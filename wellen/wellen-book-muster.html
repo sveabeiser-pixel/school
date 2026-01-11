@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WellenLibrary – Demo (autoNav)</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+ 
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Wellen",
+      "sectionTitle":"Wellenfunktion",
+      "startPage": 1,
+      "submitLabel":"Summary & submit",
+      "onSubmit":"alert",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": true,
+      "autoNavGroupTitle": "Wellen"
+    }
+    </script>
+
+    <section data-wb-page="1">
+      <h1>Herzlich Willkommen!</h1>
+      <p class="wb-muted">Absatz 1</p>
+      <h2>Überschrift 1</h2>
+      <p> Text<br>
+        Text</p>
+
+
+        <h2>Überschrift 2</h2>
+        <p> 
+        Text
+        <b>Text</b> <br>
+        Text</p>
+
+
+
+        <div class="wb-img">
+        <img src="pdf-bilder/bild01.png" alt="Zeitlicher Verlauf einer harmonischen Welle">
+        </div>
+
+        <br>
+      <h3>kleine Überschrift</h3>
+
+        Text
+
+        <h3>kleine Überschrift</h3>
+        Text
+
+      <h2>Überschrift 3</h2>
+        <p> 
+
+        Text</p>
+
+        <h3>kleine Überschrift</h3>
+        <p>Text
+        </p>
+
+    </section>
+
+    <section data-wb-page="2">
+
+   
+    <h1>Kapitel 2</h1>
+    <h2>Überschrift 1 </h2>
+
+
+
+
+
+    <!-- Multiple Choice Exercise -->
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq1",
+          "title":"Multiple Choice",
+          "questions":[
+            {
+                    
+          "text": "Was transportieren Wellen (z.B. auf einem Seil) hauptsächlich?",
+          "choices": [
+            { "id": "a", "label": "Wellen transportieren Materie dauerhaft von A nach B." },
+            { "id": "b", "label": "Wellen transportieren Energie (und Information)." },
+            { "id": "c", "label": "Wellen transportieren nur Ort." }
+          ],
+          "correct": ["b"],
+          "explain": "Bei mechanischen Wellen schwingen die Teilchen um ihre Ruhelage, aber die Störung (Energie/Information) breitet sich aus."
+          },
+          
+          {
+          "text": "Welche Achsen gehören zum y-x-Diagramm einer Momentaufnahme?",
+          "choices": [
+            { "id": "a", "label": "x-Achse: Ort x, y-Achse: Auslenkung y." },
+            { "id": "b", "label": "x-Achse: Zeit t, y-Achse: Auslenkung y." },
+            { "id": "c", "label": "x-Achse: Ort x, y-Achse: Zeit t." }
+            ],
+          "correct": ["a"],
+          "explain": "Im y-x-Diagramm wird die Auslenkung über dem Ort dargestellt (Zeit ist fest)."
+            }
+          ]
+          }
+        </script>
+      </div>
+
+
+
+
+
+      <!-- Drag and Drop Exercise -->
+
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze1",
+          "title":"Drag the Words",
+          
+  "bank": [
+    "Wellenfunktion",
+    "y(x,t)",
+    "Ort x",
+    "Zeit t",
+    "Auslenkung y",
+    "Momentaufnahme",
+    "y-x-Diagramm",
+    "Sinuskurve",
+    "Ort",
+    "Zeitverlauf",
+    "y-t-Diagramm",
+    "Phasenverschiebung",
+    "Phasendifferenz Δφ",
+    "Abstand Δx",
+    "Wellenzahl k",
+    "k = 2π/λ",
+    "Wellenlänge λ"
+  ],
+  "segments": [
+    { "t": "text", "v": "Eine Welle lässt sich durch eine " },
+    { "t": "gap",  "a": "Wellenfunktion" },
+    { "t": "text", "v": " beschreiben. Man schreibt sie oft als " },
+    { "t": "gap",  "a": "y(x,t)" },
+    { "t": "text", "v": ". Dabei ist " },
+    { "t": "gap",  "a": "Ort x" },
+    { "t": "text", "v": " die Position entlang des Seils und " },
+    { "t": "gap",  "a": "Zeit t" },
+    { "t": "text", "v": " der betrachtete Zeitpunkt. Die Größe " },
+    { "t": "gap",  "a": "Auslenkung y" },
+    { "t": "text", "v": " gibt an, wie weit das Teilchen ausgelenkt ist." },
+
+    { "t": "text", "v": "Hält man die Zeit fest, erhält man eine " },
+    { "t": "gap",  "a": "Momentaufnahme" },
+    { "t": "text", "v": ". Im " },
+    { "t": "gap",  "a": "y-x-Diagramm" },
+    { "t": "text", "v": " zeichnet man die Auslenkung gegen den Ort; bei harmonischer Anregung ist das eine " },
+    { "t": "gap",  "a": "Sinuskurve" },
+    { "t": "text", "v": "." },
+
+    { "t": "text", "v": "Hält man dagegen den Ort fest, beobachtet man den " },
+    { "t": "gap",  "a": "Zeitverlauf" },
+    { "t": "text", "v": " der Schwingung. Im " },
+    { "t": "gap",  "a": "y-t-Diagramm" },
+    { "t": "text", "v": " zeichnet man die Auslenkung gegen die Zeit; auch das ist eine Sinuskurve." },
+
+    { "t": "text", "v": "Teilchen an verschiedenen Orten schwingen nicht gleichzeitig, sondern mit einer " },
+    { "t": "gap",  "a": "Phasenverschiebung" },
+    { "t": "text", "v": ". Die " },
+    { "t": "gap",  "a": "Phasendifferenz Δφ" },
+    { "t": "text", "v": " hängt vom " },
+    { "t": "gap",  "a": "Abstand Δx" },
+    { "t": "text", "v": " ab: Δφ = k·Δx. Dabei ist k die " },
+    { "t": "gap",  "a": "Wellenzahl k" },
+    { "t": "text", "v": " mit " },
+    { "t": "gap",  "a": "k = 2π/λ" },
+    { "t": "text", "v": ", wobei λ die " },
+    { "t": "gap",  "a": "Wellenlänge λ" },
+    { "t": "text", "v": " ist." }
+  ]
+
+
+        }
+        </script>
+      </div>
+
+
+      <h2>Finde Paare</h2>
+
+      <!-- Puzzlepaare - Zuordnungsübung -->
+
+
+   
+ <div data-p2 class="p2">
+  <div class="p2-hint">Ziehe ein linkes Teil auf das passende rechte Teil (oder umgekehrt). Nur richtige Paare werden verbunden und geben Punkte.</div>
+
+  <div class="p2-banks">
+    <div>
+      <div class="p2-col-title">Links</div>
+      <div class="p2-bank" data-left-bank>
+        <div class="p2-piece p2-left" data-side="L" data-pair="1">Begriff A</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="2">Begriff B</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="p2-col-title">Rechts</div>
+      <div class="p2-bank" data-right-bank>
+        <div class="p2-piece p2-right" data-side="R" data-pair="1">Erklärung A</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="2">Erklärung B</div>
+      </div>
+    </div>
+  </div>
+
+<div class="p2-row" style="margin-top:12px">
+  <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+  <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+  <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+  <div class="p2-score" data-score></div>
+</div>
+
+
+
+  <div style="margin-top:12px">
+    <div class="p2-col-title">Gelöst</div>
+    <div class="p2-solved" data-solved></div>
+  </div>
+</div>
+
+
+     
+
+
+
+
+
+      <h2>Reflexion</h2>
+
+      <!-- Essey Freischreiben -->
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay1",
+          "title":"Freitext – Beispiel",
+          "storagePrefix":"wellen_",
+          "exportName":"wellen-ergebnisse.txt",
+          "fields":[
+            {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier..."}
+          ]
+        }
+        </script>
+      </div>
+
+
+
+<h2>Teste dein Wissen</h2>
+
+      <!-- Internetseite einbinden -->
+
+      <p> Mache das Quiz auf folgender Internetseite: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/aufgabe/quiz-zu-mechanischen-wellen" target="_blank" rel="noopener">Zur Internetseite</a>
+</p>
+
+
+
+    </section>
+
+
+
+
+
+  </div>
+
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    WellenBook.autoMount();
+    WellenBlocks.autoMount();
+    WellenLibrary.autoMountAll();
+
+    (function(){
+      const root = document.querySelector(".wb-book");
+      if(!root) return;
+      const topRight = root.querySelector(".wb-top-right");
+      if(!topRight) return;
+
+      const themes = [
+        {id: "default", label: "Standard"},
+        {id: "candy", label: "Candy"},
+        {id: "mint", label: "Mint"},
+        {id: "sunset", label: "Sunset"},
+        {id: "dark", label: "Dark"}
+      ];
+
+      const isKnown = (id) => themes.some(t => t.id === id);
+      const stored = localStorage.getItem("wbTheme") || "default";
+      const active = isKnown(stored) ? stored : "default";
+
+      const applyTheme = (id) => {
+        if(id === "default") root.removeAttribute("data-theme");
+        else root.setAttribute("data-theme", id);
+      };
+      applyTheme(active);
+
+      const wrap = document.createElement("div");
+      wrap.className = "wb-theme-wrap";
+
+      const label = document.createElement("span");
+      label.className = "wb-theme-label";
+      label.textContent = "Theme";
+
+      const select = document.createElement("select");
+      select.className = "wb-theme-select";
+      themes.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t.id;
+        opt.textContent = t.label;
+        select.appendChild(opt);
+      });
+      select.value = active;
+      select.addEventListener("change", () => {
+        applyTheme(select.value);
+        localStorage.setItem("wbTheme", select.value);
+      });
+
+      wrap.appendChild(label);
+      wrap.appendChild(select);
+      topRight.insertBefore(wrap, topRight.firstChild);
+    })();
+  </script>
+</body>
+</html>

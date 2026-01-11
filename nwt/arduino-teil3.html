@@ -1,0 +1,2163 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arduino Lernbaustein – Seiten 12–17</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1b33;
+      --card:#0f203f;
+      --text:#e8eefc;
+      --muted:#b8c6e6;
+      --accent:#35d0c2;
+      --accent2:#7aa8ff;
+      --warn:#ffd166;
+      --ok:#6ee7b7;
+      --border:rgba(255,255,255,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:14px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(53,208,194,.14), transparent 55%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(122,168,255,.14), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,18,32,.85), rgba(11,18,32,.55));
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 16px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .badge{
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+    }
+    .layout{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 16px 56px;
+      display:grid;
+      grid-template-columns: 290px 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 980px){
+      .layout{grid-template-columns:1fr}
+      nav{position:relative}
+    }
+    nav{
+      position:sticky;
+      top:74px;
+      align-self:start;
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .navhead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(135deg, rgba(53,208,194,.12), rgba(122,168,255,.10));
+    }
+    .navhead h2{margin:0 0 6px; font-size:14px; color:var(--muted); font-weight:700}
+    .progress{
+      height:10px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent2))}
+    .navlist{padding:10px}
+    .navlist a{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 10px;
+      border-radius:12px;
+      color:var(--text);
+      border:1px solid transparent;
+    }
+    .navlist a:hover{background:rgba(255,255,255,.04); border-color: var(--border); text-decoration:none}
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:rgba(255,255,255,.15);
+      border:1px solid var(--border);
+    }
+    .done .dot{background: var(--ok); border-color: rgba(110,231,183,.4)}
+    main{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+    .card{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card > .inner{padding: 18px}
+    .hero{
+      background: linear-gradient(135deg, rgba(53,208,194,.18), rgba(122,168,255,.14));
+    }
+    .hero h1{margin:0 0 8px; font-size:28px}
+    .hero p{margin:0; color:var(--muted)}
+    h3{margin:0 0 10px; font-size:18px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .callout{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:12px 12px;
+    }
+    .callout strong{display:block; margin-bottom:6px}
+    .callout.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.07)}
+    .callout.tip{border-color: rgba(53,208,194,.35); background: rgba(53,208,194,.06)}
+    .callout.info{border-color: rgba(122,168,255,.35); background: rgba(122,168,255,.06)}
+
+    .task{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.02);
+      padding: 12px;
+    }
+    .task header{
+      position:static;
+      background:none;
+      border:none;
+      backdrop-filter:none;
+    }
+    .tasktitle{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .pill{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+    textarea{
+      width:100%;
+      min-height: 110px;
+      resize: vertical;
+      padding:10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15,32,63,.55);
+      color: var(--text);
+      outline:none;
+    }
+    textarea:focus{border-color: rgba(53,208,194,.65); box-shadow: 0 0 0 3px rgba(53,208,194,.15)}
+    .btnrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    button{
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:600;
+    }
+    button.primary{
+      background: linear-gradient(90deg, rgba(53,208,194,.22), rgba(122,168,255,.18));
+      border-color: rgba(122,168,255,.35);
+    }
+    button:hover{filter: brightness(1.08)}
+    .small{font-size:12px; color:var(--muted)}
+    .sep{height:1px; background:var(--border); margin:12px 0}
+    .kvs{display:grid; grid-template-columns: 1fr; gap:10px}
+    .kv{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: 14px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.02);
+    }
+    .kv b{color: var(--accent)}
+    .footer{
+      color:var(--muted);
+      font-size:12px;
+      padding:12px 18px 18px;
+      border-top:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border:1px solid var(--border);
+      border-bottom-width:2px;
+      border-radius:8px;
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+    .pdfview {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .pdfview {
+    grid-template-columns: 1fr;
+  }
+}
+.pdfpage {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0,0,0,.2);
+}
+.pdfpage img {
+  width: 100%;
+  display: block;
+}
+.pdfcaption {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-top: 1px solid var(--border);
+}
+  .solution {
+  display: none;
+  margin-top: 10px;
+  padding: 12px;
+  border-left: 4px solid #6ee7b7;
+  background: rgba(110,231,183,.08);
+  border-radius: 12px;
+  color: var(--text);
+}
+
+.solution code {
+  display: block;
+  margin-top: 6px;
+  background: rgba(0,0,0,.25);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+</style>
+</head>
+<script>
+function checkVars() {
+  const correct = {
+    q1: ["a", "c"],
+    q2: ["a", "b", "d"],
+    q3: ["a", "b", "c"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("mc_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Sehr gut!</strong><br>Alle Antworten sind korrekt.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Kreuze und versuche es erneut.";
+  }
+}
+</script>
+
+<script>
+function toggleSolution(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === "none" || el.style.display === "")
+    ? "block"
+    : "none";
+}
+</script>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <span style="width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:inline-block"></span>
+      <span>Arduino – Lernbaustein (Seiten 12–17)</span>
+      <span class="badge">GitHub Pages • interaktiv</span>
+    </div>
+    <div class="badge" id="saveState">Lokale Speicherung: aktiv</div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav aria-label="Navigation">
+    <div class="navhead">
+      <h2>Dein Lernpfad</h2>
+      <div class="progress" title="Fortschritt (lokal auf diesem Gerät)">
+        <div class="bar" id="bar"></div>
+      </div>
+      <div class="small" style="margin-top:8px">
+        Tipp: Markiere erledigt, wenn du eine Aufgabe abgeschlossen hast.
+      </div>
+    </div>
+    <div class="navlist" id="navlist">
+      <a href="#s12" data-sec="s12"><span class="dot"></span>Variablen - Speicherplatz für Werte</a>
+      <a href="#challenge_variablen" data-sec="challenge_variablen"><span class="dot"></span>Variablen - Challenge</a>
+       <a href="#s13" data-sec="s13"><span class="dot"></span>7. Serielle Ausgabe – Mit dem Arduino kommunizieren</a>
+       <a href="#debugging" data-sec="debugging"><span class="dot"></span>Debugging - Challenge</a>
+      <a href="#s14" data-sec="s14"><span class="dot"></span>8. for-Schleifen – Wiederholungen elegant lösen</a>
+      <a href="#schachtel" data-sec="schachtel"><span class="dot"></span>Geschachtelte for-Schleifen – Schleifen in Schleifen</a>
+      <a href="#s15" data-sec="s15"><span class="dot"></span>9. LEDs dimmen – Helligkeit stufenlos steuern</a>
+       <a href="#s16" data-sec="s16"><span class="dot"></span>10. RGB-LEDs – Farben mischen mit Licht</a>
+       <a href="#s17" data-sec="s17"><span class="dot"></span>11. if / else – Entscheidungen im Programm</a>
+      <a href="#abschluss" data-sec="abschluss"><span class="dot"></span>Abschluss – Wiederholen, Anwenden, Projekt</a>
+
+
+
+    </div>
+  </nav>
+
+  <main>
+
+<!-- SECTION 12 -->
+<section class="card" id="s12">
+  <div class="inner">
+
+    <h3>6. Variablen – Speicherplätze für Werte</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist eine Variable?</strong>
+      <div style="color:var(--muted)">
+        Eine <b>Variable</b> ist ein Speicherplatz im Arduino,
+        in dem ein <b>Wert abgelegt</b> werden kann.
+        Dieser Wert kann sich während des Programms <b>ändern</b>.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout">
+      <strong>Beispiel aus dem Alltag</strong>
+      <div style="color:var(--muted)">
+        Stell dir eine Variable wie eine <b>beschriftete Kiste</b> vor:
+        <br>
+        Der Name der Kiste ist der <b>Variablenname</b>,
+        der Inhalt der Kiste ist der <b>Wert</b>.
+        <br><br>
+        Der Inhalt kann jederzeit ausgetauscht werden –
+        der Name der Kiste bleibt gleich.
+      </div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout tip">
+      <strong>Datentypen (aus dem Heft)</strong>
+      <div style="color:var(--muted)">
+        Variablen haben unterschiedliche <b>Datentypen</b>,
+        je nachdem, was gespeichert wird:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><code>int</code> – ganze Zahlen (z. B. 10, 200)</li>
+          <li><code>long</code> – sehr große ganze Zahlen</li>
+          <li><code>float</code> – Kommazahlen (z. B. 2.5)</li>
+        </ul>
+      </div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Variablen im Programm</strong>
+      <div style="color:var(--muted)">
+        Eine Variable wird zuerst <b>angelegt</b>:
+        <pre><code>int a;</code></pre>
+        Danach kann ihr ein <b>Wert zugewiesen</b> werden:
+        <pre><code>a = 10;</code></pre>
+        Später kann der Wert wieder geändert werden:
+        <pre><code>a = a + 5;</code></pre>
+      </div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Wichtiger Hinweis</strong>
+      <div style="color:var(--muted)">
+        Der Arduino merkt sich immer nur den <b>aktuellen Wert</b>
+        einer Variable. Alte Werte gehen verloren,
+        sobald ein neuer Wert zugewiesen wird.
+      </div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout">
+      <strong>Warum sind Variablen so wichtig?</strong>
+      <div style="color:var(--muted)">
+        Ohne Variablen wären Programme:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>unflexibel</li>
+          <li>lang</li>
+          <li>schwer veränderbar</li>
+        </ul>
+        Mit Variablen kann man z. B. Tonhöhen, Wartezeiten
+        oder Helligkeiten einfach anpassen.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+        <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. Schreibe neue
+        Befehle in OneNote auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
+      <div class="pdfcaption">Original – Seite 12</div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- MULTIPLE CHOICE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – Variablen</b> (mehrere Antworten möglich)</div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_vars">
+
+        <p><b>1) Was ist eine Variable?</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ Ein Speicherplatz für Werte</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ Ein fester Text im Programm</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ Ein Wert, der sich ändern kann</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ Ein elektrisches Bauteil</label>
+
+        <p><b>2) Welche Aussagen zu Variablen sind richtig?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Variablen haben einen Namen</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ Variablen können ihren Wert ändern</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Eine Variable speichert alle alten Werte</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Variablen machen Programme flexibler</label>
+
+        <p><b>3) Welche Datentypen gibt es laut Heft?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ int</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ long</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ float</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ tone</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkVars()">Antworten überprüfen</button>
+        </div>
+
+        <div id="mc_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+ 
+<!-- CHALLENGE: VARIABLEN -->
+<section class="card" id="challenge_variablen">
+  <div class="inner">
+
+    <h3>Challenge – Variablen richtig einsetzen</h3>
+
+    <div class="callout info">
+      <strong>Regel der Challenge</strong>
+      <div style="color:var(--muted)">
+        Du darfst <b>nur Variablen ändern oder hinzufügen</b>.
+        <br>
+        Die Struktur des Programms (setup, loop, Reihenfolge)
+        bleibt unverändert.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- CHALLENGE 1 -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Challenge 1 – Tempo ändern (leicht)</b></div>
+        <span class="pill">nur Variablen</span>
+      </div>
+
+      <pre><code>int t = 500;
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(t);
+  digitalWrite(13, LOW);
+  delay(t);
+}</code></pre>
+
+      <div style="color:var(--muted); margin-bottom:8px">
+        Die LED blinkt aktuell langsam.
+        <br>
+        👉 Ändere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
+        ohne die <code>delay()</code>-Zeilen zu verändern.
+      </div>
+
+      <textarea id="c1"
+        placeholder="Was musst du an der Variable ändern? Begründe kurz."></textarea>
+    </div>
+
+    <div class="sep"></div>
+
+
+<button type="button" onclick="toggleSolution('sol_c1')">
+  Lösung anzeigen
+</button>
+
+<div id="sol_c1" class="solution">
+  <strong>Lösung:</strong><br>
+  Die Blinkgeschwindigkeit wird durch die Variable <code>t</code> bestimmt.
+  <br><br>
+  Um doppelt so schnell zu blinken, muss die Wartezeit halbiert werden:
+  <code>int t = 250;</code>
+  <br><br>
+  Die Struktur des Programms bleibt gleich – nur der Wert der Variable ändert sich.
+</div>
+
+
+    <!-- CHALLENGE 2 -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Challenge 2 – Ton verändern (mittel)</b></div>
+        <span class="pill">denken erforderlich</span>
+      </div>
+
+      <pre><code>int ton = 262;
+
+void loop() {
+  tone(11, ton);
+  delay(300);
+  noTone(11);
+  delay(300);
+}</code></pre>
+
+      <div style="color:var(--muted); margin-bottom:8px">
+        Der Ton ist aktuell immer gleich.
+        <br>
+        👉 Sorge dafür, dass der Ton <b>bei jedem Durchlauf höher</b> wird.
+        <br>
+        Tipp: Der Wert der Variable darf sich ändern.
+      </div>
+
+      <textarea id="c2"
+        placeholder="Welche zusätzliche Zeile brauchst du? Erkläre, was sie bewirkt."></textarea>
+    </div>
+
+    <div class="sep"></div>
+
+
+<button type="button" onclick="toggleSolution('sol_c2')">
+  Lösung anzeigen
+</button>
+
+<div id="sol_c2" class="solution">
+  <strong>Lösung:</strong><br>
+  Der Ton wird durch die Variable <code>ton</code> bestimmt.
+  <br><br>
+  Damit der Ton bei jedem Durchlauf höher wird, muss der Wert verändert werden:
+  <code>ton = ton + 20;</code>
+  <br><br>
+  Die Variable speichert den neuen Wert und wird beim nächsten Durchlauf verwendet.
+</div>
+
+
+    <!-- CHALLENGE 3 -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Challenge 3 – Rhythmus bauen (knifflig)</b></div>
+        <span class="pill">Transfer</span>
+      </div>
+
+      <pre><code>int kurz = 150;
+int lang = 400;
+
+void loop() {
+  tone(11, 330);
+  delay(kurz);
+  noTone(11);
+  delay(lang);
+}</code></pre>
+
+      <div style="color:var(--muted); margin-bottom:8px">
+        Du hörst immer denselben Rhythmus.
+        <br>
+        👉 Erkläre, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
+        erzeugen kannst, ohne neue <code>delay()</code>-Zeilen hinzuzufügen.
+      </div>
+
+      <textarea id="c3"
+        placeholder="Beschreibe deine Idee in Worten (kein kompletter Code nötig)."></textarea>
+    </div>
+
+    <div class="sep"></div>
+
+<button type="button" onclick="toggleSolution('sol_c3')">
+  Lösung anzeigen
+</button>
+
+<div id="sol_c3" class="solution">
+  <strong>Lösung:</strong><br>
+  Verschiedene Rhythmen entstehen, indem man die Variablen
+  <code>kurz</code> und <code>lang</code> verändert.
+  <br><br>
+  Beispiel:
+  <ul>
+    <li>kurz = 100, lang = 500 → langsamer Rhythmus</li>
+    <li>kurz = 200, lang = 200 → gleichmäßiger Rhythmus</li>
+    <li>kurz = 50, lang = 300 → schneller Akzent</li>
+  </ul>
+  Die Programmstruktur bleibt gleich – nur die Werte ändern sich.
+</div>
+
+
+
+    <!-- REFLEXION -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Reflexion</b></div>
+        <span class="pill">Denken über Code</span>
+      </div>
+
+      <textarea id="c_reflex"
+        placeholder="Warum sind Variablen besser, als feste Zahlen direkt in den Code zu schreiben?"></textarea>
+    </div>
+
+    <div class="btnrow">
+      <button data-copy="c1">Antwort 1 kopieren</button>
+      <button data-copy="c2">Antwort 2 kopieren</button>
+      <button data-copy="c3">Antwort 3 kopieren</button>
+      <button data-copy="c_reflex">Reflexion kopieren</button>
+    </div>
+
+<button type="button" onclick="toggleSolution('sol_reflex')">
+  Musterlösung anzeigen
+</button>
+
+<div id="sol_reflex" class="solution">
+  <strong>Musterlösung:</strong><br>
+  Variablen machen Programme übersichtlicher und flexibler.
+  Statt viele Zahlen im Code zu ändern, passt man nur wenige
+  Variablen an und beeinflusst damit das gesamte Programmverhalten.
+</div>
+
+
+
+
+  </div>
+</section>
+
+
+<!-- SECTION 13 -->
+<section class="card" id="s13">
+  <div class="inner">
+
+    <h3>7. Serielle Ausgabe – Mit dem Arduino kommunizieren</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist die serielle Ausgabe?</strong>
+      <div style="color:var(--muted)">
+        Mit der <b>seriellen Ausgabe</b> kann der Arduino Text und Zahlen
+        an den Computer senden.
+        <br>
+        Diese Informationen erscheinen im <b>seriellen Monitor</b>
+        der Arduino-IDE.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Wozu braucht man das?</strong>
+      <div style="color:var(--muted)">
+        Die serielle Ausgabe wird vor allem genutzt, um:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>zu prüfen, ob ein Programm richtig läuft</li>
+          <li>Werte von Variablen anzuzeigen</li>
+          <li>Fehler im Programm zu finden</li>
+        </ul>
+        Sie ist eine wichtige Hilfe beim Programmieren.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Serial.begin(9600)</strong>
+      <div style="color:var(--muted)">
+        Bevor der Arduino Daten senden kann, muss die serielle Verbindung
+        gestartet werden:
+        <pre><code>Serial.begin(9600);</code></pre>
+        Die Zahl <b>9600</b> gibt die Übertragungsgeschwindigkeit an
+        (Baudrate).
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Serial.println()</strong>
+      <div style="color:var(--muted)">
+        Mit <code>Serial.println()</code> gibt der Arduino einen Wert
+        oder Text aus und beginnt danach eine <b>neue Zeile</b>.
+        <pre><code>Serial.println(x);</code></pre>
+        So kann man verfolgen, wie sich der Wert von <code>x</code>
+        im Laufe des Programms ändert.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+  <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir nochaml alles ganz genau durch, schreibe die neuen Befehle in OneNote 
+        auf deinen Spickzettel und bearbeite anschließend die Aufgaben. 
+      </div>
+    </div>
+ <div class="sep"></div>
+
+<div class="pdfpage">
+      <img src="pdf-bilder/seite13.png" alt="PDF Seite 13">
+      <div class="pdfcaption">Original – Seite 13</div>
+    </div>
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout tip">
+      <strong>Beispiel aus dem Bild</strong>
+      <div style="color:var(--muted)">
+        Im Beispiel auf Seite 13 wird eine Variable immer wieder erhöht
+        und ihr Wert im seriellen Monitor ausgegeben:
+        <pre><code>int x = 0;
+
+void loop() {
+  Serial.println(x);
+  x = x + 5;
+}</code></pre>
+        Dadurch sieht man, wie sich der Wert Schritt für Schritt verändert.
+      </div>
+    </div>
+
+     <div class="sep"></div>
+    <!-- INFOBOX 6 -->
+    <div class="callout warn">
+      <strong>Wichtiger Hinweis</strong>
+      <div style="color:var(--muted)">
+        Die Baudrate im Programm (<code>Serial.begin(9600)</code>)
+        muss mit der Baudrate im seriellen Monitor übereinstimmen.
+        <br>
+        Sonst erscheinen nur unlesbare Zeichen.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – Serielle Ausgabe</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+ <div class="sep"></div>
+      <textarea id="t_s13_q1"
+        placeholder="1) Warum ist die serielle Ausgabe beim Programmieren hilfreich?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s13_q2"
+        placeholder="2) Was passiert, wenn man Serial.begin() vergisst?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s13_q3"
+        placeholder="3) Warum eignet sich der serielle Monitor gut, um Variablen zu beobachten?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s13_q4"
+        placeholder="4) Warum muss die Baudrate im Programm und im seriellen Monitor gleich sein?"></textarea>
+ <div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_s13_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s13_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s13_q3">Antwort 3 kopieren</button>
+        <button data-copy="t_s13_q4">Antwort 4 kopieren</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- DEBUGGING -->
+<section class="card" id="debugging">
+  <div class="inner">
+
+    <h3>Debugging – Wenn das Programm nicht so läuft wie gedacht</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was bedeutet Debugging?</strong>
+      <div style="color:var(--muted)">
+        <b>Debugging</b> bedeutet, Fehler im Programm zu finden und zu beheben.
+        Fehler sind dabei <b>normal</b> und gehören zum Programmieren dazu.
+        <br>
+        Gute Programmierer unterscheiden sich nicht dadurch,
+        dass sie keine Fehler machen – sondern dadurch,
+        dass sie systematisch nach ihnen suchen.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Die wichtigste Regel</strong>
+      <div style="color:var(--muted)">
+        👉 <b>Erst denken, dann ändern.</b><br>
+        Wildes Ausprobieren führt selten zum Ziel.
+        Debugging heißt: Schritt für Schritt prüfen.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- TYPISCHE FEHLER -->
+    <h4>Typische Fehlerquellen</h4>
+
+    <div class="grid2">
+
+      <div class="callout warn">
+        <strong>Programm startet nicht</strong>
+        <div style="color:var(--muted)">
+          Häufige Ursachen:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>falsches Board ausgewählt</li>
+            <li>falscher Port ausgewählt</li>
+            <li>USB-Kabel nur zum Laden geeignet</li>
+          </ul>
+        </div>
+      </div>
+ <div class="sep"></div>
+
+      <div class="callout warn">
+        <strong>LED blinkt nicht</strong>
+        <div style="color:var(--muted)">
+          Mögliche Ursachen:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>falscher Pin im Code</li>
+            <li>LED falsch herum eingebaut</li>
+            <li>Widerstand fehlt oder falsch gesteckt</li>
+          </ul>
+        </div>
+      </div>
+ <div class="sep"></div>
+
+      <div class="callout warn">
+        <strong>Serieller Monitor zeigt nichts</strong>
+        <div style="color:var(--muted)">
+          Prüfe:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><code>Serial.begin()</code> vorhanden?</li>
+            <li>richtige Baudrate eingestellt?</li>
+            <li>serieller Monitor geöffnet?</li>
+          </ul>
+        </div>
+      </div>
+ <div class="sep"></div>
+
+      <div class="callout warn">
+        <strong>Fehlermeldung auf Englisch</strong>
+        <div style="color:var(--muted)">
+          Die Arduino-IDE meldet Fehler meist auf Englisch.
+          Das ist kein Problem:
+          <br>
+          Wichtig sind Schlüsselwörter wie
+          <code>expected</code>, <code>not declared</code>,
+          <code>before</code>.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- DEBUG-STRATEGIE -->
+    <div class="callout info">
+      <strong>Systematische Debug-Strategie</strong>
+      <div style="color:var(--muted)">
+        Gehe immer in dieser Reihenfolge vor:
+        <ol style="margin:6px 0 0; padding-left:18px">
+          <li>Was <b>soll</b> passieren?</li>
+          <li>Was <b>passiert tatsächlich</b>?</li>
+          <li>Wo im Code wird das entschieden?</li>
+          <li>Welche Variable oder welcher Pin ist beteiligt?</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI DEBUG CHALLENGES -->
+    <h4>Mini-Debug-Challenges</h4>
+ <div class="sep"></div>
+    <!-- CHALLENGE 1 -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Debug-Challenge 1</b></div>
+        <span class="pill">denken, nicht tippen</span>
+      </div>
+
+      <pre><code>int x = 0;
+
+void loop() {
+  Serial.println(x);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        Im seriellen Monitor erscheint immer nur <code>0</code>.
+        <br>
+        👉 Warum ändert sich der Wert nicht?
+      </div>
+
+      <textarea id="dbg1"
+        placeholder="Beschreibe die Ursache des Problems."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_dbg1')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_dbg1" class="solution">
+        <strong>Lösung:</strong><br>
+        Der Wert von <code>x</code> wird nie verändert.
+        Es fehlt z. B.:
+        <code>x = x + 1;</code>
+      </div>
+    </div>
+ <div class="sep"></div>
+    <!-- CHALLENGE 2 -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Debug-Challenge 2</b></div>
+        <span class="pill">Hardware + Code</span>
+      </div>
+
+      <pre><code>pinMode(13, OUTPUT);
+
+void loop() {
+  digitalWrite(12, HIGH);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        Die LED an Pin 13 leuchtet nicht.
+        <br>
+        👉 Wo liegt der Fehler?
+      </div>
+
+      <textarea id="dbg2"
+        placeholder="Beschreibe, was nicht zusammenpasst."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_dbg2')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_dbg2" class="solution">
+        <strong>Lösung:</strong><br>
+        Pin 13 wird als OUTPUT gesetzt,
+        aber Pin 12 wird eingeschaltet.
+        Pin-Nummern müssen übereinstimmen.
+      </div>
+    </div>
+ <div class="sep"></div>
+    <!-- REFLEXION -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Reflexion</b></div>
+        <span class="pill">wichtig!</span>
+      </div>
+
+      <textarea id="dbg_reflex"
+        placeholder="Warum ist Debugging ein wichtiger Teil des Programmierens?"></textarea>
+    </div>
+
+    <div class="btnrow">
+      <button data-copy="dbg1">Antwort 1 kopieren</button>
+      <button data-copy="dbg2">Antwort 2 kopieren</button>
+      <button data-copy="dbg_reflex">Reflexion kopieren</button>
+    </div>
+
+  </div>
+</section>
+
+    
+
+<!-- SECTION 14 -->
+<section class="card" id="s14">
+  <div class="inner">
+
+    <h3>8. for-Schleifen – Wiederholungen elegant lösen</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist eine for-Schleife?</strong>
+      <div style="color:var(--muted)">
+        Eine <b>for-Schleife</b> wird verwendet, wenn ein Programmteil
+        <b>mehrmals hintereinander</b> ausgeführt werden soll.
+        <br>
+        Statt denselben Code immer wieder zu schreiben,
+        nutzt man eine Schleife.<br>
+        Zwar könnte man da ja auch im loop() machen, aber da wird es solange gemacht, bis das Programm
+        gestoppt wird. Mit einer for-Schleife kann man genau festlegen, wie oft etwas passieren soll. 
+        Vielleicht nur 5 mal, oder bis eine Bedingung erfüllt ist.
+
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Warum braucht man Schleifen?</strong>
+      <div style="color:var(--muted)">
+        Schleifen machen Programme:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>kürzer</li>
+          <li>übersichtlicher</li>
+          <li>leichter veränderbar</li>
+        </ul>
+        Eine Zahl zu ändern reicht aus – der Code passt sich an.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Aufbau einer for-Schleife</strong>
+      <div style="color:var(--muted)">
+        Eine for-Schleife besteht aus <b>drei Teilen</b>:
+        <pre><code>for (int i = 0; i &lt; 5; i++) {
+  // Code
+}</code></pre>
+        Bedeutung:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Startwert:</b> <code>int i = 0</code></li>
+          <li><b>Bedingung:</b> <code>i &lt; 5</code></li>
+          <li><b>Schritt:</b> <code>i++</code> (i wird um 1 erhöht)</li>
+        </ul>
+      </div>
+    </div>
+
+
+
+ <div class="sep"></div>
+
+  <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir wieder alles ganz genau durch und schreibe die neuen Befehle in OneNote 
+        auf deinen Spickzettel und bearbeite anschließend die Aufgaben. 
+      </div>
+    </div>
+ <div class="sep"></div>
+
+ 	<div class="pdfpage">
+	      <img src="pdf-bilder/seite14.png" alt="PDF Seite 14">
+	      <div class="pdfcaption">Original – Seite 14</div>
+	    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Beispiel aus dem Heft</strong>
+      <div style="color:var(--muted)">
+        Eine LED soll fünfmal blinken:
+        <pre><code>for (int i = 0; i &lt; 5; i++) {
+  digitalWrite(13, HIGH);
+  delay(300);
+  digitalWrite(13, LOW);
+  delay(300);
+}</code></pre>
+        Der Code im Block wird genau <b>5-mal</b> ausgeführt.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Typischer Fehler</strong>
+      <div style="color:var(--muted)">
+        Wenn die Bedingung nie falsch wird,
+        läuft die Schleife <b>endlos</b>.
+        <br>
+        Deshalb immer prüfen:
+        Wird die Schleifenvariable wirklich verändert?
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – for-Schleifen</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s14_q1"
+        placeholder="1) Warum ist eine for-Schleife besser als denselben Code fünfmal zu schreiben?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s14_q2"
+        placeholder="2) Welche Aufgabe hat die Variable i in einer for-Schleife?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s14_q3"
+        placeholder="3) Wie oft wird der Code ausgeführt, wenn i von 0 bis kleiner 3 läuft?"></textarea>
+ <div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_s14_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s14_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s14_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Denken in Schleifen</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <pre><code>for (int i = 0; i &lt; 3; i++) {
+  tone(11, 262);
+  delay(200);
+  noTone(11);
+  delay(200);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        👉 Beschreibe, was dieses Programm macht,
+        ohne den Code umzuschreiben.
+      </div>
+
+      <textarea id="t_s14_challenge"
+        placeholder="Erklärung in eigenen Worten"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s14')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s14" class="solution">
+        <strong>Lösung:</strong><br>
+        Der Ton mit der Frequenz 262 Hz wird dreimal kurz abgespielt.
+        Die for-Schleife sorgt dafür, dass der Ablauf genau
+        dreimal wiederholt wird.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- SECTION 15 -->
+<section class="card" id="schachtel">
+  <div class="inner">
+
+    <h3>Geschachtelte for-Schleifen – Schleifen in Schleifen</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was bedeutet „geschachtelt“?</strong>
+      <div style="color:var(--muted)">
+        Eine <b>geschachtelte for-Schleife</b> ist eine Schleife,
+        die <b>innerhalb einer anderen Schleife</b> steht.
+        <br>
+        Die innere Schleife wird <b>bei jedem Durchlauf</b>
+        der äußeren Schleife komplett ausgeführt.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Warum braucht man das?</strong>
+      <div style="color:var(--muted)">
+        Geschachtelte Schleifen werden genutzt, wenn:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Muster erzeugt werden sollen</li>
+          <li>Abläufe mehrfach wiederholt werden</li>
+          <li>zwei Dinge gleichzeitig gezählt werden müssen</li>
+        </ul>
+        Sie sind typisch für Licht- und Tonfolgen.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Grundaufbau</strong>
+      <div style="color:var(--muted)">
+        <pre><code>for (int i = 0; i &lt; 3; i++) {
+  for (int j = 0; j &lt; 5; j++) {
+    // Code
+  }
+}</code></pre>
+        Bedeutung:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Die äußere Schleife läuft 3-mal</li>
+          <li>Bei jedem Durchlauf läuft die innere Schleife 5-mal</li>
+          <li>Der Code im Inneren läuft also <b>15-mal</b></li>
+        </ul>
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Beispiel mit LED</strong>
+      <div style="color:var(--muted)">
+        Die LED soll in mehreren Durchgängen blinken:
+        <pre><code>for (int r = 0; r &lt; 3; r++) {
+  for (int i = 0; i &lt; 4; i++) {
+    digitalWrite(13, HIGH);
+    delay(200);
+    digitalWrite(13, LOW);
+    delay(200);
+  }
+  delay(1000);
+}</code></pre>
+        👉 3 Runden, in jeder Runde blinkt die LED 4-mal.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Typischer Denkfehler</strong>
+      <div style="color:var(--muted)">
+        Viele denken, die innere Schleife laufe „nebenbei“.
+        <br>
+        Tatsächlich gilt:
+        <br>
+        👉 <b>Die innere Schleife läuft vollständig, bevor die äußere weitergeht.</b>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – geschachtelte Schleifen</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_schachtel_q1"
+        placeholder="1) Was bedeutet es, dass eine Schleife in einer anderen Schleife liegt?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_schachtel_q2"
+        placeholder="2) Wie oft läuft der innere Code, wenn außen 2-mal und innen 5-mal gezählt wird?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_schachtel_q3"
+        placeholder="3) Warum eignen sich geschachtelte Schleifen gut für Muster?"></textarea>
+ <div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_schachtel_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_schachtel_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_schachtel_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Denkaufgabe</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <pre><code>for (int a = 0; a &lt; 2; a++) {
+  for (int b = 0; b &lt; 3; b++) {
+    tone(11, 440);
+    delay(100);
+    noTone(11);
+    delay(100);
+  }
+  delay(800);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        👉 Beschreibe genau, was du hörst,
+        wenn dieses Programm läuft.
+      </div>
+
+      <textarea id="t_schachtel_challenge"
+        placeholder="Beschreibung in eigenen Worten"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_schachtel')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_schachtel" class="solution">
+        <strong>Lösung:</strong><br>
+        Es erklingen jeweils 3 kurze Töne hintereinander.
+        Diese Tonfolge wird insgesamt 2-mal wiederholt.
+        Zwischen den beiden Durchgängen gibt es eine längere Pause.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SECTION 15 – LEDs dimmen -->
+<section class="card" id="s15">
+  <div class="inner">
+
+    <h3>9. LEDs dimmen – Helligkeit stufenlos steuern</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Digital vs. Analog</strong>
+      <div style="color:var(--muted)">
+        Bisher hast du LEDs <b>digital</b> geschaltet:
+        <br>
+        👉 <code>HIGH</code> = an, <code>LOW</code> = aus.
+        <br><br>
+        Beim <b>Dimmen</b> geht es darum,
+        die Helligkeit <b>stufenlos</b> zu verändern –
+        nicht nur an oder aus.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>analogWrite()</strong>
+      <div style="color:var(--muted)">
+        Zum Dimmen benutzt man die Anweisung:
+        <pre><code>analogWrite(pin, wert);</code></pre>
+        Der <b>Wert</b> bestimmt die Helligkeit:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>0 → LED aus</li>
+          <li>127 → halbe Helligkeit</li>
+          <li>255 → volle Helligkeit</li>
+        </ul>
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Wie funktioniert das technisch?</strong>
+      <div style="color:var(--muted)">
+        Der Arduino erzeugt kein echtes Analogsignal,
+        sondern nutzt <b>Pulsweitenmodulation (PWM)</b>.
+        <br><br>
+        Dabei wird die LED sehr schnell ein- und ausgeschaltet.
+        Je länger sie eingeschaltet ist,
+        desto heller erscheint sie für das Auge.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Beispiel: LED dimmen</strong>
+      <div style="color:var(--muted)">
+        <pre><code>void setup() {
+  pinMode(3, OUTPUT);
+}
+
+void loop() {
+  analogWrite(3, 127);
+  delay(1000);
+}</code></pre>
+        Die LED an Pin 3 leuchtet mit halber Helligkeit.
+      </div>
+    </div>
+ <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Wichtiger Hinweis</strong>
+      <div style="color:var(--muted)">
+        <code>analogWrite()</code> funktioniert nur an
+        <b>PWM-Pins</b> (z. B. 3, 5, 6, 9, 10, 11 beim Arduino Uno).
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+          <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. 
+        Schreibe alle neuen Befehle in OneNote auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite15.png" alt="PDF Seite 15">
+      <div class="pdfcaption">Original – Seite 15</div>
+    </div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – LEDs dimmen</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s15_q1"
+        placeholder="1) Was ist der Unterschied zwischen digitalem Schalten und Dimmen?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s15_q2"
+        placeholder="2) Welche Aufgabe hat der zweite Wert bei analogWrite()?"></textarea>
+ <div class="sep"></div>
+      <textarea id="t_s15_q3"
+        placeholder="3) Warum kann das Auge PWM als unterschiedliche Helligkeit wahrnehmen?"></textarea>
+ <div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_s15_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s15_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s15_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Helligkeit steuern</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <pre><code>int hell = 50;
+
+void setup() {
+  pinMode(3, OUTPUT);
+}
+
+void loop() {
+  analogWrite(3, hell);
+  delay(1000);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        👉 Erkläre, was passiert, wenn du den Wert von
+        <code>hell</code> veränderst.
+      </div>
+
+      <textarea id="t_s15_challenge"
+        placeholder="Beschreibung in eigenen Worten"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s15')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s15" class="solution">
+        <strong>Lösung:</strong><br>
+        Der Wert der Variable <code>hell</code> bestimmt die Helligkeit
+        der LED. Je größer der Wert, desto heller leuchtet die LED.
+        Der Ablauf des Programms bleibt gleich – nur die Variable
+        verändert das Verhalten.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SECTION 16 – RGB LEDs -->
+<section class="card" id="s16">
+  <div class="inner">
+
+    <h3>10. RGB-LEDs – Farben mischen mit Licht</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist eine RGB-LED?</strong>
+      <div style="color:var(--muted)">
+        Eine <b>RGB-LED</b> enthält <b>drei LEDs</b> in einem Gehäuse:
+        <b>Rot</b>, <b>Grün</b> und <b>Blau</b>.
+        <br><br>
+        Durch das <b>Mischen dieser drei Farben</b> können
+        viele verschiedene Farben erzeugt werden.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Das RGB-Prinzip</strong>
+      <div style="color:var(--muted)">
+        Jede Farbe setzt sich aus Anteilen von Rot, Grün und Blau zusammen:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Rot + Grün → Gelb</li>
+          <li>Rot + Blau → Magenta</li>
+          <li>Grün + Blau → Cyan</li>
+          <li>Rot + Grün + Blau → Weiß</li>
+        </ul>
+      </div>
+    </div>
+<div class="sep"></div>
+
+           <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles nochmal genau durch und 
+        beantworte die Fragen ausführlich und schreibe alles wichtige auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
+      <div class="pdfcaption">Original – Seite 12</div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Ansteuerung mit dem Arduino</strong>
+      <div style="color:var(--muted)">
+        Jede Farbe der RGB-LED wird an einen eigenen Pin angeschlossen.
+        <br>
+        Die Helligkeit jeder Farbe wird mit <code>analogWrite()</code> gesteuert:
+        <pre><code>analogWrite(rotPin, 255);
+analogWrite(gruenPin, 0);
+analogWrite(blauPin, 0);</code></pre>
+        👉 Ergebnis: Die LED leuchtet rot.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Wertebereich</strong>
+      <div style="color:var(--muted)">
+        Für jede Farbe gilt:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>0 → Farbe aus</li>
+          <li>255 → maximale Helligkeit</li>
+        </ul>
+        Durch unterschiedliche Kombinationen entstehen neue Farben.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Gemeinsame Anode / gemeinsame Kathode</strong>
+      <div style="color:var(--muted)">
+        RGB-LEDs gibt es in zwei Varianten:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Gemeinsame Kathode</b>: gemeinsamer Minuspol</li>
+          <li><b>Gemeinsame Anode</b>: gemeinsamer Pluspol</li>
+        </ul>
+        Je nach Typ kann die Logik von <code>0</code> und <code>255</code>
+        vertauscht sein.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – RGB-LEDs</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s16_q1"
+        placeholder="1) Warum braucht eine RGB-LED drei Pins?"></textarea>
+<div class="sep"></div>
+      <textarea id="t_s16_q2"
+        placeholder="2) Wie entsteht die Farbe Gelb bei einer RGB-LED?"></textarea>
+<div class="sep"></div>
+      <textarea id="t_s16_q3"
+        placeholder="3) Welche Rolle spielt analogWrite() bei RGB-LEDs?"></textarea>
+<div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_s16_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s16_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s16_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Farbe einstellen</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <pre><code>int r = 255;
+int g = 0;
+int b = 0;
+
+void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+}
+
+void loop() {
+  analogWrite(3, r);
+  analogWrite(5, g);
+  analogWrite(6, b);
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        👉 Erkläre, welche Farbe du siehst und
+        was du an den Variablen ändern musst,
+        um z. B. <b>Violett</b> zu erzeugen.
+      </div>
+
+      <textarea id="t_s16_challenge"
+        placeholder="Erklärung in eigenen Worten"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s16')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s16" class="solution">
+        <strong>Lösung:</strong><br>
+        Mit <code>r = 255</code>, <code>g = 0</code>, <code>b = 0</code>
+        leuchtet die LED rot.
+        <br><br>
+        Für Violett werden Rot und Blau kombiniert,
+        z. B.:
+        <code>r = 200;</code>
+        <code>b = 200;</code>
+        <code>g = 0;</code>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SECTION 17 – if / else -->
+<section class="card" id="s17">
+  <div class="inner">
+
+    <h3>11. if / else – Entscheidungen im Programm</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was bedeutet if?</strong>
+      <div style="color:var(--muted)">
+        Mit <b>if</b> kann ein Programm eine <b>Entscheidung</b> treffen.
+        <br>
+        Es prüft eine Bedingung und führt Code nur dann aus,
+        <b>wenn diese Bedingung erfüllt ist</b>.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Alltagsbeispiel</strong>
+      <div style="color:var(--muted)">
+        Stell dir vor:
+        <br>
+        <i>Wenn</i> es regnet, <i>dann</i> nimmst du einen Regenschirm.
+        <br>
+        <i>Sonst</i> brauchst du keinen.
+        <br><br>
+        Genau so arbeitet <code>if / else</code> im Programm.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Grundaufbau von if / else</strong>
+      <div style="color:var(--muted)">
+        <pre><code>if (Bedingung) {
+  // wird ausgeführt, wenn die Bedingung wahr ist
+} else {
+  // wird ausgeführt, wenn die Bedingung falsch ist
+}</code></pre>
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Vergleichsoperatoren</strong>
+      <div style="color:var(--muted)">
+        Bedingungen vergleichen Werte:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><code>==</code> gleich</li>
+          <li><code>&lt;</code> kleiner als</li>
+          <li><code>&gt;</code> größer als</li>
+          <li><code>&lt;=</code> kleiner oder gleich</li>
+          <li><code>&gt;=</code> größer oder gleich</li>
+        </ul>
+        ⚠️ Wichtig: <code>==</code> ist ein Vergleich,
+        <code>=</code> ist eine Zuweisung.
+      </div>
+    </div>
+<div class="sep"></div>
+
+       <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles genau durch und beantworte die Fragen ausführlich und schreibe wieder 
+        alles neue auf deinen Spickzettel in OneNote.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite17.png" alt="PDF Seite 17">
+      <div class="pdfcaption">Original – Seite 17</div>
+    </div>
+
+<div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout">
+      <strong>Beispiel mit LED</strong>
+      <div style="color:var(--muted)">
+        <pre><code>int hell = 150;
+
+void loop() {
+  if (hell &gt; 100) {
+    digitalWrite(13, HIGH);
+  } else {
+    digitalWrite(13, LOW);
+  }
+}</code></pre>
+        👉 Die LED leuchtet nur,
+        wenn der Wert der Variable groß genug ist.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout warn">
+      <strong>Typischer Fehler</strong>
+      <div style="color:var(--muted)">
+        Viele verwechseln:
+        <br>
+        <code>if (x = 5)</code> ❌
+        <br>
+        <code>if (x == 5)</code> ✔️
+        <br><br>
+        Das erste setzt einen Wert,
+        das zweite vergleicht ihn.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – if / else</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s17_q1"
+        placeholder="1) Warum braucht ein Programm Bedingungen?"></textarea>
+<div class="sep"></div>
+      <textarea id="t_s17_q2"
+        placeholder="2) Was passiert, wenn die if-Bedingung falsch ist?"></textarea>
+<div class="sep"></div>
+      <textarea id="t_s17_q3"
+        placeholder="3) Erkläre den Unterschied zwischen = und ==."></textarea>
+<div class="sep"></div>
+      <div class="btnrow">
+        <button data-copy="t_s17_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s17_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s17_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Entscheidung treffen</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <pre><code>int wert = 80;
+
+void loop() {
+  if (wert &gt;= 100) {
+    tone(11, 440);
+  } else {
+    noTone(11);
+  }
+}</code></pre>
+
+      <div style="color:var(--muted)">
+        👉 Beschreibe, was passiert,
+        und wie du den Wert ändern musst,
+        damit der Ton erklingt.
+      </div>
+
+      <textarea id="t_s17_challenge"
+        placeholder="Erklärung in eigenen Worten"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s17')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s17" class="solution">
+        <strong>Lösung:</strong><br>
+        Der Ton erklingt nur,
+        wenn <code>wert</code> mindestens 100 ist.
+        <br>
+        Erhöht man den Wert z. B. auf
+        <code>wert = 120;</code>,
+        wird die Bedingung erfüllt
+        und der Ton eingeschaltet.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ABSCHLUSSSEITE -->
+<section class="card" id="abschluss">
+  <div class="inner">
+
+    <h3>Abschluss – Wiederholen, Anwenden, Projekt</h3>
+
+    <!-- ================= MULTIPLE CHOICE ================= -->
+    <div class="callout info">
+      <strong>Abschluss-Check</strong>
+      <div style="color:var(--muted)">
+        Kreuze alle richtigen Antworten an.
+        <br>
+        Es können <b>mehrere Antworten richtig</b> sein.
+      </div>
+    </div>
+<div class="sep"></div>
+
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – Alles im Überblick</b></div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_final">
+<div class="sep"></div>
+        <!-- FRAGE 1 -->
+        <p><b>1) Was kann eine Variable?</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ Werte speichern</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ sich während des Programms ändern</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ Hardware ersetzen</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ Programme flexibler machen</label>
+<div class="sep"></div>
+        <!-- FRAGE 2 -->
+        <p><b>2) Wozu dient die serielle Ausgabe?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Programme debuggen</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ LEDs heller machen</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Werte anzeigen</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Entscheidungen treffen</label>
+<div class="sep"></div>
+        <!-- FRAGE 3 -->
+        <p><b>3) Welche Aussagen zu for-Schleifen sind richtig?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ Sie wiederholen Code</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ Sie machen Programme kürzer</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ Sie treffen Entscheidungen</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ Sie benutzen eine Zählvariable</label>
+<div class="sep"></div>
+        <!-- FRAGE 4 -->
+        <p><b>4) Wofür braucht man if / else?</b></p>
+        <label><input type="checkbox" name="q4" value="a"> ☐ um Bedingungen zu prüfen</label><br>
+        <label><input type="checkbox" name="q4" value="b"> ☐ um Entscheidungen zu treffen</label><br>
+        <label><input type="checkbox" name="q4" value="c"> ☐ um Farben zu mischen</label><br>
+        <label><input type="checkbox" name="q4" value="d"> ☐ um auf Werte zu reagieren</label>
+<div class="sep"></div>
+        <!-- FRAGE 5 -->
+        <p><b>5) Was ist bei RGB-LEDs wichtig?</b></p>
+        <label><input type="checkbox" name="q5" value="a"> ☐ drei Pins (R, G, B)</label><br>
+        <label><input type="checkbox" name="q5" value="b"> ☐ analogWrite() für Helligkeit</label><br>
+        <label><input type="checkbox" name="q5" value="c"> ☐ nur ein Widerstand für alle Farben</label><br>
+        <label><input type="checkbox" name="q5" value="d"> ☐ Farben entstehen durch Mischen</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkFinalMC()">Antworten überprüfen</button>
+        </div>
+
+        <div id="final_mc_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ================= AMPELSCHALTUNG ================= -->
+    <h4>Zusatzaufgabe – Ampelschaltung</h4>
+
+    <div class="callout tip">
+      <strong>Ampel mit RGB-LED</strong>
+      <div style="color:var(--muted)">
+        Baue eine Ampel mit einer RGB-LED.
+        <br>
+        Die Farben sollen in der richtigen Reihenfolge wechseln:
+        <b>Rot → Gelb → Grün → Gelb → Rot</b>.
+      </div>
+    </div>
+
+    <div class="task">
+      <pre><code>// Tipp: benutze Variablen für die Farben
+// und if / else für die Logik</code></pre>
+
+      <textarea id="ampel"
+        placeholder="Beschreibe dein Vorgehen oder notiere deinen Code."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_ampel')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_ampel" class="solution">
+        <strong>Musteridee:</strong><br>
+        Jede Farbe bekommt feste RGB-Werte.
+        Mit if / else oder zeitgesteuertem Wechsel
+        werden die Farben nacheinander gesetzt.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ================= ABSCHLUSSPROJEKT ================= -->
+    <h4>Zusatzaufgabe lang:</h4>
+
+    <div class="callout info">
+      <strong>Dein eigenes Projekt</strong>
+      <div style="color:var(--muted)">
+        Entwickle ein eigenes Arduino-Projekt,
+        in dem du möglichst viele der folgenden Punkte nutzt:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Variablen</li>
+          <li>for-Schleifen</li>
+          <li>if / else</li>
+          <li>RGB-LED oder Ton</li>
+          <li>serielle Ausgabe (optional)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task">
+      <textarea id="projekt"
+        placeholder="Beschreibe dein Projekt (Idee, Ablauf, verwendete Bauteile)."></textarea>
+    </div>
+
+    <div class="btnrow">
+      <button data-copy="ampel">Ampel-Text kopieren</button>
+      <button data-copy="projekt">Projektbeschreibung kopieren</button>
+    </div>
+
+  </div>
+</section>
+
+
+    
+
+
+    
+
+
+ 
+
+
+
+
+    
+  </main>
+</div>
+
+<script>
+  // ---------- LocalStorage helpers ----------
+  const LS_PREFIX = "arduino_lernbaustein_s1-5__";
+  const $ = (sel) => document.querySelector(sel);
+
+  function lsKey(id){ return LS_PREFIX + id; }
+
+  function saveText(id, val){
+    localStorage.setItem(lsKey(id), val);
+  }
+  function loadText(id){
+    return localStorage.getItem(lsKey(id)) ?? "";
+  }
+  function setDone(secId, done=true){
+    localStorage.setItem(lsKey("done__"+secId), done ? "1" : "0");
+    refreshDoneUI();
+  }
+  function isDone(secId){
+    return (localStorage.getItem(lsKey("done__"+secId)) ?? "0") === "1";
+  }
+
+  // Load all textareas
+  document.querySelectorAll("textarea").forEach(t => {
+    t.value = loadText(t.id);
+    t.addEventListener("input", () => saveText(t.id, t.value));
+  });
+
+  // Buttons: copy / clear / done
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button");
+    if(!btn) return;
+
+    const copyId = btn.getAttribute("data-copy");
+    const clearId = btn.getAttribute("data-clear");
+    const doneSec = btn.getAttribute("data-done");
+
+    if(copyId){
+      const val = loadText(copyId);
+      try{
+        await navigator.clipboard.writeText(val);
+        btn.textContent = "Kopiert!";
+        setTimeout(()=>btn.textContent="Text kopieren", 900);
+      }catch{
+        alert("Kopieren nicht möglich. Markiere den Text manuell und kopiere ihn.");
+      }
+    }
+    if(clearId){
+      if(confirm("Feld wirklich leeren?")){
+        saveText(clearId, "");
+        $("#"+clearId).value = "";
+      }
+    }
+    if(doneSec){
+      setDone(doneSec, true);
+    }
+  });
+
+  // Nav done state + progress
+  function refreshDoneUI(){
+    const links = document.querySelectorAll("#navlist a[data-sec]");
+    let doneCount = 0;
+
+    links.forEach(a=>{
+      const sec = a.getAttribute("data-sec");
+      const dot = a.querySelector(".dot");
+      if(isDone(sec)){
+        a.classList.add("done");
+        dot && dot.parentElement && dot.parentElement.classList?.add?.("done");
+        doneCount++;
+        a.classList.add("done");
+      } else {
+        a.classList.remove("done");
+      }
+    });
+
+    const pct = Math.round((doneCount / links.length) * 100);
+    $("#bar").style.width = pct + "%";
+  }
+  refreshDoneUI();
+
+  // Save-state badge
+  try{
+    localStorage.setItem(lsKey("__ping"), "1");
+    $("#saveState").textContent = "Lokale Speicherung: aktiv";
+  }catch{
+    $("#saveState").textContent = "Lokale Speicherung: nicht verfügbar";
+  }
+</script>
+</body>
+
+<script>
+function checkFinalMC() {
+  const correct = {
+    q1: ["a","b","d"],
+    q2: ["a","c"],
+    q3: ["a","b","d"],
+    q4: ["a","b","d"],
+    q5: ["a","b","d"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("final_mc_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Glückwunsch!</strong><br>Du hast die Inhalte sehr gut verstanden.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Antworten und versuche es erneut.";
+  }
+}
+</script>
+
+</html>

@@ -1,0 +1,1914 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arduino Lernbaustein – Seiten 1–5</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1b33;
+      --card:#0f203f;
+      --text:#e8eefc;
+      --muted:#b8c6e6;
+      --accent:#35d0c2;
+      --accent2:#7aa8ff;
+      --warn:#ffd166;
+      --ok:#6ee7b7;
+      --border:rgba(255,255,255,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:14px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(53,208,194,.14), transparent 55%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(122,168,255,.14), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,18,32,.85), rgba(11,18,32,.55));
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 16px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .badge{
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+    }
+    .layout{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 16px 56px;
+      display:grid;
+      grid-template-columns: 290px 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 980px){
+      .layout{grid-template-columns:1fr}
+      nav{position:relative}
+    }
+    nav{
+      position:sticky;
+      top:74px;
+      align-self:start;
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .navhead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(135deg, rgba(53,208,194,.12), rgba(122,168,255,.10));
+    }
+    .navhead h2{margin:0 0 6px; font-size:14px; color:var(--muted); font-weight:700}
+    .progress{
+      height:10px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent2))}
+    .navlist{padding:10px}
+    .navlist a{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 10px;
+      border-radius:12px;
+      color:var(--text);
+      border:1px solid transparent;
+    }
+    .navlist a:hover{background:rgba(255,255,255,.04); border-color: var(--border); text-decoration:none}
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:rgba(255,255,255,.15);
+      border:1px solid var(--border);
+    }
+    .done .dot{background: var(--ok); border-color: rgba(110,231,183,.4)}
+    main{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+    .card{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card > .inner{padding: 18px}
+    .hero{
+      background: linear-gradient(135deg, rgba(53,208,194,.18), rgba(122,168,255,.14));
+    }
+    .hero h1{margin:0 0 8px; font-size:28px}
+    .hero p{margin:0; color:var(--muted)}
+    h3{margin:0 0 10px; font-size:18px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .callout{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:12px 12px;
+    }
+    .callout strong{display:block; margin-bottom:6px}
+    .callout.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.07)}
+    .callout.tip{border-color: rgba(53,208,194,.35); background: rgba(53,208,194,.06)}
+    .callout.info{border-color: rgba(122,168,255,.35); background: rgba(122,168,255,.06)}
+
+    .task{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.02);
+      padding: 12px;
+    }
+    .task header{
+      position:static;
+      background:none;
+      border:none;
+      backdrop-filter:none;
+    }
+    .tasktitle{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .pill{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+    textarea{
+      width:100%;
+      min-height: 110px;
+      resize: vertical;
+      padding:10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15,32,63,.55);
+      color: var(--text);
+      outline:none;
+    }
+    textarea:focus{border-color: rgba(53,208,194,.65); box-shadow: 0 0 0 3px rgba(53,208,194,.15)}
+    .btnrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    button{
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:600;
+    }
+    button.primary{
+      background: linear-gradient(90deg, rgba(53,208,194,.22), rgba(122,168,255,.18));
+      border-color: rgba(122,168,255,.35);
+    }
+    button:hover{filter: brightness(1.08)}
+    .small{font-size:12px; color:var(--muted)}
+    .sep{height:1px; background:var(--border); margin:12px 0}
+    .kvs{display:grid; grid-template-columns: 1fr; gap:10px}
+    .kv{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: 14px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.02);
+    }
+    .kv b{color: var(--accent)}
+    .footer{
+      color:var(--muted);
+      font-size:12px;
+      padding:12px 18px 18px;
+      border-top:1px solid var(--border);
+      background: rgba(0,0,0,.12);
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border:1px solid var(--border);
+      border-bottom-width:2px;
+      border-radius:8px;
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+    .pdfview {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .pdfview {
+    grid-template-columns: 1fr;
+  }
+}
+.pdfpage {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0,0,0,.2);
+}
+.pdfpage img {
+  width: 100%;
+  display: block;
+}
+.pdfcaption {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-top: 1px solid var(--border);
+}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <span style="width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:inline-block"></span>
+      <span>Arduino – Lernbaustein (Seiten 18–22)</span>
+      <span class="badge">GitHub Pages • interaktiv</span>
+    </div>
+    <div class="badge" id="saveState">Lokale Speicherung: aktiv</div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav aria-label="Navigation">
+    <div class="navhead">
+      <h2>Dein Lernpfad</h2>
+      <div class="progress" title="Fortschritt (lokal auf diesem Gerät)">
+        <div class="bar" id="bar"></div>
+      </div>
+      <div class="small" style="margin-top:8px">
+        Tipp: Markiere erledigt, wenn du eine Aufgabe abgeschlossen hast.
+      </div>
+    </div>
+    <div class="navlist" id="navlist">
+      <a href="#s18_taster" data-sec="s18_taster"><span class="dot"></span>11. Eingabe mit Tastern</a>
+      <a href="#s19_while" data-sec="s19_while"><span class="dot"></span>12 Wiederholung mit WHILE</a>
+      <a href="#s20_planen" data-sec="s20_planen"><span class="dot"></span>13. Programme planen – Denken vor dem Programmieren</a>
+      <a href="#s21_bruecke" data-sec="s21_bruecke"><span class="dot"></span>Vom Struktogramm zum Arduino-Code</a>
+      <a href="#s21_lcd" data-sec="s21_lcd"><span class="dot"></span>14. LCD Displays - Texte anzeigen</a>
+      <a href="#s22_motoren" data-sec="s22_motoren"><span class="dot"></span>15. Motoren steuern</a>
+
+    </div>
+  </nav>
+
+  <main>
+  
+    <!-- SECTION 18 – Eingabe mit Tastern -->
+<section class="card" id="s18_taster">
+  <div class="inner">
+
+    <h3>11. Eingaben mit Tastern – Der Arduino reagiert</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist ein Taster?</strong>
+      <div style="color:var(--muted)">
+        Ein <b>Taster</b> ist ein Schalter, der nur solange „an“ ist,
+        wie man ihn gedrückt hält.
+        <br>
+        Damit kann der Arduino auf Eingaben reagieren – ähnlich wie bei einer Tastatur.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Digitale Eingänge</strong>
+      <div style="color:var(--muted)">
+        Ein digitaler Eingang kennt nur zwei Zustände:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>LOW</b> (0) → kein Signal / nicht gedrückt</li>
+          <li><b>HIGH</b> (1) → Signal / gedrückt</li>
+        </ul>
+        Der Arduino liest das mit <code>digitalRead(pin)</code>.
+      </div>
+    </div>
+
+        <div class="sep"></div>
+
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Grundprinzip im Code</strong>
+      <div style="color:var(--muted)">
+        Zuerst setzt man den Pin als Eingang:
+        <pre><code>pinMode(2, INPUT);</code></pre>
+        Dann liest man den Zustand:
+        <pre><code>int state = digitalRead(2);</code></pre>
+        Und reagiert mit <code>if</code> darauf.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Pullup / Pulldown – warum braucht man das?</strong>
+      <div style="color:var(--muted)">
+        Ein Eingang darf nicht „in der Luft hängen“, sonst kann er zufällige Werte lesen.
+        Darum nutzt man einen Widerstand, der den Eingang eindeutig auf
+        <b>LOW</b> oder <b>HIGH</b> zieht.
+        <br><br>
+        Sehr praktisch ist der interne Pullup:
+        <pre><code>pinMode(2, INPUT_PULLUP);</code></pre>
+        Dann gilt meist:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Taster <b>nicht</b> gedrückt → <b>HIGH</b></li>
+          <li>Taster gedrückt → <b>LOW</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Typischer Stolperstein</strong>
+      <div style="color:var(--muted)">
+        Bei <code>INPUT_PULLUP</code> ist die Logik oft „umgedreht“:
+        gedrückt = LOW, nicht gedrückt = HIGH.
+        <br>
+        Das ist kein Fehler – man muss es nur im <code>if</code> beachten.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout">
+      <strong>Beispiel: Taster schaltet LED</strong>
+      <div style="color:var(--muted)">
+        <pre><code>const int BTN = 2;
+const int LED = 13;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  pinMode(BTN, INPUT_PULLUP);
+}
+
+void loop() {
+  int pressed = (digitalRead(BTN) == LOW);
+  if (pressed) {
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(LED, LOW);
+  }
+}</code></pre>
+        Die LED leuchtet nur, wenn der Taster gedrückt wird.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – Taster</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s18_q1"
+        placeholder="1) Was ist der Unterschied zwischen Taster und Schalter?"></textarea>
+
+      <textarea id="t_s18_q2"
+        placeholder="2) Warum braucht ein Eingang Pullup/Pulldown?"></textarea>
+
+      <textarea id="t_s18_q3"
+        placeholder="3) Was bedeutet LOW/HIGH bei INPUT_PULLUP, wenn der Taster gedrückt ist?"></textarea>
+
+      <div class="btnrow">
+        <button data-copy="t_s18_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s18_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s18_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MULTIPLE CHOICE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – Eingaben</b> (mehrere Antworten möglich)</div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_s18">
+
+        <p><b>1) Was trifft auf digitale Eingänge zu?</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ Sie kennen nur LOW oder HIGH</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ Sie liefern immer eine Kommazahl</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ Man liest sie mit digitalRead()</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ Sie brauchen keine klare Verdrahtung</label>
+
+        <p><b>2) Wozu dient INPUT_PULLUP?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Der Eingang bekommt einen definierten Grundzustand</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ Die LED wird automatisch heller</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Man spart oft einen externen Widerstand</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Der Taster liefert immer HIGH, wenn er gedrückt ist</label>
+
+        <p><b>3) Welche Aussage ist bei INPUT_PULLUP richtig?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ Nicht gedrückt → HIGH</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ Gedrückt → LOW</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ Gedrückt → HIGH</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ Das ist immer zufällig</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkS18MC()">Antworten überprüfen</button>
+        </div>
+
+        <div id="mc_s18_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Taster als „Modus-Wechsel“</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Ziel: Wenn der Taster gedrückt ist, soll die RGB-LED z. B. <b>grün</b> leuchten,
+        sonst <b>rot</b>.
+        <br>
+        Nutze <code>if / else</code> und <code>digitalRead()</code>.
+      </div>
+
+      <textarea id="t_s18_challenge"
+        placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s18')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s18" class="solution">
+        <strong>Lösungsidee:</strong><br>
+        Mit <code>INPUT_PULLUP</code> gilt: gedrückt = LOW.
+        <br>
+        Also:
+        <code>if (digitalRead(BTN) == LOW) { grün } else { rot }</code>
+        <br>
+        Die Farben setzt du über <code>analogWrite()</code> auf die RGB-Pins.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+     <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich, baue die genauen Vorgaben nach, falls nötig. Schreibe neue
+        Befehle in OneNote auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite18.png" alt="PDF Seite 18">
+      <div class="pdfcaption">Original – Seite 18</div>
+    </div>
+
+
+  </div>
+</section>
+
+
+    <!-- SECTION 2 -->
+    
+<!-- SECTION 19 – Wiederholungen mit while-Schleifen -->
+<section class="card" id="s19_while">
+  <div class="inner">
+
+    <h3>13. Wiederholungen mit while – Solange bis …</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist eine while-Schleife?</strong>
+      <div style="color:var(--muted)">
+        Eine <b>while-Schleife</b> wiederholt einen Programmteil
+        <b>so lange</b>, wie eine Bedingung <b>wahr</b> ist.
+        <br><br>
+        Merksatz: <b>while = solange</b>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Grundaufbau</strong>
+      <div style="color:var(--muted)">
+        <pre><code>while (Bedingung) {
+  // Code wird wiederholt
+}</code></pre>
+        Wenn die Bedingung irgendwann <b>false</b> wird,
+        endet die Schleife und das Programm läuft danach weiter.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Wann ist while sinnvoll?</strong>
+      <div style="color:var(--muted)">
+        Eine while-Schleife ist besonders sinnvoll, wenn man
+        <b>nicht vorher weiß</b>, wie oft etwas wiederholt werden muss.
+        <br><br>
+        Beispiele:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Solange warten, bis ein Taster gedrückt wird</li>
+          <li>Solange blinken, bis eine Bedingung erfüllt ist</li>
+          <li>Solange Werte ausgeben, bis ein Grenzwert erreicht ist</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Vergleich: for vs. while</strong>
+      <div style="color:var(--muted)">
+        <b>for</b> nutzt man meist, wenn die Anzahl der Wiederholungen fest ist
+        (z. B. „5-mal blinken“).
+        <br><br>
+        <b>while</b> nutzt man meist, wenn es heißt:
+        „<b>Solange bis</b> …“ (z. B. „solange warten, bis gedrückt“).
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Achtung: Endlosschleife</strong>
+      <div style="color:var(--muted)">
+        Wenn sich die Bedingung nie ändert, läuft die while-Schleife <b>endlos</b>.
+        Das ist einer der häufigsten Fehler.
+        <br><br>
+        Prüfe immer:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Wird eine Variable in der Schleife verändert?</li>
+          <li>Kann die Bedingung überhaupt falsch werden?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout">
+      <strong>Beispiel 1: Zählen bis ein Grenzwert erreicht ist</strong>
+      <div style="color:var(--muted)">
+        <pre><code>int x = 0;
+
+void loop() {
+  while (x &lt; 20) {
+    Serial.println(x);
+    x = x + 5;
+  }
+}</code></pre>
+        Der Code läuft so lange, bis <code>x</code> mindestens 20 ist.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 7 -->
+    <div class="callout info">
+      <strong>Beispiel 2: Warten auf einen Tastendruck</strong>
+      <div style="color:var(--muted)">
+        <pre><code>const int BTN = 2;
+
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+}
+
+void loop() {
+  while (digitalRead(BTN) == HIGH) {
+    // solange nicht gedrückt (HIGH)
+  }
+  // hier geht es weiter, sobald gedrückt (LOW)
+}</code></pre>
+        Mit <code>INPUT_PULLUP</code> gilt: gedrückt = LOW.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – while</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s19_q1"
+        placeholder="1) Erkläre den Unterschied zwischen for und while in eigenen Worten."></textarea>
+
+      <textarea id="t_s19_q2"
+        placeholder="2) Wann ist eine while-Schleife besonders sinnvoll? Nenne ein Beispiel."></textarea>
+
+      <textarea id="t_s19_q3"
+        placeholder="3) Was ist eine Endlosschleife und wie kann sie entstehen?"></textarea>
+
+      <div class="btnrow">
+        <button data-copy="t_s19_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s19_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s19_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MULTIPLE CHOICE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – while</b> (mehrere Antworten möglich)</div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_s19">
+
+        <p><b>1) Eine while-Schleife läuft …</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ so lange, wie die Bedingung wahr ist</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ genau 10-mal</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ bis die Bedingung falsch wird</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ nur in setup()</label>
+
+        <p><b>2) Welche Situationen passen gut zu while?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Warten, bis ein Taster gedrückt wird</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ Genau 5-mal blinken</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Wiederholen, bis ein Grenzwert erreicht ist</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Eine feste Liste exakt ablaufen</label>
+
+        <p><b>3) Wie vermeidet man Endlosschleifen?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ Die Bedingung muss irgendwann falsch werden können</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ In der Schleife muss sich etwas ändern (z. B. Variable)</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ Man darf nie Variablen benutzen</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ Man sollte prüfen, ob die Bedingung erreichbar ist</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkS19MC()">Antworten überprüfen</button>
+        </div>
+
+        <div id="mc_s19_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Stoppe das Blinken mit einem Taster</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Ziel: Eine LED soll blinken, <b>solange</b> der Taster <b>nicht gedrückt</b> ist.
+        Sobald der Taster gedrückt wird, soll das Blinken stoppen und die LED aus bleiben.
+        <br><br>
+        Tipp: Nutze <code>while</code> und <code>INPUT_PULLUP</code>.
+      </div>
+
+      <textarea id="t_s19_challenge"
+        placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s19')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s19" class="solution">
+        <strong>Lösungsidee:</strong><br>
+        Mit <code>INPUT_PULLUP</code> gilt: nicht gedrückt = HIGH, gedrückt = LOW.
+        <br>
+        Daher:
+        <code>while (digitalRead(BTN) == HIGH) { blinken }</code>
+        <br>
+        Danach LED ausschalten.
+      </div>
+    </div>
+
+<div class="sep"></div>
+
+     <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. Schreibe neue
+        Befehle in OneNote auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite19.png" alt="PDF Seite 19">
+      <div class="pdfcaption">Original – Seite 19</div>
+    </div>
+
+
+
+  </div>
+</section>
+
+
+
+
+
+    <!-- SECTION 3 -->
+    
+    <!-- SECTION 20 – Programme planen mit Struktogrammen -->
+<section class="card" id="s20_planen">
+  <div class="inner">
+
+    <h3>13. Programme planen – Denken vor dem Programmieren</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Warum Programme planen?</strong>
+      <div style="color:var(--muted)">
+        Gute Programme entstehen nicht durch Zufall.
+        <br>
+        Bevor man Code schreibt, sollte man sich überlegen:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Was soll das Programm tun?</li>
+          <li>In welcher Reihenfolge passieren die Schritte?</li>
+          <li>Wo gibt es Entscheidungen oder Wiederholungen?</li>
+        </ul>
+        Genau dabei helfen <b>Struktogramme</b>.
+      </div>
+    </div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Was ist ein Struktogramm?</strong>
+      <div style="color:var(--muted)">
+        Ein <b>Struktogramm</b> (auch Nassi–Shneiderman-Diagramm)
+        ist eine grafische Darstellung eines Programms.
+        <br><br>
+        Es zeigt:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>die <b>Abfolge</b> von Anweisungen</li>
+          <li><b>Bedingungen</b> (if / else)</li>
+          <li><b>Wiederholungen</b> (for / while)</li>
+        </ul>
+        👉 ohne eine einzige Zeile echten Codes.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+      <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+       Schau dir das Struktogramm genau an und beantworte die Fragen. Schreibe dir auch nochmal die einzelnen Elemente
+       (Start, Ende, Schleifen, Entscheidungen, Eingaben) mit graphischer Entsprechung (Raute, Oval, Rechteck, Abgeschnittenes Rechteck) 
+       der Struktogramme auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite20.png" alt="PDF Seite 20">
+      <div class="pdfcaption">Original – Seite 20</div>
+    </div>
+    <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Grundidee eines Struktogramms</strong>
+      <div style="color:var(--muted)">
+        Ein Struktogramm besteht aus <b>Rechtecken</b>,
+        die von oben nach unten gelesen werden.
+        <br><br>
+        Wichtig:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Kein Pfeilchaos</li>
+          <li>Keine Sprünge</li>
+          <li>Klare Struktur</li>
+        </ul>
+        Die Leserichtung ist immer: <b>oben → unten</b>.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Sequenz (Abfolge)</strong>
+      <div style="color:var(--muted)">
+        Die einfachste Form:
+        mehrere Anweisungen hintereinander.
+        <pre><code>LED einschalten
+warten
+LED ausschalten</code></pre>
+        Jede Anweisung wird genau einmal ausgeführt –
+        in der angegebenen Reihenfolge.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout info">
+      <strong>Auswahl (if / else)</strong>
+      <div style="color:var(--muted)">
+        Eine Entscheidung wird als geteiltes Feld dargestellt:
+        <pre><code>Ist der Taster gedrückt?
+  Ja → LED an
+  Nein → LED aus</code></pre>
+        Genau <b>ein</b> Weg wird ausgeführt –
+        abhängig von der Bedingung.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout info">
+      <strong>Wiederholung (for / while)</strong>
+      <div style="color:var(--muted)">
+        Wiederholungen werden als Block dargestellt,
+        der mehrfach durchlaufen wird:
+        <pre><code>Solange Bedingung wahr:
+  LED ein
+  warten
+  LED aus</code></pre>
+        Das entspricht direkt einer
+        <code>for</code>- oder <code>while</code>-Schleife.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 7 -->
+    <div class="callout warn">
+      <strong>Wichtiger Unterschied zu Flussdiagrammen</strong>
+      <div style="color:var(--muted)">
+        Struktogramme:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>haben <b>keine Pfeile</b></li>
+          <li>erzwingen saubere Struktur</li>
+          <li>passen direkt zu strukturiertem Code</li>
+        </ul>
+        Deshalb sind sie besonders gut für Einsteiger geeignet.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – Struktogramme</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s20_q1"
+        placeholder="1) Warum ist es sinnvoll, ein Programm vor dem Codieren zu planen?"></textarea>
+
+      <textarea id="t_s20_q2"
+        placeholder="2) Welche drei Grundstrukturen gibt es im Struktogramm?"></textarea>
+
+      <textarea id="t_s20_q3"
+        placeholder="3) Warum kommen Struktogramme ohne Pfeile aus?"></textarea>
+
+      <div class="btnrow">
+        <button data-copy="t_s20_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s20_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s20_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Vom Plan zum Code</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Aufgabe:
+        <br>
+        Plane mit Worten ein Programm, das:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>auf einen Tastendruck wartet</li>
+          <li>dann eine LED 3-mal blinken lässt</li>
+          <li>anschließend stoppt</li>
+        </ul>
+        <br>
+        👉 Schreibe die Schritte so,
+        dass man daraus direkt ein Struktogramm zeichnen könnte.
+      </div>
+
+      <textarea id="t_s20_challenge"
+        placeholder="Schritte in der richtigen Reihenfolge"></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s20')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s20" class="solution">
+        <strong>Musterlösung (in Worten):</strong><br>
+        1. Warte, bis der Taster gedrückt wird.<br>
+        2. Wiederhole 3-mal:<br>
+        – LED einschalten<br>
+        – warten<br>
+        – LED ausschalten<br>
+        – warten<br>
+        3. Programm endet.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- SECTION 4 -->
+<!-- BRÜCKENSEITE – Vom Struktogramm zum Code -->
+<section class="card" id="s21_bruecke">
+  <div class="inner">
+
+    <h3>Vom Struktogramm zum Arduino-Code</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Warum diese Brücke wichtig ist</strong>
+      <div style="color:var(--muted)">
+        Ein Struktogramm ist ein <b>Plan</b>, kein fertiges Programm.
+        <br>
+        Ziel ist es, diesen Plan <b>systematisch</b> in Code zu übersetzen,
+        ohne etwas zu vergessen oder durcheinanderzubringen.
+        <br><br>
+        👉 Jeder Block im Struktogramm entspricht später
+        einem bestimmten Teil im Code.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Grundregel der Übersetzung</strong>
+      <div style="color:var(--muted)">
+        <b>Struktogramm von oben nach unten lesen</b>
+        <br>
+        und jeden Block nacheinander in Code umsetzen.
+        <br><br>
+        Merksatz:
+        <br>
+        <i>Ein Block = eine Idee = ein Code-Abschnitt</i>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- SEQUENZ -->
+    <div class="callout info">
+      <strong>1. Sequenz → normaler Code</strong>
+      <div style="color:var(--muted)">
+        <b>Struktogramm (gedanklich):</b>
+        <pre><code>LED an
+warten
+LED aus</code></pre>
+
+        <b>Arduino-Code:</b>
+        <pre><code>digitalWrite(13, HIGH);
+delay(500);
+digitalWrite(13, LOW);</code></pre>
+
+        Jede Anweisung wird genau einmal
+        und in derselben Reihenfolge ausgeführt.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- IF / ELSE -->
+    <div class="callout info">
+      <strong>2. Auswahl → if / else</strong>
+      <div style="color:var(--muted)">
+        <b>Struktogramm (gedanklich):</b>
+        <pre><code>Ist Taster gedrückt?
+  Ja → LED an
+  Nein → LED aus</code></pre>
+
+        <b>Arduino-Code:</b>
+        <pre><code>if (digitalRead(BTN) == LOW) {
+  digitalWrite(LED, HIGH);
+} else {
+  digitalWrite(LED, LOW);
+}</code></pre>
+
+        Der geteilte Block im Struktogramm
+        wird zu <code>if</code> und <code>else</code>.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+
+    <!-- FOR -->
+    <div class="callout info">
+      <strong>3. Wiederholung (fest) → for-Schleife</strong>
+      <div style="color:var(--muted)">
+        <b>Struktogramm (gedanklich):</b>
+        <pre><code>Wiederhole 3-mal:
+  LED an
+  warten
+  LED aus</code></pre>
+
+        <b>Arduino-Code:</b>
+        <pre><code>for (int i = 0; i < 3; i++) {
+  digitalWrite(13, HIGH);
+  delay(300);
+  digitalWrite(13, LOW);
+  delay(300);
+}</code></pre>
+
+        Die Anzahl der Wiederholungen
+        steht direkt in der Schleife.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- WHILE -->
+    <div class="callout info">
+      <strong>4. Wiederholung (Bedingung) → while-Schleife</strong>
+      <div style="color:var(--muted)">
+        <b>Struktogramm (gedanklich):</b>
+        <pre><code>Solange Taster nicht gedrückt:
+  LED blinkt</code></pre>
+
+        <b>Arduino-Code:</b>
+        <pre><code>while (digitalRead(BTN) == HIGH) {
+  digitalWrite(LED, HIGH);
+  delay(200);
+  digitalWrite(LED, LOW);
+  delay(200);
+}</code></pre>
+
+        „Solange“ im Struktogramm
+        bedeutet fast immer <code>while</code>.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- STRATEGIE -->
+    <div class="callout tip">
+      <strong>Übersetzungs-Strategie (sehr wichtig)</strong>
+      <div style="color:var(--muted)">
+        Gehe immer in dieser Reihenfolge vor:
+        <ol style="margin:6px 0 0; padding-left:18px">
+          <li>Struktogramm vollständig verstehen</li>
+          <li>Sequenzen umsetzen</li>
+          <li>Dann Entscheidungen (if / else)</li>
+          <li>Zum Schluss Wiederholungen (for / while)</li>
+        </ol>
+        So vermeidest du typische Anfängerfehler.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ÜBUNG -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Übung – Vom Plan zum Code</b></div>
+        <span class="pill">Transfer</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Gegeben ist folgendes <b>Struktogramm in Worten</b>:
+        <br><br>
+        1. Warte, bis der Taster gedrückt wird.<br>
+        2. Wiederhole 5-mal:<br>
+        – LED einschalten<br>
+        – warten<br>
+        – LED ausschalten<br>
+        – warten
+        <br><br>
+        👉 Übersetze diesen Plan in Arduino-Code.
+      </div>
+
+      <textarea id="t_s21_task"
+        placeholder="Schreibe den passenden Arduino-Code oder beschreibe die Struktur."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s21')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s21" class="solution">
+        <strong>Musterlösung (Struktur):</strong><br>
+        <code>while</code> zum Warten auf den Taster,
+        danach eine <code>for</code>-Schleife mit 5 Durchläufen,
+        in der die LED ein- und ausgeschaltet wird.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- SECTION 5 -->
+   
+    <!-- SECTION 21 – LCD Display -->
+<section class="card" id="s21_lcd">
+  <div class="inner">
+
+    <h3>14. LCD-Displays – Texte anzeigen</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Wozu ein Display?</strong>
+      <div style="color:var(--muted)">
+        Ein Display macht ein Arduino-Projekt „sichtbar“:
+        Du kannst Werte, Zustände, Menüs oder Hinweise anzeigen
+        (z. B. Temperatur, Punktestand, Ampelmodus, Fehlermeldungen).
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Es gibt verschiedene Display-Typen</strong>
+      <div style="color:var(--muted)">
+        Nicht jedes Display funktioniert gleich. Häufige Typen:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Zeichen-LCD</b> (z. B. 16x2, 20x4; meist HD44780-kompatibel)</li>
+          <li><b>Zeichen-LCD mit I²C-Adapter</b> (weniger Kabel)</li>
+          <li><b>OLED</b> (oft I²C oder SPI; sehr kontrastreich)</li>
+          <li><b>TFT</b> (Farbdisplay; oft SPI; komplexer, mehr Speicherbedarf)</li>
+        </ul>
+        In diesem Baustein geht es vor allem um das <b>Zeichen-LCD</b>.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Zeichen-LCD (16x2 / 20x4) – was bedeutet das?</strong>
+      <div style="color:var(--muted)">
+        Ein <b>16x2</b>-Display kann <b>16 Zeichen pro Zeile</b> und hat <b>2 Zeilen</b>.
+        Ein <b>20x4</b>-Display kann <b>20 Zeichen pro Zeile</b> und hat <b>4 Zeilen</b>.
+        <br><br>
+        Es zeigt vor allem <b>Text</b> (Zeichen) an – keine frei zeichnbaren Bilder wie ein TFT.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Parallel vs. I²C</strong>
+      <div style="color:var(--muted)">
+        Es gibt zwei sehr verbreitete Anschlussarten:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Parallel</b> (viele Kabel): mehrere Datenpins + Steuerpins</li>
+          <li><b>I²C</b> (wenige Kabel): meist nur <code>VCC</code>, <code>GND</code>, <code>SDA</code>, <code>SCL</code></li>
+        </ul>
+        Für Anfänger ist ein <b>I²C-LCD</b> oft einfacher, weil man weniger verdrahten muss.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Wichtig: Spannung, Kontrast, Hintergrundbeleuchtung</strong>
+      <div style="color:var(--muted)">
+        Häufige Stolpersteine:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Kontrast</b>: Viele LCDs haben ein kleines Potentiometer – wenn der Kontrast falsch ist, siehst du „nichts“.</li>
+          <li><b>5V vs. 3.3V</b>: Manche Displays sind 5V-tolerant, andere nicht (besonders bei OLED/TFT).</li>
+          <li><b>Backlight</b>: Hintergrundbeleuchtung kann an/aus sein – bei falscher Verdrahtung wirkt das Display „tot“.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout">
+      <strong>Grundbefehle (Zeichen-LCD)</strong>
+      <div style="color:var(--muted)">
+        Typische Funktionen (je nach Library):
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><code>begin()</code> – Display starten</li>
+          <li><code>clear()</code> – Bildschirm leeren</li>
+          <li><code>setCursor(spalte, zeile)</code> – Schreibposition setzen</li>
+          <li><code>print("Text")</code> – Text ausgeben</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 7 -->
+    <div class="callout info">
+      <strong>Beispiel: 16x2 LCD (parallel, LiquidCrystal)</strong>
+      <div style="color:var(--muted)">
+        <pre><code>#include &lt;LiquidCrystal.h&gt;
+
+// Beispiel-Pins (passen ggf. an deine Verdrahtung an)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Hallo!");
+  lcd.setCursor(0, 1);
+  lcd.print("Arduino LCD");
+}
+
+void loop() {
+}</code></pre>
+        Hinweis: Bei Parallel-LCDs hängen die Pins von deiner Verkabelung ab.
+      </div>
+    </div>
+
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 8 -->
+    <div class="callout tip">
+      <strong>Beispiel: LCD mit I²C (weniger Kabel)</strong>
+      <div style="color:var(--muted)">
+        <pre><code>#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+
+// Adresse ist oft 0x27 oder 0x3F (je nach Modul)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("I2C LCD ready");
+}
+
+void loop() {
+}</code></pre>
+        Wenn nichts erscheint: Kontrast prüfen und ggf. I²C-Adresse testen.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+
+
+  <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Versuche die Schritte zum Anschluss und Programmierung eines LCD-Displays zu verstehen und 
+        gleichzeitig am Arduino umzusetzen. Schreibe dir die wichtigsten Befehle und Schritte auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite21.png" alt="PDF Seite 21">
+      <div class="pdfcaption">Original – Seite 18</div>
+    </div>
+    <div class="sep"></div>
+
+
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – Displays</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s21_q1"
+        placeholder="1) Nenne zwei verschiedene Display-Typen und einen Unterschied."></textarea>
+
+      <textarea id="t_s21_q2"
+        placeholder="2) Was bedeutet 16x2 bei einem LCD?"></textarea>
+
+      <textarea id="t_s21_q3"
+        placeholder="3) Warum kann ein LCD trotz richtiger Verdrahtung „leer“ wirken?"></textarea>
+
+      <div class="btnrow">
+        <button data-copy="t_s21_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s21_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s21_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MULTIPLE CHOICE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – LCD</b> (mehrere Antworten möglich)</div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_s21">
+
+        <p><b>1) Welche Display-Typen gibt es häufig?</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ Zeichen-LCD (16x2 / 20x4)</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ OLED</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ TFT</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ Widerstands-LED</label>
+
+        <p><b>2) Was stimmt zu I²C-LCDs?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Man braucht meist weniger Kabel als bei Parallel</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ Typisch sind SDA und SCL</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Sie funktionieren ohne Library immer automatisch</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Die I²C-Adresse kann je nach Modul unterschiedlich sein</label>
+
+        <p><b>3) Warum sieht man manchmal nichts auf dem LCD?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ Kontrast ist falsch eingestellt</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ falsche Baudrate im seriellen Monitor</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ Hintergrundbeleuchtung/Power fehlt</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ falsche I²C-Adresse / falsche Pins</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkS21MC()">Antworten überprüfen</button>
+        </div>
+
+        <div id="mc_s21_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Statusanzeige bauen</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Ziel: Das LCD soll zwei Zeilen anzeigen:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>Zeile 1: „Ampel:“ + aktueller Zustand (ROT/GELB/GRUEN)</li>
+          <li>Zeile 2: „Taster:“ + „GEDRUECKT“ oder „FREI“</li>
+        </ul>
+        Nutze <code>setCursor()</code> und <code>print()</code>.
+      </div>
+
+      <textarea id="t_s21_challenge"
+        placeholder="Beschreibe deinen Plan oder skizziere den Code."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s21_lcd')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s21_lcd" class="solution">
+        <strong>Lösungsidee:</strong><br>
+        <code>lcd.setCursor(0,0); lcd.print("Ampel: ROT");</code><br>
+        <code>lcd.setCursor(0,1); lcd.print("Taster: FREI");</code><br>
+        Bei Änderungen zuerst die Zeile überschreiben (ggf. mit Leerzeichen auffüllen) oder <code>lcd.clear()</code> nutzen.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+    <!-- SECTION 6 -->
+
+<!-- SECTION 22 – Motoren -->
+<section class="card" id="s22_motoren">
+  <div class="inner">
+
+    <h3>15. Motoren steuern</h3>
+
+    <!-- INFOBOX 1 -->
+    <div class="callout info">
+      <strong>Was ist ein Motor?</strong>
+      <div style="color:var(--muted)">
+        Ein <b>Motor</b> wandelt elektrische Energie in <b>Bewegung</b> um.
+        <br>
+        Mit Motoren können z. B. Räder angetrieben, Arme bewegt
+        oder Lüfter betrieben werden.
+        <br><br>
+        Motoren sind damit eine wichtige Verbindung zwischen
+        <b>Programm</b> und <b>realer Bewegung</b>.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 2 -->
+    <div class="callout tip">
+      <strong>Es gibt verschiedene Motorarten</strong>
+      <div style="color:var(--muted)">
+        Je nach Aufgabe nutzt man unterschiedliche Motoren:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Gleichstrommotor (DC)</b> – dreht sich kontinuierlich</li>
+          <li><b>Servomotor</b> – fährt gezielt eine Position an</li>
+          <li><b>Schrittmotor</b> – bewegt sich in festen Schritten</li>
+        </ul>
+        In diesem Lernbaustein steht vor allem der <b>DC-Motor</b> im Fokus.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 3 -->
+    <div class="callout">
+      <strong>Warum darf man Motoren nicht direkt anschließen?</strong>
+      <div style="color:var(--muted)">
+        Motoren benötigen meist:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>mehr Strom als ein Arduino-Pin liefern kann</li>
+          <li>eine Schutzbeschaltung gegen Spannungsspitzen</li>
+        </ul>
+        <br>
+        Deshalb steuert der Arduino den Motor
+        <b>nicht direkt</b>, sondern über ein Hilfsbauteil
+        (z. B. Transistor oder Motortreiber).
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 4 -->
+    <div class="callout info">
+      <strong>Transistor oder Motortreiber</strong>
+      <div style="color:var(--muted)">
+        Häufige Lösungen:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li><b>Transistor</b>: Ein/aus, evtl. mit PWM für Geschwindigkeit</li>
+          <li><b>Motortreiber-Modul</b> (z. B. L298N): Richtung + Geschwindigkeit</li>
+        </ul>
+        Der Arduino gibt nur Steuersignale,
+        die eigentliche Motorleistung kommt aus einer separaten Versorgung.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 5 -->
+    <div class="callout warn">
+      <strong>Wichtiger Schutz: Freilaufdiode</strong>
+      <div style="color:var(--muted)">
+        Motoren sind Spulen.
+        Beim Abschalten können <b>Spannungsspitzen</b> entstehen,
+        die den Arduino zerstören können.
+        <br><br>
+        Eine <b>Freilaufdiode</b> schützt die Schaltung
+        vor diesen Spannungsspitzen.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 6 -->
+    <div class="callout info">
+      <strong>Motor ein- und ausschalten (Prinzip)</strong>
+      <div style="color:var(--muted)">
+        Der Arduino steuert den Motor ähnlich wie eine LED –
+        aber indirekt:
+        <pre><code>digitalWrite(MOTOR, HIGH);  // Motor an
+digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
+        Intern schaltet dabei ein Transistor oder Treiber den Motorstrom.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- INFOBOX 7 -->
+    <div class="callout">
+      <strong>Geschwindigkeit steuern</strong>
+      <div style="color:var(--muted)">
+        Die Drehzahl eines DC-Motors kann mit
+        <b>Pulsweitenmodulation (PWM)</b> verändert werden:
+        <pre><code>analogWrite(MOTOR, 120);</code></pre>
+        Je größer der Wert (0–255),
+        desto schneller dreht sich der Motor.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+
+
+ <!-- Aufgaben -->
+    <div class="callout info">
+      <strong>AUFGABEN</strong>
+      <div style="color:var(--muted)">
+        Lies dir den Text aufmerksam durch und baue alles Schritt für Schritt genau nach.
+        Schreibe dir die wichtigsten Begriffe und Befehle auf deinen Spickzettel.
+      </div>
+    </div>
+<div class="sep"></div>
+
+ <div class="pdfpage">
+      <img src="pdf-bilder/seite22.png" alt="PDF Seite 22">
+      <div class="pdfcaption">Original – Seite 22</div>
+    </div>
+
+
+
+
+
+
+    <!-- VERSTÄNDNISFRAGEN -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Verständnisfragen – Motoren</b></div>
+        <span class="pill">Text wird gespeichert</span>
+      </div>
+
+      <textarea id="t_s22_q1"
+        placeholder="1) Warum kann ein Motor nicht direkt an einen Arduino-Pin angeschlossen werden?"></textarea>
+
+      <textarea id="t_s22_q2"
+        placeholder="2) Nenne zwei verschiedene Motorarten und einen Unterschied."></textarea>
+
+      <textarea id="t_s22_q3"
+        placeholder="3) Welche Aufgabe hat eine Freilaufdiode?"></textarea>
+
+      <div class="btnrow">
+        <button data-copy="t_s22_q1">Antwort 1 kopieren</button>
+        <button data-copy="t_s22_q2">Antwort 2 kopieren</button>
+        <button data-copy="t_s22_q3">Antwort 3 kopieren</button>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MULTIPLE CHOICE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Multiple Choice – Motoren</b> (mehrere Antworten möglich)</div>
+        <span class="pill">ankreuzen & überprüfen</span>
+      </div>
+
+      <form id="mc_s22">
+
+        <p><b>1) Welche Aussagen zu Motoren sind richtig?</b></p>
+        <label><input type="checkbox" name="q1" value="a"> ☐ Motoren erzeugen Bewegung</label><br>
+        <label><input type="checkbox" name="q1" value="b"> ☐ Motoren benötigen oft mehr Strom</label><br>
+        <label><input type="checkbox" name="q1" value="c"> ☐ Motoren können immer direkt an Pins angeschlossen werden</label><br>
+        <label><input type="checkbox" name="q1" value="d"> ☐ Motoren brauchen Schutzbeschaltung</label>
+
+        <p><b>2) Wozu dient PWM bei Motoren?</b></p>
+        <label><input type="checkbox" name="q2" value="a"> ☐ Steuerung der Geschwindigkeit</label><br>
+        <label><input type="checkbox" name="q2" value="b"> ☐ Änderung der Drehrichtung</label><br>
+        <label><input type="checkbox" name="q2" value="c"> ☐ Strombegrenzung</label><br>
+        <label><input type="checkbox" name="q2" value="d"> ☐ Schutz vor Spannungsspitzen</label>
+
+        <p><b>3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?</b></p>
+        <label><input type="checkbox" name="q3" value="a"> ☐ Transistor</label><br>
+        <label><input type="checkbox" name="q3" value="b"> ☐ Motortreiber-Modul</label><br>
+        <label><input type="checkbox" name="q3" value="c"> ☐ Widerstand allein</label><br>
+        <label><input type="checkbox" name="q3" value="d"> ☐ Freilaufdiode</label>
+
+        <div class="btnrow">
+          <button type="button" class="primary" onclick="checkS22MC()">Antworten überprüfen</button>
+        </div>
+
+        <div id="mc_s22_feedback" class="callout" style="display:none; margin-top:12px;"></div>
+      </form>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- MINI-CHALLENGE -->
+    <div class="task">
+      <div class="tasktitle">
+        <div><b>Mini-Challenge – Ventilator steuern</b></div>
+        <span class="pill">Challenge</span>
+      </div>
+
+      <div style="color:var(--muted)">
+        Ziel: Ein Motor soll:
+        <ul style="margin:6px 0 0; padding-left:18px">
+          <li>per Taster ein- und ausgeschaltet werden</li>
+          <li>bei eingeschaltetem Zustand langsam starten</li>
+        </ul>
+        Nutze <code>if</code>, <code>analogWrite()</code>
+        und eine Variable für die Geschwindigkeit.
+      </div>
+
+      <textarea id="t_s22_challenge"
+        placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+      <button type="button" onclick="toggleSolution('sol_s22')">
+        Lösung anzeigen
+      </button>
+
+      <div id="sol_s22" class="solution">
+        <strong>Lösungidee:</strong><br>
+        Taster mit <code>if</code> abfragen.
+        <br>
+        Bei gedrücktem Taster:
+        Geschwindigkeit langsam erhöhen (Variable + PWM).
+        <br>
+        Bei losgelassenem Taster:
+        Motor ausschalten.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- ABGABE & CHECKLISTE -->
+
+  
+
+
+
+    
+  </main>
+</div>
+
+
+
+<script>
+  // ---------- LocalStorage helpers ----------
+  const LS_PREFIX = "arduino_lernbaustein_s1-5__";
+  const $ = (sel) => document.querySelector(sel);
+
+  function lsKey(id){ return LS_PREFIX + id; }
+
+  function saveText(id, val){
+    localStorage.setItem(lsKey(id), val);
+  }
+  function loadText(id){
+    return localStorage.getItem(lsKey(id)) ?? "";
+  }
+  function setDone(secId, done=true){
+    localStorage.setItem(lsKey("done__"+secId), done ? "1" : "0");
+    refreshDoneUI();
+  }
+  function isDone(secId){
+    return (localStorage.getItem(lsKey("done__"+secId)) ?? "0") === "1";
+  }
+
+  // Load all textareas
+  document.querySelectorAll("textarea").forEach(t => {
+    t.value = loadText(t.id);
+    t.addEventListener("input", () => saveText(t.id, t.value));
+  });
+
+  // Buttons: copy / clear / done
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button");
+    if(!btn) return;
+
+    const copyId = btn.getAttribute("data-copy");
+    const clearId = btn.getAttribute("data-clear");
+    const doneSec = btn.getAttribute("data-done");
+
+    if(copyId){
+      const val = loadText(copyId);
+      try{
+        await navigator.clipboard.writeText(val);
+        btn.textContent = "Kopiert!";
+        setTimeout(()=>btn.textContent="Text kopieren", 900);
+      }catch{
+        alert("Kopieren nicht möglich. Markiere den Text manuell und kopiere ihn.");
+      }
+    }
+    if(clearId){
+      if(confirm("Feld wirklich leeren?")){
+        saveText(clearId, "");
+        $("#"+clearId).value = "";
+      }
+    }
+    if(doneSec){
+      setDone(doneSec, true);
+    }
+  });
+
+  // Nav done state + progress
+  function refreshDoneUI(){
+    const links = document.querySelectorAll("#navlist a[data-sec]");
+    let doneCount = 0;
+
+    links.forEach(a=>{
+      const sec = a.getAttribute("data-sec");
+      const dot = a.querySelector(".dot");
+      if(isDone(sec)){
+        a.classList.add("done");
+        dot && dot.parentElement && dot.parentElement.classList?.add?.("done");
+        doneCount++;
+        a.classList.add("done");
+      } else {
+        a.classList.remove("done");
+      }
+    });
+
+    const pct = Math.round((doneCount / links.length) * 100);
+    $("#bar").style.width = pct + "%";
+  }
+  refreshDoneUI();
+
+  // Save-state badge
+  try{
+    localStorage.setItem(lsKey("__ping"), "1");
+    $("#saveState").textContent = "Lokale Speicherung: aktiv";
+  }catch{
+    $("#saveState").textContent = "Lokale Speicherung: nicht verfügbar";
+  }
+</script>
+
+<!-- JavaScript (einmalig) für Multiple Choice Seite 22 -->
+<script>
+function checkS22MC() {
+  const correct = {
+    q1: ["a", "b", "d"],
+    q2: ["a", "c"],
+    q3: ["a", "b", "d"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`#mc_s22 input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("mc_s22_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Sehr gut!</strong><br>Du verstehst die Grundlagen der Motorsteuerung.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Kreuze und versuche es erneut.";
+  }
+}
+</script>
+
+
+<!-- JavaScript (einmalig) für Multiple Choice Seite 19 -->
+<script>
+function checkS19MC() {
+  const correct = {
+    q1: ["a", "c"],
+    q2: ["a", "c"],
+    q3: ["a", "b", "d"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`#mc_s19 input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("mc_s19_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Sehr gut!</strong><br>Du hast while-Schleifen verstanden.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Kreuze und versuche es erneut.";
+  }
+}
+</script>
+
+<!-- JavaScript (einmalig) für Multiple Choice Seite 21 (LCD) -->
+<script>
+function checkS21MC() {
+  const correct = {
+    q1: ["a", "b", "c"],
+    q2: ["a", "b", "d"],
+    q3: ["a", "c", "d"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`#mc_s21 input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("mc_s21_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Sehr gut!</strong><br>Du kennst die wichtigsten Display-Grundlagen.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Kreuze und versuche es erneut.";
+  }
+}
+</script>
+
+<!-- JavaScript (einmalig) für Multiple Choice Seite 18 -->
+
+<script>
+function checkS18MC() {
+  const correct = {
+    q1: ["a", "c"],
+    q2: ["a", "c"],
+    q3: ["a", "b"]
+  };
+
+  let ok = true;
+
+  for (let q in correct) {
+    const checked = Array.from(
+      document.querySelectorAll(`#mc_s18 input[name="${q}"]:checked`)
+    ).map(c => c.value);
+
+    if (
+      checked.length !== correct[q].length ||
+      !checked.every(v => correct[q].includes(v))
+    ) {
+      ok = false;
+    }
+  }
+
+  const fb = document.getElementById("mc_s18_feedback");
+  fb.style.display = "block";
+
+  if (ok) {
+    fb.className = "callout tip";
+    fb.innerHTML = "<strong>Sehr gut!</strong><br>Du hast die Grundlagen zu Tastern verstanden.";
+  } else {
+    fb.className = "callout warn";
+    fb.innerHTML = "<strong>Noch nicht ganz.</strong><br>Überprüfe deine Kreuze und versuche es erneut.";
+  }
+}
+</script>
+
+</body>
+</html>

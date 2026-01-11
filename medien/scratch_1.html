@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scratch Programmieren – Teil 1</title>
+  <link rel="stylesheet" href="medien_template.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="side-head">
+        <div class="badge"><span class="dot"></span> Interaktives Heft</div>
+        <div class="side-title">Scratch Programmieren</div>
+        <p class="side-sub">Vorlage mit wiederverwendbaren Bausteinen: Info-Block, Multiple Choice, Drag-&-Drop-Lückentext, Freitext mit Auto-Speichern.</p>
+      </div>
+      <nav class="nav">
+        <a href="#kapitel-1"><span>Kapitel 1</span><small>Info</small></a>
+        <a href="#quiz-1"><span>Multiple Choice</span><small>Check</small></a>
+         <a href="#kapitel-2"><span>Kapitel 2</span><small>Info</small></a>
+          <a href="#kapitel-3"><span>Kapitel 3</span><small>Info</small></a>
+        <a href="#cloze-1"><span>Lückentext</span><small>Drag</small></a>
+        <a href="#notizen"><span>Notizen</span><small>Save</small></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1 id="pageTitleH1"></h1>
+          <div class="meta"></div>
+        </div>
+        <div class="row">
+          <span class="pill">Bausteine</span>
+          <button class="btn" id="resetAllBtn" type="button">Alles zurücksetzen</button>
+        </div>
+      </div>
+
+      <div class="grid">
+
+        <section class="block" id="kapitel-1">
+          <div class="block-head">
+          <div>
+              <h2>Einführung</h2>
+              <p>Lese dir alles gründlich durch.</p>
+            </div>
+            	
+
+            <span class="pill">Info</span>
+          </div>
+          <div class="block-body">
+            <ul>
+                <h2>Hier lernst du mit Scratch Programmieren</h2>
+                <li>Scratch ist eine Programmierumgebung, mit der du ohne komplizierten
+                    Syntax die Grundideen des Programmierens kennenlernst. </li>
+                    <li>Du übst, wie man Programme als Anweisungen und Sequenzen 
+                    aufbaut, Figuren bewegt und zeichnen lässt, und wie man mit 
+                    Ereignissen (z. B. Tastendruck, grüne Fahne) Aktionen auslöst. </li>
+                    <li>Außerdem lernst du wichtige Strukturen wie Schleifen, 
+                    Verzweigungen und Variablen kennen. </li>
+                    <li>Am Ende kannst du das Gelernte in einem kleinen Spielprojekt 
+                    umsetzen und es mit eigenen Ideen erweitern.</li>
+              <li>Starte Scratch, indem du das 
+                Programm Scratch auf dem Computer oder im Browser die Seite
+                <a href="https://scratch.mit.edu" target="_blank" rel="noopener">scratch.mit.edu</a> aufrufst.
+                Klicke dort auf „Erstellen“, um ein neues Projekt zu starten.</li>
+             
+            </ul>
+ <div class="sep"></div>
+
+              <h2>Die Programmierumgebung von Scratch sieht so aus:</h2>
+              <ul>
+              <li>Die Scratch-Oberfläche teilt sich in vier Bereiche auf.</li>
+                <li>Auf der Bühne läuft alles ab, was du programmierst. Dort machen deine Figuren das, was du
+                ihnen im Programmierbereich aufträgst.</li>
+               <li> In der Figurenliste findest du alle Figuren, die in deinem Projekt dabei sind. Anfangs ist es nur
+                eine Figur. Du kannst dort auch neue Figuren erzeugen und bestimmte Eigenschaften festlegen.
+                Außerdem findest du dort auf der linken Seite auch die Bühne(n).</li>
+                <li>In der Blockpalette findest du die Blöcke, die du zum Programmieren brauchst. Du kannst sie
+                entweder dort direkt durch einen Mausklick testen, oder mit der Maus in den
+                Programmierbereich ziehen und an ein Programm anfügen.</li>
+                </ul>
+            </div>
+            	
+
+            <span class="pill">Info</span>
+          </div>
+          <div class="pdfpage">
+            <img src="scratch-bilder/bild_01.png" alt="PDF Bild 01" style="max-width:520px;width:100%;height:auto;margin:0 auto;display:block;">
+	      <div class="pdfcaption">Original – Bild 01</div>
+	    </div>
+          <div class="block-body">
+            <ul>
+              <li>Du kannst zuerst die Sprache ändern. Klicke dazu auf den Globus links oben neben Datei
+und wähle die gewünschte Sprache aus.</li>
+              <li>Speichere dein Projekt erst einmal ab. Dazu wählst du Datei – Speichern, wählst den
+Ordner aus, den du für deine Programme angelegt hast und gibst den Dateinamen
+01katze ein. Die Dateiendung .sb2 wird automatisch ergänzt.</li>
+              <li>Gib deiner Katze einen Namen. Klicke dazu auf das kleine „i“ links oben neben der Katze.
+Es öffnet sich ein Bereich, in dem du den Namen ändern kannst. Schreibe statt „Figur 1“
+den Namen deiner Katze, z.B. Mieze. Wenn du mit dem Pfeil zurückgehst, steht der
+Name jetzt unter der Katze.</li>
+            </ul>
+            <p class="note">Öffne das Programm und befolge die Anweisungen.</p>
+          </div>
+        </section>
+
+        <section class="block" id="quiz-1">
+          <div class="block-head">
+            <div>
+              <h2>Multiple Choice (mit Überprüfung)</h2>
+              Jetzt kannst du dein Wissen testen! Bearbeite die Multiple Choice Fragen.
+              <p>Richtige Antworten werden nach Klick auf „Überprüfen“ markiert.</p>
+            </div>
+            <span class="pill">Quiz</span>
+          </div>
+          <div class="block-body">
+            <script type="application/json" class="mcq-config">
+            {
+              "title": "Wiederholung (Beispiel)",
+              "questions": [
+                {
+                  "text": "Welche Aussage passt?",
+                  "multiple": false,
+                  "choices": [
+                    {"id":"a","label":"Auf der Bühne findest du die Blöcke, die du zum Programmieren brauchst."},
+                    {"id":"b","label":"In der Blockpalette findest du die Blöcke, die du zum Programmieren brauchst."},
+                    {"id":"c","label":"Im Programmierbereich findest du die Blöcke, die du zum Programmieren brauchst."}
+                  ],
+                  "correct": ["b"],
+                  "explain": "Die Blöcke findest du in der Blockpalette"
+                },
+                {
+                  "text": "Kreuze alle richtigen Antworten an:",
+                  "multiple": true,
+                  "choices": [
+                    {"id":"a","label":"Wenn du auf den Globus klickst, kannst du die Sprache ändern."},
+                    {"id":"b","label":"In der Figurenliste findest du alle Figuren, die du benutzt."},
+                    {"id":"c","label":"Im Programmierbereich findest du alle Figuren, die du zum Programmieren brauchst."}
+                  ],
+                  "correct": ["a","b"],
+                  "explain": "Bei dem Globus kannst du die Sprache ändern und die Figuren sind in der Figurenleiste."
+                }
+              ]
+            }
+            </script>
+
+            <div class="mcq" data-mcq></div>
+
+            <div class="row">
+              <button class="btn primary" type="button" data-mcq-check>Überprüfen</button>
+              <button class="btn" type="button" data-mcq-reset>Zurücksetzen</button>
+              <div class="score" data-mcq-score aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+
+<section class="block" id="kapitel-2">
+          <div class="block-head">
+            <div>
+              <h2>Input</h2>
+              <li>Die Katze oder auch jede andere Figur, die wir auf die Bühne setzen, kann sich bewegen. Wie
+sie sich bewegen soll, müssen wir ihr sagen.
+In der Blockpalette findest du eine ganze Menge Blöcke, die für die Bewegung der Katze
+zuständig sind. Du kannst sie durch einen Mausklick ausprobieren. Entweder in der Blockpalette
+selbst, oder wenn du sie vorher in den Programmierbereich ziehst und dort anklickst. Das hat
+den Vorteil, dass du auch Blöcke aneinanderhängen kannst und sie dann alle nacheinander
+ausgeführt werden.<li>
+            </div>
+            	
+            <div>
+            
+
+
+            <span class="pill">Info</span>
+          </div>
+
+         
+            </div>
+
+
+          <div class="pdfpage">
+            <img src="scratch-bilder/bild_02.png" alt="PDF Bild 02" style="max-width:320px;width:100%;height:auto;margin:0 auto;display:block;">
+	      <div class="pdfcaption">Original – Bild 02</div>
+	    </div>
+          <div class="block-body">
+            <ul>
+                   <h2>Sequenz</h2>
+              <li>Jeder Auftrag, den du deiner Katze gibst, heißt Anweisung (z.B. „gehe 10er-Schritt“).
+Mehrere Anweisungen nacheinander nennt man Sequenz.
+</li>
+              <li>Teste alle Anweisungen oder Sequenzen und schreibe auf, was passiert.</li>
+            </ul>
+            <p class="note">Tipp: Schreibe es auf ein Batt.</p>
+          </div>
+        </section>
+
+
+
+
+        <section class="block" id="kapitel-3">
+          <div class="block-head">
+            <div>
+              <h2>Input</h2>
+              <li>Bevor du weitermachst, speichere deine Datei unter 02katze_bewegen ab. („Datei“ –
+                „Speichern unter“)</li>
+                <li>Du kannst auch Blöcke wieder löschen, die du nicht mehr brauchst oder falsch eingefügt hattest.
+                Dazu ziehst du den Block einfach wieder zurück in die Blockpalette, oder du wählst nach einem
+                Rechtsklick auf den entsprechenden Block „Löschen“ aus.</li>
+                <li>Um besser sehen zu können, was die Katze gemacht hat,
+                    können wir ihre Spuren zeichnen lassen. Dazu wählst du
+                    zunächst in der Blockpalette „Malstift“ aus. Füge dann
+                    jeweils zuerst den Block in deinem Programm ein, der die
+                    Anweisung gibt, alle Malspuren wegwischen zu lassen,
+                    bevor du etwas Neues probierst, den Block zum Einschalten
+                    des Stiftes setzt du vor deine Anweisungen für die
+                    Bewegungen, den Block zum Ausschalten danach.</li>
+                <li>Außerdem machen wir unsere Katze etwas kleiner, dass sie
+                    nicht alle Spuren verdeckt. Klicke dazu in der Menüleiste auf
+                    den Icon für „Verkleinern“ und klicke
+                    dann mehrfach auf die Katze.</li>
+                    <li>Wir können das, was wir im Programmierbereich zusammengesetzt haben, auch mit der grünen
+                    Fahne rechts oberhalb der Bühne starten und mit dem Stoppschild wieder beenden.
+                    Dazu brauchen wir einen Block aus dem Bereich „Ereignisse“. Du siehst sicher schon, welchen
+                    Block du brauchst.</li>
+                     <li>Setze den Ereignisblock „Wenn Fahne angeklickt“ an den Anfang deiner Sequenz.</li>
+
+            </div>
+            	
+
+            <span class="pill">Info</span>
+          </div>
+          <div class="pdfpage">
+            <img src="scratch-bilder/bild_03.png" alt="PDF Bild 03" style="max-width:520px;width:100%;height:auto;margin:0 auto;display:block;">
+	      <div class="pdfcaption">Original – Bild 03</div>
+	    </div>
+          <div class="block-body">
+            <ul>
+              
+              Weitere Aufträge:
+              <li>Schreibe ein kleines Programm, welches zuerst die Katze ins linke obere Eck der Bühne setzt
+                und sie von dort aus dann ein Rechteck um die Bühne
+                zeichnen lässt und zeige es deiner Lehrerin.</li>
+              <li>Schreibe ein kleines Programm, welches zuerst die Katze ins linke untere Eck der Bühne setzt
+                und sie dann eine Treppe mit unterschiedlich großen Stufen nach oben steigen lässt und zeige es deiner Lehrerin.</li>
+              <li>Schreibe ein kleines Programm, welches die Katze ein Quadrat zeichnen lässt und zeige es deiner Lehrerin</li>
+              <li>Schreibe ein kleines Programm, welches die Katze ein gleichseitiges Dreieck zeichnen lässt und zeige es deiner Lehrerin.</li>
+            </ul>
+            <p class="note">Tipp: Speichere jedes Programm unter einem neuen Namen.</p>
+          </div>
+        </section>
+
+
+
+        <section class="block" id="cloze-1">
+          <div class="block-head">
+            <div>
+              <h2>Lückentext (Drag & Drop)</h2>
+              <p>Wörter aus der Wortbank in die Lücken ziehen. Jede Lücke hat eine korrekte Lösung (data-answer). Mit „Überprüfen“ werden Lücken markiert.</p>
+            </div>
+            <span class="pill">Cloze</span>
+          </div>
+
+          <div class="block-body cloze" data-cloze>
+            <div class="bank" data-bank aria-label="Wortbank">
+              <div class="chip" draggable="true" data-token="Energie">Energie</div>
+              <div class="chip" draggable="true" data-token="Amplitude">Amplitude</div>
+              <div class="chip" draggable="true" data-token="Frequenz">Frequenz</div>
+              <div class="chip" draggable="true" data-token="Periode">Periode</div>
+            </div>
+
+            <div class="text" aria-label="Lückentext">
+              Eine Welle transportiert <span class="gap" data-answer="Energie" aria-label="Lücke 1"></span>.
+              Die <span class="gap" data-answer="Amplitude" aria-label="Lücke 2"></span> ist die maximale Auslenkung.
+              Die <span class="gap" data-answer="Frequenz" aria-label="Lücke 3"></span> gibt Schwingungen pro Sekunde an.
+              Die <span class="gap" data-answer="Periode" aria-label="Lücke 4"></span> ist die Dauer einer Schwingung.
+              <div class="drop-hint">Hinweis: Klicke auf ein eingesetztes Wort, um es zurück in die Wortbank zu legen.</div>
+            </div>
+
+            <div class="row">
+              <button class="btn primary" type="button" data-cloze-check>Überprüfen</button>
+              <button class="btn" type="button" data-cloze-reset>Zurücksetzen</button>
+              <div class="score" data-cloze-score aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="block" id="notizen">
+          <div class="block-head">
+            <div>
+              <h2>Notizen / Ergebnisse</h2>
+              <p>Freitextfelder speichern automatisch im Browser (LocalStorage). Ideal als „Ergebnisdatei“ pro Schülergerät.</p>
+            </div>
+            <span class="pill">Save</span>
+          </div>
+          <div class="block-body">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" data-autosave="medien_name" placeholder="Vorname Nachname" />
+              <div class="tiny">Wird automatisch gespeichert.</div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="field">
+              <label for="notes1">Ergebnisse (Beispiel)</label>
+              <textarea id="notes1" data-autosave="medien_notes1" placeholder="Schreibe hier deine Antworten / Beobachtungen..."></textarea>
+              <div class="tiny">Tipp: Du kannst pro Aufgabe ein eigenes Feld anlegen (kopieren, data-autosave Key anpassen).</div>
+            </div>
+
+            <div class="row">
+              <button class="btn" type="button" data-export>Als .txt exportieren</button>
+              <button class="btn" type="button" data-clear-saved>Gespeichertes löschen</button>
+              <div class="score" data-save-status aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+  <script>
+    // Setze die sichtbare Überschrift automatisch aus dem <title>-Tag.
+    // Du musst den Seitentitel nur einmal im <title> ändern.
+    document.addEventListener('DOMContentLoaded', () => {
+      const h = document.getElementById('pageTitleH1');
+      if(h) h.textContent = document.title || 'Musterseite';
+    });
+  </script>
+
+ 
+
+  <script src="medien_template.js"></script>
+</body>
+</html>

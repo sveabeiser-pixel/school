@@ -103,7 +103,8 @@
   --wb-blue2:#17435a;
   --wb-blue3:#1f74b2;
   --wb-bg: radial-gradient(120% 120% at 0% 0%, #122646 0%, #0c133c 65%);
-  --wb-paper: linear-gradient(0.25turn, #152d38, #182d49, #060d2e);
+  --wb-paper: linear-gradient(#0d0d80, #043763);
+  --rwb-paper: linear-gradient(0.25turn, #152d38, #182d49, #060d2e);
   --wb-line:#41bcb5;
   --wb-text:#e7edf5;
   --wb-muted:#acb6c8;
