@@ -1,5 +1,5 @@
-/* wellen_library_v2.js
-   WellenBook (Topbar + Sidebar + Paging) + WellenBlocks (MCQ/Cloze/Essay)
+/* SB_library_v2.js
+   SBBook (Topbar + Sidebar + Paging) + SBBlocks (MCQ/Cloze/Essay)
    autoNav: Navigation automatisch aus Überschriften + Block-Titeln
 
    Einbindung:
@@ -7,8 +7,8 @@
      <script src="wellen_library_v2.js"></script>
 
    Init:
-     WellenBook.autoMount();
-     WellenBlocks.autoMount();
+     SBBook.autoMount();
+     SBBlocks.autoMount();
 */
 (function(global){
   "use strict";
@@ -384,7 +384,7 @@ ${fi.input.value || ""}
 
   const cfgScript = qs("script.wb-config[type='application/json']", mountEl);
   if(!cfgScript){
-    console.warn(`[WellenBlocks] Skip: Missing wb-config JSON for data-wb-type="${type}"`, mountEl);
+    console.warn(`[SBBlocks] Skip: Missing wb-config JSON for data-wb-type="${type}"`, mountEl);
     // Wichtig: NICHT throwen, sonst bricht alles ab
     return null;
   }
@@ -393,7 +393,7 @@ ${fi.input.value || ""}
   try{
     cfg = JSON.parse(cfgScript.textContent);
   }catch(err){
-    console.warn("[WellenBlocks] Skip: Invalid JSON in wb-config", err, mountEl);
+    console.warn("[SBBlocks] Skip: Invalid JSON in wb-config", err, mountEl);
     return null;
   }
 
@@ -404,7 +404,7 @@ ${fi.input.value || ""}
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "essay") inst = createEssay(cfg);
   else{
-    console.warn(`[WellenBlocks] Skip: Unknown data-wb-type="${type}"`, mountEl);
+    console.warn(`[SBBlocks] Skip: Unknown data-wb-type="${type}"`, mountEl);
     return null;
   }
 
@@ -466,7 +466,7 @@ ${fi.input.value || ""}
     const submitLabel = cfg.submitLabel || "Summary & submit";
 
     const pages = qsa("[data-wb-page]", bookEl).map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")})).sort((a,b)=>a.page-b.page);
-    if(!pages.length) throw new Error("WellenBook: keine Seiten (data-wb-page) gefunden.");
+    if(!pages.length) throw new Error("SBBook: keine Seiten (data-wb-page) gefunden.");
     const maxPage = cfg.maxPage || Math.max(...pages.map(p=>p.page));
 
     let groups = cfg.groups;
@@ -477,6 +477,7 @@ ${fi.input.value || ""}
 
     // Build skeleton
     const root = el("div", {class:"wb-book"});
+    root.__wbConfig = cfg;
     const topbar = el("header", {class:"wb-topbar"}, [
       el("div", {class:"wb-top-left"}, [
         el("button", {class:"wb-hamburger", type:"button", "aria-label":"Menü"}, [
@@ -496,7 +497,7 @@ ${fi.input.value || ""}
           el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="m8.6 16.6 1.4 1.4 6-6-6-6-1.4 1.4L13.2 12z"/>'})
         ]),
         el("button", {class:"wb-icon-btn", type:"button", "data-wb-fs":"1", "aria-label":"Vollbild"}, [
-          el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 9h-3v2h5v-5h-2v3zm0-14V7h-3v2h5V5h-2z"/>'})
+          el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="M9 3H3v6h2V6.41l3.29 3.3 1.42-1.42L6.41 5H9V3zm6 0v2h2.59l-3.3 3.29 1.42 1.42L19 6.41V9h2V3h-6zM9 21v-2H6.41l3.3-3.29-1.42-1.42L5 17.59V15H3v6h6zm6 0h6v-6h-2v2.59l-3.29-3.3-1.42 1.42L17.59 19H15v2z"/>'})
         ])
       ])
     ]);
@@ -512,13 +513,32 @@ ${fi.input.value || ""}
     // sidebar
     sidebar.appendChild(el("div", {class:"wb-side-top"}, [sectionTitle]));
     const sideNav = el("div", {class:"wb-side-nav"});
-    sideNav.appendChild(el("div", {class:"wb-side-section-title"}, [sectionTitle]));
     const navLinks = [];
+    const pageLabelPrefix = cfg.pageLabelPrefix || "Seite";
+    const pageListTitle = cfg.pageListTitle || "Seiten";
+    const pageNavWrap = el("div", {class:"wb-page-list"}, [
+      el("div", {class:"wb-side-section-title"}, [pageListTitle])
+    ]);
+    const pageNav = el("div", {class:"wb-nav-items"});
+    const pageByNum = new Map(pages.map(p => [p.page, p]));
+    for(let n = 1; n <= maxPage; n++){
+      const p = pageByNum.get(n);
+      if(!p) continue;
+      const pageId = ensureId(p.node, `page-${n}`);
+      const href = `#${pageId}`;
+      const a = el("a", {class:"wb-nav-item", href, "data-wb-target": href, "data-wb-page": String(n), "data-wb-page-list":"1"}, [
+        el("span", {class:"wb-dot"}), el("span", {}, [`${pageLabelPrefix} ${n}`])
+      ]);
+      pageNav.appendChild(a);
+      navLinks.push(a);
+    }
+    pageNavWrap.appendChild(pageNav);
+    sideNav.appendChild(pageNavWrap);
 
     groups.forEach((g, gi) => {
       const det = el("details", {class:"wb-group", ...(g.open ? {open:""} : {})});
       det.appendChild(el("summary", {}, [
-        el("span", {}, [g.title || `Gruppe ${gi+1}`]),
+        el("span", {"data-wb-group-title":"1"}, ["Seite 1"]),
         el("span", {class:"wb-chev"}, ["›"])
       ]));
       const itemsWrap = el("div", {class:"wb-nav-items"});
@@ -556,14 +576,23 @@ ${fi.input.value || ""}
     const hamBtn = qs(".wb-hamburger", root);
     const submitBtn = qs(".wb-submit-btn", root);
 
-    const pageSections = () => qsa("[data-wb-page]", root).map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")}));
+    const pageSections = () => qsa("[data-wb-page]", root)
+      .filter(n => n.closest(".wb-paper"))
+      .map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")}));
     const setActiveByLink = (link) => { navLinks.forEach(x=>x.classList.remove("active")); if(link) link.classList.add("active"); };
     const firstLinkOfPage = (p) => navLinks.find(a => Number(a.getAttribute("data-wb-page")||"1")===p) || null;
 
     function showPage(n, scrollToSel){
       const idx = Math.max(1, Math.min(maxPage, n));
       nowEl.textContent = String(idx);
+      const pageLabel = `${cfg.pageLabelPrefix || "Seite"} ${idx}`;
+      qsa("[data-wb-group-title]", root).forEach(el => el.textContent = pageLabel);
       pageSections().forEach(p => p.node.style.display = (p.page === idx) ? "" : "none");
+      navLinks.forEach(link => {
+        const isPageList = link.hasAttribute("data-wb-page-list");
+        const linkPage = Number(link.getAttribute("data-wb-page") || "0");
+        link.style.display = (isPageList || linkPage === idx) ? "" : "none";
+      });
       prevBtn.disabled = idx <= 1;
       nextBtn.disabled = idx >= maxPage;
 
@@ -633,6 +662,80 @@ ${fi.input.value || ""}
   function autoMountBooks(opts={}){
     const mounts = qsa("[data-wb-book]").filter(m => !m.hasAttribute("data-wb-mounted"));
     return mounts.map(m => { m.setAttribute("data-wb-mounted","1"); return mountBook(m, opts); });
+  }
+
+  // ---------- Theme ----------
+  const DEFAULT_THEMES = [
+    {id: "default", label: "Standard"},
+    {id: "candy", label: "Candy"},
+    {id: "mint", label: "Mint"},
+    {id: "sunset", label: "Sunset"},
+    {id: "grau", label: "Grau"},
+    {id: "dark", label: "Dark"}
+  ];
+
+  function normalizeThemes(list){
+    const src = Array.isArray(list) && list.length ? list : DEFAULT_THEMES;
+    return src.map(t => {
+      if(typeof t === "string") return {id: t, label: t};
+      if(t && typeof t === "object") return {id: String(t.id || ""), label: String(t.label || t.id || "")};
+      return null;
+    }).filter(t => t && t.id);
+  }
+
+  function mountTheme(bookRoot, opts={}){
+    const root = bookRoot;
+    if(!root || root.hasAttribute("data-wb-theme-mounted")) return null;
+
+    const topRight = qs(".wb-top-right", root);
+    if(!topRight) return null;
+
+    const cfg = root.__wbConfig || {};
+    const themes = normalizeThemes(cfg.themes);
+    const isKnown = (id) => themes.some(t => t.id === id);
+    const defaultTheme = isKnown(cfg.themeDefault) ? String(cfg.themeDefault) : "default";
+    const storageKey = String(cfg.themeStorageKey || "wbTheme");
+    const stored = localStorage.getItem(storageKey);
+    const active = isKnown(stored) ? stored : defaultTheme;
+
+    const applyTheme = (id) => {
+      if(id === "default") root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", id);
+    };
+    applyTheme(active);
+
+    const wrap = document.createElement("div");
+    wrap.className = "wb-theme-wrap";
+
+    const label = document.createElement("span");
+    label.className = "wb-theme-label";
+    label.textContent = "Theme";
+
+    const select = document.createElement("select");
+    select.className = "wb-theme-select";
+    themes.forEach(t => {
+      const opt = document.createElement("option");
+      opt.value = t.id;
+      opt.textContent = t.label;
+      select.appendChild(opt);
+    });
+    select.value = active;
+    select.addEventListener("change", () => {
+      applyTheme(select.value);
+      localStorage.setItem(storageKey, select.value);
+    });
+
+    wrap.appendChild(label);
+    wrap.appendChild(select);
+    topRight.insertBefore(wrap, topRight.firstChild);
+
+    root.setAttribute("data-wb-theme-mounted", "1");
+    return {root, themes, active};
+  }
+
+  function autoMountThemes(opts={}){
+    const mounts = qsa(".wb-book").filter(m => !m.hasAttribute("data-wb-theme-mounted"));
+    return mounts.map(m => mountTheme(m, opts)).filter(Boolean);
   }
 
 
@@ -926,14 +1029,16 @@ if(btnCheck) btnCheck.addEventListener("click", check);
 
 
  
-  global.WellenPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.WellenBlocks = { createMCQ, createCloze, createEssay, autoMount: autoMountBlocks, mountOne: mountBlockOne };
-  global.WellenBook   = { mount: mountBook, autoMount: autoMountBooks };
-  global.WellenLibrary = {
+  global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
+  global.SBBlocks = { createMCQ, createCloze, createEssay, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
+  global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
+  global.SBLibrary = {
   autoMountAll: (opts={}) => ({
     books: autoMountBooks(opts),
     blocks: autoMountBlocks(opts),
-    puzzle2: autoMountPuzzle2()
+    puzzle2: autoMountPuzzle2(),
+    themes: autoMountThemes(opts)
   })
 };
 

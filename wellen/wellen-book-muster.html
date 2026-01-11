@@ -28,7 +28,8 @@
       "autoNav": true,
       "autoNavHeadings": ["h1","h2"],
       "autoNavIncludeBlocks": true,
-      "autoNavGroupTitle": "Wellen"
+      "autoNavGroupTitle": "Wellen",
+      "themeDefault": "Mint"
     }
     </script>
 
@@ -285,59 +286,9 @@
 
   <script src="../assets/allgemeines_format.js"></script>
   <script>
-    WellenBook.autoMount();
-    WellenBlocks.autoMount();
-    WellenLibrary.autoMountAll();
-
-    (function(){
-      const root = document.querySelector(".wb-book");
-      if(!root) return;
-      const topRight = root.querySelector(".wb-top-right");
-      if(!topRight) return;
-
-      const themes = [
-        {id: "default", label: "Standard"},
-        {id: "candy", label: "Candy"},
-        {id: "mint", label: "Mint"},
-        {id: "sunset", label: "Sunset"},
-        {id: "dark", label: "Dark"}
-      ];
-
-      const isKnown = (id) => themes.some(t => t.id === id);
-      const stored = localStorage.getItem("wbTheme") || "default";
-      const active = isKnown(stored) ? stored : "default";
-
-      const applyTheme = (id) => {
-        if(id === "default") root.removeAttribute("data-theme");
-        else root.setAttribute("data-theme", id);
-      };
-      applyTheme(active);
-
-      const wrap = document.createElement("div");
-      wrap.className = "wb-theme-wrap";
-
-      const label = document.createElement("span");
-      label.className = "wb-theme-label";
-      label.textContent = "Theme";
-
-      const select = document.createElement("select");
-      select.className = "wb-theme-select";
-      themes.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t.id;
-        opt.textContent = t.label;
-        select.appendChild(opt);
-      });
-      select.value = active;
-      select.addEventListener("change", () => {
-        applyTheme(select.value);
-        localStorage.setItem("wbTheme", select.value);
-      });
-
-      wrap.appendChild(label);
-      wrap.appendChild(select);
-      topRight.insertBefore(wrap, topRight.firstChild);
-    })();
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
   </script>
 </body>
 </html>
