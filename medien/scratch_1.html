@@ -17,18 +17,25 @@
       "onSubmit":"alert",
       "autoNav": true,
       "autoNavHeadings": ["h1","h2"],
-      "autoNavIncludeBlocks": true,
+      "autoNavIncludeBlocks": false,
       "autoNavGroupTitle": "Scratch",
       "themeDefault": "grau"
     }
     </script>
 
-    <section data-wb-page="1">
+    <section data-wb-page="1" data-wb-page-title="Einführung">
       <h1>Scratch Programmieren - Teil 1</h1>
-      <p class="wb-muted">Vorlage mit wiederverwendbaren Bausteinen: Info-Block, Multiple Choice, Drag-&amp;-Drop-Lückentext, Freitext mit Auto-Speichern.</p>
+      <p class="wb-muted">Hier lernst du nun die ersten Schritte beim Programmieren mit Scratch. </p>
 
       <h2>Einführung</h2>
-      <p>Lese dir alles gründlich durch.</p>
+      <p>Lese dir alles gründlich durch und befolge die Anweisungen.</p>
+      <h3>Lernziele</h3>
+      <ul>
+        <li>Du findest dich in der Scratch-Oberfläche zurecht.</li>
+        <li>Du kannst Blöcke ausprobieren und zu Sequenzen verbinden.</li>
+        <li>Du startest Programme mit der grünen Fahne.</li>
+        <li>Du erklärst die Begriffe Bühne, Blockpalette und Programmierbereich.</li>
+      </ul>
       <h3>Hier lernst du mit Scratch Programmieren</h3>
       <ul>
         <li>Scratch ist eine Programmierumgebung, mit der du ohne komplizierten Syntax die Grundideen des Programmierens kennenlernst.</li>
@@ -57,8 +64,10 @@
         <li>Gib deiner Katze einen Namen. Klicke dazu auf das kleine "i" links oben neben der Katze. Es öffnet sich ein Bereich, in dem du den Namen ändern kannst. Schreibe statt "Figur 1" den Namen deiner Katze, z.B. Mieze. Wenn du mit dem Pfeil zurückgehst, steht der Name jetzt unter der Katze.</li>
       </ul>
       <p class="wb-muted">Öffne das Programm und befolge die Anweisungen.</p>
+    </section>
 
-      <h2>Multiple Choice</h2>
+    <section data-wb-page="2" data-wb-page-title="Multiple Choice">
+      <h1>Multiple Choice</h1>
       <p>Jetzt kannst du dein Wissen testen! Bearbeite die Multiple Choice Fragen.</p>
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
@@ -87,13 +96,37 @@
               ],
               "correct": ["a","b"],
               "explain": "Bei dem Globus kannst du die Sprache ändern und die Figuren sind in der Figurenleiste."
+            },
+            {
+              "text": "Womit startest du ein Scratch-Programm?",
+              "multiple": false,
+              "choices": [
+                {"id":"a","label":"Mit der grünen Fahne."},
+                {"id":"b","label":"Mit der Blockpalette."},
+                {"id":"c","label":"Mit dem Mülleimer."}
+              ],
+              "correct": ["a"],
+              "explain": "Die grüne Fahne startet das Programm."
+            },
+            {
+              "text": "Welche Aussagen sind richtig?",
+              "multiple": true,
+              "choices": [
+                {"id":"a","label":"Blöcke können aneinander gesteckt werden."},
+                {"id":"b","label":"Jede Figur kann eigene Skripte haben."},
+                {"id":"c","label":"Die Bühne zeigt nur Text und keine Figuren."}
+              ],
+              "correct": ["a","b"],
+              "explain": "Blöcke lassen sich verbinden, und Figuren haben eigene Skripte."
             }
           ]
         }
         </script>
       </div>
+    </section>
 
-      <h2>Kapitel 2 - Bewegung und Sequenzen</h2>
+    <section data-wb-page="3" data-wb-page-title="Bewegung, Sequenzen und Speichern, Zeichnen">
+      <h1>Bewegung und Sequenzen</h1>
       <p>Die Katze (oder jede andere Figur) kann sich bewegen. Wie sie sich bewegen soll, müssen wir ihr sagen.</p>
       <p>In der Blockpalette findest du viele Blöcke für die Bewegung. Du kannst sie direkt testen oder in den Programmierbereich ziehen und anklicken. Der Vorteil: Du kannst Blöcke aneinanderhängen und sie nacheinander ausführen.</p>
 
@@ -101,15 +134,21 @@
         <img src="scratch-bilder/bild_02.png" alt="Scratch Blöcke - Bewegung">
       </div>
 
-      <h3>Sequenz</h3>
+      <h2>Sequenz</h2>
       <ul>
         <li>Jeder Auftrag, den du deiner Katze gibst, heißt Anweisung (z.B. "gehe 10er-Schritt").</li>
         <li>Mehrere Anweisungen nacheinander nennt man Sequenz.</li>
         <li>Teste alle Anweisungen oder Sequenzen und schreibe auf, was passiert.</li>
       </ul>
       <p class="wb-muted">Tipp: Schreibe es auf ein Blatt.</p>
+      <h2>Übung: Bewegungs-Sequenz</h2>
+      <ul>
+        <li>Lass die Katze 10 Schritte gehen.</li>
+        <li>Drehe sie um 15 Grad.</li>
+        <li>Wiederhole die Sequenz 6 Mal.</li>
+      </ul>
 
-      <h2>Kapitel 3 - Speichern und Zeichnen</h2>
+      <h1> Speichern und Zeichnen</h1>
       <ul>
         <li>Bevor du weitermachst, speichere deine Datei unter 02katze_bewegen ab (Datei - Speichern unter).</li>
         <li>Du kannst Blöcke wieder löschen, die du nicht mehr brauchst oder falsch eingefügt hast. Ziehe den Block zurück in die Blockpalette oder wähle per Rechtsklick "Löschen".</li>
@@ -123,7 +162,7 @@
         <img src="scratch-bilder/bild_03.png" alt="Scratch Projekt - Beispiel">
       </div>
 
-      <h3>Weitere Aufträge</h3>
+      <h2>Weitere Aufträge</h2>
       <ul>
         <li>Schreibe ein kleines Programm, welches zuerst die Katze ins linke obere Eck der Bühne setzt und sie von dort aus ein Rechteck um die Bühne zeichnen lässt und zeige es deiner Lehrerin.</li>
         <li>Schreibe ein kleines Programm, welches zuerst die Katze ins linke untere Eck der Bühne setzt und sie dann eine Treppe mit unterschiedlich großen Stufen nach oben steigen lässt und zeige es deiner Lehrerin.</li>
@@ -131,30 +170,63 @@
         <li>Schreibe ein kleines Programm, welches die Katze ein gleichseitiges Dreieck zeichnen lässt und zeige es deiner Lehrerin.</li>
       </ul>
       <p class="wb-muted">Tipp: Speichere jedes Programm unter einem neuen Namen.</p>
+    </section>
 
-      <h2>Lückentext (Drag &amp; Drop)</h2>
+    <section data-wb-page="4" data-wb-page-title="Lückentext">
+      <h1>Lückentext (Drag &amp; Drop)</h1>
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
         {
           "id":"cloze1",
-          "title":"Lückentext",
-          "bank": ["Energie", "Amplitude", "Frequenz", "Periode"],
+          "title":"Scratch-Grundlagen",
+          "bank": ["Bühne", "Figur", "Blöcke", "Programmierbereich", "Ereignis", "Bewegung", "Wiederholung", "Variable"],
           "segments": [
-            {"t":"text","v":"Eine Welle transportiert "},
-            {"t":"gap","a":"Energie"},
-            {"t":"text","v":". Die "},
-            {"t":"gap","a":"Amplitude"},
-            {"t":"text","v":" ist die maximale Auslenkung. Die "},
-            {"t":"gap","a":"Frequenz"},
-            {"t":"text","v":" gibt Schwingungen pro Sekunde an. Die "},
-            {"t":"gap","a":"Periode"},
-            {"t":"text","v":" ist die Dauer einer Schwingung."}
+            {"t":"text","v":"In Scratch arbeitet man mit "},
+            {"t":"gap","a":"Blöcke"},
+            {"t":"text","v":", die man im "},
+            {"t":"gap","a":"Programmierbereich"},
+            {"t":"text","v":" zusammensetzt. Auf der "},
+            {"t":"gap","a":"Bühne"},
+            {"t":"text","v":" sieht man, was die "},
+            {"t":"gap","a":"Figur"},
+            {"t":"text","v":" macht. Ein Programm startet oft durch ein "},
+            {"t":"gap","a":"Ereignis"},
+            {"t":"text","v":" (z.B. grüne Fahne). Mit "},
+            {"t":"gap","a":"Bewegung"},
+            {"t":"text","v":"-Blöcken steuert man die Figur, mit "},
+            {"t":"gap","a":"Wiederholung"},
+            {"t":"text","v":"-Blöcken lässt man Abläufe mehrfach laufen. Ergebnisse kann man in einer "},
+            {"t":"gap","a":"Variable"},
+            {"t":"text","v":" speichern."}
           ]
         }
         </script>
       </div>
+      <h2>Begriffe wiederholen</h2>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze2",
+          "title":"Begriffe",
+          "bank": ["Bühne", "Figur", "Blockpalette", "Programm"],
+          "segments": [
+            {"t":"text","v":"Auf der "},
+            {"t":"gap","a":"Bühne"},
+            {"t":"text","v":" siehst du, was die "},
+            {"t":"gap","a":"Figur"},
+            {"t":"text","v":" macht. In der "},
+            {"t":"gap","a":"Blockpalette"},
+            {"t":"text","v":" findest du die Bausteine für dein "},
+            {"t":"gap","a":"Programm"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
 
-      <h2>Notizen / Ergebnisse</h2>
+    <section data-wb-page="5" data-wb-page-title="Notizen">
+      <h1>Notizen / Ergebnisse</h1>
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
         {
@@ -164,11 +236,31 @@
           "exportName":"scratch-teil1.txt",
           "fields":[
             {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
-            {"label":"Ergebnisse (Beispiel)","key":"notes1","kind":"textarea","placeholder":"Schreibe hier deine Antworten / Beobachtungen..."}
+            {"label":"Ergebnisse (Beispiel)","key":"notes1","kind":"textarea","placeholder":"Schreibe hier deine Antworten / Beobachtungen..."},
+            {"label":"Was war heute neu?","key":"notes2","kind":"textarea","placeholder":"Notiere neue Begriffe oder Aha-Momente..."}
           ]
         }
         </script>
       </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Mini-Projekt">
+      <h1>Mini-Projekt: Fang das Ziel</h1>
+      <p>Baue ein kleines Spiel, in dem die Katze einen Stern fängt.</p>
+      <h2>Schritte</h2>
+      <ol>
+        <li>Erzeuge eine neue Figur (z.B. Stern).</li>
+        <li>Bewege die Katze mit den Pfeiltasten (Ereignisse + Bewegung).</li>
+        <li>Lass den Stern an eine zufällige Position springen, wenn er berührt wird.</li>
+        <li>Füge eine Variable "Punkte" hinzu und erhöhe sie bei jedem Treffer.</li>
+      </ol>
+      <h2>Zusatzideen</h2>
+      <ul>
+        <li>Füge einen Timer hinzu (z.B. 30 Sekunden).</li>
+        <li>Spiele einen Sound ab, wenn der Stern gefangen wird.</li>
+        <li>Ändere die Größe des Sterns zufällig.</li>
+      </ul>
+      <p class="wb-muted">Zeige dein Projekt deiner Lehrerin.</p>
     </section>
   </div>
 

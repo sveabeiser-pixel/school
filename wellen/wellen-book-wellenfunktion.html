@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WellenLibrary – Demo (autoNav)</title>
+  <title>SBLibrary – Demo (autoNav)</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
   <script>
   window.MathJax = {
@@ -26,7 +26,7 @@
       "onSubmit":"alert",
       "autoNav": true,
       "autoNavHeadings": ["h1","h2"],
-      "autoNavIncludeBlocks": true,
+      "autoNavIncludeBlocks": false,
       "autoNavGroupTitle": "Wellen"
     }
     </script>
@@ -251,6 +251,7 @@ y(t): Sinus in der Zeit (Auf-und-ab-Schwingen)
   },
   {
     "text": "Welche Aussage ist korrekt (harmonische Welle)?",
+    "multiple": true,
     "choices": [
       { "id": "a", "label": "Die Momentaufnahme y(x,t_0) ist sinusförmig." },
       { "id": "b", "label": "Der Zeitverlauf y(x_0,t) ist sinusförmig." },
@@ -271,6 +272,7 @@ y(t): Sinus in der Zeit (Auf-und-ab-Schwingen)
   },
   {
     "text": "Was gilt für Δx = λ?",
+    "multiple": true,
     "choices": [
       { "id": "a", "label": "Δφ = 2π (gleiche Phase)." },
       { "id": "b", "label": "Δφ = π (gegenphasig)." },

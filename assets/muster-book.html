@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WellenLibrary – Demo (autoNav)</title>
+  <title>SBLibrary – Demo (autoNav)</title>
   <link rel="stylesheet" href="allgemeines_format.css">
  
   <script>
@@ -27,7 +27,7 @@
       "onSubmit":"alert",
       "autoNav": true,
       "autoNavHeadings": ["h1","h2"],
-      "autoNavIncludeBlocks": true,
+      "autoNavIncludeBlocks": false,
       "autoNavGroupTitle": "Wellen",
       "themeDefault": "default"
     }
@@ -92,7 +92,7 @@
           "questions":[
             {
                     
-          "text": "Was transportieren Wellen (z.B. auf einem Seil) hauptsächlich?",
+          "text": "Eine Antwort ist richtig. Welche Aussage trifft zu?",
           "choices": [
             { "id": "a", "label": "Wellen transportieren Materie dauerhaft von A nach B." },
             { "id": "b", "label": "Wellen transportieren Energie (und Information)." },
@@ -103,19 +103,39 @@
           },
           
           {
-          "text": "Welche Achsen gehören zum y-x-Diagramm einer Momentaufnahme?",
+          "text": "Mehrere Antworten sind richtig. Welche Aussagen treffen zu?",
+          "multiple": true,
           "choices": [
             { "id": "a", "label": "x-Achse: Ort x, y-Achse: Auslenkung y." },
             { "id": "b", "label": "x-Achse: Zeit t, y-Achse: Auslenkung y." },
             { "id": "c", "label": "x-Achse: Ort x, y-Achse: Zeit t." }
             ],
-          "correct": ["a"],
+          "correct": ["a","b"],
           "explain": "Im y-x-Diagramm wird die Auslenkung über dem Ort dargestellt (Zeit ist fest)."
             }
           ]
           }
         </script>
       </div>
+
+
+
+        <!-- Nachdenkfrage -->
+
+
+      <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"reveal1",
+          "title":"Nachdenkfrage",
+          "question":"Warum sollte man eine Quelle prüfen?",
+          "answer":"Damit man Falschinformationen erkennt und nicht ungeprüft teilt.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
 
 
 
@@ -274,7 +294,9 @@
       <p> Mache das Quiz auf folgender Internetseite: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/aufgabe/quiz-zu-mechanischen-wellen" target="_blank" rel="noopener">Zur Internetseite</a>
 </p>
 
+ <!-- PDF ansehen -->
 
+  <p class="wb-muted">Tipp: Schaue dir das PDF an: <a href="Lernidee_KI_Glaubwuerdigkeit.pdf" target="_blank" rel="noopener">Lernidee KI Glaubwuerdigkeit</a></p>
 
     </section>
 
@@ -286,9 +308,9 @@
 
   <script src="allgemeines_format.js"></script>
   <script>
-    WellenBook.autoMount();
-    WellenBlocks.autoMount();
-    WellenLibrary.autoMountAll();
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
   </script>
 </body>
 </html>

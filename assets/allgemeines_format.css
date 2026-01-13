@@ -1,7 +1,7 @@
 /* wellen_library.css
    Enthält:
-   - WellenBook Layout (Topbar + Sidebar + Page-Nav)
-   - WellenBlocks Styles (MCQ, Cloze, Essay)
+   - SBBook Layout (Topbar + Sidebar + Page-Nav)
+   - SBBlocks Styles (MCQ, Cloze, Essay)
 */
 
 /* ===== Book (scoped) ===== */
@@ -428,7 +428,7 @@
   color: var(--wb-text);
 }
 .wb-book[data-theme="grau"] .wb-sidebar{
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  background: linear-gradient(180deg, rgb(18 49 56), rgb(28 28 28));
   border-right-color: rgba(255,255,255,0.12);
   color: var(--wb-text);
   border-radius: var(--wb-radius);
@@ -731,6 +731,7 @@
   overflow:auto;
   border-right: 1px solid rgba(0,0,0,.08);
   z-index: 60;
+
 }
 .wb-book .wb-side-top{
   padding: 14px 14px 10px 14px;
@@ -745,6 +746,7 @@
   min-height: calc(100% - 58px);
 }
 .wb-book .wb-side-section-title{
+  display:none;
   padding: 12px 14px;
   background: rgba(30,102,200,.10);
   border-bottom: 1px solid var(--wb-line);
@@ -810,6 +812,7 @@
 .wb-book a.wb-nav-item.active .wb-dot{border-color: var(--wb-blue); background: var(--wb-blue);}
 
 .wb-book .wb-side-footer{
+
   padding: 14px;
   background: #ffffff;
   border-top: 1px solid var(--wb-line);
@@ -837,7 +840,7 @@
   padding: 22px 22px 60px 22px;
 }
 .wb-book .wb-paper{
-  max-width: 980px;
+  max-width: 1080px;
   margin: 0 auto;
   background: var(--wb-paper);
   border: 1px solid var(--wb-line);
@@ -845,9 +848,9 @@
   box-shadow: var(--wb-shadow);
   padding: 34px 42px;
 }
-.wb-book h1{margin:0 0 12px 0; font-size: 28px;}
-.wb-book h2{margin: 30px 0 10px 0; font-size: 22px;}
-.wb-book p{line-height:1.6; font-size: 16px; color:#111827}
+.wb-book h1{margin:0 0 12px 0; font-size: 30px;}
+.wb-book h2{margin: 30px 0 10px 0; font-size: 23px;}
+.wb-book p{line-height:1.65; font-size: 17px; color:#111827}
 .wb-book .wb-muted{color: var(--wb-muted)}
 .wb-book .wb-img-ph{
   margin-top: 18px;
@@ -872,7 +875,7 @@
   .wb-book .wb-theme-wrap{padding: 6px}
 }
 
-/* ===== WellenBlocks styles (scoped via .wb-book or standalone) ===== */
+/* ===== SBBlocks styles (scoped via .wb-book or standalone) ===== */
 .wb-block{
   margin-top: 18px;
   border: 1px solid var(--wb-block-border, var(--wb-line, #e5e7eb));
@@ -913,6 +916,24 @@
 .wb-score{font-weight: 900; color:#0b3f86}
 .wb-feedback{font-size: 13px; color: var(--wb-muted, #6b7280); margin-top: 8px}
 
+/* Reveal (Frage -> Antwort) */
+.wb-reveal{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.wb-reveal-q{
+  font-weight: 900;
+  font-size: 16px;
+}
+.wb-reveal-a{
+  border: 1px solid var(--wb-text-border, var(--wb-line, #e5e7eb));
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--wb-text-bg, #ffffff);
+  color: var(--wb-text-color, var(--wb-text, #111827));
+}
+
 /* MCQ */
 .wb-q{
   border: 1px solid var(--wb-block-border, var(--wb-line, #e5e7eb));
@@ -942,7 +963,8 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   min-height: 50px;
 }
 .wb-chip{
-  padding: 3px 10px;
+  padding: 4px 10px;
+  height:20px;
   border-radius: 999px;
   background: var(--wb-chip-bg, #ffffff);
   border: 1px solid var(--wb-chip-border, #c7d2fe);
@@ -961,6 +983,11 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   background: var(--wb-text-bg, #ffffff);
   font-size: 16px;
   color: var(--wb-text-color, var(--wb-text, #111827));
+}
+.wb-gap .wb-chip
+{
+  ccolor:red;
+  line-height:18px;
 }
 .wb-gap{
   height:19px;

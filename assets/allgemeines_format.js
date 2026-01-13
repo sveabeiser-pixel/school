@@ -93,7 +93,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", essay:"Essay / Freitext"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -379,6 +379,27 @@ ${fi.input.value || ""}
     return { node: wrapBlock("essay", cfg, el("div", {}, [body, controls])), exportTxt, clearSaved };
   }
 
+
+  function createReveal(cfg){
+    const question = String(cfg.question || "");
+    const answer = String(cfg.answer || "");
+    const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
+    const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
+
+    const qEl = el("div", {class:"wb-reveal-q"}, [question]);
+    const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, [answer]);
+    aEl.style.display = "none";
+
+    const btn = el("button", {class:"wb-btn primary wb-reveal-btn", type:"button"}, [btnShow]);
+    btn.addEventListener("click", () => {
+      const isHidden = aEl.style.display === "none";
+      aEl.style.display = isHidden ? "" : "none";
+      btn.textContent = isHidden ? btnHide : btnShow;
+    });
+
+    return { node: wrapBlock("reveal", cfg, el("div", {class:"wb-reveal"}, [qEl, btn, aEl])) };
+  }
+
   function mountBlockOne(mountEl, opts={}){
   const type = (mountEl.getAttribute("data-wb-type") || "").trim();
 
@@ -403,6 +424,7 @@ ${fi.input.value || ""}
   if(type === "mcq") inst = createMCQ(cfg);
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "essay") inst = createEssay(cfg);
+  else if(type === "reveal") inst = createReveal(cfg);
   else{
     console.warn(`[SBBlocks] Skip: Unknown data-wb-type="${type}"`, mountEl);
     return null;
@@ -427,7 +449,7 @@ ${fi.input.value || ""}
   // ---------- Book + autoNav ----------
   function buildAutoNav(bookMountEl, cfg){
     const headings = Array.isArray(cfg.autoNavHeadings) && cfg.autoNavHeadings.length ? cfg.autoNavHeadings : ["h1","h2"];
-    const includeBlocks = cfg.autoNavIncludeBlocks !== false;
+    const includeBlocks = cfg.autoNavIncludeBlocks === true;
     const groupTitle = cfg.autoNavGroupTitle || (cfg.sectionTitle || cfg.bookTitle || "Inhalt");
     const items = [];
     const pageNodes = qsa("[data-wb-page]", bookMountEl).map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")})).sort((a,b)=>a.page-b.page);
@@ -515,6 +537,15 @@ ${fi.input.value || ""}
     const sideNav = el("div", {class:"wb-side-nav"});
     const navLinks = [];
     const pageLabelPrefix = cfg.pageLabelPrefix || "Seite";
+    const getPageTitle = (p) => {
+      const t = (p && p.node && p.node.getAttribute("data-wb-page-title")) ? p.node.getAttribute("data-wb-page-title").trim() : "";
+      return t || "";
+    };
+    const pageLabelFor = (n) => {
+      const p = pages.find(x => x.page === n);
+      const t = getPageTitle(p);
+      return t ? `${pageLabelPrefix} ${n} - ${t}` : `${pageLabelPrefix} ${n}`;
+    };
     const pageListTitle = cfg.pageListTitle || "Seiten";
     const pageNavWrap = el("div", {class:"wb-page-list"}, [
       el("div", {class:"wb-side-section-title"}, [pageListTitle])
@@ -527,7 +558,7 @@ ${fi.input.value || ""}
       const pageId = ensureId(p.node, `page-${n}`);
       const href = `#${pageId}`;
       const a = el("a", {class:"wb-nav-item", href, "data-wb-target": href, "data-wb-page": String(n), "data-wb-page-list":"1"}, [
-        el("span", {class:"wb-dot"}), el("span", {}, [`${pageLabelPrefix} ${n}`])
+        el("span", {class:"wb-dot"}), el("span", {}, [pageLabelFor(n)])
       ]);
       pageNav.appendChild(a);
       navLinks.push(a);
@@ -585,7 +616,7 @@ ${fi.input.value || ""}
     function showPage(n, scrollToSel){
       const idx = Math.max(1, Math.min(maxPage, n));
       nowEl.textContent = String(idx);
-      const pageLabel = `${cfg.pageLabelPrefix || "Seite"} ${idx}`;
+      const pageLabel = pageLabelFor(idx);
       qsa("[data-wb-group-title]", root).forEach(el => el.textContent = pageLabel);
       pageSections().forEach(p => p.node.style.display = (p.page === idx) ? "" : "none");
       navLinks.forEach(link => {
@@ -599,11 +630,20 @@ ${fi.input.value || ""}
       const active = navLinks.find(a => a.classList.contains("active"));
       if(!active || Number(active.getAttribute("data-wb-page")||"1") !== idx) setActiveByLink(firstLinkOfPage(idx));
 
-      if(scrollToSel){
-        const target = qs(scrollToSel, root);
-        if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+      const activePage = pageSections().find(p => p.page === idx);
+      const target = scrollToSel ? qs(scrollToSel, root) : null;
+      const topbarH = (qs(".wb-topbar", root) && qs(".wb-topbar", root).offsetHeight) ? qs(".wb-topbar", root).offsetHeight : 0;
+      const scrollToNode = (node, smooth) => {
+        if(!node) return;
+        const y = node.getBoundingClientRect().top + global.pageYOffset - topbarH;
+        global.scrollTo({top: y, behavior: smooth ? "smooth" : "instant"});
+      };
+      if(target && activePage && activePage.node.contains(target)){
+        scrollToNode(target, true);
+      }else if(activePage){
+        scrollToNode(activePage.node, false);
       }else{
-        paper.scrollIntoView({behavior:"instant", block:"start"});
+        scrollToNode(paper, false);
       }
     }
 
@@ -616,7 +656,8 @@ ${fi.input.value || ""}
       e.preventDefault();
       const page = Number(a.getAttribute("data-wb-page")||"1");
       const target = a.getAttribute("data-wb-target") || a.getAttribute("href");
-      showPage(page, target);
+      const isPageList = a.hasAttribute("data-wb-page-list");
+      showPage(page, isPageList ? null : target);
       setActiveByLink(a);
       closeNav();
       try{ history.replaceState(null, "", a.getAttribute("href")); }catch(_){}
@@ -1030,7 +1071,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createCloze, createEssay, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createCloze, createEssay, createReveal, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {
