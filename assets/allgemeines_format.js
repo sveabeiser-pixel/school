@@ -440,6 +440,9 @@ ${fi.input.value || ""}
     return null;
   }
 
+  mountEl.__wbConfig = cfg;
+  mountEl.__wbType = type;
+
   if(opts.storagePrefix && cfg.storagePrefix == null) cfg.storagePrefix = opts.storagePrefix;
 
   let inst;
@@ -467,6 +470,258 @@ ${fi.input.value || ""}
     return mountBlockOne(m, opts);
   }).filter(Boolean);
 }
+
+
+
+  function downloadText(filename, text){
+    const blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename || "ergebnisse.txt";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 0);
+  }
+
+  function getBlockMounts(root, type){
+    return qsa(`[data-wb-type="${type}"]`, root).filter(m => m.__wbConfig || qs("script.wb-config", m));
+  }
+
+  function getStudentName(root){
+    const inp = qs("[data-wb-student-name]", root);
+    return inp ? String(inp.value || "").trim() : "";
+  }
+
+  function buildClozePrompt(cfg){
+    if(!cfg || !Array.isArray(cfg.segments)) return "";
+    return cfg.segments.map(s => {
+      if(s.t === "text") return String(s.v || "");
+      if(s.t === "gap") return "____";
+      return "";
+    }).join("");
+  }
+
+  function collectMCQ(mountEl){
+    const cfg = mountEl.__wbConfig || {};
+    const questions = Array.isArray(cfg.questions) ? cfg.questions : [];
+    const qEls = qsa(".wb-q", mountEl);
+    let correctCount = 0;
+    const items = [];
+
+    qEls.forEach((qEl, qi) => {
+      const q = questions[qi] || {};
+      const selected = qsa("input", qEl).filter(i => i.checked).map(i => i.value).sort();
+      const expected = (q.correct || []).slice().sort();
+      const ok = selected.length === expected.length && selected.every((v,i) => v === expected[i]);
+      qEl.classList.remove("correct","wrong");
+      qEl.classList.add(ok ? "correct" : "wrong");
+      const fb = qs("[data-feedback]", qEl);
+      if(fb) fb.textContent = q.explain || (ok ? "Richtig." : "Nicht ganz.");
+      if(ok) correctCount += 1;
+      items.push({ text: q.text || "", selected, expected, ok });
+    });
+
+    return { correctCount, total: qEls.length, items };
+  }
+
+  function collectCloze(mountEl){
+    const gaps = qsa(".wb-gap", mountEl);
+    let okCount = 0;
+    const items = gaps.map(g => {
+      const expected = (g.getAttribute("data-answer") || "").trim();
+      const chip = qs(".wb-chip", g);
+      const got = chip ? (chip.getAttribute("data-token") || "").trim() : "";
+      const ok = got !== "" && got === expected;
+      g.classList.remove("ok","bad");
+      g.classList.add(ok ? "ok" : "bad");
+      if(ok) okCount += 1;
+      return { expected, got, ok };
+    });
+    return { correctCount: okCount, total: gaps.length, items };
+  }
+
+  function collectEssay(mountEl){
+    const inputs = qsa("[data-wb-key]", mountEl);
+    return inputs.map(inp => ({ key: inp.getAttribute("data-wb-key") || "", value: inp.value || "" }));
+  }
+
+  function collectPuzzle(mountEl){
+    const p2 = mountEl.__p2;
+    if(p2 && typeof p2.check === "function") p2.check();
+    const pairs = qsa(".p2-joined", mountEl);
+    const okCount = pairs.filter(w => w.dataset.correct === "1").length;
+    const totalPairs = new Set(qsa(".p2-piece", mountEl).map(p => (p.getAttribute("data-pair") || "").trim())).size;
+    const items = pairs.map(w => {
+      const parts = qsa(".p2-piece", w);
+      const left = parts.find(p => String(p.getAttribute("data-side") || "").trim().toUpperCase() === "L") || parts[0];
+      const right = parts.find(p => String(p.getAttribute("data-side") || "").trim().toUpperCase() === "R") || parts[1];
+      return {
+        left: left ? String(left.textContent || "").trim() : "",
+        right: right ? String(right.textContent || "").trim() : "",
+        ok: w.dataset.correct === "1"
+      };
+    });
+    return { correctCount: okCount, total: totalPairs, items };
+  }
+
+
+  function exportResults(root, cfg, showPage){
+    const results = [];
+    const textLines = [];
+    let totalCorrect = 0;
+    let totalPossible = 0;
+    const pageTotals = new Map();
+
+    const studentName = getStudentName(root);
+    if(studentName){
+      textLines.push("Name: " + studentName);
+      textLines.push("");
+    }
+
+    const pages = qsa("[data-wb-page]", root)
+      .filter(n => n.closest(".wb-paper"))
+      .map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"0")}))
+      .sort((a,b)=>a.page-b.page);
+
+    pages.forEach(p => {
+      const pageNum = p.page;
+      const pageRoot = p.node;
+      let pageCorrect = 0;
+      let pagePossible = 0;
+
+      textLines.push("=== Seite " + pageNum + " ===");
+
+      getBlockMounts(pageRoot, "mcq").forEach((m, idx) => {
+        const res = collectMCQ(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Multiple Choice " + (idx+1));
+        results.push({type:"mcq", title, res, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, qi) => {
+          textLines.push((qi+1) + ". " + it.text);
+          textLines.push("Ausgewaehlt: " + (it.selected.join(", ") || "-"));
+          textLines.push("Richtig: " + (it.expected.join(", ") || "-"));
+          textLines.push("Ergebnis: " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
+      getBlockMounts(pageRoot, "cloze").forEach((m, idx) => {
+        const res = collectCloze(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Lueckentext " + (idx+1));
+        const prompt = buildClozePrompt(m.__wbConfig);
+        results.push({type:"cloze", title, res, prompt, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        if(prompt) textLines.push("Aufgabe: " + prompt);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, gi) => {
+          textLines.push((gi+1) + ". Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
+      getBlockMounts(pageRoot, "essay").forEach((m, idx) => {
+        const fields = collectEssay(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Text " + (idx+1));
+        results.push({type:"essay", title, fields, page: pageNum});
+        textLines.push("## Seite " + pageNum + ": " + title);
+        fields.forEach(f => {
+          textLines.push((f.key || "") + ":");
+          textLines.push(f.value || "");
+        });
+        textLines.push("");
+      });
+
+      qsa('[data-p2]', pageRoot).forEach((m, idx) => {
+        const res = collectPuzzle(m);
+        const title = "Puzzle " + (idx+1);
+        results.push({type:"puzzle", title, res, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, pi) => {
+          textLines.push((pi+1) + ". " + (it.left || "-") + " | " + (it.right || "-") + " | " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
+      if(pagePossible > 0){
+        textLines.push("Seitenpunkte: " + pageCorrect + "/" + pagePossible);
+        textLines.push("");
+        pageTotals.set(pageNum, {correct: pageCorrect, total: pagePossible});
+      }else{
+        textLines.push("");
+      }
+    });
+
+    const resultsPage = qs('[data-wb-results="1"]', root);
+    if(resultsPage){
+      resultsPage.innerHTML = "";
+      resultsPage.appendChild(el("h1", {}, ["Ergebnisse"]));
+      resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Hier siehst du eine Zusammenfassung deiner Antworten."]));
+      if(studentName){
+        resultsPage.appendChild(el("p", {}, ["Name: " + studentName]));
+      }
+      resultsPage.appendChild(el("p", {}, ["Gesamtpunkte: " + totalCorrect + "/" + totalPossible]));
+
+      let currentPage = null;
+      results.forEach(r => {
+        if(currentPage !== r.page){
+          currentPage = r.page;
+          resultsPage.appendChild(el("h2", {}, ["Seite " + currentPage]));
+          const pt = pageTotals.get(currentPage);
+          if(pt) resultsPage.appendChild(el("p", {}, ["Seitenpunkte: " + pt.correct + "/" + pt.total]));
+        }
+        resultsPage.appendChild(el("h3", {}, [r.title]));
+        if(r.type === "mcq"){
+          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
+          r.res.items.forEach((it, qi) => {
+            resultsPage.appendChild(el("p", {}, [(qi+1) + ". " + it.text]));
+            resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Ausgewaehlt: " + (it.selected.join(", ") || "-") + " | Richtig: " + (it.expected.join(", ") || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
+          });
+        }else if(r.type === "cloze"){
+          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
+          if(r.prompt) resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Aufgabe: " + r.prompt]));
+          r.res.items.forEach((it, gi) => {
+            resultsPage.appendChild(el("p", {class:"wb-muted"}, [(gi+1) + ". Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
+          });
+        }else if(r.type === "essay"){
+          r.fields.forEach(f => {
+            resultsPage.appendChild(el("p", {}, [(f.key || "") + ": " + (f.value || "")]));
+          });
+        }else if(r.type === "puzzle"){
+          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
+          r.res.items.forEach((it, pi) => {
+            resultsPage.appendChild(el("p", {class:"wb-muted"}, [(pi+1) + ". " + (it.left || "-") + " | " + (it.right || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
+          });
+        }
+      });
+    }
+
+    textLines.push("Gesamtpunkte: " + totalCorrect + "/" + totalPossible);
+
+    const fileName = (cfg && cfg.exportName) ? cfg.exportName : "ergebnisse.txt";
+    downloadText(fileName, textLines.join("\n"));
+
+    if(resultsPage && typeof showPage === "function"){
+      const pageNum = Number(resultsPage.getAttribute("data-wb-page") || "0");
+      if(pageNum) showPage(pageNum);
+    }
+  }
 
 
   // ---------- Book + autoNav ----------
@@ -509,10 +764,27 @@ ${fi.input.value || ""}
     const bookTitle = cfg.bookTitle || "Buch";
     const sectionTitle = cfg.sectionTitle || bookTitle;
     const submitLabel = cfg.submitLabel || "Summary & submit";
+    const nameLabel = cfg.studentNameLabel || "Name";
+    const namePlaceholder = cfg.studentNamePlaceholder || "Vorname Nachname";
+    const nameStorageKey = cfg.studentNameStorageKey || "wbStudentName";
 
     const pages = qsa("[data-wb-page]", bookEl).map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")})).sort((a,b)=>a.page-b.page);
+    let resultsPage = qs('[data-wb-results="1"]', bookEl);
     if(!pages.length) throw new Error("SBBook: keine Seiten (data-wb-page) gefunden.");
-    const maxPage = cfg.maxPage || Math.max(...pages.map(p=>p.page));
+    let maxPage = cfg.maxPage || Math.max(...pages.map(p=>p.page));
+    if(!resultsPage && (cfg.onSubmit === "exportResults" || cfg.onSubmit === "alert" || cfg.enableResultsPage === true)) {
+      const resultsNum = maxPage + 1;
+      resultsPage = document.createElement("section");
+      resultsPage.setAttribute("data-wb-page", String(resultsNum));
+      resultsPage.setAttribute("data-wb-page-title", String(cfg.resultsPageTitle || "Ergebnisse"));
+      resultsPage.setAttribute("data-wb-results", "1");
+      resultsPage.innerHTML = "<h1>Ergebnisse</h1><p class='wb-muted'>Hier erscheinen deine Ergebnisse nach dem Absenden.</p>";
+      bookEl.appendChild(resultsPage);
+      pages.push({node: resultsPage, page: resultsNum});
+      pages.sort((a,b)=>a.page-b.page);
+      maxPage = resultsNum;
+    }
+
 
     let groups = cfg.groups;
     if(cfg.autoNav) groups = buildAutoNav(bookEl, {...cfg, bookTitle, sectionTitle});
@@ -608,7 +880,21 @@ ${fi.input.value || ""}
       sideNav.appendChild(det);
     });
 
+    const nameInput = el("input", {class:"wb-input", type:"text", placeholder: namePlaceholder, "data-wb-student-name":"1"});
+    try{
+      const storedName = localStorage.getItem(nameStorageKey);
+      if(storedName != null) nameInput.value = storedName;
+      nameInput.addEventListener("input", () => {
+        localStorage.setItem(nameStorageKey, nameInput.value || "");
+      });
+    }catch(_){}
+    const nameWrap = el("div", {class:"wb-name-field"}, [
+      el("label", {class:"wb-label"}, [nameLabel]),
+      nameInput
+    ]);
+
     sideNav.appendChild(el("div", {class:"wb-side-footer"}, [
+      nameWrap,
       el("button", {class:"wb-submit-btn", type:"button"}, [submitLabel])
     ]));
     sidebar.appendChild(sideNav);
@@ -704,8 +990,17 @@ ${fi.input.value || ""}
     });
 
     submitBtn.addEventListener("click", () => {
-      if(cfg.onSubmit === "alert") alert("Demo: Hier könntest du eine Zusammenfassung/Abgabe-Funktion einbauen.");
-      else if(typeof opts.onSubmit === "function") opts.onSubmit({root, cfg});
+      const nameInputEl = qs("[data-wb-student-name]", root);
+      if(nameInputEl && !String(nameInputEl.value || "").trim()){
+        alert("Bitte gib deinen Namen ein.");
+        nameInputEl.focus();
+        return;
+      }
+      if(cfg.onSubmit === "exportResults" || cfg.onSubmit === "alert") {
+        exportResults(root, cfg, showPage);
+      } else if(typeof opts.onSubmit === "function") {
+        opts.onSubmit({root, cfg});
+      }
     });
 
     let startPage = Number(cfg.startPage || 1);
@@ -1073,6 +1368,8 @@ if(btnCheck) btnCheck.addEventListener("click", check);
       shuffleAll();
       setScore(false);
     }
+
+    root.__p2 = { check, reset };
 
     if(btnShuffle) btnShuffle.addEventListener("click", shuffleAll);
     if(btnReset)   btnReset.addEventListener("click", reset);
