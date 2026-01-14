@@ -99,27 +99,13 @@
       <!-- Nachdenkfrage -->
 
 
-      <div data-wb-type="reveal">
-      <script type="application/json" class="wb-config">
-        {
-          "id":"reveal1",
-          "title":"Nachdenkfrage",
-          "question":"Was fällt dir auf, wenn du das Programm Scratch öffnest im Vergleich zu dem Bild oben, bei dem 
-          Bühne, Programmierbereich, Figurenliste und Blockpalette dargestellt sind?",
-          "answer":"Es ist anders angeordnet: Die Bühne und die Figurenliste sind rechts von der Blockpalette und dem Programmierbereich.",
-          "buttonLabel":"Antwort anzeigen",
-          "buttonHideLabel":"Antwort verbergen"
-        }
-        </script>
-      </div>
 
       <div data-wb-type="reveal">
         <script type="application/json" class="wb-config">
         {
           "id":"reveal-19-vergleich",
-          "title":"Nachdenkfrage",
-          "question":"Was fällt dir auf, wenn du das Programm Scratch öffnest im Vergleich zu dem Bild oben, bei dem 
-          Bühne, Programmierbereich, Figurenliste und Blockpalette dargestellt sind?",
+          "title":"Vergleich Scratch-Oberflächen:",
+          "question":"Was fällt dir auf, wenn du das Programm Scratch öffnest im Vergleich zu dem Bild oben, bei dem Bühne, Programmierbereich, Figurenliste und Blockpalette dargestellt sind?",
           "answer":"Es ist anders angeordnet: Die Bühne und die Figurenliste sind rechts von der Blockpalette und dem Programmierbereich.",
           "buttonLabel":"Antwort anzeigen",
           "buttonHideLabel":"Antwort verbergen"
@@ -298,13 +284,16 @@
       
     </section>
 
-    <section data-wb-page="3" data-wb-page-title="Zeichnen mit dem Malstift">
+    <section data-wb-page="3" data-wb-page-title="B: Zeichnen mit dem Malstift">
       <h1>Teil B: Zeichnen mit dem Malstift</h1>
       <p class="wb-muted">Jetzt lernst du, wie die Katze Spuren zeichnet und wie du Projekte richtig speicherst.</p>
 
       <h2>Stift verwenden und kleiner machen</h2>
       <p>Bevor du weitermachst, speichere dein Projekt als <b>02katze_bewegen</b>.
-      Jetzt darfst du ausprobieren: Stift einschalten, Stift ausschalten und Spuren löschen.</p>
+      Jetzt darfst du ausprobieren: Stift einschalten, Stift ausschalten und Spuren löschen. <br>
+      Dafür mussst du den Block "Malstift" in deine Sequenz einfügen. Das machst du, 
+      indem auf den blauen Button links unten mit den zwei geschlängelten Linien und dem Plus drückst. Dann öffnet sich 
+      ein Fenster und du kannst den Block Malstift auswählen:</p>
 
       <div class="wb-img">
         <img src="sc-bilder/seite7-malstifte.png" alt="Malstift-Blöcke in Scratch">
@@ -312,7 +301,13 @@
 
       <h2>Weitere Aufträge</h2>
       <p>Jetzt lernst du, wie die Katze ein Rechteck, ein Quadrat und ein Dreieck zeichnet.
-      Nutze außerdem den Block "Wenn Fahne angeklickt" und teste dein Programm.</p>
+      Nutze außerdem den Block "Wenn Fahne angeklickt", um deine Programme zu testen.</p>
+      <p>Um besser sehen zu können, was die Katze gemacht hat, lassen wir sie Spuren zeichnen: 
+        Wähle dafür "Malstift", setze immer zuerst den Block zum Wegwischen der Spuren, dann den Block zum 
+        Einschalten des Stiftes vor die Bewegungen, und den Block zum Ausschalten danach.</p>
+        <p>Außerdem machen wir unsere Katze etwas kleiner: Klicke in der Menüleiste auf das Icon 
+          "Verkleinern" und klicke mehrfach auf die Katze.
+        </p>
 
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
@@ -345,22 +340,19 @@
         </script>
       </div>
 
-      <div data-wb-type="essay">
-        <script type="application/json" class="wb-config">
-        {
-          "id":"essay-7-aufgaben",
-          "title":"Aufgaben",
-          "storagePrefix":"scratch_seite7_",
-          "exportName":"scratch-seite7.txt",
-          "fields":[
-            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier deine Lösungen..."}
-          ]
-        }
-        </script>
-      </div>
+      <h2>Weitere Aufgaben</h2>
+      <p>Schreibe jeweils ein kleines Programm und zeige es deiner Lehrerin:</p>
+      <ul>
+        <li>Setze zuerst die Katze ins linke obere Eck der Bühne und lasse sie von dort aus ein Rechteck um die Bühne zeichnen.</li>
+        <li>Setze zuerst die Katze ins linke untere Eck der Bühne und lasse sie dann eine Treppe mit unterschiedlich großen Stufen nach oben steigen.</li>
+        <li>Lasse die Katze ein Quadrat zeichnen.</li>
+        <li>Lasse die Katze ein gleichseitiges Dreieck zeichnen.</li>
+      </ul>
+      <p class="wb-muted">Tipp: Speichere jedes Programm unter einem neuen Namen. Falls du Hilfe benötigst, gehe zur Seite Hilfekate B, versuch jedoch vorher,
+         es erstmal alleine zu lösen</p>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Ich bewege die Katze">
+    <section data-wb-page="4" data-wb-page-title="C: Ich bewege die Katze">
       <h1>Teil C: Ich bewege die Katze</h1>
       <p class="wb-muted">Jetzt lernst du, wie du die Katze mit den Pfeiltasten steuerst.</p>
 
@@ -369,20 +361,43 @@
       Verkleinere die Katze wieder, damit du besser siehst, was passiert.</p>
 
       <h2>Tastatursteuerung einrichten</h2>
-      <p>Jetzt lernst du, wie das Ereignis "Wenn Taste ... gedrückt" funktioniert.
-      Wähle die Pfeiltaste nach rechts und gib der Katze eine Bewegung nach rechts.</p>
+      <p>Unser Ziel ist es jetzt, die Katze mit den Pfeiltasten der Tastatur steuern zu können. <br>
+        Du hast schon das erste Ereignis kennen gelernt: „Wenn Fahne angeklickt“ <br>
+        Direkt darunter findest du das Ereignis „Wenn Taste … gedrückt“. Ziehe den Block in den
+        Programmierbereich und wähle die Pfeiltaste nach rechts aus. <br>
+        Jetzt fehlt nur die Bewegung nach rechts. Wie weit die Katze bei jedem Tastendruck gehen soll,
+        kannst du selbst bestimmen.</p>
 
       <div class="wb-img">
         <img src="sc-bilder/seite8-wenn-pfeil-nach-rechts.png" alt="Ereignisblock: Wenn Pfeil nach rechts gedrückt">
       </div>
 
+
+      <h2>Aufgaben:</h2>
+      <p>1. Programmiere das Ereignis „Wenn Fahne angeklickt“ so, dass die Katze dabei an eine
+        Startposition ganz unten auf der Bühne in der Mitte gesetzt wird. <br>
+        2. Programmiere jetzt die Tastaturereignisse für die restlichen Pfeiltasten und probiere alles
+        aus, indem du die Katze ein bisschen über die Bühne spazieren lässt.</p>
+
+        <h2>Kleiner Tipp:</h2>
+        <p>Du kannst einzelne Blöcke oder auch ganze Blocksequenzen vervielfältigen und dann
+          verändern. Klicke dazu mit der rechten Maustaste auf den ersten zu kopierenden Block und
+          wähle „Duplizieren“ aus. </p>
+        <p>Genauso kannst du auch einzelne Teile löschen, indem du nach dem Klick mit der rechten
+          Maustaste „Löschen“ wählst.</p>
+
       <h2>Ein neues Kostüm für links</h2>
-      <p>Damit die Katze auch nach links schauen kann, brauchst du ein neues Kostüm.
-      Du duplizierst das Kostüm und spiegelst es. So sieht die Katze richtig aus, wenn sie nach links läuft.</p>
+      <p>Die Katze läuft jetzt zwar fröhlich über die Bühne, schaut aber immer nach rechts, selbst wenn
+        sie nach links läuft. Um das zu ändern, nutzen wir für unsere Katze ein neues Bild, auf dem sie
+        nach links schaut. Dafür bekommt die Katze ein neues Kostüm. <br> Klicke dafür mit der rechten Maustaste auf
+      Kostüm 1 und wähle „Duplizieren“ aus.</p>
+
 
       <div class="wb-img">
         <img src="sc-bilder/seite8-kostüm.png" alt="Kostüm bearbeiten">
       </div>
+
+
 
       <h2>Teste nun dein Wissen</h2>
       <div data-wb-type="mcq">
@@ -434,18 +449,70 @@
       </div>
     </section>
 
-    <section data-wb-page="9">
+    <section data-wb-page="5" data-wb-page-title="C: Kostüm wechseln">
       <h1>Teil C: Kostüm wechseln</h1>
       <p class="wb-muted">Jetzt lernst du, wie die Katze beim Laufen das richtige Kostüm bekommt.</p>
 
+
+       <h2>Ein neues Kostüm für links</h2>
+      <p>Die Katze läuft jetzt zwar fröhlich über die Bühne, schaut aber immer nach rechts, selbst wenn
+        sie nach links läuft. Um das zu ändern, nutzen wir für unsere Katze ein neues Bild, auf dem sie
+        nach links schaut. Dafür bekommt die Katze ein neues Kostüm. <br> Klicke dafür mit der rechten Maustaste auf
+      Kostüm 1 und wähle „Duplizieren“ aus.</p>
+
+
+      <div class="wb-img">
+        <img src="sc-bilder/seite8-kostüm.png" alt="Kostüm bearbeiten">
+      </div>
+
+
       <h2>Kostümfenster öffnen</h2>
-      <p>Im Kostümfenster siehst du bereits zwei Kostüme. Dupliziere das erste Kostüm,
-      spiegle es und gib den Kostümen sinnvolle Namen, z.B. <b>katze_rechts</b> und <b>katze_links</b>.</p>
+      <p>Im Kostümfenster siehst du bereits zwei Kostüme.
+      Klicke auf den Icon für „Links und Rechts vertauschen“
+      und gib dann dem Kostüm einen sinnvollen Namen., z.B. <b>katze_rechts</b> und <b>katze_links</b>.</p>
+      <p>Wechsle wieder in den Programmierbereich (Skripte). <br>
+      Die Blöcke für den Kostümwechsel findest du in der Blockpalette unter „Aussehen“.
+      </p>
 
       <div class="wb-img">
         <img src="sc-bilder/seite9-kostüm.png" alt="Kostüme der Katze">
       </div>
 
+      
+      <h2>Teste nun dein Wissen</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-8",
+          "title":"Multiple Choice",
+          "questions":[
+            {
+              "text": "Wofür brauchst du den Block \"Wenn Taste ... gedrückt\"?",
+              "choices": [
+                { "id": "a", "label": "Damit die Katze auf Tastendrücke reagiert." },
+                { "id": "b", "label": "Damit die Bühne das Aussehen ändert." },
+                { "id": "c", "label": "Damit das Projekt automatisch speichert." }
+              ],
+              "correct": ["a"],
+              "explain": "So kannst du die Katze mit der Tastatur steuern."
+            },
+            {
+              "text": "Warum brauchst du ein zweites Kostüm für links?",
+              "choices": [
+                { "id": "a", "label": "Damit die Katze nach links schaut, wenn sie nach links läuft." },
+                { "id": "b", "label": "Damit die Katze schneller wird." },
+                { "id": "c", "label": "Damit neue Figuren erstellt werden." }
+              ],
+              "correct": ["a"],
+              "explain": "Die Katze soll in die Richtung schauen, in die sie läuft."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+
+      
       <h2>Mini-Spiel: Begriffe zuordnen</h2>
       <p>Teste nun dein Wissen und ordne die Schritte richtig zu.</p>
       <div data-p2 class="p2">
@@ -511,23 +578,11 @@
 
       <h2>Aufgaben</h2>
       <p>Verändere die Tastaturereignisse so, dass vor jeder Bewegung das richtige Kostüm gewählt wird.
-      Teste dein Programm und speichere es ab.</p>
-      <div data-wb-type="essay">
-        <script type="application/json" class="wb-config">
-        {
-          "id":"essay-9-aufgaben",
-          "title":"Aufgaben",
-          "storagePrefix":"scratch_seite9_",
-          "exportName":"scratch-seite9.txt",
-          "fields":[
-            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier deine Lösungen..."}
-          ]
-        }
-        </script>
-      </div>
+      Teste dein Programm, speichere es ab und zeig es deiner Lehrerin.</p>
+      
     </section>
 
-    <section data-wb-page="18">
+    <section data-wb-page="10" data-wb-page-title="Hilfekarte A">
       <h1>Hilfekarte - Teil A</h1>
       <p class="wb-muted">Wenn du festhängst, nutze diese Hilfe. Lies die Antworten erst, wenn du es selbst versucht hast.</p>
 
@@ -564,7 +619,33 @@
       </div>
     </section>
 
-    <section data-wb-page="20">
+    <section data-wb-page="11" data-wb-page-title="Hilfekarte B">
+      <h1>Hilfekarte - Teil B</h1>
+      <p class="wb-muted">Wenn du Hilfe brauchst, kannst du diese Tipps aufklappen.</p>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-19-stift",
+          "title":"Hilfe: Malstift verwenden",
+          "question":"Wie benutzt du den Malstift, damit die Katze zeichnet?",
+          "answer":"Füge vor den Bewegungsblöcken den Block 'Stift einschalten' und nach den Bewegungsblöcken den Block 'Stift ausschalten' ein. Vergiss nicht, vorher die Spuren zu löschen.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <p>So könnten die Anfänge deines Programms aussehen: <br></p>
+      <div class="wb-img">
+        <img src="sc-bilder/seite19-hilfe1.png" alt="Hilfekarte: Malstift verwenden">
+      </div>
+
+       <div class="wb-img">
+        <img src="sc-bilder/seite19-hilfe2.png" alt="Hilfekarte: Malstift verwenden">
+      </div>
+
+    <section data-wb-page="12" data-wb-page-title="Hilfekarte C">
       <h1>Hilfekarte - Teil C</h1>
       <p class="wb-muted">Wenn du Hilfe brauchst, kannst du diese Tipps aufklappen.</p>
 
