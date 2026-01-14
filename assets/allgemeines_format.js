@@ -93,7 +93,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"L?ckentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -400,6 +400,28 @@ ${fi.input.value || ""}
     return { node: wrapBlock("reveal", cfg, el("div", {class:"wb-reveal"}, [qEl, btn, aEl])) };
   }
 
+  function createRevealImage(cfg){
+    const question = String(cfg.question || "");
+    const src = String(cfg.src || cfg.image || "");
+    const alt = String(cfg.alt || "");
+    const btnShow = String(cfg.buttonLabel || "Bild anzeigen");
+    const btnHide = String(cfg.buttonHideLabel || "Bild verbergen");
+
+    const qEl = el("div", {class:"wb-reveal-q"}, [question]);
+    const imgEl = el("img", {src, alt, class:"wb-reveal-img"}, []);
+    const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, [imgEl]);
+    aEl.style.display = "none";
+
+    const btn = el("button", {class:"wb-btn primary wb-reveal-btn", type:"button"}, [btnShow]);
+    btn.addEventListener("click", () => {
+      const isHidden = aEl.style.display === "none";
+      aEl.style.display = isHidden ? "" : "none";
+      btn.textContent = isHidden ? btnHide : btnShow;
+    });
+
+    return { node: wrapBlock("reveal-img", cfg, el("div", {class:"wb-reveal"}, [qEl, btn, aEl])) };
+  }
+
   function mountBlockOne(mountEl, opts={}){
   const type = (mountEl.getAttribute("data-wb-type") || "").trim();
 
@@ -425,6 +447,7 @@ ${fi.input.value || ""}
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "essay") inst = createEssay(cfg);
   else if(type === "reveal") inst = createReveal(cfg);
+  else if(type === "reveal-img" || type === "revealimg") inst = createRevealImage(cfg);
   else{
     console.warn(`[SBBlocks] Skip: Unknown data-wb-type="${type}"`, mountEl);
     return null;
@@ -1071,7 +1094,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createCloze, createEssay, createReveal, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createCloze, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {

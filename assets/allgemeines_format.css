@@ -933,6 +933,12 @@
   background: var(--wb-text-bg, #ffffff);
   color: var(--wb-text-color, var(--wb-text, #111827));
 }
+.wb-reveal-img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:12px;
+}
 
 /* MCQ */
 .wb-q{
