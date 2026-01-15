@@ -1,0 +1,1337 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arduino Lernbaustein - Seiten 18-22</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .pdfpage{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0,0,0,.04);
+      margin: 12px 0;
+    }
+    .pdfpage img{width:100%; display:block}
+    .pdfcaption{
+      font-size: 12px;
+      color: var(--wb-muted, #6b7280);
+      padding: 6px 10px;
+      border-top: 1px solid var(--wb-line, #e5e7eb);
+    }
+
+    .wb-soft-callout{
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding:12px 12px;
+      background: transparent;
+      margin: 12px 0;
+    }
+    .wb-soft-callout strong{display:block; margin-bottom:6px}
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-bottom-width:2px;
+      border-radius:8px;
+      background: rgba(0,0,0,.03);
+      color: var(--wb-text, #111827);
+    }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+      {
+        "bookTitle": "Arduino - Lernbaustein (Seiten 18-22)",
+        "sectionTitle": "Arduino - Lernbaustein (Seiten 18-22)",
+        "submitLabel": "Summary & submit",
+        "onSubmit": "alert",
+        "webhookUrl": "https://default5f6cb15557a9496689537def5ca919.a2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4cd979cc91bf4974a3b4c1c914f70938/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4VoQy_JGo-ggGZ1ZXAYa8eK5oVMT1U1zwHDpdV6IILw",
+        "webhookEmail": "",
+        "autoNav": true
+      }
+    </script>
+    <section data-wb-page="1" data-wb-page-title="11. Eingabe mit Tastern">
+      <h1>11. Eingaben mit Tastern - Der Arduino reagiert</h1>
+
+       <div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>Was ist ein Taster?</strong>
+        <div>
+          Ein <b>Taster</b> ist ein Schalter, der nur solange "an" ist,
+          wie man ihn gedrückt hält.
+          <br>
+          Damit kann der Arduino auf Eingaben reagieren - ähnlich wie bei einer Tastatur.
+        </div>
+      </div>
+
+   
+
+      <div class="wb-soft-callout">
+        <strong>Digitale Eingänge</strong>
+        <div>
+          Ein digitaler Eingang kennt nur zwei Zustände:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>LOW</b> (0) – kein Signal / nicht gedrückt</li>
+            <li><b>HIGH</b> (1) – Signal / gedrückt</li>
+          </ul>
+          Der Arduino liest das mit <code>digitalRead(pin)</code>.
+        </div>
+      </div>
+     
+
+      <div class="wb-soft-callout">
+        <strong>Grundprinzip im Code</strong>
+        <div>
+          Zuerst setzt man den Pin als Eingang:
+          <pre><code>pinMode(2, INPUT);</code></pre>
+          Dann liest man den Zustand:
+          <pre><code>int state = digitalRead(2);</code></pre>
+          Und reagiert mit <code>if</code> darauf.
+        </div>
+      </div>
+
+    
+
+      <div class="wb-soft-callout">
+        <strong>Pullup / Pulldown - warum braucht man das?</strong>
+        <div>
+          Ein Eingang darf nicht "in der Luft hängen", sonst kann er zufällige Werte lesen.
+          Darum nutzt man einen Widerstand, der den Eingang eindeutig auf
+          <b>LOW</b> oder <b>HIGH</b> zieht.
+          <br><br>
+          Sehr praktisch ist der interne Pullup:
+          <pre><code>pinMode(2, INPUT_PULLUP);</code></pre>
+          Dann gilt meist:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>Taster <b>nicht</b> gedrückt – <b>HIGH</b></li>
+            <li>Taster gedrückt – <b>LOW</b></li>
+          </ul>
+        </div>
+      </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Typischer Stolperstein</strong>
+        <div>
+          Bei <code>INPUT_PULLUP</code> ist die Logik oft "umgedreht":
+          gedrückt = LOW, nicht gedrückt = HIGH.
+          <br>
+          Das ist kein Fehler - man muss es nur im <code>if</code> beachten.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Beispiel: Taster schaltet LED</strong>
+        <div>
+          <pre><code>const int BTN = 2;
+const int LED = 13;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  pinMode(BTN, INPUT_PULLUP);
+}
+
+void loop() {
+  int pressed = (digitalRead(BTN) == LOW);
+  if (pressed) {
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(LED, LOW);
+  }
+}</code></pre>
+          Die LED leuchtet nur, wenn der Taster gedrückt wird.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"s18_vf",
+            "title":"Verständnisfragen - Taster",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"s18_q1","kind":"textarea","placeholder":"1) Was ist der Unterschied zwischen Taster und Schalter?"},
+              {"label":"2","key":"s18_q2","kind":"textarea","placeholder":"2) Warum braucht ein Eingang Pullup/Pulldown?"},
+              {"label":"3","key":"s18_q3","kind":"textarea","placeholder":"3) Was bedeutet LOW/HIGH bei INPUT_PULLUP, wenn der Taster gedrückt ist?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc_s18",
+            "title":"Multiple Choice - Eingaben (mehrere Antworten möglich)",
+            "questions":[
+              {
+                "text":"1) Was trifft auf digitale Eingänge zu?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Sie kennen nur LOW oder HIGH"},
+                  {"id":"b","label":"Sie liefern immer eine Kommazahl"},
+                  {"id":"c","label":"Man liest sie mit digitalRead()"},
+                  {"id":"d","label":"Sie brauchen keine klare Verdrahtung"}
+                ],
+                "correct":["a","c"],
+                "explain":"Digitale Eingänge kennen LOW/HIGH und werden mit digitalRead() gelesen."
+              },
+              {
+                "text":"2) Wozu dient INPUT_PULLUP?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Der Eingang bekommt einen definierten Grundzustand"},
+                  {"id":"b","label":"Die LED wird automatisch heller"},
+                  {"id":"c","label":"Man spart oft einen externen Widerstand"},
+                  {"id":"d","label":"Der Taster liefert immer HIGH, wenn er gedrückt ist"}
+                ],
+                "correct":["a","c"],
+                "explain":"INPUT_PULLUP setzt einen Grundzustand und spart oft den externen Widerstand."
+              },
+              {
+                "text":"3) Welche Aussage ist bei INPUT_PULLUP richtig?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Nicht gedrückt = HIGH"},
+                  {"id":"b","label":"Gedrückt = LOW"},
+                  {"id":"c","label":"Gedrückt = HIGH"},
+                  {"id":"d","label":"Das ist immer zufällig"}
+                ],
+                "correct":["a","b"],
+                "explain":"Bei INPUT_PULLUP ist nicht gedrückt = HIGH und gedrückt = LOW."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Taster als "Modus-Wechsel"</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Ziel: Wenn der Taster gedrückt ist, soll die RGB-LED z. B. <b>grün</b> leuchten,
+            sonst <b>rot</b>.
+            <br>
+            Nutze <code>if / else</code> und <code>digitalRead()</code>.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Taster als Modus-Wechsel" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              Mit <code>INPUT_PULLUP</code> gilt: gedrückt = LOW.
+              <br>
+              Also:
+              <code>if (digitalRead(BTN) == LOW) { grün } else { rot }</code>
+              <br>
+              Die Farben setzt du über <code>analogWrite()</code> auf die RGB-Pins.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich, baue die genauen Vorgaben nach, falls nötig. Schreibe neue
+          Befehle in OneNote auf deinen Spickzettel.
+        </div>
+      </div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite18.png" alt="PDF Seite 18">
+        <div class="pdfcaption">Original - Seite 18</div>
+      </div>
+    </section>
+    <section data-wb-page="2" data-wb-page-title="12 Wiederholung mit WHILE">
+      <h2>13. Wiederholungen mit while - Solange bis ...</h2>
+
+      <div class="wb-soft-callout">
+        <strong>Was ist eine while-Schleife?</strong>
+        <div>
+          Eine <b>while-Schleife</b> wiederholt einen Programmteil
+          <b>so lange</b>, wie eine Bedingung <b>wahr</b> ist.
+          <br><br>
+          Merksatz: <b>while = solange</b>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Grundaufbau</strong>
+        <div>
+          <pre><code>while (Bedingung) {
+  // Code wird wiederholt
+}</code></pre>
+          Wenn die Bedingung irgendwann <b>false</b> wird,
+          endet die Schleife und das Programm läuft danach weiter.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Wann ist while sinnvoll?</strong>
+        <div>
+          Eine while-Schleife ist besonders sinnvoll, wenn man
+          <b>nicht vorher weiß</b>, wie oft etwas wiederholt werden muss.
+          <br><br>
+          Beispiele:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>Solange warten, bis ein Taster gedrückt wird</li>
+            <li>Solange blinken, bis eine Bedingung erfüllt ist</li>
+            <li>Solange Werte ausgeben, bis ein Grenzwert erreicht ist</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Vergleich: for vs. while</strong>
+        <div>
+          <b>for</b> nutzt man meist, wenn die Anzahl der Wiederholungen fest ist
+          (z. B. "5-mal blinken").
+          <br><br>
+          <b>while</b> nutzt man meist, wenn es heißt:
+          "<b>Solange bis</b> ..." (z. B. "solange warten, bis gedrückt").
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Achtung: Endlosschleife</strong>
+        <div>
+          Wenn sich die Bedingung nie ändert, läuft die while-Schleife <b>endlos</b>.
+          Das ist einer der häufigsten Fehler.
+          <br><br>
+          Prüfe immer:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>Wird eine Variable in der Schleife verändert?</li>
+            <li>Kann die Bedingung überhaupt falsch werden?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Beispiel 1: Zählen bis ein Grenzwert erreicht ist</strong>
+        <div>
+          <pre><code>int x = 0;
+
+void loop() {
+  while (x &lt; 20) {
+    Serial.println(x);
+    x = x + 5;
+  }
+}</code></pre>
+          Der Code läuft so lange, bis <code>x</code> mindestens 20 ist.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Beispiel 2: Warten auf einen Tastendruck</strong>
+        <div>
+          <pre><code>const int BTN = 2;
+
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+}
+
+void loop() {
+  while (digitalRead(BTN) == HIGH) {
+    // solange nicht gedrückt (HIGH)
+  }
+  // hier geht es weiter, sobald gedrückt (LOW)
+}</code></pre>
+          Mit <code>INPUT_PULLUP</code> gilt: gedrückt = LOW.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"s19_vf",
+            "title":"Verständnisfragen - while",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"s19_q1","kind":"textarea","placeholder":"1) Erkläre den Unterschied zwischen for und while in eigenen Worten."},
+              {"label":"2","key":"s19_q2","kind":"textarea","placeholder":"2) Wann ist eine while-Schleife besonders sinnvoll? Nenne ein Beispiel."},
+              {"label":"3","key":"s19_q3","kind":"textarea","placeholder":"3) Was ist eine Endlosschleife und wie kann sie entstehen?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc_s19",
+            "title":"Multiple Choice - while (mehrere Antworten möglich)",
+            "questions":[
+              {
+                "text":"1) Eine while-Schleife läuft ...",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"so lange, wie die Bedingung wahr ist"},
+                  {"id":"b","label":"genau 10-mal"},
+                  {"id":"c","label":"bis die Bedingung falsch wird"},
+                  {"id":"d","label":"nur in setup()"}
+                ],
+                "correct":["a","c"],
+                "explain":"while läuft, solange die Bedingung wahr ist, und endet, wenn sie falsch wird."
+              },
+              {
+                "text":"2) Welche Situationen passen gut zu while?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Warten, bis ein Taster gedrückt wird"},
+                  {"id":"b","label":"Genau 5-mal blinken"},
+                  {"id":"c","label":"Wiederholen, bis ein Grenzwert erreicht ist"},
+                  {"id":"d","label":"Eine feste Liste exakt ablaufen"}
+                ],
+                "correct":["a","c"],
+                "explain":"while nutzt man, wenn nicht vorher feststeht, wie oft etwas passiert."
+              },
+              {
+                "text":"3) Wie vermeidet man Endlosschleifen?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Die Bedingung muss irgendwann falsch werden können"},
+                  {"id":"b","label":"In der Schleife muss sich etwas ändern (z. B. Variable)"},
+                  {"id":"c","label":"Man darf nie Variablen benutzen"},
+                  {"id":"d","label":"Man sollte prüfen, ob die Bedingung erreichbar ist"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"Die Bedingung muss erreichbar sein und sich in der Schleife ändern können."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Stoppe das Blinken mit einem Taster</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Ziel: Eine LED soll blinken, <b>solange</b> der Taster <b>nicht gedrückt</b> ist.
+            Sobald der Taster gedrückt wird, soll das Blinken stoppen und die LED aus bleiben.
+            <br><br>
+            Tipp: Nutze <code>while</code> und <code>INPUT_PULLUP</code>.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Stoppe das Blinken mit einem Taster" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              Mit <code>INPUT_PULLUP</code> gilt: nicht gedrückt = HIGH, gedrückt = LOW.
+              <br>
+              Daher:
+              <code>while (digitalRead(BTN) == HIGH) { blinken }</code>
+              <br>
+              Danach LED ausschalten.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. Schreibe neue
+          Befehle in OneNote auf deinen Spickzettel.
+        </div>
+      </div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite19.png" alt="PDF Seite 19">
+        <div class="pdfcaption">Original - Seite 19</div>
+      </div>
+    </section>
+    <section data-wb-page="3" data-wb-page-title="13. Programme planen – Denken vor dem Programmieren">
+      <h2>13. Programme planen - Denken vor dem Programmieren</h2>
+
+      <div class="wb-soft-callout">
+        <strong>Warum Programme planen?</strong>
+        <div>
+          Gute Programme entstehen nicht durch Zufall.
+          <br>
+          Bevor man Code schreibt, sollte man sich überlegen:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>Was soll das Programm tun?</li>
+            <li>In welcher Reihenfolge passieren die Schritte?</li>
+            <li>Wo gibt es Entscheidungen oder Wiederholungen?</li>
+          </ul>
+          Genau dabei helfen <b>Struktogramme</b>.
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Was ist ein Struktogramm?</strong>
+        <div>
+          Ein <b>Struktogramm</b> (auch Nassi–Shneiderman-Diagramm)
+          ist eine grafische Darstellung eines Programms.
+          <br><br>
+          Es zeigt:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>die <b>Abfolge</b> von Anweisungen</li>
+            <li><b>Bedingungen</b> (if / else)</li>
+            <li><b>Wiederholungen</b> (for / while)</li>
+          </ul>
+          – ohne eine einzige Zeile echten Codes.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Schau dir das Struktogramm genau an und beantworte die Fragen. Schreibe dir auch nochmal die einzelnen Elemente
+          (Start, Ende, Schleifen, Entscheidungen, Eingaben) mit graphischer Entsprechung (Raute, Oval, Rechteck, Abgeschnittenes Rechteck)
+          der Struktogramme auf deinen Spickzettel.
+        </div>
+      </div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite20.png" alt="PDF Seite 20">
+        <div class="pdfcaption">Original - Seite 20</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Grundidee eines Struktogramms</strong>
+        <div>
+          Ein Struktogramm besteht aus <b>Rechtecken</b>,
+          die von oben nach unten gelesen werden.
+          <br><br>
+          Wichtig:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>Kein Pfeilchaos</li>
+            <li>Keine Sprünge</li>
+            <li>Klare Struktur</li>
+          </ul>
+          Die Leserichtung ist immer: <b>oben – unten</b>.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+    <div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>Sequenz (Abfolge)</strong>
+        <div>
+          Die einfachste Form:
+          mehrere Anweisungen hintereinander.
+          <pre><code>LED einschalten
+warten
+LED ausschalten</code></pre>
+          Jede Anweisung wird genau einmal ausgeführt –
+          in der angegebenen Reihenfolge.
+        </div>
+      </div>
+
+     
+
+      <div class="wb-soft-callout">
+        <strong>Auswahl (if / else)</strong>
+        <div>
+          Eine Entscheidung wird als geteiltes Feld dargestellt:
+          <pre><code>Ist der Taster gedrückt?
+  Ja – LED an
+  Nein – LED aus</code></pre>
+          Genau <b>ein</b> Weg wird ausgeführt –
+          abhängig von der Bedingung.
+        </div>
+      </div>
+
+     
+
+      <div class="wb-soft-callout">
+        <strong>Wiederholung (for / while)</strong>
+        <div>
+          Wiederholungen werden als Block dargestellt,
+          der mehrfach durchlaufen wird:
+          <pre><code>Solange Bedingung wahr:
+  LED ein
+  warten
+  LED aus</code></pre>
+          Das entspricht direkt einer
+          <code>for</code>- oder <code>while</code>-Schleife.
+        </div>
+      </div>
+
+    
+
+      <div class="wb-soft-callout">
+        <strong>Wichtiger Unterschied zu Flussdiagrammen</strong>
+        <div>
+          Struktogramme:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>haben <b>keine Pfeile</b></li>
+            <li>erzwingen saubere Struktur</li>
+            <li>passen direkt zu strukturiertem Code</li>
+          </ul>
+          Deshalb sind sie besonders gut für Einsteiger geeignet.
+        </div>
+      </div>
+</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"s20_vf",
+            "title":"Verständnisfragen - Struktogramme",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"s20_q1","kind":"textarea","placeholder":"1) Warum ist es sinnvoll, ein Programm vor dem Codieren zu planen?"},
+              {"label":"2","key":"s20_q2","kind":"textarea","placeholder":"2) Welche drei Grundstrukturen gibt es im Struktogramm?"},
+              {"label":"3","key":"s20_q3","kind":"textarea","placeholder":"3) Warum kommen Struktogramme ohne Pfeile aus?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Vom Plan zum Code</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Aufgabe:
+            <br>
+            Plane mit Worten ein Programm, das:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li>auf einen Tastendruck wartet</li>
+              <li>dann eine LED 3-mal blinken lässt</li>
+              <li>anschließend stoppt</li>
+            </ul>
+            <br>
+            – Schreibe die Schritte so,
+            dass man daraus direkt ein Struktogramm zeichnen könnte.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Vom Plan zum Code" placeholder="Schritte in der richtigen Reihenfolge"></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              <strong>Musterlösung (in Worten):</strong><br>
+              1. Warte, bis der Taster gedrückt wird.<br>
+              2. Wiederhole 3-mal:<br>
+              – LED einschalten<br>
+              – warten<br>
+              – LED ausschalten<br>
+              – warten<br>
+              3. Programm endet.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section data-wb-page="4" data-wb-page-title="Vom Struktogramm zum Arduino-Code">
+      <h2>Vom Struktogramm zum Arduino-Code</h2>
+
+      <div class="wb-soft-callout">
+        <strong>Warum diese Brücke wichtig ist</strong>
+        <div>
+          Ein Struktogramm ist ein <b>Plan</b>, kein fertiges Programm.
+          <br>
+          Ziel ist es, diesen Plan <b>systematisch</b> in Code zu übersetzen,
+          ohne etwas zu vergessen oder durcheinanderzubringen.
+          <br><br>
+          – Jeder Block im Struktogramm entspricht später
+          einem bestimmten Teil im Code.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Grundregel der Übersetzung</strong>
+        <div>
+          <b>Struktogramm von oben nach unten lesen</b>
+          <br>
+          und jeden Block nacheinander in Code umsetzen.
+          <br><br>
+          Merksatz:
+          <br>
+          <i>Ein Block = eine Idee = ein Code-Abschnitt</i>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+  <div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>1. Sequenz – normaler Code</strong>
+        <div>
+          <b>Struktogramm (gedanklich):</b>
+          <pre><code>LED an
+warten
+LED aus</code></pre>
+
+          <b>Arduino-Code:</b>
+          <pre><code>digitalWrite(13, HIGH);
+delay(500);
+digitalWrite(13, LOW);</code></pre>
+
+          Jede Anweisung wird genau einmal
+          und in derselben Reihenfolge ausgeführt.
+        </div>
+      </div>
+
+      
+
+      <div class="wb-soft-callout">
+        <strong>2. Auswahl – if / else</strong>
+        <div>
+          <b>Struktogramm (gedanklich):</b>
+          <pre><code>Ist Taster gedrückt?
+  Ja – LED an
+  Nein – LED aus</code></pre>
+
+          <b>Arduino-Code:</b>
+          <pre><code>if (digitalRead(BTN) == LOW) {
+  digitalWrite(LED, HIGH);
+} else {
+  digitalWrite(LED, LOW);
+}</code></pre>
+
+          Der geteilte Block im Struktogramm
+          wird zu <code>if</code> und <code>else</code>.
+        </div>
+      </div>
+
+     
+
+      <div class="wb-soft-callout">
+        <strong>3. Wiederholung (fest) – for-Schleife</strong>
+        <div>
+          <b>Struktogramm (gedanklich):</b>
+          <pre><code>Wiederhole 3-mal:
+  LED an
+  warten
+  LED aus</code></pre>
+
+          <b>Arduino-Code:</b>
+          <pre><code>for (int i = 0; i &lt; 3; i++) {
+  digitalWrite(13, HIGH);
+  delay(300);
+  digitalWrite(13, LOW);
+  delay(300);
+}</code></pre>
+
+          Die Anzahl der Wiederholungen
+          steht direkt in der Schleife.
+        </div>
+      </div>
+
+
+      <div class="wb-soft-callout">
+        <strong>4. Wiederholung (Bedingung) – while-Schleife</strong>
+        <div>
+          <b>Struktogramm (gedanklich):</b>
+          <pre><code>Solange Taster nicht gedrückt:
+  LED blinkt</code></pre>
+
+          <b>Arduino-Code:</b>
+          <pre><code>while (digitalRead(BTN) == HIGH) {
+  digitalWrite(LED, HIGH);
+  delay(200);
+  digitalWrite(LED, LOW);
+  delay(200);
+}</code></pre>
+
+          "Solange" im Struktogramm
+          bedeutet fast immer <code>while</code>.
+        </div>
+      </div>
+</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Übersetzungs-Strategie (sehr wichtig)</strong>
+        <div>
+          Gehe immer in dieser Reihenfolge vor:
+          <ol style="margin:6px 0 0; padding-left:18px">
+            <li>Struktogramm vollständig verstehen</li>
+            <li>Sequenzen umsetzen</li>
+            <li>Dann Entscheidungen (if / else)</li>
+            <li>Zum Schluss Wiederholungen (for / while)</li>
+          </ol>
+          So vermeidest du typische Anfängerfehler.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Übung - Vom Plan zum Code</div>
+            <div class="wb-hint">Transfer</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Gegeben ist folgendes <b>Struktogramm in Worten</b>:
+            <br><br>
+            1. Warte, bis der Taster gedrückt wird.<br>
+            2. Wiederhole 5-mal:<br>
+            – LED einschalten<br>
+            – warten<br>
+            – LED ausschalten<br>
+            – warten
+            <br><br>
+            – Übersetze diesen Plan in Arduino-Code.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Übung - Vom Plan zum Code" placeholder="Schreibe den passenden Arduino-Code oder beschreibe die Struktur."></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              <strong>Musterlösung (Struktur):</strong><br>
+              <code>while</code> zum Warten auf den Taster,
+              danach eine <code>for</code>-Schleife mit 5 Durchläufen,
+              in der die LED ein- und ausgeschaltet wird.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section data-wb-page="5" data-wb-page-title="14. LCD Displays - Texte anzeigen">
+      <h2>14. LCD-Displays - Texte anzeigen</h2>
+
+      <div class="wb-soft-callout">
+        <strong>Wozu ein Display?</strong>
+        <div>
+          Ein Display macht ein Arduino-Projekt "sichtbar":
+          Du kannst Werte, Zustände, Menüs oder Hinweise anzeigen
+          (z. B. Temperatur, Punktestand, Ampelmodus, Fehlermeldungen).
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Es gibt verschiedene Display-Typen</strong>
+        <div>
+          Nicht jedes Display funktioniert gleich. Häufige Typen:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Zeichen-LCD</b> (z. B. 16x2, 20x4; meist HD44780-kompatibel)</li>
+            <li><b>Zeichen-LCD mit I2C-Adapter</b> (weniger Kabel)</li>
+            <li><b>OLED</b> (oft I2C oder SPI; sehr kontrastreich)</li>
+            <li><b>TFT</b> (Farbdisplay; oft SPI; komplexer, mehr Speicherbedarf)</li>
+          </ul>
+          In diesem Baustein geht es vor allem um das <b>Zeichen-LCD</b>.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Zeichen-LCD (16x2 / 20x4) - was bedeutet das?</strong>
+        <div>
+          Ein <b>16x2</b>-Display kann <b>16 Zeichen pro Zeile</b> und hat <b>2 Zeilen</b>.
+          Ein <b>20x4</b>-Display kann <b>20 Zeichen pro Zeile</b> und hat <b>4 Zeilen</b>.
+          <br><br>
+          Es zeigt vor allem <b>Text</b> (Zeichen) an – keine frei zeichnbaren Bilder wie ein TFT.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Parallel vs. I2C</strong>
+        <div>
+          Es gibt zwei sehr verbreitete Anschlussarten:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Parallel</b> (viele Kabel): mehrere Datenpins + Steuerpins</li>
+            <li><b>I2C</b> (wenige Kabel): meist nur <code>VCC</code>, <code>GND</code>, <code>SDA</code>, <code>SCL</code></li>
+          </ul>
+          Für Anfänger ist ein <b>I2C-LCD</b> oft einfacher, weil man weniger verdrahten muss.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Wichtig: Spannung, Kontrast, Hintergrundbeleuchtung</strong>
+        <div>
+          Häufige Stolpersteine:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Kontrast</b>: Viele LCDs haben ein kleines Potentiometer – wenn der Kontrast falsch ist, siehst du "nichts".</li>
+            <li><b>5V vs. 3.3V</b>: Manche Displays sind 5V-tolerant, andere nicht (besonders bei OLED/TFT).</li>
+            <li><b>Backlight</b>: Hintergrundbeleuchtung kann an/aus sein – bei falscher Verdrahtung wirkt das Display "tot".</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Grundbefehle (Zeichen-LCD)</strong>
+        <div>
+          Typische Funktionen (je nach Library):
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><code>begin()</code> – Display starten</li>
+            <li><code>clear()</code> – Bildschirm leeren</li>
+            <li><code>setCursor(spalte, zeile)</code> – Schreibposition setzen</li>
+            <li><code>print("Text")</code> – Text ausgeben</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+<div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>Beispiel: 16x2 LCD (parallel, LiquidCrystal)</strong>
+        <div>
+          <pre><code>#include &lt;LiquidCrystal.h&gt;
+
+// Beispiel-Pins (passen ggf. an deine Verdrahtung an)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Hallo!");
+  lcd.setCursor(0, 1);
+  lcd.print("Arduino LCD");
+}
+
+void loop() {
+}</code></pre>
+          Hinweis: Bei Parallel-LCDs hängen die Pins von deiner Verkabelung ab.
+        </div>
+      </div>
+
+    
+
+      <div class="wb-soft-callout">
+        <strong>Beispiel: LCD mit I2C (weniger Kabel)</strong>
+        <div>
+          <pre><code>#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+
+// Adresse ist oft 0x27 oder 0x3F (je nach Modul)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("I2C LCD ready");
+}
+
+void loop() {
+}</code></pre>
+          Wenn nichts erscheint: Kontrast prüfen und ggf. I2C-Adresse testen.
+        </div>
+      </div>
+</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Versuche die Schritte zum Anschluss und Programmierung eines LCD-Displays zu verstehen und
+          gleichzeitig am Arduino umzusetzen. Schreibe dir die wichtigsten Befehle und Schritte auf deinen Spickzettel.
+        </div>
+      </div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite21.png" alt="PDF Seite 21">
+        <div class="pdfcaption">Original - Seite 21</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"s21_vf",
+            "title":"Verständnisfragen - Displays",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"s21_q1","kind":"textarea","placeholder":"1) Nenne zwei verschiedene Display-Typen und einen Unterschied."},
+              {"label":"2","key":"s21_q2","kind":"textarea","placeholder":"2) Was bedeutet 16x2 bei einem LCD?"},
+              {"label":"3","key":"s21_q3","kind":"textarea","placeholder":"3) Warum kann ein LCD trotz richtiger Verdrahtung \"leer\" wirken?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc_s21",
+            "title":"Multiple Choice - LCD (mehrere Antworten möglich)",
+            "questions":[
+              {
+                "text":"1) Welche Display-Typen gibt es häufig?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Zeichen-LCD (16x2 / 20x4)"},
+                  {"id":"b","label":"OLED"},
+                  {"id":"c","label":"TFT"},
+                  {"id":"d","label":"Widerstands-LED"}
+                ],
+                "correct":["a","b","c"],
+                "explain":"Zeichen-LCD, OLED und TFT sind typische Display-Typen."
+              },
+              {
+                "text":"2) Was stimmt zu I2C-LCDs?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Man braucht meist weniger Kabel als bei Parallel"},
+                  {"id":"b","label":"Typisch sind SDA und SCL"},
+                  {"id":"c","label":"Sie funktionieren ohne Library immer automatisch"},
+                  {"id":"d","label":"Die I2C-Adresse kann je nach Modul unterschiedlich sein"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"I2C nutzt SDA/SCL, braucht weniger Kabel und die Adresse kann variieren."
+              },
+              {
+                "text":"3) Warum sieht man manchmal nichts auf dem LCD?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Kontrast ist falsch eingestellt"},
+                  {"id":"b","label":"falsche Baudrate im seriellen Monitor"},
+                  {"id":"c","label":"Hintergrundbeleuchtung/Power fehlt"},
+                  {"id":"d","label":"falsche I2C-Adresse / falsche Pins"}
+                ],
+                "correct":["a","c","d"],
+                "explain":"Kontrast, Backlight/Power oder die Adresse/Pins sind häufige Ursachen."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Statusanzeige bauen</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Ziel: Das LCD soll zwei Zeilen anzeigen:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li>Zeile 1: "Ampel:" + aktueller Zustand (ROT/GELB/GRUEN)</li>
+              <li>Zeile 2: "Taster:" + "GEDRUECKT" oder "FREI"</li>
+            </ul>
+            Nutze <code>setCursor()</code> und <code>print()</code>.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Statusanzeige bauen" placeholder="Beschreibe deinen Plan oder skizziere den Code."></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              <strong>Lösungsidee:</strong><br>
+              <code>lcd.setCursor(0,0); lcd.print("Ampel: ROT");</code><br>
+              <code>lcd.setCursor(0,1); lcd.print("Taster: FREI");</code><br>
+              Bei Änderungen zuerst die Zeile überschreiben (ggf. mit Leerzeichen auffüllen) oder <code>lcd.clear()</code> nutzen.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section data-wb-page="6" data-wb-page-title="15. Motoren steuern">
+      <h2>15. Motoren steuern</h2>
+
+      <div class="wb-soft-callout">
+        <strong>Was ist ein Motor?</strong>
+        <div>
+          Ein <b>Motor</b> wandelt elektrische Energie in <b>Bewegung</b> um.
+          <br>
+          Mit Motoren können z. B. Räder angetrieben, Arme bewegt
+          oder Lüfter betrieben werden.
+          <br><br>
+          Motoren sind damit eine wichtige Verbindung zwischen
+          <b>Programm</b> und <b>realer Bewegung</b>.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Es gibt verschiedene Motorarten</strong>
+        <div>
+          Je nach Aufgabe nutzt man unterschiedliche Motoren:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Gleichstrommotor (DC)</b> - dreht sich kontinuierlich</li>
+            <li><b>Servomotor</b> - fährt gezielt eine Position an</li>
+            <li><b>Schrittmotor</b> - bewegt sich in festen Schritten</li>
+          </ul>
+          In diesem Lernbaustein steht vor allem der <b>DC-Motor</b> im Fokus.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>Warum darf man Motoren nicht direkt anschließen?</strong>
+        <div>
+          Motoren benötigen meist:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>mehr Strom als ein Arduino-Pin liefern kann</li>
+            <li>eine Schutzbeschaltung gegen Spannungsspitzen</li>
+          </ul>
+          <br>
+          Deshalb steuert der Arduino den Motor
+          <b>nicht direkt</b>, sondern über ein Hilfsbauteil
+          (z. B. Transistor oder Motortreiber).
+        </div>
+      </div>
+
+   
+
+      <div class="wb-soft-callout">
+        <strong>Transistor oder Motortreiber</strong>
+        <div>
+          Häufige Lösungen:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Transistor</b>: Ein/aus, evtl. mit PWM für Geschwindigkeit</li>
+            <li><b>Motortreiber-Modul</b> (z. B. L298N): Richtung + Geschwindigkeit</li>
+          </ul>
+          Der Arduino gibt nur Steuersignale,
+          die eigentliche Motorleistung kommt aus einer separaten Versorgung.
+        </div>
+      </div>
+</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Wichtiger Schutz: Freilaufdiode</strong>
+        <div>
+          Motoren sind Spulen.
+          Beim Abschalten können <b>Spannungsspitzen</b> entstehen,
+          die den Arduino zerstören können.
+          <br><br>
+          Eine <b>Freilaufdiode</b> schützt die Schaltung
+          vor diesen Spannungsspitzen.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+      <div class="wb-soft-callout">
+        <strong>Motor ein- und ausschalten (Prinzip)</strong>
+        <div>
+          Der Arduino steuert den Motor ähnlich wie eine LED –
+          aber indirekt:
+          <pre><code>digitalWrite(MOTOR, HIGH);  // Motor an
+digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
+          Intern schaltet dabei ein Transistor oder Treiber den Motorstrom.
+        </div>
+      </div>
+
+     
+
+      <div class="wb-soft-callout">
+        <strong>Geschwindigkeit steuern</strong>
+        <div>
+          Die Drehzahl eines DC-Motors kann mit
+          <b>Pulsweitenmodulation (PWM)</b> verändert werden:
+          <pre><code>analogWrite(MOTOR, 120);</code></pre>
+          Je größer der Wert (0–255),
+          desto schneller dreht sich der Motor.
+        </div>
+      </div>
+</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Lies dir den Text aufmerksam durch und baue alles Schritt für Schritt genau nach.
+          Schreibe dir die wichtigsten Begriffe und Befehle auf deinen Spickzettel.
+        </div>
+      </div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite22.png" alt="PDF Seite 22">
+        <div class="pdfcaption">Original - Seite 22</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"s22_vf",
+            "title":"Verständnisfragen - Motoren",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"s22_q1","kind":"textarea","placeholder":"1) Warum kann ein Motor nicht direkt an einen Arduino-Pin angeschlossen werden?"},
+              {"label":"2","key":"s22_q2","kind":"textarea","placeholder":"2) Nenne zwei verschiedene Motorarten und einen Unterschied."},
+              {"label":"3","key":"s22_q3","kind":"textarea","placeholder":"3) Welche Aufgabe hat eine Freilaufdiode?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc_s22",
+            "title":"Multiple Choice - Motoren (mehrere Antworten möglich)",
+            "questions":[
+              {
+                "text":"1) Welche Aussagen zu Motoren sind richtig?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Motoren erzeugen Bewegung"},
+                  {"id":"b","label":"Motoren benötigen oft mehr Strom"},
+                  {"id":"c","label":"Motoren können immer direkt an Pins angeschlossen werden"},
+                  {"id":"d","label":"Motoren brauchen Schutzbeschaltung"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"Motoren erzeugen Bewegung, brauchen Strom und Schutzbeschaltung."
+              },
+              {
+                "text":"2) Wozu dient PWM bei Motoren?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Steuerung der Geschwindigkeit"},
+                  {"id":"b","label":"Änderung der Drehrichtung"},
+                  {"id":"c","label":"Strombegrenzung"},
+                  {"id":"d","label":"Schutz vor Spannungsspitzen"}
+                ],
+                "correct":["a","c"],
+                "explain":"PWM steuert die Geschwindigkeit und kann den effektiven Strom beeinflussen."
+              },
+              {
+                "text":"3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Transistor"},
+                  {"id":"b","label":"Motortreiber-Modul"},
+                  {"id":"c","label":"Widerstand allein"},
+                  {"id":"d","label":"Freilaufdiode"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"Transistor, Motortreiber und Freilaufdiode sind typische Bauteile."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Ventilator steuern</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Ziel: Ein Motor soll:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li>per Taster ein- und ausgeschaltet werden</li>
+              <li>bei eingeschaltetem Zustand langsam starten</li>
+            </ul>
+            Nutze <code>if</code>, <code>analogWrite()</code>
+            und eine Variable für die Geschwindigkeit.
+          </div>
+
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Ventilator steuern" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              <strong>Lösungsidee:</strong><br>
+              Taster mit <code>if</code> abfragen.
+              <br>
+              Bei gedrücktem Taster:
+              Geschwindigkeit langsam erhöhen (Variable + PWM).
+              <br>
+              Bei losgelassenem Taster:
+              Motor ausschalten.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_lernbaustein_s18-22__" });
+  </script>
+</body>
+</html>

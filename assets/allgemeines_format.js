@@ -670,6 +670,15 @@ ${fi.input.value || ""}
         textLines.push("");
       });
 
+      qsa("[data-wb-export]", pageRoot).forEach((ta, idx) => {
+        const title = (ta.getAttribute("data-wb-label") || "Text " + (idx+1)).trim();
+        const value = String(ta.value || "");
+        results.push({type:"text", title, page: pageNum, value});
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push(value || "-");
+        textLines.push("");
+      });
+
       if(pagePossible > 0){
         textLines.push("Seitenpunkte: " + pageCorrect + "/" + pagePossible);
         textLines.push("");
@@ -719,6 +728,8 @@ ${fi.input.value || ""}
           r.res.items.forEach((it, pi) => {
             resultsPage.appendChild(el("p", {class:"wb-muted"}, [(pi+1) + ". " + (it.left || "-") + " | " + (it.right || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
           });
+        }else if(r.type === "text"){
+          resultsPage.appendChild(el("p", {}, [r.value || "-"]));
         }
       });
     }
@@ -1045,8 +1056,8 @@ ${fi.input.value || ""}
     {id: "candy", label: "Candy"},
     {id: "mint", label: "Mint"},
     {id: "sunset", label: "Sunset"},
-    {id: "grau", label: "Grau"},
-    {id: "dark", label: "Dark"}
+    {id: "grau", label: "Dark"},
+    {id: "dark", label: "Dark Blue"}
   ];
 
   function normalizeThemes(list){

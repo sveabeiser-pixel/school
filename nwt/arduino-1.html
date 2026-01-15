@@ -1,0 +1,493 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arduino Lernbaustein – Seiten 1–5</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .pdfpage{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0,0,0,.04);
+      margin: 12px 0;
+    }
+    .pdfpage img{width:100%; display:block}
+    .pdfcaption{
+      font-size: 12px;
+      color: var(--wb-muted, #6b7280);
+      padding: 6px 10px;
+      border-top: 1px solid var(--wb-line, #e5e7eb);
+    }
+
+    .wb-soft-callout{
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding:12px 12px;
+      background: transparent;
+      margin: 12px 0;
+    }
+    .wb-soft-callout strong{display:block; margin-bottom:6px}
+
+    .wb-kvlist{display:grid; grid-template-columns: 1fr; gap:10px}
+    .wb-kv{
+      border:1px dashed var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding:10px 12px;
+      background: var(--wb-paper, #ffffff);
+    }
+    .wb-kv b{color: var(--wb-blue, #1e66c8)}
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-bottom-width:2px;
+      border-radius:8px;
+      background: rgba(0,0,0,.03);
+      color: var(--wb-text, #111827);
+    }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+      {
+        "bookTitle": "Arduino – Lernbaustein (Seiten 1–5)",
+        "sectionTitle": "Arduino – Lernbaustein (Seiten 1–5)",
+        "submitLabel": "Summary & submit",
+        "onSubmit": "alert",
+        "webhookUrl": "https://default5f6cb15557a9496689537def5ca919.a2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4cd979cc91bf4974a3b4c1c914f70938/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4VoQy_JGo-ggGZ1ZXAYa8eK5oVMT1U1zwHDpdV6IILw",
+        "webhookEmail": "",
+        "autoNav": true
+      }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Einführung in den Microcontroller Arduino">
+      <h1>Einführung in den Microcontroller Arduino</h1>
+      <p>
+        Dieser Lernbaustein führt dich schrittweise an den Arduino heran – als „Steuerzentrale“ für kleine technische Projekte.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>So arbeitest du hier</strong>
+          <ul style="margin:0; padding-left:18px">
+            <li>Lies kurz, dann mach die Aufgaben direkt auf der Seite.</li>
+            <li>Deine Texte werden <b>lokal im Browser</b> gespeichert (nicht an die Lehrkraft gesendet).</li>
+            <li>Wenn du abgeben sollst: nutze „Text kopieren“ und füge ihn ins Abgabe-Tool (OneNote) ein.</li>
+          </ul>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Wichtig (Technik & Sicherheit)</strong>
+          <div>
+            Du kannst immer alle Texte, die du hier in die Antwortboxen eingibst, mit <b>in Zwischenablage kopieren</b> speichern und in OneNote einfügen.
+            <br/>Elektrisch: Baue Schaltungen nur wie gezeigt auf und vermeide Kurzschlüsse.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
+      OneNote einfügen.</p>
+    </div>
+
+      <p class="wb-muted">Quelle der Inhalte: Lernbaustein-PDF, Seiten 1–5.</p>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Inhaltsverzeichnis">
+      <h2>Inhaltsverzeichnis (Überblick)</h2>
+      <div class="wb-soft-callout">
+        <strong>Was kommt später?</strong>
+        <div>
+          Es folgen u. a. Programmieren, Blinken, Töne/Unterprogramme, Variablen, serielle Ausgabe, Schleifen, LEDs dimmen, If/While und mehr.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-kvlist">
+        <div class="wb-kv"><b>1</b> Was ist ein Mikrocontroller?</div>
+        <div class="wb-kv"><b>2</b> Es leuchtet!</div>
+        <div class="wb-kv"><b>3</b> Programm zum Programmieren</div>
+        <div class="wb-kv"><b>4</b> Das erste Blinken</div>
+        <div class="wb-kv"><b>5</b> Töne, Unterprogramme, Transistor</div>
+        <div class="wb-kv"><b>→</b> Variablen, Schleifen, Bedingungen, Taster, Anzeigen, Motoren</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"expect",
+            "title":"Mini-Check-in: Was erwartest du vom Arduino? Schreibe 2–4 Sätze.",
+            "fields":[
+              {"label":"Antwort","key":"expect","kind":"textarea","placeholder":"Schreibe 2–4 Sätze: Was willst du mit dem Arduino lernen oder bauen?"}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="1. Was ist ein Mikrocontroller?">
+      <h2>1. Was ist ein Mikrocontroller?</h2>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite02.png" alt="PDF Seite 2">
+        <div class="pdfcaption">Original – Seite 3</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Kernaussage</strong>
+          <div>
+            Mikrocontroller sind kleine elektronische Bauteile, die in vielen Geräten als „Steuerzentrale“ arbeiten – z. B. in Waschmaschinen, Airbags, automatischen Türen oder in deinem Projekt.
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Arduino</strong>
+          <div>
+            Der Arduino ist eine Mikrocontroller-Platine mit Anschlüssen (Pins), über die man Bauteile verbinden und Programme übertragen kann (z. B. per USB).
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite03.png" alt="PDF Seite 3">
+        <div class="pdfcaption">Original – Seite 3</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Begriffe</strong>
+        <ul style="margin:0; padding-left:18px">
+          <li><b>HIGH / LOW</b>: zwei Zustände an Pins (vereinfacht: an/aus bzw. Spannung da/nicht da).</li>
+          <li><b>USB-Anschluss</b>: darüber kann man Programme auf den Arduino übertragen.</li>
+          <li><b>Reset</b>: startet den Mikrocontroller neu.</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc",
+            "title":"Aufgabe 1: Mikrocontroller im Alltag, Beispiele: Gerät 1 – Gerät 2 – Gerät 3 – + kurze Erklärung",
+            "fields":[
+              {"label":"Antwort","key":"mc","kind":"textarea","placeholder":"Beispiele: Gerät 1 – Gerät 2 – Gerät 3 – + kurze Erklärung"}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="2. Es leuchtet!">
+      <h2>2. Es leuchtet!</h2>
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite04.png" alt="PDF Seite 4">
+        <div class="pdfcaption">Original – Seite 4</div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Komponenten und Anschlüsse</strong>
+        <div>
+          Hier lernst du alle Komponenten und Anschlüsse auf der Arduino-Platine kennen, die die LED zum Leuchten bringt!
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>LED (Leuchtdiode)</strong>
+          <div>
+            Eine LED ist eine Diode, die leuchtet – Strom fließt dabei nur in eine Richtung (Anode/Kathode).
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Widerstand</strong>
+          <div>
+            Ein Widerstand begrenzt den Strom. Ohne „Schutzwiderstand“ kann eine LED sehr schnell kaputtgehen.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>LED (Buchsenseite - Pins)</strong>
+          <div>
+            Die Pins liefern verschiednene Potenziale, Pin0-Pin12 sind entweder an oder aus, es gibt auch 5V oder 3,3V Anschlüsse,
+            GND steht für ground (Erde). Ein Stromkreis muss immer geschlossen sein (z.B. von einem Pin zum gnd).
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Bread Board/Steckbrett und Jump-Wires/Kabel</strong>
+          <div>
+            Mit dem Steckbrettt und den Kabeln kann man einen Stromkreis bauen, ohne zu Löten.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Ganz wichtig</strong>
+        <div>
+          Verwende beim Aufbau am Breadboard passende Kabel (Jumper-Wires) und achte darauf, keine falschen Verbindungen zu stecken.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"led",
+            "title":"Aufgabe 2: Warum braucht die LED einen Widerstand? Erkläre in 3–5 Sätzen.",
+            "fields":[
+              {"label":"Antwort","key":"led","kind":"textarea","placeholder":"Erkläre in 3–5 Sätzen: Was passiert ohne Widerstand und warum?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"pins",
+            "title":"Aufgabe 3: Für was sind die Pins, das Bead Bord und die Jump-Wires gut? Erkläre in 5–8 Sätzen.",
+            "fields":[
+              {"label":"Antwort","key":"pins","kind":"textarea","placeholder":"Erkläre in 5–8 Sätzen: Wie schließt man einen Stromkreis an?"}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Aufgaben">
+      <h2>Aufgaben 2.1–2.3</h2>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite05.png" alt="PDF Seite 5">
+        <div class="pdfcaption">Original – Seite 5</div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Anmerkungen zu den Aufgaben</strong>
+        <div>
+          Auf dem Bild werden verschiedene Aufgaben gezeigt. Im folgenden kannst du sie nochmals beantworten.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+ <p class="wb-muted">
+        Baue eine Schaltung aus einer LED, einem 220 Ω-Widerstand und einem Jumper-Wire wie im Bild beschrieben. Notiere:
+      </p>
+      <ul>
+        <li>Wie hast du erkannt, welches LED-Beinchen an den Pluspol gehört?</li>
+        <li>Spielt es eine Rolle, ob der Widerstand vor oder hinter der LED ist (solange es eine Reihenschaltung ist)?</li>
+      </ul>
+
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"a21",
+            "title":"2.1 LED + 220 Ω (Farben laut Bild)",
+            "hint":"Dokumentation",
+            "fields":[
+              {"label":"Antwort","key":"a21","kind":"textarea","placeholder":"Notizen zu 2.1 (Aufbau + Beobachtungen)"}
+            ]
+          }
+        </script>
+      </div>
+     
+      
+
+      <div class="wb-section-break"></div>
+
+<p class="wb-muted">
+        Das Bild zeigt, wie man eine reale Schaltung als Schaltbild darstellt (mit Pluspol, Bauteilen und GND/Masse).
+        <br/>Schreibe in eigenen Worten: <b>Welche Informationen</b> liefert ein Schaltbild, und <b>warum</b> ist es praktisch?
+      </p>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"a22",
+            "title":"2.2 Schaltbild lesen",
+            "hint":"Verstehen",
+            "fields":[
+              {"label":"Antwort","key":"a22","kind":"textarea","placeholder":"Antwort zu 2.2"}
+            ]
+          }
+        </script>
+      </div>
+      
+
+      <div class="wb-section-break"></div>
+
+       <p class="wb-muted">
+        Auf Seite 5 wird auf Farbringe von Widerständen Bezug genommen (Codierung von Zahlenwerten).
+        <br/>Notiere:
+      </p>
+      <ol>
+        <li>Wie würdest du einer anderen Person erklären, was die Farbringe grundsätzlich bedeuten?</li>
+        <li>Welche Informationen fehlen dir noch, um jeden Widerstand sicher zu bestimmen?</li>
+      </ol>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"a23",
+            "title":"2.3 Widerstands-Farbcodes",
+            "hint":"Knobelteil",
+            "fields":[
+              {"label":"Antwort","key":"a23","kind":"textarea","placeholder":"Antwort zu 2.3"}
+            ]
+          }
+        </script>
+      </div>
+     
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Merksatz: Reihe vs. Parallel</strong>
+        <div>
+          Bei der <b>Reihenschaltung</b> fließt der Strom nacheinander durch mehrere Bauteile; bei der <b>Parallelschaltung</b> gibt es mehrere Strompfade.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"rp",
+            "title":"Reflexion: Wo würdest du Reihe/Parallel im Alltag vermuten?",
+            "fields":[
+              {"label":"Antwort","key":"rp","kind":"textarea","placeholder":"Beispiel(e) + kurze Begründung"}
+            ]
+          }
+        </script>
+      </div>
+      <div class="wb-muted">
+        Wenn ihr abgeben sollt: Nutze <span class="kbd">Text kopieren</span> und füge ihn in eure Abgabe (Moodle/Nextcloud-Formular) ein.
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Multiple Choice">
+      <h2>Multiple Choice und Abgabe</h2>
+
+   
+
+      
+
+      <div class="wb-section-break"></div>
+
+      <h3>Multiple Choice – Seiten 2–5</h3>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mcq-arduino-1",
+            "title":"Multiple Choice – Seiten 2–5",
+            "questions":[
+              {
+                "text":"1. Was ist ein Mikrocontroller?",
+                "choices":[
+                  {"id":"a","label":"A – Ein Elektromotor"},
+                  {"id":"b","label":"B – Ein Sensor"},
+                  {"id":"c","label":"C – Eine kleine Steuerzentrale für Geräte"},
+                  {"id":"d","label":"D – Eine Batterie"}
+                ],
+                "correct":["c"],
+                "explain":"C – Ein Mikrocontroller steuert Abläufe in technischen Geräten."
+              },
+              {
+                "text":"2. Wozu dient der USB-Anschluss am Arduino?",
+                "choices":[
+                  {"id":"a","label":"A – Zum Laden eines Akkus"},
+                  {"id":"b","label":"B – Zum Übertragen von Programmen"},
+                  {"id":"c","label":"C – Zum Anschluss eines Lautsprechers"},
+                  {"id":"d","label":"D – Zum Einschalten des Arduino"}
+                ],
+                "correct":["b"],
+                "explain":"B – Über USB werden Programme auf den Arduino geladen."
+              },
+              {
+                "text":"3. Warum braucht eine LED einen Widerstand?",
+                "choices":[
+                  {"id":"a","label":"A – Damit sie heller leuchtet"},
+                  {"id":"b","label":"B – Damit sie die Farbe wechselt"},
+                  {"id":"c","label":"C – Damit der Strom begrenzt wird"},
+                  {"id":"d","label":"D – Damit sie schneller blinkt"}
+                ],
+                "correct":["c"],
+                "explain":"C – Ohne Widerstand würde zu viel Strom fließen."
+              },
+              {
+                "text":"4. Was bedeutet HIGH an einem Arduino-Pin?",
+                "choices":[
+                  {"id":"a","label":"A – Der Pin ist ausgeschaltet"},
+                  {"id":"b","label":"B – Der Pin liefert Spannung"},
+                  {"id":"c","label":"C – Der Pin ist kaputt"},
+                  {"id":"d","label":"D – Der Pin ist geerdet"}
+                ],
+                "correct":["b"],
+                "explain":"B – HIGH bedeutet: Spannung liegt an."
+              },
+              {
+                "text":"5. Was ist eine Reihenschaltung?",
+                "choices":[
+                  {"id":"a","label":"A – Bauteile sind nebeneinander verbunden"},
+                  {"id":"b","label":"B – Strom teilt sich auf mehrere Wege auf"},
+                  {"id":"c","label":"C – Strom fließt nacheinander durch alle Bauteile"},
+                  {"id":"d","label":"D – Es fließt kein Strom"}
+                ],
+                "correct":["c"],
+                "explain":"C – In der Reihenschaltung fließt der Strom durch alle Bauteile hintereinander."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+
+     
+
+      <div class="wb-callout">
+        <strong>Wichtig:</strong> 
+        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
+        OneNote einfügen.</p>
+      </div>
+      
+    </section>
+  </div>
+
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_lernbaustein_s1-5__" });
+  </script>
+</body>
+</html>
