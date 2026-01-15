@@ -486,6 +486,17 @@ ${fi.input.value || ""}
     }, 0);
   }
 
+  function postWebhook(url, payload){
+    if(!url) return;
+    try{
+      fetch(url, {
+        method: "POST",
+        headers: {"Content-Type":"application/json;charset=utf-8"},
+        body: JSON.stringify(payload || {})
+      });
+    }catch(_){}
+  }
+
   function getBlockMounts(root, type){
     return qsa(`[data-wb-type="${type}"]`, root).filter(m => m.__wbConfig || qs("script.wb-config", m));
   }
@@ -716,6 +727,11 @@ ${fi.input.value || ""}
 
     const fileName = (cfg && cfg.exportName) ? cfg.exportName : "ergebnisse.txt";
     downloadText(fileName, textLines.join("\n"));
+    if(cfg && cfg.webhookUrl){
+      const url = String(cfg.webhookUrl).trim();
+      const email = (cfg.webhookEmail != null) ? String(cfg.webhookEmail) : "";
+      if(url) postWebhook(url, { name: studentName, email, message: textLines.join("\n") });
+    }
 
     if(resultsPage && typeof showPage === "function"){
       const pageNum = Number(resultsPage.getAttribute("data-wb-page") || "0");
