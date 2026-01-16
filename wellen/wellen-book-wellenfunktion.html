@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -33,9 +33,17 @@
     }
     </script>
 
-    <section data-wb-page="1" data-wb-page-title="Wellenfunktion zeichnen">
+    <section data-wb-page="1" data-wb-page-title="Wellenfunktionen verstehen">
       <h1>Herzlich Willkommen!</h1>
       <p class="wb-muted">Hier lernst du nun, was eine Wellenfunktion ist und welche Möglichkeiten es gibt, sie zu zeichnen.</p>
+
+      <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Bearbeite alle Aufgaben auf dieser Internetseite, wenn du fertig bist, dann schreibe deinen Namen links unten in das Namensfeld und 
+        klicke auf den Button &quot;Summary & submit&quot; ganz unten, um deine Antworten abzusenden. Auf der Seite &quot;Ergebnisse&quot; findest du alle deine Antworten, außerdem wird noch eine txt-Datei mit den Ergebnissen heruntergeladen.
+      </p>
+    </div>
+
       <h2>Was ist eine Wellenfunktion?</h2>
       <p> Eine Wellenfunktion ist eine Vorschrift, die jedem <b>Ort</b> und jeder <b>Zeit</b> eine <b>Auslenkung</b> zuordnet. <br>
         <b>Ort entlang des Seils: x</b> <br>
@@ -47,6 +55,7 @@
         <p>
         Das bedeutet: Wenn du x und t vorgibst, sagt dir die Funktion, wie stark das Teilchen an dieser Stelle  gerade ausgelenkt ist. </p>
 
+         <div class="wb-section-break"></div>
 
         <div class="wb-callout">
       <strong>Wichtig:</strong>
@@ -54,15 +63,33 @@
         es wäre eine dreidimensionale Fläche. Vielleicht probierst du es mit Geogebra aus? </p>
     </div>
   
+   <div class="wb-section-break"></div>
+
+        <div data-wb-type="reveal">
+          <script type="application/json" class="wb-config">
+            {
+              "id":"reveal-wf-1",
+              "title":"Nachdenkfrage",
+              "question":"Warum kann man y(x,t) nicht einfach als 2D-Diagramm zeichnen?",
+              "answer":"Weil y von zwei Variablen abhängt (Ort und Zeit). Das wäre eine 3D-Fläche. Zum Zeichnen fixiert man entweder x oder t.",
+              "buttonLabel":"Antwort anzeigen",
+              "buttonHideLabel":"Antwort verbergen"
+            }
+          </script>
+        </div>
+
+         <div class="wb-section-break"></div>
 
         <p>Deshalb teilt man die Wellenfunktion zum Zeichnen auf zwei verschiedene Diagrammtypen auf. <br>
         Einmal zeichnet man die Funktion in <b>Abhängigkeit vom Ort</b> (bei festgehaltener Zeit) und einmal in <b>Abhängigkeit von der Zeit</b> (bei festgehaltenem Ort). </p>
         <p>Beide Diagramme sind Sinuskurven, aber sie zeigen <b>völlig verschiedene Dinge</b>,
         je nachdem, was man festhält.</p>
 
-         <div class="wb-section-break"></div>
+       </section>
 
-<h2>1. Zeitlicher Verlauf: Schwingung an einem festen Ort zeichnen ( y-t-Diagramm )</h2>
+
+        <section data-wb-page="2" data-wb-page-title="Zeitlicher Verlauf">
+    <h1>1. Zeitlicher Verlauf: Schwingung an einem festen Ort zeichnen ( y-t-Diagramm )</h1>
       <p> 
 
 Das ist der leichtere Part, da du das schon von den Schwingungen kennst. Du wählst einen festen Ort (also ein bestimmtes Teilchen/Seilstück) und beobachtest, 
@@ -97,7 +124,7 @@ Teilchen phasenverschoben. Die Phasenverschiebung Δφ = &omega; t hängt davon 
 
   <div class="wb-section-break"></div>
 
- <h3>Betrachtung verschiedener Orte</h3>
+ <h2>Betrachtung verschiedener Orte</h2>
 
  <p>Wenn man den Anfang der Welle bei x=0 betrachtet, so hat dieses Teilchen die Phase φ = 0 zur Zeit t=0.</p>
  <p>Wenn man nun den Ort um einen Abstand Δx weiter wandert, ändert sich die Phase um Δφ = k·Δx = 2π/λ·Δx, wobei k die Wellenzahl ist (k = 2π/λ). </p>
@@ -107,7 +134,7 @@ Teilchen phasenverschoben. Die Phasenverschiebung Δφ = &omega; t hängt davon 
 
  <div class="wb-section-break"></div>
 
-<h3>Schritt für Schritt-Anleitung</h3>
+<h2>Schritt für Schritt-Anleitung</h2>
 <p>Schaut man sich nun einen Punkt an, der einen <b>bestimmten Abstand Δx</b> vom Anfang der Welle hat, so schwingt dieser Punkt mit einer Phasenverschiebung Δφ im Vergleich zum Anfangspunkt der Welle.</p>
 <p>Nun kommt eine einfache Erklärung, wie man ohne die Phasenverschiebung zu berechnen, die Welllw zeichnen kann:</p>
 <p> Man schaut,  <b>wann</b> die Schwingung an dem Punkt ankommt, den man betrachtet, wenn zum Zeitpunkt t=0 die Schwingung am Anfangspunkt startet. </p>
@@ -119,13 +146,31 @@ Teilchen phasenverschoben. Die Phasenverschiebung Δφ = &omega; t hängt davon 
 <p>Zum Zeitpunkt t=0s fängt der Erreger an mit Periodendauer T=0,5s nach oben zu schwingen.</p>
 <p>Da es eine konstante Bewegung ist, mit der sich die Störung ausbreitet, gilt: c=Δx/t, also t = Δx/c = 1,05m / 0,3m/s = 3,5s, und somit fängt der Punkt erst 3,5s später an zu schwingen. Solange steht der Punkt still.
   </p>
-  <p>Danach schwingt der Punkt mit der gleichen Amplitude A=20cm und der gleichen Periodendauer T=0,5s wie der Erreger nach oben zu schwingen: 
+  <p>Danach fängt der Punkt mit der gleichen Amplitude A=20cm und der gleichen Periodendauer T=0,5s wie der Erreger nach oben an zu schwingen: 
 </p>
     <div class="wb-img">
   <img src="pdf-bilder/bild04.png" alt="Momentaufnahme einer harmonischen Welle">
 </div>
 
+
  <div class="wb-section-break"></div>
+
+  <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"revealkoch1",
+          "title":"Schreibe die Vorgehensweise, wie man ein y-t Diagramm an einem bestimmten Ort zeichnet in dein Heft.",
+          "question":"Schreibe es wie ein Kochrezept auf, damit du es immer wiederholen kannst.",
+          "answer":"1. Berechne den Zeitpunkt, wann die Welle an dem betrachteten Ort ankommt: t = Δx/c.           2. Zeichne die Sinuskurve mit Amplitude A und Periodendauer T, die erst ab diesem Zeitpunkt beginnt zu schwingen (davor y=0) nach rechts. Die Kurve sieht aus, wie deie Schwingung der Quelle, nur um t = Δx/c nach rechts verschoben.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+</section>
+
+<section data-wb-page="3" data-wb-page-title="Momentaufnahme">
         <h2>2. Momentaufnahme: Welle zu einem festen Zeitpunkt zeichnen ( y-x-Diagramm )</h2>
       <p> 
 
@@ -155,7 +200,7 @@ y-x-Diagramm ist eine Sinuskurve. </p>
   <img src="pdf-bilder/bild02.png" alt="Momentaufnahme einer harmonischen Welle">
 </div>
   <div class="wb-section-break"></div>
-<h3>Rückwärts denken</h3>
+<h2>Rückwärts denken</h2>
 <p>Wie du bei der Simulation vielleicht gemerkt hast, muss man <b>eine Welle rückwärts denken</b>, wenn man sie <b>zu einem bestimmten Zeitpunkt zeichen</b> will, denn die 
   Welle breitet sich mit der Zeit aus.   </p>
   <p>Hier eine Darstellung der Ausbreitung der Welle zu verschiednen Zeitpunkten:
@@ -166,7 +211,7 @@ y-x-Diagramm ist eine Sinuskurve. </p>
 </div>
 <div class="wb-section-break"></div>
 
-<h3>Schritt für Schritt-Anleitung</h3>
+<h2>Schritt für Schritt-Anleitung</h2>
 <p> Um ein Momentanbild der Welle zu zeichnen, startest du mit dem <b>Anfang der Welle</b> und betrachtest die Auslenkung y in Abhängigkeit von x zu einem festen Zeitpunkt t. </p>
 <p>Du überlegst, <b>wie weit</b> die Welle in der Zeit gekommen ist, die du betrachten möchtest. Da sich die Welle mit konstanter Geschwindigkeit c ausbreitet, ist die Welle
 zum Zeitpunkt t_0 <b>$\delta x = c \cdot t_0$</b> gekommen. </p>
@@ -187,6 +232,22 @@ wir betrachten die Schwingung als Momentanbild nach 1s.</p>
 </div>
 
 <div class="wb-section-break"></div>
+
+<div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-koch2",
+          "title":"Schreibe die Vorgehensweise, wie man ein y-x Diagramm zu einem bestimmten Zeitpunkt zeichnet in dein Heft.",
+          "question":"Schreibe es wie ein Kochrezept auf, damit du es immer wiederholen kannst.",
+          "answer":"1. Berechne den Ort, bis wohin die Welle in der Zeit t gekommen ist: Δx = c * t.            2. Zeichne die Sinuskurve mit Amplitude A und Periodendauer T, von da an rückwärts nach links (danach y=0). Fängt die Quelle an, zuerst nach oben zu schwingen, dann zeichnest du auch erst nach oben.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+<div class="wb-section-break"></div>
+      
 
 <h2>Warum beide Diagramme Sinuskurven sind, aber etwas völlig anderes zeigen</h2>
       
@@ -212,13 +273,84 @@ wir betrachten die Schwingung als Momentanbild nach 1s.</p>
 </div>
 <div class="wb-section-break"></div>
 
+
+<h3>Mini-Check 2</h3>
+<p class="wb-muted">Ordne die Diagramme und Begriffe richtig zu.</p>
+
+<div data-wb-type="reveal">
+  <script type="application/json" class="wb-config">
+    {
+      "id":"reveal-wf-3",
+      "title":"Nachdenkfrage",
+      "question":"Was passiert mit der Momentaufnahme, wenn die Zeit weiterläuft?",
+      "answer":"Die ganze Wellenform verschiebt sich im Raum. Die Form bleibt sinusförmig, aber sie liegt an einer anderen Stelle.",
+      "buttonLabel":"Antwort anzeigen",
+      "buttonHideLabel":"Antwort verbergen"
+    }
+  </script>
+</div>
+
+<div data-wb-type="reveal-img">
+  <script type="application/json" class="wb-config">
+    {
+      "id":"reveal-img-wf-2",
+      "title":"Momentaufnahme",
+      "question":"Klicke, um ein Beispiel für ein y-x-Diagramm zu sehen.",
+      "src":"pdf-bilder/bild02.png",
+      "alt":"Beispiel eines y-x-Diagramms",
+      "buttonLabel":"Bild anzeigen",
+      "buttonHideLabel":"Bild verbergen"
+    }
+  </script>
+</div>
+
+<div class="wb-section-break"></div>
+
+<div data-p2 class="p2">
+  <div class="p2-hint">Setze die passenden Paare zusammen.</div>
+
+  <div class="p2-banks">
+    <div>
+      <div class="p2-col-title">Begriffe</div>
+      <div class="p2-bank" data-left-bank>
+        <div class="p2-piece p2-left" data-side="L" data-pair="1">Momentaufnahme</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="2">Zeitlicher Verlauf</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="3">t fest</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="p2-col-title">Beschreibungen</div>
+      <div class="p2-bank" data-right-bank>
+        <div class="p2-piece p2-right" data-side="R" data-pair="1">Form der Welle im Raum</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="2">Schwingung eines festen Ortes</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="3">y-x-Diagramm</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p2-row" style="margin-top:12px">
+    <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+    <button class="wb-btn" type="button" data-reset>Zur&uuml;cksetzen</button>
+    <button class="wb-btn primary" type="button" data-check>&#220;berpr&uuml;fen</button>
+    <div class="p2-score" data-score></div>
+  </div>
+
+  <div style="margin-top:12px">
+    <div class="p2-col-title">Gel&ouml;st</div>
+    <div class="p2-solved" data-solved></div>
+  </div>
+</div>
+
+
+
 <h2>Aufgaben</h2>
   <p><b>Heftaufschrieb:</b> Beschreibe in deinen eigenen Worten die beiten Darstellungsweisen einer Welle, einmal als Schwingung eines Ortes und einmal als Momentanbild. 
     Gehe auch auf die genaue Vorgehensweise zur Zeichnung der beiden Diagramme ein.</p>
       <p> <b>Heftaufschrieb:</b> Erkläre nochmal genau den Unterschied zwischen einem y-x-Diagramm und einem y-t-Diagramm, was jeweils dargestellt wird. </p>
     </section>
 
-     <section data-wb-page="2" data-wb-page-title="Teste dein Wissen">
+     <section data-wb-page="4" data-wb-page-title="Teste dein Wissen">
 
    
       <h1>Interaktive Aufgaben</h1>
@@ -410,7 +542,6 @@ wir betrachten die Schwingung als Momentanbild nach 1s.</p>
           "storagePrefix":"wellen_",
           "exportName":"wellen-ergebnisse.txt",
           "fields":[
-            {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
             {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier..."}
           ]
         }
@@ -419,7 +550,7 @@ wir betrachten die Schwingung als Momentanbild nach 1s.</p>
 
     </section>
 
-<section data-wb-page="3" data-wb-page-title="Physikalische Größen">
+<section data-wb-page="5" data-wb-page-title="Physikalische Größen">
       <h1>Wichtige Größen zur Beschreibung einer harmonischen Welle</h1>
       <p class="wb-muted">Hier lernst du, welche Größen zur Beschreibung einer harmonischen Welle verwendet werden und wie sie miteinander zusammenhängen.</p>
       <h2>Physikalische Größen</h2>
@@ -654,7 +785,7 @@ Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle a
 
     </section>
 
-<section data-wb-page="4" data-wb-page-title="Wellenfunktion aufstellen">
+<section data-wb-page="6" data-wb-page-title="Wellenfunktion aufstellen">
       <h1>Aufstellen der Wellenfunktion</h1>
       <p class="wb-muted">Hier lernst du nun, wie genau die Wellenfunktion aussieht und wie du sie Schritt füt Schritt aufstellst.</p>
       <h2>Veranschaulichung des Vorgangs</h2>
@@ -665,13 +796,11 @@ Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle a
         <b>y-Richtung</b> ausgelenkt, die anderen Körper sind noch in Ruhe. </p> 
         <p>Im Bild darunter hat Körper A schon eine gewisse Auslenkung, der zweite Körper wird gerade von der Störung erfasst 
           und beginnt gerade in positive y-Richtung zu schwingen usw.</p>
-        <p>Ziel ist es die Auslenkung eines von der Welle erfassten Teilchens in 
+        <p>Ziel ist es, die Auslenkung eines von der Welle erfassten Teilchens in 
         <b>y-Richtung</b> an einem
         <b> beliebigen Ort x</b> und zu einer
         <b> beliebigen Zeit t</b> mathematisch zu beschreiben, z.B. im Punkt P. </p>
         <p>Die entsprechende Funktion ist die von uns gesuchte <b>Wellenfunktion</b>. </p>
-        <p>Die Auslenkung des Körpers A in Abhängigkeit von der Zeit t  beschreibt eine <b>Sinuskurve</b>, wie im unteren Bild dargestellt. </p>
-        <p>Die <b>x-Achse</b> zeigt die <b>Zeit t</b>, die <b>y-Achse</b> die <b>Auslenkung y des Körpers A</b>. </p>
         <p>Die <b>Periode T</b> der Schwingung ist die Zeit, die der Körper A für eine volle Schwingung benötigt. </p>
         <p>Die <b>Amplitude ŷ</b> ist die maximale Auslenkung des Körpers A aus seiner Ruhelage. </p>
         <p>Die <b>Frequenz f</b> ist die Anzahl der Schwingungen pro Sekunde. </p>
@@ -684,33 +813,33 @@ Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle a
       <div class="wb-section-break"></div>
 
         <h2>Mathematische Überlegungen</h2>
-      <p> 
-</p>
+      <p> Die Funktion, die die Schwingung des Körpers A beschreibt, lautet: </p>
+      <p> \[y(t) = ŷ · sin(\omega · t) $ mit $ \omega = 2\pi f =\frac{2\pi}{T}\]</p>
+      <p>  Aufgrund der Kopplung der Teilchen wandert die Störung mit der Geschwindigkeit c
+        entlang der positiven x-Richtung. </p>
+      <p>  Somit wird der Punkt P erst nach einer gewissen Zeit $\Delta t$ von der Störung erfasst, es gilt: </p>
+      <p> \[ \Delta t = \frac{x}{c} \] </p>
+      <p>Der Körper P fängt also um die Zeit $\Delta t$ verspätet an zu schwingen. Somit gilt für die Funktion, die dessen Schwingung beschreibt:</p>
+        <p> \[y(t) = ŷ · sin(\omega · (t - \Delta t)) \] </p>
+      <p> Einsetzen von $\Delta t$ liefert: </p>  
+      <p> \[y(x,t) = ŷ · sin(\omega · (t - \frac{x}{c})) \] </p>
+      <p>Umschreiben von $\omega = \frac{2\pi}{T}$ liefert:</p>
+      <p> \[y(x,t) = ŷ · sin(\frac{2\pi}{T} · ( t - \frac{x}{c})) \] </p>
+      <p>Ausmultiplizieren von $\frac{1}{T}$ ergibt:</p>
+      <p> \[y(x,t) = ŷ · sin(2\pi · ( \frac{t}{T} - \frac{x}{T \cdot c})) \] </p>
+      <p>Umschreiben von $c = \lambda f \Rightarrow \lambda = c \cdot T  $ liefert:</p>
+      <p> \[y(x,t) = ŷ · sin(2\pi · ( \frac{t}{T} - \frac{x}{\lambda})) \] </p>
 
+       <div class="wb-section-break"></div>
+      <p>Dies ist die gesuchte Wellenfunktion, die die Auslenkung y eines von der Welle erfassten Teilchens an einem beliebigen Ort x und zu einer beliebigen Zeit t beschreibt. </p>
 
-     <div class="wb-img">
-  <img src="pdf-bilder/bild02.png" alt="Momentaufnahme einer harmonischen Welle">
-</div>
-
-<h2>Dann beides zusammen</h2>
-      <p> 
-</p>
-
-
-     <div class="wb-img">
-  <img src="pdf-bilder/bild01.png" alt="Zeitlicher Verlauf einer harmonischen Welle">
-</div>
-
-<h2>Warum beide Diagramme Sinuskurven sind, aber etwas völlig anderes zeigen</h2>
-      <p>
-
-
-</p>
-
-
-     <div class="wb-img">
-  <img src="pdf-bilder/bild03.png" alt="Vergleich y-x- und y-t-Diagramm">
-</div>
+      <div class="wb-section-break"></div>
+     <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>An dem Minus vor dem $\frac{x}{\lambda}$ sieht man auch die Verschiebung nach rechts und das "rückwärts zeichnen".</p>
+    </div> 
+ 
+ 
 
     </section>
 
