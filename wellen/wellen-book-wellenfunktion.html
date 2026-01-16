@@ -394,7 +394,7 @@ wir betrachten die Schwingung als Momentanbild nach 1s.</p>
     "explain": "Momentaufnahme: Zeitpunkt einfrieren → räumliches Profil y(x,t_0)."
   },
   {
-    "text": "Welche Achsen gehören zum y-x-Diagramm einer Momentaufnahme?",
+    "text": "Welche Achsen gehören zum Diagramm einer Momentaufnahme?",
     "choices": [
       { "id": "a", "label": "x-Achse: Ort x, y-Achse: Auslenkung y." },
       { "id": "b", "label": "x-Achse: Zeit t, y-Achse: Auslenkung y." },
@@ -617,7 +617,13 @@ Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle a
       <p>
       <b> $ c = \lambda \cdot f = \frac{\lambda}{T} $ </b>
       </p>  
+      <div class="wb-section-break"></div>
 
+      <p> Schau dir in der Simulation auf folgender Internetseite (etwas weiter unten auf der Seite) den Zusammenhang zwischen 
+        Wellenlänge, Phasengeschwindigkeit und Frequenz an und werde vertraut damit: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/groessen-zur-beschreibung-einer-welle" target="_blank" rel="noopener">Zur Simulation</a>
+</p>
+
+      
       <div class="wb-section-break"></div>
           <h2>Aufgaben</h2>
 
@@ -840,6 +846,150 @@ Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle a
     </div> 
  
  
+
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgaben</h2>
+
+    <div data-wb-type="mcq">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"mcq-wf-aufstellen-1",
+        "title":"Multiple Choice",
+        "questions":[
+          {
+            "text": "Was bedeutet der Ausdruck t - x/c in der Wellenfunktion?",
+            "choices": [
+              { "id": "a", "label": "Die Schwingung am Ort x startet um die Laufzeit x/c später." },
+              { "id": "b", "label": "Die Welle breitet sich nach links aus." },
+              { "id": "c", "label": "Die Amplitude wird kleiner, je größer x ist." }
+            ],
+            "correct": ["a"],
+            "explain": "x/c ist die Verzögerung, bis die Störung den Ort x erreicht."
+          },
+          {
+            "text": "Wodurch wird das Minus vor x/λ in y(x,t) sichtbar?",
+            "choices": [
+              { "id": "a", "label": "Die Welle muss beim Zeichnen der Momentaufnahme nach links rückwärts aufgebaut werden." },
+              { "id": "b", "label": "Die Welle verliert Energie." },
+              { "id": "c", "label": "Die Frequenz wird kleiner." }
+            ],
+            "correct": ["a"],
+            "explain": "Das Minus steht für eine Verschiebung nach rechts bzw. das rückwärts Zeichnen im Raum."
+          }
+        ]
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-wf-aufstellen-1",
+          "title":"Nachdenkfrage",
+          "question":"Wie müsste die Wellenfunktion aussehen, wenn sich die Welle nach links ausbreitet? Begründe anhand des Terms mit x/λ.",
+          "answer":"Dann würde sich das Vorzeichen umdrehen: y(x,t)=y·sin(2π( t/T + x/λ )). Das Plus bedeutet, dass die Form nach links wandert.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"cloze-wf-aufstellen-1",
+        "title":"Lückentext: Wellenfunktion aufstellen",
+        "bank":[
+          "y·sin(ω·t)",
+          "Δt = x/c",
+          "t - Δt",
+          "y·sin(ω·(t - Δt))",
+          "ω = 2π/T",
+          "c = λ·f",
+          "λ = c·T",
+          "y(x,t)=y·sin(2π( t/T - x/λ))"
+        ],
+        "segments":[
+          { "t":"text", "v":"Die Schwingung am Erreger lautet " },
+          { "t":"gap", "a":"y·sin(ω·t)" },
+          { "t":"text", "v":". Die Laufzeit zur Stelle x ist " },
+          { "t":"gap", "a":"Δt = x/c" },
+          { "t":"text", "v":", daher ersetzt man t durch " },
+          { "t":"gap", "a":"t - Δt" },
+          { "t":"text", "v":" und erhält " },
+          { "t":"gap", "a":"y·sin(ω·(t - Δt))" },
+          { "t":"text", "v":". Mit " },
+          { "t":"gap", "a":"ω = 2π/T" },
+          { "t":"text", "v":" sowie " },
+          { "t":"gap", "a":"λ = c·T" },
+          { "t":"text", "v":" folgt schließlich " },
+          { "t":"gap", "a":"y(x,t)=y·sin(2π( t/T - x/λ))" },
+          { "t":"text", "v":"." }
+        ]
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-p2 class="p2">
+      <div class="p2-hint">Ordne die Begriffe den Beschreibungen aus dieser Seite zu.</div>
+
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Begriffe</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">Amplitude</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Periode T</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">Frequenz f</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">Laufzeit Δt</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="p2-col-title">Beschreibungen</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Maximale Auslenkung des Körpers A</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Zeit für eine volle Schwingung</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Schwingungen pro Sekunde</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">Zeit, bis die Störung den Ort x erreicht</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zur&uuml;cksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>&#220;berpr&uuml;fen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="p2-col-title">Gel&ouml;st</div>
+        <div class="p2-solved" data-solved></div>
+      </div>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"essay-wf-aufstellen-1",
+        "title":"Transfer: Erkläre die Herleitung der Wellenfunktion in eigenen Worten und nenne ein Beispiel aus dem Alltag, das zur Bedeutung von t - x/c passt.",
+        "storagePrefix":"wellen_",
+        "exportName":"wellen-ergebnisse.txt",
+        "fields":[
+          {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier..."}
+        ]
+      }
+      </script>
+    </div>
 
     </section>
 

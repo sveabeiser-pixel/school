@@ -114,12 +114,22 @@ function el(tag, attrs = {}, children = []) {
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const qEls = [];
 
+    function shuffle(arr){
+      for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
     cfg.questions.forEach((q, qi) => {
       const qEl = el("div", {class:"wb-q", "data-qi": String(qi)});
       qEl.appendChild(el("h3", {}, [`${qi+1}. ${q.text || ""}`]));
       const type = q.multiple ? "checkbox" : "radio";
       const name = `wbq_${cfg.id || "mcq"}_${qi}`;
-      (q.choices || []).forEach(choice => {
+      const choices = (q.choices || []).slice();
+      if(cfg.shuffleChoices !== false) shuffle(choices);
+      choices.forEach(choice => {
         const inp = el("input", {type, name, value: choice.id || ""});
         const label = el("label", {class:"wb-choice"}, [inp, el("span", {}, [choice.label || ""])]);
         qEl.appendChild(label);
