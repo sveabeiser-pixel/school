@@ -113,6 +113,7 @@ function el(tag, attrs = {}, children = []) {
     const container = el("div", {});
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const qEls = [];
+    const storageKey = (cfg.storagePrefix || "wb_") + "mcq_" + (cfg.__wbKey || cfg.id || "mcq");
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -140,6 +141,34 @@ function el(tag, attrs = {}, children = []) {
       qEls.push(qEl);
     });
 
+    function save(){
+      try{
+        const data = {};
+        qEls.forEach(qEl => {
+          const qi = Number(qEl.getAttribute("data-qi"));
+          data[qi] = qsa("input", qEl).filter(i => i.checked).map(i => i.value);
+        });
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }catch(_e){}
+    }
+
+    function loadSaved(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return;
+        const data = JSON.parse(raw);
+        qEls.forEach(qEl => {
+          const qi = Number(qEl.getAttribute("data-qi"));
+          const selected = data[qi] || [];
+          qsa("input", qEl).forEach(i => i.checked = selected.includes(i.value));
+        });
+      }catch(_e){}
+    }
+
+    qEls.forEach(qEl => {
+      qsa("input", qEl).forEach(i => i.addEventListener("change", save));
+    });
+
     function check(){
       let correctCount = 0;
       qEls.forEach(qEl => {
@@ -165,12 +194,14 @@ function el(tag, attrs = {}, children = []) {
         if(fb) fb.textContent = "";
       });
       scoreEl.textContent = "";
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
     }
     const controls = el("div", {class:"wb-row"}, [
       el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
       el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
       scoreEl
     ]);
+    loadSaved();
     return { node: wrapBlock("mcq", cfg, el("div", {}, [container, controls])), check, reset };
   }
 
@@ -180,6 +211,7 @@ function el(tag, attrs = {}, children = []) {
     const bank = el("div", {class:"wb-bank", "data-bank":"1"});
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const gaps = [];
+    const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + (cfg.__wbKey || cfg.id || "cloze");
 
         // --- shuffle (einmal beim Start) ---
     function shuffle(arr){
@@ -211,6 +243,7 @@ function el(tag, attrs = {}, children = []) {
         const fromGap = chip.parentElement && chip.parentElement.closest(".wb-gap");
         bank.appendChild(chip);
         if(fromGap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
+        save();
       });
     }
 
@@ -241,6 +274,7 @@ function el(tag, attrs = {}, children = []) {
         gap.appendChild(chip);
         gap.classList.add("filled");
         gap.classList.remove("ok","bad");
+        save();
       });
     }
 
@@ -254,6 +288,7 @@ function el(tag, attrs = {}, children = []) {
       const fromGap = chip.parentElement && chip.parentElement.closest(".wb-gap");
       bank.appendChild(chip);
       if(fromGap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
+      save();
     });
 
 
@@ -269,6 +304,41 @@ function el(tag, attrs = {}, children = []) {
       }
     });
     
+
+    function save(){
+      try{
+        const data = gaps.map(g => {
+          const chip = qs(".wb-chip", g);
+          return chip ? (chip.getAttribute("data-token") || "") : "";
+        });
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }catch(_e){}
+    }
+
+    function loadSaved(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return;
+        const data = JSON.parse(raw);
+        if(!Array.isArray(data)) return;
+        const chipMap = {};
+        qsa(".wb-chip", bank).forEach(chip => {
+          const token = chip.getAttribute("data-token") || "";
+          if(!chipMap[token]) chipMap[token] = [];
+          chipMap[token].push(chip);
+        });
+        gaps.forEach((g, idx) => {
+          const token = data[idx] || "";
+          const pool = chipMap[token];
+          if(!token || !pool || pool.length === 0) return;
+          const chip = pool.shift();
+          g.innerHTML = "";
+          g.appendChild(chip);
+          g.classList.add("filled");
+          g.classList.remove("ok","bad");
+        });
+      }catch(_e){}
+    }
 
     function check(){
       let okCount = 0;
@@ -292,6 +362,7 @@ function el(tag, attrs = {}, children = []) {
         g.innerHTML = "&nbsp;";
       });
       scoreEl.textContent = "";
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
     }
     const hint = el("div", {class:"wb-drop-hint"}, [cfg.dropHint || "Hinweis: Ziehe Wörter in die Lücken. Klick = zurück in Wortbank."]);
     const controls = el("div", {class:"wb-row"}, [
@@ -299,6 +370,7 @@ function el(tag, attrs = {}, children = []) {
       el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
       scoreEl
     ]);
+    loadSaved();
     return { node: wrapBlock("cloze", cfg, el("div", {}, [bank, text, hint, controls])), check, reset };
   }
 
@@ -396,6 +468,7 @@ ${fi.input.value || ""}
     const answerHtml = cfg.answerHtml;
     const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
+    const storageKey = (cfg.storagePrefix || "wb_") + "reveal_" + (cfg.__wbKey || cfg.id || "reveal");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, [answer]);
@@ -405,11 +478,18 @@ ${fi.input.value || ""}
     aEl.style.display = "none";
 
     const btn = el("button", {class:"wb-btn primary wb-reveal-btn", type:"button"}, [btnShow]);
+    function setOpen(isOpen){
+      aEl.style.display = isOpen ? "" : "none";
+      btn.textContent = isOpen ? btnHide : btnShow;
+      try{ localStorage.setItem(storageKey, isOpen ? "1" : "0"); }catch(_e){}
+    }
     btn.addEventListener("click", () => {
       const isHidden = aEl.style.display === "none";
-      aEl.style.display = isHidden ? "" : "none";
-      btn.textContent = isHidden ? btnHide : btnShow;
+      setOpen(isHidden);
     });
+    try{
+      if(localStorage.getItem(storageKey) === "1") setOpen(true);
+    }catch(_e){}
 
     return { node: wrapBlock("reveal", cfg, el("div", {class:"wb-reveal"}, [qEl, btn, aEl])) };
   }
@@ -420,6 +500,7 @@ ${fi.input.value || ""}
     const alt = String(cfg.alt || "");
     const btnShow = String(cfg.buttonLabel || "Bild anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Bild verbergen");
+    const storageKey = (cfg.storagePrefix || "wb_") + "revealimg_" + (cfg.__wbKey || cfg.id || "revealimg");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const imgEl = el("img", {src, alt, class:"wb-reveal-img"}, []);
@@ -427,16 +508,23 @@ ${fi.input.value || ""}
     aEl.style.display = "none";
 
     const btn = el("button", {class:"wb-btn primary wb-reveal-btn", type:"button"}, [btnShow]);
+    function setOpen(isOpen){
+      aEl.style.display = isOpen ? "" : "none";
+      btn.textContent = isOpen ? btnHide : btnShow;
+      try{ localStorage.setItem(storageKey, isOpen ? "1" : "0"); }catch(_e){}
+    }
     btn.addEventListener("click", () => {
       const isHidden = aEl.style.display === "none";
-      aEl.style.display = isHidden ? "" : "none";
-      btn.textContent = isHidden ? btnHide : btnShow;
+      setOpen(isHidden);
     });
+    try{
+      if(localStorage.getItem(storageKey) === "1") setOpen(true);
+    }catch(_e){}
 
     return { node: wrapBlock("reveal-img", cfg, el("div", {class:"wb-reveal"}, [qEl, btn, aEl])) };
   }
 
-  function mountBlockOne(mountEl, opts={}){
+  function mountBlockOne(mountEl, opts={}, idx=0){
   const type = (mountEl.getAttribute("data-wb-type") || "").trim();
 
   const cfgScript = qs("script.wb-config[type='application/json']", mountEl);
@@ -458,6 +546,10 @@ ${fi.input.value || ""}
   mountEl.__wbType = type;
 
   if(opts.storagePrefix && cfg.storagePrefix == null) cfg.storagePrefix = opts.storagePrefix;
+  if(!cfg.__wbKey){
+    const elKey = mountEl.getAttribute("data-wb-id");
+    cfg.__wbKey = elKey || cfg.id || `${type}_${idx}`;
+  }
 
   let inst;
   if(type === "mcq") inst = createMCQ(cfg);
@@ -479,9 +571,9 @@ ${fi.input.value || ""}
 
   function autoMountBlocks(opts={}){
   const mounts = qsa("[data-wb-type]").filter(m => !m.hasAttribute("data-wb-mounted"));
-  return mounts.map(m => {
+  return mounts.map((m, idx) => {
     m.setAttribute("data-wb-mounted","1");
-    return mountBlockOne(m, opts);
+    return mountBlockOne(m, opts, idx);
   }).filter(Boolean);
 }
 
@@ -1142,7 +1234,7 @@ ${fi.input.value || ""}
   // ---------- Puzzle2 (2-Teile zusammenführen) ----------
     // ---------- Puzzle2 (STRICT, 2 banks: left/right, NO pointer-capture) ----------
     // ---------- Puzzle2 (STRICT, 2 banks: left/right, Pointer+Touch+Mouse) ----------
-  function initPuzzle2(root){
+  function initPuzzle2(root, idx=0){
     const leftBank  = qs("[data-left-bank]", root);
     const rightBank = qs("[data-right-bank]", root);
     const solved    = qs("[data-solved]", root);
@@ -1150,6 +1242,8 @@ ${fi.input.value || ""}
     const btnShuffle= qs("[data-shuffle]", root);
     const btnReset  = qs("[data-reset]", root);
     const btnCheck  = qs("[data-check]", root);
+    const p2Id = root.getAttribute("data-p2-id") || root.id || `p2_${idx}`;
+    const storageKey = "wb_p2_" + p2Id;
 
 
     if(!leftBank || !rightBank || !solved) return;
@@ -1185,6 +1279,37 @@ ${fi.input.value || ""}
       : `Paare: ${pairs.length}/${totalPairs()} (noch nicht überprüft)`;
   }
 }
+
+    let isLoading = false;
+
+    function saveState(){
+      try{
+        const pairs = qsa(".p2-joined", solved).map(w => {
+          const left = qs(".p2-piece[data-side='L']", w);
+          return left ? (left.getAttribute("data-pair") || "") : "";
+        }).filter(Boolean);
+        localStorage.setItem(storageKey, JSON.stringify(pairs));
+      }catch(_e){}
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return;
+        const pairs = JSON.parse(raw);
+        if(!Array.isArray(pairs)) return;
+        isLoading = true;
+        pairs.forEach(pairId => {
+          const left = qs(`.p2-piece[data-side="L"][data-pair="${pairId}"]`, root);
+          const right = qs(`.p2-piece[data-side="R"][data-pair="${pairId}"]`, root);
+          if(left && right) join(left, right);
+        });
+        isLoading = false;
+        saveState();
+      }catch(_e){
+        isLoading = false;
+      }
+    }
 
 
     function lockPiece(p){
@@ -1238,6 +1363,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
 
   solved.appendChild(wrap);
   setScore(false); // noch nicht bewerten
+  if(!isLoading) saveState();
 }
 
 
@@ -1408,6 +1534,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
       });
       shuffleAll();
       setScore(false);
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
     }
 
     root.__p2 = { check, reset };
@@ -1416,14 +1543,15 @@ if(btnCheck) btnCheck.addEventListener("click", check);
     if(btnReset)   btnReset.addEventListener("click", reset);
 
     shuffleAll();
+    loadState();
     setScore(false);
   }
 
   function autoMountPuzzle2(){
     const mounts = qsa("[data-p2]").filter(m => !m.hasAttribute("data-p2-mounted"));
-    return mounts.map(m => {
+    return mounts.map((m, idx) => {
       m.setAttribute("data-p2-mounted", "1");
-      initPuzzle2(m);
+      initPuzzle2(m, idx);
       return m;
     });
   }
