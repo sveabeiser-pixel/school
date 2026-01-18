@@ -393,11 +393,15 @@ ${fi.input.value || ""}
   function createReveal(cfg){
     const question = String(cfg.question || "");
     const answer = String(cfg.answer || "");
+    const answerHtml = cfg.answerHtml;
     const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, [answer]);
+    if(answerHtml){
+      aEl.innerHTML = String(answerHtml);
+    }
     aEl.style.display = "none";
 
     const btn = el("button", {class:"wb-btn primary wb-reveal-btn", type:"button"}, [btnShow]);
