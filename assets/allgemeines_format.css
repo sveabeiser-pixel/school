@@ -265,10 +265,29 @@
   background: linear-gradient(180deg, #0b1727, #17355f);
   border-right-color: rgba(255,255,255,.06);
   color: #e7edf5;
+  height: calc(100vh - var(--wb-topH));
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: auto;
+  scrollbar-color: rgba(160,190,220,0.7) rgba(12,25,43,0.6);
 }
 .wb-book[data-theme="dark"] .wb-side-nav{
   background: #0c192b;
   color: var(--wb-text);
+  height: auto;
+  overflow: visible;
+}
+.wb-book[data-theme="dark"] .wb-sidebar::-webkit-scrollbar{
+  width: 12px;
+}
+.wb-book[data-theme="dark"] .wb-sidebar::-webkit-scrollbar-track{
+  background: rgba(12,25,43,0.6);
+}
+.wb-book[data-theme="dark"] .wb-sidebar::-webkit-scrollbar-thumb{
+  background: rgba(160,190,220,0.7);
+  border-radius: 10px;
+  border: 2px solid rgba(12,25,43,0.6);
 }
 .wb-book[data-theme="dark"] .wb-side-section-title{
   display:none;
@@ -389,6 +408,7 @@
 .wb-book[data-theme="dark"] .wb-side-footer{
   background: #0e1621;
   border-top-color: #374e70;
+  position: static;
 }
 .wb-book[data-theme="dark"] .wb-submit-btn{
   background: #1a283c;
@@ -728,7 +748,9 @@
   top: var(--wb-topH);
   bottom: 0;
   left: 0;
-  overflow:auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border-right: 1px solid rgba(0,0,0,.08);
   z-index: 60;
 
@@ -744,6 +766,12 @@
   color: var(--wb-text);
   padding: 0;
   min-height: calc(100% - 58px);
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: auto;
+  min-height: 0;
 }
 .wb-book .wb-side-section-title{
   display:none;
@@ -816,6 +844,10 @@
   padding: 14px;
   background: #ffffff;
   border-top: 1px solid var(--wb-line);
+  flex: 0 0 auto;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
 }
 .wb-book .wb-submit-btn{
   width: 100%;
