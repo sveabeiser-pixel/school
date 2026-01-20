@@ -1305,6 +1305,17 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   display: block;
 }
 
+/* Small task icons above exercises */
+.wb-book .wb-task-icon{
+  max-width: 160px;
+  margin: 8px 0;
+}
+.wb-book .wb-task-icon img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* Grid2: Bild zentriert und auf Text-Höhe gestreckt */
 .wb-book .grid2 .wb-img{
   display:flex;
