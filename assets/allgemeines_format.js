@@ -69,6 +69,40 @@ function el(tag, attrs = {}, children = []) {
     }
     return node;
   }
+
+  function assetBasePath(){
+    const scriptEl = document.querySelector('script[src*="allgemeines_format.js"]');
+    if(scriptEl && scriptEl.src){
+      return scriptEl.src.replace(/allgemeines_format\.js(\?.*)?$/, "");
+    }
+    return "../assets/";
+  }
+
+  function ensureTaskIcon(mountEl, type){
+    let prev = mountEl.previousElementSibling;
+    let found = false;
+    while(prev && prev.classList && prev.classList.contains("wb-task-icon")){
+      if(found) prev.remove();
+      else found = true;
+      prev = prev.previousElementSibling;
+    }
+    if(found) return;
+    const typeMap = {
+      "mcq": "mcq.png",
+      "reveal": "reveal.png",
+      "reveal-img": "reveal.png",
+      "cloze": "cloze.png",
+      "essay": "essay.png",
+      "p2": "p2.png"
+    };
+    const key = String(type || "").toLowerCase();
+    const imgName = typeMap[key];
+    if(!imgName) return;
+    const wrap = el_("div", {class:"wb-img wb-task-icon"}, [
+      el_("img", {src: assetBasePath() + imgName, alt: `Aufgabentyp: ${key.toUpperCase()}`})
+    ]);
+    mountEl.parentNode.insertBefore(wrap, mountEl);
+  }
   function readJsonScript(mountEl, selector){
     const cfgScript = qs(selector, mountEl);
     if(!cfgScript) throw new Error(`Missing JSON script: ${selector}`);
@@ -570,9 +604,10 @@ ${fi.input.value || ""}
 
 
   function autoMountBlocks(opts={}){
-  const mounts = qsa("[data-wb-type]").filter(m => !m.hasAttribute("data-wb-mounted"));
+  const mounts = qsa("[data-wb-type]").filter(m => !m.hasAttribute("data-wb-mounted") && !m.hasAttribute("data-wb-rendered"));
   return mounts.map((m, idx) => {
     m.setAttribute("data-wb-mounted","1");
+    ensureTaskIcon(m, m.getAttribute("data-wb-type") || "");
     return mountBlockOne(m, opts, idx);
   }).filter(Boolean);
 }
@@ -1551,6 +1586,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
     const mounts = qsa("[data-p2]").filter(m => !m.hasAttribute("data-p2-mounted"));
     return mounts.map((m, idx) => {
       m.setAttribute("data-p2-mounted", "1");
+      ensureTaskIcon(m, "p2");
       initPuzzle2(m, idx);
       return m;
     });
