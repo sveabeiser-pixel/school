@@ -78,15 +78,7 @@ function el(tag, attrs = {}, children = []) {
     return "../assets/";
   }
 
-  function ensureTaskIcon(mountEl, type){
-    let prev = mountEl.previousElementSibling;
-    let found = false;
-    while(prev && prev.classList && prev.classList.contains("wb-task-icon")){
-      if(found) prev.remove();
-      else found = true;
-      prev = prev.previousElementSibling;
-    }
-    if(found) return;
+  function buildTaskIcon(type){
     const typeMap = {
       "mcq": "mcq.png",
       "reveal": "reveal.png",
@@ -97,11 +89,32 @@ function el(tag, attrs = {}, children = []) {
     };
     const key = String(type || "").toLowerCase();
     const imgName = typeMap[key];
-    if(!imgName) return;
-    const wrap = el_("div", {class:"wb-img wb-task-icon"}, [
+    if(!imgName) return null;
+    return el_("div", {class:"wb-img wb-task-icon", "data-wb-task-icon": key}, [
       el_("img", {src: assetBasePath() + imgName, alt: `Aufgabentyp: ${key.toUpperCase()}`})
     ]);
-    mountEl.parentNode.insertBefore(wrap, mountEl);
+  }
+
+  function ensureTaskIcon(mountEl, type){
+    if(!mountEl) return;
+    const iconEl = buildTaskIcon(type);
+    if(!iconEl) return;
+
+    let prev = mountEl.previousElementSibling;
+    while(prev && prev.classList && prev.classList.contains("wb-task-icon")){
+      const toRemove = prev;
+      prev = prev.previousElementSibling;
+      toRemove.remove();
+    }
+
+    const head = mountEl.querySelector && mountEl.querySelector(".wb-head");
+    if(head){
+      const existing = head.querySelector(".wb-task-icon");
+      if(!existing) head.appendChild(iconEl);
+      return;
+    }
+
+    mountEl.parentNode.insertBefore(iconEl, mountEl);
   }
   function readJsonScript(mountEl, selector){
     const cfgScript = qs(selector, mountEl);
@@ -127,7 +140,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"L?ckentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -200,7 +213,10 @@ function el(tag, attrs = {}, children = []) {
     }
 
     qEls.forEach(qEl => {
-      qsa("input", qEl).forEach(i => i.addEventListener("change", save));
+      qsa("input", qEl).forEach(i => i.addEventListener("change", () => {
+        save();
+        updateCheckState();
+      }));
     });
 
     function check(){
@@ -229,17 +245,30 @@ function el(tag, attrs = {}, children = []) {
       });
       scoreEl.textContent = "";
       try{ localStorage.removeItem(storageKey); }catch(_e){}
+      updateCheckState();
+    }
+    const requireComplete = cfg.requireComplete !== false;
+    const btnCheck = el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]);
+    function updateCheckState(){
+      if(!requireComplete) return;
+      const allAnswered = qEls.every(qEl => {
+        const inputs = qsa("input", qEl);
+        if(inputs.length === 0) return true;
+        return inputs.some(i => i.checked);
+      });
+      btnCheck.disabled = !allAnswered;
     }
     const controls = el("div", {class:"wb-row"}, [
-      el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
+      btnCheck,
       el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
       scoreEl
     ]);
     loadSaved();
+    updateCheckState();
     return { node: wrapBlock("mcq", cfg, el("div", {}, [container, controls])), check, reset };
   }
 
-  function createCloze(cfg){
+function createCloze(cfg){
     if(!Array.isArray(cfg.bank)) throw new Error("Cloze: cfg.bank must be an array");
     if(!Array.isArray(cfg.segments)) throw new Error("Cloze: cfg.segments must be an array");
     const bank = el("div", {class:"wb-bank", "data-bank":"1"});
@@ -278,6 +307,7 @@ function el(tag, attrs = {}, children = []) {
         bank.appendChild(chip);
         if(fromGap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
         save();
+        updateCheckState();
       });
     }
 
@@ -309,6 +339,7 @@ function el(tag, attrs = {}, children = []) {
         gap.classList.add("filled");
         gap.classList.remove("ok","bad");
         save();
+        updateCheckState();
       });
     }
 
@@ -323,6 +354,7 @@ function el(tag, attrs = {}, children = []) {
       bank.appendChild(chip);
       if(fromGap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
       save();
+      updateCheckState();
     });
 
 
@@ -397,14 +429,23 @@ function el(tag, attrs = {}, children = []) {
       });
       scoreEl.textContent = "";
       try{ localStorage.removeItem(storageKey); }catch(_e){}
+      updateCheckState();
     }
     const hint = el("div", {class:"wb-drop-hint"}, [cfg.dropHint || "Hinweis: Ziehe Wörter in die Lücken. Klick = zurück in Wortbank."]);
+    const requireComplete = cfg.requireComplete !== false;
+    const btnCheck = el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]);
+    function updateCheckState(){
+      if(!requireComplete) return;
+      const allFilled = gaps.every(g => !!qs(".wb-chip", g));
+      btnCheck.disabled = !allFilled;
+    }
     const controls = el("div", {class:"wb-row"}, [
-      el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
+      btnCheck,
       el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
       scoreEl
     ]);
     loadSaved();
+    updateCheckState();
     return { node: wrapBlock("cloze", cfg, el("div", {}, [bank, text, hint, controls])), check, reset };
   }
 
@@ -607,8 +648,9 @@ ${fi.input.value || ""}
   const mounts = qsa("[data-wb-type]").filter(m => !m.hasAttribute("data-wb-mounted") && !m.hasAttribute("data-wb-rendered"));
   return mounts.map((m, idx) => {
     m.setAttribute("data-wb-mounted","1");
-    ensureTaskIcon(m, m.getAttribute("data-wb-type") || "");
-    return mountBlockOne(m, opts, idx);
+    const inst = mountBlockOne(m, opts, idx);
+    if(inst) ensureTaskIcon(m, m.getAttribute("data-wb-type") || "");
+    return inst;
   }).filter(Boolean);
 }
 
@@ -1268,10 +1310,10 @@ ${fi.input.value || ""}
   }
 
 
-  // ---------- Puzzle2 (2-Teile zusammenführen) ----------
-    // ---------- Puzzle2 (STRICT, 2 banks: left/right, NO pointer-capture) ----------
-    // ---------- Puzzle2 (STRICT, 2 banks: left/right, Pointer+Touch+Mouse) ----------
-  function initPuzzle2(root, idx=0){
+  // ---------- Puzzle2 (2-Teile zusammenfuehren) ----------
+  // ---------- Puzzle2 (STRICT, 2 banks: left/right, NO pointer-capture) ----------
+  // ---------- Puzzle2 (STRICT, 2 banks: left/right, Pointer+Touch+Mouse) ----------
+function initPuzzle2(root, idx=0){
     const leftBank  = qs("[data-left-bank]", root);
     const rightBank = qs("[data-right-bank]", root);
     const solved    = qs("[data-solved]", root);
@@ -1280,8 +1322,8 @@ ${fi.input.value || ""}
     const btnReset  = qs("[data-reset]", root);
     const btnCheck  = qs("[data-check]", root);
     const p2Id = root.getAttribute("data-p2-id") || root.id || `p2_${idx}`;
+    const requireComplete = String(root.getAttribute("data-p2-require-complete") || "").toLowerCase() !== "false";
     const storageKey = "wb_p2_" + p2Id;
-
 
     if(!leftBank || !rightBank || !solved) return;
 
@@ -1305,17 +1347,23 @@ ${fi.input.value || ""}
     }
 
     function setScore(graded){
-  const pairs = qsa(".p2-joined", solved);
-  const okCount = graded
-    ? pairs.filter(w => w.dataset.correct === "1").length
-    : 0;
+      const pairs = qsa(".p2-joined", solved);
+      const okCount = graded
+        ? pairs.filter(w => w.dataset.correct === "1").length
+        : 0;
 
-  if(scoreEl){
-    scoreEl.textContent = graded
-      ? `Punkte: ${okCount}/${totalPairs()}`
-      : `Paare: ${pairs.length}/${totalPairs()} (noch nicht überprüft)`;
-  }
-}
+      if(scoreEl){
+        scoreEl.textContent = graded
+          ? `Punkte: ${okCount}/${totalPairs()}`
+          : `Paare: ${pairs.length}/${totalPairs()} (noch nicht ?berpr?ft)`;
+      }
+    }
+
+    function updateCheckState(){
+      if(!btnCheck || !requireComplete) return;
+      const pairs = qsa(".p2-joined", solved);
+      btnCheck.disabled = pairs.length !== totalPairs();
+    }
 
     let isLoading = false;
 
@@ -1348,61 +1396,59 @@ ${fi.input.value || ""}
       }
     }
 
-
     function lockPiece(p){
       p.classList.add("p2-locked");
       p.style.pointerEvents = "none";
     }
 
     function canJoin(a, b){
-  if(!a || !b) return false;
-  if(a.classList.contains("p2-locked") || b.classList.contains("p2-locked")) return false;
+      if(!a || !b) return false;
+      if(a.classList.contains("p2-locked") || b.classList.contains("p2-locked")) return false;
 
-  const sa = (a.getAttribute("data-side")||"").trim().toUpperCase();
-  const sb = (b.getAttribute("data-side")||"").trim().toUpperCase();
+      const sa = (a.getAttribute("data-side")||"").trim().toUpperCase();
+      const sb = (b.getAttribute("data-side")||"").trim().toUpperCase();
 
-  // nur L+R (egal welche Pair-ID)
-  return (sa === "L" && sb === "R") || (sa === "R" && sb === "L");
-}
+      // nur L+R (egal welche Pair-ID)
+      return (sa === "L" && sb === "R") || (sa === "R" && sb === "L");
+    }
 
-function isCorrectPair(a, b){
-  const pa = (a.getAttribute("data-pair")||"").trim();
-  const pb = (b.getAttribute("data-pair")||"").trim();
-  return pa && pa === pb;
-}
+    function isCorrectPair(a, b){
+      const pa = (a.getAttribute("data-pair")||"").trim();
+      const pb = (b.getAttribute("data-pair")||"").trim();
+      return pa && pa === pb;
+    }
 
-function check(){
-  qsa(".p2-joined", solved).forEach(w => {
-    w.classList.remove("p2-ok","p2-bad");
-    w.classList.add(w.dataset.correct === "1" ? "p2-ok" : "p2-bad");
-  });
-  setScore(true);
-}
-if(btnCheck) btnCheck.addEventListener("click", check);
+    function check(){
+      qsa(".p2-joined", solved).forEach(w => {
+        w.classList.remove("p2-ok","p2-bad");
+        w.classList.add(w.dataset.correct === "1" ? "p2-ok" : "p2-bad");
+      });
+      setScore(true);
+    }
+    if(btnCheck) btnCheck.addEventListener("click", check);
 
+    function join(a, b){
+      const sa = (a.getAttribute("data-side")||"").trim().toUpperCase();
+      const left  = (sa === "L") ? a : b;
+      const right = (sa === "R") ? a : b;
 
-   function join(a, b){
-  const sa = (a.getAttribute("data-side")||"").trim().toUpperCase();
-  const left  = (sa === "L") ? a : b;
-  const right = (sa === "R") ? a : b;
+      const wrap = el("div", {class:"p2-joined"}, [
+        left,
+        el("div", {class:"p2-seam"}, []),
+        right
+      ]);
 
-  const wrap = el("div", {class:"p2-joined"}, [
-    left,
-    el("div", {class:"p2-seam"}, []),
-    right
-  ]);
+      // Merken f?r sp?tere ?berpr?fung
+      wrap.dataset.correct = isCorrectPair(left, right) ? "1" : "0";
 
-  // Merken für spätere Überprüfung
-  wrap.dataset.correct = isCorrectPair(left, right) ? "1" : "0";
+      lockPiece(left);
+      lockPiece(right);
 
-  lockPiece(left);
-  lockPiece(right);
-
-  solved.appendChild(wrap);
-  setScore(false); // noch nicht bewerten
-  if(!isLoading) saveState();
-}
-
+      solved.appendChild(wrap);
+      setScore(false); // noch nicht bewerten
+      updateCheckState();
+      if(!isLoading) saveState();
+    }
 
     // ---- Drag core ----
     let drag = null;
@@ -1469,9 +1515,8 @@ if(btnCheck) btnCheck.addEventListener("click", check);
       restoreDrag();
 
       if(targetPiece && targetPiece !== piece && canJoin(piece, targetPiece)){
-    join(piece, targetPiece);
-    } 
-
+        join(piece, targetPiece);
+      }
 
       drag = null;
     }
@@ -1505,7 +1550,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
         drag = null;
       }, {passive:false});
     } else {
-      // ---- Touch fallback (ältere iPads) ----
+      // ---- Touch fallback (?ltere iPads) ----
       root.addEventListener("touchstart", (e) => {
         const piece = e.target.closest(".p2-piece");
         if(!piece) return;
@@ -1571,6 +1616,7 @@ if(btnCheck) btnCheck.addEventListener("click", check);
       });
       shuffleAll();
       setScore(false);
+      updateCheckState();
       try{ localStorage.removeItem(storageKey); }catch(_e){}
     }
 
@@ -1582,15 +1628,28 @@ if(btnCheck) btnCheck.addEventListener("click", check);
     shuffleAll();
     loadState();
     setScore(false);
+    updateCheckState();
   }
 
-  function autoMountPuzzle2(){
+function autoMountPuzzle2(){
     const mounts = qsa("[data-p2]").filter(m => !m.hasAttribute("data-p2-mounted"));
     return mounts.map((m, idx) => {
       m.setAttribute("data-p2-mounted", "1");
-      ensureTaskIcon(m, "p2");
       initPuzzle2(m, idx);
-      return m;
+
+      let block = m.closest && m.closest(".wb-block");
+      if(!block){
+        const hasTitleAttr = m.hasAttribute("data-p2-title");
+        const title = hasTitleAttr ? m.getAttribute("data-p2-title") : "Finde Paare";
+        const hint = m.getAttribute("data-p2-hint") || "";
+        const parent = m.parentNode;
+        const next = m.nextSibling;
+        block = wrapBlock("p2", {title, hint}, m);
+        if(parent) parent.insertBefore(block, next);
+      }
+
+      ensureTaskIcon(block || m, "p2");
+      return block || m;
     });
   }
 

@@ -139,6 +139,10 @@
 
 
     <!-- Multiple Choice Exercise -->
+    <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+    <!--  "requireComplete": false,  nach "title"-->
+
+
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
         {
@@ -188,6 +192,7 @@
         }
         </script>
       </div>
+
       <div data-wb-type="reveal">
   <script type="application/json" class="wb-config">
   {
@@ -221,6 +226,10 @@
 
 
       <!-- Drag and Drop Exercise -->
+      <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+      <!--  "requireComplete": false,  nach "title"-->
+
+
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
         {
@@ -230,21 +239,7 @@
   "bank": [
     "Wellenfunktion",
     "y(x,t)",
-    "Ort x",
-    "Zeit t",
-    "Auslenkung y",
-    "Momentaufnahme",
-    "y-x-Diagramm",
-    "Sinuskurve",
-    "Ort",
-    "Zeitverlauf",
-    "y-t-Diagramm",
-    "Phasenverschiebung",
-    "Phasendifferenz Δφ",
-    "Abstand Δx",
-    "Wellenzahl k",
-    "k = 2π/λ",
-    "Wellenlänge λ"
+    "Ort x"
   ],
   "segments": [
     { "t": "text", "v": "Eine Welle lässt sich durch eine " },
@@ -253,39 +248,7 @@
     { "t": "gap",  "a": "y(x,t)" },
     { "t": "text", "v": ". Dabei ist " },
     { "t": "gap",  "a": "Ort x" },
-    { "t": "text", "v": " die Position entlang des Seils und " },
-    { "t": "gap",  "a": "Zeit t" },
-    { "t": "text", "v": " der betrachtete Zeitpunkt. Die Größe " },
-    { "t": "gap",  "a": "Auslenkung y" },
-    { "t": "text", "v": " gibt an, wie weit das Teilchen ausgelenkt ist." },
-
-    { "t": "text", "v": "Hält man die Zeit fest, erhält man eine " },
-    { "t": "gap",  "a": "Momentaufnahme" },
-    { "t": "text", "v": ". Im " },
-    { "t": "gap",  "a": "y-x-Diagramm" },
-    { "t": "text", "v": " zeichnet man die Auslenkung gegen den Ort; bei harmonischer Anregung ist das eine " },
-    { "t": "gap",  "a": "Sinuskurve" },
-    { "t": "text", "v": "." },
-
-    { "t": "text", "v": "Hält man dagegen den Ort fest, beobachtet man den " },
-    { "t": "gap",  "a": "Zeitverlauf" },
-    { "t": "text", "v": " der Schwingung. Im " },
-    { "t": "gap",  "a": "y-t-Diagramm" },
-    { "t": "text", "v": " zeichnet man die Auslenkung gegen die Zeit; auch das ist eine Sinuskurve." },
-
-    { "t": "text", "v": "Teilchen an verschiedenen Orten schwingen nicht gleichzeitig, sondern mit einer " },
-    { "t": "gap",  "a": "Phasenverschiebung" },
-    { "t": "text", "v": ". Die " },
-    { "t": "gap",  "a": "Phasendifferenz Δφ" },
-    { "t": "text", "v": " hängt vom " },
-    { "t": "gap",  "a": "Abstand Δx" },
-    { "t": "text", "v": " ab: Δφ = k·Δx. Dabei ist k die " },
-    { "t": "gap",  "a": "Wellenzahl k" },
-    { "t": "text", "v": " mit " },
-    { "t": "gap",  "a": "k = 2π/λ" },
-    { "t": "text", "v": ", wobei λ die " },
-    { "t": "gap",  "a": "Wellenlänge λ" },
-    { "t": "text", "v": " ist." }
+    { "t": "text", "v": " die Position entlang des Seils." }
   ]
 
 
@@ -297,8 +260,10 @@
       <h2>Finde Paare</h2>
 
       <!-- Puzzlepaare - Zuordnungsübung -->
+       <!-- Wenn man die Überprüfung gleich zulassen möchte: -->
+       <!-- <div data-p2 class="p2" data-p2-require-complete="false"> ... -->
 
- <div data-p2 class="p2">
+ <div data-p2 class="p2"  data-p2-title="Aufgabenstellung hier" data-p2-hint="2 Minuten">
   <div class="p2-hint">Ziehe ein linkes Teil auf das passende rechte Teil (oder umgekehrt). Nur richtige Paare werden verbunden und geben Punkte.</div>
 
   <div class="p2-banks">

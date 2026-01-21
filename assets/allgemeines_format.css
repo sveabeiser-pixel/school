@@ -927,8 +927,19 @@
   align-items:flex-start;
   gap: 12px;
 }
-.wb-head .wb-title{font-weight:900; font-size:16px}
+.wb-head > div{flex:1; min-width:0}
+.wb-head .wb-title{font-weight:900; font-size:18px}
 .wb-head .wb-hint{font-size:13px; color: var(--wb-muted, #6b7280); margin-top:4px}
+.wb-head .wb-task-icon{
+  max-width: 44px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.wb-head .wb-task-icon img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
 .wb-body{padding: 16px}
 
 .wb-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top: 12px}
