@@ -1110,9 +1110,11 @@ ${fi.input.value || ""}
       const activePage = pageSections().find(p => p.page === idx);
       const target = scrollToSel ? qs(scrollToSel, root) : null;
       const topbarH = (qs(".wb-topbar", root) && qs(".wb-topbar", root).offsetHeight) ? qs(".wb-topbar", root).offsetHeight : 0;
+   
       const scrollToNode = (node, smooth) => {
         if(!node) return;
-        const y = node.getBoundingClientRect().top + global.pageYOffset - topbarH;
+        var y = node.getBoundingClientRect().top + global.pageYOffset - topbarH;
+        if (y < 50) y = 0;
         global.scrollTo({top: y, behavior: smooth ? "smooth" : "instant"});
       };
       if(target && activePage && activePage.node.contains(target)){

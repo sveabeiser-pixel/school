@@ -408,7 +408,6 @@
 .wb-book[data-theme="dark"] .wb-side-footer{
   background: #0e1621;
   border-top-color: #374e70;
-  position: static;
 }
 .wb-book[data-theme="dark"] .wb-submit-btn{
   background: #1a283c;
@@ -451,14 +450,15 @@
   background: linear-gradient(180deg, rgb(18 49 56), rgb(28 28 28));
   border-right-color: rgba(255,255,255,0.12);
   color: var(--wb-text);
-  border-radius: var(--wb-radius);
-  overflow: hidden;
-  position: fixed;
-  top: var(--wb-topH);
-  height: auto;
-  max-height: none;
-  bottom: auto;
+ 
+  height: calc(100vh - var(--wb-topH));
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: auto;
+  scrollbar-color: rgba(160,190,220,0.7) rgba(12,25,43,0.6);  
 }
+
 .wb-book[data-theme="grau"] .wb-side-nav{
   background: rgba(0,0,0,0.2);
   color: var(--wb-text);
@@ -495,7 +495,7 @@
   background: var(--wb-blue);
 }
 .wb-book[data-theme="grau"] .wb-side-footer{
-  background: rgba(0,0,0,0.2);
+  background: rgb(23 30 33);
   border-top-color: rgba(255,255,255,0.12);
 }
 .wb-book[data-theme="grau"] .wb-submit-btn{
@@ -770,7 +770,8 @@
   display:flex;
   flex-direction: column;
   flex: 1 1 auto;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   min-height: 0;
 }
 .wb-book .wb-side-section-title{
@@ -842,12 +843,13 @@
 .wb-book .wb-side-footer{
 
   padding: 14px;
-  background: #ffffff;
+  background: #ffffff ;
   border-top: 1px solid var(--wb-line);
   flex: 0 0 auto;
   margin-top: auto;
   position: sticky;
   bottom: 0;
+  padding-bottom:50px;
 }
 .wb-book .wb-submit-btn{
   width: 100%;
@@ -869,7 +871,7 @@
 .wb-book .wb-content{
   flex:1;
   margin-left: var(--wb-sideW);
-  padding: 22px 22px 60px 22px;
+  padding: 0px 22px 60px 22px;
 }
 .wb-book .wb-paper{
   max-width: 1080px;
@@ -1111,10 +1113,11 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
 
 /* Essay / inputs */
 .wb-input, .wb-textarea{
-  width:100%;
+  width:90%;
   border-radius: 10px;
   border: 1px solid var(--wb-input-border, var(--wb-line, #e5e7eb));
   padding: 10px 12px;
+  margin-bottom:20px;
   font-size: 15px;
   outline:none;
   background: var(--wb-input-bg, #ffffff);
