@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SBLibrary - Interferenz (autoNav)</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Wellen",
+      "sectionTitle":"Interferenz",
+      "startPage": 1,
+      "submitLabel":"Summary & submit",
+      "onSubmit":"alert",
+      "webhookUrl": "https://default5f6cb15557a9496689537def5ca919.a2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/52d22bb0d42b4f38b41e8eb36ba9587a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=qxbOeScFOYXGi4zn1ia3V5IubGRq5QV0UZpGJpzKcLE",
+      "webhookEmail": "",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Wellen"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Ueberblick">
+      <h1>Ueberblick: Interferenz verstehen</h1>
+      <p class="wb-muted">Jetzt lernst du Schritt fuer Schritt, wie Interferenz entsteht und wie man sie beschreibt.</p>
+
+      <h2>Was du hier lernst</h2>
+      <p>
+        Interferenz ist ein zentrales Thema der Oberstufe. Du erkennst, wie sich Wellen ueberlagern,
+        wann sie sich verstaerken oder ausloeschen und wie man das mathematisch beschreibt.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Wichtig:</strong>
+        <p>
+          Bearbeite die Aufgaben direkt auf der Seite. Teste nun dein Wissen Schritt fuer Schritt und
+          nutze die Merksaetze als Zusammenfassung. Am Ende kannst du deine Antworten absenden.
+        </p>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Interferenz">
+      <h1>Was ist eine Interferenz?</h1>
+      <p class="wb-muted">Jetzt lernst du, wie sich Wellen ueberlagern und warum dabei Maxima und Minima entstehen.</p>
+
+      <h2>Schritt fuer Schritt</h2>
+      <ol>
+        <li>Eine Welle hat eine Amplitude: Auslenkung nach oben oder unten.</li>
+        <li>Treffen zwei Wellen zusammen, addieren sich die Amplituden vorzeichenrichtig.</li>
+        <li>Das ist das Superpositionsprinzip: Verstaerkung, Abschwaechung oder Ausloeschung.</li>
+        <li>Interferenz gibt es bei Licht, Schall und Materiewellen.</li>
+      </ol>
+
+      <p class="wb-muted">Im Video (00:12)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/interferenz.png" alt="Interferenz: Ueberlagerung zweier Wellen">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Merke:</strong>
+        <p>
+          Verstaerkung nennt man konstruktive Interferenz. Abschwaechung nennt man destruktive Interferenz.
+          Du erkennst Interferenzmuster an abwechselnden Maxima und Minima.
+        </p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"reveal-int-1",
+            "title":"Interferenzmuster",
+            "question":"Warum gelten Interferenzmuster als Nachweis der Wellennatur?",
+            "answer":"Nur Wellen ueberlagern sich so, dass regelmaessige Maxima und Minima entstehen. Teilchen alleine wuerden kein stabiles Muster erzeugen.",
+            "buttonLabel":"Antwort anzeigen",
+            "buttonHideLabel":"Antwort verbergen"
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Teste nun dein Wissen</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-int-1",
+          "title":"Multiple Choice",
+          "questions":[
+            {
+              "text": "Was beschreibt Interferenz?",
+              "choices": [
+                { "id": "a", "label": "Die Ueberlagerung von zwei oder mehr Wellen" },
+                { "id": "b", "label": "Die Erzeugung einer einzelnen Welle" },
+                { "id": "c", "label": "Die Absorption von Licht" }
+              ],
+              "correct": ["a"],
+              "explain": "Interferenz ist die Ueberlagerung von Wellen."
+            },
+            {
+              "text": "Was passiert bei destruktiver Interferenz?",
+              "choices": [
+                { "id": "a", "label": "Die Amplituden addieren sich zu einem Maximum" },
+                { "id": "b", "label": "Die Amplituden schwaechen sich oder loeschen sich aus" },
+                { "id": "c", "label": "Die Wellen erhalten eine hoehere Frequenz" }
+              ],
+              "correct": ["b"],
+              "explain": "Destruktiv bedeutet Abschwaechung oder Ausloeschung."
+            },
+            {
+              "text": "Interferenz tritt auf bei ...",
+              "multiple": true,
+              "choices": [
+                { "id": "a", "label": "Schallwellen" },
+                { "id": "b", "label": "elektromagnetischen Wellen" },
+                { "id": "c", "label": "Materiewellen" }
+              ],
+              "correct": ["a","b","c"],
+              "explain": "Interferenz ist ein allgemeines Wellenphaenomen."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Eigenschaften">
+      <h1>Welche Eigenschaften hat Interferenz?</h1>
+      <p class="wb-muted">Jetzt lernst du Koharenz und Polarisation als Schluesselbegriffe.</p>
+
+      <h2>Koharenz</h2>
+      <p>
+        Eine stabile Interferenz braucht koharente Wellen. Das bedeutet: eine feste Phasenbeziehung
+        ueber die Zeit. Aus der Phasenbeziehung folgt die Koharenzzeit als Mass fuer Lichtquellen.
+      </p>
+      <p class="wb-muted">Im Video (01:10)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/kohaerenz.png" alt="Koharenz: feste Phasenbeziehung">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Polarisation</h2>
+      <p>
+        Polarisation beschreibt die Richtung der Schwingung. Unpolarisierte Wellen schwingen schnell
+        und ungeordnet. Sind Wellen zueinander senkrecht polarisiert, interferieren sie nicht.
+      </p>
+      <p class="wb-muted">Im Video (01:34)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/interferenz.png" alt="Polarisation: Schwingungsrichtung und Interferenz">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"reveal-int-2",
+            "title":"Koharenz in einem Satz",
+            "question":"Warum brauchst du koharente Wellen fuer ein stabiles Interferenzmuster?",
+            "answer":"Nur bei fester Phasenbeziehung bleiben die Maxima und Minima an festen Orten bestehen.",
+            "buttonLabel":"Antwort anzeigen",
+            "buttonHideLabel":"Antwort verbergen"
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Konstruktiv">
+      <h1>Konstruktive Interferenz</h1>
+      <p class="wb-muted">Jetzt lernst du die Bedingung fuer Maxima.</p>
+
+      <h2>Schritt fuer Schritt</h2>
+      <ol>
+        <li>Ein Wellenberg trifft auf einen Wellenberg, ein Wellental auf ein Wellental.</li>
+        <li>Bei gleicher Amplitude verdoppelt sich die Amplitude der resultierenden Welle.</li>
+        <li>Das passiert, wenn der Gangunterschied ein ganzzahliges Vielfaches der Wellenlaenge ist.</li>
+      </ol>
+
+      <p class="wb-muted">Im Video (02:12)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/konstruktive_Interferenz.png" alt="Konstruktive Interferenz: Maxima">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Mathematisch gilt:</p>
+      <p><b>$\\Delta s = k \\cdot \\lambda$</b> mit $k = 0, \\pm 1, \\pm 2, ...</p>
+      <p>Bei $k=0$ liegt ein Maximum 0. Ordnung vor, bei $k=1$ ein Maximum 1. Ordnung.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Lueckentext: Konstruktive Interferenz</h2>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-int-1",
+          "title":"Formel und Begriffe",
+          "bank": [
+            "Gangunterschied",
+            "Wellenlaenge",
+            "k",
+            "Maximum"
+          ],
+          "segments": [
+            { "t": "text", "v": "Bei konstruktiver Interferenz ist der " },
+            { "t": "gap",  "a": "Gangunterschied" },
+            { "t": "text", "v": " ein ganzzahliges Vielfaches der " },
+            { "t": "gap",  "a": "Wellenlaenge" },
+            { "t": "text", "v": ": $\\Delta s = " },
+            { "t": "gap",  "a": "k" },
+            { "t": "text", "v": "\\cdot \\lambda$. Das Ergebnis ist ein " },
+            { "t": "gap",  "a": "Maximum" },
+            { "t": "text", "v": "." }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Destruktiv">
+      <h1>Destruktive Interferenz</h1>
+      <p class="wb-muted">Jetzt lernst du die Bedingung fuer Minima.</p>
+
+      <h2>Schritt fuer Schritt</h2>
+      <ol>
+        <li>Ein Wellenberg trifft auf ein Wellental.</li>
+        <li>Die resultierende Amplitude wird kleiner.</li>
+        <li>Bei gleicher Amplitude loeschen sich die Wellen aus.</li>
+      </ol>
+
+      <p class="wb-muted">Im Video (02:52)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/destruktive_Interferenz.png" alt="Destruktive Interferenz: Minima">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Mathematisch gilt:</p>
+      <p><b>$\\Delta s = (k + 0.5) \\cdot \\lambda$</b> mit $k = 0, \\pm 1, \\pm 2, ...</p>
+      <p>Bei $k=1$ liegt ein Minimum 1. Ordnung vor.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mini-Spiel: Zuordnen</h2>
+      <p>Jetzt lernst du, Bedingungen und Ergebnisse sicher zu verbinden.</p>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ziehe ein linkes Teil auf das passende rechte Teil (oder umgekehrt).</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Bedingung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">$\\Delta s = k \\cdot \\lambda$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">$\\Delta s = (k+0.5) \\cdot \\lambda$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Wellenberg + Wellenberg</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Wellenberg + Wellental</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Ergebnis</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Konstruktive Interferenz (Maximum)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Destruktive Interferenz (Minimum)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Amplitude wird groesser</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Amplitude wird kleiner</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zuruecksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Ueberpruefen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Geloest</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Berechnung">
+      <h1>So berechnest du die Interferenz</h1>
+      <p class="wb-muted">Jetzt lernst du, wie der Gangunterschied mit der Geometrie zusammenhaengt.</p>
+
+      <h2>Schritt fuer Schritt</h2>
+      <ol>
+        <li>Zwei Quellen $S_1$ und $S_2$ senden Wellen mit gleicher Amplitude und Frequenz aus.</li>
+        <li>Der Gangunterschied $\\Delta s$ bestimmt, ob Maxima oder Minima entstehen.</li>
+        <li>Mit dem Winkel $\\alpha$ gilt: $\\Delta s = b \\cdot \\sin(\\alpha)$.</li>
+        <li>Fuer kleine Winkel: $\\tan(\\alpha) \\approx \\sin(\\alpha)$.</li>
+        <li>Daraus folgt: $\\Delta s = b \\cdot \\frac{x}{d}$.</li>
+      </ol>
+
+      <p class="wb-muted">Im Video (03:16)</p>
+      <div class="wb-img">
+        <img src="pdf-bilder/interferenz.png" alt="Interferenzgeometrie: Gangunterschied">
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Teste nun dein Wissen</h2>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-int-1",
+          "title":"Erklaere in eigenen Worten: Wie kommst du von der Skizze zur Formel $\\Delta s = b \\cdot x / d$?",
+          "storagePrefix":"wellen_interferenz_",
+          "exportName":"wellen-interferenz.txt",
+          "fields":[
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Formuliere die Schritte und nenne die Naeherung..."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
