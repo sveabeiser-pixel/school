@@ -85,7 +85,8 @@ function el(tag, attrs = {}, children = []) {
       "reveal-img": "reveal.png",
       "cloze": "cloze.png",
       "essay": "essay.png",
-      "p2": "p2.png"
+      "p2": "p2.png",
+      "order": "order.png"
     };
     const key = String(type || "").toLowerCase();
     const imgName = typeMap[key];
@@ -140,7 +141,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", order:"Reihenfolge", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -268,7 +269,7 @@ function el(tag, attrs = {}, children = []) {
     return { node: wrapBlock("mcq", cfg, el("div", {}, [container, controls])), check, reset };
   }
 
-function createCloze(cfg){
+  function createCloze(cfg){
     if(!Array.isArray(cfg.bank)) throw new Error("Cloze: cfg.bank must be an array");
     if(!Array.isArray(cfg.segments)) throw new Error("Cloze: cfg.segments must be an array");
     const bank = el("div", {class:"wb-bank", "data-bank":"1"});
@@ -447,6 +448,176 @@ function createCloze(cfg){
     loadSaved();
     updateCheckState();
     return { node: wrapBlock("cloze", cfg, el("div", {}, [bank, text, hint, controls])), check, reset };
+  }
+
+  function createOrder(cfg){
+    if(!Array.isArray(cfg.items)) throw new Error("Order: cfg.items must be an array");
+    const rawItems = cfg.items.map((it, idx) => {
+      if(it && typeof it === "object"){
+        const label = String(it.label || it.text || it.id || "");
+        const id = String(it.id || label || `item_${idx}`);
+        return { id, label };
+      }
+      const label = String(it);
+      return { id: label || `item_${idx}`, label };
+    });
+
+    const seen = new Set();
+    const items = rawItems.map((it, idx) => {
+      let id = it.id;
+      if(seen.has(id)) id = `${id}__${idx}`;
+      seen.add(id);
+      return { id, label: it.label };
+    });
+
+    const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
+    const bank = el("div", {class:"wb-order-bank", "data-order-bank":"1"});
+    const slotsWrap = el("div", {class:"wb-order-slots"});
+    const storageKey = (cfg.storagePrefix || "wb_") + "order_" + (cfg.__wbKey || cfg.id || "order");
+
+    function shuffle(arr){
+      for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function makeChip(item){
+      const chip = el("div", {class:"wb-order-chip", draggable:"true", "data-id": item.id}, [item.label]);
+      chip.addEventListener("dragstart", (e) => {
+        global.__wbOrderDrag = chip;
+        if(e.dataTransfer){
+          e.dataTransfer.setData("text/plain", item.id);
+          e.dataTransfer.effectAllowed = "move";
+        }
+      });
+      chip.addEventListener("dragend", () => { global.__wbOrderDrag = null; });
+      chip.addEventListener("click", () => {
+        const slot = chip.parentElement && chip.parentElement.closest(".wb-order-drop");
+        if(slot) bank.appendChild(chip);
+        updateCheckState();
+        save();
+      });
+      return chip;
+    }
+
+    const chips = items.map(makeChip);
+    const order = (cfg.shuffle === false) ? chips : shuffle(chips.slice());
+    order.forEach(ch => bank.appendChild(ch));
+
+    function allowDropSlot(dropEl){
+      dropEl.addEventListener("dragover", (e) => e.preventDefault());
+      dropEl.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const chip = global.__wbOrderDrag;
+        if(!chip) return;
+        const existing = dropEl.querySelector(".wb-order-chip");
+        if(existing && existing !== chip) bank.appendChild(existing);
+        dropEl.appendChild(chip);
+        updateCheckState();
+        save();
+      });
+    }
+
+    bank.addEventListener("dragover", (e) => e.preventDefault());
+    bank.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const chip = global.__wbOrderDrag;
+      if(!chip) return;
+      bank.appendChild(chip);
+      updateCheckState();
+      save();
+    });
+
+    items.forEach((it, idx) => {
+      const drop = el("div", {
+        class:"wb-order-drop",
+        "data-expected-id": it.id,
+        "data-expected-label": it.label
+      });
+      allowDropSlot(drop);
+      const slot = el("div", {class:"wb-order-slot"}, [
+        el("div", {class:"wb-order-num"}, [`${idx + 1}.`]),
+        drop
+      ]);
+      slotsWrap.appendChild(slot);
+    });
+
+    function save(){
+      try{
+        const data = Array.from(slotsWrap.querySelectorAll(".wb-order-drop")).map(d => {
+          const chip = d.querySelector(".wb-order-chip");
+          return chip ? (chip.getAttribute("data-id") || "") : "";
+        });
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }catch(_e){}
+    }
+
+    function loadSaved(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return;
+        const data = JSON.parse(raw);
+        if(!Array.isArray(data)) return;
+        const chipMap = {};
+        chips.forEach(ch => {
+          const id = ch.getAttribute("data-id") || "";
+          if(!chipMap[id]) chipMap[id] = [];
+          chipMap[id].push(ch);
+        });
+        Array.from(slotsWrap.querySelectorAll(".wb-order-drop")).forEach((drop, i) => {
+          const id = data[i] || "";
+          const pool = chipMap[id];
+          if(!id || !pool || pool.length === 0) return;
+          drop.appendChild(pool.shift());
+        });
+      }catch(_e){}
+    }
+
+    function check(){
+      let okCount = 0;
+      const drops = Array.from(slotsWrap.querySelectorAll(".wb-order-drop"));
+      drops.forEach(drop => {
+        const expected = drop.getAttribute("data-expected-id") || "";
+        const chip = drop.querySelector(".wb-order-chip");
+        const got = chip ? (chip.getAttribute("data-id") || "") : "";
+        const slot = drop.closest(".wb-order-slot");
+        if(slot) slot.classList.remove("ok","bad");
+        const ok = got !== "" && got === expected;
+        if(slot) slot.classList.add(ok ? "ok" : "bad");
+        if(ok) okCount += 1;
+      });
+      scoreEl.textContent = `Punkte: ${okCount}/${items.length}`;
+      return {correct: okCount, total: items.length};
+    }
+
+    function reset(){
+      Array.from(slotsWrap.querySelectorAll(".wb-order-slot")).forEach(s => s.classList.remove("ok","bad"));
+      chips.forEach(ch => bank.appendChild(ch));
+      if(cfg.shuffle !== false) shuffle(chips).forEach(ch => bank.appendChild(ch));
+      scoreEl.textContent = "";
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
+      updateCheckState();
+    }
+
+    const requireComplete = cfg.requireComplete !== false;
+    const btnCheck = el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]);
+    function updateCheckState(){
+      if(!requireComplete) return;
+      const allFilled = Array.from(slotsWrap.querySelectorAll(".wb-order-drop")).every(d => !!d.querySelector(".wb-order-chip"));
+      btnCheck.disabled = !allFilled;
+    }
+
+    const controls = el("div", {class:"wb-row"}, [
+      btnCheck,
+      el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
+      scoreEl
+    ]);
+
+    loadSaved();
+    updateCheckState();
+    return { node: wrapBlock("order", cfg, el("div", {}, [bank, slotsWrap, controls])), check, reset };
   }
 
   function createEssay(cfg){
@@ -629,6 +800,7 @@ ${fi.input.value || ""}
   let inst;
   if(type === "mcq") inst = createMCQ(cfg);
   else if(type === "cloze") inst = createCloze(cfg);
+  else if(type === "order") inst = createOrder(cfg);
   else if(type === "essay") inst = createEssay(cfg);
   else if(type === "reveal") inst = createReveal(cfg);
   else if(type === "reveal-img" || type === "revealimg") inst = createRevealImage(cfg);
@@ -737,6 +909,27 @@ ${fi.input.value || ""}
     return { correctCount: okCount, total: gaps.length, items };
   }
 
+  function collectOrder(mountEl){
+    const drops = qsa(".wb-order-drop", mountEl);
+    let okCount = 0;
+    const items = drops.map(d => {
+      const expected = d.getAttribute("data-expected-label") || "";
+      const expectedId = d.getAttribute("data-expected-id") || "";
+      const chip = qs(".wb-order-chip", d);
+      const got = chip ? String(chip.textContent || "").trim() : "";
+      const gotId = chip ? (chip.getAttribute("data-id") || "") : "";
+      const ok = gotId !== "" && gotId === expectedId;
+      const slot = d.closest(".wb-order-slot");
+      if(slot){
+        slot.classList.remove("ok","bad");
+        slot.classList.add(ok ? "ok" : "bad");
+      }
+      if(ok) okCount += 1;
+      return { expected, got, ok };
+    });
+    return { correctCount: okCount, total: drops.length, items };
+  }
+
   function collectEssay(mountEl){
     const inputs = qsa("[data-wb-key]", mountEl);
     return inputs.map(inp => ({ key: inp.getAttribute("data-wb-key") || "", value: inp.value || "" }));
@@ -821,6 +1014,22 @@ ${fi.input.value || ""}
         textLines.push("Punkte: " + res.correctCount + "/" + res.total);
         res.items.forEach((it, gi) => {
           textLines.push((gi+1) + ". Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
+      getBlockMounts(pageRoot, "order").forEach((m, idx) => {
+        const res = collectOrder(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Reihenfolge " + (idx+1));
+        results.push({type:"order", title, res, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, oi) => {
+          textLines.push((oi+1) + ". Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch"));
         });
         textLines.push("");
       });
@@ -1657,7 +1866,7 @@ function autoMountPuzzle2(){
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createCloze, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createCloze, createOrder, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {

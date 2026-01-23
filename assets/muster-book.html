@@ -20,8 +20,8 @@
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
     {
-      "bookTitle":"Wellen",
-      "sectionTitle":"Wellenfunktion",
+      "bookTitle":"Muster-Fach",
+      "sectionTitle":"Muster-Thema",
       "startPage": 1,
       "submitLabel":"Summary & submit",
       "onSubmit":"alert",
@@ -299,7 +299,27 @@
 </div>
 
 
+      <!-- In Reihenfolge bringen - 1.2.3. -->
+       <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+      <!--  "requireComplete": false,  nach "title"-->
      
+
+<div data-wb-type="order">
+  <script type="application/json" class="wb-config">
+  {
+    "id": "order-int-1",
+    "title": "Ablauf in Reihenfolge",
+    "items": [
+      "Schritt A",
+      "Schritt B",
+      "Schritt C"
+    ],
+    "shuffle": true,
+    "requireComplete": true
+  }
+  </script>
+</div>
+
 
 
 
