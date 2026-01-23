@@ -52,6 +52,15 @@
           3) <b>Stehende Wellen:</b> Gegenläufige Wellen überlagern sich zu Knoten und Bäuchen.
         </p>
       </div>
+<div class="wb-section-break"></div>
+      
+      <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Bearbeite alle Aufgaben auf dieser Internetseite. Wenn du fertig bist, schreibe deinen Namen links unten in das Namensfeld und 
+        klicke auf den Button &quot;Summary & submit&quot; darunter, um deine Antworten abzusenden. Auf der letzten Seite &quot;Ergebnisse&quot; findest du dann alle deine Antworten, außerdem wird noch eine txt-Datei mit den Ergebnissen heruntergeladen.
+      </p>
+    </div>
+
     </section>
 
     <section data-wb-page="2" data-wb-page-title="Reflexion">
@@ -349,15 +358,37 @@
 
       <h2>Was ist Transmission und Reflexion?</h2>
       <p>
-        Trifft eine Welle auf eine Stelle, an der sich die Ausbreitungsgeschwindigkeit ändert,
-        läuft die Welle verändert in der ursprünglichen Richtung weiter. Zusätzlich entsteht
-        eine zweite Welle, die entgegen der ursprünglichen Ausbreitungsrichtung zurückläuft.
-      </p>
-      <p>Dies kann zum Beispiel bei Licht beim Übergang von einem optisch dünneren zu einem dichteren Medium passieren (Luft/Glas oder Luft/Wasser) oder ein Seil wird plötzlich dicker.</p>
-      <p>
-        Diesen Effekt nennen wir <b>Transmission</b> (weiterlaufende Welle) und <b>Reflexion</b>
-        (zurücklaufende Welle).
-      </p>
+  Bevor wir uns ansehen, was genau bei Transmission und Reflexion passiert,
+  müssen wir klären, was man in der Physik unter einem <strong>dünnen</strong> und einem <strong>dichten Medium</strong> versteht.
+</p>
+
+<p>
+  Ein dünnes Medium ist ein Medium, in dem sich eine Welle <strong>schneller</strong> ausbreiten kann.
+  Ein dichtes Medium ist dagegen ein Medium, in dem sich die Welle <strong>langsamer</strong> ausbreitet.
+  Wichtig ist: „dünn“ und „dicht“ beziehen sich hier <em>nicht</em> unbedingt auf die Masse oder das Gewicht,
+  sondern auf die <strong>Ausbreitungsgeschwindigkeit der Welle</strong> im Medium.
+</p>
+
+<p>
+  Beispiele:
+</p>
+<ul>
+  <li>Licht breitet sich in <strong>Luft</strong> schneller aus als in <strong>Wasser</strong> oder <strong>Glas</strong> → Luft ist optisch dünner, Wasser/Glas optisch dichter.</li>
+  <li>Eine Welle läuft auf einem <strong>dünnen Seil</strong> schneller als auf einem <strong>dicken Seil</strong> → dünnes Seil = dünnes Medium, dickes Seil = dichtes Medium.</li>
+</ul>
+
+<p>
+  Trifft eine Welle nun auf eine Stelle, an der sich die Ausbreitungsgeschwindigkeit ändert,
+  kann sie nicht einfach „unverändert“ weiterlaufen. Ein Teil der Welle läuft im neuen Medium weiter,
+  ein anderer Teil wird zurückgeworfen.
+</p>
+
+<p>
+  Genau diesen Effekt nennen wir <strong>Transmission</strong> (die weiterlaufende Welle)
+  und <strong>Reflexion</strong> (die zurücklaufende Welle).
+</p>
+
+      
 
       <div class="wb-section-break"></div>
 
@@ -1201,11 +1232,11 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <p>Im folgenden siehst du ein Video, das die Reflexion einer Welle an einem losen Ende zeigt.</p>
       <p>Die einfallende Welle kommt von links nach rechts in der Farbe braun. Die Wellenfunktion ist:</p>
-    \[y(x,t) = A \sin( \omega ( t-\frac{x}{\lambda}))\]
+    \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda}))\]
     <p>Die reflektierte Welle kommt von rechts nach links in der Farbe grün. Die Wellenfunktion ist die einfallende, gespiegelt an der y-Achse:</p>
-    \[y(x,t) = A \sin( \omega (t +\frac{x}{\lambda}))\]
+    \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda}))\]
     <p>Die überlagerte Welle ist in der Farbe rosa dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
-    \[y(x,t) = A \sin( \omega ( t-\frac{x}{\lambda})) + A \sin( \omega (t +\frac{x}{\lambda})) = 2A \sin( \omega t) \times \cos( \frac{2 \pi}{\lambda} x)\]
+    \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda})) + A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda})) = 2A \sin( 2 \pi \frac{t}{T}) \cdot \cos( 2 \pi \frac{x}{\lambda})\]
       <p>Schau dir das Video ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
       <p>Vorsicht, im Video ist die Zeit negativ!</p>
 
@@ -1255,11 +1286,11 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
      <p>Im folgenden siehst du noch ein Video, das die Reflexion einer Welle an einem festen Ende zeigt.</p>
       <p>Die einfallende Welle kommt wieder von links nach rechts in der Farbe orange. Die Wellenfunktion ist:</p>
-    \[y(x,t) = A \sin( \omega (t -\frac{x}{\lambda}))\]
+    \[y(x,t) = A \sin( 2 \pi (\frac{t}{T}-\frac{x}{\lambda}))\]
     <p>Die reflektierte Welle kommt von rechts nach links in der Farbe grün mit Phasensprung, was eine Spiegelung an der y-Achse und an der x-Achse der einfallenden Wellenfunktion entspricht:</p>
-    \[y(x,t) = -A \sin( \omega (t +\frac{x}{\lambda}))\]
+    \[y(x,t) = -A \sin( 2 \pi (\frac{t}{T} +\frac{x}{\lambda}))\]
     <p>Die überlagerte Welle ist in der Farbe rosa dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
-    \[y(x,t) = A \sin( \omega (t -\frac{x}{\lambda})) + (-A \sin( \omega (t +\frac{x}{\lambda}))) = 2A \sin( \omega t) \times \cos( \frac{2 \pi}{\lambda} x)\]
+    \[y(x,t) = A \sin( 2 \pi (\frac{t}{T}-\frac{x}{\lambda})) + (-A \sin( 2 \pi (\frac{t}{T} +\frac{x}{\lambda}))) = -2A \cos( 2 \pi \frac{t}{T}) \cdot \sin( 2 \pi \frac{x}{\lambda})\]
       <p>Schau dir das Video ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
       <p>Vorsicht, auch hier ist die Zeit negativ, dann dreht sich alles um.</p>
 
@@ -1438,6 +1469,82 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
      <p>Mache nun zum Schluss auch noch das Quiz zu fortschreitenden und stehenden Wellen: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/aufgabe/quiz-zur-gegenueberstellung-von-fortschreitenden-und-stehenden-wellen" target="_blank" rel="noopener">Zum Quiz</a> </p>
 
     </section>
+
+    <section data-wb-page="10" data-wb-page-title="Rechenaufgaben">
+      <h1>Rechenaufgaben</h1>
+      <p class="wb-muted">Hier findest du weitere Rechenaufgaben zu stehenden Wellen.</p>
+      <h2>Rechenaufgabe Wellenträger 1:</h2>
+      <p></p>
+
+      <h2>Rechenaufgabe Eisendraht:</h2>
+      <p>Ein 60,0 cm langer Eisendraht wird an beiden Enden fest eingespannt und mit einem Elektromagneten 
+        zum Schwingen angeregt. Die Erregerfrequenz wird dabei von 0 Hz auf 100 Hz langsam erhöht. Bei 400Hz
+        beobachtet man erstmals, dass die Mitte des Drahts dauerhaft in Ruhe bleibt.</p>
+        <div class="wb-soft-callout">
+        <p>a) Bestimme die Ausbreitungsgeschwindigkeit der vom Erreger erzeugten Welle.</p>
+        </div>
+        <p>Der Draht wird nun zunächst mit der Frequenz 500Hz, dann in einem weiteren Experiment mit der Frequenz 600Hz angeregt.</p>
+        <div class="grid2">
+        <div class="wb-soft-callout">
+          <p>b) Überprüfe, ob es nach dem Einschwingvorgang zwischen den beiden eingespannten Enden Punkte auf dem Draht geben kann,
+          für die die nebenstehenden Zeit-Auslenkungs-Diagramme prinipiell möglich sind. Begründe deine Antwort.</p>
+        </p>
+        </div>
+        <div class="wb-img">
+        <img src="pdf-bilder/aufgabe-reflexion2.png" alt="Zwei feste Enden" style="width:100%; height:auto;">
+        </div>
+        </div>
+        <p>Eine Schülergruppe diskutiert, ob das Diagramm nebenstehende Diagramm ein Momentbild des Eisendrahts sein könnte.</p>
+        <div class="grid2">
+        <div class="wb-soft-callout">
+          <ul>
+            <li>Axel: "Das kann nur sein, wenn der Draht ruht."</li>
+            <li>Christoph: "Der muss nicht ruhen, an der Stelle ist ein Knoten."</li>
+            <li>Eva: "Das ist möglich, wenn es sich um eine Eigenschwingung handelt."</li>
+            <li>Petra: "Das kann nicht sein, das würde der Energieerhaltung widersprechen."</li>
+          </ul>
+        </p>
+        </div>
+        <div class="wb-img">
+        <img src="pdf-bilder/aufgabe-reflexion2b.png" alt="Zwei feste Enden" style="width:100%; height:auto;">
+        </div>
+        </div>
+        <div class="wb-soft-callout">
+          <p>c) Beurteile jeder der vier Aussagen.</p>
+        </p>
+
+           <div data-wb-type="reveal">
+  <script type="application/json" class="wb-config">
+  {
+    "id":"reveal-grundschwingung-1",
+    "title":"Tipp zur Lösung",
+    "question":"Klicke, um die Erklärung zu sehen.",
+    "answerHtml":"<div class=\"grid2\"><div class=\"wb-soft-callout\">a) Welche Eigenschwingungen sind möglich, wenn der Draht beidseitig eingespannt ist? Um welche Eigenschwingung handelt es sich bei 400Hz?</div><div class=\"wb-soft-callout\">b) Sind bei den beiden Frequenzen Eigenschwingungen möglich? Wie sieht die Situation an einem Knoten aus, wie an einem anderen Ort?</div><div class=\"wb-soft-callout\">c) Überlege, welche Informationen aus einem Auslenkungs-Ort-Diagramm abgelesen werden können und welche nicht. Beachte den Unterschied zum Auslenkungs-Zeit-Diagramm</div></div>",
+    "buttonLabel":"Antwort anzeigen",
+    "buttonHideLabel":"Antwort verbergen"
+  }
+  </script>
+</div>
+
+<h2>Lösung zur Aufgabe Eisendraht</h2>
+
+<div class="wb-soft-callout">
+  a) Bestimmung der Ausbreitungsgeschwindigkeit der Welle:<br>
+  Wir haben zwei feste Enden, die Grundschwingung (1.Eigenfrequenz) hat genau einen Bauch in der Mitte und Knoten an den Enden.<br>
+  Die Frequenz der Grundschwingung ist <br>
+  \[L=\frac{\lambda_1}{2}\]  
+  Bei den weitern Eigenfrequenzen kommt immer ein Bauch dazu, deshalb ist der erste Knoten in der Mitte bei der zweiten Eigenfrequenz.<br>
+  Und genau das wird beobachtet. Jetzt ist die Länge des Seils auch genau die Wellenlänge der zweiten Eigenfrequenz: $L=\lambda_2$<br>
+  Mit $f_k = k \cdot f_1$ für die k-te Oberschwingung folgt für die erste Eigenfrequenz (k=2): $f_2=400Hz$ und somit $f_1=200Hz$.<br>
+  Für die Ausbreitungsgeschwindigkeit der Welle gilt:<br>
+  \[c = \lambda_2 \cdot f_2  = 0.6m \cdot 400Hz = 240 m/s\] 
+</div>
+  
+
+    </section>
+
+
+
   </div>
 
   <script src="../assets/allgemeines_format.js"></script>
