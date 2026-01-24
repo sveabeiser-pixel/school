@@ -41,6 +41,7 @@
         Interferenz ist ein zentrales Thema der Oberstufe. Du erkennst, wie sich Wellen überlagern,
         wann sie sich verstärken oder auslöschen und wie man das mathematisch beschreibt.
       </p>
+      <p>Zum Schluss gibt es noch einige Rechenaufgaben, die die Themen Reflexion, stehende Wellen und Interferenz verbinden.</p>
 
       <div class="wb-section-break"></div>
 
@@ -613,13 +614,268 @@
           }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Aufgaben: Eigenschaften</h2>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-int-4",
+          "title":"Multiple Choice",
+          "questions":[
+            {
+              "text": "Welche Aussage beschreibt kohärente Wellen korrekt?",
+              "choices": [
+                { "id": "a", "label": "Gleiche Frequenz und feste Phasenbeziehung" },
+                { "id": "b", "label": "Gleiche Amplitude und gleiche Ausbreitungsrichtung" },
+                { "id": "c", "label": "Beliebige Frequenzen, Hauptsache gleiche Polarisation" }
+              ],
+              "correct": ["a"],
+              "explain": "Kohärenz bedeutet gleiche Frequenz und stabile Phasenbeziehung."
+            },
+            {
+              "text": "Was folgt, wenn zwei Wellen zueinander senkrecht polarisiert sind?",
+              "choices": [
+                { "id": "a", "label": "Sie interferieren konstruktiv." },
+                { "id": "b", "label": "Sie können nicht interferieren." },
+                { "id": "c", "label": "Es entsteht immer eine Schwebung." }
+              ],
+              "correct": ["b"],
+              "explain": "Senkrecht polarisierte Wellen überlagern sich nicht."
+            },
+            {
+              "text": "Woran erkennst du eine Schwebung?",
+              "choices": [
+                { "id": "a", "label": "Die Frequenz der Welle springt zufällig." },
+                { "id": "b", "label": "Die Amplitude wächst und schrumpft periodisch." },
+                { "id": "c", "label": "Die Wellenlänge wird konstant halbiert." }
+              ],
+              "correct": ["b"],
+              "explain": "Schwebung zeigt sich als periodische Amplitudenänderung."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"reveal-int-4",
+            "title":"Transfer",
+            "question":"Zwei Lautsprecher spielen fast die gleiche Tonhöhe, aber leicht verstimmt. Was hörst du und wie erklärst du das mit den Eigenschaften von Interferenz?",
+            "answer":"Du hörst eine Schwebung: Die Amplitude wird periodisch lauter und leiser, weil sich zwei Wellen mit leicht unterschiedlichen Frequenzen überlagern.",
+            "buttonLabel":"Antwort anzeigen",
+            "buttonHideLabel":"Antwort verbergen"
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-int-4",
+          "title":"Kohärenz und Polarisation",
+          "bank": [
+            "Frequenz",
+            "Phasenbeziehung",
+            "Interferenz",
+            "senkrecht",
+            "nicht"
+          ],
+          "segments": [
+            { "t": "text", "v": "Kohärente Wellen haben die gleiche " },
+            { "t": "gap",  "a": "Frequenz" },
+            { "t": "text", "v": " und eine feste " },
+            { "t": "gap",  "a": "Phasenbeziehung" },
+            { "t": "text", "v": ". Sind zwei Wellen zueinander " },
+            { "t": "gap",  "a": "senkrecht" },
+            { "t": "text", "v": " polarisiert, können sie " },
+            { "t": "gap",  "a": "nicht" },
+            { "t": "text", "v": " zur " },
+            { "t": "gap",  "a": "Interferenz" },
+            { "t": "text", "v": " beitragen." }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mini-Spiel: Zuordnen</h2>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne die Eigenschaften den passenden Beschreibungen zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Kohärenz</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Schwebung</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Polarisation</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Senkrecht polarisiert</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Beschreibung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Gleiche Frequenz, feste Phasenbeziehung</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Amplitude ändert sich periodisch</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Richtung der Schwingung</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Keine Interferenz möglich</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-int-4",
+          "title":"Erkläre: Wie würdest du experimentell prüfen, ob zwei Lichtquellen kohärent sind?",
+          "storagePrefix":"wellen_interferenz_",
+          "exportName":"wellen-interferenz.txt",
+          "fields":[
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Beschreibe dein Vorgehen und woran du Kohärenz erkennst..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "order-int-4",
+          "title": "Prüfe die Bedingungen für Interferenz",
+          "items": [
+            "Prüfe, ob die Frequenzen gleich sind.",
+            "Überlege, ob eine feste Phasenbeziehung vorliegt.",
+            "Beobachte, ob ein stabiles Interferenzmuster entsteht."
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
     </section>
 
 
 
     <section data-wb-page="5" data-wb-page-title="Berechnung">
+    
       <h1>So berechnest du die Interferenz</h1>
-      <p class="wb-muted">Jetzt lernst du, wie der Gangunterschied mit der Geometrie zusammenhängt.</p>
+
+<p class="wb-muted">
+  Jetzt lernst du Schritt für Schritt, wie man den <strong>Gangunterschied</strong> geometrisch berechnet
+  und warum er entscheidet, ob sich Wellen verstärken oder auslöschen.
+</p>
+
+<p>
+  Wir betrachten zwei punktförmige Quellen <strong>$S_1$</strong> und <strong>$S_2$</strong>, die gleichzeitig
+  Wellen mit <strong>gleicher Frequenz</strong> und <strong>gleicher Amplitude</strong> aussenden.
+  Die beiden Quellen haben einen festen Abstand <strong>$d$</strong> zueinander.
+</p>
+<p>
+  Wir betrachten einen Punkt <strong>$E$</strong>, der sich in <strong>großer Entfernung</strong> von den beiden Quellen befindet,
+  und untersuchen dort die <strong>Interferenz</strong> der beiden ankommenden Wellen.
+  Aufgrund der großen Entfernung kann man annehmen, dass die Wellen in der Umgebung von
+  <strong>$E$</strong> nahezu <strong>parallel</strong> verlaufen.
+</p>
+
+
+
+
+<div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Was ist der Gangunterschied</strong>
+         <p>
+  Die Wellen von $S_1$ und $S_2$ laufen zu einem gemeinsamen Beobachtungspunkt $E$.
+  Da die Wege unterschiedlich lang sind, treffen die Wellen dort nicht immer gleichzeitig ein.
+</p>
+
+<p>
+  Der <b>Gangunterschied</b> $\Delta s$ ist die
+  <b>Differenz der beiden Weglängen</b>.
+  Er bestimmt, ob sich die Wellen am Beobachtungspunkt <b>verstärken</b> (konstruktive Interferenz)
+  oder <b>auslöschen</b> (destruktive Interferenz).
+</p>
+        </div>  
+        <div class="wb-img">
+        <img src="pdf-bilder/interferenz.png" alt="Interferenzgeometrie: Gangunterschied">
+      </div>
+      </div>
+
+<h2>Schritt für Schritt</h2>
+<ol>
+  <li>
+    Zwei Quellen <strong>$S_1$</strong> und <strong>$S_2$</strong> senden kohärente Wellen aus
+    (gleiche Frequenz, feste Phasenbeziehung).
+  </li>
+
+  <li>
+    Die Wellen treffen sich in einem Punkt im Abstand <strong>$d$</strong> von den Quellen.
+    Der seitliche Abstand dieses Punktes von der Mitte nennen wir <strong>$x$</strong>.
+  </li>
+
+  <li>
+    Durch die Geometrie entsteht ein Gangunterschied <strong>$\Delta s$</strong>.
+    Dieser ergibt sich aus der Projektion des Quellenabstands <strong>$b$</strong>
+    auf die Ausbreitungsrichtung der Wellen:
+    <br>
+    <strong>$\Delta s = b \cdot \sin(\alpha)$</strong>
+  </li>
+
+  <li>
+    Der Winkel <strong>$\alpha$</strong> ist sehr klein, da der Beobachtungspunkt weit entfernt ist
+    (<strong>$d \gg b$</strong>). Für kleine Winkel gilt die Näherung:
+    <br>
+    <strong>$\tan(\alpha) \approx \sin(\alpha)$</strong>
+  </li>
+
+  <li>
+    Aus der Geometrie folgt:
+    <br>
+    <strong>$\tan(\alpha) = \dfrac{x}{d}$</strong>
+  </li>
+
+  <li>
+    Setzt man dies in die Formel für den Gangunterschied ein, erhält man:
+    <br>
+    <strong>$\Delta s = b \cdot \dfrac{x}{d}$</strong>
+  </li>
+</ol>
+
+<h2>Warum ist das wichtig?</h2>
+<p>
+  Mit dieser Formel kannst du genau berechnen, an welchen Stellen auf dem Schirm
+  <strong>helle Streifen</strong> (Maxima) und <strong>dunkle Streifen</strong> (Minima) entstehen.
+</p>
+
+<p>
+  <strong>Merke:</strong> Der Gangunterschied hängt direkt von der
+  <strong>Geometrie des Aufbaus</strong> ab – vom Quellenabstand <strong>$b$</strong>,
+  vom Abstand zum Schirm <strong>$d$</strong> und von der Position <strong>$x$</strong>.
+</p>
+
 
       <h2>Schritt für Schritt</h2>
       <ol>
