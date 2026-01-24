@@ -1092,47 +1092,137 @@ ${fi.input.value || ""}
     const resultsPage = qs('[data-wb-results="1"]', root);
     if(resultsPage){
       resultsPage.innerHTML = "";
-      resultsPage.appendChild(el("h1", {}, ["Ergebnisse"]));
-      resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Hier siehst du eine Zusammenfassung deiner Antworten."]));
-      if(studentName){
-        resultsPage.appendChild(el("p", {}, ["Name: " + studentName]));
-      }
-      resultsPage.appendChild(el("p", {}, ["Gesamtpunkte: " + totalCorrect + "/" + totalPossible]));
+      const wrap = el("div", {class:"wb-results-wrap"}, []);
 
-      let currentPage = null;
-      results.forEach(r => {
-        if(currentPage !== r.page){
-          currentPage = r.page;
-          resultsPage.appendChild(el("h2", {}, ["Seite " + currentPage]));
-          const pt = pageTotals.get(currentPage);
-          if(pt) resultsPage.appendChild(el("p", {}, ["Seitenpunkte: " + pt.correct + "/" + pt.total]));
-        }
-        resultsPage.appendChild(el("h3", {}, [r.title]));
+      const typeLabel = {
+        mcq: "Multiple Choice",
+        cloze: "Lueckentext",
+        order: "Reihenfolge",
+        puzzle: "Zuordnung",
+        essay: "Essay",
+        text: "Text"
+      };
+
+      function isCompleted(r){
         if(r.type === "mcq"){
-          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
-          r.res.items.forEach((it, qi) => {
-            resultsPage.appendChild(el("p", {}, [(qi+1) + ". " + it.text]));
-            resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Ausgewaehlt: " + (it.selected.join(", ") || "-") + " | Richtig: " + (it.expected.join(", ") || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
-          });
-        }else if(r.type === "cloze"){
-          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
-          if(r.prompt) resultsPage.appendChild(el("p", {class:"wb-muted"}, ["Aufgabe: " + r.prompt]));
-          r.res.items.forEach((it, gi) => {
-            resultsPage.appendChild(el("p", {class:"wb-muted"}, [(gi+1) + ". Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
-          });
-        }else if(r.type === "essay"){
-          r.fields.forEach(f => {
-            resultsPage.appendChild(el("p", {}, [(f.key || "") + ": " + (f.value || "")]));
-          });
-        }else if(r.type === "puzzle"){
-          resultsPage.appendChild(el("p", {}, ["Punkte: " + r.res.correctCount + "/" + r.res.total]));
-          r.res.items.forEach((it, pi) => {
-            resultsPage.appendChild(el("p", {class:"wb-muted"}, [(pi+1) + ". " + (it.left || "-") + " | " + (it.right || "-") + " | " + (it.ok ? "richtig" : "falsch")]));
-          });
-        }else if(r.type === "text"){
-          resultsPage.appendChild(el("p", {}, [r.value || "-"]));
+          return r.res.items.every(it => Array.isArray(it.selected) && it.selected.length);
         }
+        if(r.type === "cloze"){
+          return r.res.items.every(it => String(it.got || "").trim() !== "");
+        }
+        if(r.type === "essay"){
+          return r.fields.some(f => String(f.value || "").trim() !== "");
+        }
+        if(r.type === "text"){
+          return String(r.value || "").trim() !== "";
+        }
+        return true;
+      }
+
+      const allInteractions = results.length;
+      const doneInteractions = results.filter(isCompleted).length;
+      const allPages = pages.length;
+      const pagesWithDone = new Set(results.filter(isCompleted).map(r => r.page));
+      const donePages = pagesWithDone.size;
+
+      const scorePct = totalPossible ? Math.round((totalCorrect / totalPossible) * 100) : 0;
+      const bookPct = allPages ? Math.round((donePages / allPages) * 100) : 0;
+      const intPct = allInteractions ? Math.round((doneInteractions / allInteractions) * 100) : 0;
+
+      const topGrid = el("div", {class:"wb-results-topgrid"}, [
+        el("div", {class:"wb-results-card"}, [
+          el("div", {class:"wb-results-card-text"}, [
+            el("h3", {}, ["Total score"]),
+            el("p", {class:"wb-results-big"}, [String(totalCorrect), " / ", String(totalPossible)]),
+            el("p", {class:"wb-results-small"}, [String(doneInteractions), " of ", String(allInteractions), " interactions"])
+          ]),
+          el("div", {class:"wb-results-ring", style:`--p:${scorePct};--ring-color:var(--wb-ok)`}, [])
+        ]),
+        el("div", {class:"wb-results-card"}, [
+          el("div", {class:"wb-results-card-text"}, [
+            el("h3", {}, ["Book progress"]),
+            el("p", {class:"wb-results-big wb-results-blue"}, [String(bookPct), "%"]),
+            el("p", {class:"wb-results-small"}, [String(donePages), " of ", String(allPages), " pages"])
+          ]),
+          el("div", {class:"wb-results-ring", style:`--p:${bookPct};--ring-color:var(--wb-blue)`}, [])
+        ]),
+        el("div", {class:"wb-results-card"}, [
+          el("div", {class:"wb-results-card-text"}, [
+            el("h3", {}, ["Interactions progress"]),
+            el("p", {class:"wb-results-big wb-results-blue"}, [String(intPct), "%"]),
+            el("p", {class:"wb-results-small"}, [String(doneInteractions), " of ", String(allInteractions), " interactions"])
+          ]),
+          el("div", {class:"wb-results-ring", style:`--p:${intPct};--ring-color:var(--wb-blue)`}, [])
+        ])
+      ]);
+
+      const summaryHead = el("div", {class:"wb-results-summary-head"}, [
+        el("div", {class:"wb-results-heading"}, ["Summary"])
+      ]);
+
+      const panelTitle = cfg.bookTitle || cfg.sectionTitle || "Ergebnisse";
+      const panelTopChildren = [
+        el("div", {class:"wb-results-panel-title"}, [panelTitle]),
+        el("p", {class:"wb-results-panel-sub"}, [String(doneInteractions), " of ", String(allInteractions), " interactions completed"])
+      ];
+      if(studentName){
+        panelTopChildren.push(el("p", {class:"wb-results-name"}, ["Name: " + studentName]));
+      }
+
+      const tableRows = results.map(r => {
+        const scoreText = (r.type === "mcq" || r.type === "cloze" || r.type === "order" || r.type === "puzzle")
+          ? `${r.res.correctCount} / ${r.res.total}`
+          : "-";
+        const meta = typeLabel[r.type] || "Interaktion";
+        return el("div", {class:"wb-results-row"}, [
+          el("div", {class:"wb-results-dot"}, []),
+          el("div", {}, [
+            el("div", {class:"wb-results-name-text"}, [r.title || "Ohne Titel"]),
+            el("div", {class:"wb-results-muted"}, [`${meta} - Seite ${r.page}`])
+          ]),
+          el("div", {class:"wb-results-score"}, [scoreText])
+        ]);
       });
+
+      const panel = el("div", {class:"wb-results-panel"}, [
+        el("div", {class:"wb-results-panel-top"}, panelTopChildren),
+        el("div", {class:"wb-results-table"}, [
+          el("div", {class:"wb-results-thead"}, [
+            el("div", {}, []),
+            el("div", {}, []),
+            el("div", {class:"wb-results-score-head"}, ["Score"])
+          ]),
+          ...tableRows
+        ])
+      ]);
+
+      const essayItems = results
+        .filter(r => r.type === "essay")
+        .map(r => {
+          const values = r.fields
+            .map(f => {
+              const label = String(f.key || "").trim();
+              const value = String(f.value || "").trim();
+              return (label ? (label + ": ") : "") + (value || "-");
+            })
+            .join("\n");
+          return el("div", {class:"wb-results-essay-item"}, [
+            el("div", {class:"wb-results-essay-title"}, [r.title || "Essay"]),
+            el("div", {class:"wb-results-essay-text"}, [values || "-"])
+          ]);
+        });
+
+      const essaysSection = el("div", {class:"wb-results-essays"}, [
+        el("div", {class:"wb-results-essays-head"}, ["Essay-Texte"]),
+        essayItems.length ? el("div", {class:"wb-results-essays-list"}, essayItems)
+          : el("div", {class:"wb-results-muted"}, ["Keine Essays gefunden."])
+      ]);
+
+      wrap.appendChild(topGrid);
+      wrap.appendChild(summaryHead);
+      wrap.appendChild(panel);
+      wrap.appendChild(essaysSection);
+      resultsPage.appendChild(wrap);
     }
 
     textLines.push("Gesamtpunkte: " + totalCorrect + "/" + totalPossible);
