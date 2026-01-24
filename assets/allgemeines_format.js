@@ -708,18 +708,27 @@ ${fi.input.value || ""}
   }
 
 
+  function normalizeLines(value){
+    if(Array.isArray(value)) return value.join("\n");
+    if(value == null) return "";
+    return String(value);
+  }
+
   function createReveal(cfg){
     const question = String(cfg.question || "");
-    const answer = String(cfg.answer || "");
-    const answerHtml = cfg.answerHtml;
+    const answer = normalizeLines(cfg.answer || "");
+    const answerHtml = cfg.answerHtml != null ? normalizeLines(cfg.answerHtml) : "";
     const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
     const storageKey = (cfg.storagePrefix || "wb_") + "reveal_" + (cfg.__wbKey || cfg.id || "reveal");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
-    const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, [answer]);
+    const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, []);
     if(answerHtml){
-      aEl.innerHTML = String(answerHtml);
+      aEl.innerHTML = answerHtml;
+    }else{
+      aEl.textContent = answer;
+      if(answer.indexOf("\n") !== -1) aEl.style.whiteSpace = "pre-line";
     }
     aEl.style.display = "none";
 
