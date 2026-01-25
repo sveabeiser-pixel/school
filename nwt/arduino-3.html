@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Arduino Lernbaustein – Seiten 12–17</title>
+  <title>Arduino Lernbaustein â€“ Seiten 12â€“17</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
   <style>
     .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -51,8 +51,8 @@
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
       {
-        "bookTitle": "Arduino – Lernbaustein (Seiten 12–17)",
-        "sectionTitle": "Arduino – Lernbaustein (Seiten 12–17)",
+        "bookTitle": "Arduino â€“ Lernbaustein (Seiten 12â€“17)",
+        "sectionTitle": "Arduino â€“ Lernbaustein (Seiten 12â€“17)",
         "submitLabel": "Summary & submit",
         "onSubmit": "alert",
         "webhookEmail": "",
@@ -61,14 +61,14 @@
     </script>
 
     <section data-wb-page="1" data-wb-page-title="Variablen">
-      <h1>6. Variablen – Speicherplätze für Werte</h1>
+      <h1>6. Variablen â€“ SpeicherplÃ¤tze fÃ¼r Werte</h1>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine Variable?</strong>
         <div>
           Eine <b>Variable</b> ist ein Speicherplatz im Arduino,
           in dem ein <b>Wert abgelegt</b> werden kann.
-          Dieser Wert kann sich während des Programms <b>ändern</b>.
+          Dieser Wert kann sich wÃ¤hrend des Programms <b>Ã¤ndern</b>.
         </div>
       </div>
 
@@ -82,7 +82,7 @@
           Der Name der Kiste ist der <b>Variablenname</b>,
           der Inhalt der Kiste ist der <b>Wert</b>.
           <br><br>
-          Der Inhalt kann jederzeit ausgetauscht werden –
+          Der Inhalt kann jederzeit ausgetauscht werden â€“
           der Name der Kiste bleibt gleich.
         </div>
       </div>
@@ -95,9 +95,9 @@
           Variablen haben unterschiedliche <b>Datentypen</b>,
           je nachdem, was gespeichert wird:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><code>int</code> – ganze Zahlen (z. B. 10, 200)</li>
-            <li><code>long</code> – sehr große ganze Zahlen</li>
-            <li><code>float</code> – Kommazahlen (z. B. 2.5)</li>
+            <li><code>int</code> â€“ ganze Zahlen (z. B. 10, 200)</li>
+            <li><code>long</code> â€“ sehr groÃŸe ganze Zahlen</li>
+            <li><code>float</code> â€“ Kommazahlen (z. B. 2.5)</li>
           </ul>
         </div>
       </div>
@@ -111,7 +111,7 @@
           <pre><code>int a;</code></pre>
           Danach kann ihr ein <b>Wert zugewiesen</b> werden:
           <pre><code>a = 10;</code></pre>
-          Später kann der Wert wieder geändert werden:
+          SpÃ¤ter kann der Wert wieder geÃ¤ndert werden:
           <pre><code>a = a + 5;</code></pre>
         </div>
       </div>
@@ -132,13 +132,13 @@
       <div class="wb-soft-callout">
         <strong>Warum sind Variablen so wichtig?</strong>
         <div>
-          Ohne Variablen wären Programme:
+          Ohne Variablen wÃ¤ren Programme:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>unflexibel</li>
             <li>lang</li>
-            <li>schwer veränderbar</li>
+            <li>schwer verÃ¤nderbar</li>
           </ul>
-          Mit Variablen kann man z. B. Tonhöhen, Wartezeiten
+          Mit Variablen kann man z. B. TonhÃ¶hen, Wartezeiten
           oder Helligkeiten einfach anpassen.
         </div>
       </div>
@@ -148,45 +148,45 @@
       <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
         <div>
-          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. Schreibe neue
+          Lies dir alles nochmal genau durch und beantworte die Fragen ausfÃ¼hrlich. Schreibe neue
           Befehle in OneNote auf deinen Spickzettel.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
-        <div class="pdfcaption">Original – Seite 12</div>
+        <div class="pdfcaption">Original â€“ Seite 12</div>
       </div>
 
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
           {
             "id":"mc_vars",
-            "title":"Multiple Choice – Variablen (mehrere Antworten möglich)",
+            "title":"Multiple Choice â€“ Variablen (mehrere Antworten mÃ¶glich)",
             "questions":[
               {
                 "text":"1) Was ist eine Variable?",
                 "multiple": true,
                 "choices":[
-                  {"id":"a","label":"Ein Speicherplatz für Werte"},
+                  {"id":"a","label":"Ein Speicherplatz fÃ¼r Werte"},
                   {"id":"b","label":"Ein fester Text im Programm"},
-                  {"id":"c","label":"Ein Wert, der sich ändern kann"},
+                  {"id":"c","label":"Ein Wert, der sich Ã¤ndern kann"},
                   {"id":"d","label":"Ein elektrisches Bauteil"}
                 ],
                 "correct":["a","c"],
-                "explain":"Richtig sind Speicherplatz für Werte und veränderlicher Wert."
+                "explain":"Richtig sind Speicherplatz fÃ¼r Werte und verÃ¤nderlicher Wert."
               },
               {
                 "text":"2) Welche Aussagen zu Variablen sind richtig?",
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"Variablen haben einen Namen"},
-                  {"id":"b","label":"Variablen können ihren Wert ändern"},
+                  {"id":"b","label":"Variablen kÃ¶nnen ihren Wert Ã¤ndern"},
                   {"id":"c","label":"Eine Variable speichert alle alten Werte"},
                   {"id":"d","label":"Variablen machen Programme flexibler"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"Variablen haben Namen, ändern Werte und machen Programme flexibler."
+                "explain":"Variablen haben Namen, Ã¤ndern Werte und machen Programme flexibler."
               },
               {
                 "text":"3) Welche Datentypen gibt es laut Heft?",
@@ -206,15 +206,15 @@
       </div>
     </section>
     <section data-wb-page="2" data-wb-page-title="Variablen - Challenge">
-      <h2>Challenge – Variablen richtig einsetzen</h2>
+      <h2>Challenge â€“ Variablen richtig einsetzen</h2>
 
       <div class="wb-soft-callout">
         <strong>Regel der Challenge</strong>
         <div>
-          Du darfst <b>nur Variablen ändern oder hinzufügen</b>.
+          Du darfst <b>nur Variablen Ã¤ndern oder hinzufÃ¼gen</b>.
           <br>
           Die Struktur des Programms (setup, loop, Reihenfolge)
-          bleibt unverändert.
+          bleibt unverÃ¤ndert.
         </div>
       </div>
 
@@ -223,7 +223,7 @@
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Challenge 1 – Tempo ändern (leicht)</div>
+            <div class="wb-title">Challenge 1 â€“ Tempo Ã¤ndern (leicht)</div>
             <div class="wb-hint">nur Variablen</div>
           </div>
         </div>
@@ -240,21 +240,21 @@ void loop() {
           <div class="wb-muted">
             Die LED blinkt aktuell langsam.
             <br>
-            ? Ändere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
-            ohne die <code>delay()</code>-Zeilen zu verändern.
+            ? Ã„ndere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
+            ohne die <code>delay()</code>-Zeilen zu verÃ¤ndern.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 1 – Tempo ändern" placeholder="Was musst du an der Variable ändern? Begründe kurz."></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 1 â€“ Tempo Ã¤ndern" placeholder="Was musst du an der Variable Ã¤ndern? BegrÃ¼nde kurz."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Die Blinkgeschwindigkeit wird durch die Variable <code>t</code> bestimmt.
               <br><br>
               Um doppelt so schnell zu blinken, muss die Wartezeit halbiert werden:
               <code>int t = 250;</code>
               <br><br>
-              Die Struktur des Programms bleibt gleich – nur der Wert der Variable ändert sich.
+              Die Struktur des Programms bleibt gleich â€“ nur der Wert der Variable Ã¤ndert sich.
             </div>
           </details>
         </div>
@@ -265,7 +265,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Challenge 2 – Ton verändern (mittel)</div>
+            <div class="wb-title">Challenge 2 â€“ Ton verÃ¤ndern (mittel)</div>
             <div class="wb-hint">denken erforderlich</div>
           </div>
         </div>
@@ -282,22 +282,22 @@ void loop() {
           <div class="wb-muted">
             Der Ton ist aktuell immer gleich.
             <br>
-            ? Sorge dafür, dass der Ton <b>bei jedem Durchlauf höher</b> wird.
+            ? Sorge dafÃ¼r, dass der Ton <b>bei jedem Durchlauf hÃ¶her</b> wird.
             <br>
-            Tipp: Der Wert der Variable darf sich ändern.
+            Tipp: Der Wert der Variable darf sich Ã¤ndern.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 2 – Ton verändern" placeholder="Welche zusätzliche Zeile brauchst du? Erkläre, was sie bewirkt."></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 2 â€“ Ton verÃ¤ndern" placeholder="Welche zusÃ¤tzliche Zeile brauchst du? ErklÃ¤re, was sie bewirkt."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Der Ton wird durch die Variable <code>ton</code> bestimmt.
               <br><br>
-              Damit der Ton bei jedem Durchlauf höher wird, muss der Wert verändert werden:
+              Damit der Ton bei jedem Durchlauf hÃ¶her wird, muss der Wert verÃ¤ndert werden:
               <code>ton = ton + 20;</code>
               <br><br>
-              Die Variable speichert den neuen Wert und wird beim nächsten Durchlauf verwendet.
+              Die Variable speichert den neuen Wert und wird beim nÃ¤chsten Durchlauf verwendet.
             </div>
           </details>
         </div>
@@ -308,7 +308,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Challenge 3 – Rhythmus bauen (knifflig)</div>
+            <div class="wb-title">Challenge 3 â€“ Rhythmus bauen (knifflig)</div>
             <div class="wb-hint">Transfer</div>
           </div>
         </div>
@@ -324,27 +324,27 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            Du hörst immer denselben Rhythmus.
+            Du hÃ¶rst immer denselben Rhythmus.
             <br>
-            ? Erkläre, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
-            erzeugen kannst, ohne neue <code>delay()</code>-Zeilen hinzuzufügen.
+            ? ErklÃ¤re, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
+            erzeugen kannst, ohne neue <code>delay()</code>-Zeilen hinzuzufÃ¼gen.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 3 – Rhythmus bauen" placeholder="Beschreibe deine Idee in Worten (kein kompletter Code nötig)."></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 3 â€“ Rhythmus bauen" placeholder="Beschreibe deine Idee in Worten (kein kompletter Code nÃ¶tig)."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Verschiedene Rhythmen entstehen, indem man die Variablen
-              <code>kurz</code> und <code>lang</code> verändert.
+              <code>kurz</code> und <code>lang</code> verÃ¤ndert.
               <br><br>
               Beispiel:
               <ul>
                 <li>kurz = 100, lang = 500 ? langsamer Rhythmus</li>
-                <li>kurz = 200, lang = 200 ? gleichmäßiger Rhythmus</li>
+                <li>kurz = 200, lang = 200 ? gleichmÃ¤ÃŸiger Rhythmus</li>
                 <li>kurz = 50, lang = 300 ? schneller Akzent</li>
               </ul>
-              Die Programmstruktur bleibt gleich – nur die Werte ändern sich.
+              Die Programmstruktur bleibt gleich â€“ nur die Werte Ã¤ndern sich.
             </div>
           </details>
         </div>
@@ -357,7 +357,7 @@ void loop() {
           {
             "id":"c_reflex",
             "title":"Reflexion",
-            "hint":"Denken über Code",
+            "hint":"Denken Ã¼ber Code",
             "fields":[
               {"label":"Antwort","key":"c_reflex","kind":"textarea","placeholder":"Warum sind Variablen besser, als feste Zahlen direkt in den Code zu schreiben?"}
             ]
@@ -366,17 +366,17 @@ void loop() {
       </div>
 
       <details>
-        <summary>Musterlösung anzeigen</summary>
+        <summary>MusterlÃ¶sung anzeigen</summary>
         <div>
-          Variablen machen Programme übersichtlicher und flexibler.
-          Statt viele Zahlen im Code zu ändern, passt man nur wenige
+          Variablen machen Programme Ã¼bersichtlicher und flexibler.
+          Statt viele Zahlen im Code zu Ã¤ndern, passt man nur wenige
           Variablen an und beeinflusst damit das gesamte Programmverhalten.
         </div>
       </details>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="7. Serielle Ausgabe">
-      <h2>7. Serielle Ausgabe – Mit dem Arduino kommunizieren</h2>
+      <h2>7. Serielle Ausgabe â€“ Mit dem Arduino kommunizieren</h2>
 
       <div class="wb-soft-callout">
         <strong>Was ist die serielle Ausgabe?</strong>
@@ -396,7 +396,7 @@ void loop() {
         <div>
           Die serielle Ausgabe wird vor allem genutzt, um:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>zu prüfen, ob ein Programm richtig läuft</li>
+            <li>zu prÃ¼fen, ob ein Programm richtig lÃ¤uft</li>
             <li>Werte von Variablen anzuzeigen</li>
             <li>Fehler im Programm zu finden</li>
           </ul>
@@ -412,7 +412,7 @@ void loop() {
           Bevor der Arduino Daten senden kann, muss die serielle Verbindung
           gestartet werden:
           <pre><code>Serial.begin(9600);</code></pre>
-          Die Zahl <b>9600</b> gibt die Übertragungsgeschwindigkeit an
+          Die Zahl <b>9600</b> gibt die Ãœbertragungsgeschwindigkeit an
           (Baudrate).
         </div>
       </div>
@@ -426,7 +426,7 @@ void loop() {
           oder Text aus und beginnt danach eine <b>neue Zeile</b>.
           <pre><code>Serial.println(x);</code></pre>
           So kann man verfolgen, wie sich der Wert von <code>x</code>
-          im Laufe des Programms ändert.
+          im Laufe des Programms Ã¤ndert.
         </div>
       </div>
 
@@ -436,19 +436,19 @@ void loop() {
         <strong>AUFGABEN</strong>
         <div>
           Lies dir nochaml alles ganz genau durch, schreibe die neuen Befehle in OneNote
-          auf deinen Spickzettel und bearbeite anschließend die Aufgaben.
+          auf deinen Spickzettel und bearbeite anschlieÃŸend die Aufgaben.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite13.png" alt="PDF Seite 13">
-        <div class="pdfcaption">Original – Seite 13</div>
+        <div class="pdfcaption">Original â€“ Seite 13</div>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Beispiel aus dem Bild</strong>
         <div>
-          Im Beispiel auf Seite 13 wird eine Variable immer wieder erhöht
+          Im Beispiel auf Seite 13 wird eine Variable immer wieder erhÃ¶ht
           und ihr Wert im seriellen Monitor ausgegeben:
           <pre><code>int x = 0;
 
@@ -456,7 +456,7 @@ void loop() {
   Serial.println(x);
   x = x + 5;
 }</code></pre>
-          Dadurch sieht man, wie sich der Wert Schritt für Schritt verändert.
+          Dadurch sieht man, wie sich der Wert Schritt fÃ¼r Schritt verÃ¤ndert.
         </div>
       </div>
 
@@ -466,7 +466,7 @@ void loop() {
         <strong>Wichtiger Hinweis</strong>
         <div>
           Die Baudrate im Programm (<code>Serial.begin(9600)</code>)
-          muss mit der Baudrate im seriellen Monitor übereinstimmen.
+          muss mit der Baudrate im seriellen Monitor Ã¼bereinstimmen.
           <br>
           Sonst erscheinen nur unlesbare Zeichen.
         </div>
@@ -478,7 +478,7 @@ void loop() {
         <script type="application/json" class="wb-config">
           {
             "id":"s13_vf",
-            "title":"Verständnisfragen – Serielle Ausgabe",
+            "title":"VerstÃ¤ndnisfragen â€“ Serielle Ausgabe",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"s13_q1","kind":"textarea","placeholder":"1) Warum ist die serielle Ausgabe beim Programmieren hilfreich?"},
@@ -491,16 +491,16 @@ void loop() {
       </div>
     </section>
     <section data-wb-page="4" data-wb-page-title="Debugging - Challenge">
-      <h2>Debugging – Wenn das Programm nicht so läuft wie gedacht</h2>
+      <h2>Debugging â€“ Wenn das Programm nicht so lÃ¤uft wie gedacht</h2>
 
       <div class="wb-soft-callout">
         <strong>Was bedeutet Debugging?</strong>
         <div>
           <b>Debugging</b> bedeutet, Fehler im Programm zu finden und zu beheben.
-          Fehler sind dabei <b>normal</b> und gehören zum Programmieren dazu.
+          Fehler sind dabei <b>normal</b> und gehÃ¶ren zum Programmieren dazu.
           <br>
           Gute Programmierer unterscheiden sich nicht dadurch,
-          dass sie keine Fehler machen – sondern dadurch,
+          dass sie keine Fehler machen â€“ sondern dadurch,
           dass sie systematisch nach ihnen suchen.
         </div>
       </div>
@@ -510,9 +510,9 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Die wichtigste Regel</strong>
         <div>
-          ? <b>Erst denken, dann ändern.</b><br>
-          Wildes Ausprobieren führt selten zum Ziel.
-          Debugging heißt: Schritt für Schritt prüfen.
+          ? <b>Erst denken, dann Ã¤ndern.</b><br>
+          Wildes Ausprobieren fÃ¼hrt selten zum Ziel.
+          Debugging heiÃŸt: Schritt fÃ¼r Schritt prÃ¼fen.
         </div>
       </div>
 
@@ -524,10 +524,10 @@ void loop() {
         <div class="wb-soft-callout">
           <strong>Programm startet nicht</strong>
           <div>
-            Häufige Ursachen:
+            HÃ¤ufige Ursachen:
             <ul style="margin:6px 0 0; padding-left:18px">
-              <li>falsches Board ausgewählt</li>
-              <li>falscher Port ausgewählt</li>
+              <li>falsches Board ausgewÃ¤hlt</li>
+              <li>falscher Port ausgewÃ¤hlt</li>
               <li>USB-Kabel nur zum Laden geeignet</li>
             </ul>
           </div>
@@ -536,7 +536,7 @@ void loop() {
         <div class="wb-soft-callout">
           <strong>LED blinkt nicht</strong>
           <div>
-            Mögliche Ursachen:
+            MÃ¶gliche Ursachen:
             <ul style="margin:6px 0 0; padding-left:18px">
               <li>falscher Pin im Code</li>
               <li>LED falsch herum eingebaut</li>
@@ -548,11 +548,11 @@ void loop() {
         <div class="wb-soft-callout">
           <strong>Serieller Monitor zeigt nichts</strong>
           <div>
-            Prüfe:
+            PrÃ¼fe:
             <ul style="margin:6px 0 0; padding-left:18px">
               <li><code>Serial.begin()</code> vorhanden?</li>
               <li>richtige Baudrate eingestellt?</li>
-              <li>serieller Monitor geöffnet?</li>
+              <li>serieller Monitor geÃ¶ffnet?</li>
             </ul>
           </div>
         </div>
@@ -563,7 +563,7 @@ void loop() {
             Die Arduino-IDE meldet Fehler meist auf Englisch.
             Das ist kein Problem:
             <br>
-            Wichtig sind Schlüsselwörter wie
+            Wichtig sind SchlÃ¼sselwÃ¶rter wie
             <code>expected</code>, <code>not declared</code>,
             <code>before</code>.
           </div>
@@ -578,7 +578,7 @@ void loop() {
           Gehe immer in dieser Reihenfolge vor:
           <ol style="margin:6px 0 0; padding-left:18px">
             <li>Was <b>soll</b> passieren?</li>
-            <li>Was <b>passiert tatsächlich</b>?</li>
+            <li>Was <b>passiert tatsÃ¤chlich</b>?</li>
             <li>Wo im Code wird das entschieden?</li>
             <li>Welche Variable oder welcher Pin ist beteiligt?</li>
           </ol>
@@ -606,15 +606,15 @@ void loop() {
           <div class="wb-muted">
             Im seriellen Monitor erscheint immer nur <code>0</code>.
             <br>
-            ? Warum ändert sich der Wert nicht?
+            ? Warum Ã¤ndert sich der Wert nicht?
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 1" placeholder="Beschreibe die Ursache des Problems."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
-              Der Wert von <code>x</code> wird nie verändert.
+              Der Wert von <code>x</code> wird nie verÃ¤ndert.
               Es fehlt z. B.:
               <code>x = x + 1;</code>
             </div>
@@ -647,11 +647,11 @@ void loop() {
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 2" placeholder="Beschreibe, was nicht zusammenpasst."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Pin 13 wird als OUTPUT gesetzt,
               aber Pin 12 wird eingeschaltet.
-              Pin-Nummern müssen übereinstimmen.
+              Pin-Nummern mÃ¼ssen Ã¼bereinstimmen.
             </div>
           </details>
         </div>
@@ -674,19 +674,19 @@ void loop() {
     </section>
 
     <section data-wb-page="5" data-wb-page-title="8. for-Schleifen">
-      <h2>8. for-Schleifen – Wiederholungen elegant lösen</h2>
+      <h2>8. for-Schleifen â€“ Wiederholungen elegant lÃ¶sen</h2>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine for-Schleife?</strong>
         <div>
           Eine <b>for-Schleife</b> wird verwendet, wenn ein Programmteil
-          <b>mehrmals hintereinander</b> ausgeführt werden soll.
+          <b>mehrmals hintereinander</b> ausgefÃ¼hrt werden soll.
           <br>
           Statt denselben Code immer wieder zu schreiben,
           nutzt man eine Schleife.<br>
-          Zwar könnte man da ja auch im loop() machen, aber da wird es solange gemacht, bis das Programm
+          Zwar kÃ¶nnte man da ja auch im loop() machen, aber da wird es solange gemacht, bis das Programm
           gestoppt wird. Mit einer for-Schleife kann man genau festlegen, wie oft etwas passieren soll.
-          Vielleicht nur 5 mal, oder bis eine Bedingung erfüllt ist.
+          Vielleicht nur 5 mal, oder bis eine Bedingung erfÃ¼llt ist.
         </div>
       </div>
 
@@ -697,11 +697,11 @@ void loop() {
         <div>
           Schleifen machen Programme:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>kürzer</li>
-            <li>übersichtlicher</li>
-            <li>leichter veränderbar</li>
+            <li>kÃ¼rzer</li>
+            <li>Ã¼bersichtlicher</li>
+            <li>leichter verÃ¤nderbar</li>
           </ul>
-          Eine Zahl zu ändern reicht aus – der Code passt sich an.
+          Eine Zahl zu Ã¤ndern reicht aus â€“ der Code passt sich an.
         </div>
       </div>
 
@@ -718,7 +718,7 @@ void loop() {
           <ul style="margin:6px 0 0; padding-left:18px">
             <li><b>Startwert:</b> <code>int i = 0</code></li>
             <li><b>Bedingung:</b> <code>i &lt; 5</code></li>
-            <li><b>Schritt:</b> <code>i++</code> (i wird um 1 erhöht)</li>
+            <li><b>Schritt:</b> <code>i++</code> (i wird um 1 erhÃ¶ht)</li>
           </ul>
         </div>
       </div>
@@ -729,26 +729,26 @@ void loop() {
         <strong>AUFGABEN</strong>
         <div>
           Lies dir wieder alles ganz genau durch und schreibe die neuen Befehle in OneNote
-          auf deinen Spickzettel und bearbeite anschließend die Aufgaben.
+          auf deinen Spickzettel und bearbeite anschlieÃŸend die Aufgaben.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite14.png" alt="PDF Seite 14">
-        <div class="pdfcaption">Original – Seite 14</div>
+        <div class="pdfcaption">Original â€“ Seite 14</div>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Beispiel aus dem Heft</strong>
         <div>
-          Eine LED soll fünfmal blinken:
+          Eine LED soll fÃ¼nfmal blinken:
           <pre><code>for (int i = 0; i &lt; 5; i++) {
   digitalWrite(13, HIGH);
   delay(300);
   digitalWrite(13, LOW);
   delay(300);
 }</code></pre>
-          Der Code im Block wird genau <b>5-mal</b> ausgeführt.
+          Der Code im Block wird genau <b>5-mal</b> ausgefÃ¼hrt.
         </div>
       </div>
 
@@ -758,10 +758,10 @@ void loop() {
         <strong>Typischer Fehler</strong>
         <div>
           Wenn die Bedingung nie falsch wird,
-          läuft die Schleife <b>endlos</b>.
+          lÃ¤uft die Schleife <b>endlos</b>.
           <br>
-          Deshalb immer prüfen:
-          Wird die Schleifenvariable wirklich verändert?
+          Deshalb immer prÃ¼fen:
+          Wird die Schleifenvariable wirklich verÃ¤ndert?
         </div>
       </div>
 
@@ -771,12 +771,12 @@ void loop() {
         <script type="application/json" class="wb-config">
           {
             "id":"s14_vf",
-            "title":"Verständnisfragen – for-Schleifen",
+            "title":"VerstÃ¤ndnisfragen â€“ for-Schleifen",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s14_q1","kind":"textarea","placeholder":"1) Warum ist eine for-Schleife besser als denselben Code fünfmal zu schreiben?"},
+              {"label":"1","key":"s14_q1","kind":"textarea","placeholder":"1) Warum ist eine for-Schleife besser als denselben Code fÃ¼nfmal zu schreiben?"},
               {"label":"2","key":"s14_q2","kind":"textarea","placeholder":"2) Welche Aufgabe hat die Variable i in einer for-Schleife?"},
-              {"label":"3","key":"s14_q3","kind":"textarea","placeholder":"3) Wie oft wird der Code ausgeführt, wenn i von 0 bis kleiner 3 läuft?"}
+              {"label":"3","key":"s14_q3","kind":"textarea","placeholder":"3) Wie oft wird der Code ausgefÃ¼hrt, wenn i von 0 bis kleiner 3 lÃ¤uft?"}
             ]
           }
         </script>
@@ -787,7 +787,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Mini-Challenge – Denken in Schleifen</div>
+            <div class="wb-title">Mini-Challenge â€“ Denken in Schleifen</div>
             <div class="wb-hint">Challenge</div>
           </div>
         </div>
@@ -804,13 +804,13 @@ void loop() {
             ohne den Code umzuschreiben.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Denken in Schleifen" placeholder="Erklärung in eigenen Worten"></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge â€“ Denken in Schleifen" placeholder="ErklÃ¤rung in eigenen Worten"></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Der Ton mit der Frequenz 262 Hz wird dreimal kurz abgespielt.
-              Die for-Schleife sorgt dafür, dass der Ablauf genau
+              Die for-Schleife sorgt dafÃ¼r, dass der Ablauf genau
               dreimal wiederholt wird.
             </div>
           </details>
@@ -818,16 +818,16 @@ void loop() {
       </div>
     </section>
     <section data-wb-page="6" data-wb-page-title="Geschachtelte Schleifen">
-      <h2>Geschachtelte for-Schleifen – Schleifen in Schleifen</h2>
+      <h2>Geschachtelte for-Schleifen â€“ Schleifen in Schleifen</h2>
 
       <div class="wb-soft-callout">
-        <strong>Was bedeutet „geschachtelt“?</strong>
+        <strong>Was bedeutet â€žgeschachteltâ€œ?</strong>
         <div>
           Eine <b>geschachtelte for-Schleife</b> ist eine Schleife,
           die <b>innerhalb einer anderen Schleife</b> steht.
           <br>
           Die innere Schleife wird <b>bei jedem Durchlauf</b>
-          der äußeren Schleife komplett ausgeführt.
+          der Ã¤uÃŸeren Schleife komplett ausgefÃ¼hrt.
         </div>
       </div>
 
@@ -839,10 +839,10 @@ void loop() {
           Geschachtelte Schleifen werden genutzt, wenn:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>Muster erzeugt werden sollen</li>
-            <li>Abläufe mehrfach wiederholt werden</li>
-            <li>zwei Dinge gleichzeitig gezählt werden müssen</li>
+            <li>AblÃ¤ufe mehrfach wiederholt werden</li>
+            <li>zwei Dinge gleichzeitig gezÃ¤hlt werden mÃ¼ssen</li>
           </ul>
-          Sie sind typisch für Licht- und Tonfolgen.
+          Sie sind typisch fÃ¼r Licht- und Tonfolgen.
         </div>
       </div>
 
@@ -858,9 +858,9 @@ void loop() {
 }</code></pre>
           Bedeutung:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>Die äußere Schleife läuft 3-mal</li>
-            <li>Bei jedem Durchlauf läuft die innere Schleife 5-mal</li>
-            <li>Der Code im Inneren läuft also <b>15-mal</b></li>
+            <li>Die Ã¤uÃŸere Schleife lÃ¤uft 3-mal</li>
+            <li>Bei jedem Durchlauf lÃ¤uft die innere Schleife 5-mal</li>
+            <li>Der Code im Inneren lÃ¤uft also <b>15-mal</b></li>
           </ul>
         </div>
       </div>
@@ -870,7 +870,7 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Beispiel mit LED</strong>
         <div>
-          Die LED soll in mehreren Durchgängen blinken:
+          Die LED soll in mehreren DurchgÃ¤ngen blinken:
           <pre><code>for (int r = 0; r &lt; 3; r++) {
   for (int i = 0; i &lt; 4; i++) {
     digitalWrite(13, HIGH);
@@ -889,11 +889,11 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Typischer Denkfehler</strong>
         <div>
-          Viele denken, die innere Schleife laufe „nebenbei“.
+          Viele denken, die innere Schleife laufe â€žnebenbeiâ€œ.
           <br>
-          Tatsächlich gilt:
+          TatsÃ¤chlich gilt:
           <br>
-          ? <b>Die innere Schleife läuft vollständig, bevor die äußere weitergeht.</b>
+          ? <b>Die innere Schleife lÃ¤uft vollstÃ¤ndig, bevor die Ã¤uÃŸere weitergeht.</b>
         </div>
       </div>
 
@@ -903,12 +903,12 @@ void loop() {
         <script type="application/json" class="wb-config">
           {
             "id":"schachtel_vf",
-            "title":"Verständnisfragen – geschachtelte Schleifen",
+            "title":"VerstÃ¤ndnisfragen â€“ geschachtelte Schleifen",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"schachtel_q1","kind":"textarea","placeholder":"1) Was bedeutet es, dass eine Schleife in einer anderen Schleife liegt?"},
-              {"label":"2","key":"schachtel_q2","kind":"textarea","placeholder":"2) Wie oft läuft der innere Code, wenn außen 2-mal und innen 5-mal gezählt wird?"},
-              {"label":"3","key":"schachtel_q3","kind":"textarea","placeholder":"3) Warum eignen sich geschachtelte Schleifen gut für Muster?"}
+              {"label":"2","key":"schachtel_q2","kind":"textarea","placeholder":"2) Wie oft lÃ¤uft der innere Code, wenn auÃŸen 2-mal und innen 5-mal gezÃ¤hlt wird?"},
+              {"label":"3","key":"schachtel_q3","kind":"textarea","placeholder":"3) Warum eignen sich geschachtelte Schleifen gut fÃ¼r Muster?"}
             ]
           }
         </script>
@@ -919,7 +919,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Mini-Challenge – Denkaufgabe</div>
+            <div class="wb-title">Mini-Challenge â€“ Denkaufgabe</div>
             <div class="wb-hint">Challenge</div>
           </div>
         </div>
@@ -935,25 +935,25 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Beschreibe genau, was du hörst,
-            wenn dieses Programm läuft.
+            ? Beschreibe genau, was du hÃ¶rst,
+            wenn dieses Programm lÃ¤uft.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Denkaufgabe" placeholder="Beschreibung in eigenen Worten"></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge â€“ Denkaufgabe" placeholder="Beschreibung in eigenen Worten"></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
-              Es erklingen jeweils 3 kurze Töne hintereinander.
+              Es erklingen jeweils 3 kurze TÃ¶ne hintereinander.
               Diese Tonfolge wird insgesamt 2-mal wiederholt.
-              Zwischen den beiden Durchgängen gibt es eine längere Pause.
+              Zwischen den beiden DurchgÃ¤ngen gibt es eine lÃ¤ngere Pause.
             </div>
           </details>
         </div>
       </div>
     </section>
     <section data-wb-page="7" data-wb-page-title="9. LEDs dimmen">
-      <h2>9. LEDs dimmen – Helligkeit stufenlos steuern</h2>
+      <h2>9. LEDs dimmen â€“ Helligkeit stufenlos steuern</h2>
 
       <div class="wb-soft-callout">
         <strong>Digital vs. Analog</strong>
@@ -963,7 +963,7 @@ void loop() {
           ? <code>HIGH</code> = an, <code>LOW</code> = aus.
           <br><br>
           Beim <b>Dimmen</b> geht es darum,
-          die Helligkeit <b>stufenlos</b> zu verändern –
+          die Helligkeit <b>stufenlos</b> zu verÃ¤ndern â€“
           nicht nur an oder aus.
         </div>
       </div>
@@ -993,8 +993,8 @@ void loop() {
           sondern nutzt <b>Pulsweitenmodulation (PWM)</b>.
           <br><br>
           Dabei wird die LED sehr schnell ein- und ausgeschaltet.
-          Je länger sie eingeschaltet ist,
-          desto heller erscheint sie für das Auge.
+          Je lÃ¤nger sie eingeschaltet ist,
+          desto heller erscheint sie fÃ¼r das Auge.
         </div>
       </div>
 
@@ -1030,21 +1030,21 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
         <div>
-          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich.
+          Lies dir alles nochmal genau durch und beantworte die Fragen ausfÃ¼hrlich.
           Schreibe alle neuen Befehle in OneNote auf deinen Spickzettel.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite15.png" alt="PDF Seite 15">
-        <div class="pdfcaption">Original – Seite 15</div>
+        <div class="pdfcaption">Original â€“ Seite 15</div>
       </div>
 
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
             "id":"s15_vf",
-            "title":"Verständnisfragen – LEDs dimmen",
+            "title":"VerstÃ¤ndnisfragen â€“ LEDs dimmen",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"s15_q1","kind":"textarea","placeholder":"1) Was ist der Unterschied zwischen digitalem Schalten und Dimmen?"},
@@ -1059,7 +1059,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Mini-Challenge – Helligkeit steuern</div>
+            <div class="wb-title">Mini-Challenge â€“ Helligkeit steuern</div>
             <div class="wb-hint">Challenge</div>
           </div>
         </div>
@@ -1076,34 +1076,34 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Erkläre, was passiert, wenn du den Wert von
-            <code>hell</code> veränderst.
+            ? ErklÃ¤re, was passiert, wenn du den Wert von
+            <code>hell</code> verÃ¤nderst.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Helligkeit steuern" placeholder="Beschreibung in eigenen Worten"></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge â€“ Helligkeit steuern" placeholder="Beschreibung in eigenen Worten"></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Der Wert der Variable <code>hell</code> bestimmt die Helligkeit
-              der LED. Je größer der Wert, desto heller leuchtet die LED.
-              Der Ablauf des Programms bleibt gleich – nur die Variable
-              verändert das Verhalten.
+              der LED. Je grÃ¶ÃŸer der Wert, desto heller leuchtet die LED.
+              Der Ablauf des Programms bleibt gleich â€“ nur die Variable
+              verÃ¤ndert das Verhalten.
             </div>
           </details>
         </div>
       </div>
     </section>
     <section data-wb-page="8" data-wb-page-title="10. RGB-LEDs">
-      <h2>10. RGB-LEDs – Farben mischen mit Licht</h2>
+      <h2>10. RGB-LEDs â€“ Farben mischen mit Licht</h2>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine RGB-LED?</strong>
         <div>
-          Eine <b>RGB-LED</b> enthält <b>drei LEDs</b> in einem Gehäuse:
-          <b>Rot</b>, <b>Grün</b> und <b>Blau</b>.
+          Eine <b>RGB-LED</b> enthÃ¤lt <b>drei LEDs</b> in einem GehÃ¤use:
+          <b>Rot</b>, <b>GrÃ¼n</b> und <b>Blau</b>.
           <br><br>
-          Durch das <b>Mischen dieser drei Farben</b> können
+          Durch das <b>Mischen dieser drei Farben</b> kÃ¶nnen
           viele verschiedene Farben erzeugt werden.
         </div>
       </div>
@@ -1113,12 +1113,12 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Das RGB-Prinzip</strong>
         <div>
-          Jede Farbe setzt sich aus Anteilen von Rot, Grün und Blau zusammen:
+          Jede Farbe setzt sich aus Anteilen von Rot, GrÃ¼n und Blau zusammen:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>Rot + Grün ? Gelb</li>
+            <li>Rot + GrÃ¼n ? Gelb</li>
             <li>Rot + Blau ? Magenta</li>
-            <li>Grün + Blau ? Cyan</li>
-            <li>Rot + Grün + Blau ? Weiß</li>
+            <li>GrÃ¼n + Blau ? Cyan</li>
+            <li>Rot + GrÃ¼n + Blau ? WeiÃŸ</li>
           </ul>
         </div>
       </div>
@@ -1129,13 +1129,13 @@ void loop() {
         <strong>AUFGABEN</strong>
         <div>
           Lies dir alles nochmal genau durch und
-          beantworte die Fragen ausführlich und schreibe alles wichtige auf deinen Spickzettel.
+          beantworte die Fragen ausfÃ¼hrlich und schreibe alles wichtige auf deinen Spickzettel.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
-        <div class="pdfcaption">Original – Seite 12</div>
+        <div class="pdfcaption">Original â€“ Seite 12</div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1158,7 +1158,7 @@ analogWrite(blauPin, 0);</code></pre>
       <div class="wb-soft-callout">
         <strong>Wertebereich</strong>
         <div>
-          Für jede Farbe gilt:
+          FÃ¼r jede Farbe gilt:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>0 ? Farbe aus</li>
             <li>255 ? maximale Helligkeit</li>
@@ -1188,7 +1188,7 @@ analogWrite(blauPin, 0);</code></pre>
         <script type="application/json" class="wb-config">
           {
             "id":"s16_vf",
-            "title":"Verständnisfragen – RGB-LEDs",
+            "title":"VerstÃ¤ndnisfragen â€“ RGB-LEDs",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"s16_q1","kind":"textarea","placeholder":"1) Warum braucht eine RGB-LED drei Pins?"},
@@ -1203,7 +1203,7 @@ analogWrite(blauPin, 0);</code></pre>
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Mini-Challenge – Farbe einstellen</div>
+            <div class="wb-title">Mini-Challenge â€“ Farbe einstellen</div>
             <div class="wb-hint">Challenge</div>
           </div>
         </div>
@@ -1225,20 +1225,20 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Erkläre, welche Farbe du siehst und
-            was du an den Variablen ändern musst,
+            ? ErklÃ¤re, welche Farbe du siehst und
+            was du an den Variablen Ã¤ndern musst,
             um z. B. <b>Violett</b> zu erzeugen.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Farbe einstellen" placeholder="Erklärung in eigenen Worten"></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge â€“ Farbe einstellen" placeholder="ErklÃ¤rung in eigenen Worten"></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Mit <code>r = 255</code>, <code>g = 0</code>, <code>b = 0</code>
               leuchtet die LED rot.
               <br><br>
-              Für Violett werden Rot und Blau kombiniert,
+              FÃ¼r Violett werden Rot und Blau kombiniert,
               z. B.:
               <code>r = 200;</code>
               <code>b = 200;</code>
@@ -1249,15 +1249,15 @@ void loop() {
       </div>
     </section>
     <section data-wb-page="9" data-wb-page-title="11. if / else">
-      <h2>11. if / else – Entscheidungen im Programm</h2>
+      <h2>11. if / else â€“ Entscheidungen im Programm</h2>
 
       <div class="wb-soft-callout">
         <strong>Was bedeutet if?</strong>
         <div>
           Mit <b>if</b> kann ein Programm eine <b>Entscheidung</b> treffen.
           <br>
-          Es prüft eine Bedingung und führt Code nur dann aus,
-          <b>wenn diese Bedingung erfüllt ist</b>.
+          Es prÃ¼ft eine Bedingung und fÃ¼hrt Code nur dann aus,
+          <b>wenn diese Bedingung erfÃ¼llt ist</b>.
         </div>
       </div>
 
@@ -1282,9 +1282,9 @@ void loop() {
         <strong>Grundaufbau von if / else</strong>
         <div>
           <pre><code>if (Bedingung) {
-  // wird ausgeführt, wenn die Bedingung wahr ist
+  // wird ausgefÃ¼hrt, wenn die Bedingung wahr ist
 } else {
-  // wird ausgeführt, wenn die Bedingung falsch ist
+  // wird ausgefÃ¼hrt, wenn die Bedingung falsch ist
 }</code></pre>
         </div>
       </div>
@@ -1298,9 +1298,9 @@ void loop() {
           <ul style="margin:6px 0 0; padding-left:18px">
             <li><code>==</code> gleich</li>
             <li><code>&lt;</code> kleiner als</li>
-            <li><code>&gt;</code> größer als</li>
+            <li><code>&gt;</code> grÃ¶ÃŸer als</li>
             <li><code>&lt;=</code> kleiner oder gleich</li>
-            <li><code>&gt;=</code> größer oder gleich</li>
+            <li><code>&gt;=</code> grÃ¶ÃŸer oder gleich</li>
           </ul>
           ? Wichtig: <code>==</code> ist ein Vergleich,
           <code>=</code> ist eine Zuweisung.
@@ -1312,14 +1312,14 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
         <div>
-          Lies dir alles genau durch und beantworte die Fragen ausführlich und schreibe wieder
+          Lies dir alles genau durch und beantworte die Fragen ausfÃ¼hrlich und schreibe wieder
           alles neue auf deinen Spickzettel in OneNote.
         </div>
       </div>
 
       <div class="pdfpage">
         <img src="pdf-bilder/seite17.png" alt="PDF Seite 17">
-        <div class="pdfcaption">Original – Seite 17</div>
+        <div class="pdfcaption">Original â€“ Seite 17</div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1337,7 +1337,7 @@ void loop() {
   }
 }</code></pre>
           ? Die LED leuchtet nur,
-          wenn der Wert der Variable groß genug ist.
+          wenn der Wert der Variable groÃŸ genug ist.
         </div>
       </div>
 
@@ -1363,12 +1363,12 @@ void loop() {
         <script type="application/json" class="wb-config">
           {
             "id":"s17_vf",
-            "title":"Verständnisfragen – if / else",
+            "title":"VerstÃ¤ndnisfragen â€“ if / else",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"s17_q1","kind":"textarea","placeholder":"1) Warum braucht ein Programm Bedingungen?"},
               {"label":"2","key":"s17_q2","kind":"textarea","placeholder":"2) Was passiert, wenn die if-Bedingung falsch ist?"},
-              {"label":"3","key":"s17_q3","kind":"textarea","placeholder":"3) Erkläre den Unterschied zwischen = und ==."}
+              {"label":"3","key":"s17_q3","kind":"textarea","placeholder":"3) ErklÃ¤re den Unterschied zwischen = und ==."}
             ]
           }
         </script>
@@ -1378,7 +1378,7 @@ void loop() {
       <div class="wb-block">
         <div class="wb-head">
           <div>
-            <div class="wb-title">Mini-Challenge – Entscheidung treffen</div>
+            <div class="wb-title">Mini-Challenge â€“ Entscheidung treffen</div>
             <div class="wb-hint">Challenge</div>
           </div>
         </div>
@@ -1395,21 +1395,21 @@ void loop() {
 
           <div class="wb-muted">
             ? Beschreibe, was passiert,
-            und wie du den Wert ändern musst,
+            und wie du den Wert Ã¤ndern musst,
             damit der Ton erklingt.
           </div>
 
-          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Entscheidung treffen" placeholder="Erklärung in eigenen Worten"></textarea>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge â€“ Entscheidung treffen" placeholder="ErklÃ¤rung in eigenen Worten"></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Der Ton erklingt nur,
               wenn <code>wert</code> mindestens 100 ist.
               <br>
-              Erhöht man den Wert z. B. auf
+              ErhÃ¶ht man den Wert z. B. auf
               <code>wert = 120;</code>,
-              wird die Bedingung erfüllt
+              wird die Bedingung erfÃ¼llt
               und der Ton eingeschaltet.
             </div>
           </details>
@@ -1417,14 +1417,14 @@ void loop() {
       </div>
     </section>
     <section data-wb-page="10" data-wb-page-title="Abschluss">
-      <h2>Abschluss – Wiederholen, Anwenden, Projekt - Abgabe</h2>
+      <h2>Abschluss â€“ Wiederholen, Anwenden, Projekt - Abgabe</h2>
 
       <div class="wb-soft-callout">
         <strong>Abschluss-Check</strong>
         <div>
           Kreuze alle richtigen Antworten an.
           <br>
-          Es können <b>mehrere Antworten richtig</b> sein.
+          Es kÃ¶nnen <b>mehrere Antworten richtig</b> sein.
         </div>
       </div>
 
@@ -1432,19 +1432,19 @@ void loop() {
         <script type="application/json" class="wb-config">
           {
             "id":"mc_final",
-            "title":"Multiple Choice – Alles im Überblick",
+            "title":"Multiple Choice â€“ Alles im Ãœberblick",
             "questions":[
               {
                 "text":"1) Was kann eine Variable?",
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"Werte speichern"},
-                  {"id":"b","label":"sich während des Programms ändern"},
+                  {"id":"b","label":"sich wÃ¤hrend des Programms Ã¤ndern"},
                   {"id":"c","label":"Hardware ersetzen"},
                   {"id":"d","label":"Programme flexibler machen"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"Variablen speichern Werte, ändern sich und machen Programme flexibler."
+                "explain":"Variablen speichern Werte, Ã¤ndern sich und machen Programme flexibler."
               },
               {
                 "text":"2) Wozu dient die serielle Ausgabe?",
@@ -1463,32 +1463,32 @@ void loop() {
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"Sie wiederholen Code"},
-                  {"id":"b","label":"Sie machen Programme kürzer"},
+                  {"id":"b","label":"Sie machen Programme kÃ¼rzer"},
                   {"id":"c","label":"Sie treffen Entscheidungen"},
-                  {"id":"d","label":"Sie benutzen eine Zählvariable"}
+                  {"id":"d","label":"Sie benutzen eine ZÃ¤hlvariable"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"for-Schleifen wiederholen Code, verkürzen Programme und nutzen eine Zählvariable."
+                "explain":"for-Schleifen wiederholen Code, verkÃ¼rzen Programme und nutzen eine ZÃ¤hlvariable."
               },
               {
-                "text":"4) Wofür braucht man if / else?",
+                "text":"4) WofÃ¼r braucht man if / else?",
                 "multiple": true,
                 "choices":[
-                  {"id":"a","label":"um Bedingungen zu prüfen"},
+                  {"id":"a","label":"um Bedingungen zu prÃ¼fen"},
                   {"id":"b","label":"um Entscheidungen zu treffen"},
                   {"id":"c","label":"um Farben zu mischen"},
                   {"id":"d","label":"um auf Werte zu reagieren"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"if/else prüft Bedingungen, trifft Entscheidungen und reagiert auf Werte."
+                "explain":"if/else prÃ¼ft Bedingungen, trifft Entscheidungen und reagiert auf Werte."
               },
               {
                 "text":"5) Was ist bei RGB-LEDs wichtig?",
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"drei Pins (R, G, B)"},
-                  {"id":"b","label":"analogWrite() für Helligkeit"},
-                  {"id":"c","label":"nur ein Widerstand für alle Farben"},
+                  {"id":"b","label":"analogWrite() fÃ¼r Helligkeit"},
+                  {"id":"c","label":"nur ein Widerstand fÃ¼r alle Farben"},
                   {"id":"d","label":"Farben entstehen durch Mischen"}
                 ],
                 "correct":["a","b","d"],
@@ -1500,7 +1500,7 @@ void loop() {
       </div>
 
       <div class="wb-section-break"></div>
-      <h3>Zusatzaufgabe – Ampelschaltung</h3>
+      <h3>Zusatzaufgabe â€“ Ampelschaltung</h3>
 
       <div class="wb-soft-callout">
         <strong>Ampel mit RGB-LED</strong>
@@ -1508,19 +1508,19 @@ void loop() {
           Baue eine Ampel mit einer RGB-LED.
           <br>
           Die Farben sollen in der richtigen Reihenfolge wechseln:
-          <b>Rot ? Gelb ? Grün ? Gelb ? Rot</b>.
+          <b>Rot ? Gelb ? GrÃ¼n ? Gelb ? Rot</b>.
         </div>
       </div>
 
       <div class="wb-block">
         <div class="wb-body">
-          <pre><code>// Tipp: benutze Variablen für die Farben
-// und if / else für die Logik</code></pre>
+          <pre><code>// Tipp: benutze Variablen fÃ¼r die Farben
+// und if / else fÃ¼r die Logik</code></pre>
 
-          <textarea class="wb-textarea" id="ampel" data-wb-export="1" data-wb-label="Zusatzaufgabe – Ampelschaltung" placeholder="Beschreibe dein Vorgehen oder notiere deinen Code."></textarea>
+          <textarea class="wb-textarea" id="ampel" data-wb-export="1" data-wb-label="Zusatzaufgabe â€“ Ampelschaltung" placeholder="Beschreibe dein Vorgehen oder notiere deinen Code."></textarea>
 
           <details>
-            <summary>Lösung anzeigen</summary>
+            <summary>LÃ¶sung anzeigen</summary>
             <div>
               Jede Farbe bekommt feste RGB-Werte.
               Mit if / else oder zeitgesteuertem Wechsel
@@ -1538,7 +1538,7 @@ void loop() {
         <strong>Dein eigenes Projekt</strong>
         <div>
           Entwickle ein eigenes Arduino-Projekt,
-          in dem du möglichst viele der folgenden Punkte nutzt:
+          in dem du mÃ¶glichst viele der folgenden Punkte nutzt:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>Variablen</li>
             <li>for-Schleifen</li>
@@ -1551,14 +1551,14 @@ void loop() {
 
       <div class="wb-block">
         <div class="wb-body">
-          <textarea class="wb-textarea" id="projekt" data-wb-export="1" data-wb-label="Zusatzaufgabe – Projekt" placeholder="Beschreibe dein Projekt (Idee, Ablauf, verwendete Bauteile)."></textarea>
+          <textarea class="wb-textarea" id="projekt" data-wb-export="1" data-wb-label="Zusatzaufgabe â€“ Projekt" placeholder="Beschreibe dein Projekt (Idee, Ablauf, verwendete Bauteile)."></textarea>
         </div>
       </div>
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
-        OneNote einfügen.</p>
+        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin Ã¼bertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
+        OneNote einfÃ¼gen.</p>
       </div>
 
 
