@@ -1127,6 +1127,53 @@
   font-size:13px;
   margin-top:4px;
 }
+.wb-results-progress{
+  margin: 16px 0 22px;
+  padding: 10px 14px;
+  background: var(--wb-paper);
+  border-radius: 999px;
+  border:1px solid var(--wb-line);
+  box-shadow: var(--wb-shadow);
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.wb-results-progress-track{
+  position:relative;
+  flex:1 1 auto;
+  height:18px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+}
+.wb-results-progress-fill{
+  height:100%;
+  width: calc(var(--p) * 1%);
+  background:#2faa60;
+  border-radius:inherit;
+}
+.wb-results-progress-star{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.wb-results-progress-star-svg{
+  width:22px;
+  height:22px;
+  fill:#bdbdbd;
+}
+.wb-results-progress-score{
+  font-weight:800;
+  font-size:20px;
+  color:#1e293b;
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
 .wb-results-essays{
   margin-top: 22px;
   background: var(--wb-paper);
@@ -1161,6 +1208,15 @@
   .wb-results-thead,
   .wb-results-row{ grid-template-columns: 26px 1fr 90px; }
   .wb-results-card{ min-height:100px; }
+}
+@media (max-width: 600px){
+  .wb-results-progress{
+    flex-wrap:wrap;
+  }
+  .wb-results-progress-score{
+    width:100%;
+    text-align:right;
+  }
 }
 
 /* Section break */

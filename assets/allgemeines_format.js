@@ -1196,6 +1196,19 @@ ${fi.input.value || ""}
         ])
       ]);
 
+      const scorePctClamped = Math.max(0, Math.min(100, scorePct));
+      const progressBar = el("div", {class:"wb-results-progress", style:`--p:${scorePctClamped}`}, [
+        el("div", {class:"wb-results-progress-track"}, [
+          el("div", {class:"wb-results-progress-fill"}, [])
+        ]),
+        el("div", {class:"wb-results-progress-star", "aria-hidden":"true"}, [
+          el("svg", {viewBox:"0 0 24 24", class:"wb-results-progress-star-svg"}, [
+            el("path", {d:"M12 2.5l2.92 5.92 6.54.95-4.73 4.61 1.12 6.53L12 17.9 6.15 20.51l1.12-6.53L2.54 9.37l6.54-.95L12 2.5z"})
+          ])
+        ]),
+        el("div", {class:"wb-results-progress-score"}, [`${totalCorrect} / ${totalPossible}`])
+      ]);
+
       const essayItems = results
         .filter(r => r.type === "essay")
         .map(r => {
@@ -1221,6 +1234,7 @@ ${fi.input.value || ""}
       wrap.appendChild(topGrid);
       wrap.appendChild(summaryHead);
       wrap.appendChild(panel);
+      wrap.appendChild(progressBar);
       wrap.appendChild(essaysSection);
       resultsPage.appendChild(wrap);
     }
