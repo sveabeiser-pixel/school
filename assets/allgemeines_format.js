@@ -1677,7 +1677,7 @@ function initPuzzle2(root, idx=0){
       if(scoreEl){
         scoreEl.textContent = graded
           ? `Punkte: ${okCount}/${totalPairs()}`
-          : `Paare: ${pairs.length}/${totalPairs()} (noch nicht ?berpr?ft)`;
+          : `Paare: ${pairs.length}/${totalPairs()} (noch nicht überprüft)`;
       }
     }
 
