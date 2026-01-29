@@ -78,6 +78,14 @@ function el(tag, attrs = {}, children = []) {
     return "../assets/";
   }
 
+  function typesetMath(root){
+    if(!root) return;
+    const mj = global.MathJax;
+    if(mj && typeof mj.typesetPromise === "function"){
+      mj.typesetPromise([root]).catch(() => {});
+    }
+  }
+
   function buildTaskIcon(type){
     const typeMap = {
       "mcq": "mcq.png",
@@ -232,6 +240,7 @@ function el(tag, attrs = {}, children = []) {
         qEl.classList.add(ok ? "correct" : "wrong");
         const fb = qs("[data-feedback]", qEl);
         fb.textContent = q.explain || (ok ? "Richtig." : "Nicht ganz.");
+        typesetMath(fb);
         if(ok) correctCount += 1;
       });
       scoreEl.textContent = `Punkte: ${correctCount}/${qEls.length}`;
