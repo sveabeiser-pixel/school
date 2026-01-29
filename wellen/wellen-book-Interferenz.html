@@ -186,6 +186,7 @@
       <div class="wb-section-break"></div>
 
       <h2>Teste nun dein Wissen</h2>
+   
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
         {
@@ -927,6 +928,166 @@
         }
         </script>
       </div>
+ <div class="wb-section-break"></div>
+
+         <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-int-berechnung-1",
+          "title":"Gangunterschied und Schirmformel",
+          "questions":[
+            {
+              "text":"Welche Formel nutzt diese Seite für den Gangunterschied bei kleinem Winkel?",
+              "choices":[
+                { "id":"a", "label":"$\\Delta s = d \\cdot \\sin(\\alpha)$" },
+                { "id":"b", "label":"$\\Delta s = d \\cdot \\frac{a}{e}$" },
+                { "id":"c", "label":"$\\Delta s = \\frac{e}{d} \\cdot a$" }
+              ],
+              "correct":["b"],
+              "explain":"Mit $\\tan(\\alpha) \\approx \\sin(\\alpha)$ und $\\tan(\\alpha)=\\frac{a}{e}$ ergibt sich $\\Delta s = d \\cdot \\frac{a}{e}$."
+            },
+            {
+              "text":"Wie verändert sich der Abstand der Maxima auf dem Schirm, wenn der Quellenabstand $d$ größer wird (bei gleichem $e$ und $\\lambda$)?",
+              "choices":[
+                { "id":"a", "label":"Die Abstände werden größer." },
+                { "id":"b", "label":"Die Abstände werden kleiner." },
+                { "id":"c", "label":"Die Abstände bleiben gleich." }
+              ],
+              "correct":["b"],
+              "explain":"Aus $a=\\frac{e}{d}\\cdot k\\cdot \\lambda$ folgt: größeres $d$ ergibt kleinere Abstände."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-int-berechnung-1",
+          "title":"Warum die Näherung?",
+          "question":"Warum darf man hier $\\tan(\\alpha) \\approx \\sin(\\alpha)$ setzen?",
+          "answer":"Weil der Beobachtungspunkt weit entfernt ist ($e \\gg d$) und damit $\\alpha$ sehr klein ist. Für kleine Winkel sind $\\tan(\\alpha)$ und $\\sin(\\alpha)$ nahezu gleich."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-int-berechnung-1",
+          "title":"Leite die Schirmformel her",
+          "bank":[
+            "$\\Delta s$",
+            "$d$",
+            "$\\sin(\\alpha)$",
+            "$\\tan(\\alpha)$",
+            "$\\tan(\\alpha)$",
+            "$\\frac{a}{e}$",
+            "$\\Delta s = d \\cdot \\sin(\\alpha)$",
+            "$\\Delta s = d \\cdot \\frac{a}{e}$"
+          ],
+          "segments":[
+            { "t":"text", "v":"Der Gangunterschied ist " },
+            { "t":"gap", "a":"$\\Delta s$" },
+            { "t":"text", "v":" und ergibt sich geometrisch zu " },
+            { "t":"gap", "a":"$\\Delta s = d \\cdot \\sin(\\alpha)$" },
+            { "t":"text", "v":". Für kleine Winkel gilt " },
+            { "t":"gap", "a":"$\\tan(\\alpha)$" },
+            { "t":"text", "v":" ist nahezu gleich " },
+            { "t":"gap", "a":"$\\sin(\\alpha)$" },
+            { "t":"text", "v":" und " },
+            { "t":"gap", "a":"$\\tan(\\alpha)$" },
+            { "t":"text", "v":" = " },
+            { "t":"gap", "a":"$\\frac{a}{e}$" },
+            { "t":"text", "v":". Daraus folgt " },
+            { "t":"gap", "a":"$\\Delta s = d \\cdot \\frac{a}{e}$" },
+            { "t":"text", "v":"." }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne die Größen ihrer Bedeutung zu.</div>
+
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Größen</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">d</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">e</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">a</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Gangunterschied &Delta;s</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="p2-col-title">Bedeutungen</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Quellenabstand</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Schirmabstand</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Seitlicher Abstand vom Mittelpunkt</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Differenz der Weglängen</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order-int-berechnung-1",
+          "title":"Ordne die Rechenschritte",
+          "items":[
+            "Schreibe den Gangunterschied als $\\Delta s = d \\cdot \\sin(\\alpha)$.",
+            "Stelle den Zusammenhang $\\tan(\\alpha)=\\frac{a}{e}$ her.",
+            "Nutze für kleine Winkel die Näherung $\\tan(\\alpha) \\approx \\sin(\\alpha)$.",
+            "Erhalte $\\Delta s = d \\cdot \\frac{a}{e}$."
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-int-berechnung-1",
+          "title":"Transfer: Was passiert bei Änderungen am Aufbau?",
+          "storagePrefix":"wellen_interferenz_",
+          "exportName":"wellen-interferenz.txt",
+          "fields":[
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Beschreibe, wie sich die Maxima-Abstände ändern und begründe mit einer Formel..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
     </section>
 
     
