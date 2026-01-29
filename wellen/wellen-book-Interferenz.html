@@ -800,7 +800,7 @@
   <strong>$E$</strong> nahezu <strong>parallel</strong> verlaufen.
 </p>
 
-
+  <div class="wb-section-break"></div>
 
 
 <div class="grid2">
@@ -818,10 +818,12 @@
   oder <b>auslöschen</b> (destruktive Interferenz).
 </p>
         </div>  
+          
         <div class="wb-img">
         <img src="pdf-bilder/interferenz.png" alt="Interferenzgeometrie: Gangunterschied">
       </div>
       </div>
+        <div class="wb-section-break"></div>
 
 <h2>Schritt für Schritt</h2>
 <ol>
@@ -840,52 +842,170 @@
     Dieser ergibt sich aus der Projektion des Quellenabstands <strong>$d$</strong>
     auf die Ausbreitungsrichtung der Wellen:
     <br>
-    <strong>$\Delta s = d \cdot \sin(\alpha)$</strong>
+    <strong>\[\Delta s = d \cdot \sin(\alpha)\]</strong>
   </li>
 
   <li>
     Der Winkel <strong>$\alpha$</strong> ist sehr klein, da der Beobachtungspunkt weit entfernt ist
     (<strong>$e \gg d$</strong>). Für kleine Winkel gilt die Näherung:
     <br>
-    <strong>$\tan(\alpha) \approx \sin(\alpha)$</strong>
+    <strong>\[\tan(\alpha) \approx \sin(\alpha)\]</strong>
   </li>
 
   <li>
     Aus der Geometrie folgt:
     <br>
-    <strong>$\tan(\alpha) = \dfrac{a}{e}$</strong>
+    <strong>\[\tan(\alpha) = \dfrac{a}{e}\]</strong>
   </li>
 
   <li>
     Setzt man dies in die Formel für den Gangunterschied ein, erhält man:
     <br>
-    <strong>$\Delta s = d \cdot \dfrac{a}{e}$</strong>
+    <strong>\[\Delta s = d \cdot \dfrac{a}{e}\]</strong>
   </li>
 </ol>
+  <div class="wb-section-break"></div>
 
 <h2>Warum ist das wichtig?</h2>
 <p>
   Mit dieser Formel kannst du genau berechnen, an welchen Stellen auf dem Schirm
   <strong>helle Streifen</strong> (Maxima) und <strong>dunkle Streifen</strong> (Minima) entstehen.
 </p>
+  <div class="wb-section-break"></div>
 
-<p>
-  <strong>Merke:</strong> Der Gangunterschied hängt direkt von der
+ <div class="wb-callout">
+      <strong>Merke:</strong> 
+      <p>
+  Der Gangunterschied hängt direkt von der
   <strong>Geometrie des Aufbaus</strong> ab – vom Quellenabstand <strong>$d$</strong>,
   vom Abstand zum Schirm <strong>$e$</strong> und von der Position <strong>$a$</strong>.
 </p>
+    </div>
+
+  <div class="wb-section-break"></div>
+       <div data-wb-type="reveal">
+  <script type="application/json" class="wb-config">
+  {
+    "id":"reveal-grundschwingung-1",
+    "title":"Aufgabe: Schreibe Schritt für Schritt nochmal kurz auf.",
+    "question":"Klicke, um Hilfe zu holen.",
+    "answerHtml":[
+    "<div class=\"grid2\"><div class=\"wb-soft-callout\"><ol>",
+    "<li>Zwei Quellen $S_1$ und $S_2$ senden Wellen mit gleicher Amplitude und Frequenz aus.</li>",
+    "<li>Der Gangunterschied $\\Delta s$ bestimmt, ob Maxima oder Minima entstehen.</li>",
+    "<li>Mit dem Winkel $\\alpha$ gilt: $\\Delta s = d \\cdot \\sin(\\alpha)$ und $\\tan(\\alpha) = \\dfrac{a}{e}$.</li>",
+    "<li>Für kleine Winkel: $\\tan(\\alpha) \\approx \\sin(\\alpha)$ <br>.</li>",
+    "<li>Daraus folgt: $\\Delta s = d \\cdot \\frac{a}{e}$.</li>",
+    "</ol></div>",
+    "<div class=\"wb-img\"><img src=\"pdf-bilder/interferenz.png\" alt=\"Zwei feste Enden\" style=\"width:110%; height:auto;\"></div>",
+  "</div>"
+    ],
+    "buttonLabel":"Antwort anzeigen",
+    "buttonHideLabel":"Antwort verbergen"
+  }
+  </script>
+</div>
+  <div class="wb-section-break"></div>
+
+   <h2>Bedingungen für Maxima</h2>
+
+   <p>
+Überlagern sich zwei Wellen, die von zwei Quellen mit dem Abstand <b>d</b> ausgehen, dann können sich ihre Schwingungen
+an manchen Orten <b>verstärken</b> und an anderen <b>abschwächen</b>.
+Zuerst betrachte wir die Verstärkung, die <b>konstruktive Interferenz</b>.
+</p>
+
+<p>
+Damit wir vorhersagen können, <i>wo</i> diese Verstärkungen auftreten, betrachten wir zwei Möglichkeiten:
+</p>
+
+<ul>
+  <li>die Lage der Maxima in Abhängigkeit vom <b>Winkel &alpha;</b>, gemessen ab dem Mittelpunkt der beiden Quellen.</li>
+  <li>die Lage der Maxima als <b>Ort a</b> auf einem Schirm, der im Abstand $e$ aufgestellt ist.</li>
+</ul>
+
+<p>
+In beiden Fällen spielt der <b>Gangunterschied &Delta;s</b> eine zentrale Rolle.
+</p>
+
+<div class="wb-section-break"></div>
+   
+   <h3>1. Winkelabhängigkeit der Maxima</h3>
+   <p>
+    Ein Maximum entsteht genau dann, wenn sich die beiden Wellen <b>phasengleich</b> überlagern.
+    Das ist der Fall, wenn der Gangunterschied ein ganzzahliges Vielfaches der Wellenlänge ist:
+    </p>
+ <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Wann entsteht ein Maximum?</strong>
+          <p>Bringen wir nun die Formeln für kontruktive Interferenz von Seite 3
+      \[\Delta s = k \cdot \lambda \quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ...\] und der Bedingung für den Gangunterschied 
+      bei Winkel  $\alpha$
+      \[\Delta s = d \cdot \sin(\alpha)\] zusammen, ergibt sich:
+    \[\sin(\alpha)=\frac{k\cdot\lambda}{d}\quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ... \]</p>
+      <p><b>   Hauptmaximum ($k=0$):</b>    $\quad \quad \sin(\alpha)=0$</p>
+      <p><b>1. Nebenmaximum ($k=1$):</b>    $\quad\sin(\alpha)=\frac{\lambda}{d}$</p>
+      <p><b>2. Nebenmaximum ($k=2$):</b>    $\quad\sin(\alpha)=\frac{2\cdot\lambda}{d}$</p>
+      <p><b>3. Nebenmaximum ($k=3$):</b>    $\quad\sin(\alpha)=\frac{3\cdot\lambda}{d}$</p>
+      <p>...</p>
+        </div>
+       <div class="wb-img">
+        <img src="pdf-bilder/maximum-winkel.png" alt="Interferenzgeometrie: Gangunterschied">
+      </div>
+      </div>
+        <div class="wb-callout">
+      <strong>Für Maxima gilt:</strong> 
+      <p>  \[\sin(\alpha)=\frac{k\cdot\lambda}{d}\quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ... \]</p>
+    </div>
+     <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Die Abstände der Maxima sind <b>nicht gleichmäßig</b>. </p>
+    <p>Je <b>größer</b> die Wellenlänge <b>&lambda;</b>,
+    desto <b>größer</b> ist der Winkel zwischen Maxima.</p>
+    <p>Je <b>größer</b> der Abstand <b>d</b> der Quellen, desto <b>kleiner</b> ist der Winkel zwischen Maxima.</p>
+    </div>
 
 
-      <h2>Schritt für Schritt</h2>
-      <ol>
-        <li>Zwei Quellen $S_1$ und $S_2$ senden Wellen mit gleicher Amplitude und Frequenz aus.</li>
-        <li>Der Gangunterschied $\Delta s$ bestimmt, ob Maxima oder Minima entstehen.</li>
-        <li>Mit dem Winkel $\alpha$ gilt: $\Delta s = d \cdot \sin(\alpha)$.</li>
-        <li>Für kleine Winkel: $\tan(\alpha) \approx \sin(\alpha)$.</li>
-        <li>Daraus folgt: $\Delta s = d \cdot \frac{a}{e}$.</li>
-      </ol>
+      <div class="wb-section-break"></div>
+       <h3>2. Lage der Maxima auf einem Schirm</h3>
+       <p>
+    In Experimenten misst man den Winkel meist nicht direkt.
+    Stattdessen beobachtet man die <b>hellen Streifen</b> auf einem Schirm,
+    der sich im Abstand <b>e</b> von den beiden Quellen befindet.
+    </p>
+ <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Ort auf dem Schirm</strong>
+          <p>Bringen wir nun die Formeln für kontruktive Interferenz von Seite 3
+      \[\Delta s = k \cdot \lambda \quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ...\] und der Bedingung für den Gangunterschied 
+       bei kleinem Winkel  ($e \gg d$)
+      \[\Delta s = d \cdot \frac{a}{e}\] zusammen, ergibt sich:
+     \[ a=\frac{e}{d}\cdot k\cdot \lambda \quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ... \]</p>
+      <p><b>   Hauptmaximum ($k=0$):</b>    $\quad \quad a=0$</p>
+      <p><b>1. Nebenmaximum ($k=1$):</b>    $\quad a=\frac{e}{d}\cdot \lambda$</p>
+      <p><b>2. Nebenmaximum ($k=2$):</b>    $\quad a=\frac{e}{d}\cdot 2\lambda$</p>
+      <p><b>3. Nebenmaximum ($k=3$):</b>    $\quad a=\frac{e}{d}\cdot 3\lambda$</p>
+      <p>...</p>
+        </div>
+       <div class="wb-img">
+        <img src="pdf-bilder/interferenz.png" alt="Interferenzgeometrie: Gangunterschied">
+      </div>
+      </div>
 
+       <div class="wb-callout">
+      <strong>Für Maxima gilt:</strong> 
+      <p> \[ a=\frac{e}{d}\cdot k\cdot \lambda \quad \textrm{mit}\quad  k=0,\pm 1, \pm 2, ... \]</p>
+    </div>
+     <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Die Abstände der Maxima auf dem Schirm sind also <b>gleichmäßig</b>. </p>
+    <p>Je <b>größer</b> der Schirmabstand <b>e</b> oder die Wellenlänge <b>&lambda;</b>,
+    desto <b>weiter</b> liegen die hellen Streifen auseinander.</p>
+    <p>Je <b>größer</b> der Abstand <b>d</b> der Quellen, desto <b>näher</b> liegen die hellen Streifen auseinander.</p>
+    </div>
     
+
+   
 
       <div class="wb-section-break"></div>
 
@@ -894,7 +1014,7 @@
         <script type="application/json" class="wb-config">
         {
           "id":"essay-int-1",
-          "title":"Erkläre in eigenen Worten: Wie kommst du von der Skizze zur Formel $\\Delta s = b \\cdot x / d$?",
+          "title":"Erkläre in eigenen Worten: Wie kommst du von der Skizze zur Formel $\\Delta s = d \\cdot \\frac{a}{e}$?",
           "storagePrefix":"wellen_interferenz_",
           "exportName":"wellen-interferenz.txt",
           "fields":[
