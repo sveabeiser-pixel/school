@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="scorm_pkg_001" version="1.2"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2">
+
+  <organizations default="org1">
+    <organization identifier="org1">
+      <title>{{TITLE}}</title>
+      <item identifier="item1" identifierref="res1">
+        <title>{{TITLE}}</title>
+      </item>
+    </organization>
+  </organizations>
+
+  <resources>
+    <resource identifier="res1"
+      type="webcontent"
+      adlcp:scormtype="sco"
+      href="{{LAUNCH}}">
+      <file href="{{LAUNCH}}"/>
+    </resource>
+  </resources>
+</manifest>
