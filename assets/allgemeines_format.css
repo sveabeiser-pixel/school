@@ -5,6 +5,15 @@
 */
 
 /* ===== Book (scoped) ===== */
+.wb-book,
+html,
+body{
+  height: 100%;
+}
+body{
+  margin: 0;
+  overflow: hidden;
+}
 .wb-book{
   --wb-blue:#1e66c8;
   --wb-blue2:#1658b3;
@@ -49,9 +58,19 @@
 
   position: relative;
   min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--wb-bg);
   color: var(--wb-text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.wb-book:fullscreen,
+.wb-book:-webkit-full-screen,
+.wb-book:-ms-fullscreen{
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ===== Themes (optional) ===== */
@@ -728,7 +747,7 @@
 .wb-book .wb-layout{
   display:flex;
   padding-top: var(--wb-topH);
-  min-height: 100vh;
+  height: calc(100vh - var(--wb-topH));
 }
 .wb-book .wb-backdrop{
   display:none;
@@ -872,6 +891,10 @@
   flex:1;
   margin-left: var(--wb-sideW);
   padding: 0px 22px 60px 22px;
+  height: calc(100vh - var(--wb-topH));
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 .wb-book .wb-paper{
   max-width: 1080px;
