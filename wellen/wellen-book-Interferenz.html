@@ -19,7 +19,7 @@
     <script type="application/json" class="wb-book-config">
     {
       "bookTitle":"Wellen",
-      "sectionTitle":"Interferenz",
+      "sectionTitle":"Interferenz 1",
       "startPage": 1,
       "submitLabel":"Summary & submit",
       "onSubmit":"alert",
@@ -603,6 +603,10 @@ sie ist aber <b>nicht dauerhaft an einem festen Ort</b> (rechtes Bild).
     </div>
      
       <div class="wb-section-break"></div>
+<p> Schau dir dazu noch die Simulationen auf folgender Internetseite an: <a href="https://www.abi-physik.de/buch/wellen/schwebung/" target="_blank" rel="noopener">Zur Internetseite</a>
+</p>
+
+        <div class="wb-section-break"></div>
 
       <h2>Polarisation</h2>
      <p>
@@ -1505,6 +1509,159 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
   in die bekannten linearen Beziehungen über.
   </p>
 </div>
+
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgaben zu den Bedingungen</h2>
+
+    <div data-wb-type="mcq">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"mcq-int-bedingungen-1",
+        "title":"Maxima, Minima und ihre Bedingungen",
+        "questions":[
+          {
+            "text":"Welche Aussage passt zur Bedingung für Maxima bei zwei Quellen?",
+            "choices":[
+              { "id":"a", "label":"$\\Delta s = \\left(k - \\tfrac{1}{2}\\right)\\lambda$" },
+              { "id":"b", "label":"$\\Delta s = k\\lambda$" },
+              { "id":"c", "label":"$\\Delta s = \\frac{e}{d}\\cdot a$" }
+            ],
+            "correct":["b"],
+            "explain":"Maxima entstehen bei phasengleicher Überlagerung: $\\Delta s = k\\lambda$."
+          },
+          {
+            "text":"Was passiert mit den Abständen der Maxima auf dem Schirm, wenn der Quellenabstand $d$ größer wird (bei konstantem $e$ und $\\lambda$)?",
+            "choices":[
+              { "id":"a", "label":"Die Abstände werden größer." },
+              { "id":"b", "label":"Die Abstände werden kleiner." },
+              { "id":"c", "label":"Die Abstände bleiben gleich." }
+            ],
+            "correct":["b"],
+            "explain":"Aus $a=\\frac{e}{d}\\cdot k\\lambda$ folgt: größeres $d$ -> kleinere Abstände."
+          },
+          {
+            "text":"Welcher Zusammenhang gehört zur exakten (nicht näherungsweisen) Berechnung der Maxima?",
+            "choices":[
+              { "id":"a", "label":"$a = e\\cdot\\tan\\left(\\arcsin\\left(\\frac{k\\lambda}{d}\\right)\\right)$" },
+              { "id":"b", "label":"$a = \\frac{e}{d}\\cdot k\\lambda$" },
+              { "id":"c", "label":"$\\sin(\\alpha) = \\frac{\\left(k-\\tfrac{1}{2}\\right)\\lambda}{d}$" }
+            ],
+            "correct":["a"],
+            "explain":"Ohne Kleinwinkelnäherung wird $a$ über $\\tan(\\arcsin(\\cdot))$ berechnet."
+          }
+        ]
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"reveal-int-bedingungen-1",
+        "title":"Transfer: Warum zwischen den Maxima?",
+        "question":"Warum liegen die Minima immer zwischen zwei Maxima, obwohl die Formeln unterschiedlich aussehen?",
+        "answer":"Maxima erfüllen $\\Delta s = k\\lambda$, Minima $\\Delta s = \\left(k-\\tfrac{1}{2}\\right)\\lambda$. Der Gangunterschied wächst kontinuierlich mit dem Winkel bzw. dem Ort auf dem Schirm. Zwischen zwei ganzzahligen Vielfachen liegt zwangsläufig ein halbes Vielfaches - daher liegen die Minima zwischen benachbarten Maxima."
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"cloze-int-bedingungen-1",
+        "title":"Formeln ergänzen",
+        "bank":["$k\\lambda$","$\\left(k-\\tfrac{1}{2}\\right)\\lambda$","$\\sin(\\alpha)$","$a$","$e$","$d$"],
+        "segments":[
+          {"t":"text","v":"Für Maxima gilt der Gangunterschied "},
+          {"t":"gap","a":"$k\\lambda$"},
+          {"t":"text","v":". Für Minima gilt "},
+          {"t":"gap","a":"$\\left(k-\\tfrac{1}{2}\\right)\\lambda$"},
+          {"t":"text","v":". Beim Schirmansatz (kleiner Winkel) nutzt man "},
+          {"t":"gap","a":"$\\sin(\\alpha)$"},
+          {"t":"text","v":" ≈ "},
+          {"t":"gap","a":"$a$"},
+          {"t":"text","v":"/"},
+          {"t":"gap","a":"$e$"},
+          {"t":"text","v":"."}
+        ]
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-p2 data-p2-id="p2-int-bedingungen-1" data-p2-title="Paare finden: Bedingung <-> Bedeutung" data-p2-hint="Ziehe zusammen, was zusammengehört.">
+      <div class="p2">
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Bedingung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="p1">$\Delta s = k\lambda$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="p2">$\Delta s = \left(k-\tfrac{1}{2}\right)\lambda$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="p3">$a = \frac{e}{d}\cdot k\lambda$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="p4">$a = \frac{e}{d}\left(k-\tfrac{1}{2}\right)\lambda$</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Bedeutung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="p2">Minimum (destruktive Interferenz)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="p3">Maxima auf dem Schirm (Kleinwinkelnäherung)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="p1">Maximum (konstruktive Interferenz)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="p4">Minima auf dem Schirm (Kleinwinkelnäherung)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p2-row">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+
+        <div class="p2-solved" data-solved></div>
+      </div>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"order-int-bedingungen-1",
+        "title":"Vom Bild zur Formel: richtige Reihenfolge",
+        "items":[
+          {"id":"a","label":"Passende Interferenzbedingung wählen (Maximum/Minimum)"},
+          {"id":"b","label":"Gangunterschied geometrisch bestimmen (Skizze)"},
+          {"id":"c","label":"Winkel- oder Schirmformel einsetzen"},
+          {"id":"d","label":"Nach $\\alpha$ oder $a$ umstellen"},
+          {"id":"e","label":"Ergebnis interpretieren (hell/dunkel, Abstand)"}
+        ]
+      }
+      </script>
+    </div>
+
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script type="application/json" class="wb-config">
+      {
+        "id":"essay-int-bedingungen-1",
+        "title":"Denken in Bedingungen",
+        "storagePrefix":"wellen_interferenz_",
+        "exportName":"wellen-interferenz.txt",
+        "fields":[
+          {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Erläutere an einem eigenen Beispiel, wie du von der Bedingung (Max/Min) zur Position $a$ auf dem Schirm kommst. Nenne dabei mindestens eine Näherung oder eine exakte Beziehung."}
+        ]
+      }
+      </script>
+    </div>
 
     </section>
 
