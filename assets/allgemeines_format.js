@@ -972,6 +972,151 @@ ${fi.input.value || ""}
     return { correctCount: okCount, total: totalPairs, items };
   }
 
+  // ---------- SCORM (1.2 + 2004) ----------
+  function scormFindAPI(){
+    let w = window;
+    for(let i = 0; i < 20; i++){
+      if(w.API_1484_11) return { api: w.API_1484_11, version: "2004" };
+      if(w.API) return { api: w.API, version: "1.2" };
+      if(!w.parent || w.parent === w) break;
+      w = w.parent;
+    }
+    if(window.opener && window.opener !== window){
+      try{
+        if(window.opener.API_1484_11) return { api: window.opener.API_1484_11, version: "2004" };
+        if(window.opener.API) return { api: window.opener.API, version: "1.2" };
+      }catch(_){}
+    }
+    return null;
+  }
+
+  function scormInit(apiInfo){
+    if(!apiInfo || !apiInfo.api) return false;
+    try{
+      if(apiInfo.version === "2004") return apiInfo.api.Initialize("") === "true";
+      return apiInfo.api.LMSInitialize("") === "true";
+    }catch(_){
+      return false;
+    }
+  }
+
+  function scormSet(apiInfo, key, value){
+    try{
+      if(apiInfo.version === "2004") return apiInfo.api.SetValue(key, String(value)) === "true";
+      return apiInfo.api.LMSSetValue(key, String(value)) === "true";
+    }catch(_){
+      return false;
+    }
+  }
+
+  function scormGet(apiInfo, key){
+    try{
+      if(apiInfo.version === "2004") return apiInfo.api.GetValue(key) || "";
+      return apiInfo.api.LMSGetValue(key) || "";
+    }catch(_){
+      return "";
+    }
+  }
+
+  function scormGetLastError(apiInfo){
+    try{
+      if(apiInfo.version === "2004") return Number(apiInfo.api.GetLastError && apiInfo.api.GetLastError()) || 0;
+      return Number(apiInfo.api.LMSGetLastError && apiInfo.api.LMSGetLastError()) || 0;
+    }catch(_){
+      return 0;
+    }
+  }
+
+  function scormGetErrorString(apiInfo, code){
+    try{
+      if(apiInfo.version === "2004"){
+        return (apiInfo.api.GetErrorString && apiInfo.api.GetErrorString(String(code))) || "";
+      }
+      return (apiInfo.api.LMSGetErrorString && apiInfo.api.LMSGetErrorString(String(code))) || "";
+    }catch(_){
+      return "";
+    }
+  }
+
+  function scormCommit(apiInfo){
+    try{
+      if(apiInfo.version === "2004") return apiInfo.api.Commit("") === "true";
+      return apiInfo.api.LMSCommit("") === "true";
+    }catch(_){
+      return false;
+    }
+  }
+
+  function scormFinish(apiInfo){
+    try{
+      if(apiInfo.version === "2004") return apiInfo.api.Terminate("") === "true";
+      return apiInfo.api.LMSFinish("") === "true";
+    }catch(_){
+      return false;
+    }
+  }
+
+  function sendScormResults(summary, cfg){
+    const apiInfo = scormFindAPI();
+    if(!apiInfo){
+      try{ console.log("[SCORM] API not found"); }catch(_){}
+      return false;
+    }
+    try{ console.log("[SCORM] API found, version:", apiInfo.version); }catch(_){}
+    if(!scormInit(apiInfo)){
+      const err = scormGetLastError(apiInfo);
+      const errText = scormGetErrorString(apiInfo, err);
+      const allowAlreadyInit = (err === 0 || err === 101 || err === 103);
+      if(allowAlreadyInit){
+        try{ console.log("[SCORM] Init not needed (already initialized). Code:", err, errText); }catch(_){}
+      }else{
+        try{ console.log("[SCORM] Init failed. Code:", err, errText); }catch(_){}
+        return false;
+      }
+    }else{
+      try{ console.log("[SCORM] Init OK"); }catch(_){}
+    }
+
+    const totalCorrect = Number(summary.totalCorrect || 0);
+    const totalPossible = Number(summary.totalPossible || 0);
+    const scorePct = totalPossible ? (totalCorrect / totalPossible) * 100 : 0;
+    const passThreshold = (cfg && typeof cfg.scormPassThreshold === "number") ? cfg.scormPassThreshold : 0;
+    const isPassed = scorePct >= passThreshold;
+
+    let ok = true;
+    if(apiInfo.version === "2004"){
+      ok = scormSet(apiInfo, "cmi.score.raw", totalCorrect) && ok;
+      ok = scormSet(apiInfo, "cmi.score.min", 0) && ok;
+      ok = scormSet(apiInfo, "cmi.score.max", totalPossible) && ok;
+      ok = scormSet(apiInfo, "cmi.score.scaled", totalPossible ? (totalCorrect / totalPossible) : 0) && ok;
+      ok = scormSet(apiInfo, "cmi.completion_status", "completed") && ok;
+      ok = scormSet(apiInfo, "cmi.success_status", isPassed ? "passed" : "failed") && ok;
+    }else{
+      ok = scormSet(apiInfo, "cmi.core.score.raw", totalCorrect) && ok;
+      ok = scormSet(apiInfo, "cmi.core.score.min", 0) && ok;
+      ok = scormSet(apiInfo, "cmi.core.score.max", totalPossible) && ok;
+      ok = scormSet(apiInfo, "cmi.core.lesson_status", isPassed ? "passed" : "failed") && ok;
+    }
+
+    const committed = scormCommit(apiInfo);
+    const finished = scormFinish(apiInfo);
+    try{
+      console.log("[SCORM] Set OK:", ok, "Commit OK:", committed, "Finish OK:", finished);
+    }catch(_){}
+    return ok && committed && finished;
+  }
+
+  function scormGetStudentName(){
+    const apiInfo = scormFindAPI();
+    if(!apiInfo) return "";
+    const key = (apiInfo.version === "2004") ? "cmi.learner_name" : "cmi.core.student_name";
+    let name = String(scormGet(apiInfo, key) || "").trim();
+    if(name) return name;
+    if(scormInit(apiInfo)){
+      name = String(scormGet(apiInfo, key) || "").trim();
+    }
+    return name;
+  }
 
   function exportResults(root, cfg, showPage){
     const results = [];
@@ -1250,9 +1395,13 @@ ${fi.input.value || ""}
 
     textLines.push("Gesamtpunkte: " + totalCorrect + "/" + totalPossible);
 
+    const scormSent = sendScormResults({ totalCorrect, totalPossible }, cfg);
+    try{ console.log("[SCORM] Submission result:", scormSent); }catch(_){}
     const fileName = (cfg && cfg.exportName) ? cfg.exportName : "ergebnisse.txt";
-    downloadText(fileName, textLines.join("\n"));
-    if(cfg && cfg.webhookUrl){
+    if(!scormSent){
+      downloadText(fileName, textLines.join("\n"));
+    }
+    if(!scormSent && cfg && cfg.webhookUrl){
       const url = String(cfg.webhookUrl).trim();
       const email = (cfg.webhookEmail != null) ? String(cfg.webhookEmail) : "";
       if(url) postWebhook(url, { name: studentName, email, message: textLines.join("\n") });
@@ -1429,6 +1578,10 @@ ${fi.input.value || ""}
         localStorage.setItem(nameStorageKey, nameInput.value || "");
       });
     }catch(_){}
+    if(!String(nameInput.value || "").trim()){
+      const scormName = scormGetStudentName();
+      if(scormName) nameInput.value = scormName;
+    }
     const nameWrap = el("div", {class:"wb-name-field"}, [
       el("label", {class:"wb-label"}, [nameLabel]),
       nameInput

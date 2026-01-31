@@ -84,7 +84,7 @@ if (-not (Test-Path $templatePath)) {
     exit 1
 }
 
-$htmlText = Get-Content -LiteralPath $htmlFile -Raw
+$htmlText = Get-Content -LiteralPath $htmlFile -Raw -Encoding UTF8
 if (-not $Title) {
     $titleMatch = [regex]::Match($htmlText, '(?is)<title>\s*(.*?)\s*</title>')
     if ($titleMatch.Success) {
@@ -146,7 +146,7 @@ try {
         Copy-Item -LiteralPath $resolved.Path -Destination $destPath -Force
     }
 
-    $manifestTemplate = Get-Content -LiteralPath $templatePath -Raw
+    $manifestTemplate = Get-Content -LiteralPath $templatePath -Raw -Encoding UTF8
     $safeTitle = [System.Security.SecurityElement]::Escape($Title)
     $safeLaunch = [System.Security.SecurityElement]::Escape($htmlName)
     $manifest = $manifestTemplate -replace "\{\{TITLE\}\}", $safeTitle
