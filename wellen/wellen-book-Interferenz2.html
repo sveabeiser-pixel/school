@@ -209,16 +209,17 @@
             Dahinter steht ein Schirm, der weit genug entfernt ist, damit sich die Wellen ausbreiten
             und überlagern können.
           </p>
+          <ul>
+        <li>Die Spalte wirken wie <b>zwei neue Quellen</b>.</li>
+        <li>Die entstehenden Teilwellen überlagern sich.</li>
+        <li>Auf dem Schirm erscheinen <b>helle und dunkle Streifen</b> (Maxima und Minima).</li>
+      </ul>
         </div>
         <div class="wb-img">
           <img src="pdf-bilder/doppelspalt-e.png" alt="Typischer Aufbau des Doppelspaltexperiments" style="width:100%; height:auto;">
         </div>
       </div>
-      <ul>
-        <li>Die Spalte wirken wie <b>zwei neue Quellen</b>.</li>
-        <li>Die entstehenden Teilwellen überlagern sich.</li>
-        <li>Auf dem Schirm erscheinen <b>helle und dunkle Streifen</b> (Maxima und Minima).</li>
-      </ul>
+      
 
       <div class="wb-section-break"></div>
 
@@ -228,8 +229,30 @@
         Selbst wenn immer nur <b>ein einziges Teilchen</b> unterwegs ist,
         baut sich das Interferenzbild langsam auf. Das wirkt fast magisch,
         ist aber ein zentraler Hinweis: Die Wahrscheinlichkeit verteilt sich
-        wellenartig und erzeugt das Muster.
+        wellenartig und erzeugt das Muster. Das Teilchen geht sozusagen durch beide 
+        Spalte <b>gleichzeitig</b>, denn die Wellen beiser Spalte müssen sich überlagern, um
+        ein Interferenzbild zu erzeugen.
       </p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Interferenzmuster mit Elektronen</strong>
+          <p>
+            Selbst bei sehr wenigen Elektronen entsteht das Muster nach und nach.
+            Die Streifen sind kein Zufall, sondern Ausdruck der wellenartigen
+            Wahrscheinlichkeitsverteilung. Man misst in diesem Versuch keine Teilcheneigenschaften des Elektrons, sondern
+            seine Welleneigenschaft (eine Welle geht durch beide Spalte gleichzeitig). Das passt zu Louis de Broglies Idee
+            (1924): Materie hat auch Wellencharakter. Jedem Teilchen ist eine
+            Wellenlänge zugeordnet, \(\lambda = h/p\), wobei $p$ der Impuls und $h$ das Plancksche Wirkungsquantum ist.
+            Aber dazu später mehr. Je nach Experiment zeigt
+            Materie dann Teilcheneigenschaften (lokalisiert) oder Welleneigenschaften
+            (ausgebreitet, mit Interferenz und Beugung).
+          </p>
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/Interferenzmuster-elektronen.png" alt="Interferenzmuster mit Elektronen" style="width:100%; height:auto;">
+        </div>
+      </div>
 
       <div class="wb-section-break"></div>
 
@@ -247,6 +270,10 @@
         welchen Weg das Photon genommen hat – und auf dem Schirm bleibt kein
         Interferenzmuster mehr übrig.
       </p>
+      <p>Jetzt hat sich der Versuch so verändert, dass man nicht mehr die Welleneigenschaft der Teilchen oder des 
+        Lichts misst, sondern die Teilcheneigenschaft. Ein Teilchen kann nur durch einen Spalt gehen, und damit kann 
+        es sich nicht mehr überlagern und es kommt keine Interferenz mehr zustande.
+      </p>
 
       <div class="wb-section-break"></div>
 
@@ -258,6 +285,31 @@
         erscheint das Interferenzmuster. Man kann das so deuten, als würde die
         Information nachträglich „ausradiert“ – daher der Name <b>Quantenradierer</b>.
       </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Merke:</strong>
+        <p>
+          Interferenz entsteht nur, wenn keine Welcher-Weg-Information verfügbar ist.
+          Sobald der Weg prinzipiell bestimmbar ist, verschwinden die Streifen.
+        </p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"reveal-ds-1",
+            "title":"Verständnisfrage",
+            "question":"Warum verschwindet das Interferenzmuster, sobald Welcher-Weg-Information möglich ist?",
+            "answer":"Weil die Möglichkeit, den Weg zu bestimmen, die Überlagerung der Teilwellen zerstört. Ohne überlagerte Wahrscheinlichkeiten gibt es keine Interferenzstreifen.",
+            "buttonLabel":"Antwort anzeigen",
+            "buttonHideLabel":"Antwort verbergen"
+          }
+        </script>
+      </div>
 
       <div class="wb-section-break"></div>
 
@@ -278,6 +330,171 @@
           klassische Beweis für die Wellennatur des Lichts und der Startpunkt
           für die Quantenphysik.
         </p>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Doppelspalt Aufgaben">
+      <h1>Aufgaben: Doppelspalt</h1>
+      <p class="wb-muted">Teste dein Verständnis, vertiefe zentrale Ideen und übertrage sie auf neue Situationen.</p>
+
+      <h2>Multiple Choice</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-ds-1",
+          "title":"Doppelspalt - Grundlagen",
+          "questions":[
+            {
+              "text":"Welche Aussage beschreibt das Interferenzmuster am besten?",
+              "choices":[
+                {"id":"a","label":"Es entsteht nur, wenn beide Spalte exakt gleich breit sind."},
+                {"id":"b","label":"Es besteht aus abwechselnd hellen und dunklen Streifen."},
+                {"id":"c","label":"Es entsteht nur bei sehr hoher Intensität."}
+              ],
+              "correct":["b"],
+              "explain":"Interferenz erzeugt Maxima und Minima, sichtbar als helle und dunkle Streifen."
+            },
+            {
+              "text":"Warum verschwindet das Interferenzmuster, wenn Welcher-Weg-Information möglich ist?",
+              "choices":[
+                {"id":"a","label":"Weil die Teilchen dann schneller fliegen."},
+                {"id":"b","label":"Weil die Überlagerung der Teilwellen zerstört wird."},
+                {"id":"c","label":"Weil der Schirm zu weit entfernt ist."}
+              ],
+              "correct":["b"],
+              "explain":"Die Möglichkeit, den Weg zu bestimmen, verhindert die Interferenz."
+            },
+            {
+              "text":"Welche Experimente zeigen den Wellencharakter von Materie?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Doppelspalt mit Elektronen"},
+                {"id":"b","label":"Doppelspalt mit Atomen"},
+                {"id":"c","label":"Elektrischer Strom in einem Draht"}
+              ],
+              "correct":["a","b"],
+              "explain":"Interferenz mit Elektronen und Atomen belegt die Materiewelle."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Nachdenkfrage</h2>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-ds-2",
+          "title":"Impuls-Experiment",
+          "question":"Wie würdest du mit dem Doppelspalt testen, ob ein neues Teilchen Wellencharakter hat?",
+          "answer":"Man schickt das Teilchen durch einen Doppelspalt und prüft, ob sich ein Interferenzmuster am Schirm aufbaut. Ein Muster wäre ein Hinweis auf Wellencharakter.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Lückentext</h2>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-ds-1",
+          "title":"de Broglie und Doppelspalt",
+          "bank": ["Wellenlänge", "p", "Interferenz", "Welcher-Weg-Information", "verschwindet"],
+          "segments": [
+            {"t":"text","v":"Nach de Broglie besitzt jedes Teilchen eine "},
+            {"t":"gap","a":"Wellenlänge"},
+            {"t":"text","v":" mit \\(\\lambda = h/"},
+            {"t":"gap","a":"p"},
+            {"t":"text","v":"\\). Beim Doppelspalt entsteht "},
+            {"t":"gap","a":"Interferenz"},
+            {"t":"text","v":", aber sobald "},
+            {"t":"gap","a":"Welcher-Weg-Information"},
+            {"t":"text","v":" möglich ist, "},
+            {"t":"gap","a":"verschwindet"},
+            {"t":"text","v":" das Muster."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Zuordnen</h2>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne die Begriffe den passenden Erklärungen zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Kohärenz</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Interferenzmuster</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Welcher-Weg-Information</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Quantenradierer</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Feste Phasenbeziehung zwischen den Wellen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Helle und dunkle Streifen auf dem Schirm.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Angabe, durch welchen Spalt ein Teilchen lief.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Aufbau, der die Weg-Information wieder löscht.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Reihenfolge</h2>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "order-ds-1",
+          "title": "Vom Spalt zum Muster",
+          "items": [
+            "Kohärente Welle trifft auf den Doppelspalt.",
+            "Teilwellen beugen sich an den Spalten.",
+            "Teilwellen überlagern sich auf dem Schirm.",
+            "Helle und dunkle Streifen entstehen."
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Essay</h2>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-ds-1",
+          "title":"Transfer: Welcher-Weg und Quantenradierer",
+          "storagePrefix":"wellen_interferenz2_",
+          "exportName":"wellen-interferenz2-antworten.txt",
+          "fields":[
+            {"label":"Name", "key":"name", "kind":"text", "placeholder":"Vorname Nachname"},
+            {"label":"Antwort", "key":"answer", "kind":"textarea", "placeholder":"Erkläre in eigenen Worten, warum das Interferenzmuster verschwindet, wenn der Weg bestimmbar ist, und was der Quantenradierer daran ändert."}
+          ]
+        }
+        </script>
       </div>
     </section>
 
