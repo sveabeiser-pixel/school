@@ -285,6 +285,7 @@ function el(tag, attrs = {}, children = []) {
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const gaps = [];
     const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + (cfg.__wbKey || cfg.id || "cloze");
+    let selectedChip = null;
 
         // --- shuffle (einmal beim Start) ---
     function shuffle(arr){
@@ -298,6 +299,42 @@ function el(tag, attrs = {}, children = []) {
     function clearGap(g){
       g.classList.remove("filled","ok","bad");
       g.innerHTML = "&nbsp;";
+    }
+
+    function nextEmptyGap(){
+      return gaps.find(g => !qs(".wb-chip", g)) || null;
+    }
+
+    function clearSelection(){
+      if(selectedChip) selectedChip.classList.remove("wb-chip-selected");
+      selectedChip = null;
+    }
+
+    function selectChip(chip){
+      if(selectedChip === chip){
+        clearSelection();
+        return;
+      }
+      if(selectedChip) selectedChip.classList.remove("wb-chip-selected");
+      selectedChip = chip;
+      selectedChip.classList.add("wb-chip-selected");
+    }
+
+    function placeChipInGap(chip, gap){
+      if(!chip || !gap) return false;
+      const fromGap = chip.parentElement && chip.parentElement.closest(".wb-gap");
+      if(fromGap && fromGap !== gap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
+
+      const existing = qs(".wb-chip", gap);
+      if(existing && existing !== chip) bank.appendChild(existing);
+
+      gap.innerHTML = "";
+      gap.appendChild(chip);
+      gap.classList.add("filled");
+      gap.classList.remove("ok","bad");
+      save();
+      updateCheckState();
+      return true;
     }
 
     function attachChip(chip){
@@ -314,10 +351,23 @@ function el(tag, attrs = {}, children = []) {
       // Klick = zurück in Wortbank
       chip.addEventListener("click", () => {
         const fromGap = chip.parentElement && chip.parentElement.closest(".wb-gap");
-        bank.appendChild(chip);
-        if(fromGap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
-        save();
-        updateCheckState();
+        if(fromGap){
+          bank.appendChild(chip);
+          if(!qs(".wb-chip", fromGap)) clearGap(fromGap);
+          save();
+          updateCheckState();
+          clearSelection();
+          return;
+        }
+        // Klick aus der Bank: naechste freie Luecke fuellen
+        const empty = nextEmptyGap();
+        if(empty){
+          placeChipInGap(chip, empty);
+          clearSelection();
+          return;
+        }
+        // Wenn keine freie Luecke, Chip nur markieren
+        selectChip(chip);
       });
     }
 
@@ -337,19 +387,15 @@ function el(tag, attrs = {}, children = []) {
         e.preventDefault();
         const chip = global.__wbDragChip;
         if(!chip) return;
+        placeChipInGap(chip, gap);
+      });
 
-        const fromGap = chip.parentElement && chip.parentElement.closest(".wb-gap");
-        if(fromGap && fromGap !== gap && !qs(".wb-chip", fromGap)) clearGap(fromGap);
-
-        const existing = qs(".wb-chip", gap);
-        if(existing && existing !== chip) bank.appendChild(existing);
-
-        gap.innerHTML = "";
-        gap.appendChild(chip);
-        gap.classList.add("filled");
-        gap.classList.remove("ok","bad");
-        save();
-        updateCheckState();
+      // Klick auf Luecke: ausgewählten Chip einsetzen
+      gap.addEventListener("click", () => {
+        if(!selectedChip) return;
+        if(placeChipInGap(selectedChip, gap)){
+          clearSelection();
+        }
       });
     }
 
