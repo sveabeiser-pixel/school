@@ -169,7 +169,8 @@ function el(tag, attrs = {}, children = []) {
     const container = el("div", {});
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const qEls = [];
-    const storageKey = (cfg.storagePrefix || "wb_") + "mcq_" + (cfg.__wbKey || cfg.id || "mcq");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "mcq_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "mcq");
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -284,7 +285,8 @@ function el(tag, attrs = {}, children = []) {
     const bank = el("div", {class:"wb-bank", "data-bank":"1"});
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const gaps = [];
-    const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + (cfg.__wbKey || cfg.id || "cloze");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "cloze");
     let selectedChip = null;
 
         // --- shuffle (einmal beim Start) ---
@@ -528,7 +530,8 @@ function el(tag, attrs = {}, children = []) {
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const bank = el("div", {class:"wb-order-bank", "data-order-bank":"1"});
     const slotsWrap = el("div", {class:"wb-order-slots"});
-    const storageKey = (cfg.storagePrefix || "wb_") + "order_" + (cfg.__wbKey || cfg.id || "order");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "order_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "order");
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -678,6 +681,7 @@ function el(tag, attrs = {}, children = []) {
   function createEssay(cfg){
     const storagePrefix = (cfg.storagePrefix != null ? String(cfg.storagePrefix) : "wb_");
     const id = String(cfg.id || "essay");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const fields = Array.isArray(cfg.fields) ? cfg.fields : [
       {label:"Name", key:"name", kind:"text", placeholder:"Vorname Nachname"},
       {label:"Antwort", key:"text", kind:"textarea", placeholder:"Schreibe hier..."}
@@ -698,7 +702,7 @@ function el(tag, attrs = {}, children = []) {
       if(i < inputs.length-1) body.appendChild(el("div", {class:"wb-spacer"}));
     });
 
-    const storageKey = (k) => `${storagePrefix}${id}__${k}`;
+    const storageKey = (k) => `${storagePrefix}${pageKey}_${id}__${k}`;
     const load = () => inputs.forEach(fi => {
       const v = localStorage.getItem(storageKey(fi.key));
       if(v != null) fi.input.value = v;
@@ -775,7 +779,8 @@ ${fi.input.value || ""}
     const answerHtml = cfg.answerHtml != null ? normalizeLines(cfg.answerHtml) : "";
     const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
-    const storageKey = (cfg.storagePrefix || "wb_") + "reveal_" + (cfg.__wbKey || cfg.id || "reveal");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "reveal_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "reveal");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, []);
@@ -810,7 +815,8 @@ ${fi.input.value || ""}
     const alt = String(cfg.alt || "");
     const btnShow = String(cfg.buttonLabel || "Bild anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Bild verbergen");
-    const storageKey = (cfg.storagePrefix || "wb_") + "revealimg_" + (cfg.__wbKey || cfg.id || "revealimg");
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "revealimg_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "revealimg");
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const imgEl = el("img", {src, alt, class:"wb-reveal-img"}, []);
