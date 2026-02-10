@@ -1807,7 +1807,8 @@ function initPuzzle2(root, idx=0){
     const btnCheck  = qs("[data-check]", root);
     const p2Id = root.getAttribute("data-p2-id") || root.id || `p2_${idx}`;
     const requireComplete = String(root.getAttribute("data-p2-require-complete") || "").toLowerCase() !== "false";
-    const storageKey = "wb_p2_" + p2Id;
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = "wb_p2_" + pageKey + "_" + p2Id;
 
     if(!leftBank || !rightBank || !solved) return;
 
