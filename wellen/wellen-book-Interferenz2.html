@@ -13,6 +13,47 @@
   };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .sim-card{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--wb-text-bg, #fff);
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      margin: 14px 0;
+    }
+    .sim-grid{
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 900px){
+      .sim-grid{ grid-template-columns: 1fr; }
+    }
+    .sim-controls label{
+      display:block;
+      font-weight: 900;
+      margin: 10px 0 6px;
+    }
+    .sim-controls input[type="range"]{ width: 100%; }
+    .sim-mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: var(--wb-muted, #6b7280);
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    #singleSlitCanvas{
+      width: 100%;
+      height: 260px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display:block;
+    }
+    .mini-list li{ margin: 6px 0; }
+  </style>
 </head>
 <body>
   <div data-wb-book>
@@ -535,6 +576,15 @@
         }
         </script>
       </div>
+
+<div class="wb-section-break"></div>
+        <h2>Aufgaben</h2>
+          <p> <b>Heftaufschrieb 1:</b> Beschreibe das Doppelspaltexperiment, einmal für klassische Teilchen und einam für Wellen oder quantenmechanische Teilchen, die auch Wellencharakter haben.</p>
+          <p> <b>Heftaufschrieb 2:</b> Zeichne das Muster, das entsteht, wenn klassische Teilchen durch den Doppelspalt fliegen, oder wenn quantenmechanische Teilchen durch den Doppelspalt fliegen und interferieren.</p>
+         
+          
+          <div class="wb-section-break"></div>
+
     </section>
 
     <section data-wb-page="4" data-wb-page-title="Interferenz am Doppelspalt">
@@ -1259,7 +1309,7 @@ und versuche, die Veränderungen mit den gelernten Zusammenhängen zu erklären 
         <script type="application/json" class="wb-config">
         {
           "id":"cloze-int2-aufgabe3-werte",
-          "title":"Aufgabe 3b und 3c",
+          "title":"Aufgabenteil b) und c)",
           "bank": ["2,6 mm", "4 mm", "1000 nm", "$\\Delta x=\\lambda L/d$", "$\\lambda=\\Delta x\\,d/L$"],
           "segments": [
             {"t":"text","v":"Für den Abstand benachbarter Maxima gilt "},
@@ -1309,6 +1359,512 @@ und versuche, die Veränderungen mit den gelernten Zusammenhängen zu erklären 
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
+        <h2>Weitere Aufgaben</h2>
+          <p> <b>Heftaufschrieb 3:</b> Schreibe alle Formeln für die Maxima und Minima beim Doppelspalt auf.</p>
+           <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
+          
+          <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Einzelspalt: Idee & Herleitung">
+      <h1>Beugung am Einzelspalt: Warum wird Licht hinter dem Spalt breiter?</h1>
+      <p class="wb-muted">
+        Ziel: Du erarbeitest dir, was Beugung bedeutet, warum beim Einzelspalt Interferenz entsteht
+        und wie die Minimum-Bedingung hergeleitet wird.
+      </p>
+
+      <div class="wb-soft-callout">
+        <strong>Leitfrage:</strong>
+        <p>Wenn Licht doch geradlinig läuft, warum sieht man hinter einem schmalen Spalt ein hell-dunkel-Muster?</p>
+      </div>
+
+      <h2>1. Was bedeutet Beugung?</h2>
+      <p>
+        Beugung bedeutet: Eine Welle breitet sich nicht nur streng geradlinig aus, sondern
+        fächert hinter Kanten und Öffnungen in den Schattenraum hinein auf. Das ist besonders
+        gut sichtbar, wenn die Öffnung in der Größenordnung der Wellenlänge liegt.
+      </p>
+      <ul class="mini-list">
+        <li><b>Licht:</b> sehr kleine Wellenlängen, daher sichtbare Beugung meist an sehr kleinen Strukturen.</li>
+        <li><b>Schall:</b> große Wellenlängen, daher im Alltag deutlichere Beugung.</li>
+      </ul>
+
+      <div class="wb-section-break"></div>
+
+      <h2>2. Huygens als Denkmodell</h2>
+      <p>
+        Das <strong>Huygenssche Prinzip</strong> sagt: <em>Jeder Punkt einer Wellenfront</em> kann als Ausgangspunkt
+        einer neuen, kreis- (2D) oder kugelförmigen (3D) <strong>Elementarwelle</strong> betrachtet werden.
+        Die neue Wellenfront entsteht als <strong>Einhüllende</strong> dieser Elementarwellen.
+      </p>
+      <div class="grid2">
+        <div class="wb-img">
+          <img src="pdf-bilder/huygens.png" alt="Huygens-Prinzip mit Elementarwellen">
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/huygens2.png" alt="Huygens-Prinzip am Einzelspalt" style="width:80%; height:auto;">
+        </div>
+      </div>
+      <div class="wb-callout">
+        <p>
+          Wird die Wellenfront durch einen Spalt begrenzt, sieht man an den Rändern wieder die Kreiswellen.
+          Da der Spalt jedoch eine gewisse Dicke hat, können auch die einzelnen Kreiswellen interferieren.
+          Hinter dem Spalt überlagern sich dadurch viele Teilwellen mit unterschiedlichen Phasen.
+          Genau diese Überlagerung erzeugt Richtungen mit hoher und niedriger Intensität.
+        </p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>3. Warum gibt es Minima beim Einzelspalt?</h2>
+      <p>
+        Das wirkt erst mal paradox: Interferenz kennt man vom Doppelspalt – aber beim Einzelspalt ist nur <em>eine</em> Öffnung da.
+        Der Schlüssel ist: Der Spalt hat eine endliche Breite \(l\). Innerhalb dieser Breite können viele Punkte als Quellen
+        von Elementarwellen wirken. Diese Elementarwellen können sich am Schirm <strong>gegenseitig verstärken oder auslöschen</strong>.
+      </p>
+     
+       <div class="wb-section-break"></div>
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Gedankentrick:</strong>
+          <p>
+            Stell dir den Spalt der Breite \(l\) vor. Du teilst ihn in zwei Hälften: obere Hälfte und untere Hälfte.
+            Du schaust auf einen Punkt \(P\) auf dem Schirm, der unter dem Winkel $\alpha_1$ zur Mitte liegt.
+          </p>
+          <p>
+            Wenn der Gangunterschied zwischen Strahlen aus der oberen und unteren Kante des Spalts genau \(\lambda\) ist,
+            dann findet in der oberen Hälfte für jeden Teilstrahl ein Partnerstrahl in der unteren Hälfte, der um \(\lambda/2\) verschoben ist.
+            Diese Paare löschen sich dann paarweise aus → <b>Minimum</b>.
+          </p>
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/einzelspalt2.png" alt="Gedankentrick zur Minimum-Herleitung am Einzelspalt">
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+       <div class="wb-soft-callout">
+        <strong>Ganz wichtig:</strong>
+        Das ist eine <em>Argumentationsidee</em>: Du nimmst sehr viele Teilstrahlen/Elementarwellen an.
+        Für ein Minimum muss die Geometrie so passen, dass sich die Beiträge systematisch auslöschen.
+      </div>
+       <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-callout">
+          <strong>Minimum-Bedingung:</strong>
+          <p>\[
+            \sin(\alpha_k)=\frac{k\,\lambda}{d},\quad k= \pm 1,\pm 2,\pm 3,\dots
+          \]</p>
+          <ul>
+          <li>$d$ ist Breite des Spalts</li>
+          <li>$k$ ist die Ordnung des Minimums</li>
+          <li>$\lambda$ ist die Wellenlänge</li>
+          </ul>
+          <p class="wb-muted">Hinweis: Da \(\sin(\alpha)\le1\), gibt es nur Minima solange \(k\lambda\le d\).</p>
+          
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/einzelspalt1.png" alt="Minimum-Bedingung am Einzelspalt" style="width:120%; height:auto;">
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <p>Ist dir aufgefallen, wie ähnlich die Formel zu der vom Doppelspalt ist? </p>
+     
+      <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"reveal1",
+          "title":"Nachdenkfrage",
+          "question":"Was ist der Unterschied zu der Formel beim Doppelspalt?",
+          "answer":"Die Formel sieht identisch aus, das $d$ steht jedoch einmal für den Abstand der Spalte beim Doppelspalt und beim Einzelspalt für die Breite des Spaltes. Beim Dopelspalt ist es außerdem die Formel für die Maxima und beim Einzelspalt für die Minima!",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>4. Was ist mit den Maxima beim Einzelspalt?</h2>
+
+      <p>Und jetzt wollen wir die Formel für die Maxima beim Einzelspalt herausfinden:</p>
+      <p>Natürlich ist das Hauptmaximum bei $\alpha=0^\circ$</p>
+      <p>Und für die Nebenmaxima gilt: sie liegen immer zwischen zwei Nebenminima. </p>
+      <p>Somit ist es genau <b>andersherum</b> wie beim Doppelspalt! Und es gilt:</p>
+       <div class="wb-callout">
+          <strong>Maximum-Bedingung:</strong>
+          <p>\[
+            \sin(\alpha_k)=\frac{\left(k+\frac{1}{2}\right)\,\lambda}{d},\quad k= \pm 1,\pm 2,\pm 3,\dots
+          \]</p>
+          <ul>
+          <li>$d$ ist Breite des Spalts</li>
+          <li>$k$ ist die Ordnung des Minimums</li>
+          <li>$\lambda$ ist die Wellenlänge</li>
+          </ul>
+          <p class="wb-muted">Hinweis: Da \(\sin(\alpha)\le1\), gibt es nur Maxima solange \(\left(k+\frac{1}{2}\right)\lambda\le d\).</p>
+        </div>
+
+        <div class="wb-section-break"></div>
+        <div class="wb-callout"> <p><b>Achtung:</b> Hier unterscheidet sich die Formel zum Doppelspalt, in der Formel vom Doppelspalt steht ein <b>Minus</b> $sin(\alpha_k)=\frac{\left(k-\frac{1}{2}\right)\lambda}{d},\quad k=\pm 1,\pm 2, ...$.</p>
+        <p>Das bedeutet, dass das erste Maximum beim Einzelspalt viel breiter als beim Doppelspalt ist.</p></div>
+
+      <div class="wb-section-break"></div>
+      <h2>5. Vergleich Einzelspalt - Doppelspalt</h2>
+      <p>
+Um die Bedingungen für Maxima und Minima beim Einzelspalt und beim Doppelspalt direkt miteinander vergleichen zu können, betrachten wir eine bewusst vereinfachte Ausgangssituation:
+</p>
+
+<p>
+Da sich die Formeln formal sehr ähneln, setzen wir den Spaltabstand \(d\) des Doppelspalts gleich der Spaltbreite \(d\) des Einzelspalts. 
+Die endliche Breite der einzelnen Spalte im Doppelspalt wird dabei zunächst vernachlässigt, sodass wir uns ausschließlich auf die Interferenzbedingung konzentrieren können.
+</p>
+
+<p>
+Links ist der Doppelspalt dargestellt, rechts der Einzelspalt – beide mit derselben charakteristischen Länge \(d\).
+</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-img">
+        <img src="pdf-bilder/doppelspalt-m.png" alt="Zwei feste Enden" style="width:100%; height:auto;">
+        </div>
+        <div class="wb-img">
+        <img src="pdf-bilder/einzelspalt-m.png" alt="Zwei feste Enden" style="width:100%; height:auto;">
+        </div>
+      </div>
+       <div class="wb-section-break"></div>
+      <p>
+Auffällig ist zunächst, dass das zentrale Maximum des Einzelspalts deutlich breiter ist als das des Doppelspalts.
+</p>
+
+<p>
+Betrachtet man die Lage der Extremstellen genauer, erkennt man eine systematische Beziehung:
+Das erste Minimum des Einzelspalts fällt genau mit dem ersten Maximum des Doppelspalts zusammen 
+(hier beispielsweise bei \(u=1\)), das zweite Minimum des Einzelspalts mit dem zweiten Maximum des Doppelspalts (\(u=2\)) usw.
+</p>
+
+<p>
+Umgekehrt liegt das erste Nebenmaximum des Einzelspalts an derselben Stelle wie das zweite Minimum des Doppelspalts – 
+und entsprechend setzt sich diese Zuordnung fort.
+</p>
+
+<p>
+Das erste Minimum des Doppelspalts besitzt jedoch kein Gegenstück beim Einzelspalt. 
+Gerade deshalb ist das zentrale Maximum des Einzelspalts deutlich breiter: 
+Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das erste Doppelspalt-Minimum.
+</p>
+
+        <div class="wb-section-break"></div>
+
+      <h2>Sicherung 1</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-es-start-1",
+          "title":"Beugung und Huygens",
+          "questions":[
+            {
+              "text":"Wann wird Beugung besonders stark sichtbar?",
+              "choices":[
+                {"id":"a","label":"Wenn die Öffnung viel größer als die Wellenlänge ist."},
+                {"id":"b","label":"Wenn die Öffnung in der Größenordnung der Wellenlänge liegt."},
+                {"id":"c","label":"Nur wenn der Schirm sehr weit weg steht."}
+              ],
+              "correct":["b"],
+              "explain":"Beugung ist deutlich, wenn Strukturgröße und Wellenlänge vergleichbar sind."
+            },
+            {
+              "text":"Warum entsteht beim Einzelspalt trotz nur einer Öffnung Interferenz?",
+              "choices":[
+                {"id":"a","label":"Weil viele Teilwellen aus verschiedenen Punkten des Spalts überlagert werden."},
+                {"id":"b","label":"Weil die Lichtgeschwindigkeit im Spalt schwankt."},
+                {"id":"c","label":"Weil der Schirm das Muster erzwingt."}
+              ],
+              "correct":["a"],
+              "explain":"Interferenz entsteht durch Überlagerung vieler Elementarwellen aus dem Spalt."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Sicherung 2</h2>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-es-huygens-1",
+          "title":"Huygens in einem Satz",
+          "bank":["Wellenfront","Elementarwelle","Einhüllende","Punktquelle","Überlagerung","$d\\sin(\\alpha)=k\\lambda$"],
+          "segments":[
+            {"t":"text","v":"Nach Huygens ist jeder Punkt einer "},
+            {"t":"gap","a":"Wellenfront"},
+            {"t":"text","v":" eine "},
+            {"t":"gap","a":"Punktquelle"},
+            {"t":"text","v":" für eine neue "},
+            {"t":"gap","a":"Elementarwelle"},
+            {"t":"text","v":". Die neue Front ist die "},
+            {"t":"gap","a":"Einhüllende"},
+            {"t":"text","v":" der "},
+            {"t":"gap","a":"Überlagerung"},
+            {"t":"text","v":". Minima am Einzelspalt erfüllen "},
+            {"t":"gap","a":"$d\\sin(\\alpha)=k\\lambda$"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Reihenfolge der Herleitung</h2>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order-es-derivation-1",
+          "title":"Vom Modell zur Formel",
+          "items":[
+            "Betrachte einen Schirmpunkt unter dem Winkel \\(\\alpha\\).",
+            "Jeder Punkt im Spalt sendet Teilwellen (Huygens).",
+            "Teile den Spalt gedanklich in zwei Hälften.",
+            "Fordere paarweise Auslöschung mit Gangunterschied \\(\\lambda/2\\).",
+            "Daraus folgt als Bedingung für Minima: \\(d\\sin(\\alpha_k)=k\\lambda\\)."
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-es-kleinwinkel-1",
+          "title":"Vertiefung: Kleinwinkelnäherung",
+          "question":"Wann darf man $\\sin(\\alpha)\\approx\\tan(\\alpha)\\approx\\alpha$ setzen?",
+          "answer":"Bei kleinen Winkeln nahe der Mitte. Dann wird aus der Winkelbedingung direkt eine Schirmformel, z. B. $a_k\\approx\\dfrac{e\\,k\\lambda}{d}$, wobei $e$ der Abstand zum Schirm ist und $a_k$ der horizontale Abstand zum k. Minimum.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Einzelspalt: Rechnen & Simulation">
+      <h1>Einzelspalt: Rechnen, Intensitätsverteilung und Abschlusscheck</h1>
+      <p class="wb-muted">
+        Jetzt setzt du die Herleitung in Zahlen um, arbeitest mit der Intensitätsfunktion
+        und prüfst die Zusammenhänge experimentell in der Simulation.
+      </p>
+
+      <h2>1. Rechenweg am Beispiel</h2>
+      
+      <p>
+        Typische Versuchssituation: Abstand Spalt–Schirm \(e = 2{,}50\,\text{m}\),
+        Abstand vom Hauptmaximum zum 1. Minimum: \(a = 3{,}2\,\text{cm}\),
+        Laserwellenlänge \(\lambda = 633\,\text{nm}\). 
+      </p>
+      <p>Gesucht: Breite des Spalts $d$</p>
+      <p>
+        Für \(k=1\) gilt \(d\sin(\alpha_1)=\lambda\). Bei kleinen Winkeln:
+        \(\sin(\alpha_1)\approx\tan(\alpha_1)\approx a_1/e\).
+        Damit folgt direkt:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          d \approx \frac{e\,\lambda}{a_1} \ = \ \frac{2,5 m \cdot 633 \cdot 10^{-9}m}{0,032 m}\ =\ 4,9 \cdot 10^{-5}m
+        \]</strong></p>
+      </div>
+      <p>Die Breite des Spalts beträgt $ 4,9 \cdot 10^{-5}m$.</p>
+      <p>
+        Allgemein für die Minima-Lage:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          a_k \approx \frac{e\,k\,\lambda}{d}
+        \]</strong></p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>2. Intensitätsfunktion (Fraunhofer)</h2>
+      <p>
+        Für den Einzelspalt wird die Intensität häufig durch
+      </p>
+      <p>
+        \[
+          I(\alpha)=I_0\left(\frac{\sin\beta}{\beta}\right)^2,\qquad
+          \beta=\frac{\pi\,d\,\sin\alpha}{\lambda}
+        \]
+      </p>
+      <p>
+        beschrieben. Minima liegen dort, wo \(\sin\beta=0^\circ\) (außer bei \(\beta=0^\circ\)).
+        Das passt zur Bedingung \(d\sin(\alpha_k)=k\lambda\). Diese Formel musst du nicht „auswendig“ können – aber du kannst sie benutzen, um Muster zu erklären.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>3. Simulation Einzelspalt</h2>
+      <p>
+        Experimentiere mit \(\lambda\), \(d\), \(e\) und dem Winkel \(\alpha\).
+        Vergleichssimulation: <a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/einzelspalt" target="_blank" rel="noopener">LEIFI-Einzelspalt</a>
+      </p>
+      <div class="sim-card">
+        <div class="sim-grid">
+          <div>
+            <canvas id="singleSlitCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
+            <div class="sim-mono" id="singleSlitReadout"></div>
+          </div>
+          <div class="sim-controls">
+            <label for="esLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="esLamNm" type="range" min="380" max="700" value="633" />
+            <div class="sim-mono">\(\lambda\) = <span id="esLamNmVal">633</span> nm</div>
+
+            <label for="esLMm">Spaltbreite \(d\) (mm)</label>
+            <input id="esLMm" type="range" min="0.01" max="0.30" value="0.05" step="0.005" />
+            <div class="sim-mono">\(l\) = <span id="esLMmVal">0.05</span> mm</div>
+
+            <label for="esAM">Abstand \(e\) (m)</label>
+            <input id="esAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sim-mono">\(e\) = <span id="esAMVal">2.5</span> m</div>
+
+            <label for="esThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="esThetaDeg" type="range" min="-12" max="12" value="2" step="0.1" />
+            <div class="sim-mono">\(\alpha\) = <span id="esThetaDegVal">2.0</span> °</div>
+
+            <div class="wb-soft-callout">
+              <strong>Experimentierauftrag</strong>
+              <ul class="mini-list">
+                <li>Verkleinere \(d\): Beobachte die Breite des zentralen Maximums.</li>
+                <li>Vergrößere \(\lambda\): Beobachte die Lage der Minima.</li>
+                <li>Finde ein \(\alpha\) mit fast \(I(\alpha)=0\) und prüfe \(d\sin(\alpha)=k\lambda\).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+       <h2>4. Transfer: Doppelspalt</h2>
+       <p>Die Effekte des Einzelspaltes sind auch beim Doppelspalt sichtbar.
+
+Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der Einzelspalte auch beim Doppelspalt sichtbar – einige Maxima sind sehr lichtschwach oder fehlen komplett.
+
+</p>
+      <p>
+        Man kann auch sagen: beim Doppelspalt überlagert sich das Doppelspalt-Interferenzmuster mit der „Hüllkurve“ des Einzelspalts:
+        Manche Doppelspalt-Maxima werden sehr schwach oder fehlen, weil sie genau in ein Einzelspalt-Minimum fallen.
+      </p>
+
+      <h2>5. Sicherung und Transfer</h2>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne Parameteränderung und beobachteten Effekt zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Änderung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">\(d\) wird kleiner</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">\(\lambda\) wird größer</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">\(e\) wird größer</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">\(d\) wird größer</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Beobachtung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Zentrales Maximum wird breiter, Minima wandern nach außen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Minima liegen bei größeren Winkeln bzw. größeren Abständen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Das gesamte Muster wird auf dem Schirm größer skaliert.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Zentrales Maximum wird schmaler, Minima rücken zur Mitte.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-es-final-1",
+          "title":"Finale Kontrolle",
+          "questions":[
+            {
+              "text":"Welche Aussage ist korrekt?",
+              "choices":[
+                {"id":"a","label":"Beim Einzelspalt gibt es keine Interferenz."},
+                {"id":"b","label":"Minima entstehen durch Auslöschung von Beiträgen aus verschiedenen Spaltbereichen."},
+                {"id":"c","label":"Die Minima-Lage hängt nicht von \\(\\lambda\\) ab."}
+              ],
+              "correct":["b"],
+              "explain":"Die Interferenz innerhalb des Spalts erzeugt die dunklen Stellen."
+            },
+            {
+              "text":"Was passiert typischerweise beim Doppelspalt zusätzlich?",
+              "choices":[
+                {"id":"a","label":"Die Einzelspalt-Hüllkurve moduliert die Doppelspalt-Interferenz."},
+                {"id":"b","label":"Alle Maxima bleiben immer gleich stark."},
+                {"id":"c","label":"Die Hüllkurve hängt nicht von der Spaltbreite ab."}
+              ],
+              "correct":["a"],
+              "explain":"Das Doppelspaltmuster wird von der Einzelspalt-Beugung umhüllt."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-es-summary-1",
+          "title":"Mini-Zusammenfassung",
+          "bank":["Beugung","Interferenz","Spaltbreite","Wellenlänge","Minima","$k\\lambda$"],
+          "segments":[
+            {"t":"text","v":"Beim Einzelspalt beobachtet man "},
+            {"t":"gap","a":"Beugung"},
+            {"t":"text","v":" und "},
+            {"t":"gap","a":"Interferenz"},
+            {"t":"text","v":". Entscheidend sind "},
+            {"t":"gap","a":"Spaltbreite"},
+            {"t":"text","v":" und "},
+            {"t":"gap","a":"Wellenlänge"},
+            {"t":"text","v":". Die "},
+            {"t":"gap","a":"Minima"},
+            {"t":"text","v":" erfüllen $d\\sin(\\alpha)=$"},
+            {"t":"gap","a":"$k\\lambda$"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+        <div class="wb-section-break"></div>
+        <h2>Weitere Aufgaben</h2>
+          <p> <b>Heftaufschrieb 4:</b> Beschreibe die Beugung am Einzelspalt und warum auch hier ein Interferenzmuster entsteht.</p>
+           <p> <b>Heftaufschrieb 5:</b> Schreibe alle Formeln für die Maxima und Minima beim Einzelspalt auf.</p>
+           <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
+          
+          <div class="wb-section-break"></div>
     </section>
 
   </div>
@@ -1316,9 +1872,145 @@ und versuche, die Veränderungen mit den gelernten Zusammenhängen zu erklären 
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
+    function initSingleSlitSim(){
+      const canvas = document.getElementById("singleSlitCanvas");
+      const readout = document.getElementById("singleSlitReadout");
+      if(!canvas || !readout) return;
+
+      const lamNm = document.getElementById("esLamNm");
+      const lMm = document.getElementById("esLMm");
+      const aM = document.getElementById("esAM");
+      const thetaDeg = document.getElementById("esThetaDeg");
+
+      const lamNmVal = document.getElementById("esLamNmVal");
+      const lMmVal = document.getElementById("esLMmVal");
+      const aMVal = document.getElementById("esAMVal");
+      const thetaDegVal = document.getElementById("esThetaDegVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      function sinc(x){
+        if(Math.abs(x) < 1e-8) return 1;
+        return Math.sin(x) / x;
+      }
+
+      function intensity(thetaRad, l, lam){
+        const beta = Math.PI * l * Math.sin(thetaRad) / lam;
+        const s = sinc(beta);
+        return s * s;
+      }
+
+      function draw(){
+        const lam = Number(lamNm.value) * 1e-9;
+        const l = Number(lMm.value) * 1e-3;
+        const a = Number(aM.value);
+        const thMark = Number(thetaDeg.value) * Math.PI / 180;
+
+        lamNmVal.textContent = String(lamNm.value);
+        lMmVal.textContent = Number(lMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
+        aMVal.textContent = Number(aM.value).toFixed(1);
+        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
+
+        const thMin = -12 * Math.PI / 180;
+        const thMax = 12 * Math.PI / 180;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const padL = 56, padR = 18, padT = 18, padB = 44;
+        const x0 = padL, x1 = W - padR;
+        const y0 = padT, y1 = H - padB;
+
+        ctx.beginPath();
+        ctx.rect(x0, y0, x1 - x0, y1 - y0);
+        ctx.stroke();
+
+        [0, 0.5, 1].forEach(v => {
+          const y = y1 - v * (y1 - y0);
+          ctx.beginPath();
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x1, y);
+          ctx.stroke();
+          ctx.fillText(String(v), 10, y + 4);
+        });
+
+        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
+          const th = d * Math.PI / 180;
+          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
+          ctx.beginPath();
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y1);
+          ctx.stroke();
+          ctx.fillText(d + "°", x - 10, H - 16);
+        });
+
+        ctx.beginPath();
+        const N = 900;
+        for(let i = 0; i <= N; i++){
+          const th = thMin + (thMax - thMin) * i / N;
+          const I = intensity(th, l, lam);
+          const x = x0 + (i / N) * (x1 - x0);
+          const y = y1 - I * (y1 - y0);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
+        const IM = intensity(thMark, l, lam);
+        const yM = y1 - IM * (y1 - y0);
+
+        ctx.beginPath();
+        ctx.moveTo(xM, y0);
+        ctx.lineTo(xM, y1);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        const kMax = Math.floor(l / lam);
+        const kShow = Math.min(kMax, 8);
+        const minima = [];
+        for(let k = 1; k <= kShow; k++){
+          const s = (k * lam) / l;
+          if(s >= 1) break;
+          const thk = Math.asin(s);
+          minima.push({k, th: thk});
+          minima.push({k, th: -thk});
+        }
+        minima.forEach(m => {
+          const x = x0 + (m.th - thMin) / (thMax - thMin) * (x1 - x0);
+          if(x < x0 || x > x1) return;
+          ctx.beginPath();
+          ctx.moveTo(x, y1);
+          ctx.lineTo(x, y1 + 10);
+          ctx.stroke();
+        });
+
+        const yApprox = a * Math.tan(thMark);
+        const yCm = yApprox * 100;
+        readout.textContent =
+          "Markierung:\n" +
+          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
+          `I(alpha)/I0 ≈ ${IM.toFixed(4)}\n` +
+          `y ≈ a*tan(alpha) ≈ ${yCm.toFixed(2)} cm (a=${a.toFixed(1)} m)\n\n` +
+          "Minima (l*sin(alpha)=k*lambda):\n" +
+          (minima
+            .filter(m => m.th >= 0)
+            .map(m => `k=${m.k}: alpha_k≈${(m.th * 180 / Math.PI).toFixed(2)} deg`)
+            .join(", ") || "—");
+      }
+
+      [lamNm, lMm, aM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
+      draw();
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    initSingleSlitSim();
   </script>
 </body>
 </html>
