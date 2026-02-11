@@ -1688,9 +1688,18 @@ ${fi.input.value || ""}
       const activePage = pageSections().find(p => p.page === idx);
       const target = scrollToSel ? qs(scrollToSel, root) : null;
       const topbarH = (qs(".wb-topbar", root) && qs(".wb-topbar", root).offsetHeight) ? qs(".wb-topbar", root).offsetHeight : 0;
+      const scrollContainer = content;
    
       const scrollToNode = (node, smooth) => {
         if(!node) return;
+        if(scrollContainer && scrollContainer.scrollTo){
+          const cRect = scrollContainer.getBoundingClientRect();
+          const nRect = node.getBoundingClientRect();
+          let y = (nRect.top - cRect.top) + scrollContainer.scrollTop;
+          if (y < 0) y = 0;
+          scrollContainer.scrollTo({top: y, behavior: smooth ? "smooth" : "auto"});
+          return;
+        }
         var y = node.getBoundingClientRect().top + global.pageYOffset - topbarH;
         if (y < 50) y = 0;
         global.scrollTo({top: y, behavior: smooth ? "smooth" : "instant"});
