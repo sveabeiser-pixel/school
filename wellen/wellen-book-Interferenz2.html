@@ -1093,6 +1093,208 @@ und versuche, die Veränderungen mit den gelernten Zusammenhängen zu erklären 
 
       <div class="wb-section-break"></div>
 
+      <h2>Aufgabe Zwei Sender: Interferenz und Beugung</h2>
+      <p>
+        Ein Sender emittiert zwei kohärente Schallwellen mit der Wellenlänge
+        <strong>$\lambda = 3\,\text{m}$</strong>. Die beiden Quellen sind
+        <strong>$d = 15{,}0\,\text{m}$</strong> voneinander entfernt.
+      </p>
+      <div class="wb-soft-callout">
+        a) Berechne die Beugungswinkel $\alpha$ für die Maxima der 1. und 2. Ordnung.
+        </div>
+        <div class="wb-soft-callout">
+        b) Beschreibe, wie sich der Gangunterschied $\Delta s$ bei konstruktiver Interferenz
+        auf die Lage der Maxima auswirkt.
+        </div>
+        <div class="wb-soft-callout">
+        c) Ein Detektor misst eine periodische Abnahme der Intensität bei der Bewegung entlang einer Linie.
+        Erkläre, wie destruktive Interferenz dabei entsteht.
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Jetzt versuchen wir zusammen die Lösung zu finden, Schritt für Schritt:</p>
+
+       <div class="wb-section-break"></div>
+
+      <h3>Interaktiv: Rechenwerte einsetzen</h3>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-int2-aufgabe2-werte",
+          "title":"Aufgabenteil a) und b)",
+          "bank": ["0,2", "11,54", "0,4", "23,58", "3 m", "6 m"],
+          "segments": [
+            {"t":"text","v":"Mit $\\sin(\\alpha_k)=\\dfrac{k\\lambda}{d}$ folgt für k=1: $\\sin(\\alpha_1)=$ "},
+            {"t":"gap","a":"0,2"},
+            {"t":"text","v":" und damit $\\alpha_1 \\approx $"},
+            {"t":"gap","a":"11,54"},
+            {"t":"text","v":"$^\\circ$. Für k=2: $\\sin(\\alpha_2)=$ "},
+            {"t":"gap","a":"0,4"},
+            {"t":"text","v":" und damit $\\alpha_2 \\approx $"},
+            {"t":"gap","a":"23,58"},
+            {"t":"text","v":"$^\\circ$. Der Gangunterschied bei konstruktiver Interferenz ist $\\Delta s = k\\lambda$, also bei k=1: "},
+            {"t":"gap","a":"3 m"},
+            {"t":"text","v":" und bei k=2: "},
+            {"t":"gap","a":"6 m"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Interaktiv: Verständnis zu b) und c)</h3>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-int2-aufgabe2-verstaendnis",
+          "title":"Gangunterschied und Intensitaet",
+          "questions":[
+            {
+              "text":"Wie bestimmt $\\Delta s=k\\lambda$ die Lage der Maxima?",
+              "choices":[
+                {"id":"a","label":"Je größer k, desto größer der Winkel zum Hauptmaximum und desto weiter außen liegt das Maximum."},
+                {"id":"b","label":"Alle Maxima liegen beim gleichen Winkel, nur die Intensität ändert sich."},
+                {"id":"c","label":"Maxima treten nur für k=1 auf."}
+              ],
+              "correct":["a"],
+              "explain":"Mit wachsendem k wächst $\\sin(\\alpha_k)=k\\lambda/d$ und damit der Winkel des Maximums."
+            },
+            {
+              "text":"Wann entsteht destruktive Interferenz?",
+              "choices":[
+                {"id":"a","label":"Wenn $\\Delta s=(2k+1)\\dfrac{\\lambda}{2}$ gilt, also eine Phasenverschiebung von $180^\\circ$ vorliegt."},
+                {"id":"b","label":"Wenn $\\Delta s=k\\lambda$ gilt."},
+                {"id":"c","label":"Nur wenn die Quellen unterschiedliche Frequenzen haben."}
+              ],
+              "correct":["a"],
+              "explain":"Bei ungeraden halben Vielfachen der Wellenlaenge sind die Wellen gegenphasig und löschen sich aus."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-int2-aufgabe2-loesung",
+          "title":"Musterlösung Aufgabe Zwei Sender (a-c)",
+          "question":"Vergleiche deine Ergebnisse mit der Musterlösung.",
+          "answer":"a) Maxima: $\\sin(\\alpha_k)=\\dfrac{k\\lambda}{d}$. Mit $\\lambda=3\\,\\text{m}$ und $d=15\\,\\text{m}$ gilt: Für k=1: $\\sin(\\alpha_1)=\\dfrac{3}{15}=0{,}2$, also $\\alpha_1=\\arcsin(0{,}2)\\approx 11{,}54^\\circ$. Für k=2: $\\sin(\\alpha_2)=\\dfrac{6}{15}=0{,}4$, also $\\alpha_2=\\arcsin(0{,}4)\\approx 23{,}58^\\circ$. b) Konstruktiv gilt $\\Delta s=k\\lambda$. Damit gehören zu den Maxima feste Gangunterschiede, z. B. k=1: $\\Delta s=3\\,\\text{m}$, k=2: $\\Delta s=6\\,\\text{m}$. Größeres k bedeutet größeren Winkel und Maxima weiter weg vom Hauptmaximum. c) Destruktive Interferenz entsteht bei $\\Delta s=(2k+1)\\dfrac{\\lambda}{2}$. Dann sind die Wellen um $180^\\circ$ phasenverschoben und löschen sich (nahezu) aus. Bei Bewegung des Detektors ändert sich $\\Delta s$ periodisch, daher werden abwechselnd Maxima und Minima gemessen.",
+          "buttonLabel":"Lösung anzeigen",
+          "buttonHideLabel":"Lösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Aufgabe Doppelspalt und Wellenlängenmessung</h2>
+      <p>
+        Ein Doppelspalt mit einem Spaltabstand <strong>$d=0{,}5\,\text{mm}$</strong> wird
+        mit monochromatischem Licht beleuchtet (<strong>$\lambda=650\,\text{nm}$</strong>).
+      </p>
+      <div class="wb-soft-callout">
+        a) Erläutere, warum das Interferenzmuster aus hellen und dunklen Streifen besteht.
+        </div>
+        <div class="wb-soft-callout">
+        b) Der Schirm befindet sich $L=2{,}0\,\text{m}$ vom Doppelspalt entfernt.
+        Berechne den Abstand benachbarter Maxima im Interferenzmuster.
+        </div>
+        <div class="wb-soft-callout">
+        c) In einem zweiten Versuch sind benachbarte Maxima
+        $\Delta x=4\,\text{mm}$ entfernt (wieder bei $L=2{,}0\,\text{m}$).
+        Bestimme die Wellenlänge des Lichts.
+    </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Jetzt versuchen wir wieder die Lösung Schritt für Schritt:</p>
+
+      <div class="wb-section-break"></div>
+
+      
+
+      <h3>Interaktiv: Verständnis zu a)</h3>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-int2-aufgabe3-verstaendnis",
+          "title":"Interferenzmuster erklaeren",
+          "questions":[
+            {
+              "text":"Warum sieht man beim Doppelspalt helle und dunkle Streifen?",
+              "choices":[
+                {"id":"a","label":"Weil sich die Lichtwellen überlagern: Bei $\\Delta s=k\\lambda$ entstehen Maxima (hell), bei halben ungeraden Vielfachen Minima (dunkel)."},
+                {"id":"b","label":"Weil ein Spalt immer hell und der andere immer dunkel ist."},
+                {"id":"c","label":"Weil sich die Lichtgeschwindigkeit auf dem Schirm periodisch ändert."}
+              ],
+              "correct":["a"],
+              "explain":"Konstruktive und destruktive Interferenz erzeugen das charakteristische Streifenmuster."
+            },
+            {
+              "text":"Welche Aussage zur Bestimmung einer unbekannten Wellenlänge ist korrekt?",
+              "choices":[
+                {"id":"a","label":"Man misst $\\Delta x$, $d$ und $L$ und berechnet mit $\\lambda=\\dfrac{\\Delta x\\,d}{L}$ (Kleinwinkelnäherung)."},
+                {"id":"b","label":"Es reicht, nur den Schirmabstand $L$ zu kennen."},
+                {"id":"c","label":"Die Wellenlänge kann nicht aus einem Interferenzmuster bestimmt werden."}
+              ],
+              "correct":["a"],
+              "explain":"Aus dem gemessenen Streifenabstand folgt die Wellenlänge direkt."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Interaktiv: Rechnen zu b) und c)</h3>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-int2-aufgabe3-werte",
+          "title":"Aufgabe 3b und 3c",
+          "bank": ["2,6 mm", "4 mm", "1000 nm", "$\\Delta x=\\lambda L/d$", "$\\lambda=\\Delta x\\,d/L$"],
+          "segments": [
+            {"t":"text","v":"Für den Abstand benachbarter Maxima gilt "},
+            {"t":"gap","a":"$\\Delta x=\\lambda L/d$"},
+            {"t":"text","v":". Mit $\\lambda=650\\,\\text{nm}$, $L=2{,}0\\,\\text{m}$ und $d=0{,}5\\,\\text{mm}$ ergibt sich $\\Delta x=$ "},
+            {"t":"gap","a":"2,6 mm"},
+            {"t":"text","v":". Im zweiten Versuch ist $\\Delta x=$ "},
+            {"t":"gap","a":"4 mm"},
+            {"t":"text","v":", daher folgt für die unbekannte Wellenlänge "},
+            {"t":"gap","a":"$\\lambda=\\Delta x\\,d/L$"},
+            {"t":"text","v":" und numerisch $\\lambda=$ "},
+            {"t":"gap","a":"1000 nm"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-int2-aufgabe3-loesung",
+          "title":"Musterlösung Aufgabe Doppelspalt und Wellenlängenmessung (a-c)",
+          "question":"Vergleiche deine Ergebnisse mit der Musterlösung.",
+          "answer":"a) Das Interferenzmuster entsteht durch Überlagerung der Teilwellen aus beiden Spalten. Bei konstruktiver Interferenz ($\\Delta s=k\\lambda$) erscheinen helle Streifen, bei destruktiver Interferenz dunkle Streifen. b) Mit $\\Delta x=\\dfrac{\\lambda L}{d}$ folgt: $\\Delta x=\\dfrac{650\\cdot10^{-9}\\,\\text{m}\\cdot2{,}0\\,\\text{m}}{0{,}5\\cdot10^{-3}\\,\\text{m}}=2{,}6\\cdot10^{-3}\\,\\text{m}=2{,}6\\,\\text{mm}$. c) Für unbekanntes $\\lambda$ gilt $\\lambda=\\dfrac{\\Delta x\\,d}{L}$. Mit $\\Delta x=4\\,\\text{mm}$, $d=0{,}5\\,\\text{mm}$, $L=2{,}0\\,\\text{m}$ ergibt sich $\\lambda=1{,}0\\cdot10^{-6}\\,\\text{m}=1000\\,\\text{nm}$. Exakter (ohne Kleinwinkelnäherung) kann man schreiben: $\\lambda=\\dfrac{d}{k}\\sin\\!\\left(\\arctan\\!\\left(\\dfrac{\\Delta x}{L}\\right)\\right)$.",
+          "buttonLabel":"Lösung anzeigen",
+          "buttonHideLabel":"Lösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <h2>Essay</h2>
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">

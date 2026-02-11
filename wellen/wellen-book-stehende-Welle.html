@@ -1162,6 +1162,103 @@
           <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
           <div class="wb-section-break"></div>
 
+      <h2>Aufgabe Reflexion und stehende Wellen:</h2>
+      <p>
+        Ein Seil wird an einem festen Ende reflektiert, wodurch eine stehende Welle entsteht.
+        Die Grundfrequenz beträgt <strong>$f=20\,\text{Hz}$</strong>, die Ausbreitungsgeschwindigkeit
+        <strong>$c=40\,\text{m/s}$</strong>.
+      </p>
+      <div class="wb-soft-callout">
+        a) Berechne die Wellenlänge $\lambda$ der Grundfrequenz.
+        </div>
+        <div class="wb-soft-callout">
+        b) Bestimme die Frequenz der zweiten und dritten Oberwelle.
+        </div>
+        <div class="wb-soft-callout">
+        c) Beschreibe, wie sich die stehende Welle aus der Überlagerung von einlaufender und reflektierter Welle ergibt.
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Jetzt versuchen wir wieder die Lösung Schritt für Schritt:</p>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Interaktiv: Rechenwerte einsetzen</h3>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-stehend-aufgabe4-werte",
+          "title":"Aufgabenteil a) und b)",
+          "bank": ["$\\lambda=c/f$", "2 m", "$f_n=n\\cdot f_1$", "40 Hz", "60 Hz"],
+          "segments": [
+            {"t":"text","v":"Für die Grundschwingung gilt "},
+            {"t":"gap","a":"$\\lambda=c/f$"},
+            {"t":"text","v":". Mit $c=40\\,\\text{m/s}$ und $f=20\\,\\text{Hz}$ folgt $\\lambda=$ "},
+            {"t":"gap","a":"2 m"},
+            {"t":"text","v":". Für Oberwellen nutzt man "},
+            {"t":"gap","a":"$f_n=n\\cdot f_1$"},
+            {"t":"text","v":". Damit ist $f_2=$ "},
+            {"t":"gap","a":"40 Hz"},
+            {"t":"text","v":" und $f_3=$ "},
+            {"t":"gap","a":"60 Hz"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Interaktiv: Verständnis zu c)</h3>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-stehend-aufgabe4-verstaendnis",
+          "title":"Reflexion und stehende Welle",
+          "questions":[
+            {
+              "text":"Wie entsteht bei festem Ende die stehende Welle?",
+              "choices":[
+                {"id":"a","label":"Durch Überlagerung von einlaufender und reflektierter Welle gleicher Frequenz; am festen Ende liegt ein Knoten."},
+                {"id":"b","label":"Nur durch eine einzelne Welle ohne Reflexion."},
+                {"id":"c","label":"Weil sich die Ausbreitungsgeschwindigkeit periodisch ändert."}
+              ],
+              "correct":["a"],
+              "explain":"Die Reflexion liefert die gegenläufige Welle, deren Überlagerung Knoten und Bäuche erzeugt."
+            },
+            {
+              "text":"Welche Aussage zu Knoten und Bäuchen ist korrekt?",
+              "choices":[
+                {"id":"a","label":"Knoten haben Amplitude null, Bäuche maximale Amplitude."},
+                {"id":"b","label":"An Knoten ist die Amplitude maximal."},
+                {"id":"c","label":"Bei einer stehenden Welle gibt es keine festen Orte."}
+              ],
+              "correct":["a"],
+              "explain":"Knoten bleiben dauerhaft ohne Auslenkung, Bäuche schwingen maximal."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-stehend-aufgabe4-loesung",
+          "title":"Musterlösung Aufgabe Reflexion und stehende Wellen (a-c)",
+          "question":"Vergleiche deine Ergebnisse mit der Musterlösung.",
+          "answer":"a) Wellenlänge der Grundfrequenz: $\\lambda=\\dfrac{c}{f}=\\dfrac{40}{20}=2\\,\\text{m}$. b) Für die n-te Oberwelle gilt $f_n=n\\cdot f_1$. Daher: $f_2=2\\cdot20\\,\\text{Hz}=40\\,\\text{Hz}$ und $f_3=3\\cdot20\\,\\text{Hz}=60\\,\\text{Hz}$. c) Eine stehende Welle entsteht durch Überlagerung einer einlaufenden mit der am festen Ende reflektierten Welle. Am festen Ende bildet sich ein Knoten (Amplitude null). Zwischen den Knoten liegen Bäuche mit maximaler Amplitude; die überlagerten Wellen sind dort phasenabhängig gegeneinander verschoben.",
+          "buttonLabel":"Lösung anzeigen",
+          "buttonHideLabel":"Lösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <h2>Rechenaufgabe Gummiseil C:</h2>
       <p>Berechne folgende Aufgabe, versuche erst, die Aufgabe alleine und selbstständig zu lösen. Wenn du nicht mehr weiter weißt, kannst du die Lösung aufdecken, 
 decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht hat und löse von da wieder selbstständig.</p>
