@@ -1667,6 +1667,87 @@ ${fi.input.value || ""}
       .map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")}));
     const setActiveByLink = (link) => { navLinks.forEach(x=>x.classList.remove("active")); if(link) link.classList.add("active"); };
     const firstLinkOfPage = (p) => navLinks.find(a => Number(a.getAttribute("data-wb-page")||"1")===p) || null;
+    const unlockedPages = new Set();
+    const revealObservers = new Map();
+
+    function getRevealTargets(pageNode){
+      if(!pageNode) return [];
+      const selector = [
+        "h1","h2","h3","h4","h5","h6",
+        "p","li","blockquote","figure","figcaption","table","pre","img",
+        ".wb-block",".wb-callout",".wb-soft-callout"
+      ].join(",");
+      return qsa(selector, pageNode).filter(node => {
+        if(node.tagName && node.tagName.toLowerCase() === "img"){
+          if(node.closest(".wb-task-icon")) return false;
+        }
+        const groupedParent = node.parentElement && node.parentElement.closest(".wb-block,.wb-callout,.wb-soft-callout,figure,table,pre,blockquote");
+        if(groupedParent && groupedParent !== node) return false;
+        return true;
+      });
+    }
+
+    function markRevealDone(node){
+      if(!node) return;
+      node.classList.remove("wb-reveal-item-pending");
+      node.classList.add("wb-reveal-item-done");
+      node.setAttribute("data-wb-reveal-done", "1");
+    }
+
+    function ensureRevealObserver(idx){
+      const activePage = pageSections().find(p => p.page === idx);
+      if(!activePage || !activePage.node) return;
+      const pageNode = activePage.node;
+
+      let obs = revealObservers.get(idx);
+      if(!obs){
+        obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if(!entry.isIntersecting) return;
+            markRevealDone(entry.target);
+            obs.unobserve(entry.target);
+          });
+        }, {root: content, threshold: 0.2});
+        revealObservers.set(idx, obs);
+      }
+
+      getRevealTargets(pageNode).forEach(node => {
+        if(node.getAttribute("data-wb-reveal-done") === "1"){
+          node.classList.remove("wb-reveal-item-pending");
+          node.classList.add("wb-reveal-item-done");
+          return;
+        }
+        node.classList.add("wb-reveal-item-pending");
+        node.classList.remove("wb-reveal-item-done");
+        obs.observe(node);
+      });
+    }
+
+    function setPageRevealState(idx){
+      const activePage = pageSections().find(p => p.page === idx);
+      if(!activePage || !activePage.node) return;
+      const node = activePage.node;
+      if(unlockedPages.has(idx)){
+        node.classList.remove("wb-reveal-on-scroll-pending");
+        node.classList.add("wb-reveal-on-scroll-done");
+        ensureRevealObserver(idx);
+      }else{
+        node.classList.remove("wb-reveal-on-scroll-done");
+        node.classList.add("wb-reveal-on-scroll-pending");
+        getRevealTargets(node).forEach(target => {
+          if(target.getAttribute("data-wb-reveal-done") === "1") return;
+          target.classList.add("wb-reveal-item-pending");
+          target.classList.remove("wb-reveal-item-done");
+        });
+      }
+    }
+
+    function revealCurrentPageOnFirstDownScroll(){
+      const idx = Number(nowEl.textContent || "1");
+      if(unlockedPages.has(idx)) return;
+      unlockedPages.add(idx);
+      setPageRevealState(idx);
+    }
 
     function showPage(n, scrollToSel){
       const idx = Math.max(1, Math.min(maxPage, n));
@@ -1711,6 +1792,7 @@ ${fi.input.value || ""}
       }else{
         scrollToNode(paper, false);
       }
+      setPageRevealState(idx);
     }
 
     const closeNav = () => root.classList.remove("nav-open");
@@ -1731,6 +1813,23 @@ ${fi.input.value || ""}
 
     prevBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) - 1));
     nextBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) + 1));
+    content.addEventListener("scroll", () => {
+      if(content.scrollTop > 6) revealCurrentPageOnFirstDownScroll();
+    }, {passive:true});
+    content.addEventListener("wheel", (e) => {
+      if(e.deltaY > 0) revealCurrentPageOnFirstDownScroll();
+    }, {passive:true});
+    let touchStartY = null;
+    content.addEventListener("touchstart", (e) => {
+      const touch = e.touches && e.touches[0];
+      touchStartY = touch ? touch.clientY : null;
+    }, {passive:true});
+    content.addEventListener("touchmove", (e) => {
+      if(touchStartY == null) return;
+      const touch = e.touches && e.touches[0];
+      if(!touch) return;
+      if((touchStartY - touch.clientY) > 8) revealCurrentPageOnFirstDownScroll();
+    }, {passive:true});
 
     root.addEventListener("keydown", (e) => {
       if(e.key === "ArrowLeft") showPage(Number(nowEl.textContent) - 1);
