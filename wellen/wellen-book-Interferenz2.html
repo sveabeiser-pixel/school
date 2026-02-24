@@ -52,6 +52,14 @@
       background: rgba(255,255,255,0.5);
       display:block;
     }
+    #dsCanvas{
+      width: 100%;
+      height: 260px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display:block;
+    }
     .mini-list li{ margin: 6px 0; }
   </style>
 </head>
@@ -1727,8 +1735,8 @@ Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das er
             <div class="sim-mono">\(\lambda\) = <span id="esLamNmVal">633</span> nm</div>
 
             <label for="esLMm">Spaltbreite \(d\) (mm)</label>
-            <input id="esLMm" type="range" min="0.01" max="0.30" value="0.05" step="0.005" />
-            <div class="sim-mono">\(l\) = <span id="esLMmVal">0.05</span> mm</div>
+            <input id="esLMm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
+            <div class="sim-mono">\(l\) = <span id="esLMmVal">0.020</span> mm</div>
 
             <label for="esAM">Abstand \(e\) (m)</label>
             <input id="esAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
@@ -1738,7 +1746,14 @@ Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das er
             <input id="esThetaDeg" type="range" min="-12" max="12" value="2" step="0.1" />
             <div class="sim-mono">\(\alpha\) = <span id="esThetaDegVal">2.0</span> °</div>
 
-            <div class="wb-soft-callout">
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
               <strong>Experimentierauftrag</strong>
               <ul class="mini-list">
                 <li>Verkleinere \(d\): Beobachte die Breite des zentralen Maximums.</li>
@@ -1746,11 +1761,7 @@ Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das er
                 <li>Finde ein \(\alpha\) mit fast \(I(\alpha)=0\) und prüfe \(d\sin(\alpha)=k\lambda\).</li>
               </ul>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
+              <div class="wb-section-break"></div>
 
        <h2>4. Transfer: Doppelspalt</h2>
        <p>Die Effekte des Einzelspaltes sind auch beim Doppelspalt sichtbar.
@@ -1762,6 +1773,71 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         Man kann auch sagen: beim Doppelspalt überlagert sich das Doppelspalt-Interferenzmuster mit der „Hüllkurve“ des Einzelspalts:
         Manche Doppelspalt-Maxima werden sehr schwach oder fehlen, weil sie genau in ein Einzelspalt-Minimum fallen.
       </p>
+      <div class="wb-section-break"></div>
+
+      <h2>Simulation: Doppelspalt mit Einzelspalt-Hüllkurve</h2>
+      <p>
+        Hier siehst du die Überlagerung aus <strong>Doppelspalt-Interferenz</strong> und der
+        <strong>Einzelspalt-Hüllkurve</strong>. Du kannst sowohl den <strong>Spaltabstand</strong> \(g\)
+        (Mitte-Mitte) als auch die <strong>Spaltbreite</strong> \(b\) der einzelnen Spalte ändern.
+      </p>
+
+      <div class="wb-soft-callout">
+        <strong>Modell (Fernfeld / Fraunhofer):</strong>
+        <p>\[
+          I(\alpha)=I_0\left(\frac{\sin\beta}{\beta}\right)^2\cos^2\delta,\quad
+          \beta=\frac{\pi b\sin\alpha}{\lambda},\quad
+          \delta=\frac{\pi g\sin\alpha}{\lambda}.
+        \]</p>
+        <ul>
+          <li>\(\left(\frac{\sin\beta}{\beta}\right)^2\): Einzelspalt-Hüllkurve (breiter bei kleinerem \(b\))</li>
+          <li>\(\cos^2\delta\): feines Interferenzmuster des Doppelspalts (enger bei größerem \(g\))</li>
+        </ul>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-grid">
+          <div>
+            <canvas id="dsCanvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
+            <div class="sim-mono" id="dsReadout"></div>
+          </div>
+
+          <div class="sim-controls">
+            <label for="dsLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="dsLamNm" type="range" min="380" max="700" value="633" />
+            <div class="sim-mono">\(\lambda\) = <span id="dsLamNmVal">633</span> nm</div>
+
+            <label for="dsbMm">Spaltbreite \(b\) (mm)</label>
+            <input id="dsbMm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
+            <div class="sim-mono">\(b\) = <span id="dsbMmVal">0.020</span> mm</div>
+
+            <label for="dsgMm">Spaltabstand \(g\) (mm) (Mitte-Mitte)</label>
+            <input id="dsgMm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
+            <div class="sim-mono">\(g\) = <span id="dsgMmVal">0.100</span> mm</div>
+
+            <label for="dsAM">Abstand \(e\) (m) (nur für \(y\approx a\cdot\tan\alpha\))</label>
+            <input id="dsAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sim-mono">\(e\) = <span id="dsAMVal">2.5</span> m</div>
+
+            <label for="dsThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="dsThetaDeg" type="range" min="-12" max="12" value="1.5" step="0.1" />
+            <div class="sim-mono">\(\alpha\) = <span id="dsThetaDegVal">1.5</span> °</div>
+
+            
+          </div>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+              <strong>Experimentierauftrag:</strong>
+              <ul class="mini-list">
+                <li>Erhöhe <b>g</b>: Was passiert mit dem Abstand der feinen Interferenzstreifen?</li>
+                <li>Verringere <b>b</b>: Was passiert mit der Breite der Hüllkurve?</li>
+                <li>Suche ein \(\alpha\), wo die Hüllkurve fast 0 ist. Was passiert dort mit den Doppelspalt-Maxima?</li>
+              </ul>
+            </div>
+      <div class="wb-section-break"></div>
 
       <h2>5. Sicherung und Transfer</h2>
       <div data-p2 class="p2">
@@ -2007,10 +2083,170 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       draw();
     }
 
+    function initDoubleSlitWithEnvelopeSim(){
+      const canvas = document.getElementById("dsCanvas");
+      const readout = document.getElementById("dsReadout");
+      if(!canvas || !readout) return;
+
+      const lamNm = document.getElementById("dsLamNm");
+      const bMm = document.getElementById("dsbMm");
+      const gMm = document.getElementById("dsgMm");
+      const aM = document.getElementById("dsAM");
+      const thetaDeg = document.getElementById("dsThetaDeg");
+
+      const lamNmVal = document.getElementById("dsLamNmVal");
+      const bMmVal = document.getElementById("dsbMmVal");
+      const gMmVal = document.getElementById("dsgMmVal");
+      const aMVal = document.getElementById("dsAMVal");
+      const thetaDegVal = document.getElementById("dsThetaDegVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      function sinc(x){
+        if(Math.abs(x) < 1e-8) return 1;
+        return Math.sin(x) / x;
+      }
+
+      function intensity(thetaRad, b, g, lam){
+        const s = Math.sin(thetaRad);
+        const beta = Math.PI * b * s / lam;
+        const delta = Math.PI * g * s / lam;
+        const env = sinc(beta);
+        const inter = Math.cos(delta);
+        return (env * env) * (inter * inter);
+      }
+
+      function envelope(thetaRad, b, lam){
+        const beta = Math.PI * b * Math.sin(thetaRad) / lam;
+        const env = sinc(beta);
+        return env * env;
+      }
+
+      function draw(){
+        const lam = Number(lamNm.value) * 1e-9;
+        const b = Number(bMm.value) * 1e-3;
+        const g = Number(gMm.value) * 1e-3;
+        const a = Number(aM.value);
+        const thMark = Number(thetaDeg.value) * Math.PI / 180;
+
+        lamNmVal.textContent = String(lamNm.value);
+        bMmVal.textContent = Number(bMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
+        gMmVal.textContent = Number(gMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
+        aMVal.textContent = Number(aM.value).toFixed(1);
+        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
+
+        const thMin = -12 * Math.PI / 180;
+        const thMax = 12 * Math.PI / 180;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const padL = 56, padR = 18, padT = 18, padB = 44;
+        const x0 = padL, x1 = W - padR;
+        const y0 = padT, y1 = H - padB;
+
+        ctx.beginPath();
+        ctx.rect(x0, y0, x1 - x0, y1 - y0);
+        ctx.stroke();
+
+        [0, 0.5, 1].forEach(v => {
+          const y = y1 - v * (y1 - y0);
+          ctx.beginPath();
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x1, y);
+          ctx.stroke();
+          ctx.fillText(String(v), 10, y + 4);
+        });
+
+        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
+          const th = d * Math.PI / 180;
+          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
+          ctx.beginPath();
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y1);
+          ctx.stroke();
+          ctx.fillText(d + "°", x - 10, H - 16);
+        });
+
+        ctx.beginPath();
+        const N = 1200;
+        for(let i = 0; i <= N; i++){
+          const th = thMin + (thMax - thMin) * i / N;
+          const I = intensity(th, b, g, lam);
+          const x = x0 + (i / N) * (x1 - x0);
+          const y = y1 - I * (y1 - y0);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.save();
+        ctx.setLineDash([8, 6]);
+        ctx.beginPath();
+        for(let i = 0; i <= N; i++){
+          const th = thMin + (thMax - thMin) * i / N;
+          const E = envelope(th, b, lam);
+          const x = x0 + (i / N) * (x1 - x0);
+          const y = y1 - E * (y1 - y0);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.restore();
+
+        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
+        const IM = intensity(thMark, b, g, lam);
+        const EM = envelope(thMark, b, lam);
+        const yM = y1 - IM * (y1 - y0);
+
+        ctx.beginPath();
+        ctx.moveTo(xM, y0);
+        ctx.lineTo(xM, y1);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        const kMax = Math.floor(b / lam);
+        const kShow = Math.min(kMax, 8);
+        for(let k = 1; k <= kShow; k++){
+          const s = (k * lam) / b;
+          if(s >= 1) break;
+          const thk = Math.asin(s);
+          [thk, -thk].forEach(t => {
+            const x = x0 + (t - thMin) / (thMax - thMin) * (x1 - x0);
+            if(x < x0 || x > x1) return;
+            ctx.beginPath();
+            ctx.moveTo(x, y1);
+            ctx.lineTo(x, y1 + 10);
+            ctx.stroke();
+          });
+        }
+
+        const yApprox = a * Math.tan(thMark);
+        const yCm = yApprox * 100;
+
+        readout.textContent =
+          "Markierung:\n" +
+          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
+          `I(alpha)/I0 ≈ ${IM.toFixed(4)} (Doppelspalt * Huellkurve)\n` +
+          `Huellkurve E(alpha) ≈ ${EM.toFixed(4)}\n` +
+          `y ≈ a*tan(alpha) ≈ ${yCm.toFixed(2)} cm (a=${a.toFixed(1)} m)\n\n` +
+          "Einzelspalt-Minima (b*sin(alpha)=k*lambda) sind unten markiert.\n" +
+          "Beobachte: Liegt ein Doppelspalt-Maximum in einem Einzelspalt-Minimum, verschwindet es praktisch.";
+      }
+
+      [lamNm, bMm, gMm, aM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
+      draw();
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
     initSingleSlitSim();
+    initDoubleSlitWithEnvelopeSim();
   </script>
 </body>
 </html>
