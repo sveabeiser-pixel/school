@@ -1667,7 +1667,6 @@ ${fi.input.value || ""}
       .map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")}));
     const setActiveByLink = (link) => { navLinks.forEach(x=>x.classList.remove("active")); if(link) link.classList.add("active"); };
     const firstLinkOfPage = (p) => navLinks.find(a => Number(a.getAttribute("data-wb-page")||"1")===p) || null;
-    const unlockedPages = new Set();
     const revealObservers = new Map();
 
     function getRevealTargets(pageNode){
@@ -1694,59 +1693,40 @@ ${fi.input.value || ""}
       node.setAttribute("data-wb-reveal-done", "1");
     }
 
-    function ensureRevealObserver(idx){
+    function revealVisibleTargetsNow(pageNode){
+      if(!pageNode) return;
+      const cRect = content.getBoundingClientRect();
+      getRevealTargets(pageNode).forEach(node => {
+        if(node.getAttribute("data-wb-reveal-done") === "1") return;
+        const nRect = node.getBoundingClientRect();
+        const visible = nRect.bottom > cRect.top + 8 && nRect.top < cRect.bottom - 8;
+        if(visible) markRevealDone(node);
+      });
+    }
+
+    function armRevealObserver(idx){
       const activePage = pageSections().find(p => p.page === idx);
       if(!activePage || !activePage.node) return;
       const pageNode = activePage.node;
+      const oldObs = revealObservers.get(idx);
+      if(oldObs) oldObs.disconnect();
 
-      let obs = revealObservers.get(idx);
-      if(!obs){
-        obs = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if(!entry.isIntersecting) return;
-            markRevealDone(entry.target);
-            obs.unobserve(entry.target);
-          });
-        }, {root: content, threshold: 0.2});
-        revealObservers.set(idx, obs);
-      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+          markRevealDone(entry.target);
+          obs.unobserve(entry.target);
+        });
+      }, {root: content, threshold: 0.2});
+      revealObservers.set(idx, obs);
 
       getRevealTargets(pageNode).forEach(node => {
-        if(node.getAttribute("data-wb-reveal-done") === "1"){
-          node.classList.remove("wb-reveal-item-pending");
-          node.classList.add("wb-reveal-item-done");
-          return;
-        }
+        node.removeAttribute("data-wb-reveal-done");
         node.classList.add("wb-reveal-item-pending");
         node.classList.remove("wb-reveal-item-done");
         obs.observe(node);
       });
-    }
-
-    function setPageRevealState(idx){
-      const activePage = pageSections().find(p => p.page === idx);
-      if(!activePage || !activePage.node) return;
-      const node = activePage.node;
-      if(unlockedPages.has(idx)){
-        node.classList.remove("wb-reveal-on-scroll-pending");
-        node.classList.add("wb-reveal-on-scroll-done");
-        ensureRevealObserver(idx);
-      }else{
-        node.classList.remove("wb-reveal-on-scroll-done");
-        node.classList.add("wb-reveal-on-scroll-pending");
-        getRevealTargets(node).forEach(target => {
-          if(target.getAttribute("data-wb-reveal-done") === "1") return;
-          target.classList.add("wb-reveal-item-pending");
-          target.classList.remove("wb-reveal-item-done");
-        });
-      }
-    }
-
-    function revealCurrentPageOnFirstDownScroll(){
-      const idx = Number(nowEl.textContent || "1");
-      if(unlockedPages.has(idx)) return;
-      unlockedPages.add(idx);
-      setPageRevealState(idx);
+      requestAnimationFrame(() => revealVisibleTargetsNow(pageNode));
     }
 
     function showPage(n, scrollToSel){
@@ -1792,7 +1772,7 @@ ${fi.input.value || ""}
       }else{
         scrollToNode(paper, false);
       }
-      setPageRevealState(idx);
+      armRevealObserver(idx);
     }
 
     const closeNav = () => root.classList.remove("nav-open");
@@ -1813,24 +1793,6 @@ ${fi.input.value || ""}
 
     prevBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) - 1));
     nextBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) + 1));
-    content.addEventListener("scroll", () => {
-      if(content.scrollTop > 6) revealCurrentPageOnFirstDownScroll();
-    }, {passive:true});
-    content.addEventListener("wheel", (e) => {
-      if(e.deltaY > 0) revealCurrentPageOnFirstDownScroll();
-    }, {passive:true});
-    let touchStartY = null;
-    content.addEventListener("touchstart", (e) => {
-      const touch = e.touches && e.touches[0];
-      touchStartY = touch ? touch.clientY : null;
-    }, {passive:true});
-    content.addEventListener("touchmove", (e) => {
-      if(touchStartY == null) return;
-      const touch = e.touches && e.touches[0];
-      if(!touch) return;
-      if((touchStartY - touch.clientY) > 8) revealCurrentPageOnFirstDownScroll();
-    }, {passive:true});
-
     root.addEventListener("keydown", (e) => {
       if(e.key === "ArrowLeft") showPage(Number(nowEl.textContent) - 1);
       if(e.key === "ArrowRight") showPage(Number(nowEl.textContent) + 1);
