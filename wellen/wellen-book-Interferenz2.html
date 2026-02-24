@@ -796,107 +796,99 @@ und wie dadurch Maxima und Minima entstehen.
 
       <div class="wb-section-break"></div>
 
-      <h2>Schritt 1: Winkelabhängige Formeln</h2>
-      <p>
-       <p>
-Zuerst betrachten wir die <b>Winkelabhängigkeit</b>.
-Der Gangunterschied entsteht hier allein durch die <b>Geometrie</b> der Anordnung.
-</p>
-
-<p>
-Betrachtet man einen Punkt, der unter dem Winkel $\alpha$ zur Mittelsenkrechten liegt,
-so müssen die beiden Wellen unterschiedlich lange Wege zurücklegen.
-Dieser Wegunterschied wird <b>Gangunterschied</b> genannt und lautet:
-</p>
-
-\[
-\Delta s = d \cdot \sin(\alpha).
-\]
-
-<p>
-Je größer der Winkel $\alpha$ ist, desto größer ist also der Gangunterschied
-und desto stärker unterscheiden sich die beiden zurückgelegten Wege.
-</p>
-
-      </p>
-      <div class="wb-section-break"></div>
-
-      <h3>Maxima (hell)</h3>
-      <p>
-        Konstruktive Interferenz bedeutet: <b>phasengleich</b>.
-        Das gilt, wenn der Gangunterschied ein ganzzahliges Vielfaches der Wellenlänge ist:
-      </p>
-      <div class="wb-callout">
-        <p>
-          <strong>$\Delta s = k\cdot\lambda\quad\Rightarrow\quad\sin(\alpha) = \dfrac{k\cdot\lambda}{d}\quad$</strong>
-          mit $\quad k = 0, \pm 1, \pm 2, ...$
-        </p>
-      </div>
-      <div class="wb-section-break"></div>
-
-      <h3>Minima (dunkel)</h3>
-      <p>
-        Destruktive Interferenz bedeutet: <b>gegenphasig</b>.
-        Das passiert bei einem ungeraden halben Vielfachen der Wellenlänge:
-      </p>
-      <div class="wb-callout">
-        <p>
-          <strong>$\Delta s = \left(k - \tfrac12\right)\cdot\lambda\quad\Rightarrow\quad\sin(\alpha) = \dfrac{\left(k-\tfrac12\right)\cdot\lambda}{d}\quad$</strong>
-          mit $\quad k = \pm 1, \pm 2, ...$
-        </p>
+      <h2>Schritt 1: Betrachtung für einen beliebigen Punkt auf dem Schirm</h2>
+      <div class="grid2">
+        <div>
+          <p>Die entscheidenden Größen sind:</p>
+          <ul>
+            <li><b>d</b>: Abstand der Mittelpunkte der beiden Spalte,</li>
+            <li><b>e</b>: Abstand zwischen Doppelspalt und Schirm,</li>
+            <li><b>a</b>: Abstand eines beliebigen Punkts <b>A</b> auf dem Schirm zum Hauptmaximum,</li>
+            <li><b>&alpha;</b>: Winkel zwischen Mittelsenkrechter und Blickrichtung zu <b>A</b>.</li>
+            <li> <b>$\ell$</b>: Abstand vom Punkt M zum Punkt A (gestichetle Diagonale).</li>
+          </ul>
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/interferenz2.png" alt="Skizze zur Herleitung am Doppelspalt" style="width:75%; max-width:420px; height:auto;">
+        </div>
       </div>
 
-      <div class="wb-section-break"></div>
-
-      <h2>Schritt 2: Schirm-Formeln (kleiner Winkel)</h2>
       <p>
-Auf dem Schirm misst man den Winkel $\alpha$ nicht direkt.
-Stattdessen beobachtet man die Position <b>a</b> eines hellen oder dunklen Streifens
-relativ zur Mitte des Schirms.
-</p>
+        Aus der Geometrie der Skizze folgt f&uuml;r den Punkt <b>A</b>:
+      </p>
+      <div class="wb-callout">
+        <p><strong>$\sin(\alpha)=\dfrac{a}{\sqrt{e^2+a^2}}$</strong>, da $\quad \quad \sin(\alpha)=\frac{a}{\ell}\quad\quad$ und $\quad\quad \ell^2=e^2+a^2\quad\quad$</p>
+      </div>
 
-<p>
-Ist der Schirm weit entfernt im Vergleich zum Spaltabstand (<b>e ≫ d</b>),
-dann sind die Winkel klein.
-In diesem Fall gelten die Näherungen:
-</p>
+      <p>
+        F&uuml;r das kleine Interferenzdreieck gilt gleichzeitig:
+      </p>
+      <div class="wb-callout">
+        <p><strong>$\sin(\alpha)=\dfrac{\Delta s}{d}$</strong></p>
+      </div>
 
-\[
-\tan(\alpha) \approx \sin(\alpha)
-\quad\text{und}\quad
-\tan(\alpha) = \frac{a}{e}.
-\]
+      <p>Setzt du beide Beziehungen gleich, erh&auml;ltst du die allgemeine Schirm-Geometrie:</p>
+      <div class="wb-callout">
+        <p><strong>$\Delta s=\dfrac{d\cdot a}{\sqrt{e^2+a^2}}$</strong></p>
+      </div>
 
-<p>
-Damit lässt sich der Gangunterschied direkt durch die Schirmkoordinate ausdrücken:
-</p>
-
-\[
-\Delta s = d \cdot \frac{a}{e}.
-\]
-
-<p>
-Diese Beziehung nennt man die <b>Schirmformel</b>.
-Mit ihr kann man nun die Bedingungen für <b>Maxima</b> und <b>Minima</b>
-direkt als Funktion des Ortes <b>a</b> auf dem Schirm angeben.
-</p>
-
+      <p class="wb-muted">Jetzt hast du gelernt: Der Gangunterschied am Schirm folgt direkt aus der Geometrie von <b>d</b>, <b>e</b> und <b>a</b>.</p>
 
       <div class="wb-section-break"></div>
-      <h3>Maxima auf dem Schirm</h3>
+
+      <h2>Schritt 2: Betrachtung f&uuml;r Maxima auf dem Schirm</h2>
+      <p>
+        Liegt am Punkt <b>A<sub>k</sub></b> ein Maximum, dann hei&szlig;t sein Abstand zur Mitte <b>a<sub>k</sub></b>.
+        Das Maximum k-ter Ordnung entsteht nur bei konstruktiver Interferenz:
+      </p>
+      <div class="wb-callout">
+        <p><strong>$\Delta s_k=k\cdot\lambda$</strong> mit $\;k=0,1,2,\dots$</p>
+      </div>
+
+      <p>Einsetzen in die allgemeine Geometrie aus Schritt 1 liefert:</p>
+      <div class="wb-callout">
+        <p><strong>$k\cdot\lambda=\dfrac{d\cdot a_k}{\sqrt{e^2+a_k^2}}$</strong></p>
+      </div>
+
+      <p>Nach der Wellenl&auml;nge umgestellt ergibt sich die gesuchte Messformel:</p>
+      <div class="wb-callout">
+        <p><strong>$\lambda=\dfrac{d\cdot a_k}{k\cdot\sqrt{e^2+a_k^2}}$</strong></p>
+      </div>
+      <p class="wb-muted">Jetzt hast du gelernt: Mit dem Ort eines Maximums kannst du die Wellenl&auml;nge direkt bestimmen.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 3: Schirm-Formeln (kleiner Winkel)</h2>
+      <p>
+        F&uuml;r gro&szlig;e Schirmabst&auml;nde (<b>e &gg; a<sub>k</sub></b>) sind die Winkel klein.
+        Dann gilt n&auml;herungsweise:
+      </p>
+
+      \[
+      \sqrt{e^2+a_k^2}\approx e,\qquad \tan(\alpha)\approx\sin(\alpha),\qquad \tan(\alpha)=\frac{a}{e}.
+      \]
+
+      <p>Damit werden die Formeln besonders einfach und praxistauglich:</p>
+
+      <div class="wb-callout">
+        <p><strong>Maxima: $\;a_k\approx\dfrac{e}{d}\cdot k\cdot\lambda$</strong></p>
+        <p><strong>Wellenl&auml;nge aus Maxima: $\;\lambda\approx\dfrac{d\cdot a_k}{e\cdot k}$</strong></p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h3>Maxima und Minima auf dem Schirm (N&auml;herungsformeln)</h3>
       <div class="wb-callout">
         <p>
-          <strong>$a_k = \dfrac{e}{d}\cdot k\cdot\lambda\quad$</strong>
+          <strong>Maxima: $\;a_k \approx \dfrac{e}{d}\cdot k\cdot\lambda$</strong>
           mit $\quad k = 0, \pm 1, \pm 2, ...$
         </p>
         <p>Man spricht vom k. Maximum oder Maximum k. Ordnung. Das Nullte Maximum ist in der Mitte.</p>
       </div>
       <div class="wb-section-break"></div>
 
-      <h3>Minima auf dem Schirm</h3>
       <div class="wb-callout">
         <p>
-          <strong>$a_k = \dfrac{e}{d}\cdot\left(k - \tfrac12\right)\cdot\lambda\quad $</strong>
+          <strong>Minima: $\;a_k \approx \dfrac{e}{d}\cdot\left(k - \tfrac12\right)\cdot\lambda$</strong>
           mit $\quad k = \pm 1, \pm 2, ...$
         </p>
         <p>Man spricht vom k. Minimum oder Minimum k. Ordnung.</p>
