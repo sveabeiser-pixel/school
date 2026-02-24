@@ -60,6 +60,14 @@
       background: rgba(255,255,255,0.5);
       display:block;
     }
+    #gratingCanvas{
+      width: 100%;
+      height: 260px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display:block;
+    }
     .mini-list li{ margin: 6px 0; }
   </style>
 </head>
@@ -1935,6 +1943,374 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
           <div class="wb-section-break"></div>
     </section>
 
+    <section data-wb-page="8" data-wb-page-title="Vielfachspalt & Gitter">
+      <h1>Vielfachspalt und Gitter: viele Spalte, scharfe Maxima</h1>
+      <p class="wb-muted">
+        Jetzt erweiterst du den Doppelspalt auf viele gleichabständige Spalte und nutzt das als Messmethode für Wellenlängen.
+      </p>
+
+      <h2>Einstieg: Was ändert sich bei mehr als zwei Spalten?</h2>
+      <p>
+        Beim Vielfachspalt überlagern sich nicht nur zwei, sondern viele Teilwellen.
+        Dadurch werden die hellen Hauptmaxima deutlich <b>schärfer</b> und die dunklen Bereiche dazwischen ausgeprägter.
+      </p>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-gitter-1",
+          "title":"Stopp & check",
+          "question":"Warum ist ein Gitter gut für Messungen geeignet?",
+          "answer":"Weil die Hauptmaxima bei vielen Spalten sehr schmal und gut unterscheidbar werden. Dadurch kannst du Winkel oder Schirmabstände präziser ablesen als beim Doppelspalt.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 1: Intensitätsverteilung Spaltgitter</h2>
+      <p>
+        Du kennst vom Doppelspalt bereits ein regelmäßiges Interferenzmuster. Erhöhst du die Spaltzahl \(N\),
+        werden die Hauptmaxima immer schmaler und intensiver. Gleichzeitig treten zwischen zwei Hauptmaxima
+        Nebenmaxima mit deutlich geringerer Helligkeit auf.
+      </p>
+      <p>
+        Für sehr große Spaltzahlen (\(N\gg1\)) erhältst du sehr scharfe Hauptmaxima, während dazwischen fast
+        überall destruktive Interferenz dominiert.
+      </p>
+      <div class="wb-callout">
+        <p><strong>Zwischen zwei Hauptmaxima liegen immer \(N-1\) Minima und \(N-2\) Nebenmaxima.</strong></p>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-img">
+          <img src="pdf-bilder/interferenzmuster-gitter.png" alt="Interferenzmuster eines Spaltgitters">
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/interferenzmuster-gitter2.png" alt="Zeigerdarstellung für mehrere Spaltöffnungen">
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <p>
+        Um zu verstehen, warum Nebenmaxima entstehen und Hauptmaxima schärfer werden, hilft die
+        Zeigerdarstellung der Amplituden. Dazu schauen wir uns einen Dreifachspalt an, also betrachten
+        wir drei Zeiger:
+      </p>
+      <ul>
+        <li>Beim Hauptmaximum zeigen alle Zeiger in dieselbe Richtung: maximale Verstärkung (1).</li>
+        <li>Bei verändertem Winkel wächst der Gangunterschied: Das Zeigerpolygon faltet sich und die Gesamtamplitude sinkt (2).</li>
+        <li>Bei geschlossener Zeigerfigur ist die Gesamtamplitude null: Minimum (Auslöschung) (3),(6).</li>
+        <li>Zwischen zwei Minima kann ein kleines Nebenmaximum auftreten, bevor wieder ein Hauptmaximum folgt (5).</li>
+        <li>Mit wachsendem \(N\) gibt es mehr Nebenmaxima, aber sie werden schwächer; die Energie konzentriert sich stärker in den Hauptmaxima.</li>
+      </ul>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 2: Grundformel für Hauptmaxima</h2>
+      <p>
+        Für ein Beugungsgitter mit Gitterkonstante \(g\) (Abstand benachbarter Spaltmitten) gilt für die Hauptmaxima:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          \sin(\alpha_k)=\frac{k\lambda}{g},\qquad k=0,\pm1,\pm2,\dots
+        \]</strong></p>
+      </div>
+      <p>
+        Oft ist statt \(g\) die Anzahl der Linien pro Millimeter \(n\) gegeben. Dann gilt:
+      </p>
+      <div class="wb-callout">
+        <p><strong>$
+          g=\frac{1}{n} \qquad
+        $</strong> und somit $\qquad \sin(\alpha_k)=k \cdot n \cdot\lambda,\qquad k=0,\pm1,\pm2,\dots$</p> 
+      </div>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Die Lage der Hauptmaxima wird durch \(g\), \(\lambda\) und die Ordnung \(k\) festgelegt.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 3: Wellenlänge aus den Maxima bestimmen</h2>
+      <p>
+        Misst du auf dem Schirm den Abstand \(a_k\) des \(k\)-ten Maximums zur Mitte bei Schirmabstand \(e\), dann ist
+        \(\tan(\alpha_k)=a_k/e\). Exakt folgt:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          \lambda=\frac{g}{k}\sin\!\left(\arctan\!\left(\frac{a_k}{e}\right)\right)
+        \]</strong></p>
+      </div>
+      <p>
+        Für kleine Winkel (\(e\gg a_k\)) darfst du näherungsweise setzen \(\sin(\alpha_k)\approx\tan(\alpha_k)\approx a_k/e\):
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          \lambda\approx\frac{g\,a_k}{k\,e}
+        \]</strong></p>
+      </div>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Mit \(g\), \(e\), \(k\) und \(a_k\) kannst du eine unbekannte Wellenlänge bestimmen.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Sicherung: Begriffe sicher zuordnen</h2>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-gitter-1",
+          "title":"Merke: Gitterformeln",
+          "bank":["Gitterkonstante","Hauptmaximum","$g\\sin(\\alpha_k)=k\\lambda$","kleine Winkel","$\\lambda\\approx g a_k/k e$"],
+          "segments":[
+            {"t":"text","v":"Beim Vielfachspalt entstehen besonders scharfe "},
+            {"t":"gap","a":"Hauptmaximum"},
+            {"t":"text","v":". Die Grundbedingung lautet "},
+            {"t":"gap","a":"$g\\sin(\\alpha_k)=k\\lambda$"},
+            {"t":"text","v":". Für "},
+            {"t":"gap","a":"kleine Winkel"},
+            {"t":"text","v":" nutzt du auf dem Schirm die Näherung "},
+            {"t":"gap","a":"$\\lambda\\approx g a_k/k e$"},
+            {"t":"text","v":". Der Spaltabstand heißt "},
+            {"t":"gap","a":"Gitterkonstante"},
+            {"t":"text","v":" und wird meist mit g bezeichnet."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Simulation: Vielfachspalt und Gitter</h2>
+      <p>
+        Verändere \(N\) (Spaltzahl), \(g\), \(b\) und \(\lambda\). Beobachte, wie Hauptmaxima schärfer werden und wie sich ihre Lage ändert.
+        Vergleich: <a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/vielfachspalt-und-gitter" target="_blank" rel="noopener">LEIFI: Vielfachspalt und Gitter</a>
+      </p>
+
+      <div class="wb-soft-callout">
+        <strong>Modell (Fernfeld):</strong>
+        <p>\[
+          I(\alpha)\propto\left(\frac{\sin\beta}{\beta}\right)^2
+          \left(\frac{\sin(N\delta)}{N\sin(\delta)}\right)^2,\quad
+          \beta=\frac{\pi b\sin\alpha}{\lambda},\quad
+          \delta=\frac{\pi g\sin\alpha}{\lambda}.
+        \]</p>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-grid">
+          <div>
+            <canvas id="gratingCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
+            <div class="sim-mono" id="gratingReadout"></div>
+          </div>
+          <div class="sim-controls">
+            <label for="gtLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="gtLamNm" type="range" min="380" max="700" value="550" />
+            <div class="sim-mono">\(\lambda\) = <span id="gtLamNmVal">550</span> nm</div>
+
+            <label for="gtGUm">Gitterkonstante \(g\) (\(\mu\)m)</label>
+            <input id="gtGUm" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
+            <div class="sim-mono">\(g\) = <span id="gtGUmVal">4.0</span> \(\mu\)m</div>
+
+            <label for="gtBUm">Spaltbreite \(b\) (\(\mu\)m)</label>
+            <input id="gtBUm" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
+            <div class="sim-mono">\(b\) = <span id="gtBUmVal">0.8</span> \(\mu\)m</div>
+
+            <label for="gtN">Spaltzahl \(N\)</label>
+            <input id="gtN" type="range" min="2" max="14" value="6" step="1" />
+            <div class="sim-mono">\(N\) = <span id="gtNVal">6</span></div>
+
+            <label for="gtEM">Schirmabstand \(e\) (m)</label>
+            <input id="gtEM" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
+            <div class="sim-mono">\(e\) = <span id="gtEMVal">2.0</span> m</div>
+
+            <label for="gtThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="gtThetaDeg" type="range" min="-25" max="25" value="3" step="0.1" />
+            <div class="sim-mono">\(\alpha\) = <span id="gtThetaDegVal">3.0</span> °</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Beobachtung: Was ändert die Anzahl der Spalte \(N\)?</h2>
+      <p><strong>Auftrag:</strong> Schau dir die Simulation systematisch an. Verändere nur \(N\), halte die anderen Regler erst einmal konstant und notiere deine Beobachtungen.</p>
+      <p>Wir konzentrieren uns auf die Änderung des Schirmbildes in Abhängigkeit von der Anzahl der Spalte und stellen fest:</p>
+      <ul>
+        <li>Die Anzahl der Spalte verändert <b>nicht</b> die Lage der Hauptmaxima.</li>
+        <li>Die Anzahl der Spalte verändert die Breite der Hauptmaxima: Je größer \(N\), desto schmaler die Hauptmaxima.</li>
+        <li>Die Anzahl der Spalte verändert die Helligkeit zwischen den Hauptmaxima: Je größer \(N\), desto dunkler die Bereiche zwischen den Hauptmaxima.</li>
+        <li>Die Anzahl der Spalte verändert die Zahl der Nebenmaxima zwischen zwei Hauptmaxima: Bei \(N\) Spalten gibt es <b>\(N-2\)</b> Nebenmaxima.</li>
+      </ul>
+      <p class="wb-muted">Jetzt hast du das gelernt: \(N\) steuert vor allem Schärfe und Kontrast, nicht die Position der Hauptmaxima.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Zusatzaufgaben: Neue Inhalte sichern</h2>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne die Änderung korrekt zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Änderung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Spaltzahl \(N\) wird größer</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Gitterkonstante \(g\) wird kleiner</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Ordnung \(k\) wird größer</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Zwischen zwei Hauptmaxima bei \(N\) Spalten</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Folge</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Hauptmaxima werden schmaler, Nebenmaxima zahlreicher und schwächer.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Hauptmaxima liegen bei größeren Winkeln.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Das zugehörige Hauptmaximum liegt weiter von der Mitte entfernt.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Es gibt \(N-1\) Minima und \(N-2\) Nebenmaxima.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-gitter-2",
+          "title":"Formeln sicher unterscheiden",
+          "bank":["$\\lambda=\\dfrac{g}{k}\\sin(\\alpha_k)$","$\\alpha_k=\\arctan\\!\\left(\\dfrac{a_k}{e}\\right)$","$\\lambda\\approx\\dfrac{g\\,a_k}{k\\,e}$","kleine Winkel"],
+          "segments":[
+            {"t":"text","v":"Exakt gilt für Hauptmaxima "},
+            {"t":"gap","a":"$\\lambda=\\dfrac{g}{k}\\sin(\\alpha_k)$"},
+            {"t":"text","v":" mit "},
+            {"t":"gap","a":"$\\alpha_k=\\arctan\\!\\left(\\dfrac{a_k}{e}\\right)$"},
+            {"t":"text","v":". Für "},
+            {"t":"gap","a":"kleine Winkel"},
+            {"t":"text","v":" nutzt du die Näherung "},
+            {"t":"gap","a":"$\\lambda\\approx\\dfrac{g\\,a_k}{k\\,e}$"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Anwendung: Messstrategie ordnen</h2>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order-gitter-1",
+          "title":"Bringe den Messablauf in die richtige Reihenfolge",
+          "hint":"Du willst eine unbekannte Wellenlänge mit dem Gitter bestimmen.",
+          "items":[
+            "Gitterkonstante g (oder Linienzahl n und dann g=1/n) festhalten.",
+            "Schirmabstand e messen.",
+            "Ordnung k wählen und den Abstand a_k des k-ten Maximums messen.",
+            "Winkel über $\\tan(\\alpha_k)=a_k/e$ berechnen oder Kleinwinkelnäherung nutzen.",
+            "Wellenlänge mit $\\lambda=(g/k)*\\sin(\\alpha_k)$ bestimmen."
+          ],
+          "acceptedOrders":[
+            [1,2,3,4,5],
+            [2,1,3,4,5]
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mini-Check</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-gitter-1",
+          "title":"Verstehen statt auswendig lernen",
+          "hint":"Prüfe jede Aussage mit der Formel.",
+          "questions":[
+            {
+              "text":"Was passiert bei gleicher Wellenlänge, wenn g kleiner wird (engeres Gitter)?",
+              "choices":[
+                {"id":"a","label":"Die Hauptmaxima liegen bei größeren Winkeln."},
+                {"id":"b","label":"Die Hauptmaxima rücken zur Mitte."},
+                {"id":"c","label":"Die Winkel bleiben immer gleich."}
+              ],
+              "correct":["a"],
+              "explain":"Aus g*sin(alpha_k)=k*lambda folgt: kleineres g erfordert größeres sin(alpha_k) und damit größere Winkel."
+            },
+            {
+              "text":"Welche Aussage zur Spaltzahl N ist korrekt?",
+              "choices":[
+                {"id":"a","label":"Mit größerem N werden Hauptmaxima schmaler und deutlicher."},
+                {"id":"b","label":"Mit größerem N verschwinden alle Maxima außer k=0."},
+                {"id":"c","label":"N ändert nur die Farbe, nicht die Intensitätsverteilung."}
+              ],
+              "correct":["a"],
+              "explain":"Mehr Spalte führen zu schärferen Hauptmaxima und stärkerer Unterdrückung dazwischen."
+            },
+            {
+              "text":"Wie viele Nebenmaxima liegen zwischen zwei Hauptmaxima bei \(N\) Spalten?",
+              "choices":[
+                {"id":"a","label":"\(N-1\)"},
+                {"id":"b","label":"\(N-2\)"},
+                {"id":"c","label":"\(N\)"}
+              ],
+              "correct":["b"],
+              "explain":"Zwischen zwei Hauptmaxima liegen \(N-1\) Minima und damit \(N-2\) Nebenmaxima."
+            },
+            {
+              "text":"Wann ist die Näherung \(\lambda\\approx\\dfrac{g a_k}{k e}\) sinnvoll?",
+              "choices":[
+                {"id":"a","label":"Bei kleinen Winkeln, also \(e\\gg a_k\)."},
+                {"id":"b","label":"Nur bei \(k=0\)."},
+                {"id":"c","label":"Nur wenn \(N=2\)."}
+              ],
+              "correct":["a"],
+              "explain":"Die Näherung nutzt \(\sin(\\alpha_k)\\approx\\tan(\\alpha_k)\\approx a_k/e\), das gilt bei kleinen Winkeln."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Transfer</h2>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-gitter-1",
+          "title":"Was würde passieren, wenn ...?",
+          "hint":"Antworte in 4-8 Sätzen und nutze mindestens zwei Fachbegriffe korrekt.",
+          "fields":[
+            {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Was ändert sich am Muster, wenn du N stark erhöhst und gleichzeitig g verkleinerst? Begründe mit Formeln."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Weiterforschen & Quellen</h2>
+      <ul>
+        <li><a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/vielfachspalt-und-gitter" target="_blank" rel="noopener">LEIFIphysik: Vielfachspalt und Gitter</a></li>
+      </ul>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Ein Gitter macht Maxima schärfer und erlaubt eine präzise Bestimmung von \(\lambda\).
+      </p>
+    </section>
+
   </div>
 
   <script src="../assets/wb-webhook-loader.js"></script>
@@ -2234,11 +2610,168 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       draw();
     }
 
+    function initGratingSim(){
+      const canvas = document.getElementById("gratingCanvas");
+      const readout = document.getElementById("gratingReadout");
+      if(!canvas || !readout) return;
+
+      const lamNm = document.getElementById("gtLamNm");
+      const gUm = document.getElementById("gtGUm");
+      const bUm = document.getElementById("gtBUm");
+      const nSlits = document.getElementById("gtN");
+      const eM = document.getElementById("gtEM");
+      const thetaDeg = document.getElementById("gtThetaDeg");
+
+      const lamNmVal = document.getElementById("gtLamNmVal");
+      const gUmVal = document.getElementById("gtGUmVal");
+      const bUmVal = document.getElementById("gtBUmVal");
+      const nSlitsVal = document.getElementById("gtNVal");
+      const eMVal = document.getElementById("gtEMVal");
+      const thetaDegVal = document.getElementById("gtThetaDegVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      function sinc(x){
+        if(Math.abs(x) < 1e-8) return 1;
+        return Math.sin(x) / x;
+      }
+
+      function nSlitFactor(thetaRad, N, g, lam){
+        const dlt = Math.PI * g * Math.sin(thetaRad) / lam;
+        const den = Math.sin(dlt);
+        if(Math.abs(den) < 1e-8) return 1;
+        const num = Math.sin(N * dlt);
+        const q = num / (N * den);
+        return q * q;
+      }
+
+      function envelope(thetaRad, b, lam){
+        const beta = Math.PI * b * Math.sin(thetaRad) / lam;
+        const env = sinc(beta);
+        return env * env;
+      }
+
+      function intensity(thetaRad, N, b, g, lam){
+        return envelope(thetaRad, b, lam) * nSlitFactor(thetaRad, N, g, lam);
+      }
+
+      function draw(){
+        const lam = Number(lamNm.value) * 1e-9;
+        const g = Number(gUm.value) * 1e-6;
+        const b = Number(bUm.value) * 1e-6;
+        const N = Number(nSlits.value);
+        const e = Number(eM.value);
+        const thMark = Number(thetaDeg.value) * Math.PI / 180;
+
+        lamNmVal.textContent = String(lamNm.value);
+        gUmVal.textContent = Number(gUm.value).toFixed(1);
+        bUmVal.textContent = Number(bUm.value).toFixed(1);
+        nSlitsVal.textContent = String(N);
+        eMVal.textContent = Number(eM.value).toFixed(1);
+        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
+
+        const thMin = -25 * Math.PI / 180;
+        const thMax = 25 * Math.PI / 180;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const padL = 56, padR = 18, padT = 18, padB = 44;
+        const x0 = padL, x1 = W - padR;
+        const y0 = padT, y1 = H - padB;
+
+        ctx.beginPath();
+        ctx.rect(x0, y0, x1 - x0, y1 - y0);
+        ctx.stroke();
+
+        [0, 0.5, 1].forEach(v => {
+          const y = y1 - v * (y1 - y0);
+          ctx.beginPath();
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x1, y);
+          ctx.stroke();
+          ctx.fillText(String(v), 10, y + 4);
+        });
+
+        [-25, -15, -5, 0, 5, 15, 25].forEach(d => {
+          const th = d * Math.PI / 180;
+          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
+          ctx.beginPath();
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y1);
+          ctx.stroke();
+          ctx.fillText(d + "°", x - 10, H - 16);
+        });
+
+        ctx.beginPath();
+        const steps = 1600;
+        for(let i = 0; i <= steps; i++){
+          const th = thMin + (thMax - thMin) * i / steps;
+          const I = intensity(th, N, b, g, lam);
+          const x = x0 + (i / steps) * (x1 - x0);
+          const y = y1 - I * (y1 - y0);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
+        const IM = intensity(thMark, N, b, g, lam);
+        const yM = y1 - IM * (y1 - y0);
+
+        ctx.beginPath();
+        ctx.moveTo(xM, y0);
+        ctx.lineTo(xM, y1);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        const principal = [];
+        const kMax = Math.floor(g / lam);
+        for(let k = -kMax; k <= kMax; k++){
+          const s = (k * lam) / g;
+          if(Math.abs(s) > 1) continue;
+          const th = Math.asin(s);
+          if(th < thMin || th > thMax) continue;
+          principal.push({k, th});
+          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
+          ctx.beginPath();
+          ctx.moveTo(x, y1);
+          ctx.lineTo(x, y1 + 10);
+          ctx.stroke();
+        }
+
+        const yApprox = e * Math.tan(thMark);
+        const yCm = yApprox * 100;
+        const linesPerMm = (1e-3 / g);
+        const kPos = principal.filter(p => p.k >= 0)
+          .slice(0, 5)
+          .map(p => `k=${p.k}: ${(p.th * 180 / Math.PI).toFixed(2)} deg`)
+          .join(", ");
+
+        readout.textContent =
+          "Markierung:\n" +
+          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
+          `I(alpha)/I0 ≈ ${IM.toFixed(4)}\n` +
+          `y ≈ e*tan(alpha) ≈ ${yCm.toFixed(2)} cm (e=${e.toFixed(1)} m)\n` +
+          `n ≈ ${Math.round(linesPerMm)} Linien/mm\n\n` +
+          "Hauptmaxima (g*sin(alpha_k)=k*lambda):\n" +
+          (kPos || "keine im sichtbaren Winkelbereich");
+      }
+
+      [lamNm, gUm, bUm, nSlits, eM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
+      draw();
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
     initSingleSlitSim();
     initDoubleSlitWithEnvelopeSim();
+    initGratingSim();
   </script>
 </body>
 </html>

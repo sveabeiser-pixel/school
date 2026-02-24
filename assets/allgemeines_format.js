@@ -526,6 +526,52 @@ function el(tag, attrs = {}, children = []) {
       seen.add(id);
       return { id, label: it.label };
     });
+    const canonicalOrder = items.map(it => it.id);
+    const indexToId = items.map(it => it.id);
+    const labelToId = new Map(items.map(it => [it.label, it.id]));
+
+    function normalizeOrderEntry(v){
+      if(typeof v === "number" && Number.isInteger(v)){
+        const id = indexToId[v - 1];
+        return id || null;
+      }
+      const s = String(v == null ? "" : v).trim();
+      if(!s) return null;
+      if(/^\d+$/.test(s)){
+        const idx = Number(s);
+        const id = indexToId[idx - 1];
+        if(id) return id;
+      }
+      if(indexToId.includes(s)) return s;
+      if(labelToId.has(s)) return labelToId.get(s);
+      return null;
+    }
+
+    function normalizeAcceptedOrders(){
+      const raw = cfg.acceptedOrders;
+      if(!Array.isArray(raw) || raw.length === 0) return [canonicalOrder];
+      const out = [];
+      raw.forEach(ord => {
+        if(!Array.isArray(ord) || ord.length !== items.length) return;
+        const ids = ord.map(normalizeOrderEntry);
+        if(ids.some(x => !x)) return;
+        const uniq = new Set(ids);
+        if(uniq.size !== items.length) return;
+        if(!ids.every(id => indexToId.includes(id))) return;
+        out.push(ids);
+      });
+      if(out.length === 0) return [canonicalOrder];
+      const dedup = [];
+      const seenSig = new Set();
+      out.forEach(ids => {
+        const sig = ids.join("|");
+        if(seenSig.has(sig)) return;
+        seenSig.add(sig);
+        dedup.push(ids);
+      });
+      return dedup;
+    }
+    const acceptedOrders = normalizeAcceptedOrders();
 
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const bank = el("div", {class:"wb-order-bank", "data-order-bank":"1"});
@@ -634,18 +680,33 @@ function el(tag, attrs = {}, children = []) {
     }
 
     function check(){
-      let okCount = 0;
       const drops = Array.from(slotsWrap.querySelectorAll(".wb-order-drop"));
-      drops.forEach(drop => {
-        const expected = drop.getAttribute("data-expected-id") || "";
+      const gotIds = drops.map(drop => {
         const chip = drop.querySelector(".wb-order-chip");
-        const got = chip ? (chip.getAttribute("data-id") || "") : "";
+        return chip ? (chip.getAttribute("data-id") || "") : "";
+      });
+      const fullMatch = acceptedOrders.find(order => order.every((id, i) => gotIds[i] !== "" && gotIds[i] === id));
+      let targetOrder = fullMatch || acceptedOrders[0] || canonicalOrder;
+      if(!fullMatch){
+        let bestScore = -1;
+        acceptedOrders.forEach(order => {
+          const score = order.reduce((n, id, i) => n + ((gotIds[i] !== "" && gotIds[i] === id) ? 1 : 0), 0);
+          if(score > bestScore){
+            bestScore = score;
+            targetOrder = order;
+          }
+        });
+      }
+      let okCount = 0;
+      drops.forEach((drop, i) => {
         const slot = drop.closest(".wb-order-slot");
         if(slot) slot.classList.remove("ok","bad");
-        const ok = got !== "" && got === expected;
+        const got = gotIds[i];
+        const ok = got !== "" && got === targetOrder[i];
         if(slot) slot.classList.add(ok ? "ok" : "bad");
         if(ok) okCount += 1;
       });
+      if(fullMatch) okCount = items.length;
       scoreEl.textContent = `Punkte: ${okCount}/${items.length}`;
       return {correct: okCount, total: items.length};
     }

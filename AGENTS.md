@@ -40,7 +40,7 @@ Die technische Implementierung ist in `allgemeines_format.js` und das Styling in
 
 Du lieferst (mindestens) diese Dateien:
 
-- `index.html` (fertige Seite, läuft lokal per Doppelklick oder via GitHub Pages), den genauen Namen bekommst du genannt
+- `index.html` (fertige Seite, läuft lokal per Doppelklick oder via GitHub Pages), den genauen Namen bekommst du genannt, diese Seite sieht vom Format aus, wie muster-book.htlm
 - ggf. `assets/` (Bilder/Icons/Quellenliste etc., nur wenn nötig)
 - optional: `README.md` (kurz: wie starten, wie anpassen)
 
