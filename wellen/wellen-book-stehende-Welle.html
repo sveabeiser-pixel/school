@@ -77,6 +77,38 @@
       background: rgba(255,255,255,0.5);
       display: block;
     }
+    #fixedPulseCanvas{
+      width: 100%;
+      height: 280px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #loosePulseCanvas{
+      width: 100%;
+      height: 280px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #thinDenseCanvas{
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #denseThinCanvas{
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -184,7 +216,53 @@
         Du kannst das selbst ausprobieren: Binde ein elastisches Seil an einem Ende fest und erzeuge am
         anderen Ende eine Störung. Beobachte die zurücklaufende Welle.
       </p>
+      <h2>Simulation anschauen</h2>
+      <p>
+        In der Simulation siehst du genau diesen Fall mit einem einmaligen nach oben ausgelenkten Puls.
+        Nach der Reflexion am festen Ende kommt der Puls invertiert (nach unten) zurück.
+      </p>
+      <div class="sw-sim-card">
+        <div>
+          <canvas id="fixedPulseCanvas" width="960" height="460" aria-label="Pulsreflexion am festen Ende"></canvas>
+          <div class="sw-sim-mono" id="fixedPulseReadout"></div>
+          <label for="fpSpeed">Animationsgeschwindigkeit</label>
+          <input id="fpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="fpSpeedVal">1.0</span></div>
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" id="fpStartBtn">Start</button>
+            <button class="wb-btn" type="button" id="fpStopBtn">Stop</button>
+            <button class="wb-btn" type="button" id="fpResetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
       <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Aufgabe zur Simulation:</strong>
+        <p>
+          Starte die Simulation und drücke genau im Moment der Reflexion an der Wand auf <b>Stop</b>.<br>
+          Vergleiche dann die drei Kurven ganz genau:
+          <b>einlaufender Puls</b> (braun), <b>reflektierter Puls</b> (grün) und <b>Überlagerung</b> (pink).<br>
+          Beschreibe in 2-3 Sätzen, was du am festen Ende über Spiegelung und Phasensprung erkennst.
+        </p>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-reflexion-festes-ende-stop",
+          "title":"Auswertung: Reflexionsmoment am festen Ende",
+          "storagePrefix":"wellen_",
+          "exportName":"wellen-ergebnisse.txt",
+          "hint":"Schreibe 2-5 Sätze zu einlaufender Welle, reflektierter Welle und Überlagerung beim Stop-Moment.",
+          "fields":[
+            {"label":"Deine Beobachtung","key":"answer","kind":"textarea","placeholder":"Beschreibe hier deine Beobachtung..."}
+          ]
+        }
+        </script>
+      </div>
+
+       <div class="wb-section-break"></div>
 
       <h2>2. Reflexion am losen Ende</h2>
       <p>
@@ -230,6 +308,48 @@
         Lass ein elastisches Seil von einem hohen Punkt frei herunterhängen und erzeuge oben eine Störung.
         Beobachte die Reflexion am losen Ende.
       </p>
+      <p>
+        In der Simulation siehst du einen einzelnen Puls am losen Ende: Die reflektierte Welle ist nur an
+        der y-Achse gespiegelt (kein Phasensprung). Der pinke Punkt am rechten Ende bewegt sich mit.
+      </p>
+      <div class="sw-sim-card">
+        <div>
+          <canvas id="loosePulseCanvas" width="960" height="460" aria-label="Pulsreflexion am losen Ende"></canvas>
+          <div class="sw-sim-mono" id="loosePulseReadout"></div>
+          <label for="lpSpeed">Animationsgeschwindigkeit</label>
+          <input id="lpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="lpSpeedVal">1.0</span></div>
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" id="lpStartBtn">Start</button>
+            <button class="wb-btn" type="button" id="lpStopBtn">Stop</button>
+            <button class="wb-btn" type="button" id="lpResetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Aufgabe zur Simulation:</strong>
+        <p>
+          Starte die Simulation und drücke im Reflexionsmoment am losen Ende auf <b>Stop</b>.<br>
+          Vergleiche einlaufenden Puls (braun), reflektierten Puls (grün) und Summation (pink).<br>
+          Beschreibe in 2-3 Sätzen in eigenen Worten, warum hier kein Phasensprung auftritt.
+        </p>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-reflexion-loses-ende-stop",
+          "title":"Auswertung: Reflexionsmoment am losen Ende",
+          "storagePrefix":"wellen_",
+          "exportName":"wellen-ergebnisse.txt",
+          "hint":"Schreibe 2-5 Sätze zu Spiegelung an der y-Achse, fehlendem Phasensprung und dem beweglichen Endpunkt.",
+          "fields":[
+            {"label":"Deine Beobachtung","key":"answer","kind":"textarea","placeholder":"Beschreibe hier deine Beobachtung..."}
+          ]
+        }
+        </script>
+      </div>
 
       <div class="wb-section-break"></div>
       <h2>Das Wichtigste auf einen Blick</h2>
@@ -263,7 +383,7 @@
       <div class="wb-section-break"></div>
 
       
-      <p> Schau dir jetzt nochmal die beiden Animationen der Reflexion am festen und am losen Ende auf folgenden Internetseiten an: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/reflexion" target="_blank" rel="noopener">Zur Animation 1</a>
+      <p> Wenn du möchtest kannst du dir noch weitere Animationen der Reflexion am festen und am losen Ende auf folgenden Internetseiten anschauen: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/reflexion" target="_blank" rel="noopener">Zur Animation 1</a>
         <a href="https://www.abi-physik.de/buch/wellen/reflexion-am-festen-losen-ende/" target="_blank" rel="noopener">Zur Animation 2</a>
 </p>
 
@@ -500,6 +620,28 @@
 
       <div class="wb-section-break"></div>
 
+      <p>
+        <b>Simulation</b>: Ein nach oben ausgelenkter Impuls läuft vom dünnen (linken) ins dichtere (rechte) Medium.
+        Am Übergang entsteht eine kleinere transmittierte Welle nach rechts und eine reflektierte Welle mit
+        Phasensprung nach links.
+      </p>
+      <div class="sw-sim-card">
+        <div>
+          <canvas id="thinDenseCanvas" width="960" height="520" aria-label="Transmission und Reflexion duenn nach dicht"></canvas>
+          <div class="sw-sim-mono" id="thinDenseReadout"></div>
+          <label for="tdSpeed">Animationsgeschwindigkeit</label>
+          <input id="tdSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="tdSpeedVal">1.0</span></div>
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" id="tdStartBtn">Start</button>
+            <button class="wb-btn" type="button" id="tdStopBtn">Stop</button>
+            <button class="wb-btn" type="button" id="tdResetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="wb-callout">
         <strong>Zusammenfassung dünn → dicht:</strong>
         <p>
@@ -548,8 +690,30 @@
         <img src="pdf-bilder/reflekt.png" alt="Zeitlicher Verlauf einer harmonischen Welle" style="width:60%; height:auto;">
         </div>
         </div>
+ 
+      
+      <div class="wb-section-break"></div>
 
-     
+      <p>
+        <b>Simulation</b>: Ein nach oben ausgelenkter Impuls läuft vom dichteren (linken) ins dünnere (rechte) Medium.
+        Am Übergang entsteht eine transmittierte Welle mit größerer Amplitude und größerer Wellenlänge.
+        Die reflektierte Welle hat kleinere Amplitude, aber die gleiche Wellenlänge wie die einlaufende.
+      </p>
+      <div class="sw-sim-card">
+        <div>
+          <canvas id="denseThinCanvas" width="960" height="520" aria-label="Transmission und Reflexion dicht nach duenn"></canvas>
+          <div class="sw-sim-mono" id="denseThinReadout"></div>
+          <label for="dtSpeed">Animationsgeschwindigkeit</label>
+          <input id="dtSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="dtSpeedVal">1.0</span></div>
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" id="dtStartBtn">Start</button>
+            <button class="wb-btn" type="button" id="dtStopBtn">Stop</button>
+            <button class="wb-btn" type="button" id="dtResetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
+
       <div class="wb-section-break"></div>
 
       <div class="wb-callout">
@@ -590,8 +754,8 @@
 
       <div class="wb-section-break"></div>
 
-      <p> Schau dir auch hier die beiden Animationen von Transmission und Reflexion von 
-        dichteren zu dünneren Medien und umgekehrt auf folgender Internetseite an: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/transmission-und-reflexion" target="_blank" rel="noopener">Zur Animation</a>
+      <p> Schau dir auch hier nochmal die beiden Animationen von Transmission und Reflexion vom 
+        dichteren zum dünneren Medien und umgekehrt auf folgender Internetseite an, wenn du willst: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/transmission-und-reflexion" target="_blank" rel="noopener">Zur Animation</a>
 </p>
 
 
@@ -1567,7 +1731,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda}))\]
     <p>Die reflektierte Welle läuft von rechts nach links in der Farbe grün und wird an der y-Achse (der Wand) reflektiert. Die Wellenfunktion ist die einfallende, gespiegelt an der y-Achse:</p>
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda}))\]
-    <p>Die überlagerte Welle ist in der Farbe rosa dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
+    <p>Die überlagerte Welle ist in der Farbe pink dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda})) + A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda})) = 2A \sin( 2 \pi \frac{t}{T}) \cdot \cos( 2 \pi \frac{x}{\lambda})\]
       <p>Schau dir die Simulation ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
       <p>Du kannst Amplitude, Wellenl&auml;nge und Animationsgeschwindigkeit ver&auml;ndern.</p>
@@ -1612,9 +1776,18 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       <div class="wb-callout">
         <strong>Hinweise:</strong>
         <p>
-          - Rechts von der Wand werden die Wellen nicht gezeichnet, die y-Achse beschreibt die Wand.<br>
+          - Rechts von der Wand wird nur die einfallende Welle als Fortsetzung gezeichnet, die y-Achse beschreibt die Wand.<br>
           - Bei der Reflexion einer elektromagnetischen Welle verhält sich das Magnetfeld ähnlich
             wie eine mechanische Welle, die am losen Ende reflektiert wird.
+        </p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Kleine Aufgabe:</strong>
+        <p>
+          Starte die Simulation und drücke an einer beliebigen Stelle auf <b>Stop</b>.<br>
+          Vergleiche die braune einfallende und die grüne reflektierte Welle links der y-Achse.
+          Erkläre in 1-2 Sätzen: Warum ist die reflektierte Welle hier eine Spiegelung an der <b>y-Achse</b> (ohne Spiegelung an der x-Achse)?
         </p>
       </div>
 
@@ -1688,9 +1861,18 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       <div class="wb-callout">
         <strong>Hinweise:</strong>
         <p>
-          - Rechts von der Wand werden die Wellen nicht gezeichnet, die y-Achse beschreibt die Wand.<br>
+          - Rechts von der Wand wird nur die einfallende Welle als Fortsetzung gezeichnet, die y-Achse beschreibt die Wand.<br>
           - Bei der Reflexion einer elektromagnetischen Welle verhält sich das elektrische Feld ähnlich
             wie eine mechanische Welle, die am festen Ende reflektiert wird.
+        </p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Kleine Aufgabe:</strong>
+        <p>
+          Starte die Simulation und drücke an einer beliebigen Stelle auf <b>Stop</b>.<br>
+          Vergleiche die orange einfallende und die grüne reflektierte Welle links der y-Achse.
+          Erkläre in 1-2 Sätzen: Warum ist die reflektierte Welle hier eine Spiegelung an der <b>y-Achse und x-Achse</b> (mit Phasensprung)?
         </p>
       </div>
     </section>
@@ -2030,6 +2212,779 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       rafId = requestAnimationFrame(draw);
     }
 
+    function initFixedPulseReflectionSim(){
+      const canvas = document.getElementById("fixedPulseCanvas");
+      const readout = document.getElementById("fixedPulseReadout");
+      if(!canvas || !readout){
+        if(!window.__wbFixedPulseObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("fixedPulseCanvas") && document.getElementById("fixedPulseReadout")){
+              initFixedPulseReflectionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbFixedPulseObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbFixedPulseInit === "1") return;
+      canvas.dataset.wbFixedPulseInit = "1";
+
+      const startBtn = document.getElementById("fpStartBtn");
+      const stopBtn = document.getElementById("fpStopBtn");
+      const resetBtn = document.getElementById("fpResetBtn");
+      const speedEl = document.getElementById("fpSpeed");
+      const speedVal = document.getElementById("fpSpeedVal");
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const xL = 40;
+      const xR = W - 24;
+      const y0 = H * 0.58;
+      const plotW = xR - xL;
+      const L = 1.0;
+      const x0 = -0.10;
+      const c = 0.28;
+      const halfWidth = 0.07;
+      const A = 1.0;
+      const tReflect = (L - x0) / c;
+      const tCycle = (2 * L - 2 * x0) / c;
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function pulse(x, center){
+        // Kompakter Puls: außerhalb der Breite exakt 0 (kein "Vorschatten").
+        const u = x - center;
+        if(Math.abs(u) > halfWidth) return 0;
+        return 0.5 * (1 + Math.cos(Math.PI * u / halfWidth));
+      }
+      function yIncident(x, tau){
+        const s = x0 + c * tau;
+        return A * pulse(x, s);
+      }
+      function yReflected(x, tau){
+        const s = x0 + c * tau;
+        const sMirror = 2 * L - s; // Spiegelung an der y-Achse (Wand)
+        return -A * pulse(x, sMirror); // Minuszeichen = Spiegelung an der x-Achse
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+        const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const tau = ((tRaw % tCycle) + tCycle) % tCycle;
+        const scaleY = H * 0.28;
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(xR, y0);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(55,65,81,0.9)";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(xR, 26);
+        ctx.lineTo(xR, H - 26);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("festes Ende", xR - 78, 20);
+        // Markierung des festen Endes: fester Punkt auf der Ruhelage
+        ctx.fillStyle = "#d946ef";
+        ctx.beginPath();
+        ctx.arc(xR, y0, 5.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        const steps = 900;
+
+        ctx.strokeStyle = "#b45309";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * yIncident(x, tau);
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * yReflected(x, tau);
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#d946ef";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * (yIncident(x, tau) + yReflected(x, tau));
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        readout.textContent =
+          "braun = einlaufender Puls\n" +
+          "gruen = reflektierter Puls (Phasensprung)\n" +
+          "pink = Summation (Ueberlagerung)\n" +
+          "Reflexion am festen Ende: Spiegelung an y- und x-Achse\n" +
+          `v = ${speed.toFixed(1)}\n` +
+          `t = ${tau.toFixed(2)} s (zyklisch), erster Wandkontakt bei t = ${tReflect.toFixed(2)} s`;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      if(speedEl) speedEl.addEventListener("input", () => {});
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+    function initLoosePulseReflectionSim(){
+      const canvas = document.getElementById("loosePulseCanvas");
+      const readout = document.getElementById("loosePulseReadout");
+      if(!canvas || !readout){
+        if(!window.__wbLoosePulseObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("loosePulseCanvas") && document.getElementById("loosePulseReadout")){
+              initLoosePulseReflectionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbLoosePulseObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbLoosePulseInit === "1") return;
+      canvas.dataset.wbLoosePulseInit = "1";
+
+      const startBtn = document.getElementById("lpStartBtn");
+      const stopBtn = document.getElementById("lpStopBtn");
+      const resetBtn = document.getElementById("lpResetBtn");
+      const speedEl = document.getElementById("lpSpeed");
+      const speedVal = document.getElementById("lpSpeedVal");
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const xL = 40;
+      const xR = W - 24;
+      const y0 = H * 0.58;
+      const plotW = xR - xL;
+      const L = 1.0;
+      const x0 = -0.10;
+      const c = 0.28;
+      const halfWidth = 0.07;
+      const A = 1.0;
+      const tReflect = (L - x0) / c;
+      const tCycle = (2 * L - 2 * x0) / c;
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function pulse(x, center){
+        const u = x - center;
+        if(Math.abs(u) > halfWidth) return 0;
+        return 0.5 * (1 + Math.cos(Math.PI * u / halfWidth));
+      }
+      function yIncident(x, tau){
+        const s = x0 + c * tau;
+        return A * pulse(x, s);
+      }
+      function yReflected(x, tau){
+        const s = x0 + c * tau;
+        const sMirror = 2 * L - s; // nur Spiegelung an der y-Achse
+        return A * pulse(x, sMirror);
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+        const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const tau = ((tRaw % tCycle) + tCycle) % tCycle;
+        const scaleY = H * 0.28;
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(xR, y0);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(55,65,81,0.9)";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(xR, 26);
+        ctx.lineTo(xR, H - 26);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("loses Ende", xR - 72, 20);
+
+        const steps = 900;
+
+        ctx.strokeStyle = "#b45309";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * yIncident(x, tau);
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * yReflected(x, tau);
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#d946ef";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * L;
+          const y = y0 - scaleY * (yIncident(x, tau) + yReflected(x, tau));
+          const xPix = xL + xn * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        const yEnd = y0 - scaleY * (yIncident(L, tau) + yReflected(L, tau));
+        ctx.fillStyle = "#d946ef";
+        ctx.beginPath();
+        ctx.arc(xR, yEnd, 5.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        readout.textContent =
+          "braun = einlaufender Puls\n" +
+          "gruen = reflektierter Puls (kein Phasensprung)\n" +
+          "pink = Summation (Ueberlagerung)\n" +
+          "Reflexion am losen Ende: nur Spiegelung an der y-Achse\n" +
+          `v = ${speed.toFixed(1)}\n` +
+          `t = ${tau.toFixed(2)} s (zyklisch), erster Wandkontakt bei t = ${tReflect.toFixed(2)} s`;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      if(speedEl) speedEl.addEventListener("input", () => {});
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+    function initThinDenseTransitionSim(){
+      const canvas = document.getElementById("thinDenseCanvas");
+      const readout = document.getElementById("thinDenseReadout");
+      if(!canvas || !readout){
+        if(!window.__wbThinDenseObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("thinDenseCanvas") && document.getElementById("thinDenseReadout")){
+              initThinDenseTransitionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbThinDenseObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbThinDenseInit === "1") return;
+      canvas.dataset.wbThinDenseInit = "1";
+
+      const startBtn = document.getElementById("tdStartBtn");
+      const stopBtn = document.getElementById("tdStopBtn");
+      const resetBtn = document.getElementById("tdResetBtn");
+      const speedEl = document.getElementById("tdSpeed");
+      const speedVal = document.getElementById("tdSpeedVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const xL = 36;
+      const xR = W - 24;
+      const y0 = H * 0.58;
+      const plotW = xR - xL;
+      const L = 1.0;
+      const xB = 0.58;
+      const x0 = -0.12;
+      const c1 = 0.30; // duennes Medium
+      const c2 = 0.18; // dichteres Medium
+      const halfWidth = 0.065; // links: groessere Wellenlaenge / breiterer Puls
+      const halfWidthT = halfWidth * (c2 / c1); // rechts: kleinere Wellenlaenge / schmalerer Puls
+      const A = 1.0;
+      const r = -0.58; // Reflexion mit Phasensprung
+      const tCoef = 0.34; // Transmission bewusst kleiner als reflektierte Amplitude
+      const tReflect = (xB - x0) / c1;
+      const tLeftOut = (2 * xB - x0 + halfWidth) / c1;
+      const tRightOut = tReflect + (L - xB + halfWidthT) / c2;
+      const tCycle = Math.max(tLeftOut, tRightOut) + 0.5;
+
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function pulse(x, center, width){
+        const u = x - center;
+        if(Math.abs(u) > width) return 0;
+        return 0.5 * (1 + Math.cos(Math.PI * u / width));
+      }
+
+      function yIncident(x, tau){
+        const s = x0 + c1 * tau;
+        return A * pulse(x, s, halfWidth);
+      }
+      function yReflected(x, tau){
+        const s = x0 + c1 * tau;
+        const sMirror = 2 * xB - s; // Spiegelung an der Grenzflaeche (y-Achsen-Analogon)
+        return r * pulse(x, sMirror, halfWidth);
+      }
+      function yTransmitted(x, tau){
+        if(tau < tReflect) return 0;
+        const s = xB + c2 * (tau - tReflect);
+        return tCoef * A * pulse(x, s, halfWidthT);
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+        const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const tau = ((tRaw % tCycle) + tCycle) % tCycle;
+        const scaleY = H * 0.30;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const xBoundary = xL + xB * plotW;
+        ctx.fillStyle = "rgba(59,130,246,0.08)";
+        ctx.fillRect(xL, 24, xBoundary - xL, H - 48);
+        ctx.fillStyle = "rgba(16,185,129,0.10)";
+        ctx.fillRect(xBoundary, 24, xR - xBoundary, H - 48);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(xR, y0);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(31,41,55,0.95)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(xBoundary, 24);
+        ctx.lineTo(xBoundary, H - 24);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("duennes Seil (links)", xL + 8, 20);
+        ctx.fillText("dichteres Seil (rechts)", xBoundary + 8, 20);
+        ctx.fillText("Uebergang", xBoundary - 34, H - 10);
+
+        const steps = 1100;
+
+        // Einlaufende Welle links
+        ctx.strokeStyle = "#b45309";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const y = y0 - scaleY * yIncident(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Reflektierte Welle links (mit Phasensprung)
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const y = y0 - scaleY * yReflected(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Transmittierte Welle rechts (kleiner)
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xB + xn * (L - xB);
+          const y = y0 - scaleY * yTransmitted(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Summation als "schwingendes Seil": links duenn, rechts dicker
+        ctx.strokeStyle = "#d946ef";
+        ctx.beginPath();
+        ctx.lineWidth = 2.4; // duennes Seil links
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const ySum = yIncident(x, tau) + yReflected(x, tau);
+          const y = y0 - scaleY * ySum;
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.lineWidth = 4.8; // dichteres Seil rechts
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xB + xn * (L - xB);
+          const ySum = yTransmitted(x, tau);
+          const y = y0 - scaleY * ySum;
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        readout.textContent =
+          "braun = einlaufender Puls (duennes Medium)\n" +
+          "gruen = reflektierter Puls (kleiner, Phasensprung)\n" +
+          "blau  = transmittierter Puls (kleiner und schmaler)\n" +
+          "pink  = Seil (Summation), links duenn / rechts dicker\n" +
+          `v = ${speed.toFixed(1)}\n` +
+          `t = ${tau.toFixed(2)} s (zyklisch), erster Uebergangskontakt bei t = ${tReflect.toFixed(2)} s`;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      if(speedEl) speedEl.addEventListener("input", () => {});
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+    function initDenseThinTransitionSim(){
+      const canvas = document.getElementById("denseThinCanvas");
+      const readout = document.getElementById("denseThinReadout");
+      if(!canvas || !readout){
+        if(!window.__wbDenseThinObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("denseThinCanvas") && document.getElementById("denseThinReadout")){
+              initDenseThinTransitionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbDenseThinObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbDenseThinInit === "1") return;
+      canvas.dataset.wbDenseThinInit = "1";
+
+      const startBtn = document.getElementById("dtStartBtn");
+      const stopBtn = document.getElementById("dtStopBtn");
+      const resetBtn = document.getElementById("dtResetBtn");
+      const speedEl = document.getElementById("dtSpeed");
+      const speedVal = document.getElementById("dtSpeedVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const xL = 36;
+      const xR = W - 24;
+      const y0 = H * 0.58;
+      const plotW = xR - xL;
+      const L = 1.0;
+      const xB = 0.58;
+      const x0 = -0.12;
+      const c1 = 0.18; // dichteres Medium links
+      const c2 = 0.30; // duenneres Medium rechts
+      const halfWidth = 0.052; // links: kleinere Wellenlaenge / schmalerer Puls
+      const halfWidthT = halfWidth * (c2 / c1); // rechts: groessere Wellenlaenge / breiterer Puls
+      const A = 1.0;
+      const r = 0.36; // kleinere Reflexion, kein Phasensprung
+      const tCoef = 1.25; // groessere Transmission
+      // Start der Wechselwirkungen beim Eintreffen der vorderen Pulsflanke am Uebergang
+      const tReflect = (xB - (x0 + halfWidth)) / c1;
+      const tLeftOut = tReflect + (xB + 2 * halfWidth) / c1;
+      const tRightOut = tReflect + (L - xB + 2 * halfWidthT) / c2;
+      const tCycle = Math.max(tLeftOut, tRightOut) + 0.5;
+
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function pulse(x, center, width){
+        const u = x - center;
+        if(Math.abs(u) > width) return 0;
+        return 0.5 * (1 + Math.cos(Math.PI * u / width));
+      }
+      function yIncident(x, tau){
+        const s = x0 + c1 * tau;
+        return A * pulse(x, s, halfWidth);
+      }
+      function yReflected(x, tau){
+        if(tau < tReflect) return 0;
+        // Startet mit Flanke am Uebergang und laeuft nach links.
+        const s = xB + halfWidth - c1 * (tau - tReflect);
+        return r * pulse(x, s, halfWidth);
+      }
+      function yTransmitted(x, tau){
+        if(tau < tReflect) return 0;
+        // Startet mit Flanke am Uebergang und laeuft nach rechts.
+        const s = xB - halfWidthT + c2 * (tau - tReflect);
+        return tCoef * A * pulse(x, s, halfWidthT);
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+        const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const tau = ((tRaw % tCycle) + tCycle) % tCycle;
+        const scaleY = H * 0.30;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const xBoundary = xL + xB * plotW;
+        ctx.fillStyle = "rgba(16,185,129,0.10)";
+        ctx.fillRect(xL, 24, xBoundary - xL, H - 48);
+        ctx.fillStyle = "rgba(59,130,246,0.08)";
+        ctx.fillRect(xBoundary, 24, xR - xBoundary, H - 48);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(xR, y0);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(31,41,55,0.95)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(xBoundary, 24);
+        ctx.lineTo(xBoundary, H - 24);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("dichteres Seil (links)", xL + 8, 20);
+        ctx.fillText("duennes Seil (rechts)", xBoundary + 8, 20);
+        ctx.fillText("Uebergang", xBoundary - 34, H - 10);
+
+        const steps = 1100;
+
+        ctx.strokeStyle = "#b45309";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const y = y0 - scaleY * yIncident(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const y = y0 - scaleY * yReflected(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xB + xn * (L - xB);
+          const y = y0 - scaleY * yTransmitted(x, tau);
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#d946ef";
+        // Gleicher Anschlusswert am Uebergang -> keine sichtbare Sprungstelle.
+        const yJoin = yTransmitted(xB, tau);
+        const yJoinPix = y0 - scaleY * yJoin;
+        ctx.beginPath();
+        ctx.lineWidth = 4.8; // dichteres Seil links
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xn * xB;
+          const ySum = (i === steps) ? yJoin : (yIncident(x, tau) + yReflected(x, tau));
+          const y = y0 - scaleY * ySum;
+          const xPix = xL + x * plotW;
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.lineWidth = 2.4; // duennes Seil rechts
+        ctx.moveTo(xBoundary, yJoinPix);
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xB + xn * (L - xB);
+          const ySum = (i === 0) ? yJoin : yTransmitted(x, tau);
+          const y = y0 - scaleY * ySum;
+          const xPix = xL + x * plotW;
+          ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        readout.textContent =
+          "braun = einlaufender Puls (dichteres Medium)\n" +
+          "gruen = reflektierter Puls (kleiner, kein Phasensprung)\n" +
+          "blau  = transmittierter Puls (groesser und breiter)\n" +
+          "pink  = Seil (Summation), links dicker / rechts duenn\n" +
+          `v = ${speed.toFixed(1)}\n` +
+          `t = ${tau.toFixed(2)} s (zyklisch), erster Uebergangskontakt bei t = ${tReflect.toFixed(2)} s`;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      if(speedEl) speedEl.addEventListener("input", () => {});
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
     function initLooseReflectionSim(){
       const canvas = document.getElementById("looseReflectCanvas");
       const readout = document.getElementById("looseReflectReadout");
@@ -2143,7 +3098,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
         }
         ctx.stroke();
 
-        // Überlagerung (rosa), nur links von y-Achse
+        // Überlagerung (pink), nur links von y-Achse
         ctx.strokeStyle = "#d946ef";
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -2593,6 +3548,10 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    initThinDenseTransitionSim();
+    initDenseThinTransitionSim();
+    initFixedPulseReflectionSim();
+    initLoosePulseReflectionSim();
     initBuildStandingSim();
     initLooseReflectionSim();
     initFixedReflectionSim();
