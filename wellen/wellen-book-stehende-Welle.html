@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -13,6 +13,71 @@
   };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .sw-sim-card{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--wb-text-bg, #fff);
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      margin: 14px 0;
+    }
+    .sw-sim-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 900px){
+      .sw-sim-grid{ grid-template-columns: 1fr; }
+    }
+    .sw-sim-controls label{
+      display: block;
+      font-weight: 900;
+      margin: 10px 0 6px;
+    }
+    .sw-sim-controls input[type="range"],
+    .sw-sim-controls select{ width: 100%; }
+    .sw-sim-mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: var(--wb-muted, #6b7280);
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    #standingModesCanvas{
+      width: 100%;
+      height: 290px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #looseReflectCanvas{
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #fixedReflectCanvas{
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+    #buildStandingCanvas{
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div data-wb-book>
@@ -717,11 +782,53 @@
       <div class="wb-section-break"></div>
       <h2>Simulationen anschauen</h2>
 
-      <p> Schau dir nun Animationen zur Entstehung stehender Wellen auf folgenden Internetseiten an (ganz oben). 
-        Versuche zu verstehen, was genau passiert und wie genau die stehende Welle entsteht: <a href="https://www.abi-physik.de/buch/wellen/stehende-welle/" target="_blank" rel="noopener">Zur ersten Animation</a>,  
+      <p> Schau dir nun Animationen zur Entstehung stehender Wellen in der folgenden Simulation an.
+        Du kannst auswählen ob die Erreger links und rechts gleichphasig schwingen oder gegenphasig
+        schwingen. Zudem kannst du die Amplitude, die Frequenz und die Geschwindigkeit ändern.
+        <br>
+        Die braune Welle kommt von links und die grüne Welle von rechts. Die pinke Welle ist die
+        Überlagerung beider Wellen und wird schließlich zur stehenden Welle. <br> 
+        Wenn du noch mehr sehen möchtest, 
+        kannst du auf folgenden Internetseiten an (ganz oben) die Simulationen anschauen. <br>
+         <a href="https://www.abi-physik.de/buch/wellen/stehende-welle/" target="_blank" rel="noopener">Zur ersten Animation</a>,  
         <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/stehende-wellen-uebersicht" target="_blank" rel="noopener">Zur zweiten Animation</a>
 </p>
+<p>Versuche zu verstehen, was genau passiert und wie genau die stehende Welle entsteht:</p>
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div>
+            <canvas id="buildStandingCanvas" width="960" height="520" aria-label="Entstehung einer stehenden Welle"></canvas>
+            <div class="sw-sim-mono" id="buildStandingReadout"></div>
+          </div>
+          <div class="sw-sim-controls">
+            <label for="bsMode">Startmodus der beiden Quellen</label>
+            <select id="bsMode">
+              <option value="inphase">Im Takt (gleichphasig)</option>
+              <option value="antiphase">Gegenläufig (gegenphasig)</option>
+            </select>
+
+            <label for="bsAmp">Amplitude A</label>
+            <input id="bsAmp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="bsAmpVal">0.80</span></div>
+
+            <label for="bsFreq">Anregungsfrequenz f</label>
+            <input id="bsFreq" type="range" min="0.4" max="2.0" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="bsFreqVal">0.90</span></div>
+
+            <label for="bsC">Ausbreitungsgeschwindigkeit c</label>
+            <input id="bsC" type="range" min="0.1" max="1.0" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="bsCVal">0.90</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="bsStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="bsStopBtn">Stop</button>
+              <button class="wb-btn" type="button" id="bsResetBtn">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="wb-section-break"></div>
+
 
       <h2>1. Stehende Wellen mit zwei festen Enden</h2>
       <p>
@@ -898,7 +1005,115 @@
 
       <div class="wb-section-break"></div>
 
-        <p> Schau dir jetzt nochmal die drei Animationen der stehenden Wellen mit Grund und Oberschwingungen auf folgender Internetseite an: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/stehende-wellen-uebersicht" target="_blank" rel="noopener">Zur Animation</a>
+      <h2>Simulation: Moden stehender Wellen</h2>
+      <p>
+        Hier kannst du nochmal die Stehenden Wellen genau anschauen. Du kannst zwischen 
+        zwei festen Enden, einem festen und einem losen und zwei losen Enden wechseln. 
+        Stelle die Randbedingungen und die Schwingung \(n\) ein. So siehst du die Grundschwingung
+        und die Oberschwingungen bis \(n=5\) direkt in Bewegung.
+      </p>
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div>
+            <canvas id="standingModesCanvas" width="960" height="520" aria-label="Simulation stehender Wellen"></canvas>
+            <div class="sw-sim-mono" id="standingModesReadout"></div>
+          </div>
+          <div class="sw-sim-controls">
+            <label for="standingBoundary">Randbedingungen</label>
+            <select id="standingBoundary">
+              <option value="fixed-fixed">Zwei feste Enden</option>
+              <option value="fixed-free">Ein festes und ein loses Ende</option>
+              <option value="free-free">Zwei lose Enden</option>
+            </select>
+
+            <label for="standingN">Schwingung n (1 = Grundschwingung)</label>
+            <input id="standingN" type="range" min="1" max="5" value="1" step="1" />
+            <div class="sw-sim-mono">n = <span id="standingNVal">1</span></div>
+
+            <label for="standingAmp">Amplitude A</label>
+            <input id="standingAmp" type="range" min="0.3" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="standingAmpVal">0.80</span></div>
+
+            <label for="standingSpeed">Animationsgeschwindigkeit</label>
+            <input id="standingSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="standingSpeedVal">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="smStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="smStopBtn">Stop</button>
+              <button class="wb-btn" type="button" id="smResetBtn">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Aufgaben zur Moden-Simulation</h2>
+      <p>
+        Nutze <b>Start</b>, <b>Stop</b> und <b>Reset</b> gezielt, um bestimmte Momentaufnahmen zu erzeugen.
+      </p>
+      <div class="wb-soft-callout">
+        <strong>Arbeitsauftrag</strong>
+        <ul class="mini-list">
+          <li>Stelle <b>zwei feste Enden</b> und \(n=2\) ein.</li>
+          <li>Stoppe die Simulation bei <b>maximaler Auslenkung</b> (Bäuche maximal).</li>
+          <li>Starte erneut und stoppe so, dass das Seil nur ein <b>gerader Strich</b> auf der Ruhelage ist.</li>
+          <li>Wiederhole das für \(n=3\) und anschließend für den Modus <b>fest/lose</b>.</li>
+          <li>Notiere bei jedem Fall kurz, was gleich bleibt und was sich ändert.</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-stehend-moden-stop-1",
+          "title":"Dokumentation deiner Stop-Momente",
+          "hint":"Beschreibe die Einstellungen und den beobachteten Zustand in kurzen Stichpunkten.",
+          "fields":[
+            {"label":"Fall A: fest/fest, n=2, maximale Auslenkung","key":"a","kind":"textarea","placeholder":"Knoten/Bäuche und Form beschreiben"},
+            {"label":"Fall B: fest/fest, n=2, Seil als Strich","key":"b","kind":"textarea","placeholder":"Was erkennst du beim Nulldurchgang?"},
+            {"label":"Fall C: fest/fest, n=3, maximale Auslenkung","key":"c","kind":"textarea","placeholder":"Vergleich zu n=2"},
+            {"label":"Fall D: fest/lose, n=3, zwei unterschiedliche Stop-Momente","key":"d","kind":"textarea","placeholder":"Endbedingungen vergleichen"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-stehend-moden-stop-1",
+          "title":"Mini-Check zu Momentaufnahmen",
+          "questions":[
+            {
+              "text":"Wann erscheint die stehende Welle als gerader Strich auf der Ruhelage?",
+              "choices":[
+                {"id":"a","label":"Wenn der zeitliche Faktor der stehenden Welle null ist."},
+                {"id":"b","label":"Nur bei n=1."},
+                {"id":"c","label":"Nur bei zwei losen Enden."}
+              ],
+              "correct":["a"],
+              "explain":"Dann ist die Auslenkung an allen Orten gleichzeitig null."
+            },
+            {
+              "text":"Was gilt bei einem gestoppten Moment maximaler Auslenkung?",
+              "choices":[
+                {"id":"a","label":"Knoten bleiben bei null, Bäuche sind betragsmäßig maximal."},
+                {"id":"b","label":"Alle Punkte haben dieselbe maximale Auslenkung."},
+                {"id":"c","label":"Nur die Enden sind ausgelenkt."}
+              ],
+              "correct":["a"],
+              "explain":"Knoten bleiben immer ruhig, Bäuche erreichen den größten Betrag."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+        <p> Du kannst dir diese Animation der stehenden Wellen mit Grund und Oberschwingungen auf folgender Internetseite auch nochmal anschauen: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/grundwissen/stehende-wellen-uebersicht" target="_blank" rel="noopener">Zur Animation</a>
 </p>
     </section>
 
@@ -1344,18 +1559,49 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="wb-section-break"></div>
 
-      <p>Im folgenden siehst du ein Video, das die Reflexion einer Welle an einem losen Ende zeigt.</p>
+      <p>Im Folgenden siehst du eine Simulation, die die Reflexion einer Welle an einem losen Ende zeigt.</p>
+      <p>Die y-Achse steht als Wand, an der die Welle reflektiert wird. Die einlaufende Welle geht jedoch auch durch
+      die Wand durch, die reflektierte natürlich nicht.
+     </p>
       <p>Die einfallende Welle kommt von links nach rechts in der Farbe braun. Die Wellenfunktion ist:</p>
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda}))\]
-    <p>Die reflektierte Welle kommt von rechts nach links in der Farbe grün. Die Wellenfunktion ist die einfallende, gespiegelt an der y-Achse:</p>
+    <p>Die reflektierte Welle läuft von rechts nach links in der Farbe grün und wird an der y-Achse (der Wand) reflektiert. Die Wellenfunktion ist die einfallende, gespiegelt an der y-Achse:</p>
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda}))\]
     <p>Die überlagerte Welle ist in der Farbe rosa dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
     \[y(x,t) = A \sin( 2 \pi ( \frac{t}{T}-\frac{x}{\lambda})) + A \sin( 2 \pi ( \frac{t}{T} +\frac{x}{\lambda})) = 2A \sin( 2 \pi \frac{t}{T}) \cdot \cos( 2 \pi \frac{x}{\lambda})\]
-      <p>Schau dir das Video ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
-      <p>Vorsicht, im Video ist die Zeit negativ!</p>
+      <p>Schau dir die Simulation ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
+      <p>Du kannst Amplitude, Wellenl&auml;nge und Animationsgeschwindigkeit ver&auml;ndern.</p>
 
       <div class="wb-section-break"></div>
 
+
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div>
+            <canvas id="looseReflectCanvas" width="960" height="520" aria-label="Reflexion am losen Ende"></canvas>
+            <div class="sw-sim-mono" id="looseReflectReadout"></div>
+          </div>
+          <div class="sw-sim-controls">
+            <label for="lrAmp">Amplitude A</label>
+            <input id="lrAmp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="lrAmpVal">0.80</span></div>
+
+            <label for="lrLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <input id="lrLam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
+            <div class="sw-sim-mono">lambda = <span id="lrLamVal">1.20</span></div>
+
+            <label for="lrSpeed">Animationsgeschwindigkeit</label>
+            <input id="lrSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="lrSpeedVal">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="lrStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="lrStopBtn">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
       <div class="wb-callout">
       <strong>Wichtig:</strong> 
       <p>Mathematisch ist die reflektierte Welle die einfallende Welle, gespiegelt an der y-Achse, da es <b>keinen</b> Phasensprung gibt.</p>
@@ -1363,20 +1609,10 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-img">
-        <video controls width="100%">
-        <source src="reflexion-loses-Ende.MP4" type="video/mp4">
-        Dein Browser unterstützt das Video-Tag nicht.
-        </video>
-        </div>
-
-<div class="wb-section-break"></div>
-
       <div class="wb-callout">
         <strong>Hinweise:</strong>
         <p>
-          - Rechts von der Wand ist die Sekundärwelle zur Primärwelle gleichläufig und gegenphasig,
-            daher löschen sich die beiden Wellen dort aus.<br>
+          - Rechts von der Wand werden die Wellen nicht gezeichnet, die y-Achse beschreibt die Wand.<br>
           - Bei der Reflexion einer elektromagnetischen Welle verhält sich das Magnetfeld ähnlich
             wie eine mechanische Welle, die am losen Ende reflektiert wird.
         </p>
@@ -1398,18 +1634,50 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="wb-section-break"></div>
 
-     <p>Im folgenden siehst du noch ein Video, das die Reflexion einer Welle an einem festen Ende zeigt.</p>
+     <p>Im Folgenden siehst du eine Simulation, die die Reflexion einer Welle an einem festen Ende zeigt.</p>
+     <p>Die y-Achse steht wieder als Wand, an der die Welle reflektiert wird. Die einlaufende Welle geht jedoch auch durch
+      die Wand durch, die reflektierte natürlich nicht.
+     </p>
       <p>Die einfallende Welle kommt wieder von links nach rechts in der Farbe orange. Die Wellenfunktion ist:</p>
     \[y(x,t) = A \sin( 2 \pi (\frac{t}{T}-\frac{x}{\lambda}))\]
-    <p>Die reflektierte Welle kommt von rechts nach links in der Farbe grün mit Phasensprung, was eine Spiegelung an der y-Achse und an der x-Achse der einfallenden Wellenfunktion entspricht:</p>
+    <p>Die reflektierte Welle läuft von rechts nach links ab der y-Achse in der Farbe grün mit Phasensprung, 
+      was eine Spiegelung an der y-Achse und an der x-Achse der einfallenden Wellenfunktion entspricht:</p>
     \[y(x,t) = -A \sin( 2 \pi (\frac{t}{T} +\frac{x}{\lambda}))\]
-    <p>Die überlagerte Welle ist in der Farbe rosa dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
+    <p>Die überlagerte Welle ist in der Farbe pink dargestellt. Die Wellenfunktion der stehenden Welle ist die Summe der beiden anderen:</p>
     \[y(x,t) = A \sin( 2 \pi (\frac{t}{T}-\frac{x}{\lambda})) + (-A \sin( 2 \pi (\frac{t}{T} +\frac{x}{\lambda}))) = -2A \cos( 2 \pi \frac{t}{T}) \cdot \sin( 2 \pi \frac{x}{\lambda})\]
-      <p>Schau dir das Video ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
-      <p>Vorsicht, auch hier ist die Zeit negativ, dann dreht sich alles um.</p>
+      <p>Schau dir die Simulation ganz genau an und versuche, die Wellenfunktion zu verstehen.</p>
+      <p>Du kannst Amplitude, Wellenlänge und Animationsgeschwindigkeit verändern.</p>
 
       <div class="wb-section-break"></div>
 
+
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div>
+            <canvas id="fixedReflectCanvas" width="960" height="520" aria-label="Reflexion am festen Ende"></canvas>
+            <div class="sw-sim-mono" id="fixedReflectReadout"></div>
+          </div>
+          <div class="sw-sim-controls">
+            <label for="frAmp">Amplitude A</label>
+            <input id="frAmp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="frAmpVal">0.80</span></div>
+
+            <label for="frLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <input id="frLam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
+            <div class="sw-sim-mono">lambda = <span id="frLamVal">1.20</span></div>
+
+            <label for="frSpeed">Animationsgeschwindigkeit</label>
+            <input id="frSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="frSpeedVal">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="frStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="frStopBtn">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="wb-section-break"></div>
       <div class="wb-callout">
       <strong>Wichtig:</strong> 
       <p>Mathematisch ist die reflektierte Welle die einfallende Welle, gespiegelt an der y-Achse <b>und </b> an der x-Achste, da es einen Phasensprung gibt.</p>
@@ -1417,20 +1685,10 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-img">
-        <video controls width="100%">
-        <source src="reflexion-festes-Ende.MP4" type="video/mp4">
-        Dein Browser unterstützt das Video-Tag nicht.
-        </video>
-        </div>
-
-        <div class="wb-section-break"></div>
-
       <div class="wb-callout">
         <strong>Hinweise:</strong>
         <p>
-          - Rechts von der Wand ist die Sekundärwelle zur Primärwelle gleichläufig und gegenphasig,
-            die beiden Wellen löschen sich daher rechts von der Wand aus.<br>
+          - Rechts von der Wand werden die Wellen nicht gezeichnet, die y-Achse beschreibt die Wand.<br>
           - Bei der Reflexion einer elektromagnetischen Welle verhält sich das elektrische Feld ähnlich
             wie eine mechanische Welle, die am festen Ende reflektiert wird.
         </p>
@@ -1590,9 +1848,755 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
+    function initBuildStandingSim(){
+      const canvas = document.getElementById("buildStandingCanvas");
+      const readout = document.getElementById("buildStandingReadout");
+      if(!canvas || !readout){
+        if(!window.__wbBuildStandingObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("buildStandingCanvas") && document.getElementById("buildStandingReadout")){
+              initBuildStandingSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbBuildStandingObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbBuildStandingInit === "1") return;
+      canvas.dataset.wbBuildStandingInit = "1";
+
+      const modeEl = document.getElementById("bsMode");
+      const ampEl = document.getElementById("bsAmp");
+      const freqEl = document.getElementById("bsFreq");
+      const cEl = document.getElementById("bsC");
+      const startBtn = document.getElementById("bsStartBtn");
+      const stopBtn = document.getElementById("bsStopBtn");
+      const resetBtn = document.getElementById("bsResetBtn");
+      const ampVal = document.getElementById("bsAmpVal");
+      const freqVal = document.getElementById("bsFreqVal");
+      const cVal = document.getElementById("bsCVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width, H = canvas.height;
+      const xL = 40, xR = W - 30, y0 = H * 0.55;
+      const Lpx = xR - xL;
+      const L = 1; // normierte Seillaenge
+      let rafId = 0;
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+
+      function waveLeft(x, t, A, f, c, phi){
+        if(t < x / c) return 0;
+        return A * Math.sin(2 * Math.PI * f * (t - x / c) + phi);
+      }
+      function waveRight(x, t, A, f, c, phi){
+        if(t < (L - x) / c) return 0;
+        return A * Math.sin(2 * Math.PI * f * (t - (L - x) / c) + phi);
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+
+        const mode = modeEl ? modeEl.value : "inphase";
+        const A = ampEl ? Number(ampEl.value) : 0.8;
+        const f = freqEl ? Number(freqEl.value) : 0.9;
+        const c = cEl ? Number(cEl.value) : 0.9;
+        const phiR = (mode === "antiphase") ? Math.PI : 0;
+        const t = isRunning ? ((now - t0) / 1000) : tFrozen;
+
+        if(ampVal) ampVal.textContent = A.toFixed(2);
+        if(freqVal) freqVal.textContent = f.toFixed(2);
+        if(cVal) cVal.textContent = c.toFixed(2);
+
+        const scaleY = H * 0.20;
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(xR, y0);
+        ctx.stroke();
+
+        ctx.fillStyle = "#374151";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("Quelle links", xL + 4, 20);
+        ctx.fillText("Quelle rechts", xR - 100, 20);
+
+        const steps = 700;
+        // Welle von links
+        ctx.strokeStyle = "#8b5e3c";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const xPix = xL + xn * Lpx;
+          const y = y0 - scaleY * waveLeft(xn, t, A, f, c, 0);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Welle von rechts
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const xPix = xL + xn * Lpx;
+          const y = y0 - scaleY * waveRight(xn, t, A, f, c, phiR);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Überlagerung
+        ctx.strokeStyle = "#d946ef";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const xPix = xL + xn * Lpx;
+          const y = y0 - scaleY * (
+            waveLeft(xn, t, A, f, c, 0) +
+            waveRight(xn, t, A, f, c, phiR)
+          );
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Knoten der stehenden Welle (rote Punkte) zur Veranschaulichung
+        // Bestimmt aus dem ortsabhängigen Cosinus-Faktor der Überlagerung.
+        const k = 2 * Math.PI * f / c;
+        const nodeXs = [];
+        const nodeScan = 1600;
+        const tol = 0.012;
+        let prevVal = null;
+        for(let i = 0; i <= nodeScan; i++){
+          const xn = i / nodeScan;
+          const s = Math.cos((k * L - phiR) / 2 - k * xn);
+          const a = Math.abs(s);
+          if(a < tol){
+            if(prevVal == null || Math.abs(xn - prevVal) > 0.012){
+              nodeXs.push(xn);
+              prevVal = xn;
+            }
+          }
+        }
+        ctx.fillStyle = "#dc2626";
+        nodeXs.forEach(xn => {
+          const xPix = xL + xn * Lpx;
+          ctx.beginPath();
+          ctx.arc(xPix, y0, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        const filled = Math.min(1, t * c);
+        ctx.fillStyle = "rgba(99,102,241,0.08)";
+        ctx.fillRect(xL, 24, Lpx * filled, H - 50);
+        ctx.fillRect(xR - Lpx * filled, 24, Lpx * filled, H - 50);
+
+        readout.textContent =
+          "braun = von links, gruen = von rechts, pink = Summe\n" +
+          "rote Punkte = Knoten der stehenden Welle\n" +
+          `Modus: ${mode === "inphase" ? "im Takt (gleichphasig)" : "gegenlaeufig (gegenphasig)"}\n` +
+          `t = ${t.toFixed(2)} s\n` +
+          "Wenn beide Wellen den ganzen Bereich erreicht haben, bildet sich das stehende Muster.";
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        t0 = performance.now() - tFrozen * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        tFrozen = (performance.now() - t0) / 1000;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function initLooseReflectionSim(){
+      const canvas = document.getElementById("looseReflectCanvas");
+      const readout = document.getElementById("looseReflectReadout");
+      if(!canvas || !readout){
+        if(!window.__wbLooseRefObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("looseReflectCanvas") && document.getElementById("looseReflectReadout")){
+              initLooseReflectionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbLooseRefObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbLooseRefInit === "1") return;
+      canvas.dataset.wbLooseRefInit = "1";
+
+      const ampEl = document.getElementById("lrAmp");
+      const lamEl = document.getElementById("lrLam");
+      const speedEl = document.getElementById("lrSpeed");
+      const startBtn = document.getElementById("lrStartBtn");
+      const stopBtn = document.getElementById("lrStopBtn");
+      const ampVal = document.getElementById("lrAmpVal");
+      const lamVal = document.getElementById("lrLamVal");
+      const speedVal = document.getElementById("lrSpeedVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const y0 = H * 0.56;
+      const xL = 40;
+      const xWall = W * 0.72; // y-Achse / Reflexionsstelle
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function yIncident(x, t, A, lam, f){
+        const k = 2 * Math.PI / lam;
+        const w = 2 * Math.PI * f;
+        return A * Math.sin(w * t - k * x);
+      }
+      function yReflected(x, t, A, lam, f){
+        const k = 2 * Math.PI / lam;
+        const w = 2 * Math.PI * f;
+        return A * Math.sin(w * t + k * x);
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+
+        const A = ampEl ? Number(ampEl.value) : 0.8;
+        const lamNorm = lamEl ? Number(lamEl.value) : 1.2;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const t = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const f = 0.8;
+
+        if(ampVal) ampVal.textContent = A.toFixed(2);
+        if(lamVal) lamVal.textContent = lamNorm.toFixed(2);
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+
+        const Lpx = xWall - xL;
+        const lamPx = lamNorm * Lpx;
+        const scaleY = A * (H * 0.24);
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Achsen
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(W - 20, y0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(xWall, 24);
+        ctx.lineTo(xWall, H - 24);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("y-Achse / loses Ende (Reflexion)", xWall - 120, 20);
+
+        // Einfallende Welle (braun), links von y-Achse
+        ctx.strokeStyle = "#8b5e3c";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const steps = 700;
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx; // x<=0 links der Achse
+          const y = y0 - scaleY * yIncident(xRel, t, 1, 1, f);
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Reflektierte Welle (grün), an y-Achse gespiegelt, ohne Phasensprung
+        ctx.strokeStyle = "#0f9d58";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx;
+          const y = y0 - scaleY * yReflected(xRel, t, 1, 1, f);
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Überlagerung (rosa), nur links von y-Achse
+        ctx.strokeStyle = "#d946ef";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx;
+          const yi = yIncident(xRel, t, 1, 1, f);
+          const yr = yReflected(xRel, t, 1, 1, f);
+          const y = y0 - scaleY * (yi + yr);
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Einfallende Welle als Fortsetzung rechts der y-Achse
+        ctx.strokeStyle = "#8b5e3c";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xWall + (i / steps) * (W - xWall - 20);
+          const xRel = (xPix - xWall) / lamPx;
+          const y = y0 - scaleY * yIncident(xRel, t, 1, 1, f);
+          if(i === 0) ctx.moveTo(xPix, y);
+          else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Knoten der pinken stehenden Welle (lose Reflexion): cos(2*pi*xRel)=0
+        const nodesLoose = [];
+        const nodeScanLoose = 1200;
+        let prevLoose = null;
+        for(let i = 0; i <= nodeScanLoose; i++){
+          const xn = i / nodeScanLoose;
+          const xRel = (xL + xn * (xWall - xL) - xWall) / lamPx;
+          const s = Math.cos(2 * Math.PI * xRel);
+          if(Math.abs(s) < 0.012){
+            if(prevLoose == null || Math.abs(xn - prevLoose) > 0.012){
+              nodesLoose.push(xn);
+              prevLoose = xn;
+            }
+          }
+        }
+        ctx.fillStyle = "#dc2626";
+        nodesLoose.forEach(xn => {
+          const xPix = xL + xn * (xWall - xL);
+          ctx.beginPath();
+          ctx.arc(xPix, y0, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Bereich rechts der y-Achse markieren (nur einlaufende Welle gezeichnet)
+        ctx.fillStyle = "rgba(148,163,184,0.07)";
+        ctx.fillRect(xWall, 24, W - xWall - 20, H - 48);
+        ctx.fillStyle = "#64748b";
+        ctx.fillText("rechts: nur einfallende Welle", xWall + 10, y0 - 10);
+
+        readout.textContent =
+          "Links der y-Achse:\n" +
+          "braun = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
+          "gruen = reflektiert y2 = A*sin(2pi*(t/T + x/lambda))\n" +
+          "pink  = ueberlagert y = y1 + y2\n" +
+          "Rechts der y-Achse: Fortsetzung der einfallenden Welle\n" +
+          "rote Punkte = Knoten der stehenden Welle\n" +
+          "Reflexion am losen Ende: ohne Phasensprung.";
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      [ampEl, lamEl, speedEl].forEach(el => el && el.addEventListener("input", () => {
+        if(!isRunning) return;
+      }));
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function initStandingModesSim(){
+      const canvas = document.getElementById("standingModesCanvas");
+      const readout = document.getElementById("standingModesReadout");
+      if(!canvas || !readout){
+        if(!window.__wbStandingObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("standingModesCanvas") && document.getElementById("standingModesReadout")){
+              initStandingModesSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbStandingObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbStandingInit === "1") return;
+      canvas.dataset.wbStandingInit = "1";
+
+      const boundaryEl = document.getElementById("standingBoundary");
+      const nEl = document.getElementById("standingN");
+      const ampEl = document.getElementById("standingAmp");
+      const speedEl = document.getElementById("standingSpeed");
+      const startBtn = document.getElementById("smStartBtn");
+      const stopBtn = document.getElementById("smStopBtn");
+      const resetBtn = document.getElementById("smResetBtn");
+      const nVal = document.getElementById("standingNVal");
+      const ampVal = document.getElementById("standingAmpVal");
+      const speedVal = document.getElementById("standingSpeedVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const L = 1;
+      const yMid = H * 0.55;
+      const xL = 50;
+      const xR = W - 30;
+      const plotW = xR - xL;
+      let rafId = 0;
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+
+      function yNorm(x, mode, n, phase){
+        const xn = x / L;
+        if(mode === "fixed-fixed"){
+          return Math.sin(n * Math.PI * xn) * Math.cos(phase);
+        }
+        if(mode === "free-free"){
+          return Math.cos(n * Math.PI * xn) * Math.cos(phase);
+        }
+        const m = 2 * n - 1;
+        return Math.sin(0.5 * m * Math.PI * xn) * Math.cos(phase);
+      }
+
+      function nodePositions(mode, n){
+        const arr = [];
+        if(mode === "fixed-fixed"){
+          for(let k = 0; k <= n; k++) arr.push(k / n);
+          return arr;
+        }
+        if(mode === "free-free"){
+          for(let k = 0; k <= n; k++) arr.push((k + 0.5) / n);
+          return arr.filter(v => v > 0 && v < 1);
+        }
+        const m = 2 * n - 1;
+        for(let k = 0; k <= n - 1; k++) arr.push((2 * k) / m);
+        return arr;
+      }
+
+      function freqFactor(mode, n){
+        if(mode === "fixed-free") return (2 * n - 1);
+        return n;
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const mode = boundaryEl ? boundaryEl.value : "fixed-fixed";
+        const n = nEl ? Number(nEl.value) : 1;
+        const A = ampEl ? Number(ampEl.value) : 0.8;
+        const speed = speedEl ? Number(speedEl.value) : 1;
+
+        if(nVal) nVal.textContent = String(n);
+        if(ampVal) ampVal.textContent = A.toFixed(2);
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+
+        const t = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const phase = 2 * Math.PI * freqFactor(mode, n) * 0.6 * t;
+
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.6)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, yMid);
+        ctx.lineTo(xR, yMid);
+        ctx.stroke();
+
+        const ampPx = A * (H * 0.22);
+        ctx.strokeStyle = "#111827";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        const steps = 600;
+        for(let i = 0; i <= steps; i++){
+          const xn = i / steps;
+          const x = xL + xn * plotW;
+          const y = yMid - ampPx * yNorm(xn, mode, n, phase);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        const nodes = nodePositions(mode, n);
+        ctx.fillStyle = "#dc2626";
+        nodes.forEach(v => {
+          const x = xL + v * plotW;
+          ctx.beginPath();
+          ctx.arc(x, yMid, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = "#374151";
+        ctx.font = "16px sans-serif";
+        ctx.fillText("Knoten", xL + 8, 26);
+        ctx.fillText("Baeuche schwingen mit", xL + 8, 48);
+
+        let endText = "";
+        if(mode === "fixed-fixed") endText = "Enden: fest/fest -> Knoten an beiden Enden";
+        else if(mode === "free-free") endText = "Enden: lose/lose -> Baeuche an beiden Enden";
+        else endText = "Enden: fest/lose -> nur ungerade Harmonische";
+
+        readout.textContent =
+          `Modus: ${mode}\n` +
+          `n = ${n}\n` +
+          `${endText}\n` +
+          `Frequenzverhaeltnis: f_n/f_1 = ${freqFactor(mode, n)}`;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      [boundaryEl, nEl, ampEl, speedEl].forEach(el => el && el.addEventListener("input", () => {}));
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+    function initFixedReflectionSim(){
+      const canvas = document.getElementById("fixedReflectCanvas");
+      const readout = document.getElementById("fixedReflectReadout");
+      if(!canvas || !readout){
+        if(!window.__wbFixedRefObserver){
+          const obs = new MutationObserver(() => {
+            if(document.getElementById("fixedReflectCanvas") && document.getElementById("fixedReflectReadout")){
+              initFixedReflectionSim();
+            }
+          });
+          obs.observe(document.body, {childList:true, subtree:true});
+          window.__wbFixedRefObserver = obs;
+        }
+        return;
+      }
+      if(canvas.dataset.wbFixedRefInit === "1") return;
+      canvas.dataset.wbFixedRefInit = "1";
+
+      const ampEl = document.getElementById("frAmp");
+      const lamEl = document.getElementById("frLam");
+      const speedEl = document.getElementById("frSpeed");
+      const startBtn = document.getElementById("frStartBtn");
+      const stopBtn = document.getElementById("frStopBtn");
+      const ampVal = document.getElementById("frAmpVal");
+      const lamVal = document.getElementById("frLamVal");
+      const speedVal = document.getElementById("frSpeedVal");
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const y0 = H * 0.56;
+      const xL = 40;
+      const xWall = W * 0.72;
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = false;
+      let rafId = 0;
+
+      function yIncident(x, t, f){
+        const w = 2 * Math.PI * f;
+        return Math.sin(w * t - 2 * Math.PI * x);
+      }
+      function yReflectedFixed(x, t, f){
+        const w = 2 * Math.PI * f;
+        return -Math.sin(w * t + 2 * Math.PI * x); // Spiegelung an y- und x-Achse
+      }
+
+      function draw(now){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+
+        const A = ampEl ? Number(ampEl.value) : 0.8;
+        const lamNorm = lamEl ? Number(lamEl.value) : 1.2;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const t = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
+        const f = 0.8;
+
+        if(ampVal) ampVal.textContent = A.toFixed(2);
+        if(lamVal) lamVal.textContent = lamNorm.toFixed(2);
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+
+        const Lpx = xWall - xL;
+        const lamPx = lamNorm * Lpx;
+        const scaleY = A * (H * 0.24);
+
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.65)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xL, y0);
+        ctx.lineTo(W - 20, y0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(xWall, 24);
+        ctx.lineTo(xWall, H - 24);
+        ctx.stroke();
+        ctx.fillStyle = "#374151";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("y-Achse / festes Ende (Reflexion)", xWall - 120, 20);
+
+        const steps = 700;
+
+        ctx.strokeStyle = "#f59e0b"; // einfallend links
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx;
+          const y = y0 - scaleY * yIncident(xRel, t, f);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f9d58"; // reflektiert mit Phasensprung
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx;
+          const y = y0 - scaleY * yReflectedFixed(xRel, t, f);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#d946ef"; // Überlagerung nur links der y-Achse
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xL + (i / steps) * (xWall - xL);
+          const xRel = (xPix - xWall) / lamPx;
+          const yi = yIncident(xRel, t, f);
+          const yr = yReflectedFixed(xRel, t, f);
+          const y = y0 - scaleY * (yi + yr);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Einfallende Welle als Fortsetzung rechts der y-Achse
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const xPix = xWall + (i / steps) * (W - xWall - 20);
+          const xRel = (xPix - xWall) / lamPx;
+          const y = y0 - scaleY * yIncident(xRel, t, f);
+          if(i === 0) ctx.moveTo(xPix, y); else ctx.lineTo(xPix, y);
+        }
+        ctx.stroke();
+
+        // Knoten der pinken stehenden Welle (feste Reflexion): sin(2*pi*xRel)=0
+        const nodesFixed = [];
+        const nodeScanFixed = 1200;
+        let prevFixed = null;
+        for(let i = 0; i <= nodeScanFixed; i++){
+          const xn = i / nodeScanFixed;
+          const xRel = (xL + xn * (xWall - xL) - xWall) / lamPx;
+          const s = Math.sin(2 * Math.PI * xRel);
+          if(Math.abs(s) < 0.012){
+            if(prevFixed == null || Math.abs(xn - prevFixed) > 0.012){
+              nodesFixed.push(xn);
+              prevFixed = xn;
+            }
+          }
+        }
+        ctx.fillStyle = "#dc2626";
+        nodesFixed.forEach(xn => {
+          const xPix = xL + xn * (xWall - xL);
+          ctx.beginPath();
+          ctx.arc(xPix, y0, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = "rgba(148,163,184,0.07)";
+        ctx.fillRect(xWall, 24, W - xWall - 20, H - 48);
+        ctx.fillStyle = "#64748b";
+        ctx.fillText("rechts: nur einfallende Welle", xWall + 10, y0 - 10);
+
+        readout.textContent =
+          "Links der y-Achse:\n" +
+          "orange = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
+          "gruen  = reflektiert y2 = -A*sin(2pi*(t/T + x/lambda))\n" +
+          "pink   = ueberlagert y = y1 + y2\n" +
+          "Rechts der y-Achse: Fortsetzung der einfallenden Welle\n" +
+          "rote Punkte = Knoten der stehenden Welle\n" +
+          "Reflexion am festen Ende: mit Phasensprung (Spiegelung an y- und x-Achse).";
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      rafId = requestAnimationFrame(draw);
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    initBuildStandingSim();
+    initLooseReflectionSim();
+    initFixedReflectionSim();
+    initStandingModesSim();
   </script>
 </body>
 </html>

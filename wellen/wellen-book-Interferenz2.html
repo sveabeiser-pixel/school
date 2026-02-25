@@ -2363,6 +2363,245 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       </p>
     </section>
 
+    <section data-wb-page="9" data-wb-page-title="Gitter mit Einzelspalt-Hüllkurve">
+      <h1>Überlagerung von Einzelspalt und Gitter: fehlende Maxima</h1>
+      <p class="wb-muted">
+        Jetzt untersuchst du genauer, warum bei einem realen Gitter manche Hauptmaxima verschwinden können.
+      </p>
+
+      <h2>Leitfrage</h2>
+      <p>
+        Warum zeigt ein Gitter manchmal nicht alle erwarteten Hauptmaxima \(m=1,2,3,\dots\),
+        obwohl die Gittergleichung eigentlich eine Lage dafür vorhersagt?
+      </p>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-missing-1",
+          "title":"Erste Idee",
+          "question":"Was überlagert sich beim realen Spaltgitter?",
+          "answer":"Das feine Interferenzmuster des Vielfachspalts wird von der Einzelspalt-Hüllkurve moduliert. Liegt ein Gitter-Hauptmaximum genau in einem Einzelspalt-Minimum, fehlt dieses Maximum im beobachteten Bild.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 1: Zwei Bedingungen gleichzeitig denken</h2>
+      <p>
+        Für das Spaltgitter gelten für die <b>Hauptmaxima</b>:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          g\sin(\alpha)=m\lambda,\qquad m=0,\pm1,\pm2,\dots
+        \]</strong></p>
+      </div>
+      <p>
+        Für den Einzelspalt gelten für die <b>Minima</b>:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          b\sin(\alpha)=p\lambda,\qquad p=1,2,3,\dots
+        \]</strong></p>
+      </div>
+      <p>
+        Fallen beide Bedingungen beim selben Winkel zusammen, wird das Gittermaximum ausgelöscht:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          \frac{m}{g}=\frac{p}{b}
+          \quad\Rightarrow\quad
+          m=p\frac{g}{b}
+        \]</strong></p>
+      </div>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Fehlende Ordnungen entstehen, wenn ein Gitter-Hauptmaximum genau auf ein Einzelspalt-Minimum trifft.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 2: Rechenbeispiel mit periodisch fehlenden Ordnungen</h2>
+      <p>
+        Gegeben: \(g=10\,\mu\text{m}\), \(b=2\,\mu\text{m}\), \(\lambda=500\,\text{nm}\).<br>
+        Dann ist \(\dfrac{g}{b}=5\), also:
+      </p>
+      <div class="wb-callout">
+        <p><strong>\[
+          m=p\cdot5
+        \]</strong></p>
+      </div>
+      <p>
+        Damit fehlen die Hauptmaxima \(m=5,10,15,\dots\), sofern sie im sichtbaren Winkelbereich liegen.
+      </p>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-missing-1",
+          "title":"Rechnung sichern",
+          "bank":["5","$m=p\\cdot 5$","5, 10, 15","Einzelspalt-Minimum"],
+          "segments":[
+            {"t":"text","v":"Bei $g=10\\,\\mu$m und $b=2\\,\\mu$m ist $g/b=$"},
+            {"t":"gap","a":"5"},
+            {"t":"text","v":". Deshalb gilt "},
+            {"t":"gap","a":"$m=p\\cdot 5$"},
+            {"t":"text","v":" und fehlende Ordnungen sind z. B. "},
+            {"t":"gap","a":"5, 10, 15"},
+            {"t":"text","v":", weil das Hauptmaximum auf ein "},
+            {"t":"gap","a":"Einzelspalt-Minimum"},
+            {"t":"text","v":" fällt."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schritt 3: Rechenbeispiel mit nicht-ganzzahligem Verhältnis</h2>
+      <p>
+        Gegeben: \(g=9\,\mu\text{m}\), \(b=2\,\mu\text{m}\). Dann ist \(\dfrac{g}{b}=4{,}5\).<br>
+        Mit \(m=p\cdot4{,}5\) werden nur für passende \(p\) ganzzahlige \(m\) getroffen:
+      </p>
+      <ul>
+        <li>\(p=1\Rightarrow m=4{,}5\) (kein Hauptmaximum-Index)</li>
+        <li>\(p=2\Rightarrow m=9\) (fehlende Ordnung)</li>
+        <li>\(p=4\Rightarrow m=18\) (fehlende Ordnung)</li>
+      </ul>
+      <p>
+        Du siehst: Nicht jedes \(p\) erzeugt eine fehlende Ordnung, sondern nur die Fälle mit ganzzahligem \(m\).
+      </p>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order-missing-1",
+          "title":"Rechenweg für fehlende Ordnungen",
+          "hint":"Bringe den Denkweg in die richtige Reihenfolge.",
+          "items":[
+            "Verhältnis g/b berechnen.",
+            "Bedingung m = p*(g/b) aufstellen.",
+            "p = 1, 2, 3, ... einsetzen.",
+            "Prüfen, für welche p ein ganzzahliges m entsteht.",
+            "Diese m als fehlende Ordnungen notieren."
+          ],
+          "acceptedOrders":[
+            [1,2,3,4,5],
+            [2,1,3,4,5]
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Anwendung mit der Simulation (Seite 8)</h2>
+      <p>
+        Nutze die Simulationen auf <b>Seite 8</b> (Gitter + Zeigermodell) und finde jeweils ein Beispiel,
+        bei dem ein bestimmtes Hauptmaximum verschwindet.
+      </p>
+      <div class="wb-soft-callout">
+        <strong>Auftrag:</strong>
+        <ul class="mini-list">
+          <li>Finde ein Beispiel, bei dem das <b>1. Maximum</b> (\(m=1\)) fehlt.</li>
+          <li>Finde ein Beispiel, bei dem das <b>2. Maximum</b> (\(m=2\)) fehlt.</li>
+          <li>Finde ein Beispiel, bei dem das <b>3. Maximum</b> (\(m=3\)) fehlt.</li>
+          <li>Notiere jeweils \(g\), \(b\), \(\lambda\) und das Verhältnis \(g/b\).</li>
+          <li>Prüfe rechnerisch mit \(m=p\cdot\frac{g}{b}\), warum die Ordnung fehlt.</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-missing-sim-1",
+          "title":"Dokumentation: Fehlende Ordnungen selbst finden",
+          "hint":"Trage für jede fehlende Ordnung konkrete Simulationswerte ein und begründe kurz mit der Formel.",
+          "fields":[
+            {"label":"Beispiel für fehlendes 1. Maximum (m=1)","key":"m1","kind":"textarea","placeholder":"g=..., b=..., lambda=..., g/b=..., passendes p=..., kurze Begründung"},
+            {"label":"Beispiel für fehlendes 2. Maximum (m=2)","key":"m2","kind":"textarea","placeholder":"g=..., b=..., lambda=..., g/b=..., passendes p=..., kurze Begründung"},
+            {"label":"Beispiel für fehlendes 3. Maximum (m=3)","key":"m3","kind":"textarea","placeholder":"g=..., b=..., lambda=..., g/b=..., passendes p=..., kurze Begründung"},
+            {"label":"Muster erkannt?","key":"pattern","kind":"textarea","placeholder":"Welche Regel erkennst du zwischen m, p und g/b?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mini-Check</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-missing-1",
+          "title":"Fehlende Ordnungen verstehen",
+          "hint":"Achte auf den Unterschied zwischen Lagebedingung und Intensität.",
+          "questions":[
+            {
+              "text":"Welche Aussage erklärt ein fehlendes Gittermaximum korrekt?",
+              "choices":[
+                {"id":"a","label":"Das Maximum liegt gleichzeitig in einem Einzelspalt-Minimum."},
+                {"id":"b","label":"Die Gittergleichung gilt dort nicht mehr."},
+                {"id":"c","label":"Nur m=0 kann beobachtet werden."}
+              ],
+              "correct":["a"],
+              "explain":"Die Lage wird weiterhin von der Gittergleichung beschrieben, aber die Hüllkurve kann die Intensität dort auf null drücken."
+            },
+            {
+              "text":"Bei g/b = 6 fehlen typischerweise welche Hauptmaxima?",
+              "choices":[
+                {"id":"a","label":"m = 6, 12, 18, ..."},
+                {"id":"b","label":"m = 1, 2, 3, ..."},
+                {"id":"c","label":"Nur m = 3."}
+              ],
+              "correct":["a"],
+              "explain":"Aus m = p*(g/b) folgt m = 6p."
+            },
+            {
+              "text":"Warum kann bei g/b = 4,5 trotzdem m=9 fehlen?",
+              "choices":[
+                {"id":"a","label":"Weil p=2 dann m=9 ergibt."},
+                {"id":"b","label":"Weil alle ungeraden m immer fehlen."},
+                {"id":"c","label":"Weil die Wellenlänge dabei null wird."}
+              ],
+              "correct":["a"],
+              "explain":"Fehlende Ordnungen treten genau dann auf, wenn m ganzzahlig aus m=p*(g/b) wird."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Transfer</h2>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-missing-1",
+          "title":"Parameter-Variation",
+          "hint":"Antworte in 4-8 Sätzen. Nutze die Begriffe Hüllkurve, Hauptmaximum und fehlende Ordnung korrekt.",
+          "fields":[
+            {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Was ändert sich am Muster, wenn du b bei konstantem g vergrößerst? Erkläre auch, was mit fehlenden Ordnungen passieren kann."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Weiterforschen & Quellen</h2>
+      <ul>
+        <li><a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/ausblick/intensitaetsverteilung-beim-gitter" target="_blank" rel="noopener">LEIFIphysik: Intensitätsverteilung beim Gitter</a></li>
+        <li><a href="https://ph22.pages.ub.uni-bielefeld.de/skripte/Praktikum/Lichtquellen/LQ_Monochromator.pdf" target="_blank" rel="noopener">Uni Bielefeld/NTNU-Praktikumsunterlagen: Intensitätsfunktion und missing orders</a></li>
+        <li><a href="https://physikbuch.schule/grid-diffraction.html" target="_blank" rel="noopener">physikbuch.schule: Gitterbeugung (Zeigermodell)</a></li>
+      </ul>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Sichtbare Gittermaxima entstehen nur dort, wo Gitterbedingung und Einzelspalt-Hüllkurve zusammen eine von null verschiedene Intensität liefern.
+      </p>
+    </section>
+
   </div>
 
   <script src="../assets/wb-webhook-loader.js"></script>
