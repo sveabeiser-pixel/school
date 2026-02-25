@@ -630,8 +630,8 @@
           <canvas id="thinDenseCanvas" width="960" height="520" aria-label="Transmission und Reflexion duenn nach dicht"></canvas>
           <div class="sw-sim-mono" id="thinDenseReadout"></div>
           <label for="tdSpeed">Animationsgeschwindigkeit</label>
-          <input id="tdSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="tdSpeedVal">1.0</span></div>
+          <input id="tdSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="tdSpeedVal">0.6</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="tdStartBtn">Start</button>
             <button class="wb-btn" type="button" id="tdStopBtn">Stop</button>
@@ -704,8 +704,8 @@
           <canvas id="denseThinCanvas" width="960" height="520" aria-label="Transmission und Reflexion dicht nach duenn"></canvas>
           <div class="sw-sim-mono" id="denseThinReadout"></div>
           <label for="dtSpeed">Animationsgeschwindigkeit</label>
-          <input id="dtSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="dtSpeedVal">1.0</span></div>
+          <input id="dtSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+          <div class="sw-sim-mono">v = <span id="dtSpeedVal">0.6</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="dtStartBtn">Start</button>
             <button class="wb-btn" type="button" id="dtStopBtn">Stop</button>
@@ -2590,11 +2590,12 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const halfWidthT = halfWidth * (c2 / c1); // rechts: kleinere Wellenlaenge / schmalerer Puls
       const A = 1.0;
       const r = -0.58; // Reflexion mit Phasensprung
-      const tCoef = 0.34; // Transmission bewusst kleiner als reflektierte Amplitude
-      const tReflect = (xB - x0) / c1;
-      const tLeftOut = (2 * xB - x0 + halfWidth) / c1;
-      const tRightOut = tReflect + (L - xB + halfWidthT) / c2;
-      const tCycle = Math.max(tLeftOut, tRightOut) + 0.5;
+      const tCoef = 1 + r; // stetiger Anschluss am Uebergang (links/rechts gleich)
+      const tFront = (xB - (x0 + halfWidth)) / c1; // erste Beruehrung der Flanke
+      const tBack = (xB - (x0 - halfWidth)) / c1; // letzte Beruehrung der Flanke
+      const tLeftOut = tBack + (xB + halfWidth) / c1;
+      const tRightOut = tBack + (L - xB + halfWidthT) / c2;
+      const tCycle = Math.max(tLeftOut, tRightOut) + 1.4;
 
       let t0 = performance.now();
       let tFrozen = 0;
@@ -2611,15 +2612,19 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
         const s = x0 + c1 * tau;
         return A * pulse(x, s, halfWidth);
       }
+      function boundaryDrive(tauLocal){
+        const s = x0 + c1 * tauLocal;
+        return pulse(xB, s, halfWidth);
+      }
       function yReflected(x, tau){
-        const s = x0 + c1 * tau;
-        const sMirror = 2 * xB - s; // Spiegelung an der Grenzflaeche (y-Achsen-Analogon)
-        return r * pulse(x, sMirror, halfWidth);
+        const tLocal = tau - (xB - x) / c1;
+        if(tLocal < tFront) return 0;
+        return r * A * boundaryDrive(tLocal);
       }
       function yTransmitted(x, tau){
-        if(tau < tReflect) return 0;
-        const s = xB + c2 * (tau - tReflect);
-        return tCoef * A * pulse(x, s, halfWidthT);
+        const tLocal = tau - (x - xB) / c2;
+        if(tLocal < tFront) return 0;
+        return tCoef * A * boundaryDrive(tLocal);
       }
 
       function draw(now){
@@ -2627,7 +2632,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
           cancelAnimationFrame(rafId);
           return;
         }
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         if(speedVal) speedVal.textContent = speed.toFixed(1);
         const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
@@ -2706,12 +2711,14 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
         // Summation als "schwingendes Seil": links duenn, rechts dicker
         ctx.strokeStyle = "#d946ef";
+        const yJoin = yTransmitted(xB, tau);
+        const yJoinPix = y0 - scaleY * yJoin;
         ctx.beginPath();
         ctx.lineWidth = 2.4; // duennes Seil links
         for(let i = 0; i <= steps; i++){
           const xn = i / steps;
           const x = xn * xB;
-          const ySum = yIncident(x, tau) + yReflected(x, tau);
+          const ySum = (i === steps) ? yJoin : (yIncident(x, tau) + yReflected(x, tau));
           const y = y0 - scaleY * ySum;
           const xPix = xL + x * plotW;
           if(i === 0) ctx.moveTo(xPix, y);
@@ -2720,14 +2727,14 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
         ctx.stroke();
         ctx.beginPath();
         ctx.lineWidth = 4.8; // dichteres Seil rechts
+        ctx.moveTo(xBoundary, yJoinPix);
         for(let i = 0; i <= steps; i++){
           const xn = i / steps;
           const x = xB + xn * (L - xB);
-          const ySum = yTransmitted(x, tau);
+          const ySum = (i === 0) ? yJoin : yTransmitted(x, tau);
           const y = y0 - scaleY * ySum;
           const xPix = xL + x * plotW;
-          if(i === 0) ctx.moveTo(xPix, y);
-          else ctx.lineTo(xPix, y);
+          ctx.lineTo(xPix, y);
         }
         ctx.stroke();
 
@@ -2737,7 +2744,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
           "blau  = transmittierter Puls (kleiner und schmaler)\n" +
           "pink  = Seil (Summation), links duenn / rechts dicker\n" +
           `v = ${speed.toFixed(1)}\n` +
-          `t = ${tau.toFixed(2)} s (zyklisch), erster Uebergangskontakt bei t = ${tReflect.toFixed(2)} s`;
+          `t = ${tau.toFixed(2)} s (zyklisch), Beginn am Uebergang bei t = ${tFront.toFixed(2)} s`;
 
         rafId = requestAnimationFrame(draw);
       }
@@ -2745,12 +2752,12 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function startAnim(){
         if(isRunning) return;
         isRunning = true;
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         t0 = performance.now() - (tFrozen / speed) * 1000;
       }
       function stopAnim(){
         if(!isRunning) return;
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         tFrozen = ((performance.now() - t0) / 1000) * speed;
         isRunning = false;
       }
@@ -2812,7 +2819,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const tReflect = (xB - (x0 + halfWidth)) / c1;
       const tLeftOut = tReflect + (xB + 2 * halfWidth) / c1;
       const tRightOut = tReflect + (L - xB + 2 * halfWidthT) / c2;
-      const tCycle = Math.max(tLeftOut, tRightOut) + 0.5;
+      const tCycle = Math.max(tLeftOut, tRightOut) + 1.4;
 
       let t0 = performance.now();
       let tFrozen = 0;
@@ -2846,7 +2853,7 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
           cancelAnimationFrame(rafId);
           return;
         }
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         if(speedVal) speedVal.textContent = speed.toFixed(1);
         const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
@@ -2963,12 +2970,12 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function startAnim(){
         if(isRunning) return;
         isRunning = true;
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         t0 = performance.now() - (tFrozen / speed) * 1000;
       }
       function stopAnim(){
         if(!isRunning) return;
-        const speed = speedEl ? Number(speedEl.value) : 1.0;
+        const speed = speedEl ? Number(speedEl.value) : 0.6;
         tFrozen = ((performance.now() - t0) / 1000) * speed;
         isRunning = false;
       }
