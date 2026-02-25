@@ -68,6 +68,15 @@
       background: rgba(255,255,255,0.5);
       display:block;
     }
+    #phasorCanvas,
+    #phasorPatternCanvas{
+      width: 100%;
+      height: 260px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display:block;
+    }
     .mini-list li{ margin: 6px 0; }
   </style>
 </head>
@@ -2009,9 +2018,52 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
 
       <div class="wb-section-break"></div>
 
+      <h2>Simulation: Zeigermodell (Zeigerpolygon)</h2>
+      <p>
+        Stelle den Ort im Muster &uuml;ber den Ortsparameter \(u=\dfrac{g\sin(\alpha)}{\lambda}\) ein.
+        So siehst du direkt, wie sich das Zeigerpolygon mit der Spaltzahl \(N\) ver&auml;ndert.
+        Vergleich: <a href="https://physikbuch.schule/grid-diffraction.html" target="_blank" rel="noopener">physikbuch.schule (Bild 11.151)</a>
+      </p>
+      <div class="sim-card">
+        <div class="sim-grid">
+          <div>
+            <canvas id="phasorCanvas" width="900" height="520" aria-label="Zeigerpolygon für Spaltgitter"></canvas>
+            <div class="wb-section-break"></div>
+            <canvas id="phasorPatternCanvas" width="900" height="300" aria-label="Intensität in Abhängigkeit von u"></canvas>
+          </div>
+          <div class="sim-controls">
+            <label for="phN">Spaltzahl \(N\)</label>
+            <input id="phN" type="range" min="2" max="10" value="3" step="1" />
+            <div class="sim-mono">\(N\) = <span id="phNVal">3</span></div>
+
+            <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
+            <input id="phU" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
+            <div class="sim-mono">\(u\) = <span id="phUVal">0.180</span></div>
+
+            <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
+            <input id="phScale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
+            <div class="sim-mono">Skalierung = <span id="phScaleVal">1.00</span></div>
+            <div class="sim-mono" id="phasorReadout"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Arbeitsauftrag:</strong>
+        <ul class="mini-list">
+          <li>Setze \(N=3\) und fahre \(u\) von 0 bis 1: finde Hauptmaximum, Minima und Nebenmaximum.</li>
+          <li>Erh&ouml;he \(N\) bis 10 bei gleichem \(u\): beobachte, wie sich die Summe der Zeiger ver&auml;ndert.</li>
+          <li>Pr&uuml;fe: Bei \(u=k\) liegen Hauptmaxima, bei \(u=m/N\) (nicht ganzzahlig) Minima.</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <h2>Schritt 2: Grundformel für Hauptmaxima</h2>
       <p>
-        Für ein Beugungsgitter mit Gitterkonstante \(g\) (Abstand benachbarter Spaltmitten) gilt für die Hauptmaxima:
+        Für ein Beugungsgitter mit Gitterkonstante \(g\) (Abstand benachbarter Spaltmitten) gilt für die Hauptmaxima, wie auch beim Doppelspalt:
       </p>
       <div class="wb-callout">
         <p><strong>\[
@@ -2766,12 +2818,184 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       draw();
     }
 
+    function initGratingPhasorSim(){
+      const canvas = document.getElementById("phasorCanvas");
+      const patternCanvas = document.getElementById("phasorPatternCanvas");
+      const readout = document.getElementById("phasorReadout");
+      if(!canvas || !patternCanvas || !readout){
+        if(!global.__wbPhasorObserver){
+          const observer = new MutationObserver(() => {
+            const c = document.getElementById("phasorCanvas");
+            const pc = document.getElementById("phasorPatternCanvas");
+            const r = document.getElementById("phasorReadout");
+            if(c && pc && r){
+              initGratingPhasorSim();
+            }
+          });
+          observer.observe(document.body, {childList:true, subtree:true});
+          global.__wbPhasorObserver = observer;
+        }
+        return;
+      }
+      if(canvas.dataset.wbPhasorInit === "1") return;
+      canvas.dataset.wbPhasorInit = "1";
+
+      const nEl = document.getElementById("phN");
+      const uEl = document.getElementById("phU");
+      const scaleEl = document.getElementById("phScale");
+      const nVal = document.getElementById("phNVal");
+      const uVal = document.getElementById("phUVal");
+      const scaleVal = document.getElementById("phScaleVal");
+
+      const ctx = canvas.getContext("2d");
+      const pctx = patternCanvas.getContext("2d");
+      const W = canvas.width, H = canvas.height;
+      const PW = patternCanvas.width, PH = patternCanvas.height;
+
+      function factorI(u, N){
+        const x = Math.PI * u;
+        const den = Math.sin(x);
+        if(Math.abs(den) < 1e-10) return 1;
+        const q = Math.sin(N * x) / (N * den);
+        return q * q;
+      }
+
+      function drawArrow(c, x1, y1, x2, y2){
+        c.beginPath();
+        c.moveTo(x1, y1);
+        c.lineTo(x2, y2);
+        c.stroke();
+        const ang = Math.atan2(y2 - y1, x2 - x1);
+        const hl = 9;
+        c.beginPath();
+        c.moveTo(x2, y2);
+        c.lineTo(x2 - hl * Math.cos(ang - Math.PI / 7), y2 - hl * Math.sin(ang - Math.PI / 7));
+        c.lineTo(x2 - hl * Math.cos(ang + Math.PI / 7), y2 - hl * Math.sin(ang + Math.PI / 7));
+        c.closePath();
+        c.fill();
+      }
+
+      function draw(){
+        const N = Number(nEl.value);
+        const u = Number(uEl.value);
+        const scl = Number(scaleEl.value);
+        const phi = 2 * Math.PI * u;
+
+        nVal.textContent = String(N);
+        uVal.textContent = Number(u).toFixed(3);
+        scaleVal.textContent = Number(scl).toFixed(2);
+
+        ctx.clearRect(0, 0, W, H);
+        const cx = W * 0.45;
+        const cy = H * 0.50;
+        const unit = Math.min(W, H) * 0.11 * scl;
+        const pts = [{x:0, y:0}];
+        for(let m = 0; m < N; m++){
+          const a = m * phi;
+          const last = pts[pts.length - 1];
+          pts.push({x: last.x + Math.cos(a), y: last.y + Math.sin(a)});
+        }
+        const ext = pts.reduce((o,p) => ({
+          minX: Math.min(o.minX, p.x), maxX: Math.max(o.maxX, p.x),
+          minY: Math.min(o.minY, p.y), maxY: Math.max(o.maxY, p.y)
+        }), {minX:0,maxX:0,minY:0,maxY:0});
+        const spanX = Math.max(2, ext.maxX - ext.minX);
+        const spanY = Math.max(2, ext.maxY - ext.minY);
+        const fit = Math.min((W * 0.75) / (spanX * unit), (H * 0.75) / (spanY * unit), 1.6);
+        const s = unit * fit;
+
+        ctx.strokeStyle = "rgba(110,120,140,0.45)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(40, cy); ctx.lineTo(W - 20, cy);
+        ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20);
+        ctx.stroke();
+
+        ctx.fillStyle = "#111827";
+        ctx.strokeStyle = "#111827";
+        ctx.lineWidth = 2;
+        for(let i = 0; i < N; i++){
+          const p1 = pts[i], p2 = pts[i + 1];
+          const x1 = cx + p1.x * s, y1 = cy - p1.y * s;
+          const x2 = cx + p2.x * s, y2 = cy - p2.y * s;
+          drawArrow(ctx, x1, y1, x2, y2);
+          ctx.fillText(String(i + 1), x1 + 4, y1 - 6);
+        }
+
+        const r = pts[pts.length - 1];
+        const rx = cx + r.x * s, ry = cy - r.y * s;
+        ctx.strokeStyle = "#dc2626";
+        ctx.fillStyle = "#dc2626";
+        ctx.lineWidth = 3;
+        drawArrow(ctx, cx, cy, rx, ry);
+        ctx.fillText("Resultierende", rx + 8, ry - 6);
+
+        pctx.clearRect(0, 0, PW, PH);
+        const padL = 56, padR = 18, padT = 16, padB = 38;
+        const x0 = padL, x1 = PW - padR, y0 = padT, y1 = PH - padB;
+        const uMin = -1.5, uMax = 1.5;
+        pctx.strokeStyle = "#9ca3af";
+        pctx.lineWidth = 1;
+        pctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+        [0,0.25,0.5,0.75,1].forEach(v => {
+          const y = y1 - v * (y1 - y0);
+          pctx.beginPath(); pctx.moveTo(x0, y); pctx.lineTo(x1, y); pctx.stroke();
+          pctx.fillStyle = "#6b7280";
+          pctx.fillText(v.toFixed(2), 10, y + 4);
+        });
+        [-1.5,-1,-0.5,0,0.5,1,1.5].forEach(uv => {
+          const x = x0 + ((uv - uMin) / (uMax - uMin)) * (x1 - x0);
+          pctx.beginPath(); pctx.moveTo(x, y0); pctx.lineTo(x, y1); pctx.stroke();
+          pctx.fillStyle = "#6b7280";
+          pctx.fillText(String(uv), x - 10, PH - 14);
+        });
+
+        pctx.strokeStyle = "#1f2937";
+        pctx.lineWidth = 2;
+        pctx.beginPath();
+        const steps = 1200;
+        for(let i = 0; i <= steps; i++){
+          const uu = uMin + (uMax - uMin) * i / steps;
+          const I = factorI(uu, N);
+          const x = x0 + (i / steps) * (x1 - x0);
+          const y = y1 - I * (y1 - y0);
+          if(i === 0) pctx.moveTo(x, y); else pctx.lineTo(x, y);
+        }
+        pctx.stroke();
+
+        const Iu = factorI(u, N);
+        const xm = x0 + ((u - uMin) / (uMax - uMin)) * (x1 - x0);
+        const ym = y1 - Iu * (y1 - y0);
+        pctx.strokeStyle = "#dc2626";
+        pctx.fillStyle = "#dc2626";
+        pctx.lineWidth = 2;
+        pctx.beginPath(); pctx.moveTo(xm, y0); pctx.lineTo(xm, y1); pctx.stroke();
+        pctx.beginPath(); pctx.arc(xm, ym, 5, 0, Math.PI * 2); pctx.fill();
+
+        const amp = Math.hypot(r.x, r.y);
+        const relAmp = amp / N;
+        readout.textContent =
+          "Aktueller Ort:\n" +
+          `u = ${u.toFixed(3)}\n` +
+          `Phasenschritt Delta-phi = ${(phi * 180 / Math.PI).toFixed(2)} deg\n` +
+          `Relative Amplitude A/Amax = ${(relAmp).toFixed(4)}\n` +
+          `Relative Intensitaet I/Imax = ${(Iu).toFixed(4)}\n\n` +
+          "Merke:\n" +
+          "Hauptmaxima bei u = k (ganzzahlig).\n" +
+          "Minima zwischen zwei Hauptmaxima bei u = m/N (m=1..N-1).";
+      }
+
+      [nEl, uEl, scaleEl].forEach(elm => elm && elm.addEventListener("input", draw));
+      draw();
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
     initSingleSlitSim();
     initDoubleSlitWithEnvelopeSim();
     initGratingSim();
+    initGratingPhasorSim();
   </script>
 </body>
 </html>
