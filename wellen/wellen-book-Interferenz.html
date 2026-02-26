@@ -471,8 +471,13 @@
    
 <h2>Simulation: Zwei kohärente Quellen und Schirm</h2>
 <p>
-  Verschiebe den Cursor auf dem Schirm nach oben oder unten.
-  Du siehst, wie sich der Gangunterschied ändert und wie daraus die Überlagerung rechts von E entsteht.
+  Verschiebe den Cursor auf dem Schirm nach oben oder unten mit dem Schieberegler rechts. <br>
+  Du siehst, wie sich der Gangunterschied $\Delta s$ und der Winkel $\alpha$ ändert und wie daraus die Überlagerung rechts von E entsteht (rote Kurve). <br>
+  Du kannst die Frequenz und die Animationsgeschwindigkeit verändern und den Winkel $\alpha$
+  und Gangunterschied $\Delta s$ ein- oder ausblenden. <br>
+  Zudem siehst du rechts auf dem Schirm ein Interferenzmuster, das helle Steifen zeigt, wenn die 
+  Amplitude der Überlagerung groß ist und dunkle Steifen, wenn die Amplitude der Überlagerung 
+  Null ist. 
 </p>
 <div class="int-sim-card">
   <div class="int-sim-grid">
@@ -493,12 +498,43 @@
       <input id="cohSpeed" type="range" min="0.2" max="1.8" value="0.8" step="0.1" />
       <div class="int-sim-mono">v = <span id="cohSpeedVal">0.8</span></div>
       <div class="wb-row" style="margin-top:10px">
+        <button class="wb-btn" type="button" id="cohToggleAlphaBtn">Alpha ausblenden</button>
+        <button class="wb-btn" type="button" id="cohToggleDsBtn">Delta s ausblenden</button>
+      </div>
+      <div class="wb-row" style="margin-top:10px">
         <button class="wb-btn primary" type="button" id="cohStartBtn">Start</button>
         <button class="wb-btn" type="button" id="cohStopBtn">Stop</button>
         <button class="wb-btn" type="button" id="cohResetBtn">Reset</button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="wb-section-break"></div>
+
+<h2>Aufgaben zur Simulation</h2>
+<div class="wb-soft-callout">
+  <p>
+    1. Stelle den Cursor so ein, dass die <b>Amplitude der Überlagerung maximal</b> ist, <b>konstruktive Interferenz</b>. Notiere den Wert von <b>y(E)</b> und <b>Δs/λ</b>.<br>
+    2. Stelle den Cursor so ein, dass die <b>Amplitude der Überlagerung null</b> ist, <b>destruktive Interferenz</b>. Notiere wieder <b>y(E)</b> und <b>Δs/λ</b>.<br>
+    3. Ändere die Frequenz (z. B. auf <b>f = 2.6</b>) und wiederhole 1 und 2.<br>
+    4. Vergleiche deine Werte: Was ändert sich bei den Positionen der Maxima/Minima, wenn du die Frequenz änderst?
+  </p>
+</div>
+
+<div data-wb-type="essay">
+  <script type="application/json" class="wb-config">
+  {
+    "id":"essay-int-sim-max-min",
+    "title":"Auswertung der Simulation",
+    "storagePrefix":"wellen_interferenz_",
+    "exportName":"wellen-interferenz.txt",
+    "hint":"Notiere deine vier Einstellungen und formuliere eine kurze Regel zum Einfluss der Frequenz.",
+    "fields":[
+      {"label":"Deine Beobachtungen","key":"answer","kind":"textarea","placeholder":"Max 1, Min 1, Max 2, Min 2 + kurze Auswertung..."}
+    ]
+  }
+  </script>
 </div>
 
 <div class="wb-section-break"></div>
@@ -1470,6 +1506,12 @@ auf einem Schirm im Abstand <b>e</b>.
 </div>
 <div class="wb-section-break"></div>
 
+<h2><b>Vertiefen</b></h2>
+<p>Gehe jetzt ruhig nochmal zurück zu Seite 3 und schaue dir die Simulation ganz unten nochmal an
+  und versuche, alle Zusammenhänge zu verstehen. Vielleicht verstehst du die Animation jetzt besser.
+</p>
+<div class="wb-section-break"></div>
+
 
 <h2><b>Zum Weiterdenken:</b> Wenn man keine Kleinwinkelnäherung benutzt</h2>
 
@@ -2335,6 +2377,8 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
       const startBtn = document.getElementById("cohStartBtn");
       const stopBtn = document.getElementById("cohStopBtn");
       const resetBtn = document.getElementById("cohResetBtn");
+      const toggleAlphaBtn = document.getElementById("cohToggleAlphaBtn");
+      const toggleDsBtn = document.getElementById("cohToggleDsBtn");
       const yVal = document.getElementById("cohCursorYVal");
       const speedVal = document.getElementById("cohSpeedVal");
       const freqVal = document.getElementById("cohFreqVal");
@@ -2360,6 +2404,8 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
       let t0 = performance.now();
       let tFrozen = 0;
       let isRunning = true;
+      let showAlpha = true;
+      let showDs = true;
       let rafId = 0;
 
       function drawWavePath(ax, ay, bx, by, t, kVal, omega, color){
@@ -2443,8 +2489,8 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
           const L2y = Math.hypot(xScreen - xS, yPix - yS2);
           const phaseY = k * (L1y - L2y);
           const aNorm = Math.min(1, Math.abs(Math.cos(phaseY / 2))); // 0..1
-          // Gewuenschte Darstellung: hell bei A=0, dunkel bei A=max
-          const gray = Math.round(255 - 210 * aNorm);
+          // Gewuenschte Darstellung: hell bei A=max, dunkel bei A=0
+          const gray = Math.round(45 + 210 * aNorm);
           ctx.fillStyle = `rgb(${gray},${gray},${gray})`;
           ctx.fillRect(xPatL, yPix, xPatR - xPatL, 1);
         }
@@ -2463,6 +2509,67 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
         ctx.moveTo(xS, yS2);
         ctx.lineTo(xScreen, yE);
         ctx.stroke();
+
+        // Mittellinie nur sichtbar, wenn alpha sichtbar ist
+        if(showAlpha){
+          ctx.strokeStyle = "rgba(15,118,110,0.9)";
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          ctx.moveTo(xS, yMid);
+          ctx.lineTo(xScreen, yE);
+          ctx.stroke();
+        }
+
+        const alpha = Math.atan2(yE - yMid, xScreen - xS);
+        if(showAlpha){
+          const rA = 46;
+          ctx.strokeStyle = "#0f766e";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(xS, yMid, rA, 0, alpha, alpha < 0);
+          ctx.stroke();
+          ctx.fillStyle = "#0f766e";
+          ctx.font = "24px serif";
+          const aLabelX = xS + 30;
+          const aLabelY = yMid + (alpha < 0 ? -10 : 24);
+          ctx.fillText("α", aLabelX, aLabelY);
+        }
+
+        if(showDs){
+          const upperLong = L1 >= L2;
+          const Llong = upperLong ? L1 : L2;
+          const Lshort = upperLong ? L2 : L1;
+          const ySrc = upperLong ? yS1 : yS2;
+          const dxL = xScreen - xS;
+          const dyL = yE - ySrc;
+          const inv = 1 / Math.max(1e-6, Llong);
+          const txL = dxL * inv;
+          const tyL = dyL * inv;
+          // Delta s direkt an der jeweiligen Quelle S1/S2 markieren.
+          const s0 = 10;
+          const dsLen = Math.abs(Llong - Lshort);
+          const s1 = Math.min(Llong - 8, s0 + dsLen);
+          const ax = xS + txL * s0;
+          const ay = ySrc + tyL * s0;
+          const bx = xS + txL * s1;
+          const by = ySrc + tyL * s1;
+          const nx = -tyL;
+          const ny = txL;
+          const tick = 7;
+          ctx.strokeStyle = "#d946ef";
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(ax, ay);
+          ctx.lineTo(bx, by);
+          ctx.moveTo(ax - nx * tick, ay - ny * tick);
+          ctx.lineTo(ax + nx * tick, ay + ny * tick);
+          ctx.moveTo(bx - nx * tick, by - ny * tick);
+          ctx.lineTo(bx + nx * tick, by + ny * tick);
+          ctx.stroke();
+          ctx.fillStyle = "#d946ef";
+          ctx.font = "21px serif";
+          ctx.fillText("Δs", (ax + bx) * 0.5 + 8, (ay + by) * 0.5 - 8);
+        }
 
         drawWavePath(xS, yS1, xScreen, yE, t, k, omega, "#57b84a");
         drawWavePath(xS, yS2, xScreen, yE, t, k, omega, "#2f36ff");
@@ -2543,7 +2650,7 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
         else if(Math.abs(frac - 0.5) < 0.12) hint = "nahe destruktiv";
         readout.textContent =
           `lambda = ${lam.toFixed(1)} px, dS = ${dS.toFixed(1)} px, dS/lambda = ${(dS / lam).toFixed(2)} (${hint})\n` +
-          `f = ${freq.toFixed(1)}\n` +
+          `f = ${freq.toFixed(1)}, alpha = ${(alpha * 180 / Math.PI).toFixed(1)}°\n` +
           "gruen/blau: Einzelwellen bis E und rechts weiterlaufend\n" +
           "rot: Ueberlagerung rechts von E";
 
@@ -2573,6 +2680,14 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
       if(startBtn) startBtn.addEventListener("click", startAnim);
       if(stopBtn) stopBtn.addEventListener("click", stopAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      if(toggleAlphaBtn) toggleAlphaBtn.addEventListener("click", () => {
+        showAlpha = !showAlpha;
+        toggleAlphaBtn.textContent = showAlpha ? "Alpha ausblenden" : "Alpha einblenden";
+      });
+      if(toggleDsBtn) toggleDsBtn.addEventListener("click", () => {
+        showDs = !showDs;
+        toggleDsBtn.textContent = showDs ? "Delta s ausblenden" : "Delta s einblenden";
+      });
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
