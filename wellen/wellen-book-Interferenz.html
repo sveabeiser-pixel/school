@@ -2351,7 +2351,7 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
       const yS1 = yMid - dPix / 2;
       const yS2 = yMid + dPix / 2;
       const xScreen = W * 0.58;
-      const xOutEnd = W - 36;
+      const xOutEnd = W - 150;
       const ampPath = 12;
       const ampOut = 15;
       const fRef = 1.1;
@@ -2432,6 +2432,28 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
         ctx.moveTo(xScreen, 34);
         ctx.lineTo(xScreen, H - 30);
         ctx.stroke();
+
+        // Interferenzmuster rechts neben dem Schirm
+        const xPatL = xOutEnd + 18;
+        const xPatR = W - 24;
+        const yPatT = 34;
+        const yPatB = H - 30;
+        for(let yPix = yPatT; yPix <= yPatB; yPix++){
+          const L1y = Math.hypot(xScreen - xS, yPix - yS1);
+          const L2y = Math.hypot(xScreen - xS, yPix - yS2);
+          const phaseY = k * (L1y - L2y);
+          const aNorm = Math.min(1, Math.abs(Math.cos(phaseY / 2))); // 0..1
+          // Gewuenschte Darstellung: hell bei A=0, dunkel bei A=max
+          const gray = Math.round(255 - 210 * aNorm);
+          ctx.fillStyle = `rgb(${gray},${gray},${gray})`;
+          ctx.fillRect(xPatL, yPix, xPatR - xPatL, 1);
+        }
+        ctx.strokeStyle = "rgba(20,20,20,0.75)";
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(xPatL, yPatT, xPatR - xPatL, yPatB - yPatT);
+        ctx.fillStyle = "#374151";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("Interferenzmuster", xPatL - 2, 24);
 
         ctx.strokeStyle = "rgba(20,20,20,0.85)";
         ctx.lineWidth = 2;
