@@ -230,7 +230,6 @@
           <div class="sw-sim-mono">v = <span id="fpSpeedVal">1.0</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="fpStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="fpStopBtn">Stop</button>
             <button class="wb-btn" type="button" id="fpResetBtn">Reset</button>
           </div>
         </div>
@@ -321,7 +320,6 @@
           <div class="sw-sim-mono">v = <span id="lpSpeedVal">1.0</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="lpStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="lpStopBtn">Stop</button>
             <button class="wb-btn" type="button" id="lpResetBtn">Reset</button>
           </div>
         </div>
@@ -634,7 +632,6 @@
           <div class="sw-sim-mono">v = <span id="tdSpeedVal">0.6</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="tdStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="tdStopBtn">Stop</button>
             <button class="wb-btn" type="button" id="tdResetBtn">Reset</button>
           </div>
         </div>
@@ -708,7 +705,6 @@
           <div class="sw-sim-mono">v = <span id="dtSpeedVal">0.6</span></div>
           <div class="wb-row" style="margin-top:10px">
             <button class="wb-btn primary" type="button" id="dtStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="dtStopBtn">Stop</button>
             <button class="wb-btn" type="button" id="dtResetBtn">Reset</button>
           </div>
         </div>
@@ -985,7 +981,6 @@
 
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="bsStartBtn">Start</button>
-              <button class="wb-btn" type="button" id="bsStopBtn">Stop</button>
               <button class="wb-btn" type="button" id="bsResetBtn">Reset</button>
             </div>
           </div>
@@ -1203,7 +1198,6 @@
             <div class="sw-sim-mono">v = <span id="standingSpeedVal">1.0</span></div>
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="smStartBtn">Start</button>
-              <button class="wb-btn" type="button" id="smStopBtn">Stop</button>
               <button class="wb-btn" type="button" id="smResetBtn">Reset</button>
             </div>
           </div>
@@ -1759,7 +1753,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
             <div class="sw-sim-mono">v = <span id="lrSpeedVal">1.0</span></div>
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="lrStartBtn">Start</button>
-              <button class="wb-btn" type="button" id="lrStopBtn">Stop</button>
             </div>
           </div>
         </div>
@@ -1844,7 +1837,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
             <div class="sw-sim-mono">v = <span id="frSpeedVal">1.0</span></div>
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="frStartBtn">Start</button>
-              <button class="wb-btn" type="button" id="frStopBtn">Stop</button>
             </div>
           </div>
         </div>
@@ -2053,7 +2045,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const freqEl = document.getElementById("bsFreq");
       const cEl = document.getElementById("bsC");
       const startBtn = document.getElementById("bsStartBtn");
-      const stopBtn = document.getElementById("bsStopBtn");
       const resetBtn = document.getElementById("bsResetBtn");
       const ampVal = document.getElementById("bsAmpVal");
       const freqVal = document.getElementById("bsFreqVal");
@@ -2204,11 +2195,21 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
     }
 
@@ -2231,7 +2232,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       canvas.dataset.wbFixedPulseInit = "1";
 
       const startBtn = document.getElementById("fpStartBtn");
-      const stopBtn = document.getElementById("fpStopBtn");
       const resetBtn = document.getElementById("fpResetBtn");
       const speedEl = document.getElementById("fpSpeed");
       const speedVal = document.getElementById("fpSpeedVal");
@@ -2371,12 +2371,22 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
@@ -2400,7 +2410,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       canvas.dataset.wbLoosePulseInit = "1";
 
       const startBtn = document.getElementById("lpStartBtn");
-      const stopBtn = document.getElementById("lpStopBtn");
       const resetBtn = document.getElementById("lpResetBtn");
       const speedEl = document.getElementById("lpSpeed");
       const speedVal = document.getElementById("lpSpeedVal");
@@ -2540,12 +2549,22 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
@@ -2569,7 +2588,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       canvas.dataset.wbThinDenseInit = "1";
 
       const startBtn = document.getElementById("tdStartBtn");
-      const stopBtn = document.getElementById("tdStopBtn");
       const resetBtn = document.getElementById("tdResetBtn");
       const speedEl = document.getElementById("tdSpeed");
       const speedVal = document.getElementById("tdSpeedVal");
@@ -2764,12 +2782,22 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
@@ -2793,7 +2821,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       canvas.dataset.wbDenseThinInit = "1";
 
       const startBtn = document.getElementById("dtStartBtn");
-      const stopBtn = document.getElementById("dtStopBtn");
       const resetBtn = document.getElementById("dtResetBtn");
       const speedEl = document.getElementById("dtSpeed");
       const speedVal = document.getElementById("dtSpeedVal");
@@ -2982,12 +3009,22 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
@@ -3014,7 +3051,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const lamEl = document.getElementById("lrLam");
       const speedEl = document.getElementById("lrSpeed");
       const startBtn = document.getElementById("lrStartBtn");
-      const stopBtn = document.getElementById("lrStopBtn");
       const ampVal = document.getElementById("lrAmpVal");
       const lamVal = document.getElementById("lrLamVal");
       const speedVal = document.getElementById("lrSpeedVal");
@@ -3186,12 +3222,21 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
         tFrozen = ((performance.now() - t0) / 1000) * speed;
         isRunning = false;
       }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
+      }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       [ampEl, lamEl, speedEl].forEach(el => el && el.addEventListener("input", () => {
         if(!isRunning) return;
       }));
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
     }
 
@@ -3218,7 +3263,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const ampEl = document.getElementById("standingAmp");
       const speedEl = document.getElementById("standingSpeed");
       const startBtn = document.getElementById("smStartBtn");
-      const stopBtn = document.getElementById("smStopBtn");
       const resetBtn = document.getElementById("smResetBtn");
       const nVal = document.getElementById("standingNVal");
       const ampVal = document.getElementById("standingAmpVal");
@@ -3352,12 +3396,22 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       function resetAnim(){
         isRunning = false;
         tFrozen = 0;
+        updateToggleBtn();
+      }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
       }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       [boundaryEl, nEl, ampEl, speedEl].forEach(el => el && el.addEventListener("input", () => {}));
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
@@ -3384,7 +3438,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
       const lamEl = document.getElementById("frLam");
       const speedEl = document.getElementById("frSpeed");
       const startBtn = document.getElementById("frStartBtn");
-      const stopBtn = document.getElementById("frStopBtn");
       const ampVal = document.getElementById("frAmpVal");
       const lamVal = document.getElementById("frLamVal");
       const speedVal = document.getElementById("frSpeedVal");
@@ -3546,9 +3599,18 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
         tFrozen = ((performance.now() - t0) / 1000) * speed;
         isRunning = false;
       }
+      function updateToggleBtn(){
+        if(!startBtn) return;
+        startBtn.textContent = isRunning ? "Stop" : "Start";
+      }
+      function toggleAnim(){
+        if(isRunning) stopAnim();
+        else startAnim();
+        updateToggleBtn();
+      }
 
-      if(startBtn) startBtn.addEventListener("click", startAnim);
-      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(startBtn) startBtn.addEventListener("click", toggleAnim);
+      updateToggleBtn();
       rafId = requestAnimationFrame(draw);
     }
 
@@ -3566,5 +3628,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
   </script>
 </body>
 </html>
+
 
 
