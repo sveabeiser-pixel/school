@@ -13,6 +13,46 @@
   };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .int-sim-card{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--wb-text-bg, #fff);
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      margin: 14px 0;
+    }
+    .int-sim-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 900px){
+      .int-sim-grid{ grid-template-columns: 1fr; }
+    }
+    #coherentScreenCanvas{
+      width: 100%;
+      height: 360px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.6);
+      display: block;
+    }
+    .int-sim-controls label{
+      display: block;
+      font-weight: 900;
+      margin: 10px 0 6px;
+    }
+    .int-sim-controls input[type="range"]{ width: 100%; }
+    .int-sim-mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: var(--wb-muted, #6b7280);
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
   <div data-wb-book>
@@ -429,6 +469,40 @@
 
 
    
+<h2>Simulation: Zwei kohärente Quellen und Schirm</h2>
+<p>
+  Verschiebe den Cursor auf dem Schirm nach oben oder unten.
+  Du siehst, wie sich der Gangunterschied ändert und wie daraus die Überlagerung rechts von E entsteht.
+</p>
+<div class="int-sim-card">
+  <div class="int-sim-grid">
+    <div>
+      <canvas id="coherentScreenCanvas" width="980" height="560" aria-label="Interferenz von zwei kohärenten Quellen"></canvas>
+      <div class="int-sim-mono" id="coherentScreenReadout"></div>
+    </div>
+    <div class="int-sim-controls">
+      <label for="cohCursorY">Cursorposition auf dem Schirm</label>
+      <input id="cohCursorY" type="range" min="-180" max="180" value="0" step="1" />
+      <div class="int-sim-mono">y(E) = <span id="cohCursorYVal">0</span></div>
+
+      <label for="cohFreq">Frequenz</label>
+      <input id="cohFreq" type="range" min="1.0" max="3.0" value="1.1" step="0.1" />
+      <div class="int-sim-mono">f = <span id="cohFreqVal">1.1</span></div>
+
+      <label for="cohSpeed">Animationsgeschwindigkeit</label>
+      <input id="cohSpeed" type="range" min="0.2" max="1.8" value="0.8" step="0.1" />
+      <div class="int-sim-mono">v = <span id="cohSpeedVal">0.8</span></div>
+      <div class="wb-row" style="margin-top:10px">
+        <button class="wb-btn primary" type="button" id="cohStartBtn">Start</button>
+        <button class="wb-btn" type="button" id="cohStopBtn">Stop</button>
+        <button class="wb-btn" type="button" id="cohResetBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wb-section-break"></div>
+
       <h2>Lückentext: Konstruktive Interferenz</h2>
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
@@ -2252,6 +2326,236 @@ Auch dies ist eine <b>exakte Beziehung</b> für die dunklen Streifen auf dem Sch
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
+    function initCoherentScreenSim(){
+      const canvas = document.getElementById("coherentScreenCanvas");
+      const readout = document.getElementById("coherentScreenReadout");
+      const yEl = document.getElementById("cohCursorY");
+      const speedEl = document.getElementById("cohSpeed");
+      const freqEl = document.getElementById("cohFreq");
+      const startBtn = document.getElementById("cohStartBtn");
+      const stopBtn = document.getElementById("cohStopBtn");
+      const resetBtn = document.getElementById("cohResetBtn");
+      const yVal = document.getElementById("cohCursorYVal");
+      const speedVal = document.getElementById("cohSpeedVal");
+      const freqVal = document.getElementById("cohFreqVal");
+      if(!canvas || !readout || !yEl || !speedEl || !freqEl) return;
+      if(canvas.dataset.wbCohInit === "1") return;
+      canvas.dataset.wbCohInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const xS = 110;
+      const yMid = H * 0.44;
+      const dPix = 160;
+      const yS1 = yMid - dPix / 2;
+      const yS2 = yMid + dPix / 2;
+      const xScreen = W * 0.58;
+      const xOutEnd = W - 36;
+      const ampPath = 12;
+      const ampOut = 15;
+      const fRef = 1.1;
+      const lamRef = 82;
+      const cPix = lamRef * fRef; // konstante Ausbreitungsgeschwindigkeit in px/s
+      let t0 = performance.now();
+      let tFrozen = 0;
+      let isRunning = true;
+      let rafId = 0;
+
+      function drawWavePath(ax, ay, bx, by, t, kVal, omega, color){
+        const dx = bx - ax;
+        const dy = by - ay;
+        const L = Math.hypot(dx, dy);
+        if(L < 1e-6) return;
+        const tx = dx / L;
+        const ty = dy / L;
+        const nx = -ty;
+        const ny = tx;
+        const steps = Math.max(140, Math.floor(L / 2));
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        for(let i = 0; i <= steps; i++){
+          const s = (i / steps) * L;
+          const ph = kVal * s - omega * t;
+          const off = ampPath * Math.sin(ph);
+          const x = ax + tx * s + nx * off;
+          const y = ay + ty * s + ny * off;
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      function draw(tNow){
+        if(!canvas.isConnected){
+          cancelAnimationFrame(rafId);
+          return;
+        }
+        const speed = Number(speedEl.value);
+        const freq = Number(freqEl.value);
+        const lam = cPix / Math.max(freq, 0.05);
+        const k = 2 * Math.PI / lam;
+        const omega = 2 * Math.PI * freq;
+        const t = isRunning ? ((tNow - t0) / 1000) * speed : tFrozen;
+        const yOff = Number(yEl.value);
+        const yE = yMid + yOff;
+        if(yVal) yVal.textContent = String(Math.round(yOff));
+        if(speedVal) speedVal.textContent = speed.toFixed(1);
+        if(freqVal) freqVal.textContent = freq.toFixed(1);
+
+        const L1 = Math.hypot(xScreen - xS, yE - yS1);
+        const L2 = Math.hypot(xScreen - xS, yE - yS2);
+        const dS = L1 - L2;
+
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(120,130,150,0.75)";
+        ctx.lineWidth = 1.1;
+        ctx.setLineDash([8, 8]);
+        ctx.beginPath();
+        ctx.moveTo(xS - 24, yMid);
+        ctx.lineTo(xScreen + 10, yMid);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.strokeStyle = "rgba(20,20,20,0.85)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(xS, yS1 - 16);
+        ctx.lineTo(xS, yS2 + 16);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(20,20,20,0.8)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(xScreen, 34);
+        ctx.lineTo(xScreen, H - 30);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(20,20,20,0.85)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(xS, yS1);
+        ctx.lineTo(xScreen, yE);
+        ctx.moveTo(xS, yS2);
+        ctx.lineTo(xScreen, yE);
+        ctx.stroke();
+
+        drawWavePath(xS, yS1, xScreen, yE, t, k, omega, "#57b84a");
+        drawWavePath(xS, yS2, xScreen, yE, t, k, omega, "#2f36ff");
+
+        const outLen = xOutEnd - xScreen;
+        const stepsOut = Math.max(220, Math.floor(outLen / 2));
+        ctx.strokeStyle = "rgba(20,20,20,0.5)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(xScreen, yE);
+        ctx.lineTo(xOutEnd, yE);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#57b84a";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        for(let i = 0; i <= stepsOut; i++){
+          const xr = (i / stepsOut) * outLen;
+          const y = yE - ampOut * Math.sin(k * xr - omega * t + k * L1);
+          const x = xScreen + xr;
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#2f36ff";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        for(let i = 0; i <= stepsOut; i++){
+          const xr = (i / stepsOut) * outLen;
+          const y = yE - ampOut * Math.sin(k * xr - omega * t + k * L2);
+          const x = xScreen + xr;
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.strokeStyle = "#dc2626";
+        ctx.lineWidth = 2.8;
+        ctx.beginPath();
+        for(let i = 0; i <= stepsOut; i++){
+          const xr = (i / stepsOut) * outLen;
+          const y1 = ampOut * Math.sin(k * xr - omega * t + k * L1);
+          const y2 = ampOut * Math.sin(k * xr - omega * t + k * L2);
+          const y = yE - (y1 + y2);
+          const x = xScreen + xr;
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.fillStyle = "#57b84a";
+        ctx.beginPath();
+        ctx.arc(xS, yS1, 6.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#2f36ff";
+        ctx.beginPath();
+        ctx.arc(xS, yS2, 6.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#dc2626";
+        ctx.beginPath();
+        ctx.arc(xScreen, yE, 6.4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#374151";
+        ctx.font = "28px serif";
+        ctx.fillText("S1", xS - 56, yS1 - 10);
+        ctx.fillText("S2", xS - 56, yS2 - 10);
+        ctx.fillStyle = "#dc2626";
+        ctx.fillText("E", xScreen + 8, yE + 26);
+        ctx.font = "16px sans-serif";
+        ctx.fillStyle = "#374151";
+        ctx.fillText("Schirm", xScreen - 26, 22);
+
+        let hint = "gemischt";
+        const frac = Math.abs(dS / lam - Math.round(dS / lam));
+        if(frac < 0.12) hint = "nahe konstruktiv";
+        else if(Math.abs(frac - 0.5) < 0.12) hint = "nahe destruktiv";
+        readout.textContent =
+          `lambda = ${lam.toFixed(1)} px, dS = ${dS.toFixed(1)} px, dS/lambda = ${(dS / lam).toFixed(2)} (${hint})\n` +
+          `f = ${freq.toFixed(1)}\n` +
+          "gruen/blau: Einzelwellen bis E und rechts weiterlaufend\n" +
+          "rot: Ueberlagerung rechts von E";
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function startAnim(){
+        if(isRunning) return;
+        isRunning = true;
+        const speed = Number(speedEl.value);
+        t0 = performance.now() - (tFrozen / speed) * 1000;
+      }
+      function stopAnim(){
+        if(!isRunning) return;
+        const speed = Number(speedEl.value);
+        tFrozen = ((performance.now() - t0) / 1000) * speed;
+        isRunning = false;
+      }
+      function resetAnim(){
+        isRunning = false;
+        tFrozen = 0;
+      }
+
+      yEl.addEventListener("input", () => {});
+      speedEl.addEventListener("input", () => {});
+      freqEl.addEventListener("input", () => {});
+      if(startBtn) startBtn.addEventListener("click", startAnim);
+      if(stopBtn) stopBtn.addEventListener("click", stopAnim);
+      if(resetBtn) resetBtn.addEventListener("click", resetAnim);
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+    initCoherentScreenSim();
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
