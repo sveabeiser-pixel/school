@@ -1215,8 +1215,9 @@
           <li>Stelle <b>zwei feste Enden</b> und \(n=2\) ein.</li>
           <li>Stoppe die Simulation bei <b>maximaler Auslenkung</b> (Bäuche maximal).</li>
           <li>Starte erneut und stoppe so, dass das Seil nur ein <b>gerader Strich</b> auf der Ruhelage ist.</li>
-          <li>Wiederhole das für \(n=3\) und anschließend für den Modus <b>fest/lose</b>.</li>
-          <li>Notiere bei jedem Fall kurz, was gleich bleibt und was sich ändert.</li>
+          <li>Wiederhole das für \(n=3\) und anschließend für den Modus <b>fest/lose</b> und für den Modus <b>lose/lose</b>.</li>
+          <li>Notiere bei jedem Fall kurz, was gleich bleibt und was sich ändert. Analysiere dabei besonders, in welchem Abstand - ausgedrückt in Vielfachen der Wellenlänge \(\lambda\) - 
+              Knoten und Bäuche von den jeweiligen Enden auftreten.</li>
         </ul>
       </div>
 
@@ -1951,6 +1952,60 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
             { "t":"text", "v":" mit " },
             { "t":"gap", "a":"doppelter Amplitude" },
             { "t":"text", "v":" an der Wand." }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-stehend-2-positionen",
+          "title":"Positionen von Knoten und Bäuchen (von der Wand gemessen)",
+          "hint":"Nutze x als Abstand von der Wand und vergleiche festes vs. loses Ende.",
+          "questions":[
+            {
+              "text":"Festes Ende: Welche Aussage zu den Positionen ist korrekt?",
+              "choices":[
+                { "id":"a", "label":"Knoten: $x = n \\cdot \\frac{\\lambda}{2}$;$\\quad $ Berge/Bäuche: $x = (2n+1) \\cdot \\frac{\\lambda}{4}$" },
+                { "id":"b", "label":"Knoten: $x = (2n+1) \\cdot \\frac{\\lambda}{4}$;$\\quad $ Berge/Bäuche: $x = n \\cdot \\frac{\\lambda}{2}$" },
+                { "id":"c", "label":"Knoten und Berge liegen beide bei $x = n \\cdot \\frac{\\lambda}{2}$" }
+              ],
+              "correct":["a"],
+              "explain":"Am festen Ende liegt bei x=0 ein Knoten. Daher folgen Knoten im Abstand $\\frac{\\lambda}{2}$ und Berge/Bäuche um $\\frac{\\lambda}{4}$ versetzt."
+            },
+            {
+              "text":"Loses Ende: Welche Aussage zu den Positionen ist korrekt?",
+              "choices":[
+                { "id":"a", "label":"Knoten: $x = n \\cdot \\frac{\\lambda}{2}$;  $\\quad $  Berge/Bäuche: $x = (2n+1) \\cdot \\frac{\\lambda}{4}$" },
+                { "id":"b", "label":"Knoten: $x = (2n+1) \\cdot \\frac{\\lambda}{4}$;  $\\quad $   Berge/Bäuche: $x = n \\cdot \\frac{\\lambda}{2}$" },
+                { "id":"c", "label":"Berge/Bäuche gibt es nur bei $x = 0$." }
+              ],
+              "correct":["b"],
+              "explain":"Am losen Ende liegt bei $x=0$ ein Berg/Bauch. Die Knoten liegen jeweils dazwischen bei ungeraden Viertelwellenlängen."
+            },
+            {
+              "text":"Wo liegt beim festen Ende der erste Berg/Bauch von der Wand aus?",
+              "choices":[
+                { "id":"a", "label":"$x = \\frac{\\lambda}{8}$" },
+                { "id":"b", "label":"$x = \\frac{\\lambda}{4}$" },
+                { "id":"c", "label":"$x = \\frac{\\lambda}{2}$" }
+              ],
+              "correct":["b"],
+              "explain":"Beim festen Ende startet die stehende Welle mit einem Knoten an der Wand; der erste Berg/Bauch folgt bei lambda/4."
+            },
+            {
+              "text":"Wo liegt beim losen Ende der erste Knoten von der Wand aus?",
+              "choices":[
+                { "id":"a", "label":"$x = \\frac{\\lambda}{4}$" },
+                { "id":"b", "label":"$x = \\frac{\\lambda}{2}$" },
+                { "id":"c", "label":"$x = 0$" }
+              ],
+              "correct":["a"],
+              "explain":"Beim losen Ende ist an der Wand ein Berg/Bauch ($x=0$). Der erste Knoten liegt deshalb bei $\\frac{\\lambda}{4}$."
+            }
           ]
         }
         </script>

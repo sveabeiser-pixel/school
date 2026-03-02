@@ -77,6 +77,14 @@
       background: rgba(255,255,255,0.5);
       display:block;
     }
+    #dsParticleCanvas{
+      width: 100%;
+      height: 360px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.5);
+      display:block;
+    }
     .mini-list li{ margin: 6px 0; }
   </style>
 </head>
@@ -436,6 +444,70 @@
           klassische Beweis für die Wellennatur des Lichts und der Startpunkt
           für die Quantenphysik.
         </p>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <h2>Simulation: Teilchen am Doppelspalt</h2>
+      <p>
+        Starte die Simulation und vergleiche vier Fälle:
+        nur Spalt A, nur Spalt B, beide Spalte mit Welcher-Weg-Information
+        (Summe der Einzelverteilungen) und beide Spalte ohne Welcher-Weg-Information
+        (Interferenzmuster).
+      </p>
+      <div class="sim-card">
+        <div class="sim-grid">
+          <div>
+            <canvas id="dsParticleCanvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
+          </div>
+          <div class="sim-controls">
+            <label for="dspMode">Modus</label>
+            <select id="dspMode">
+              <option value="slitA">Nur durch Spalt A</option>
+              <option value="slitB">Nur durch Spalt B</option>
+              <option value="bothWhich">Beide Spalte mit Welcher-Weg-Information</option>
+              <option value="bothInterf" selected>Beide Spalte ohne Welcher-Weg-Information (Interferenz)</option>
+            </select>
+
+            <label for="dspRate">Teilchenrate</label>
+            <input id="dspRate" type="range" min="5" max="80" step="1" value="34" />
+            <div class="sim-mono">Teilchen/s = <span id="dspRateVal">34</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="dspStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="dspResetBtn">Reset</button>
+            </div>
+
+            <div class="sim-mono" id="dspReadout"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Arbeitsauftrag: Genau beobachten und vergleichen</strong>
+        <p>
+          Wechsle in der Simulation mehrfach zwischen
+          <b>„Beide Spalte mit Welcher-Weg-Information“</b> und
+          <b>„Beide Spalte ohne Welcher-Weg-Information“</b>.
+          Beschreibe danach ganz genau, wie sich
+          Einzelverteilungen, Gesamtverteilung und das Muster auf dem Schirm unterscheiden.
+        </p>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-ds-whichway-compare",
+          "title":"Vergleichsaufgabe: Mit vs. ohne Welcher-Weg-Information",
+          "storagePrefix":"interferenz2_",
+          "exportName":"interferenz2-ergebnisse.txt",
+          "hint":"Schreibe 6-10 Sätze. Nenne konkret: Form von a, b und c, Anzahl sichtbarer Maxima/Minima und was sich beim Umschalten sofort ändert.",
+          "fields":[
+            {"label":"Dein Vergleich","key":"vergleich","kind":"textarea","placeholder":"Beschreibe hier sehr genau den Unterschied zwischen den beiden Modi..."}
+          ]
+        }
+        </script>
       </div>
     </section>
 
@@ -1991,6 +2063,27 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       <div class="wb-callout">
         <p><strong>Zwischen zwei Hauptmaxima liegen immer \(N-1\) Minima und \(N-2\) Nebenmaxima.</strong></p>
       </div>
+      <div class="wb-soft-callout">
+        <strong>Kleine Erklärung: Zeigermodell und Gangunterschied</strong>
+        <p>
+          Im Zeigermodell gilt: Jede harmonische Welle entspricht einem rotierenden Zeiger.
+          Die Zeigerlänge ist die Amplitude, der Zeigerwinkel ist die Phase, und die Überlagerung
+          mehrerer Wellen ist die Vektoraddition der Zeiger.
+        </p>
+        <p>
+          Der Gangunterschied \(\Delta s\) zwischen zwei Teilwellen bestimmt direkt den
+          Phasenunterschied \(\Delta\varphi\):
+          \[
+            \Delta\varphi = 2\pi\frac{\Delta s}{\lambda}.
+          \]
+          Wird \(\Delta s\) größer, drehen sich die Zeiger gegeneinander.
+          Zeiger parallel \(\Rightarrow\) konstruktive Interferenz (Maximum),
+          Zeiger entgegengesetzt \(\Rightarrow\) destruktive Interferenz (Minimum).
+        </p>
+        <p>Bei einer Überlagerung von mehreren Zeigern (Wellen) ergibt sich die Gesamtamplitude durch Vektoraddition der aller Zeiger.</p>
+        <p>Schaue dir dazu folgendes Video an: <a href="https://www.youtube.com/watch?v=b9VGpZStkGI" target="_blank" rel="noopener">Zur Internetseite</a>
+</p>
+      </div>
       <div class="wb-section-break"></div>
 
       <div class="grid2">
@@ -3228,6 +3321,421 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       draw();
     }
 
+    function initDoubleSlitParticleSim(){
+      const canvas = document.getElementById("dsParticleCanvas");
+      const modeEl = document.getElementById("dspMode");
+      const rateEl = document.getElementById("dspRate");
+      const rateVal = document.getElementById("dspRateVal");
+      const startBtn = document.getElementById("dspStartBtn");
+      const resetBtn = document.getElementById("dspResetBtn");
+      const readout = document.getElementById("dspReadout");
+      if(!canvas || !modeEl || !rateEl || !rateVal || !startBtn || !resetBtn || !readout) return;
+      if(canvas.dataset.wbDsParticleInit === "1") return;
+      canvas.dataset.wbDsParticleInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+
+      const sourceX = 88;
+      const sourceY = H * 0.5;
+      const barrierX = 360;
+      const slitGap = 132;
+      const slitOpen = 46;
+      const slitAY = H * 0.5 - slitGap * 0.5;
+      const slitBY = H * 0.5 + slitGap * 0.5;
+      const screenX = 742;
+      const yMin = 34;
+      const yMax = H - 34;
+      const bins = 44;
+      const binH = (yMax - yMin) / bins;
+
+      const colorA = "#0891b2";
+      const colorB = "#c026d3";
+      const colorTotal = "#0f172a";
+
+      const countsA = new Array(bins).fill(0);
+      const countsB = new Array(bins).fill(0);
+      const particles = [];
+      const flashes = [];
+      const cdfCache = new Map();
+      let displayScaleMax = 1;
+
+      let running = false;
+      let spawnAcc = 0;
+      let rafId = 0;
+      let lastTs = performance.now();
+
+      function modeLabel(mode){
+        if(mode === "slitA") return "Nur Spalt A";
+        if(mode === "slitB") return "Nur Spalt B";
+        if(mode === "bothWhich") return "Beide Spalte mit Welcher-Weg-Information";
+        return "Beide Spalte ohne Welcher-Weg-Information";
+      }
+
+      function gaussian(x, mean, sigma){
+        const z = (x - mean) / sigma;
+        return Math.exp(-0.5 * z * z);
+      }
+
+      function intensityAt(normY, mode, slit){
+        const sigma = 0.30;
+        const shift = 0.11;
+        const fringeFreq = 13.5;
+        const visibility = 1.0;
+        const iA = gaussian(normY, -shift, sigma);
+        const iB = gaussian(normY, +shift, sigma);
+
+        if(mode === "slitA") return iA;
+        if(mode === "slitB") return iB;
+        if(mode === "bothWhich") return slit === "A" ? iA : iB;
+
+        const env = iA + iB;
+        const fringe = 0.5 * (1 + visibility * Math.cos(2 * Math.PI * fringeFreq * normY));
+        return Math.max(0, env * fringe);
+      }
+
+      function buildCdf(mode, slit){
+        const key = mode + "|" + slit;
+        if(cdfCache.has(key)) return cdfCache.get(key);
+        const samples = 720;
+        const cdf = new Array(samples);
+        let sum = 0;
+        for(let i = 0; i < samples; i++){
+          const t = i / (samples - 1);
+          const n = -1 + 2 * t;
+          const w = intensityAt(n, mode, slit) + 1e-6;
+          sum += w;
+          cdf[i] = sum;
+        }
+        for(let i = 0; i < samples; i++) cdf[i] /= sum;
+        cdfCache.set(key, cdf);
+        return cdf;
+      }
+
+      function sampleNorm(mode, slit){
+        const cdf = buildCdf(mode, slit);
+        const r = Math.random();
+        let lo = 0;
+        let hi = cdf.length - 1;
+        while(lo < hi){
+          const mid = (lo + hi) >> 1;
+          if(cdf[mid] < r) lo = mid + 1;
+          else hi = mid;
+        }
+        const t = lo / (cdf.length - 1);
+        return -1 + 2 * t;
+      }
+
+      function normToY(normY){
+        const n = Math.max(-1, Math.min(1, normY));
+        return yMin + (0.5 * (n + 1)) * (yMax - yMin);
+      }
+
+      function pickSlit(mode){
+        if(mode === "slitA") return "A";
+        if(mode === "slitB") return "B";
+        return Math.random() < 0.5 ? "A" : "B";
+      }
+
+      function stepTowards(p, tx, ty, step){
+        const dx = tx - p.x;
+        const dy = ty - p.y;
+        const dist = Math.hypot(dx, dy);
+        if(dist < 1e-6 || step >= dist){
+          p.x = tx;
+          p.y = ty;
+          return true;
+        }
+        p.x += dx / dist * step;
+        p.y += dy / dist * step;
+        return false;
+      }
+
+      function registerHit(y, slit, withFlash = true){
+        const mode = modeEl.value;
+        const idx = Math.max(0, Math.min(bins - 1, Math.floor((y - yMin) / binH)));
+        let sigmaBins = 1.35;
+        let gain = 5.6;
+        if(mode === "bothWhich"){
+          sigmaBins = 1.20;
+          gain = 5.0;
+        }else if(mode === "bothInterf"){
+          sigmaBins = 0.20;
+          gain = 4.9;
+        }
+        let norm = 0;
+        const w = new Array(bins).fill(0);
+        for(let j = 0; j < bins; j++){
+          const d = (j - idx) / sigmaBins;
+          const ww = Math.exp(-0.5 * d * d);
+          w[j] = ww;
+          norm += ww;
+        }
+        const arr = slit === "A" ? countsA : countsB;
+        for(let j = 0; j < bins; j++){
+          arr[j] += gain * (w[j] / norm);
+        }
+        if(withFlash) flashes.push({y, slit, life: 0.45});
+      }
+
+      function spawnParticle(){
+        const mode = modeEl.value;
+        const slit = pickSlit(mode);
+        const slitY = slit === "A" ? slitAY : slitBY;
+        const targetNorm = sampleNorm(mode, slit);
+        const targetY = normToY(targetNorm);
+        particles.push({
+          x: sourceX,
+          y: sourceY,
+          slit,
+          phase: 1,
+          sx: barrierX - 8,
+          sy: slitY + (Math.random() - 0.5) * 8,
+          tx: screenX,
+          ty: targetY,
+          speed: 370 + Math.random() * 45
+        });
+      }
+
+      function resetAll(){
+        countsA.fill(0);
+        countsB.fill(0);
+        particles.length = 0;
+        flashes.length = 0;
+        spawnAcc = 0;
+        displayScaleMax = 1;
+      }
+
+      function drawColumn(x, title, color, data, maxCount){
+        const colW = 50;
+        ctx.fillStyle = "#111827";
+        ctx.font = "12px sans-serif";
+        ctx.fillText(title, x + 4, yMin - 12);
+
+        for(let i = 0; i < bins; i++){
+          const y = yMin + (i + 0.5) * binH;
+          ctx.strokeStyle = "rgba(107,114,128,0.35)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + colW, y);
+          ctx.stroke();
+
+          const dots = Math.max(0, Math.round((data[i] / maxCount) * 5));
+          for(let d = 0; d < dots; d++){
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.arc(x + 7 + d * 8, y, 3.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      function drawScene(){
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f5f5f5";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = "#111827";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(18, 18, screenX - 2, H - 36);
+
+        ctx.fillStyle = "#9ca3af";
+        ctx.fillRect(sourceX - 36, sourceY - 18, 64, 36);
+        ctx.strokeStyle = "#111827";
+        ctx.strokeRect(sourceX - 36, sourceY - 18, 64, 36);
+        ctx.beginPath();
+        ctx.arc(sourceX + 28, sourceY, 9, 0, Math.PI * 2);
+        ctx.fillStyle = "#e5e7eb";
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(107,114,128,0.55)";
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(sourceX + 28, sourceY);
+        ctx.lineTo(barrierX - 8, slitAY);
+        ctx.lineTo(screenX, yMin + (yMax - yMin) * 0.33);
+        ctx.moveTo(sourceX + 28, sourceY);
+        ctx.lineTo(barrierX - 8, slitBY);
+        ctx.lineTo(screenX, yMin + (yMax - yMin) * 0.67);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#0b0b0b";
+        ctx.fillRect(barrierX - 8, 20, 16, H - 40);
+
+        ctx.fillStyle = "#f5f5f5";
+        ctx.fillRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
+        ctx.fillRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
+        ctx.strokeStyle = "#111827";
+        ctx.strokeRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
+        ctx.strokeRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
+
+        for(let i = 0; i < bins; i++){
+          const y = yMin + i * binH + 3;
+          ctx.strokeStyle = "#374151";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(screenX - 10, y, 18, Math.max(6, binH - 6));
+        }
+
+        const total = countsA.map((v, i) => v + countsB[i]);
+        const mode = modeEl.value;
+        const theory = new Array(bins).fill(0);
+        let thMax = 0;
+        for(let i = 0; i < bins; i++){
+          const y = yMin + (i + 0.5) * binH;
+          const norm = 2 * ((y - yMin) / (yMax - yMin)) - 1;
+          let t = 0;
+          if(mode === "slitA") t = intensityAt(norm, "slitA", "A");
+          else if(mode === "slitB") t = intensityAt(norm, "slitB", "B");
+          else if(mode === "bothWhich"){
+            t = intensityAt(norm, "bothWhich", "A") + intensityAt(norm, "bothWhich", "B");
+          }else{
+            t = intensityAt(norm, "bothInterf", "A");
+          }
+          theory[i] = t;
+          if(t > thMax) thMax = t;
+        }
+        const maxCount = Math.max(1, ...total);
+        for(let i = 0; i < bins; i++){
+          const y = yMin + (i + 0.5) * binH;
+          const len = 2 + 28 * (total[i] / maxCount);
+          ctx.strokeStyle = "rgba(15,23,42,0.45)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(screenX + 10, y);
+          ctx.lineTo(screenX + 10 + len, y);
+          ctx.stroke();
+        }
+
+        ctx.beginPath();
+        for(let i = 0; i < bins; i++){
+          const y = yMin + (i + 0.5) * binH;
+          const len = 2 + 28 * (thMax > 0 ? (theory[i] / thMax) : 0);
+          const x = screenX + 10 + len;
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        for(const p of particles){
+          ctx.beginPath();
+          ctx.fillStyle = p.slit === "A" ? colorA : colorB;
+          ctx.arc(p.x, p.y, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#111827";
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
+        }
+
+        for(const f of flashes){
+          const alpha = Math.max(0, f.life / 0.45);
+          ctx.beginPath();
+          ctx.fillStyle = f.slit === "A" ? `rgba(8,145,178,${alpha})` : `rgba(192,38,211,${alpha})`;
+          ctx.arc(screenX + 8, f.y, 4.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        const xA = screenX + 44;
+        const xB = screenX + 104;
+        const xC = screenX + 164;
+        const total2 = countsA.map((v, i) => v + countsB[i]);
+        const dataA = countsA;
+        const dataB = countsB;
+        const modeHits = total2.reduce((s, v) => s + v, 0);
+        const rawMax = Math.max(1, ...dataA, ...dataB, ...total2);
+        const smoothFac = Math.min(0.35, 0.06 + modeHits / 3200);
+        displayScaleMax = Math.max(1, displayScaleMax * (1 - smoothFac) + rawMax * smoothFac);
+        drawColumn(xA, "a", colorA, dataA, displayScaleMax);
+        drawColumn(xB, "b", colorB, dataB, displayScaleMax);
+        drawColumn(xC, "c", colorTotal, total2, displayScaleMax);
+      }
+
+      function updateReadout(){
+        const total = countsA.reduce((s, v) => s + v, 0) + countsB.reduce((s, v) => s + v, 0);
+        const mode = modeEl.value;
+        const txt =
+          "Modus:\n" +
+          `${modeLabel(mode)}\n` +
+          `Treffer gesamt: ${total}\n` +
+          `Spalt A (cyan): ${countsA.reduce((s, v) => s + v, 0)}\n` +
+          `Spalt B (magenta): ${countsB.reduce((s, v) => s + v, 0)}\n\n` +
+          "Am Schirm:\n" +
+          "dunkle Balken = gemessene Treffer\n" +
+          "orange Linie = theoretische Kurve\n\n" +
+          "Rechts:\n" +
+          "a = Einzelverteilung Spalt A\n" +
+          "b = Einzelverteilung Spalt B\n" +
+          "c = Gesamtverteilung auf dem Schirm";
+        readout.textContent = txt;
+      }
+
+      function animate(ts){
+        const dt = Math.min(0.05, (ts - lastTs) / 1000);
+        lastTs = ts;
+
+        if(running){
+          const rate = Number(rateEl.value);
+          spawnAcc += rate * dt;
+          while(spawnAcc >= 1){
+            spawnParticle();
+            spawnAcc -= 1;
+            if(particles.length > 420) break;
+          }
+        }
+
+        for(let i = particles.length - 1; i >= 0; i--){
+          const p = particles[i];
+          const step = p.speed * dt;
+          if(p.phase === 1){
+            if(stepTowards(p, p.sx, p.sy, step)) p.phase = 2;
+          }else{
+            if(stepTowards(p, p.tx, p.ty, step)){
+              registerHit(p.ty, p.slit);
+              particles.splice(i, 1);
+            }
+          }
+        }
+
+        for(let i = flashes.length - 1; i >= 0; i--){
+          flashes[i].life -= dt;
+          if(flashes[i].life <= 0) flashes.splice(i, 1);
+        }
+
+        drawScene();
+        updateReadout();
+        rafId = requestAnimationFrame(animate);
+      }
+
+      function syncStartLabel(){
+        startBtn.textContent = running ? "Pause" : "Start";
+      }
+
+      rateVal.textContent = String(rateEl.value);
+      rateEl.addEventListener("input", () => {
+        rateVal.textContent = String(rateEl.value);
+      });
+      modeEl.addEventListener("change", () => {
+        resetAll();
+      });
+      startBtn.addEventListener("click", () => {
+        running = !running;
+        syncStartLabel();
+      });
+      resetBtn.addEventListener("click", () => {
+        resetAll();
+      });
+
+      syncStartLabel();
+      resetAll();
+      rafId = requestAnimationFrame(animate);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
@@ -3235,6 +3743,7 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
     initDoubleSlitWithEnvelopeSim();
     initGratingSim();
     initGratingPhasorSim();
+    initDoubleSlitParticleSim();
   </script>
 </body>
 </html>
