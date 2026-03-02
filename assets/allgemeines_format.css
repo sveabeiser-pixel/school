@@ -716,6 +716,9 @@ body{
   font-size: 22px;
   color: #1f2937;
 }
+.wb-book .wb-present-title{
+  display:none;
+}
 
 .wb-book .wb-top-right{
   display:flex;
@@ -727,12 +730,13 @@ body{
 }
 .wb-book .wb-present-ind{
   display:none;
-  font-size: 15px;
+  font-size: 12px;
   color: var(--wb-blue3);
   white-space: nowrap;
-  max-width: 54vw;
+  max-width: 34vw;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: right;
 }
 .wb-book .wb-page-ind{
   font-size: 18px;
@@ -942,12 +946,27 @@ body{
 }
 .wb-book.wb-present-mode .wb-top-left{
   min-width: 0;
+  flex: 1 1 auto;
 }
 .wb-book.wb-present-mode .wb-top-right{
   margin-left: auto;
+  gap: 8px;
+}
+.wb-book.wb-present-mode .wb-present-title{
+  display:block;
+  font-size: 34px;
+  font-weight: 900;
+  color: var(--wb-blue3);
+  margin-left: 38px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70vw;
 }
 .wb-book.wb-present-mode .wb-present-ind{
   display:block;
+  font-size: 15px;
+  max-width: 40vw;
 }
 .wb-book.wb-present-mode .wb-layout{
   padding-top: var(--wb-topH);
@@ -972,8 +991,16 @@ body{
   overflow-x: hidden;
   padding-right: 8px;
 }
+.wb-book.wb-present-mode [data-wb-page] > h2{
+  display:none !important;
+}
 .wb-book.wb-present-mode .wb-section-break{
   display:none !important;
+}
+.wb-book.wb-present-mode [data-wb-page].wb-present-sparse{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 .wb-book.wb-present-mode h1{font-size: 36px; margin-bottom: 16px;}
 .wb-book.wb-present-mode h2{font-size: 28px; margin-top: 20px; margin-bottom: 10px;}

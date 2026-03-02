@@ -1603,7 +1603,8 @@ ${fi.input.value || ""}
         el("button", {class:"wb-hamburger", type:"button", "aria-label":"Menü"}, [
           el("svg", {width:"26", height:"26", viewBox:"0 0 24 24", html:'<path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path>'})
         ]),
-        el("div", {class:"wb-brand"}, [bookTitle])
+        el("div", {class:"wb-brand"}, [bookTitle]),
+        el("div", {class:"wb-present-title", "data-wb-present-h2":"1"}, ["-"])
       ]),
       el("div", {class:"wb-top-right"}, [
         el("div", {class:"wb-page-ind"}, [
@@ -1611,8 +1612,6 @@ ${fi.input.value || ""}
           el("span", {"data-wb-pagemax":"1"}, [String(maxPage)])
         ]),
         el("div", {class:"wb-present-ind", "data-wb-present-ind":"1"}, [
-          el("span", {"data-wb-present-h2":"1"}, ["-"]),
-          " · ",
           "Seite ",
           el("span", {"data-wb-present-pagenow":"1"}, ["1"]),
           " / ",
@@ -1815,10 +1814,10 @@ ${fi.input.value || ""}
       const chunks = [];
       let cur = [];
       let curH = 0;
-      const softMaxPx = maxPx * 1.18;
+      const softMaxPx = maxPx * 1.28;
       nodes.forEach(node => {
         const h = getNodeHeight(node);
-        if(cur.length >= 2 && (curH + h) > softMaxPx){
+        if(cur.length >= 3 && (curH + h) > softMaxPx){
           chunks.push(cur);
           cur = [node];
           curH = h;
@@ -1884,12 +1883,49 @@ ${fi.input.value || ""}
         const available = Math.max(220, content.clientHeight - 24);
         const maxPx = available * presentationMaxFill;
         const minPx = available * presentationMinFill;
+        if(presentationSplit === "h2-smart" && groups.length > 1){
+          const first = groups[0];
+          const second = groups[1];
+          const firstBody = first.filter(n => {
+            const tn = String(n.tagName || "").toLowerCase();
+            return tn !== "h1" && tn !== "h2";
+          });
+          const firstBodyH = firstBody.reduce((s, n) => s + getNodeHeight(n), 0);
+          const firstH = first.reduce((s, n) => s + getNodeHeight(n), 0);
+          const secondH = second.reduce((s, n) => s + getNodeHeight(n), 0);
+          const introIsShort = firstBody.length <= 2 && firstBodyH <= (minPx * 1.15);
+          if(introIsShort && (firstH + secondH) <= (maxPx * 1.22)){
+            groups[0] = first.concat(second);
+            groups.splice(1, 1);
+          }
+        }
         groups.forEach(group => {
           splitGroupByHeight(group, maxPx, minPx).forEach(chunk => {
             if(chunk.length) slides.push(chunk);
           });
         });
         if(!slides.length) slides.push(nodes.slice());
+
+        // Post-merge: vermeidet sehr kleine Folien nach dem ersten Split.
+        if(slides.length > 1){
+          const getSlideHeight = (slide) => slide.reduce((s, n) => s + getNodeHeight(n), 0);
+          const tinyPx = minPx * 1.45;
+          const mergeLimitPx = maxPx * 1.35;
+          const merged = [];
+          for(let i = 0; i < slides.length; i++){
+            const cur = slides[i];
+            const curH = getSlideHeight(cur);
+            const next = i < slides.length - 1 ? slides[i + 1] : null;
+            const nextH = next ? getSlideHeight(next) : 0;
+            const curIsTiny = curH < tinyPx || cur.length <= 2;
+            if(curIsTiny && next && (curH + nextH) <= mergeLimitPx){
+              slides[i + 1] = cur.concat(next);
+              continue;
+            }
+            merged.push(cur);
+          }
+          slides = merged.length ? merged : slides;
+        }
       }finally{
         nodes.forEach((node, i) => { node.style.display = savedDisplay[i]; });
       }
@@ -1911,6 +1947,7 @@ ${fi.input.value || ""}
     }
 
     function restorePageContent(pageNode){
+      if(pageNode && pageNode.classList) pageNode.classList.remove("wb-present-sparse");
       getTopLevelBlocks(pageNode).forEach(node => setNodeVisible(node, true));
     }
 
@@ -1961,6 +1998,10 @@ ${fi.input.value || ""}
 
       const visibleSet = new Set(slides[idx] || []);
       getTopLevelBlocks(pageEntry.node).forEach(node => setNodeVisible(node, visibleSet.has(node)));
+      const visibleNodes = slides[idx] || [];
+      const visibleHeight = visibleNodes.reduce((s, n) => s + getNodeHeight(n), 0);
+      const sparseThreshold = Math.max(180, (content.clientHeight || 0) * 0.42);
+      pageEntry.node.classList.toggle("wb-present-sparse", visibleHeight > 0 && visibleHeight < sparseThreshold);
       updatePresentationIndicator(pageNum, idx + 1, totalSlides, getHeadingForSlide(pageEntry.node, slides[idx] || []));
       if(content && content.scrollTo) content.scrollTo({top:0, behavior:"auto"});
     }
@@ -2720,3 +2761,4 @@ function autoMountPuzzle2(){
 };
 
 })(window);
+
