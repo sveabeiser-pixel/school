@@ -1610,11 +1610,26 @@ ${fi.input.value || ""}
           el("span", {"data-wb-pagenow":"1"}, ["1"]), " / ",
           el("span", {"data-wb-pagemax":"1"}, [String(maxPage)])
         ]),
+        el("div", {class:"wb-present-ind", "data-wb-present-ind":"1"}, [
+          el("span", {"data-wb-present-h2":"1"}, ["-"]),
+          " · ",
+          "Seite ",
+          el("span", {"data-wb-present-pagenow":"1"}, ["1"]),
+          " / ",
+          el("span", {"data-wb-present-pagemax":"1"}, [String(maxPage)]),
+          " · Slide ",
+          el("span", {"data-wb-slide-now":"1"}, ["1"]),
+          " / ",
+          el("span", {"data-wb-slide-max":"1"}, ["1"])
+        ]),
         el("button", {class:"wb-icon-btn", type:"button", "data-wb-prev":"1", "aria-label":"Zurück"}, [
           el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/>'})
         ]),
         el("button", {class:"wb-icon-btn", type:"button", "data-wb-next":"1", "aria-label":"Weiter"}, [
           el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="m8.6 16.6 1.4 1.4 6-6-6-6-1.4 1.4L13.2 12z"/>'})
+        ]),
+        el("button", {class:"wb-icon-btn wb-present-btn", type:"button", "data-wb-present":"1", "aria-label":"Präsentationsmodus", "title":"Präsentationsmodus", "aria-pressed":"false"}, [
+          el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="M3 4h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v8h16V6H4z"/>'})
         ]),
         el("button", {class:"wb-icon-btn", type:"button", "data-wb-fs":"1", "aria-label":"Vollbild"}, [
           el("svg", {width:"20", height:"20", viewBox:"0 0 24 24", html:'<path d="M9 3H3v6h2V6.41l3.29 3.3 1.42-1.42L6.41 5H9V3zm6 0v2h2.59l-3.3 3.29 1.42 1.42L19 6.41V9h2V3h-6zM9 21v-2H6.41l3.3-3.29-1.42-1.42L5 17.59V15H3v6h6zm6 0h6v-6h-2v2.59l-3.29-3.3-1.42 1.42L17.59 19H15v2z"/>'})
@@ -1719,9 +1734,23 @@ ${fi.input.value || ""}
     const nowEl = qs("[data-wb-pagenow]", root);
     const prevBtn = qs("[data-wb-prev]", root);
     const nextBtn = qs("[data-wb-next]", root);
+    const presentBtn = qs("[data-wb-present]", root);
     const fsBtn = qs("[data-wb-fs]", root);
     const hamBtn = qs(".wb-hamburger", root);
     const submitBtn = qs(".wb-submit-btn", root);
+    const presentPageNowEl = qs("[data-wb-present-pagenow]", root);
+    const presentPageMaxEl = qs("[data-wb-present-pagemax]", root);
+    const slideNowEl = qs("[data-wb-slide-now]", root);
+    const slideMaxEl = qs("[data-wb-slide-max]", root);
+    const presentH2El = qs("[data-wb-present-h2]", root);
+
+    const presentationToggle = cfg.presentationToggle !== false;
+    const presentationRemember = cfg.presentationRemember !== false;
+    const presentationModeDefault = String(cfg.presentationModeDefault || "normal").toLowerCase() === "present" ? "present" : "normal";
+    const presentationSplit = String(cfg.presentationSplit || "h2-smart").toLowerCase();
+    const presentationMaxFill = Math.min(0.95, Math.max(0.4, Number(cfg.presentationMaxFill || 0.82)));
+    const presentationMinFill = Math.min(0.6, Math.max(0.1, Number(cfg.presentationMinFill || 0.28)));
+    const presentationStorageKey = "wb_present_mode::" + (global.location && global.location.pathname ? global.location.pathname : "default");
 
     const pageSections = () => qsa("[data-wb-page]", root)
       .filter(n => n.closest(".wb-paper"))
@@ -1729,6 +1758,241 @@ ${fi.input.value || ""}
     const setActiveByLink = (link) => { navLinks.forEach(x=>x.classList.remove("active")); if(link) link.classList.add("active"); };
     const firstLinkOfPage = (p) => navLinks.find(a => Number(a.getAttribute("data-wb-page")||"1")===p) || null;
     const revealObservers = new Map();
+    const originalDisplay = new WeakMap();
+    const presentationCache = new Map();
+    const presentationSlideByPage = new Map();
+    let isPresentationMode = false;
+    let presentationRequestedFullscreen = false;
+
+    if(presentPageNowEl) presentPageNowEl.textContent = "1";
+    if(presentPageMaxEl) presentPageMaxEl.textContent = String(maxPage);
+    if(slideNowEl) slideNowEl.textContent = "1";
+    if(slideMaxEl) slideMaxEl.textContent = "1";
+    if(presentH2El) presentH2El.textContent = "-";
+
+    function rememberPresentationMode(on){
+      if(!presentationRemember) return;
+      try{ localStorage.setItem(presentationStorageKey, on ? "present" : "normal"); }catch(_){}
+    }
+
+    function shouldStartInPresentationMode(){
+      if(!presentationToggle) return false;
+      if(!presentationRemember) return presentationModeDefault === "present";
+      try{
+        const v = localStorage.getItem(presentationStorageKey);
+        if(v === "present" || v === "normal") return v === "present";
+      }catch(_){}
+      return presentationModeDefault === "present";
+    }
+
+    function getPageByNumber(n){
+      return pageSections().find(p => p.page === n) || null;
+    }
+
+    function getTopLevelBlocks(pageNode){
+      if(!pageNode) return [];
+      return Array.from(pageNode.children).filter(n => {
+        if(!n || n.nodeType !== 1) return false;
+        if(String(n.tagName || "").toLowerCase() === "script") return false;
+        if(n.classList && n.classList.contains("wb-section-break")) return false;
+        return true;
+      });
+    }
+
+    function getNodeHeight(node){
+      if(!node || !node.getBoundingClientRect) return 0;
+      const rect = node.getBoundingClientRect();
+      let mt = 0, mb = 0;
+      try{
+        const cs = global.getComputedStyle(node);
+        mt = parseFloat(cs.marginTop || "0") || 0;
+        mb = parseFloat(cs.marginBottom || "0") || 0;
+      }catch(_){}
+      return rect.height + mt + mb;
+    }
+
+    function splitGroupByHeight(nodes, maxPx, minPx){
+      const chunks = [];
+      let cur = [];
+      let curH = 0;
+      const softMaxPx = maxPx * 1.18;
+      nodes.forEach(node => {
+        const h = getNodeHeight(node);
+        if(cur.length >= 2 && (curH + h) > softMaxPx){
+          chunks.push(cur);
+          cur = [node];
+          curH = h;
+        }else{
+          cur.push(node);
+          curH += h;
+        }
+      });
+      if(cur.length) chunks.push(cur);
+      if(chunks.length <= 1) return chunks;
+      const out = [];
+      for(let i = 0; i < chunks.length; i++){
+        const c = chunks[i];
+        const cH = c.reduce((s, n) => s + getNodeHeight(n), 0);
+        if(cH < minPx && i < chunks.length - 1){
+          const n = chunks[i + 1];
+          const nH = n.reduce((s, x) => s + getNodeHeight(x), 0);
+          if((cH + nH) <= softMaxPx){
+            chunks[i + 1] = c.concat(n);
+            continue;
+          }
+        }
+        out.push(c);
+      }
+      return out;
+    }
+
+    function buildPresentationSlides(pageNode){
+      if(!pageNode) return [];
+      const pageNum = Number(pageNode.getAttribute("data-wb-page") || "1");
+      const cached = presentationCache.get(pageNum);
+      if(cached) return cached;
+
+      const nodes = getTopLevelBlocks(pageNode);
+      if(!nodes.length){
+        const emptySlides = [];
+        presentationCache.set(pageNum, emptySlides);
+        return emptySlides;
+      }
+
+      const savedDisplay = nodes.map(node => node.style.display || "");
+      nodes.forEach(node => { node.style.display = originalDisplay.has(node) ? (originalDisplay.get(node) || "") : ""; });
+
+      let slides = [];
+      try{
+        let groups = [];
+        if(presentationSplit === "h2-smart"){
+          let cur = [];
+          nodes.forEach(node => {
+            const tn = String(node.tagName || "").toLowerCase();
+            if(tn === "h2" && cur.length){
+              groups.push(cur);
+              cur = [node];
+            }else{
+              cur.push(node);
+            }
+          });
+          if(cur.length) groups.push(cur);
+        }else{
+          groups = [nodes.slice()];
+        }
+
+        const available = Math.max(220, content.clientHeight - 24);
+        const maxPx = available * presentationMaxFill;
+        const minPx = available * presentationMinFill;
+        groups.forEach(group => {
+          splitGroupByHeight(group, maxPx, minPx).forEach(chunk => {
+            if(chunk.length) slides.push(chunk);
+          });
+        });
+        if(!slides.length) slides.push(nodes.slice());
+      }finally{
+        nodes.forEach((node, i) => { node.style.display = savedDisplay[i]; });
+      }
+
+      presentationCache.set(pageNum, slides);
+      return slides;
+    }
+
+    function setNodeVisible(node, visible){
+      if(!node || !node.style) return;
+      if(!originalDisplay.has(node)){
+        originalDisplay.set(node, node.style.display || "");
+      }
+      if(visible){
+        node.style.display = originalDisplay.get(node) || "";
+      }else{
+        node.style.display = "none";
+      }
+    }
+
+    function restorePageContent(pageNode){
+      getTopLevelBlocks(pageNode).forEach(node => setNodeVisible(node, true));
+    }
+
+    function restoreAllPageContent(){
+      pageSections().forEach(p => restorePageContent(p.node));
+    }
+
+    function getHeadingForSlide(pageNode, slideNodes){
+      if(!pageNode || !slideNodes || !slideNodes.length) return "-";
+      const all = getTopLevelBlocks(pageNode);
+      const first = slideNodes[0];
+      const firstIdx = all.indexOf(first);
+      for(let i = slideNodes.length - 1; i >= 0; i--){
+        const n = slideNodes[i];
+        if(String(n.tagName || "").toLowerCase() === "h2"){
+          return (n.textContent || "").trim() || "-";
+        }
+      }
+      if(firstIdx >= 0){
+        for(let i = firstIdx; i >= 0; i--){
+          const n = all[i];
+          if(String(n.tagName || "").toLowerCase() === "h2"){
+            return (n.textContent || "").trim() || "-";
+          }
+        }
+      }
+      const h1 = qs("h1", pageNode);
+      return h1 ? ((h1.textContent || "").trim() || "-") : "-";
+    }
+
+    function updatePresentationIndicator(pageNum, slideNum, slideTotal, headingText){
+      if(presentPageNowEl) presentPageNowEl.textContent = String(pageNum);
+      if(presentPageMaxEl) presentPageMaxEl.textContent = String(maxPage);
+      if(slideNowEl) slideNowEl.textContent = String(slideNum);
+      if(slideMaxEl) slideMaxEl.textContent = String(slideTotal);
+      if(presentH2El) presentH2El.textContent = String(headingText || "-");
+    }
+
+    function showPresentationSlide(pageNum, slideIndex){
+      const pageEntry = getPageByNumber(pageNum);
+      if(!pageEntry || !pageEntry.node) return;
+      const slides = buildPresentationSlides(pageEntry.node);
+      const totalSlides = Math.max(1, slides.length || 1);
+      const idx = Math.max(0, Math.min(totalSlides - 1, Number(slideIndex) || 0));
+      presentationSlideByPage.set(pageNum, idx);
+      prevBtn.disabled = !(idx > 0 || pageNum > 1);
+      nextBtn.disabled = !(idx < totalSlides - 1 || pageNum < maxPage);
+
+      const visibleSet = new Set(slides[idx] || []);
+      getTopLevelBlocks(pageEntry.node).forEach(node => setNodeVisible(node, visibleSet.has(node)));
+      updatePresentationIndicator(pageNum, idx + 1, totalSlides, getHeadingForSlide(pageEntry.node, slides[idx] || []));
+      if(content && content.scrollTo) content.scrollTo({top:0, behavior:"auto"});
+    }
+
+    function getSlideCount(pageNum){
+      const pageEntry = getPageByNumber(pageNum);
+      if(!pageEntry || !pageEntry.node) return 1;
+      const slides = buildPresentationSlides(pageEntry.node);
+      return Math.max(1, slides.length || 1);
+    }
+
+    function findSlideForTarget(pageNum, targetNode){
+      if(!targetNode) return 0;
+      const pageEntry = getPageByNumber(pageNum);
+      if(!pageEntry || !pageEntry.node) return 0;
+      const slides = buildPresentationSlides(pageEntry.node);
+      for(let i = 0; i < slides.length; i++){
+        const found = slides[i].some(n => n === targetNode || (n.contains && n.contains(targetNode)));
+        if(found) return i;
+      }
+      return 0;
+    }
+
+    function invalidatePresentationCache(){
+      presentationCache.clear();
+    }
+
+    function updatePresentationButtonState(){
+      if(!presentBtn) return;
+      presentBtn.setAttribute("aria-pressed", isPresentationMode ? "true" : "false");
+      presentBtn.setAttribute("title", isPresentationMode ? "Präsentationsmodus beenden" : "Präsentationsmodus");
+    }
 
     function getRevealTargets(pageNode){
       if(!pageNode) return [];
@@ -1790,7 +2054,7 @@ ${fi.input.value || ""}
       requestAnimationFrame(() => revealVisibleTargetsNow(pageNode));
     }
 
-    function showPage(n, scrollToSel){
+    function showPage(n, scrollToSel, presentationOpts){
       const idx = Math.max(1, Math.min(maxPage, n));
       nowEl.textContent = String(idx);
       const pageLabel = pageLabelFor(idx);
@@ -1833,7 +2097,85 @@ ${fi.input.value || ""}
       }else{
         scrollToNode(paper, false);
       }
-      armRevealObserver(idx);
+      if(isPresentationMode){
+        const requestedSlide = presentationOpts && Number.isFinite(Number(presentationOpts.slideIndex))
+          ? Number(presentationOpts.slideIndex)
+          : presentationSlideByPage.get(idx);
+        showPresentationSlide(idx, Number.isFinite(Number(requestedSlide)) ? Number(requestedSlide) : 0);
+      }else{
+        armRevealObserver(idx);
+      }
+    }
+
+    async function setPresentationMode(on, options = {}){
+      if(!presentationToggle) return;
+      const enable = !!on;
+      if(enable === isPresentationMode) return;
+      isPresentationMode = enable;
+      root.classList.toggle("wb-present-mode", isPresentationMode);
+      updatePresentationButtonState();
+      rememberPresentationMode(isPresentationMode);
+
+      if(isPresentationMode){
+        closeNav();
+        invalidatePresentationCache();
+        const pageNum = Number(nowEl.textContent || "1");
+        showPage(pageNum, null, {slideIndex: 0});
+        if(options.skipFullscreen !== true){
+          try{
+            if(!document.fullscreenElement){
+              await root.requestFullscreen();
+              presentationRequestedFullscreen = true;
+            }
+          }catch(_){}
+        }
+      }else{
+        restoreAllPageContent();
+        if(presentationRequestedFullscreen && document.fullscreenElement === root){
+          try{ await document.exitFullscreen(); }catch(_){}
+        }
+        presentationRequestedFullscreen = false;
+        if(slideNowEl) slideNowEl.textContent = "1";
+        if(slideMaxEl) slideMaxEl.textContent = "1";
+        if(presentH2El) presentH2El.textContent = "-";
+        const pageNum = Number(nowEl.textContent || "1");
+        showPage(pageNum);
+      }
+    }
+
+    function goNext(){
+      const pageNum = Number(nowEl.textContent || "1");
+      if(isPresentationMode){
+        const slideCount = getSlideCount(pageNum);
+        const currentSlide = presentationSlideByPage.has(pageNum) ? Number(presentationSlideByPage.get(pageNum)) : 0;
+        if(currentSlide < slideCount - 1){
+          showPresentationSlide(pageNum, currentSlide + 1);
+          return;
+        }
+        if(pageNum < maxPage){
+          showPage(pageNum + 1, null, {slideIndex: 0});
+        }
+        return;
+      }
+      showPage(pageNum + 1);
+    }
+
+    function goPrev(){
+      const pageNum = Number(nowEl.textContent || "1");
+      if(isPresentationMode){
+        const currentSlide = presentationSlideByPage.has(pageNum) ? Number(presentationSlideByPage.get(pageNum)) : 0;
+        if(currentSlide > 0){
+          showPresentationSlide(pageNum, currentSlide - 1);
+          return;
+        }
+        if(pageNum > 1){
+          const prevPage = pageNum - 1;
+          showPage(prevPage);
+          showPresentationSlide(prevPage, getSlideCount(prevPage) - 1);
+        }
+        return;
+      }
+      showPage(pageNum - 1);
     }
 
     const closeNav = () => root.classList.remove("nav-open");
@@ -1847,16 +2189,32 @@ ${fi.input.value || ""}
       const target = a.getAttribute("data-wb-target") || a.getAttribute("href");
       const isPageList = a.hasAttribute("data-wb-page-list");
       showPage(page, isPageList ? null : target);
+      if(isPresentationMode && !isPageList && String(target || "").startsWith("#")){
+        const targetNode = qs(target, root);
+        showPresentationSlide(page, findSlideForTarget(page, targetNode));
+      }
       setActiveByLink(a);
       closeNav();
       try{ history.replaceState(null, "", a.getAttribute("href")); }catch(_){}
     }));
 
-    prevBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) - 1));
-    nextBtn.addEventListener("click", () => showPage(Number(nowEl.textContent) + 1));
+    prevBtn.addEventListener("click", goPrev);
+    nextBtn.addEventListener("click", goNext);
     root.addEventListener("keydown", (e) => {
-      if(e.key === "ArrowLeft") showPage(Number(nowEl.textContent) - 1);
-      if(e.key === "ArrowRight") showPage(Number(nowEl.textContent) + 1);
+      if(e.key === "ArrowLeft" || e.key === "PageUp"){
+        e.preventDefault();
+        goPrev();
+        return;
+      }
+      if(e.key === "ArrowRight" || e.key === "PageDown" || e.key === " "){
+        e.preventDefault();
+        goNext();
+        return;
+      }
+      if(isPresentationMode && e.key === "Escape"){
+        e.preventDefault();
+        setPresentationMode(false, {skipFullscreen:true});
+      }
     });
     root.tabIndex = -1;
     root.focus({preventScroll:true});
@@ -1866,6 +2224,24 @@ ${fi.input.value || ""}
         if(!document.fullscreenElement) await root.requestFullscreen();
         else await document.exitFullscreen();
       }catch(_){}
+    });
+    if(presentBtn){
+      if(!presentationToggle){
+        presentBtn.style.display = "none";
+      }else{
+        presentBtn.addEventListener("click", () => setPresentationMode(!isPresentationMode));
+      }
+    }
+
+    let presentResizeTimer = 0;
+    global.addEventListener("resize", () => {
+      if(!isPresentationMode) return;
+      clearTimeout(presentResizeTimer);
+      presentResizeTimer = setTimeout(() => {
+        invalidatePresentationCache();
+        const pageNum = Number(nowEl.textContent || "1");
+        showPresentationSlide(pageNum, presentationSlideByPage.has(pageNum) ? Number(presentationSlideByPage.get(pageNum)) : 0);
+      }, 80);
     });
 
     submitBtn.addEventListener("click", () => {
@@ -1889,11 +2265,17 @@ ${fi.input.value || ""}
         startPage = Number(link.getAttribute("data-wb-page")||startPage);
         setActiveByLink(link);
         showPage(startPage, initialHash);
+        if(shouldStartInPresentationMode()){
+          setPresentationMode(true);
+        }
         return {root, showPage};
       }
     }
     setActiveByLink(firstLinkOfPage(startPage));
     showPage(startPage);
+    if(shouldStartInPresentationMode()){
+      setPresentationMode(true);
+    }
     return {root, showPage};
   }
 

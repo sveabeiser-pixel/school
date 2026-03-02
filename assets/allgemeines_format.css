@@ -725,6 +725,15 @@ body{
   font-weight: 900;
   user-select:none;
 }
+.wb-book .wb-present-ind{
+  display:none;
+  font-size: 15px;
+  color: var(--wb-blue3);
+  white-space: nowrap;
+  max-width: 54vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .wb-book .wb-page-ind{
   font-size: 18px;
   min-width: 70px;
@@ -742,6 +751,10 @@ body{
 .wb-book .wb-icon-btn svg{fill: var(--wb-blue3)}
 .wb-book .wb-icon-btn:active{transform: translateY(1px)}
 .wb-book .wb-icon-btn:disabled{opacity:.55; cursor:not-allowed; transform:none}
+.wb-book .wb-present-btn[aria-pressed="true"]{
+  border-color: var(--wb-blue);
+  background: #eaf2ff;
+}
 
 /* Layout */
 .wb-book .wb-layout{
@@ -909,6 +922,64 @@ body{
 .wb-book h2{margin: 30px 0 10px 0; font-size: 23px;}
 .wb-book p{line-height:1.65; font-size: 17px; color:#111827}
 .wb-book .wb-muted{color: var(--wb-muted)}
+
+/* Presentation mode */
+.wb-book.wb-present-mode .wb-sidebar,
+.wb-book.wb-present-mode .wb-backdrop,
+.wb-book.wb-present-mode .wb-hamburger,
+.wb-book.wb-present-mode .wb-brand,
+.wb-book.wb-present-mode .wb-page-ind,
+.wb-book.wb-present-mode [data-wb-fs],
+.wb-book.wb-present-mode .wb-theme-wrap{
+  display:none !important;
+}
+.wb-book.wb-present-mode .wb-topbar{
+  height: 56px;
+  padding: 0 12px;
+}
+.wb-book.wb-present-mode{
+  --wb-topH: 56px;
+}
+.wb-book.wb-present-mode .wb-top-left{
+  min-width: 0;
+}
+.wb-book.wb-present-mode .wb-top-right{
+  margin-left: auto;
+}
+.wb-book.wb-present-mode .wb-present-ind{
+  display:block;
+}
+.wb-book.wb-present-mode .wb-layout{
+  padding-top: var(--wb-topH);
+  height: calc(100vh - var(--wb-topH));
+}
+.wb-book.wb-present-mode .wb-content{
+  margin-left: 0;
+  padding: 10px 16px 16px 16px;
+  height: calc(100vh - var(--wb-topH));
+}
+.wb-book.wb-present-mode .wb-paper{
+  max-width: none;
+  margin: 0;
+  border-radius: 10px;
+  height: calc(100vh - var(--wb-topH) - 26px);
+  padding: 26px 34px;
+  overflow: hidden;
+}
+.wb-book.wb-present-mode [data-wb-page]{
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+.wb-book.wb-present-mode .wb-section-break{
+  display:none !important;
+}
+.wb-book.wb-present-mode h1{font-size: 36px; margin-bottom: 16px;}
+.wb-book.wb-present-mode h2{font-size: 28px; margin-top: 20px; margin-bottom: 10px;}
+.wb-book.wb-present-mode p,
+.wb-book.wb-present-mode li,
+.wb-book.wb-present-mode label{font-size: 19px; line-height: 1.55;}
 .wb-book [data-wb-page] .wb-reveal-item-pending{
   opacity: 0;
   transform: translateY(12px);
