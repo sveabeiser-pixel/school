@@ -2080,6 +2080,10 @@ ${fi.input.value || ""}
       return true;
     }
 
+    function wait(ms){
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     async function exitAnyFullscreen(){
       const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
       if(!exit) return false;
@@ -2098,6 +2102,13 @@ ${fi.input.value || ""}
         if(active !== root){
           const entered = await requestRootFullscreen();
           if(!entered){
+            setPseudoFullscreen(true);
+            return true;
+          }
+          // iPad/Safari can resolve requestFullscreen without actually entering fullscreen.
+          // Verify state and fall back when native fullscreen was not applied.
+          await wait(80);
+          if(getActiveFullscreenElement() !== root){
             setPseudoFullscreen(true);
             return true;
           }
