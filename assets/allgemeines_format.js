@@ -2097,6 +2097,23 @@ ${fi.input.value || ""}
     async function enterBookFullscreen(){
       fullscreenPinned = true;
       if(pseudoFullscreenActive) return true;
+      if(isIOSLike()){
+        // iPad/iOS: keep a stable fullscreen-like mode independent of native API quirks.
+        setPseudoFullscreen(true);
+        try{
+          const active = getActiveFullscreenElement();
+          if(active !== root){
+            const entered = await requestRootFullscreen();
+            if(entered){
+              await wait(80);
+              if(getActiveFullscreenElement() === root){
+                setPseudoFullscreen(false);
+              }
+            }
+          }
+        }catch(_){}
+        return true;
+      }
       try{
         const active = getActiveFullscreenElement();
         if(active !== root){
@@ -2290,7 +2307,9 @@ ${fi.input.value || ""}
         }
       }else{
         restoreAllPageContent();
-        // Keep fullscreen active until the dedicated fullscreen button is used.
+        if(presentationRequestedFullscreen && isBookFullscreenActive()){
+          await exitBookFullscreen();
+        }
         presentationRequestedFullscreen = false;
         if(slideNowEl) slideNowEl.textContent = "1";
         if(slideMaxEl) slideMaxEl.textContent = "1";
