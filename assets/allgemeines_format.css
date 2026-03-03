@@ -465,6 +465,13 @@ body.wb-global-fs{
 .wb-book[data-theme="dark"] .wb-icon-btn svg{
   fill: #cfe7fb;
 }
+.wb-book[data-theme="dark"] .wb-present-btn[aria-pressed="true"]{
+  background: #7fa8d8;
+  border-color: #9ec4ef;
+}
+.wb-book[data-theme="dark"] .wb-present-btn[aria-pressed="true"] svg{
+  fill: #10243d;
+}
 .wb-book[data-theme="dark"] .wb-theme-wrap{
   background: rgb(38 51 77 / 80%);
   border-color: #5975a1;
@@ -553,6 +560,13 @@ body.wb-global-fs{
 }
 .wb-book[data-theme="grau"] .wb-icon-btn svg{
   fill: var(--wb-text);
+}
+.wb-book[data-theme="grau"] .wb-present-btn[aria-pressed="true"]{
+  background: #89d7e8;
+  border-color: #afeaf6;
+}
+.wb-book[data-theme="grau"] .wb-present-btn[aria-pressed="true"] svg{
+  fill: #0f2b33;
 }
 .wb-book[data-theme="grau"] .wb-theme-wrap{
   background: rgba(255,255,255,0.08);
