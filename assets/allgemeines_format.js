@@ -2667,6 +2667,14 @@ function initPuzzle2(root, idx=0){
 
     // ---- Drag core ----
     let drag = null;
+    function getViewportOffset(){
+      const vv = window.visualViewport;
+      if(!vv) return {x: 0, y: 0};
+      return {
+        x: Number(vv.offsetLeft || 0),
+        y: Number(vv.offsetTop || 0)
+      };
+    }
 
     function startDrag(piece, clientX, clientY){
       if(!piece || piece.classList.contains("p2-locked")) return;
@@ -2688,17 +2696,19 @@ function initPuzzle2(root, idx=0){
       drag.originParent.insertBefore(drag.placeholder, drag.originNext);
 
       piece.classList.add("p2-dragging");
+      const vp = getViewportOffset();
       piece.style.position = "fixed";
-      piece.style.left = rect.left + "px";
-      piece.style.top  = rect.top  + "px";
+      piece.style.left = (rect.left + vp.x) + "px";
+      piece.style.top  = (rect.top  + vp.y) + "px";
       piece.style.width = rect.width + "px";
       piece.style.zIndex = 9999;
     }
 
     function moveDrag(clientX, clientY){
       if(!drag) return;
-      drag.piece.style.left = (clientX - drag.offsetX) + "px";
-      drag.piece.style.top  = (clientY - drag.offsetY) + "px";
+      const vp = getViewportOffset();
+      drag.piece.style.left = (clientX - drag.offsetX + vp.x) + "px";
+      drag.piece.style.top  = (clientY - drag.offsetY + vp.y) + "px";
     }
 
     function restoreDrag(){
