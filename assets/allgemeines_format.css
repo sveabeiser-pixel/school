@@ -81,13 +81,17 @@ body.wb-global-fs{
   position: fixed;
   inset: 0;
   z-index: 9999;
+  height: 100vh;
+  min-height: 100vh;
   height: 100dvh;
   min-height: 100dvh;
 }
 .wb-book.wb-pseudo-fullscreen .wb-layout{
+  height: calc(100vh - var(--wb-topH));
   height: calc(100dvh - var(--wb-topH));
 }
 .wb-book.wb-pseudo-fullscreen .wb-content{
+  height: calc(100vh - var(--wb-topH));
   height: calc(100dvh - var(--wb-topH));
 }
 

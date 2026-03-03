@@ -2060,18 +2060,54 @@ ${fi.input.value || ""}
       }
     }
 
+    function getActiveFullscreenElement(){
+      return (
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement ||
+        null
+      );
+    }
+
+    async function requestRootFullscreen(){
+      const req = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
+      if(!req) return false;
+      const result = req.call(root);
+      if(result && typeof result.then === "function"){
+        await result;
+      }
+      return true;
+    }
+
+    async function exitAnyFullscreen(){
+      const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+      if(!exit) return false;
+      const result = exit.call(document);
+      if(result && typeof result.then === "function"){
+        await result;
+      }
+      return true;
+    }
+
     async function enterBookFullscreen(){
+      if(pseudoFullscreenActive) return true;
       if(isIOSLike()){
         setPseudoFullscreen(true);
         return true;
       }
       try{
-        if(!document.fullscreenElement){
-          await root.requestFullscreen();
+        const active = getActiveFullscreenElement();
+        if(active !== root){
+          const entered = await requestRootFullscreen();
+          if(!entered){
+            setPseudoFullscreen(true);
+            return true;
+          }
         }
         return true;
       }catch(_){
-        return false;
+        setPseudoFullscreen(true);
+        return true;
       }
     }
 
@@ -2081,8 +2117,10 @@ ${fi.input.value || ""}
         return true;
       }
       try{
-        if(document.fullscreenElement){
-          await document.exitFullscreen();
+        const active = getActiveFullscreenElement();
+        if(active){
+          const exited = await exitAnyFullscreen();
+          return !!exited;
         }
         return true;
       }catch(_){
@@ -2091,7 +2129,7 @@ ${fi.input.value || ""}
     }
 
     function isBookFullscreenActive(){
-      return pseudoFullscreenActive || document.fullscreenElement === root;
+      return pseudoFullscreenActive || getActiveFullscreenElement() === root;
     }
 
     function getRevealTargets(pageNode){
