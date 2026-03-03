@@ -2093,12 +2093,6 @@ ${fi.input.value || ""}
     async function enterBookFullscreen(){
       fullscreenPinned = true;
       if(pseudoFullscreenActive) return true;
-      if(isIOSLike()){
-        // iPad/iOS fullscreen can be dismissed by system gestures while scrolling.
-        // Use the stable pseudo fullscreen so exit is only controlled by our button.
-        setPseudoFullscreen(true);
-        return true;
-      }
       try{
         const active = getActiveFullscreenElement();
         if(active !== root){
