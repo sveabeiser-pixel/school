@@ -2036,6 +2036,7 @@ ${fi.input.value || ""}
     }
 
     let pseudoFullscreenActive = false;
+    let fullscreenPinned = false;
 
     function setPseudoFullscreen(on){
       const enable = !!on;
@@ -2056,6 +2057,17 @@ ${fi.input.value || ""}
         document.msFullscreenElement ||
         null
       );
+    }
+
+    function isIOSLike(){
+      try{
+        const ua = navigator.userAgent || "";
+        const iOSUA = /iPad|iPhone|iPod/.test(ua);
+        const iPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+        return iOSUA || iPadOS;
+      }catch(_){
+        return false;
+      }
     }
 
     async function requestRootFullscreen(){
@@ -2079,6 +2091,7 @@ ${fi.input.value || ""}
     }
 
     async function enterBookFullscreen(){
+      fullscreenPinned = true;
       if(pseudoFullscreenActive) return true;
       try{
         const active = getActiveFullscreenElement();
@@ -2099,6 +2112,7 @@ ${fi.input.value || ""}
     }
 
     async function exitBookFullscreen(){
+      fullscreenPinned = false;
       if(pseudoFullscreenActive){
         setPseudoFullscreen(false);
         return true;
@@ -2117,6 +2131,17 @@ ${fi.input.value || ""}
 
     function isBookFullscreenActive(){
       return pseudoFullscreenActive || getActiveFullscreenElement() === root;
+    }
+
+    function syncFullscreenStateAfterNativeExit(){
+      const active = getActiveFullscreenElement();
+      if(active === root){
+        if(pseudoFullscreenActive) setPseudoFullscreen(false);
+        return;
+      }
+      if(fullscreenPinned && !pseudoFullscreenActive && isIOSLike()){
+        setPseudoFullscreen(true);
+      }
     }
 
     function getRevealTargets(pageNode){
@@ -2346,6 +2371,8 @@ ${fi.input.value || ""}
       if(isBookFullscreenActive()) await exitBookFullscreen();
       else await enterBookFullscreen();
     });
+    document.addEventListener("fullscreenchange", syncFullscreenStateAfterNativeExit);
+    document.addEventListener("webkitfullscreenchange", syncFullscreenStateAfterNativeExit);
     if(presentBtn){
       if(!presentationToggle){
         presentBtn.style.display = "none";
