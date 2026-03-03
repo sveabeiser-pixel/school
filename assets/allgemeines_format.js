@@ -2349,6 +2349,14 @@ ${fi.input.value || ""}
     prevBtn.addEventListener("click", goPrev);
     nextBtn.addEventListener("click", goNext);
     root.addEventListener("keydown", (e) => {
+      if(e.defaultPrevented) return;
+      const target = e.target;
+      if(target && (
+        (typeof target.closest === "function" && target.closest("input, textarea, select, [contenteditable]:not([contenteditable='false'])")) ||
+        target.isContentEditable
+      )){
+        return;
+      }
       if(e.key === "ArrowLeft" || e.key === "PageUp"){
         e.preventDefault();
         goPrev();
