@@ -2035,6 +2035,65 @@ ${fi.input.value || ""}
       presentBtn.setAttribute("title", isPresentationMode ? "Präsentationsmodus beenden" : "Präsentationsmodus");
     }
 
+    function isIOSLike(){
+      try{
+        const ua = navigator.userAgent || "";
+        const iOSUA = /iPad|iPhone|iPod/.test(ua);
+        const iPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+        return iOSUA || iPadOS;
+      }catch(_){
+        return false;
+      }
+    }
+
+    let pseudoFullscreenActive = false;
+
+    function setPseudoFullscreen(on){
+      const enable = !!on;
+      pseudoFullscreenActive = enable;
+      root.classList.toggle("wb-pseudo-fullscreen", enable);
+      if(document && document.documentElement){
+        document.documentElement.classList.toggle("wb-global-fs", enable);
+      }
+      if(document && document.body){
+        document.body.classList.toggle("wb-global-fs", enable);
+      }
+    }
+
+    async function enterBookFullscreen(){
+      if(isIOSLike()){
+        setPseudoFullscreen(true);
+        return true;
+      }
+      try{
+        if(!document.fullscreenElement){
+          await root.requestFullscreen();
+        }
+        return true;
+      }catch(_){
+        return false;
+      }
+    }
+
+    async function exitBookFullscreen(){
+      if(pseudoFullscreenActive){
+        setPseudoFullscreen(false);
+        return true;
+      }
+      try{
+        if(document.fullscreenElement){
+          await document.exitFullscreen();
+        }
+        return true;
+      }catch(_){
+        return false;
+      }
+    }
+
+    function isBookFullscreenActive(){
+      return pseudoFullscreenActive || document.fullscreenElement === root;
+    }
+
     function getRevealTargets(pageNode){
       if(!pageNode) return [];
       const selector = [
@@ -2163,17 +2222,15 @@ ${fi.input.value || ""}
         const pageNum = Number(nowEl.textContent || "1");
         showPage(pageNum, null, {slideIndex: 0});
         if(options.skipFullscreen !== true){
-          try{
-            if(!document.fullscreenElement){
-              await root.requestFullscreen();
-              presentationRequestedFullscreen = true;
-            }
-          }catch(_){}
+          const entered = await enterBookFullscreen();
+          if(entered){
+            presentationRequestedFullscreen = true;
+          }
         }
       }else{
         restoreAllPageContent();
-        if(presentationRequestedFullscreen && document.fullscreenElement === root){
-          try{ await document.exitFullscreen(); }catch(_){}
+        if(presentationRequestedFullscreen && isBookFullscreenActive()){
+          await exitBookFullscreen();
         }
         presentationRequestedFullscreen = false;
         if(slideNowEl) slideNowEl.textContent = "1";
@@ -2261,10 +2318,8 @@ ${fi.input.value || ""}
     root.focus({preventScroll:true});
 
     fsBtn.addEventListener("click", async () => {
-      try{
-        if(!document.fullscreenElement) await root.requestFullscreen();
-        else await document.exitFullscreen();
-      }catch(_){}
+      if(isBookFullscreenActive()) await exitBookFullscreen();
+      else await enterBookFullscreen();
     });
     if(presentBtn){
       if(!presentationToggle){
