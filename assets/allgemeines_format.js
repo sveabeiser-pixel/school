@@ -2035,17 +2035,6 @@ ${fi.input.value || ""}
       presentBtn.setAttribute("title", isPresentationMode ? "Präsentationsmodus beenden" : "Präsentationsmodus");
     }
 
-    function isIOSLike(){
-      try{
-        const ua = navigator.userAgent || "";
-        const iOSUA = /iPad|iPhone|iPod/.test(ua);
-        const iPadOS = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
-        return iOSUA || iPadOS;
-      }catch(_){
-        return false;
-      }
-    }
-
     let pseudoFullscreenActive = false;
 
     function setPseudoFullscreen(on){
@@ -2091,10 +2080,6 @@ ${fi.input.value || ""}
 
     async function enterBookFullscreen(){
       if(pseudoFullscreenActive) return true;
-      if(isIOSLike()){
-        setPseudoFullscreen(true);
-        return true;
-      }
       try{
         const active = getActiveFullscreenElement();
         if(active !== root){
@@ -2106,6 +2091,8 @@ ${fi.input.value || ""}
         }
         return true;
       }catch(_){
+        // iPad/Safari may reject native fullscreen depending on context/version.
+        // Keep the feature usable by falling back to pseudo fullscreen.
         setPseudoFullscreen(true);
         return true;
       }
