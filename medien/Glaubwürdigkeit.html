@@ -25,37 +25,48 @@
 
     <section data-wb-page="1" data-wb-page-title="Einstieg">
       <h1>Glaubwürdig oder nicht?</h1>
-      <p class="wb-muted">Jetzt lernst du, wie du digitale Texte besser beurteilen kannst.</p>
+      <p class="wb-muted">Jetzt lernst du, wie du digitale Nachrichten und Posts systematisch prüfst.</p>
 
       <h2>Lernziele</h2>
       <ul>
-        <li>Du erkennst Merkmale glaubwürdiger und unglaubwürdiger Texte.</li>
-        <li>Du nutzt einfache Kriterien zur Überprüfung.</li>
-        <li>Du kannst Ergebnisse begründen.</li>
+        <li>Du unterscheidest zwischen Nachricht, Meinung, Satire und gezielter Desinformation.</li>
+        <li>Du prüfst Quellen mit klaren Kriterien (Autor, Datum, Belege, Impressum, Absicht).</li>
+        <li>Du wendest die Kriterien praktisch mit dem SWR Fakefinder an.</li>
       </ul>
 
-      <h2>Brainstorming: Was macht Texte glaubwürdig?</h2>
-      <p>Schreibe deine Ideen auf. Jetzt lernst du, worauf es wirklich ankommt.</p>
+      <h2>Einstieg: Woher kommen deine Infos?</h2>
+      <p>Stopp &amp; check: Überlege, welche Apps oder Plattformen du für Nachrichten nutzt und wie sehr du ihnen vertraust.</p>
 
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
         {
-          "id":"brainstorm",
-          "title":"Aufgabe: Brainstorming",
+          "id":"einstieg_quellen",
+          "title":"Aufgabe: Deine Mediennutzung",
           "storagePrefix":"glaub_",
           "fields":[
-            {"label":"Meine Merkmale", "key":"merkmale", "kind":"textarea", "placeholder":"z.B. Autor, Datum, Quellen, Impressum..."}
+            {"label":"Welche sozialen Netzwerke nutzt du? Wofür?", "key":"netzwerke", "kind":"textarea", "placeholder":"z.B. TikTok für Unterhaltung, YouTube für Erklärvideos ..."},
+            {"label":"Wo informierst du dich über aktuelle Ereignisse?", "key":"newsquellen", "kind":"textarea", "placeholder":"z.B. Tagesschau-App, YouTube, Radio, Zeitung ..."},
+            {"label":"Welche Quelle wirkt auf dich am vertrauenswürdigsten und warum?", "key":"vertrauen", "kind":"textarea", "placeholder":"Begründe mit mindestens 2 Kriterien."}
           ]
         }
         </script>
       </div>
 
-      <p class="wb-muted">Tipp: Schaue dir das PDF an: <a href="Lernidee_KI_Glaubwuerdigkeit.pdf" target="_blank" rel="noopener">Lernidee KI Glaubwürdigkeit</a></p>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_ziele",
+          "title":"Was kannst du danach?",
+          "question":"Was hast du nach dieser Einheit konkret gelernt?",
+          "answer":"Du kannst Falschmeldungen gezielter erkennen, Quellen vergleichen und begründet entscheiden, ob eine Nachricht eher glaubwürdig oder eher zweifelhaft ist."
+        }
+        </script>
+      </div>
     </section>
 
     <section data-wb-page="2" data-wb-page-title="Kriterien">
       <h1>Kriterien für Glaubwürdigkeit</h1>
-      <h2>Wichtige Fragen</h2>
+      <h2>Wichtige Prüffragen</h2>
       <ul>
         <li><b>Wer?</b> Wer ist Autor oder Herausgeber?</li>
         <li><b>Wann?</b> Gibt es ein Datum?</li>
@@ -63,6 +74,26 @@
         <li><b>Wie?</b> Gibt es Quellen, Belege oder Links?</li>
         <li><b>Wo?</b> Gibt es ein Impressum oder Kontakt?</li>
       </ul>
+
+      <h2>Merke: Nicht alles ist automatisch „Fake News“</h2>
+      <p>Jetzt hast du gelernt: Der entscheidende Punkt ist die <b>Absicht</b>. Wird absichtlich getäuscht, spricht man von Fake News/Desinformation.</p>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order_einordnung",
+          "title":"Ordne die Begriffe nach Täuschungsabsicht (wenig - viel)",
+          "hint":"Ziehe nach oben, was typischerweise die geringste Täuschungsabsicht hat.",
+          "items":[
+            "Journalistischer Fehler (versehentliche Falschmeldung)",
+            "Clickbait-Überschrift",
+            "Satire mit erkennbarer Übertreibung",
+            "Manipulierter Inhalt",
+            "Gezielte Desinformation"
+          ]
+        }
+        </script>
+      </div>
 
       <h2>Puzzle: Kriterium zuordnen</h2>
 
@@ -128,6 +159,8 @@
         }
         </script>
       </div>
+
+      <p class="wb-muted">Jetzt hast du das gelernt: Mit den 5W-Fragen kannst du fast jede Nachricht strukturiert prüfen.</p>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Beispiel 1">
@@ -156,7 +189,26 @@
         </script>
       </div>
 
-      <h2>Teste nun dein Wissen</h2>
+      <h2>Werkzeuge für die Überprüfung</h2>
+      <ul>
+        <li>Tagesschau Faktenfinder: <a href="https://www.tagesschau.de/faktenfinder/" target="_blank" rel="noopener">tagesschau.de/faktenfinder</a></li>
+        <li>Hoaxsearch: <a href="http://hoaxsearch.com/" target="_blank" rel="noopener">hoaxsearch.com</a></li>
+        <li>Google Bilder-Rückwärtssuche: <a href="https://images.google.de/" target="_blank" rel="noopener">images.google.de</a></li>
+        <li>YouTube DataViewer: <a href="https://citizenevidence.amnestyusa.org/" target="_blank" rel="noopener">citizenevidence.amnestyusa.org</a></li>
+      </ul>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_bildercheck",
+          "title":"Stopp & check: Bilder und Videos",
+          "question":"Warum reicht es nicht, nur den Text zu lesen?",
+          "answer":"Bilder und Videos können aus dem Kontext gerissen oder bearbeitet sein. Deshalb prüfst du immer, ob das Material wirklich zur Meldung passt und ob es schon früher in anderem Zusammenhang veröffentlicht wurde."
+        }
+        </script>
+      </div>
+
+      <h2>Mini-Check</h2>
 
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
@@ -179,9 +231,60 @@
         }
         </script>
       </div>
+
+      <p class="wb-muted">Jetzt hast du das gelernt: Gute Belege sind wichtiger als eine überzeugende Überschrift.</p>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Beispiel 2+3">
+    <section data-wb-page="4" data-wb-page-title="Fakefinder-Praxis">
+      <h1>Praxis: SWR Fakefinder for school</h1>
+      <p>Jetzt setzt du die Kriterien direkt in einem Quiz ein.</p>
+      <h2>Arbeitsauftrag</h2>
+      <ol>
+        <li>Öffne <a href="https://schule.swrfakefinder.de/" target="_blank" rel="noopener">schule.swrfakefinder.de</a>.</li>
+        <li>Bearbeite ein Quiz einzeln oder in einer 2er-Gruppe.</li>
+        <li>Notiere zu mindestens 3 Meldungen, welche Kriterien dir bei der Entscheidung geholfen haben.</li>
+      </ol>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"fakefinder_auswertung",
+          "title":"Auswertung Fakefinder",
+          "hint":"Begründe jede Entscheidung mit Kriterien, nicht nur mit Gefühl.",
+          "storagePrefix":"glaub_",
+          "fields":[
+            {"label":"Meldung 1: Was war dein Urteil und warum?", "key":"ff1", "kind":"textarea", "placeholder":"Nenne z.B. Autor, Belege, Sprache, Bildmaterial."},
+            {"label":"Meldung 2: Was war dein Urteil und warum?", "key":"ff2", "kind":"textarea", "placeholder":"Welche Hinweise waren stark, welche unsicher?"},
+            {"label":"Meldung 3: Was war dein Urteil und warum?", "key":"ff3", "kind":"textarea", "placeholder":"Was würdest du zusätzlich recherchieren?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_fakefinder",
+          "title":"Check: Vorgehen beim Prüfen",
+          "questions":[
+            {
+              "text":"Welche Reihenfolge ist sinnvoll?",
+              "multiple": false,
+              "choices":[
+                {"id":"a","label":"Zuerst teilen, dann später prüfen."},
+                {"id":"b","label":"Erst Quelle, Datum, Belege und Bilder prüfen, dann entscheiden."},
+                {"id":"c","label":"Nur auf Kommentare unter dem Post achten."}
+              ],
+              "correct":["b"],
+              "explain":"Seriöses Prüfen passiert vor dem Teilen."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Beispiel 2+3+4">
       <h1>Beispiel 2: KI-Antwort prüfen</h1>
       <p>Jetzt lernst du, KI-Antworten kritisch zu prüfen.</p>
       <h2>Aufgabe</h2>
@@ -227,10 +330,8 @@
         }
         </script>
       </div>
-    </section>
 
-    <section data-wb-page="5" data-wb-page-title="Beispiel 4 + Abschluss">
-      <h1>Beispiel 4: Krypto-Investments</h1>
+      <h2>Beispiel 4: Krypto-Investments</h2>
       <p>Jetzt lernst du, Werbeversprechen zu erkennen.</p>
       <h2>Aufgabe</h2>
       <p>Eine Anzeige verspricht "geheime Systeme zum Geldverdienen".</p>
@@ -259,22 +360,62 @@
         }
         </script>
       </div>
+    </section>
 
-      <h2>Abschluss: Austausch</h2>
-      <p>Teste nun dein Wissen und diskutiere im Plenum: Wie erkennt man Fake News?</p>
+    <section data-wb-page="6" data-wb-page-title="Abschluss & Quellen">
+      <h1>Zusammenfassung</h1>
+      <p>Jetzt hast du das gelernt:</p>
+      <ul>
+        <li>Du kannst Quellen auf Autor, Datum, Belege, Impressum und Absicht prüfen.</li>
+        <li>Du unterscheidest eher zwischen Versehen, Meinung, Satire und gezielter Täuschung.</li>
+        <li>Du nutzt Werkzeuge wie Fakefinder, Faktenfinder und Rückwärtssuche.</li>
+      </ul>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_abschluss",
+          "title":"Selbstkontrolle",
+          "questions":[
+            {
+              "text":"Welche Aussage passt zu einem guten Faktencheck?",
+              "multiple": false,
+              "choices":[
+                {"id":"a","label":"Wenn viele Likes da sind, ist die Meldung sicher wahr."},
+                {"id":"b","label":"Ich prüfe mindestens zwei unabhängige Quellen."},
+                {"id":"c","label":"Ein emotionaler Text ist automatisch glaubwürdig."}
+              ],
+              "correct":["b"],
+              "explain":"Unabhängige Quellen erhöhen die Sicherheit deiner Einschätzung."
+            }
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
         {
           "id":"abschluss",
-          "title":"Meine wichtigsten Regeln",
+          "title":"Abgabe: Meine 3 wichtigsten Regeln",
+          "hint":"Formuliere kurz und konkret, damit du die Regeln später schnell anwenden kannst.",
           "storagePrefix":"glaub_",
           "fields":[
-            {"label":"Meine 3 wichtigsten Regeln", "key":"regeln", "kind":"textarea", "placeholder":"z.B. Quelle, Datum, Impressum..."}
+            {"label":"Meine 3 wichtigsten Regeln", "key":"regeln", "kind":"textarea", "placeholder":"z.B. 1) Quelle prüfen 2) Datum prüfen 3) Nicht sofort teilen"}
           ]
         }
         </script>
       </div>
+
+      <h2>Weiterforschen &amp; Quellen</h2>
+      <ul>
+        <li>SWR Fakefinder for school: <a href="https://schule.swrfakefinder.de/" target="_blank" rel="noopener">schule.swrfakefinder.de</a></li>
+        <li>SWR Hintergrund Fakefinder: <a href="https://www.swr.de/unternehmen/medienkompetenz/Fakes-treffsicher-filtern-so-geht-s,fakefinder-100.html" target="_blank" rel="noopener">swr.de</a></li>
+        <li>ARD alpha, so geht MEDIEN - Lexikon: Fake News: <a href="https://youtu.be/Pbu_NY-EDI4" target="_blank" rel="noopener">youtu.be/Pbu_NY-EDI4</a></li>
+        <li>Stiftung Neue Verantwortung, Fakten statt Fakes: <a href="https://www.stiftung-nv.de/sites/default/files/snv_fakten_statt_fakes.pdf" target="_blank" rel="noopener">stiftung-nv.de</a></li>
+        <li>Mimikama (aktuelle Falschmeldungen): <a href="https://www.mimikama.at/" target="_blank" rel="noopener">mimikama.at</a></li>
+        <li>Tagesschau Faktenfinder: <a href="https://www.tagesschau.de/faktenfinder/" target="_blank" rel="noopener">tagesschau.de/faktenfinder</a></li>
+      </ul>
     </section>
   </div>
 

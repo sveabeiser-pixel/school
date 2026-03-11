@@ -288,6 +288,13 @@ function el(tag, attrs = {}, children = []) {
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "cloze");
     let selectedChip = null;
+    function normalizeGapAnswers(raw){
+      if(Array.isArray(raw)){
+        return raw.map(v => String(v == null ? "" : v).trim()).filter(v => v !== "");
+      }
+      const s = String(raw == null ? "" : raw).trim();
+      return s ? [s] : [];
+    }
 
         // --- shuffle (einmal beim Start) ---
     function shuffle(arr){
@@ -420,7 +427,12 @@ function el(tag, attrs = {}, children = []) {
     cfg.segments.forEach(s => {
       if(s.t === "text") text.appendChild(document.createTextNode(String(s.v || "")));
       if(s.t === "gap"){
-        const g = el("span", {class:"wb-gap", "data-answer": String(s.a || "")}, []);
+        const answers = normalizeGapAnswers(s.a);
+        const g = el("span", {
+          class:"wb-gap",
+          "data-answer": answers[0] || "",
+          "data-answers": JSON.stringify(answers)
+        }, []);
         g.innerHTML = "&nbsp;";
         allowDropGap(g);
         gaps.push(g);
@@ -468,10 +480,21 @@ function el(tag, attrs = {}, children = []) {
       let okCount = 0;
       gaps.forEach(g => {
         g.classList.remove("ok","bad");
-        const expected = (g.getAttribute("data-answer") || "").trim();
+        let expectedList = [];
+        try{
+          const raw = g.getAttribute("data-answers") || "[]";
+          const parsed = JSON.parse(raw);
+          if(Array.isArray(parsed)){
+            expectedList = parsed.map(v => String(v == null ? "" : v).trim()).filter(v => v !== "");
+          }
+        }catch(_){}
+        if(expectedList.length === 0){
+          const expected = (g.getAttribute("data-answer") || "").trim();
+          if(expected) expectedList = [expected];
+        }
         const chip = qs(".wb-chip", g);
         const got = chip ? (chip.getAttribute("data-token") || "").trim() : "";
-        const ok = got !== "" && got === expected;
+        const ok = got !== "" && expectedList.includes(got);
         g.classList.add(ok ? "ok" : "bad");
         if(ok) okCount += 1;
       });

@@ -2714,6 +2714,274 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
       </p>
     </section>
 
+    <section data-wb-page="10" data-wb-page-title="Dünne Schichten">
+      <h1>Interferenz an dünnen Schichten</h1>
+      <p class="wb-muted">
+        Leitfrage: Ist Interferenz auch ohne Beugung möglich? Ja, und genau das erarbeitest du auf dieser Seite.
+      </p>
+      <div style="display:flex; gap:6px; flex-wrap:nowrap; align-items:flex-start;">
+        <div class="wb-img" style="flex:1 1 33.333%; margin:0; min-width:0;">
+          <img src="pdf-bilder/seifenblasen.png" alt="Seifenblasen mit farbigem Schillern durch Dünnschichtinterferenz" style="width:100%; max-width:none; height:380px; object-fit:cover; object-position:center;">
+        </div>
+        <div class="wb-img" style="flex:1 1 33.333%; margin:0; min-width:0;">
+          <img src="pdf-bilder/oelfilm.png" alt="Ölfilm auf Wasser mit Interferenzfarben" style="width:100%; max-width:none; height:380px; object-fit:cover; object-position:center;">
+        </div>
+        <div class="wb-img" style="flex:1 1 33.333%; margin:0; min-width:0;">
+          <img src="pdf-bilder/libellenflügel.png" alt="Libellenflügel mit strukturell bedingtem Schillern" style="width:100%; max-width:none; height:380px; object-fit:cover; object-position:center;">
+        </div>
+      </div>
+
+      <h2>Einstieg: Schillern im Alltag</h2>
+      <p>
+        Du kennst das farbige Schillern von Seifenblasen, Libellenflügeln oder Öl auf Wasser.
+        Dieses Schillern entsteht durch Interferenz an einer sehr dünnen Schicht:
+        Ein Teil des Lichts wird an der Vorderseite reflektiert, ein anderer Teil dringt ein,
+        wird an der Rückseite reflektiert und beide Teilstrahlen überlagern sich danach.
+      </p>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-thinfilm-1",
+          "title":"Warum ohne Beugung?",
+          "question":"Warum sprechen wir hier von Interferenz ohne Beugungsexperiment?",
+          "answer":"Die Interferenz entsteht hier durch zwei reflektierte Teilstrahlen an zwei Grenzflächen derselben dünnen Schicht. Du brauchst dafür keinen Doppelspalt: Entscheidend sind Gangunterschied und Phasenlage der beiden reflektierten Wellen.",
+          "buttonLabel":"Erklärung anzeigen",
+          "buttonHideLabel":"Erklärung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Versuch und Beobachtung</h2>
+      <p>
+        Richte eine Taschenlampe schräg auf ein transparentes Handydisplay oder eine sehr dünne Kunststoffschicht.
+        Das reflektierte Licht zeigt dann je nach Blickwinkel helle, dunkle oder farbige Streifen.
+      </p>
+      <p>
+        Beobachtung: Auf der Oberfläche treten streifenartige Interferenzmuster auf.
+        Je nach lokaler Schichtdicke und Winkel kommt es zu konstruktiver oder destruktiver Interferenz.
+      </p>
+      <div class="grid2" style="gap:2px;">
+        <div class="wb-img" style="margin:0;">
+          <img src="pdf-bilder/handy.png" alt="Handy mit Lichtreflexen auf einer dünnen Schicht" style="width:50%; max-width:none; height:auto;">
+        </div>
+        <div class="wb-img" style="margin:0;">
+          <img src="pdf-bilder/duenne-schicht.png" alt="Streifenmuster durch Interferenz an einer dünnen Schicht" style="width:100%; max-width:none; height:auto;">
+        </div>
+      </div>
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Interferenz kann auch bei Reflexion an zwei Grenzflächen derselben Schicht entstehen.
+      </p>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order-thinfilm-1",
+          "title":"Ablauf in dünnen Schichten",
+          "hint":"Ordne den Strahlweg von Teilstrahl 2 in die richtige Reihenfolge.",
+          "items":[
+            "Licht trifft auf die vordere Grenzfläche (Punkt A).",
+            "Ein Teil wird sofort reflektiert (Teilstrahl 1).",
+            "Ein Teil dringt in die Schicht ein und wird zum Lot gebrochen (beta < alpha).",
+            "Reflexion an der Rückseite der Schicht (Punkt B).",
+            "Austritt an der Vorderseite (Punkt C), Brechung vom Lot weg.",
+            "Teilstrahl 1 und Teilstrahl 2 laufen parallel und interferieren."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Wann konstruktiv, wann destruktiv?</h2>
+      <p>
+        Für senkrechten Einfall gilt zunächst geometrisch \(\Delta s=2d\).
+        Wegen der Brechungszahl \(n\) wird daraus optisch \(\delta=2dn\).
+        Zusätzlich kommt bei Reflexion am optisch dichteren Medium ein Phasensprung von \(180^\circ\) (\(\lambda/2\)) hinzu.
+      </p>
+      <div class="wb-callout">
+        <p><strong>Bei senkrechtem Einfall (mit Phasensprung):</strong></p>
+        <p>
+          Auslöschung: \(\;2dn=k\lambda\)<br>
+          Maximale Verstärkung: \(\;2dn=\dfrac{2k-1}{2}\lambda,\;k=1,2,3,\dots\)
+        </p>
+      </div>
+      <p>
+        Für schrägen Einfall ersetzt du \(2dn\) durch den winkelabhängigen Term:
+        \[
+          \delta_\text{opt}=2d\sqrt{n^2-\sin^2\alpha}
+        \]
+      </p>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-thinfilm-1",
+          "title":"Formeln sichern",
+          "hint":"Setze passende Begriffe und Formeln ein.",
+          "bank":["2d","2dn","k lambda","(2k-1)/2 * lambda","zum Lot hin","180 Grad","2d*sqrt(n^2-sin^2(alpha))"],
+          "segments":[
+            {"t":"text","v":"Bei senkrechtem Einfall ist der geometrische Zusatzweg von Strahl 2 gleich "},
+            {"t":"gap","a":"2d"},
+            {"t":"text","v":". Mit Brechungszahl n wird daraus optisch "},
+            {"t":"gap","a":"2dn"},
+            {"t":"text","v":". Die Auslöschungsbedingung lautet dann "},
+            {"t":"gap","a":["k lambda","k*lambda"]},
+            {"t":"text","v":" (rechte Seite von 2dn = ...). Für maximale Verstärkung gilt "},
+            {"t":"gap","a":["(2k-1)/2 * lambda","((2k-1)/2)*lambda"]},
+            {"t":"text","v":". Beim Übergang Luft -> Glimmer wird der Strahl "},
+            {"t":"gap","a":"zum Lot hin"},
+            {"t":"text","v":" gebrochen, und an der dichteren Grenzfläche tritt ein Phasensprung von "},
+            {"t":"gap","a":["180 Grad","180°"]},
+            {"t":"text","v":" auf. Für schrägen Einfall nutzt du statt 2dn den Term "},
+            {"t":"gap","a":["2d*sqrt(n^2-sin^2(alpha))","2d sqrt(n^2-sin^2(alpha))"]},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Begriffe vernetzen</h2>
+      <div data-p2 class="p2" data-p2-title="P2: Begriff -> Bedeutung" data-p2-hint="Füge jeweils passenden Begriff und Aussage zusammen.">
+        <div class="p2-hint">Füge jeweils passenden Begriff und Aussage zusammen.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Phasensprung bei Reflexion</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Optische Weglänge</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Dünne Schicht</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Kohärenzlänge</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Tritt beim Übergang zum optisch dichteren Medium auf und entspricht 180 Grad.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Berücksichtigt, dass Licht im Medium mit n langsamer ist als in Luft.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Nur dann bleibt der Gangunterschied klein genug für stabile Interferenz bei normalen Lichtquellen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Ist der Gangunterschied größer als dieser Wert, verschwindet ein stabiles Muster.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Puzzle: Phänomen -> Erklärung</h2>
+      <div data-p2 class="p2" data-p2-title="Puzzle: Dünne Schichten im Alltag" data-p2-hint="Ordne jedes Phänomen der passenden physikalischen Ursache zu.">
+        <div class="p2-hint">Ordne jedes Phänomen der passenden physikalischen Ursache zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Phänomen</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Seifenblase schillert</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Ölfilm auf Pfütze</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Newtonsche Ringe</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Entspiegelung</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Lokal wechselnde Schichtdicke und Blickwinkel ändern die ausgelöschten bzw. verstärkten Farben.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Reflexion an oberer und unterer Grenzfläche des Ölfilms erzeugt farbabhängige Interferenz.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Die Luftschicht zwischen Linse und Platte wird radial dicker, daher entstehen ringförmige Maxima/Minima.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Beschichtung wird so gewählt, dass reflektierte Anteile für Zielwellenlängen möglichst destruktiv interferieren.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mini-Check</h2>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-thinfilm-1",
+          "title":"Verständnischeck: Dünne Schichten",
+          "hint":"Wähle die fachlich richtige Aussage.",
+          "questions":[
+            {
+              "text":"Welche Aussage zur Reflexion an einer dünnen Schicht ist korrekt?",
+              "choices":[
+                {"id":"a","label":"Beide reflektierten Teilstrahlen haben immer denselben Phasensprung."},
+                {"id":"b","label":"Nur der an der optisch dichteren Grenzfläche reflektierte Teilstrahl erhält den 180-Grad-Phasensprung."},
+                {"id":"c","label":"Ohne Beugung kann grundsätzlich keine Interferenz auftreten."}
+              ],
+              "correct":["b"],
+              "explain":"Der Phasensprung tritt beim Übergang zum optisch dichteren Medium auf, nicht automatisch bei jeder Reflexion."
+            },
+            {
+              "text":"Warum sieht man Interferenz an dünnen Schichten bei weißem Licht oft als Farbmuster?",
+              "choices":[
+                {"id":"a","label":"Weil alle Wellenlängen immer gleichzeitig maximal verstärkt werden."},
+                {"id":"b","label":"Weil je nach d, alpha und lambda unterschiedliche Farben konstruktiv oder destruktiv interferieren."},
+                {"id":"c","label":"Weil das Licht im Medium keine Brechung erfährt."}
+              ],
+              "correct":["b"],
+              "explain":"Die Bedingungen hängen von Wellenlänge, Schichtdicke und Winkel ab. Daher werden nicht alle Farben gleich behandelt."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Transfer</h2>
+      <p>
+        Du planst eine Entspiegelung für ein Display. Begründe, welche Größen du kontrollieren musst
+        und warum eine einzelne Schicht nicht alle Reflexe für alle Winkel und Farben vollständig entfernen kann.
+      </p>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay-thinfilm-1",
+          "title":"Transferfrage",
+          "hint":"Antworte in 5-8 Sätzen. Nutze die Begriffe Gangunterschied, Phasensprung und Kohärenzlänge korrekt.",
+          "fields":[
+            {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Erkläre die physikalischen Grenzen einer Entspiegelung mit nur einer Schicht."}
+          ]
+        }
+        </script>
+      </div>
+
+      <p class="wb-muted">
+        Jetzt hast du das gelernt: Interferenz ohne Beugung ist möglich, wenn reflektierte Teilstrahlen an dünnen Schichten mit passendem Gangunterschied überlagert werden.
+      </p>
+
+      <h2>Weiterforschen & Quellen</h2>
+      <ul>
+        <li><a href="https://www.leifiphysik.de/optik/interferenz/grundwissen/interferenz-duennen-schichten" target="_blank" rel="noopener">LEIFIphysik: Interferenz an dünnen Schichten</a></li>
+        <li><a href="https://www.spektrum.de/lexikon/physik/duennschichtinterferenz/3383" target="_blank" rel="noopener">Spektrum Lexikon: Dünnschichtinterferenz</a></li>
+        <li><a href="https://de.wikipedia.org/wiki/Newtonsche_Ringe" target="_blank" rel="noopener">Newtonsche Ringe (Überblick)</a></li>
+      </ul>
+    </section>
+
   </div>
 
   <script src="../assets/wb-webhook-loader.js"></script>
