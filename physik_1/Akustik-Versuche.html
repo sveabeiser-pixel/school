@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akustik-Versuche</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .ak-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items: start;
+    }
+    .ak-card {
+      background: #fff;
+      border: 1px solid #d8dee6;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(20, 40, 70, 0.06);
+    }
+    .ak-card h3,
+    .ak-card h4 {
+      margin-top: 0;
+    }
+    .ak-img-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin: 16px 0;
+    }
+    .ak-img-grid figure,
+    .ak-figure {
+      margin: 0;
+    }
+    .ak-img-grid img,
+    .ak-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid #d8dee6;
+      background: #fff;
+    }
+    .ak-img-grid figcaption,
+    .ak-figure figcaption {
+      font-size: 0.95rem;
+      color: #5f6b7a;
+      margin-top: 6px;
+    }
+    .ak-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .ak-list li + li {
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle": "Physik 7",
+      "sectionTitle": "Akustik-Versuche",
+      "startPage": 1,
+      "submitLabel": "Ergebnisse anzeigen",
+      "onSubmit": "exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1", "h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Akustik",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "Akustik-Versuche-Ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>Akustik: Versuche zu Schallerzeugung und Schall unterwegs</h1>
+      <p class="wb-muted">Kurze Wiederholung für eine Doppelstunde, Schwerpunkt: beobachten, erklären, sauber dokumentieren.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Leitfrage</strong>
+          <p>Wie entsteht Schall und wie kommt er von der Quelle zu deinem Ohr?</p>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>So arbeitest du hier</strong>
+          <ul class="ak-list">
+            <li>Lies die kurze Theorie.</li>
+            <li>Führe die Versuche aus den Arbeitsblättern durch.</li>
+            <li>Dokumentiere Beobachtung und Erklärung direkt im Essay-Feld.</li>
+            <li>Nutze am Ende die Ergebnisseite als Sicherung.</li>
+          </ul>
+        </div>
+      </div>
+
+      
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_start_reveal",
+          "title": "Was kannst du danach?",
+          "hint": "Klappe die Kurzvorschau auf.",
+          "question": "Was sollst du nach dieser Doppelstunde sicher können?",
+          "answer": "Du kannst Schallquellen als schwingende Körper erkennen, einfache Beobachtungen aus Versuchen deuten und erklären, warum Schall sich in Luft, Flüssigkeiten und Festkörpern ausbreiten kann.",
+          "buttonLabel": "Antwort anzeigen",
+          "buttonHideLabel": "Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Dein Arbeitsauftrag</strong>
+        <p>Suche dir <strong>ein bis zwei Versuche</strong> aus der Schallerzeugung auf Seite 3, <strong>zwei Versuche</strong> aus den Stimmgabel-Versuchen auf Seite 4 und <strong>einen Versuch</strong> aus Schall unterwegs auf Seite 5 aus. Bearbeite genau diese Versuche im HTML und fülle die Versuchsprotokolle sorgfältig aus.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Grundidee">
+      <h1>Grundidee: Schall entsteht durch Schwingungen</h1>
+
+      <p>Schall ist nichts Geheimnisvolles: Immer wenn ein Körper schnell hin und her schwingt, kann er seine Umgebung anstoßen. Genau das passiert zum Beispiel bei einem Lineal, einer Stimmgabel, einem Strohhalm oder an deinem Kehlkopf. Die angrenzenden Teilchen werden dabei ebenfalls in Bewegung versetzt und geben diese Bewegung weiter.</p>
+
+      <p>Wichtig ist dabei: Nicht der ganze Stoff wandert von der Schallquelle bis zu deinem Ohr. Stattdessen wird die Störung weitergegeben. Deshalb kann sich Schall in Luft, Wasser und festen Stoffen ausbreiten. Ohne Teilchen, also im Vakuum, funktioniert das nicht.</p>
+
+      <div class="wb-callout">
+        <strong>Merke</strong>
+        <p>Schall entsteht durch eine <strong>Schwingung</strong>. Diese Schwingung wird an benachbarte Teilchen weitergegeben. So breitet sich Schall in einem Stoff aus.</p>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Eine Schallquelle schwingt. Der Schall selbst ist die weitergegebene Störung. Dein Ohr nimmt diese Schwingung auf.</p>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_cloze_grundidee",
+          "title": "Sicherung: Begriffe einsetzen",
+          "hint": "Ziehe die Wörter an die passende Stelle.",
+          "bank": ["schwingt", "Festkörpern", "Ohr", "Vakuum"],
+          "segments": [
+            { "t": "text", "v": "Eine Schallquelle " },
+            { "t": "gap", "a": "schwingt" },
+            { "t": "text", "v": ". Schall kann sich in Luft, Flüssigkeiten und " },
+            { "t": "gap", "a": "Festkörpern" },
+            { "t": "text", "v": " ausbreiten. Dein " },
+            { "t": "gap", "a": "Ohr" },
+            { "t": "text", "v": " nimmt die Schwingungen auf. Im " },
+            { "t": "gap", "a": "Vakuum" },
+            { "t": "text", "v": " funktioniert das nicht." }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-p2 class="p2" data-p2-title="Zuordnung: Begriff und Erklärung" data-p2-hint="Ordne sauber zu.">
+        <div class="p2-hint">Ziehe jeweils einen Begriff auf die passende Erklärung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Schallquelle</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Schallausbreitung</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Tonhöhe</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Lautstärke</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">hängt mit der Schnelligkeit der Schwingung zusammen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">der Körper, der selbst schwingt und Schall erzeugt</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">hängt mit der Größe der Auslenkung zusammen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Weitergabe der Schwingung durch einen Stoff</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Schallerzeugung">
+      <h1>Versuche zur Schallerzeugung</h1>
+
+      <p>Hier machst du eigenständig Versuche und dokumentierst deine Beobachtungen. Schwerpunkt: Was schwingt, und wie hängen Tonhöhe oder Lautstärke damit zusammen?</p>
+
+      <div class="ak-grid">
+        <div class="ak-card">
+          <h3>Suche die einen Versuch hiervon aus:</h3>
+          <ul class="ak-list">
+            <li>Luftballon oder quietschender Luftballon</li>
+            <li>Klingender Strohhalm</li>
+          </ul>
+        </div>
+        <div class="ak-card">
+          <h3>Suche dir auch einen Versuch hiervon aus:</h3>
+          <ul class="ak-list">
+            <li>Frosch</li>
+              <li>Klingende Metallstreifen oder Schallentstehung bei einem Lineal</li>
+            <li>Kehlkopf</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ak-img-grid">
+        <figure>
+          <img src="akustik-versuche-bilder/versuche_schallerzeugung_seite-1.png" alt="Luftballon und Strohhalm als Schallquellen" />
+          <figcaption>Luftballon und Strohhalm: Die Tonhöhe ändert sich, wenn sich Länge oder Spannung ändern.</figcaption>
+        </figure>
+        <figure>
+          <img src="akustik-versuche-bilder/versuche_schallerzeugung_seite-2.png" alt="Versuch klingende Metallstreifen oder Lineal" />
+          <figcaption>Klingende Metallstreifen: Die freie Länge beeinflusst Schwingung und Ton.</figcaption>
+        </figure>
+        <figure>
+          <img src="akustik-versuche-bilder/versuche_schallerzeugung_seite-3.png" alt="Frosch und Kehlkopf als Beispiele für Schallerzeugung" />
+          <figcaption>Frosch und Kehlkopf: Nicht nur Geräte, auch dein Körper kann Schall erzeugen.</figcaption>
+        </figure>
+      </div>
+
+      <div class="ak-grid">
+        <div class="ak-card">
+          <h3>Stationen zur Schallerzeugung</h3>
+          <ul class="ak-list">
+            <li><strong>Luftballon:</strong> Öffnung auseinanderziehen, Ton beobachten, Spannung verändern.</li>
+            <li><strong>Strohhalm:</strong> Spitze anblasen, danach kürzen und Ton vergleichen.</li>
+          </ul>
+        </div>
+        <div class="ak-card">
+          <h3>Weitere Versuche</h3>
+          <ul class="ak-list">
+            <li><strong>Frosch:</strong> mit dem Stab über den Rücken streichen und den Klang deuten.</li>
+            <li><strong>Metallstreifen oder Lineal:</strong> freie Länge ändern und Schwingung mit Ton verknüpfen.</li>
+            <li><strong>Kehlkopf:</strong> beim Summen und Sprechen fühlen, was schwingt.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_mcq_schallerzeugung",
+          "title": "Mini-Check: Schallerzeugung",
+          "hint": "Kreuze die richtige Aussage an.",
+          "shuffleChoices": true,
+          "questions": [
+            {
+              "text": "Warum wird der Ton beim kürzeren Lineal oder Strohhalm meist höher?",
+              "choices": [
+                { "id": "a", "label": "Weil kürzere Teile langsamer schwingen." },
+                { "id": "b", "label": "Weil kürzere Teile schneller schwingen." },
+                { "id": "c", "label": "Weil kürzere Teile keinen Schall mehr übertragen." }
+              ],
+              "correct": ["b"],
+              "explain": "Kürzere schwingende Teile haben meist eine höhere Frequenz. Das hörst du als höheren Ton."
+            },
+            {
+              "text": "Was zeigt der Kehlkopf-Versuch besonders gut?",
+              "choices": [
+                { "id": "a", "label": "Dass Sprechen ohne Schwingungen möglich ist." },
+                { "id": "b", "label": "Dass nur Luft schwingen kann, aber kein Körper." },
+                { "id": "c", "label": "Dass beim Sprechen oder Summen im Kehlkopf etwas schwingt." }
+              ],
+              "correct": ["c"],
+              "explain": "Beim Fühlen am Hals merkst du direkt die Schwingungen im Bereich des Kehlkopfs."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_essay_schallerzeugung",
+          "title": "Versuchsprotokoll: Schallerzeugung",
+          "hint": "Dokumentiere hier ein bis zwei ausgewählte Versuche aus Seite 3.",
+          "storagePrefix": "akustik_",
+          "fields": [
+            { "label": "Gewählter Versuch 1", "key": "versuch1_name", "kind": "text", "placeholder": "z. B. Luftballon" },
+            { "label": "Versuch 1: Beobachtung", "key": "versuch1_beobachtung", "kind": "textarea", "placeholder": "Was hast du gesehen, gehört oder gespürt?" },
+            { "label": "Versuch 1: Erklärung", "key": "versuch1_erklaerung", "kind": "textarea", "placeholder": "Was schwingt? Warum ändert sich der Ton?" },
+            { "label": "Gewählter Versuch 2", "key": "versuch2_name", "kind": "text", "placeholder": "optional: zweiter Versuch aus Seite 3" },
+            { "label": "Versuch 2: Beobachtung", "key": "versuch2_beobachtung", "kind": "textarea", "placeholder": "Nur ausfüllen, wenn du einen zweiten Versuch gewählt hast." },
+            { "label": "Versuch 2: Erklärung", "key": "versuch2_erklaerung", "kind": "textarea", "placeholder": "Erkläre mit dem Fachwort Schwingung." }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Bei allen Versuchen zur Schallerzeugung gibt es einen Teil, der schwingt. Verändert sich die Schwingung, verändert sich auch der Ton.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Stimmgabel">
+      <h1>Stimmgabel: Schwingung sichtbar, hörbar und fühlbar machen</h1>
+
+      <p>Die Stimmgabel taucht in den folgenden Versuchen mehrfach auf: am Ohr, am Zahn, im Wasser, auf dem Tisch, beim Drehen und auf der Rußplatte. Genau diese Versuche zeigen besonders klar, dass Schall mit Schwingungen zusammenhängt.</p>
+
+      <figure class="ak-figure">
+        <img src="akustik-versuche-bilder/ab_schall_schwingt_seite-1.png" alt="Arbeitsblatt mit mehreren Stimmgabel-Versuchen" />
+        <figcaption>Stimmgabel-Versuche: Erfahrungen am Ohr, im Wasser, laut und leise, Spur auf der Rußplatte.</figcaption>
+      </figure>
+
+      <div class="ak-card" style="margin-top:16px">
+        <h3>Diese Stimmgabel-Versuche gehören dazu</h3>
+        <ul class="ak-list">
+          <li><strong>Erfahrungen mit der Stimmgabel:</strong> am Ohr und vorsichtig über den Knopf am Zahn oder Kopf spüren.</li>
+          <li><strong>Tauchende Stimmgabel:</strong> Spitzen ins Wasser halten und die Wasseroberfläche beobachten.</li>
+          <li><strong>Laut und leise:</strong> Stimmgabel drehen und die Veränderung des Tons wahrnehmen.</li>
+          <li><strong>Schwingungen auf der Rußplatte:</strong> kräftig und schwächer anschlagen und die Spur vergleichen.</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_order_stimmgabel",
+          "title": "Ablauf: So deutest du einen Stimmgabel-Versuch",
+          "hint": "Bringe die Schritte in eine sinnvolle Reihenfolge.",
+          "items": [
+            "Beobachtung genau festhalten: Was hörst, siehst oder fühlst du?",
+            "Überlegen: Welcher Teil der Stimmgabel schwingt?",
+            "Wirkung beschreiben: Wie wird die Umgebung mitbewegt?",
+            "Erklärung formulieren: So entsteht oder verändert sich der Schall."
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_reveal_stimmgabel",
+          "title": "Warum spritzt das Wasser?",
+          "hint": "Nutze die Auflösung erst nach deinem Erklärversuch.",
+          "question": "Was zeigt die tauchende Stimmgabel im Wasserglas?",
+          "answer": "Die schwingenden Zinken stoßen das Wasser immer wieder an. Dadurch wird sichtbar, dass die Stimmgabel hin und her schwingt. Der Versuch macht Schwingung also indirekt sichtbar.",
+          "buttonLabel": "Auflösung zeigen",
+          "buttonHideLabel": "Auflösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_essay_stimmgabel",
+          "title": "Versuchsprotokoll: Stimmgabel",
+          "hint": "Dokumentiere einen Stimmgabel-Versuch besonders genau.",
+          "storagePrefix": "akustik_",
+          "fields": [
+            { "label": "Gewählter Versuch", "key": "versuch_name", "kind": "text", "placeholder": "z. B. tauchende Stimmgabel" },
+            { "label": "Beobachtung", "key": "beobachtung", "kind": "textarea", "placeholder": "Was ist passiert?" },
+            { "label": "Erklärung", "key": "erklaerung", "kind": "textarea", "placeholder": "Was schwingt und warum passt das zur Theorie?" }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Schall unterwegs">
+      <h1>Schall unterwegs: Luft, Wasser und feste Stoffe</h1>
+
+      <p>Mit den folgenden Versuchen prüfst du, wie Schall übertragen wird: Glockenläuten, Schallausbreitung in Flüssigkeiten, Schnurtelefon und Kerzenflimmern.</p>
+
+      <div class="ak-img-grid">
+        <figure>
+          <img src="akustik-versuche-bilder/ab_schall_unterwegs_seite-1.png" alt="Glockenläuten und Schallausbreitung in Flüssigkeiten" />
+          <figcaption>Schall im Festkörper und im Wasser: Löffel an der Schnur und Wecker im Wasser.</figcaption>
+        </figure>
+        <figure>
+          <img src="akustik-versuche-bilder/ab_schall_unterwegs_seite-2.png" alt="Schnurtelefon und Kerzenflimmern" />
+          <figcaption>Schnurtelefon und Kerzenflimmern: Schall breitet sich nicht nur in Luft aus.</figcaption>
+        </figure>
+      </div>
+
+      <div class="ak-grid">
+        <div class="ak-card">
+          <h3>Vier Versuche, vier Medien</h3>
+          <ul class="ak-list">
+            <li><strong>Glockenläuten:</strong> Löffel an der Schnur, Finger in den Ohren, Klang vergleichen.</li>
+            <li><strong>Flüssigkeiten:</strong> tickenden Wecker im Wasser hören und Lautstärke deuten.</li>
+            <li><strong>Schnurtelefon:</strong> mit gespannter und lockerer Schnur testen.</li>
+            <li><strong>Kerzenflimmern:</strong> Folie an der Röhre anklopfen und die Flamme beobachten.</li>
+          </ul>
+        </div>
+        <div class="ak-card">
+          <h3>Arbeitsauftrag</h3>
+          <ul class="ak-list">
+            <li>Notiere immer zuerst die Beobachtung.</li>
+            <li>Erst danach formulierst du die Erklärung.</li>
+            <li>Nutze die Wörter <em>Schwingung</em>, <em>Übertragung</em> und <em>Teilchen</em>.</li>
+            <li>Vergleiche mindestens zwei verschiedene Medien.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-p2 class="p2" data-p2-title="Zuordnung: Versuch und Aussage" data-p2-hint="Welche Beobachtung passt zu welchem Versuch?">
+        <div class="p2-hint">Ordne die vier Versuche ihren Kernaussagen zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Versuch</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Glockenläuten</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Schall in Flüssigkeiten</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Schnurtelefon</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Kerzenflimmern</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Kernaussage</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Druckschwankungen in der Luft bringen die Flamme zum Zittern.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Auch Wasser kann Schall übertragen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Ein fester Stoff kann Schall sehr deutlich weiterleiten.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Gespanntes Material überträgt Schwingungen besser als lockere Schnur.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_essay_schall_unterwegs",
+          "title": "Versuchsprotokoll: Schall unterwegs",
+          "hint": "Nutze mindestens ein Beispiel aus Luft, Wasser oder Festkörper.",
+          "storagePrefix": "akustik_",
+          "fields": [
+            { "label": "Gewählter Versuch", "key": "versuch", "kind": "text", "placeholder": "z. B. Schnurtelefon" },
+            { "label": "Beobachtung", "key": "beobachtung", "kind": "textarea", "placeholder": "Was hast du beobachtet?" },
+            { "label": "Erklärung", "key": "erklaerung", "kind": "textarea", "placeholder": "Wie wurde der Schall übertragen?" },
+            { "label": "Transfer", "key": "transfer", "kind": "textarea", "placeholder": "Wann klappt die Übertragung besonders gut oder schlecht?" }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Schall braucht einen Stoff zur Ausbreitung. Je nach Versuch wird klar: Auch Wasser und Festkörper können Schall gut weitergeben.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Sicherung">
+      <h1>Sicherung, Transfer und Weiterforschen</h1>
+
+      <p>Stopp &amp; check: Prüfe jetzt, ob du die Grundideen aus den Versuchen sicher anwenden kannst.</p>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_mcq_abschluss",
+          "title": "Abschluss-Check",
+          "hint": "Hier geht es um Verstehen, nicht um Raten.",
+          "shuffleChoices": true,
+          "questions": [
+            {
+              "text": "Welche Aussage beschreibt Schall am besten?",
+              "choices": [
+                { "id": "a", "label": "Schall ist die Ausbreitung von Schwingungen in einem Stoff." },
+                { "id": "b", "label": "Schall ist immer nur bewegte Luft und sonst nichts." },
+                { "id": "c", "label": "Schall entsteht nur bei Musikinstrumenten." }
+              ],
+              "correct": ["a"],
+              "explain": "Die Versuche zeigen Luft, Wasser und Festkörper als mögliche Träger."
+            },
+            {
+              "text": "Warum funktioniert das Schnurtelefon mit gespannter Schnur besser?",
+              "choices": [
+                { "id": "a", "label": "Weil die Schwingungen besser auf die Schnur übertragen und weitergegeben werden." },
+                { "id": "b", "label": "Weil lockere Schnur den Schall schneller macht." },
+                { "id": "c", "label": "Weil dann kein Becher mehr nötig ist." }
+              ],
+              "correct": ["a"],
+              "explain": "Die gespannte Schnur überträgt die Schwingungen direkter."
+            },
+            {
+              "text": "Mehrere Antworten sind richtig: Welche Versuche zeigen Schwingungen direkt oder indirekt besonders deutlich?",
+              "multiple": true,
+              "choices": [
+                { "id": "a", "label": "Tauchende Stimmgabel im Wasser" },
+                { "id": "b", "label": "Kehlkopf beim Summen" },
+                { "id": "c", "label": "Kerzenflimmern" },
+                { "id": "d", "label": "Alle drei" }
+              ],
+              "correct": ["a", "b", "c"],
+              "explain": "Bei allen drei Versuchen erkennst oder spürst du die Wirkung von Schwingungen. Antwort d ist deshalb als Sammelantwort hier absichtlich kein eigener Treffer."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id": "ak_reveal_transfer",
+          "title": "Transferfrage",
+          "hint": "Denke erst selbst nach.",
+          "question": "Was würde beim Schnurtelefon passieren, wenn du statt einer Schnur ein stark dehnbares Gummiband verwendest?",
+          "answer": "Die Übertragung wäre meist schlechter. Ein Gummiband gibt leicht nach, dadurch kommen die Schwingungen weniger klar und weniger direkt beim zweiten Becher an.",
+          "buttonLabel": "Mögliche Antwort",
+          "buttonHideLabel": "Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="ak-grid">
+        <div class="ak-card">
+          <h2>Jetzt hast du gelernt</h2>
+          <ul class="ak-list">
+            <li>Schall entsteht durch schwingende Körper.</li>
+            <li>Tonhöhe und Lautstärke hängen mit der Art der Schwingung zusammen.</li>
+            <li>Schall kann sich in Luft, Wasser und Festkörpern ausbreiten.</li>
+            <li>Versuche liefern Beobachtungen, aus denen du Erklärungen ableiten kannst.</li>
+          </ul>
+        </div>
+        <div class="ak-card">
+          <h2>Quellen &amp; Weiterforschen</h2>
+          <ul class="ak-list">
+            <li>Arbeitsblatt <em>Versuche-Schallerzeugung.pdf</em></li>
+            <li>Arbeitsblatt <em>AB_Schall_schwingt.pdf</em></li>
+            <li>Arbeitsblatt <em>AB_Schall_unterwegs.pdf</em></li>
+            <li>Weiterdenken: Welcher Versuch zeigt Schall am deutlichsten? Begründe deine Wahl mit Beobachtung und Erklärung.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
