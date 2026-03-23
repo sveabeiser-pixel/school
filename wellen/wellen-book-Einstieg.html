@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wellen: Einstieg</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .wave-img-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin: 16px 0;
+    }
+    .wave-figure {
+      margin: 0;
+    }
+    .wave-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid #d8dee6;
+      background: #fff;
+    }
+    .wave-figure figcaption {
+      font-size: 0.95rem;
+      color: #5f6b7a;
+      margin-top: 6px;
+    }
+    .wave-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .wave-list li + li {
+      margin-top: 6px;
+    }
+    .wt-sim-card {
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--wb-text-bg, #fff);
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      margin: 14px 0;
+    }
+    .wt-sim-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .wt-sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .wt-sim-controls label {
+      display: block;
+      font-weight: 900;
+      margin: 10px 0 6px;
+    }
+    .wt-sim-controls input[type="range"] {
+      width: 100%;
+    }
+    .wt-sim-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: var(--wb-muted, #6b7280);
+      white-space: pre-wrap;
+      margin-top: 8px;
+    }
+    #transversalWaveCanvas,
+    #longitudinalWaveCanvas {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 1px solid var(--wb-line, #e5e7eb);
+      background: rgba(255,255,255,0.55);
+      display: block;
+    }
+    .wb-book[data-theme="grau"] .wt-sim-card,
+    .wb-book[data-theme="dark"] .wt-sim-card {
+      background: rgba(255,255,255,0.14);
+    }
+    .wave-sort-wrap {
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(140,210,210,0.35), rgba(200,235,232,0.55));
+      border: 1px solid #b7d6d6;
+    }
+    .wave-sort-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .wave-sort-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .wave-dropzone {
+      min-height: 280px;
+      background: rgba(255,255,255,0.82);
+      border: 2px solid #c7d2e3;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(30, 41, 59, 0.08);
+    }
+    .wave-dropzone.is-over {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+    .wave-drop-head {
+      padding: 14px 18px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: rgba(15, 23, 42, 0.08);
+    }
+    .wave-drop-body {
+      min-height: 210px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .wave-chip-bank {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.76);
+      border: 1px dashed #9fb9cc;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .wave-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      max-width: 320px;
+      min-height: 74px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid #aac0d5;
+      background: #dbe8fb;
+      color: #294774;
+      box-shadow: 0 6px 18px rgba(41, 71, 116, 0.16);
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+    }
+    .wave-chip:active {
+      cursor: grabbing;
+    }
+    .wave-chip.correct {
+      background: #dff4df;
+      border-color: #6aa36a;
+      color: #1f5d1f;
+    }
+    .wave-chip.wrong {
+      background: #fde2e2;
+      border-color: #d37b7b;
+      color: #8a2d2d;
+    }
+    .wave-sort-toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .wave-sort-status {
+      font-size: 0.95rem;
+      color: var(--wb-muted, #6b7280);
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Wellen",
+      "sectionTitle":"Einstieg: Wellen als sich ausbreitende Störung",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Einstieg",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "wellen-einstieg-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>Was ist eine Welle?</h1>
+      <p class="wb-muted">In diesem Einstieg untersuchst du die Grundidee der Welle: Eine Welle ist keine wandernde Materie, sondern eine sich ausbreitende Störung.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Leitfrage</strong>
+          <p>Was genau breitet sich bei einer Welle aus, und was machen die einzelnen Teilchen des Trägers dabei?</p>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>So arbeitest du hier</strong>
+          <ul class="wave-list">
+            <li>Lies die Erklärungen in kleinen Schritten.</li>
+            <li>Nutze die Buchseiten als Beobachtungsmaterial.</li>
+            <li>Prüfe dein Verständnis direkt mit den Aufgaben.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Ausgangspunkt</strong>
+        <p>Die vorhandene Einstiegsseite erklärt Wellen als fortschreitende Störungen. Das Dorn-Bader-Buch vertieft dazu Längs- und Querwellen, die Beschreibung von Wellen sowie den Zusammenhang \(c = \lambda \cdot f\).</p>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_start",
+          "title":"Was kannst du danach?",
+          "hint":"Klappe die Zielbeschreibung auf.",
+          "question":"Was solltest du nach dieser Einheit sicher erklären können?",
+          "answer":"Du kannst beschreiben, warum eine Welle eine sich ausbreitende Störung ist, den Unterschied zwischen Längs- und Querwelle erklären, räumliche und zeitliche Betrachtung unterscheiden und den Zusammenhang c = λ · f anwenden.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Störung">
+      <h1>Welle = sich ausbreitende Störung</h1>
+
+      <div class="wb-img">
+        <img src="pdf-bilder/wellen.png" alt="Ebene Wellen auf einem See, Kreiswellen in einer Pfütze und La Ola im Fußballstadion" style="width:100%; height:auto; max-width:none;" />
+      </div>
+      <p class="wb-muted">B1 a) Ebene Wellen auf einem See, b) Kreiswellen in einer Pfütze, c) La Ola im Fußballstadion</p>
+
+      <p>Wenn an einem Träger ein Teilchen ausgelenkt wird, geraten benachbarte Teilchen wegen der Kopplung ebenfalls in Bewegung. Die Störung wandert weiter, auch wenn jedes Teilchen nur um seine Ruhelage schwingt.</p>
+
+      <h2>Voraussetzungen für die Entstehung von Wellen</h2>
+      <p>Die Ausbreitung <strong>mechanischer Wellen</strong> erfordert zunächst einen <strong>Träger</strong>, in dem sich schwingungsfähige Teilchen befinden. Solche Träger können feste, flüssige oder gasförmige Stoffe sein.</p>
+
+      <p><strong>Elektromagnetische Wellen</strong> brauchen dagegen keinen materiellen Träger. Sie können sich auch im Vakuum ausbreiten, zum Beispiel das Licht von der Sonne zur Erde.</p>
+
+      <p>Bei mechanischen Wellen reicht ein Stoff allein aber noch nicht aus. Die Teilchen müssen <strong>schwingungsfähig</strong> sein und untereinander eine <strong>Kopplung</strong> besitzen. Nur dann kann sich eine von außen eingebrachte Störung über das gesamte System fortpflanzen.</p>
+
+      <p>Zur Veranschaulichung nutzt man oft das <strong>Kugel-Feder-Modell</strong>. Die Kugeln stehen für die Teilchen des Trägers, die Federn für die Kopplung zwischen ihnen. In vereinfachten Skizzen werden diese Federn oft nur noch als Verbindungsstriche dargestellt.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Für mechanische Wellen brauchst du</strong>
+          <ul class="wave-list">
+            <li>einen Träger</li>
+            <li>schwingungsfähige Teilchen</li>
+            <li>eine Kopplung zwischen den Teilchen</li>
+          </ul>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Wichtiger Unterschied</strong>
+          <p>Schall braucht einen Träger. Licht nicht. Genau deshalb kann Sonnenlicht durch das Vakuum des Weltalls zur Erde gelangen, Schall aber nicht.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="wb-callout">
+          <strong>Merke</strong>
+          <p>Bei einer mechanischen Welle führen die Teilchen des Trägers nacheinander eine Bewegung aus. Transportiert werden dabei Energie, Impuls und Information, aber nicht Materie.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="pdf-bilder/wassertropfen.png" alt="Ein Tropfen erzeugt Wasserwellen" />
+          <figcaption>Ein Tropfen erzeugt Wasserwellen.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Wie breitet sich eine harmonische Welle aus?</h2>
+      <div class="grid2">
+        <div>
+          <p>Bei einer harmonischen Welle beginnt ein Oszillator am Ort \(x = 0\) mit seiner Bewegung. Danach werden weitere Oszillatoren nacheinander erfasst. Jeder einzelne schwingt harmonisch, aber nicht alle beginnen gleichzeitig.</p>
+
+          <p>Nach einer ganzen Schwingungsdauer \(T\) hat sich die Störung so weit ausgebreitet, dass wieder dieselbe Phase erreicht ist. Der Abstand zwischen zwei gleichphasigen Punkten ist dann die <strong>Wellenlänge \(\lambda\)</strong>.</p>
+
+          <p>Du kannst dieselbe Welle auf drei Arten betrachten. <strong>Räumlich</strong> fragst du: Wie sieht die Welle zu einem bestimmten Zeitpunkt entlang des Ortes aus? <strong>Zeitlich</strong> fragst du: Wie bewegt sich ein einzelnes Teilchen an einem festen Ort im Verlauf der Zeit? <strong>Räumlich-zeitlich</strong> verfolgst du, wie eine bestimmte Phase durch Ort und Zeit wandert.</p>
+
+          <p>Gerade diese räumlich-zeitliche Sicht ist wichtig: Sie zeigt, dass die Phase mit einer bestimmten Geschwindigkeit durch den Träger läuft. Deshalb spricht man hier auch von der <strong>Phasengeschwindigkeit \(c\)</strong>. Transportiert werden dabei nicht die Teilchen selbst, sondern Information und Energie.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="pdf-bilder/zeit_raum_welle.png" alt="Räumlich-zeitliche Darstellung einer Welle" style="max-width:300px; margin:0 auto;" />
+          <figcaption>Zeitlicher und räumlicher Blick auf eine harmonische Welle.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Genaue Beschreibung der Ausbreitung</h2>
+      <p>Ein Erreger lenkt zunächst ein erstes Teilchen aus seiner Gleichgewichtslage aus. Durch die elastische Kopplung wird diese Auslenkung zeitversetzt auf das nächste Teilchen übertragen. Genau diesen Zeitversatz beschreibt man als <strong>Phasenverschiebung</strong>. Auf diese Weise breitet sich die Störung Schritt für Schritt durch das gesamte System aus.</p>
+
+      <p>Die <strong>Ausbreitungsgeschwindigkeit</strong> hängt dabei von zwei Dingen ab: von der Stärke der elastischen Kopplung und von der Trägheit der Teilchen. Je stärker die Kopplung, desto schneller wird das Nachbarteilchen beschleunigt. Je größer die Masse der Teilchen, desto träger reagiert das System und desto langsamer läuft die Störung weiter.</p>
+
+      <p>In der Regel ist diese Geschwindigkeit eine <strong>Eigenschaft des Systems</strong> selbst. Sie hängt also vor allem vom Träger ab und nicht einfach davon, wie stark oder wie oft du anregst. Wird ein Teilchen sinusförmig angeregt, entsteht daraus eine <strong>harmonische Welle</strong>.</p>
+
+      <div class="wb-callout">
+        <strong>Wichtig für die Deutung</strong>
+        <p>Bei einer mechanischen Welle breitet sich nicht Materie aus, sondern der Bewegungszustand der Teilchen. Die Teilchen schwingen um ihre Gleichgewichtslage und bleiben im Mittel am selben Ort.</p>
+      </div>
+
+      <h2>Energieformen in Wellen</h2>
+      <p>Wenn ein Teilchen die Störung an das nächste weitergibt, verrichtet es über die Kopplung zunächst Beschleunigungsarbeit und dann Spannarbeit. Dadurch wird Energie von einem Teilchen zum nächsten übertragen.</p>
+
+      <p>Mit der Störung wandern deshalb <strong>Spannenergie</strong> und <strong>kinetische Energie</strong> durch das System. Ist die Spannenergie gerade maximal, dann ist die kinetische Energie null. Ist die kinetische Energie maximal, ist die Spannenergie kleiner oder null. Das kennst du vom Federpendel: Auch dort wechseln sich diese Energieformen ständig ab.</p>
+
+      <p>Die Energie steckt dabei immer in denjenigen Teilchen, die gerade von der Störung erfasst sind. Eine Welle überträgt somit nicht nur Energie, sondern auch <strong>Impuls</strong> und <strong>Information</strong> durch das System.</p>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_stoerung",
+          "title":"Check: Grundidee der Welle",
+          "hint":"Wähle die Aussage, die den Kern am besten trifft.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussage beschreibt eine mechanische Welle am treffendsten?",
+              "choices":[
+                {"id":"a","label":"Die Teilchen des Trägers wandern dauerhaft gemeinsam in Ausbreitungsrichtung."},
+                {"id":"b","label":"Eine Störung breitet sich im Träger aus, während die Teilchen lokal schwingen."},
+                {"id":"c","label":"Eine Welle ist nur dann vorhanden, wenn Materie transportiert wird."}
+              ],
+              "correct":["b"],
+              "explain":"Genau das ist die Grundidee: Die Störung läuft durch den Träger, die Teilchen selbst bleiben in der Nähe ihrer Ruhelage."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Eine Welle ist eine fortschreitende Störung. Die Teilchen schwingen lokal, aber die Störung selbst wandert durch den Träger.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Längs- und Querwellen">
+      <h1>Wellentypen</h1>
+
+      <p>Es gibt <strong>Transversalwellen</strong> und <strong>Longitudinalwellen</strong>.</p>
+      <p>Als erstes betrachten wir Transversalwellen. Was bedeutet das eigentlich? Schau dir die Definition an und versuche, dir passende Beispiele selbst zu überlegen.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Transversalwelle</strong>
+        <p>Bei einer Transversalwelle schwingen die Teilchen <b>senkrecht</b> zur Ausbreitungsrichtung. Eine Momentaufnahme zeigt eine Folge von <b>Wellenbergen</b> und <b>Wellentälern</b>.</p>
+      </div>
+
+      <p>Was gilt dann für eine Longitudinalwelle? Überlege dir auch hierzu eigenständig Beispiele.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Longitudinalwelle</strong>
+        <p>Bei einer Longitudinalwelle schwingen die Teilchen <b>parallel</b> zur Ausbreitungsrichtung. Eine Momentaufnahme zeigt eine Folge von <b>Verdichtungen</b> und <b>Verdünnungen</b>.</p>
+      </div>
+
+      <p>Für eine bessere Veranschaulichung kannst du die folgenden Simulationen nutzen. Beobachte genau, in welche Richtung sich die Teilchen bewegen und wie die Störung durch das System läuft.</p>
+
+      <div class="wt-sim-card">
+        <div class="wt-sim-grid">
+          <div>
+            <canvas id="transversalWaveCanvas" width="960" height="520" aria-label="Simulation einer Transversalwelle"></canvas>
+            <div class="wt-sim-mono" id="transversalWaveReadout"></div>
+          </div>
+          <div class="wt-sim-controls">
+            <h2>Simulation: Transversalwelle</h2>
+            <p>Die Teilchen schwingen auf und ab, während die Welle nach rechts läuft.</p>
+            <label for="transAmp">Amplitude A</label>
+            <input id="transAmp" type="range" min="0.3" max="1.4" value="0.9" step="0.05" />
+            <div class="wt-sim-mono">A = <span id="transAmpVal">0.90</span></div>
+
+            <label for="transFreq">Frequenz f</label>
+            <input id="transFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="wt-sim-mono">f = <span id="transFreqVal">1.00</span></div>
+
+            <label for="transSpeed">Ausbreitungsgeschwindigkeit c</label>
+            <input id="transSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="wt-sim-mono">c = <span id="transSpeedVal">0.80</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="transPauseBtn">Pause</button>
+              <button class="wb-btn" type="button" id="transResetBtn">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wt-sim-card">
+        <div class="wt-sim-grid">
+          <div>
+            <canvas id="longitudinalWaveCanvas" width="960" height="520" aria-label="Simulation einer Longitudinalwelle"></canvas>
+            <div class="wt-sim-mono" id="longitudinalWaveReadout"></div>
+          </div>
+          <div class="wt-sim-controls">
+            <h2>Simulation: Longitudinalwelle</h2>
+            <p>Die Teilchen schwingen vor und zurück. Sichtbar werden Verdichtungen und Verdünnungen.</p>
+            <label for="longAmp">Amplitude A</label>
+            <input id="longAmp" type="range" min="0.2" max="1.0" value="0.55" step="0.05" />
+            <div class="wt-sim-mono">A = <span id="longAmpVal">0.55</span></div>
+
+            <label for="longFreq">Frequenz f</label>
+            <input id="longFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="wt-sim-mono">f = <span id="longFreqVal">1.00</span></div>
+
+            <label for="longSpeed">Ausbreitungsgeschwindigkeit c</label>
+            <input id="longSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="wt-sim-mono">c = <span id="longSpeedVal">0.80</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="longPauseBtn">Pause</button>
+              <button class="wb-btn" type="button" id="longResetBtn">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Zuordnungsübung: Sortiere die Begriffe</h2>
+      <p>Ziehe die Karten in das passende Feld. Achte darauf, ob die Teilchen parallel oder senkrecht zur Ausbreitungsrichtung schwingen und welche Beispiele typisch sind.</p>
+
+      <div class="wave-sort-wrap" id="waveTypeSort">
+        <div class="wave-sort-grid">
+          <div class="wave-dropzone" data-kind="transversal">
+            <div class="wave-drop-head">Transversalwelle</div>
+            <div class="wave-drop-body"></div>
+          </div>
+          <div class="wave-dropzone" data-kind="longitudinal">
+            <div class="wave-drop-head">Longitudinalwelle</div>
+            <div class="wave-drop-body"></div>
+          </div>
+        </div>
+        <div class="wave-chip-bank" data-bank>
+          <div class="wave-chip" draggable="true" data-answer="transversal">Auslenkung senkrecht zur Ausbreitungsrichtung</div>
+          <div class="wave-chip" draggable="true" data-answer="longitudinal">Auslenkung parallel zur Ausbreitungsrichtung</div>
+          <div class="wave-chip" draggable="true" data-answer="transversal">Teilchen bewegen sich auf und ab</div>
+          <div class="wave-chip" draggable="true" data-answer="longitudinal">Teilchen bilden Verdichtungen und Verdünnungen</div>
+          <div class="wave-chip" draggable="true" data-answer="transversal">Beispiele: Gitarrensaite, elektromagnetische Welle</div>
+          <div class="wave-chip" draggable="true" data-answer="longitudinal">Beispiele: Schallwelle, Federdruck</div>
+        </div>
+        <div class="wave-sort-toolbar">
+          <button class="wb-btn primary" type="button" id="waveSortCheck">Überprüfen</button>
+          <button class="wb-btn" type="button" id="waveSortReset">Zurücksetzen</button>
+          <div class="wave-sort-status" id="waveSortStatus">Noch nicht überprüft.</div>
+        </div>
+      </div>
+
+      <div data-p2 class="p2" data-p2-title="Zuordnung: Wellentyp und Eigenschaft" data-p2-hint="Ordne sauber zu.">
+        <div class="p2-hint">Ziehe den Wellentyp auf die passende Beschreibung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Wellentyp</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Längswelle</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Querwelle</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Schall in Luft</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">La-Ola im Stadion</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Beschreibung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Die Teilchen schwingen parallel zur Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Typisches Beispiel für Verdichtungen und Verdünnungen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Typisches Modell für eine fortschreitende Querstörung.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_transversal",
+          "title":"Warum ist die La-Ola eine gute Analogie?",
+          "hint":"Öffne die Erklärung erst nach deinem eigenen Versuch.",
+          "question":"Wieso passt die La-Ola als Bild für eine Welle?",
+          "answer":"Weil die Zuschauer nicht mit der Welle durchs Stadion laufen. Sie stehen an ihrem Platz auf und setzen sich wieder. Nur die Störung beziehungsweise das Muster der Bewegung wandert weiter.",
+          "buttonLabel":"Erklärung anzeigen",
+          "buttonHideLabel":"Erklärung verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Wellen beschreiben">
+      <h1>Wie beschreibt man eine Welle?</h1>
+
+      <p>Das Buch unterscheidet zwei Blickrichtungen auf dieselbe Welle. Du kannst die Welle zu einem festen Zeitpunkt entlang des Ortes anschauen oder an einem festen Ort verfolgen, wie sich die Auslenkung mit der Zeit ändert.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Zwei Perspektiven</strong>
+        <ul class="wave-list">
+          <li><strong>Räumliche Perspektive:</strong> Wie sieht die Welle an einem bestimmten Zeitpunkt entlang des Ortes aus?</li>
+          <li><strong>Zeitliche Perspektive:</strong> Wie schwingt ein einzelner Oszillator an einem festen Ort im Verlauf der Zeit?</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze_perspektiven",
+          "title":"Sicherung: Perspektiven unterscheiden",
+          "hint":"Setze die passenden Begriffe ein.",
+          "bank":["Ort","Zeit","Wellenlänge","Schwingungsdauer"],
+          "segments":[
+            {"t":"text","v":"Bei der räumlichen Betrachtung hältst du die "},
+            {"t":"gap","a":"Zeit"},
+            {"t":"text","v":" fest und untersuchst den Verlauf über den "},
+            {"t":"gap","a":"Ort"},
+            {"t":"text","v":". Dabei kannst du besonders gut die "},
+            {"t":"gap","a":"Wellenlänge"},
+            {"t":"text","v":" erkennen. Bei der zeitlichen Betrachtung hältst du den Ort fest und bestimmst zum Beispiel die "},
+            {"t":"gap","a":"Schwingungsdauer"},
+            {"t":"text","v":" eines Oszillators."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order_beschreiben",
+          "title":"Bring die Gedankenfolge in die richtige Reihenfolge",
+          "hint":"So gehst du vor, wenn du eine Welle systematisch beschreiben willst.",
+          "items":[
+            "Entscheide zuerst, ob du räumlich oder zeitlich auf die Welle blickst.",
+            "Bestimme dann die passende Größe: zum Beispiel Wellenlänge oder Schwingungsdauer.",
+            "Verknüpfe beide Sichtweisen, um die Ausbreitung der Phase zu verstehen."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Dieselbe Welle kann unterschiedlich beschrieben werden. Räumlich erkennst du die Wellenlänge, zeitlich die Schwingung eines einzelnen Teilchens.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Wellen in Gleichungen">
+      <h1>Wellen in Gleichungen</h1>
+
+      <p>Wenn sich die Phase innerhalb einer Schwingungsdauer \(T\) um genau eine Wellenlänge \(\lambda\) weiterbewegt, dann folgt daraus der zentrale Zusammenhang:</p>
+
+      <div class="wb-callout">
+        <strong>Merksatz</strong>
+        <p>\[
+        c = \lambda \cdot f
+        \]
+        Die Ausbreitungsgeschwindigkeit \(c\) hängt vom Träger ab, die Frequenz \(f\) vom Erreger. Daraus ergibt sich die Wellenlänge \(\lambda\).</p>
+      </div>
+
+      <div class="wave-img-grid">
+        <figure class="wave-figure">
+          <img src="pdf-bilder/dorn-wellen-144.png" alt="Dorn-Bader Seite zu Wellen in Gleichungen" />
+          <figcaption>Die Phase wandert mit der Ausbreitungsgeschwindigkeit \(c\). Daraus folgt \(c = \lambda \cdot f\).</figcaption>
+        </figure>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_gleichung",
+          "title":"Mini-Check: Deute die Formel",
+          "hint":"Achte darauf, welche Größe vom Erreger und welche vom Träger abhängt.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussage passt zu c = λ · f ?",
+              "choices":[
+                {"id":"a","label":"Wenn der Träger gleich bleibt und die Frequenz steigt, wird die Wellenlänge kleiner."},
+                {"id":"b","label":"Wenn die Frequenz steigt, steigt immer automatisch auch die Ausbreitungsgeschwindigkeit."},
+                {"id":"c","label":"Die Wellenlänge ist unabhängig von Erreger und Träger."}
+              ],
+              "correct":["a"],
+              "explain":"Bleibt c konstant, dann muss λ kleiner werden, wenn f größer wird."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_c_lambda_f",
+          "title":"Nachdenken",
+          "hint":"Überlege erst selbst, bevor du öffnest.",
+          "question":"Warum ändert sich in demselben Träger bei höherer Frequenz die Wellenlänge?",
+          "answer":"Weil sich die Welle im selben Träger mit ungefähr derselben Ausbreitungsgeschwindigkeit ausbreitet. Wenn pro Sekunde mehr Schwingungen erzeugt werden, muss der Abstand zwischen zwei gleichphasigen Punkten kleiner werden.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Transfer">
+      <h1>Transfer: Was bedeutet das für echte Beispiele?</h1>
+
+      <p>Du kennst jetzt die Grundidee. Entscheidend ist nun, dass du das auf neue Situationen übertragen kannst.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Denk weiter</strong>
+        <p>Was würdest du bei einer Lautsprecherwelle in Luft erwarten? Und woran erkennst du bei einer Seilwelle sofort, dass keine Materie transportiert wird?</p>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_transfer",
+          "title":"Mögliche Antwort",
+          "hint":"Nutze die Antwort als Vergleich mit deinem eigenen Gedankengang.",
+          "question":"Was ist der gemeinsame Kern von La-Ola, Seilwelle und Schallwelle?",
+          "answer":"In allen drei Fällen wird ein Bewegungsmuster oder eine Störung weitergegeben. Die beteiligten Personen, Seilstücke oder Luftteilchen bleiben aber jeweils in ihrer Umgebung und wandern nicht als Ganzes mit der Welle mit.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_transfer",
+          "title":"Abschluss-Check",
+          "hint":"Prüfe, ob du die Kerngedanken sicher auseinanderhalten kannst.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussage ist richtig?",
+              "choices":[
+                {"id":"a","label":"Bei einer Querwelle schwingen die Teilchen parallel zur Ausbreitungsrichtung."},
+                {"id":"b","label":"Räumliche und zeitliche Betrachtung beschreiben dieselbe Welle aus zwei Perspektiven."},
+                {"id":"c","label":"Eine Welle transportiert immer Materie von der Quelle bis zum Empfänger."}
+              ],
+              "correct":["b"],
+              "explain":"Genau darum geht es bei der Wellenbeschreibung: dieselbe Welle, aber zwei unterschiedliche Blickrichtungen."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Quellen">
+      <h1>Zusammenfassung, Quellen und Weiterforschen</h1>
+      <p>Jetzt hast du das gelernt: Eine Welle ist eine sich ausbreitende Störung. Du kannst Längs- und Querwellen unterscheiden, räumliche und zeitliche Beschreibung auseinanderhalten und den Zusammenhang \(c = \lambda \cdot f\) deuten.</p>
+
+      <div class="wb-callout">
+        <strong>Quellen</strong>
+        <ul class="wave-list">
+          <li>Dorn-Bader Physik Kursstufe, Buchseiten 138–144 aus der von dir angegebenen PDF-Datei.</li>
+          <li>Vorhandene Web-Vorlage im Projekt: <code>wellen/wellen-book..html</code> beziehungsweise die entsprechende GitHub-Pages-Seite.</li>
+        </ul>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Weiterforschen</strong>
+        <ul class="wave-list">
+          <li>Warum können sich Schallwellen nicht im Vakuum ausbreiten?</li>
+          <li>Weshalb liefern Seismogramme Informationen über das Erdinnere?</li>
+          <li>Wie verändert sich \(\lambda\), wenn du \(f\) erhöhst, der Träger aber gleich bleibt?</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    (function(){
+      const root = document.getElementById("waveTypeSort");
+      if(!root || root.dataset.wbWaveSortInit === "1") return;
+      root.dataset.wbWaveSortInit = "1";
+
+      const bank = root.querySelector("[data-bank]");
+      const zones = Array.from(root.querySelectorAll(".wave-dropzone"));
+      const bodies = zones.map(z => z.querySelector(".wave-drop-body"));
+      const checkBtn = document.getElementById("waveSortCheck");
+      const resetBtn = document.getElementById("waveSortReset");
+      const status = document.getElementById("waveSortStatus");
+      let dragChip = null;
+
+      function allChips(){
+        return Array.from(root.querySelectorAll(".wave-chip"));
+      }
+
+      function shuffleBank(){
+        const chips = Array.from(bank.querySelectorAll(".wave-chip"));
+        for(let i = chips.length - 1; i > 0; i--){
+          const j = Math.floor(Math.random() * (i + 1));
+          bank.appendChild(chips[j]);
+          chips.splice(j, 1);
+        }
+      }
+
+      function clearState(){
+        allChips().forEach(chip => chip.classList.remove("correct", "wrong"));
+        status.textContent = "Noch nicht überprüft.";
+      }
+
+      function reset(){
+        bodies.forEach(body => {
+          Array.from(body.children).forEach(chip => bank.appendChild(chip));
+        });
+        clearState();
+        shuffleBank();
+      }
+
+      allChips().forEach(chip => {
+        chip.addEventListener("dragstart", () => {
+          dragChip = chip;
+          chip.classList.remove("correct", "wrong");
+        });
+        chip.addEventListener("dragend", () => {
+          dragChip = null;
+          zones.forEach(z => z.classList.remove("is-over"));
+        });
+      });
+
+      zones.forEach(zone => {
+        const body = zone.querySelector(".wave-drop-body");
+        zone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          zone.classList.add("is-over");
+        });
+        zone.addEventListener("dragleave", () => zone.classList.remove("is-over"));
+        zone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          zone.classList.remove("is-over");
+          if(dragChip) body.appendChild(dragChip);
+          clearState();
+        });
+      });
+
+      bank.addEventListener("dragover", (e) => e.preventDefault());
+      bank.addEventListener("drop", (e) => {
+        e.preventDefault();
+        if(dragChip) bank.appendChild(dragChip);
+        clearState();
+      });
+
+      checkBtn.addEventListener("click", () => {
+        let correct = 0;
+        let total = 0;
+        zones.forEach(zone => {
+          const kind = zone.getAttribute("data-kind");
+          Array.from(zone.querySelectorAll(".wave-chip")).forEach(chip => {
+            total += 1;
+            const ok = chip.getAttribute("data-answer") === kind;
+            chip.classList.toggle("correct", ok);
+            chip.classList.toggle("wrong", !ok);
+            if(ok) correct += 1;
+          });
+        });
+        const missing = bank.querySelectorAll(".wave-chip").length;
+        if(missing > 0){
+          status.textContent = "Es liegen noch " + missing + " Karten im Startbereich.";
+        } else {
+          status.textContent = "Richtig zugeordnet: " + correct + " von " + total + ".";
+        }
+      });
+
+      resetBtn.addEventListener("click", reset);
+      shuffleBank();
+    })();
+
+    (function(){
+      const canvas = document.getElementById("transversalWaveCanvas");
+      const readout = document.getElementById("transversalWaveReadout");
+      const ampEl = document.getElementById("transAmp");
+      const freqEl = document.getElementById("transFreq");
+      const speedEl = document.getElementById("transSpeed");
+      const ampVal = document.getElementById("transAmpVal");
+      const freqVal = document.getElementById("transFreqVal");
+      const speedVal = document.getElementById("transSpeedVal");
+      const pauseBtn = document.getElementById("transPauseBtn");
+      const resetBtn = document.getElementById("transResetBtn");
+      if(!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
+      if(canvas.dataset.wbTransversalInit === "1") return;
+      canvas.dataset.wbTransversalInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const baseY = H * 0.58;
+      const left = 56;
+      const right = W - 48;
+      const points = 32;
+      let phase = 0;
+      let paused = false;
+      let rafId = 0;
+      let lastTs = 0;
+
+      function syncLabels(){
+        ampVal.textContent = Number(ampEl.value).toFixed(2);
+        freqVal.textContent = Number(freqEl.value).toFixed(2);
+        speedVal.textContent = Number(speedEl.value).toFixed(2);
+      }
+
+      function drawAxes(){
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(left, baseY);
+        ctx.lineTo(right, baseY);
+        ctx.stroke();
+        ctx.fillStyle = "#64748b";
+        ctx.font = "18px sans-serif";
+        ctx.fillText("Ausbreitungsrichtung", right - 180, baseY - 14);
+        ctx.beginPath();
+        ctx.moveTo(right - 18, baseY - 8);
+        ctx.lineTo(right, baseY);
+        ctx.lineTo(right - 18, baseY + 8);
+        ctx.stroke();
+      }
+
+      function draw(ts){
+        if(!canvas.isConnected) return;
+        if(!lastTs) lastTs = ts;
+        const dt = Math.min(0.05, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if(!paused){
+          phase += dt * Number(freqEl.value) * 2.3;
+        }
+
+        const A = Number(ampEl.value) * 70;
+        const c = Number(speedEl.value) * 2.4;
+        const lambdaPx = 230 / Math.max(0.35, Number(freqEl.value));
+
+        ctx.clearRect(0, 0, W, H);
+        drawAxes();
+
+        ctx.strokeStyle = "#e11d48";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for(let i = 0; i < 360; i++){
+          const x = left + (right - left) * (i / 359);
+          const y = baseY - A * Math.sin((x / lambdaPx) - phase * c);
+          if(i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        for(let i = 0; i < points; i++){
+          const x0 = left + (right - left) * (i / (points - 1));
+          const y = baseY - A * Math.sin((x0 / lambdaPx) - phase * c);
+
+          ctx.strokeStyle = "rgba(100,116,139,0.35)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x0, baseY - 85);
+          ctx.lineTo(x0, baseY + 85);
+          ctx.stroke();
+
+          ctx.fillStyle = "#0f766e";
+          ctx.beginPath();
+          ctx.arc(x0, y, 8.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "20px sans-serif";
+        ctx.fillText("Transversalwelle", left, 36);
+        readout.textContent =
+          "Teilchenbewegung: senkrecht zur Ausbreitungsrichtung\n" +
+          "Momentaufnahme: Wellenberge und Wellentäler\n" +
+          "Beobachte: Die Punkte schwingen auf und ab, während die Form nach rechts läuft.";
+        rafId = requestAnimationFrame(draw);
+      }
+
+      ampEl.addEventListener("input", syncLabels);
+      freqEl.addEventListener("input", syncLabels);
+      speedEl.addEventListener("input", syncLabels);
+      pauseBtn.addEventListener("click", () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? "Weiter" : "Pause";
+      });
+      resetBtn.addEventListener("click", () => {
+        phase = 0;
+        lastTs = 0;
+      });
+      syncLabels();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    })();
+
+    (function(){
+      const canvas = document.getElementById("longitudinalWaveCanvas");
+      const readout = document.getElementById("longitudinalWaveReadout");
+      const ampEl = document.getElementById("longAmp");
+      const freqEl = document.getElementById("longFreq");
+      const speedEl = document.getElementById("longSpeed");
+      const ampVal = document.getElementById("longAmpVal");
+      const freqVal = document.getElementById("longFreqVal");
+      const speedVal = document.getElementById("longSpeedVal");
+      const pauseBtn = document.getElementById("longPauseBtn");
+      const resetBtn = document.getElementById("longResetBtn");
+      if(!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
+      if(canvas.dataset.wbLongitudinalInit === "1") return;
+      canvas.dataset.wbLongitudinalInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const left = 56;
+      const right = W - 48;
+      const baseY = H * 0.54;
+      const points = 33;
+      let phase = 0;
+      let paused = false;
+      let rafId = 0;
+      let lastTs = 0;
+
+      function syncLabels(){
+        ampVal.textContent = Number(ampEl.value).toFixed(2);
+        freqVal.textContent = Number(freqEl.value).toFixed(2);
+        speedVal.textContent = Number(speedEl.value).toFixed(2);
+      }
+
+      function draw(ts){
+        if(!canvas.isConnected) return;
+        if(!lastTs) lastTs = ts;
+        const dt = Math.min(0.05, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if(!paused){
+          phase += dt * Number(freqEl.value) * 2.3;
+        }
+
+        const A = Number(ampEl.value) * 34;
+        const c = Number(speedEl.value) * 2.4;
+        const lambdaPx = 230 / Math.max(0.35, Number(freqEl.value));
+        const spacing = (right - left) / (points - 1);
+
+        ctx.clearRect(0, 0, W, H);
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(left, baseY);
+        ctx.lineTo(right, baseY);
+        ctx.stroke();
+
+        let compressionScore = 0;
+        for(let i = 0; i < points; i++){
+          const xRest = left + spacing * i;
+          const offset = A * Math.sin((xRest / lambdaPx) - phase * c);
+          const x = xRest + offset;
+          const neighborOffset = A * Math.sin(((xRest + spacing) / lambdaPx) - phase * c);
+          compressionScore += Math.abs(neighborOffset - offset);
+
+          ctx.strokeStyle = "rgba(100,116,139,0.24)";
+          ctx.beginPath();
+          ctx.moveTo(xRest, baseY - 70);
+          ctx.lineTo(xRest, baseY + 70);
+          ctx.stroke();
+
+          ctx.fillStyle = "#2563eb";
+          ctx.beginPath();
+          ctx.arc(x, baseY, 9, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = "#2563eb";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x, baseY - 20);
+          ctx.lineTo(x + (offset >= 0 ? 18 : -18), baseY - 20);
+          ctx.stroke();
+        }
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "20px sans-serif";
+        ctx.fillText("Longitudinalwelle", left, 36);
+
+        const compressionHint = compressionScore < 180 ? "gering" : (compressionScore < 270 ? "mittel" : "stark");
+        readout.textContent =
+          "Teilchenbewegung: parallel zur Ausbreitungsrichtung\n" +
+          "Momentaufnahme: Verdichtungen und Verdünnungen\n" +
+          "Aktuelle Verdichtungsstärke: " + compressionHint;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      ampEl.addEventListener("input", syncLabels);
+      freqEl.addEventListener("input", syncLabels);
+      speedEl.addEventListener("input", syncLabels);
+      pauseBtn.addEventListener("click", () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? "Weiter" : "Pause";
+      });
+      resetBtn.addEventListener("click", () => {
+        phase = 0;
+        lastTs = 0;
+      });
+      syncLabels();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    })();
+
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
