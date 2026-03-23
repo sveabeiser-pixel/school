@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scratch Einstieg - Klasse 5/6</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Scratch Einstieg",
+      "sectionTitle":"Sch?lerteil",
+      "startPage": 1,
+      "submitLabel":"Zusammenfassung & abgeben",
+      "onSubmit":"alert",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Scratch",
+      "themeDefault": "grau"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Teil A">
+      <h1>Teil A: Erste Begegnung mit Scratch</h1>
+      <p class="wb-muted">Jetzt lernst du die Scratch?Oberfl?che kennen und machst die ersten Schritte.</p>
+
+      <h2>Die Scratch?Oberfl?che</h2>
+      <p>Die Scratch?Oberfl?che teilt sich in vier Bereiche auf:</p>
+      <ul>
+        <li><b>B?hne</b>: Dort l?uft alles ab, was du programmierst.</li>
+        <li><b>Programmierbereich</b>: Hier baust du deine Programme zusammen.</li>
+        <li><b>Figurenliste</b>: Hier findest du alle Figuren im Projekt (anfangs nur eine).</li>
+        <li><b>Blockpalette</b>: Hier liegen die Bl?cke zum Programmieren.</li>
+      </ul>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-01.png" alt="Scratch-Oberfl?che mit Bereichen">
+      </div>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>?ndere die Sprache ?ber den Globus links oben neben ?Datei?.</li>
+        <li>Speichere dein Projekt als <b>01katze</b> (Datei ? Speichern).</li>
+        <li>Gib deiner Katze einen Namen (statt ?Figur 1?, z.B. Mieze).</li>
+      </ol>
+
+      <h2>Puzzle: Bereiche zuordnen</h2>
+
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne die Begriffe den passenden Erkl?rungen zu.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">B?hne</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Programmierbereich</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Blockpalette</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Figurenliste</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erkl?rung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Hier siehst du, was passiert.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Hier baust du dein Programm.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Hier findest du alle Bl?cke.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Hier stehen alle Figuren.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zur?cksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>?berpr?fen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gel?st</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Teil B (1)">
+      <h1>Teil B: Die Katze lernt laufen (Seite 1)</h1>
+      <p>Jetzt lernst du, wie Bewegungen funktionieren.</p>
+
+      <h2>Bewegungsbl?cke</h2>
+      <p>In der Blockpalette findest du viele Bl?cke, mit denen sich die Katze bewegen kann. Du kannst sie testen, indem du sie anklickst oder in den Programmierbereich ziehst.</p>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-02.png" alt="Bewegungsbl?cke in Scratch">
+      </div>
+
+      <h2>Begriffe</h2>
+      <p><b>Anweisung</b>: Ein einzelner Auftrag (z.B. ?gehe 10er?Schritt?).</p>
+      <p><b>Sequenz</b>: Mehrere Anweisungen nacheinander.</p>
+
+      <h2>Auftrag</h2>
+      <p>Teste folgende Anweisungen oder Sequenzen und schreibe auf, was passiert.</p>
+      <ul>
+        <li>Zusatzfrage: Was passiert bei einer negativen Zahl?</li>
+        <li>Zusatzfrage: Wie hei?en die Koordinaten der Ecken der B?hne?</li>
+        <li>Zusatzauftrag: Teste alle vier Richtungen.</li>
+        <li>Teste die Bl?cke erneut, nachdem du vorher ?drehe dich um 30 Grad? eingef?gt hast. Bei welchen ?ndert sich das Ergebnis?</li>
+      </ul>
+
+      <h2>L?ckentext</h2>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze-b1",
+          "title":"Anweisung und Sequenz",
+          "bank": ["Anweisung", "Sequenz", "mehrere", "nacheinander"],
+          "segments": [
+            {"t":"text","v":"Eine "},
+            {"t":"gap","a":"Anweisung"},
+            {"t":"text","v":" ist ein einzelner Auftrag. Eine "},
+            {"t":"gap","a":"Sequenz"},
+            {"t":"text","v":" besteht aus "},
+            {"t":"gap","a":"mehrere"},
+            {"t":"text","v":" Auftr?gen "},
+            {"t":"gap","a":"nacheinander"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"b1",
+          "title":"Meine Beobachtungen",
+          "storagePrefix":"scratch01_",
+          "fields":[
+            {"label":"Beobachtungen", "key":"b1", "kind":"textarea", "placeholder":"Was hast du beobachtet?"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Teil B (2)">
+      <h1>Teil B: Die Katze lernt laufen (Seite 2)</h1>
+      <p>Jetzt lernst du das Zeichnen mit dem Stift und speicherst dein Projekt.</p>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-03.png" alt="Malstift und Verkleinern">
+      </div>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>Speichere deine Datei als <b>02katze_bewegen</b> (?Datei? ? ?Speichern unter?).</li>
+        <li>L?sche falsche Bl?cke, indem du sie zur?ck in die Blockpalette ziehst oder ?L?schen? w?hlst.</li>
+        <li>Nutze den Malstift: zuerst ?alle Spuren l?schen?, dann ?Stift an?, danach ?Stift aus?.</li>
+        <li>Verkleinere die Katze mit dem Icon ?Verkleinern?.</li>
+        <li>Schreibe Programme: Rechteck, Treppe, Quadrat und gleichseitiges Dreieck.</li>
+        <li>Nutze das Ereignis ?Wenn Fahne angeklickt? und teste dein Programm.</li>
+        <li>Speichere dein Projekt erneut.</li>
+      </ol>
+
+      <h2>Multiple Choice</h2>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-b",
+          "title":"Ereignisse",
+          "questions":[
+            {
+              "text":"Welcher Block startet das Programm?",
+              "multiple": false,
+              "choices":[
+                {"id":"a","label":"Wenn Fahne angeklickt"},
+                {"id":"b","label":"Wiederhole fortlaufend"},
+                {"id":"c","label":"?ndere x um 10"}
+              ],
+              "correct":["a"],
+              "explain":"Die gr?ne Fahne startet das Programm."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Teil C (1)">
+      <h1>Teil C: Ich bewege die Katze (Seite 1)</h1>
+      <p>Jetzt lernst du, die Katze mit den Pfeiltasten zu steuern.</p>
+      <p>?ffne dein Projekt <b>01katze</b> oder starte neu und speichere es als <b>03katze</b>.</p>
+      <p>Verkleinere die Katze wieder.</p>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-04.png" alt="Tastaturereignisse in Scratch">
+      </div>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>Programmiere ?Wenn Fahne angeklickt? so, dass die Katze an eine Startposition gesetzt wird.</li>
+        <li>Programmiere die Pfeiltasten f?r alle Richtungen und teste die Steuerung.</li>
+        <li>Tipp: Du kannst Bl?cke duplizieren und l?schen.</li>
+      </ol>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Teil C (2)">
+      <h1>Teil C: Kost?me wechseln</h1>
+      <p>Jetzt lernst du, Kost?me zu ?ndern, damit die Katze in die richtige Richtung schaut.</p>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-05.png" alt="Kost?me der Katze">
+      </div>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>?ffne das Kost?mfenster. Dupliziere Kost?m 1 und spiegle es.</li>
+        <li>Benenne die Kost?me sinnvoll (z.B. katze_rechts).</li>
+        <li>Wechsle im Programm vor der Bewegung das Kost?m.</li>
+        <li>Teste und speichere alles.</li>
+      </ol>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Teil D/E">
+      <h1>Teil D: Die Katze l?uft ?ber die Stra?e</h1>
+      <p>Jetzt lernst du, die B?hne zu gestalten und ein Auto anzulegen.</p>
+      <p>?ffne dein Projekt <b>03katze</b> und speichere es als <b>04katze</b>.</p>
+
+      <div class="wb-img">
+        <img src="scratch01/scratch-abbildung-06.png" alt="B?hne und Stra?e">
+      </div>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>Erkunde den Zeicheneditor.</li>
+        <li>Zeichne eine Stra?e und f?rbe die Umgebung gr?n.</li>
+        <li>Nenne die B?hne <b>Level1</b>.</li>
+        <li>Lege ein neues Objekt (Auto) an.</li>
+      </ol>
+
+      <h1>Teil E: Ein Auto f?hrt vorbei</h1>
+      <p>Jetzt lernst du Schleifen kennen.</p>
+      <p><b>Schleifen</b> wiederholen Anweisungen. Es gibt: ?wiederhole ? mal?, ?wiederhole fortlaufend? und ?wiederhole bis ??.</p>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>Teste die Schleife mit fester Anzahl (Auto f?hrt 10?mal).</li>
+        <li>Teste die Schleife, die so lange wiederholt, bis der Rand ber?hrt wird.</li>
+        <li>Baue eine Verzweigung ein, damit das Auto links neu startet.</li>
+        <li>?berlege Bedingungen mit Operatoren (z.B. x?Position).</li>
+      </ol>
+
+      <h2>Multiple Choice</h2>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-e",
+          "title":"Schleifen",
+          "questions":[
+            {
+              "text":"Wozu dient eine Schleife?",
+              "multiple": false,
+              "choices":[
+                {"id":"a","label":"Um Anweisungen zu wiederholen."},
+                {"id":"b","label":"Um eine Figur zu l?schen."},
+                {"id":"c","label":"Um eine Datei zu speichern."}
+              ],
+              "correct":["a"],
+              "explain":"Schleifen wiederholen Befehle."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Teil F">
+      <h1>Teil F: Die Katze zeichnet</h1>
+      <p>Jetzt lernst du, Programme zu verstehen und zu erweitern.</p>
+
+      <h2>Aufgabe 1: Was passt zusammen?</h2>
+
+      <div data-p2 class="p2">
+        <div class="p2-hint">Verbinde passende Begriffe.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">wiederhole fortlaufend</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">?ndere x um 10</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">falls ... dann ... sonst</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erkl?rung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Endlosschleife</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Bewegungsschritt</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Verzweigung</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zur?cksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>?berpr?fen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gel?st</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <h2>Aufgabe 2?4</h2>
+      <ul>
+        <li>Erweitere das Quadrat?Programm zu 10?10 Quadraten.</li>
+        <li>Beschreibe, was ein gegebener Programmcode ausl?st.</li>
+        <li>Zusatz: Zeichne das ?Haus vom Nikolaus? und 5 H?user nebeneinander.</li>
+      </ul>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"f-aufgaben",
+          "title":"Meine Notizen zu Teil F",
+          "storagePrefix":"scratch01_",
+          "fields":[
+            {"label":"Ergebnisse", "key":"teilf", "kind":"textarea", "placeholder":"Beschreibe deine L?sungen und Beobachtungen..."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Teil G/H">
+      <h1>Teil G: Das Auto ?ndert die Geschwindigkeit</h1>
+      <p>Jetzt lernst du Variablen kennen.</p>
+      <p><b>Variable</b>: Ein Speicher f?r Werte, die sich ?ndern k?nnen.</p>
+
+      <h2>Auftr?ge</h2>
+      <ol>
+        <li>Lege die Variable <b>v1</b> an.</li>
+        <li>Initialisiere v1 mit 10.</li>
+        <li>Erh?he und verringere v1 mit zwei Tasten.</li>
+        <li>Ersetze die feste Zahl im Programm durch v1.</li>
+        <li>Baue Grenzen ein (z.B. v1 &lt; 20 und v1 &gt; 5).</li>
+        <li>Baue Verzweigungen ein: Taste x erh?ht v1, Taste c verringert v1.</li>
+        <li>Nutze logische Operatoren: und, oder, nicht.</li>
+      </ol>
+
+      <h2>Multiple Choice</h2>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq-g",
+          "title":"Variablen",
+          "questions":[
+            {
+              "text":"Was ist eine Variable?",
+              "multiple": false,
+              "choices":[
+                {"id":"a","label":"Ein Speicher f?r ver?nderliche Werte."},
+                {"id":"b","label":"Ein Bild in der B?hne."},
+                {"id":"c","label":"Eine Schleife."}
+              ],
+              "correct":["a"],
+              "explain":"Variablen speichern Werte, die sich ?ndern k?nnen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <h1>Teil H: Die Katze muss aufpassen</h1>
+      <p>Jetzt lernst du, dein Spiel zu erweitern.</p>
+      <ul>
+        <li>Auto stoppt, wenn die Katze ber?hrt wird.</li>
+        <li>F?ge weitere Autos, Z?hler, Leben und Level hinzu.</li>
+        <li>Erweitere das Spiel um neue B?hnenbilder und Nachrichten.</li>
+      </ul>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"abschluss",
+          "title":"Meine Ideen f?r den Spielausbau",
+          "storagePrefix":"scratch01_",
+          "fields":[
+            {"label":"Meine Ideen", "key":"ideen", "kind":"textarea", "placeholder":"Welche Erweiterungen m?chtest du umsetzen?"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
+
+

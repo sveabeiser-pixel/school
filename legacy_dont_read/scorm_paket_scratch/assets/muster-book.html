@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SBLibrary – Demo (autoNav)</title>
+  <link rel="stylesheet" href="allgemeines_format.css">
+ 
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Muster-Fach",
+      "sectionTitle":"Muster-Thema",
+      "startPage": 1,
+      "submitLabel":"Summary & submit",
+      "onSubmit":"alert",
+      "webhookEmail": "",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Wellen",
+      "themeDefault": "default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Inhalt 1">
+      <h1>Herzlich Willkommen!</h1>
+      <p class="wb-muted">Absatz 1</p>
+      <h2>Überschrift 1</h2>
+      <p> Text<br>
+        Text</p>
+
+
+        <h2>Überschrift 2</h2>
+        <p> 
+        Text
+        <b>Text</b> <br>
+        Text</p>
+
+
+        <!-- Bild einbinden -->
+
+        <div class="wb-img">
+        <img src="pdf-bilder/oberschwingung-2-fest.png" alt="Zwei feste Enden" style="width:100%; height:auto;">
+        </div>
+
+        <!-- Video einbinden -->
+
+         <div class="wb-img">
+        <video controls width="100%">
+        <source src="reflexion-festes-Ende.MP4" type="video/mp4">
+        Dein Browser unterstützt das Video-Tag nicht.
+        </video>
+        </div>
+
+        <br>
+      <h3>kleine Überschrift</h3>
+
+        Text
+
+        <h3>kleine Überschrift</h3>
+        Text
+
+      <h2>Überschrift 3</h2>
+        <p> 
+
+        Text</p>
+
+        <h3>kleine Überschrift</h3>
+        <p>Text
+        </p>
+
+         <!-- 2 Callout boxen nebeneinander -->
+
+
+        <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>So arbeitest du hier</strong>
+          <ul style="margin:0; padding-left:18px">
+            <li>Lies kurz, dann mach die Aufgaben direkt auf der Seite.</li>
+          </ul>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Wichtig (Technik & Sicherheit)</strong>
+          <div>
+            GitHub Pages ist statisch: Es gibt keine automatische Ergebnisabgabe.
+            <br/>Elektrisch: Baue Schaltungen nur wie gezeigt auf und vermeide Kurzschlüsse.
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Inhalt 2">
+
+   
+    <h1>Kapitel 2</h1>
+    <h2>Überschrift 1 </h2>
+
+
+  <!-- Call out box -->
+
+    <div class="wb-callout">
+      <strong>Wichtig:</strong> 
+      <p>Merke dir die drei Bereiche im Scratch‑Fenster.</p>
+    </div>
+
+
+     <!-- Inline  box -->
+
+    <p class="wb-mini-note">Tipp: Speichere dein Projekt regelmäßig.</p>
+
+
+
+     <!-- dünner Strich -->
+
+    <div class="wb-section-break"></div>
+
+
+    
+     <!-- dicker Zwischen-Text -->
+
+    <p class="wb-section-break-text">Weiter geht’s mit der nächsten Aufgabe.</p>
+
+
+
+
+    <!-- Multiple Choice Exercise -->
+    <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+    <!--  "requireComplete": false,  nach "title"-->
+
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq1",
+          "title":"Multiple Choice",
+          "questions":[
+            {
+                    
+          "text": "Eine Antwort ist richtig. Welche Aussage trifft zu?",
+          "choices": [
+            { "id": "a", "label": "Wellen transportieren Materie dauerhaft von A nach B." },
+            { "id": "b", "label": "Wellen transportieren Energie (und Information)." },
+            { "id": "c", "label": "Wellen transportieren nur Ort." }
+          ],
+          "correct": ["b"],
+          "explain": "Bei mechanischen Wellen schwingen die Teilchen um ihre Ruhelage, aber die Störung (Energie/Information) breitet sich aus."
+          },
+          
+          {
+          "text": "Mehrere Antworten sind richtig. Welche Aussagen treffen zu?",
+          "multiple": true,
+          "choices": [
+            { "id": "a", "label": "x-Achse: Ort x, y-Achse: Auslenkung y." },
+            { "id": "b", "label": "x-Achse: Zeit t, y-Achse: Auslenkung y." },
+            { "id": "c", "label": "x-Achse: Ort x, y-Achse: Zeit t." }
+            ],
+          "correct": ["a","b"],
+          "explain": "Im y-x-Diagramm wird die Auslenkung über dem Ort dargestellt (Zeit ist fest)."
+            }
+          ]
+          }
+        </script>
+      </div>
+
+
+
+        <!-- Nachdenkfrage -->
+      <div data-wb-type="reveal">
+      <script type="application/json" class="wb-config">
+        {
+          "id":"reveal1",
+          "title":"Nachdenkfrage",
+          "question":"Warum sollte man eine Quelle prüfen?",
+          "answer":"Damit man Falschinformationen erkennt und nicht ungeprüft teilt.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+  <script type="application/json" class="wb-config">
+  {
+    "id":"reveal-grundschwingung-1",
+    "title":"Grundschwingung",
+    "question":"Klicke, um die Erklärung zu sehen.",
+    "answerHtml":[
+    "<div class=\"grid2\"><div class=\"wb-soft-callout\"><p>Bei einer Ausbreitungsgeschwindigkeit </p></div>",
+    "<div class=\"wb-img\"><img src=\"pdf-bilder/oberschwingung-2-fest.png\" alt=\"Zwei feste Enden\" style=\"width:110%; height:auto;\"></div>",
+  "</div>"
+    ],
+    "buttonLabel":"Antwort anzeigen",
+    "buttonHideLabel":"Antwort verbergen"
+  }
+  </script>
+</div>
+
+
+        <!-- Nachdenkfrage mit Bild-->
+      <div data-wb-type="reveal-img">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-img-1",
+          "title":"Bild ansehen",
+          "question":"Klicke, um das Bild zu sehen.",
+          "src":"bild.jpg",
+          "alt":"Scratch starten",
+          "buttonLabel":"Bild anzeigen",
+          "buttonHideLabel":"Bild verbergen"
+        }
+        </script>
+      </div>
+
+
+
+
+      <!-- Drag and Drop Exercise -->
+      <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+      <!--  "requireComplete": false,  nach "title"-->
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze1",
+          "title":"Drag the Words",
+          
+  "bank": [
+    "Wellenfunktion",
+    "y(x,t)",
+    "Ort x"
+  ],
+  "segments": [
+    { "t": "text", "v": "Eine Welle lässt sich durch eine " },
+    { "t": "gap",  "a": "Wellenfunktion" },
+    { "t": "text", "v": " beschreiben. Man schreibt sie oft als " },
+    { "t": "gap",  "a": "y(x,t)" },
+    { "t": "text", "v": ". Dabei ist " },
+    { "t": "gap",  "a": "Ort x" },
+    { "t": "text", "v": " die Position entlang des Seils." }
+  ]
+
+
+        }
+        </script>
+      </div>
+
+
+      <h2>Finde Paare</h2>
+
+      <!-- Puzzlepaare - Zuordnungsübung -->
+       <!-- Wenn man die Überprüfung gleich zulassen möchte: -->
+       <!-- <div data-p2 class="p2" data-p2-require-complete="false"> ... -->
+
+ <div data-p2 class="p2"  data-p2-title="Aufgabenstellung hier" data-p2-hint="2 Minuten">
+  <div class="p2-hint">Ziehe ein linkes Teil auf das passende rechte Teil (oder umgekehrt). Nur richtige Paare werden verbunden und geben Punkte.</div>
+
+  <div class="p2-banks">
+    <div>
+      <div class="p2-col-title">Links</div>
+      <div class="p2-bank" data-left-bank>
+        <div class="p2-piece p2-left" data-side="L" data-pair="1">Begriff A</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="2">Begriff B</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="p2-col-title">Rechts</div>
+      <div class="p2-bank" data-right-bank>
+        <div class="p2-piece p2-right" data-side="R" data-pair="1">Erklärung A</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="2">Erklärung B</div>
+      </div>
+    </div>
+  </div>
+
+<div class="p2-row" style="margin-top:12px">
+  <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+  <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+  <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+  <div class="p2-score" data-score></div>
+</div>
+
+
+
+  <div style="margin-top:12px">
+    <div class="p2-col-title">Gelöst</div>
+    <div class="p2-solved" data-solved></div>
+  </div>
+</div>
+
+
+      <!-- In Reihenfolge bringen - 1.2.3. -->
+       <!--  Wenn man die Überprüfung gleich erlauben möchte:-->
+      <!--  "requireComplete": false,  nach "title"-->
+     
+
+<div data-wb-type="order">
+  <script type="application/json" class="wb-config">
+  {
+    "id": "order-int-1",
+    "title": "Ablauf in Reihenfolge",
+    "items": [
+      "Schritt A",
+      "Schritt B",
+      "Schritt C"
+    ],
+    "shuffle": true,
+    "requireComplete": true
+  }
+  </script>
+</div>
+
+
+
+
+
+
+      <h2>Reflexion</h2>
+
+      <!-- Essey Freischreiben -->
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay1",
+          "title":"Freitext – Beispiel",
+          "storagePrefix":"wellen_",
+          "exportName":"wellen-ergebnisse.txt",
+          "fields":[
+            {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Schreibe hier..."}
+          ]
+        }
+        </script>
+      </div>
+
+
+
+<h2>Teste dein Wissen</h2>
+
+      <!-- Internetseite einbinden -->
+
+      <p> Mache das Quiz auf folgender Internetseite: <a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/aufgabe/quiz-zu-mechanischen-wellen" target="_blank" rel="noopener">Zur Internetseite</a>
+</p>
+
+ <!-- PDF ansehen -->
+
+  <p class="wb-muted">Tipp: Schaue dir das PDF an: <a href="Lernidee_KI_Glaubwuerdigkeit.pdf" target="_blank" rel="noopener">Lernidee KI Glaubwuerdigkeit</a></p>
+
+    </section>
+
+
+
+
+
+  </div>
+
+  <script src="wb-webhook-loader.js"></script>
+  <script src="allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>

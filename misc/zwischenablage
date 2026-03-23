@@ -1,0 +1,221 @@
+ 
+ nach
+
+  <div class="wb-callout">
+      <strong>Wichtig:</strong>
+      <p>y(x,t) ist eine Funktion mit zwei â€žEingabenâ€œ (<b>Ort und Zeit</b>), deshalb kann man die Funktion nicht einfach zeichnen, 
+        es wäre eine dreidimensionale Fläche. Vielleicht probierst du es mit Geogebra aus? </p>
+    </div>
+ 
+ einfügen
+
+ <h3>Mini-Check</h3>
+        <p class="wb-muted">Teste dein Verst&auml;ndnis mit kurzen Aufgaben.</p>
+
+        <div data-wb-type="reveal">
+          <script type="application/json" class="wb-config">
+            {
+              "id":"reveal-wf-1",
+              "title":"Nachdenkfrage",
+              "question":"Warum kann man y(x,t) nicht einfach als 2D-Diagramm zeichnen?",
+              "answer":"Weil y von zwei Variablen abhängt (Ort und Zeit). Das wäre eine 3D-Fläche. Zum Zeichnen fixiert man entweder x oder t.",
+              "buttonLabel":"Antwort anzeigen",
+              "buttonHideLabel":"Antwort verbergen"
+            }
+          </script>
+        </div>
+
+        <div data-wb-type="reveal">
+          <script type="application/json" class="wb-config">
+            {
+              "id":"reveal-wf-2",
+              "title":"Merksatz-Check",
+              "question":"Was zeigt ein y-x-Diagramm im Vergleich zum y-t-Diagramm?",
+              "answer":"y-x: Momentaufnahme der Welle im Raum (t fest). y-t: Schwingung eines festen Ortes im Zeitverlauf (x fest).",
+              "buttonLabel":"Antwort anzeigen",
+              "buttonHideLabel":"Antwort verbergen"
+            }
+          </script>
+        </div>
+
+        <div data-wb-type="reveal-img">
+          <script type="application/json" class="wb-config">
+            {
+              "id":"reveal-img-wf-1",
+              "title":"Beispielbild",
+              "question":"Klicke, um ein Beispiel für ein y-t-Diagramm zu sehen.",
+              "src":"pdf-bilder/bild01.png",
+              "alt":"Beispiel eines y-t-Diagramms",
+              "buttonLabel":"Bild anzeigen",
+              "buttonHideLabel":"Bild verbergen"
+            }
+          </script>
+        </div>
+
+        <div class="wb-section-break"></div>
+
+        <div data-p2 class="p2">
+          <div class="p2-hint">Ordne die Begriffe den richtigen Beschreibungen zu.</div>
+
+          <div class="p2-banks">
+            <div>
+              <div class="p2-col-title">Begriffe</div>
+              <div class="p2-bank" data-left-bank>
+                <div class="p2-piece p2-left" data-side="L" data-pair="1">Wellenfunktion y(x,t)</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="2">Momentaufnahme</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="3">y-x-Diagramm</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="4">y-t-Diagramm</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="p2-col-title">Beschreibungen</div>
+              <div class="p2-bank" data-right-bank>
+                <div class="p2-piece p2-right" data-side="R" data-pair="1">Ordnet Ort und Zeit einer Auslenkung zu</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="2">Zeit ist fest, Form der Welle im Raum</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="3">Auslenkung &uuml;ber dem Ort (t fest)</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="4">Auslenkung &uuml;ber der Zeit (x fest)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p2-row" style="margin-top:12px">
+            <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+            <button class="wb-btn" type="button" data-reset>Zur&uuml;cksetzen</button>
+            <button class="wb-btn primary" type="button" data-check>&#220;berpr&uuml;fen</button>
+            <div class="p2-score" data-score></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="p2-col-title">Gel&ouml;st</div>
+            <div class="p2-solved" data-solved></div>
+          </div>
+        </div>
+
+
+
+und nochmal vor   
+
+
+<h3>Mini-Check 2</h3>
+<p class="wb-muted">Ordne die Diagramme und Begriffe richtig zu.</p>
+
+<div data-wb-type="reveal">
+  <script type="application/json" class="wb-config">
+    {
+      "id":"reveal-wf-3",
+      "title":"Nachdenkfrage",
+      "question":"Was passiert mit der Momentaufnahme, wenn die Zeit weiterläuft?",
+      "answer":"Die ganze Wellenform verschiebt sich im Raum. Die Form bleibt sinusförmig, aber sie liegt an einer anderen Stelle.",
+      "buttonLabel":"Antwort anzeigen",
+      "buttonHideLabel":"Antwort verbergen"
+    }
+  </script>
+</div>
+
+<div data-wb-type="reveal-img">
+  <script type="application/json" class="wb-config">
+    {
+      "id":"reveal-img-wf-2",
+      "title":"Momentaufnahme",
+      "question":"Klicke, um ein Beispiel für ein y-x-Diagramm zu sehen.",
+      "src":"pdf-bilder/bild02.png",
+      "alt":"Beispiel eines y-x-Diagramms",
+      "buttonLabel":"Bild anzeigen",
+      "buttonHideLabel":"Bild verbergen"
+    }
+  </script>
+</div>
+
+<div class="wb-section-break"></div>
+
+<div data-p2 class="p2">
+  <div class="p2-hint">Setze die passenden Paare zusammen.</div>
+
+  <div class="p2-banks">
+    <div>
+      <div class="p2-col-title">Begriffe</div>
+      <div class="p2-bank" data-left-bank>
+        <div class="p2-piece p2-left" data-side="L" data-pair="1">Momentaufnahme</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="2">Zeitlicher Verlauf</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="3">t fest</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="p2-col-title">Beschreibungen</div>
+      <div class="p2-bank" data-right-bank>
+        <div class="p2-piece p2-right" data-side="R" data-pair="1">Form der Welle im Raum</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="2">Schwingung eines festen Ortes</div>
+        <div class="p2-piece p2-right" data-side="R" data-pair="3">y-x-Diagramm</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p2-row" style="margin-top:12px">
+    <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+    <button class="wb-btn" type="button" data-reset>Zur&uuml;cksetzen</button>
+    <button class="wb-btn primary" type="button" data-check>&#220;berpr&uuml;fen</button>
+    <div class="p2-score" data-score></div>
+  </div>
+
+  <div style="margin-top:12px">
+    <div class="p2-col-title">Gel&ouml;st</div>
+    <div class="p2-solved" data-solved></div>
+  </div>
+</div>
+
+
+vor
+
+<h2>Aufgaben</h2>
+  <p><b>Heftaufschrieb:</b> Beschreibe in deinen eigenen Worten die beiten Darstellungsweisen einer Welle, einmal als Schwingung eines Ortes und einmal als Momentanbild. 
+    Gehe auch auf die genaue Vorgehensweise zur Zeichnung der beiden Diagramme ein.</p>
+      <p> <b>Heftaufschrieb:</b> Erkläre nochmal genau den Unterschied zwischen einem y-x-Diagramm und einem y-t-Diagramm, was jeweils dargestellt wird. </p>
+    </section>
+
+
+
+
+    
+
+
+
+      <p><b>Rechenaufgabe Gummiseil B:</b> <br> 
+Berechne folgende Aufgabe, versuche erst, die Aufgabe alleine und selbstständig zu lösen. Wenn du nicht mehr weiter weißt, kannst du die Lösung aufdecken, 
+decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht hat und löse von da wieder selbstständig.</p>
+
+<div class="wb-img" style="overflow: visible; display:flex; justify-content:center;">
+  <img src="pdf-bilder/aufgabe-gummiseil-b.png" alt="Gummiseil A" style="width:90%; height:auto; max-width:none;">
+</div>
+
+
+
+      <div data-wb-type="reveal-img">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-seil-B",
+          "title":"Bild ansehen",
+          "question":"Klicke, um die Lösung zu sehen.",
+          "src":"pdf-bilder/aufgabe-gummiseil-b-loe1.png",
+          "alt":"Scratch starten",
+          "buttonLabel":"Bild anzeigen",
+          "buttonHideLabel":"Bild verbergen"
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal-img">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal-seil-B-2",
+          "title":"Bild ansehen",
+          "question":"Klicke, um die Lösung zu sehen.",
+          "src":"pdf-bilder/aufgabe-gummiseil-b-loe2.png",
+          "alt":"Scratch starten",
+          "buttonLabel":"Bild anzeigen",
+          "buttonHideLabel":"Bild verbergen"
+        }
+        </script>
+      </div>
+
