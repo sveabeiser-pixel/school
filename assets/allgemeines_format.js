@@ -89,6 +89,7 @@ function el(tag, attrs = {}, children = []) {
   function buildTaskIcon(type){
     const typeMap = {
       "mcq": "mcq.png",
+      "verify": "mcq.png",
       "reveal": "reveal.png",
       "reveal-img": "reveal.png",
       "cloze": "cloze.png",
@@ -149,7 +150,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", cloze:"Lückentext (Drag the Words)", order:"Reihenfolge", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", verify:"Wahr oder Falsch", cloze:"Lückentext (Drag the Words)", order:"Reihenfolge", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -277,6 +278,38 @@ function el(tag, attrs = {}, children = []) {
     loadSaved();
     updateCheckState();
     return { node: wrapBlock("mcq", cfg, el("div", {}, [container, controls])), check, reset };
+  }
+
+  function createVerify(cfg){
+    const rawItems = Array.isArray(cfg.questions) ? cfg.questions : [];
+    const derivedItems = rawItems.length ? rawItems : (cfg.statement || cfg.text ? [{
+      text: cfg.statement || cfg.text || "",
+      correct: cfg.answer === false ? ["false"] : ["true"],
+      explain: cfg.explain || ""
+    }] : []);
+    if(!derivedItems.length) throw new Error("Verify: cfg.questions or cfg.statement is required");
+
+    const verifyCfg = Object.assign({}, cfg, {
+      shuffleChoices: false,
+      questions: derivedItems.map(item => ({
+        text: item.text || item.statement || "",
+        multiple: false,
+        choices: [
+          {id:"true", label: item.trueLabel || cfg.trueLabel || "Wahr"},
+          {id:"false", label: item.falseLabel || cfg.falseLabel || "Falsch"}
+        ],
+        correct: Array.isArray(item.correct) ? item.correct : [item.answer === false ? "false" : "true"],
+        explain: item.explain || cfg.explain || ""
+      }))
+    });
+
+    const inst = createMCQ(verifyCfg);
+    inst.node.setAttribute("data-wb-type", "verify");
+    return {
+      node: wrapBlock("verify", verifyCfg, qs(".wb-body", inst.node).firstChild),
+      check: inst.check,
+      reset: inst.reset
+    };
   }
 
   function createCloze(cfg){
@@ -1137,6 +1170,7 @@ ${fi.input.value || ""}
 
   let inst;
   if(type === "mcq") inst = createMCQ(cfg);
+  else if(type === "verify") inst = createVerify(cfg);
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "order") inst = createOrder(cfg);
   else if(type === "categorize") inst = createCategorize(cfg);
@@ -1230,6 +1264,10 @@ ${fi.input.value || ""}
     });
 
     return { correctCount, total: qEls.length, items };
+  }
+
+  function collectVerify(mountEl){
+    return collectMCQ(mountEl);
   }
 
   function collectCloze(mountEl){
@@ -1516,6 +1554,25 @@ ${fi.input.value || ""}
         textLines.push("");
       });
 
+      getBlockMounts(pageRoot, "verify").forEach((m, idx) => {
+        const res = collectVerify(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Wahr oder Falsch " + (idx+1));
+        results.push({type:"verify", title, res, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, qi) => {
+          textLines.push((qi+1) + ". " + it.text);
+          textLines.push("Ausgewaehlt: " + (it.selected.join(", ") || "-"));
+          textLines.push("Richtig: " + (it.expected.join(", ") || "-"));
+          textLines.push("Ergebnis: " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
       getBlockMounts(pageRoot, "cloze").forEach((m, idx) => {
         const res = collectCloze(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Lueckentext " + (idx+1));
@@ -1619,6 +1676,7 @@ ${fi.input.value || ""}
 
       const typeLabel = {
         mcq: "Multiple Choice",
+        verify: "Wahr oder Falsch",
         cloze: "Lueckentext",
         order: "Reihenfolge",
         categorize: "Kategorisieren",
@@ -1628,7 +1686,7 @@ ${fi.input.value || ""}
       };
 
       function isCompleted(r){
-        if(r.type === "mcq"){
+        if(r.type === "mcq" || r.type === "verify"){
           return r.res.items.every(it => Array.isArray(it.selected) && it.selected.length);
         }
         if(r.type === "cloze"){
@@ -1697,7 +1755,7 @@ ${fi.input.value || ""}
       }
 
       const tableRows = results.map(r => {
-        const scoreText = (r.type === "mcq" || r.type === "cloze" || r.type === "order" || r.type === "puzzle")
+        const scoreText = (r.type === "mcq" || r.type === "verify" || r.type === "cloze" || r.type === "order" || r.type === "puzzle")
           ? `${r.res.correctCount} / ${r.res.total}`
           : "-";
         const meta = typeLabel[r.type] || "Interaktion";
@@ -3161,7 +3219,7 @@ function autoMountPuzzle2(){
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createCloze, createOrder, createCategorize, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createVerify, createCloze, createOrder, createCategorize, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {

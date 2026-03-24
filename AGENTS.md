@@ -22,11 +22,13 @@ Du arbeitest **kritisch**: Du prüfst die Logik, Fachlichkeit und den roten Fade
 - `allgemeines_format.css`
 - `allgemeines_format.js`
 
-Diese Dateien enthalten/erwarten u. a. eine Book-/Sidebar-Navigation und Interaktions-Blocks (MCQ, Cloze, Order, Essay, Reveal, Puzzle2). Orientierung an den vorhandenen Data-Attributen und JSON-Konfigurationen.
+Diese Dateien enthalten/erwarten u. a. eine Book-/Sidebar-Navigation und Interaktions-Blocks (MCQ, Verify, Cloze, Order, Categorize, Essay, Reveal, Puzzle2). Orientierung an den vorhandenen Data-Attributen und JSON-Konfigurationen.
 
 **Wichtige Block-Typen (deine Interaktionen):**
 - `mcq` (Multiple Choice)
+- `verify` (Wahr/Falsch zu einer Aussage)
 - `cloze` (Lückentext mit Wortbank)
+- `categorize` (Begriffe in Kategorien einsortieren)
 - `p2` (Zuordnung/Paare zusammenführen)
 - `reveal` (Frage → Antwort einklappbar)
 - `essay` (Freitext, speichert lokal)
@@ -129,6 +131,22 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
   </script>
 </div>
 
+#### Verify
+```html
+<div data-wb-type="verify">
+  <script class="wb-config" type="application/json">
+  {
+    "id":"verify_1",
+    "title":"Wahr oder falsch?",
+    "hint":"Prüfe die Aussage.",
+    "statement":"Eine mechanische Welle transportiert Materie.",
+    "answer": false,
+    "explain":"Nicht die Materie, sondern der Bewegungszustand breitet sich aus."
+  }
+  </script>
+</div>
+```
+
 #### Cloze
 <div data-wb-type="cloze">
   <script class="wb-config" type="application/json">
@@ -155,6 +173,27 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
   }
   </script>
 </div>
+
+#### Categorize
+```html
+<div data-wb-type="categorize">
+  <script class="wb-config" type="application/json">
+  {
+    "id":"cat_1",
+    "title":"Sortiere die Begriffe",
+    "hint":"Ziehe jeden Begriff in die passende Kategorie.",
+    "categories":[
+      {"id":"transversal","title":"Transversalwelle"},
+      {"id":"longitudinal","title":"Longitudinalwelle"}
+    ],
+    "items":[
+      {"label":"Auslenkung senkrecht zur Ausbreitungsrichtung","category":"transversal"},
+      {"label":"Auslenkung parallel zur Ausbreitungsrichtung","category":"longitudinal"}
+    ]
+  }
+  </script>
+</div>
+```
 
 #### Reveal
 
@@ -337,7 +376,7 @@ Du bist fertig, wenn:
 
 - `index.html` mit Einbindungen von `allgemeines_format.css` und `allgemeines_format.js` korrekt läuft,  
 - 6–10 logisch aufgebaute Seiten vorhanden sind,  
-- jeder Interaktionstyp mindestens einmal vorkommt (`mcq`, `cloze`, `p2`, `reveal`, `essay`, `order`),  
+- jeder Interaktionstyp mindestens einmal vorkommt (`mcq`, `verify`, `cloze`, `categorize`, `p2`, `reveal`, `essay`, `order`),
 - eine „Jetzt hast du das gelernt…“-Zusammenfassung enthalten ist,  
 - ein Abschnitt „Weiterforschen & Quellen“ existiert,  
 - die Selbstkontrolle (Kapitel 6) durchgeführt und eingearbeitet wurde.  
