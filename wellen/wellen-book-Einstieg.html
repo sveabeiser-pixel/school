@@ -78,7 +78,8 @@
       margin-top: 8px;
     }
     #transversalWaveCanvas,
-    #longitudinalWaveCanvas {
+    #longitudinalWaveCanvas,
+    #huygensDiffractionCanvas {
       width: 100%;
       height: 300px;
       border-radius: 12px;
@@ -414,7 +415,156 @@
       </div>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Wellen beschreiben">
+    <section data-wb-page="4" data-wb-page-title="Wellenfronten">
+      <h1>Wellenfronten, Wellenstrahlen und das Huygenssche Prinzip</h1>
+
+      <p>Zwischen der Schwingung am Erreger und der Schwingung an einem Ort im Wellenfeld liegt meist eine Phasenverschiebung. Alle Punkte, die von der Quelle gleich weit entfernt sind, haben aber dieselbe Laufzeit und schwingen deshalb in derselben Phase.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Wellenfront</strong>
+          <p>Eine Wellenfront verbindet benachbarte Punkte gleicher Phase. Auf ihr liegen also alle Punkte, die die gleiche Laufzeit von der Quelle haben.</p>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Wellenstrahl</strong>
+          <p>Wellenstrahlen oder Wellennormalen stehen senkrecht auf der Wellenfront. Sie zeigen die Ausbreitungsrichtung der Welle an.</p>
+        </div>
+      </div>
+
+      <p>Damit kannst du zwei Darstellungen derselben Welle unterscheiden: Die <strong>Wellenfront</strong> zeigt dir Orte gleicher Phase, der <strong>Wellenstrahl</strong> zeigt dir die Richtung, in die sich die Störung fortpflanzt.</p>
+
+      <div class="wave-img-grid">
+        <figure class="wave-figure">
+          <img src="pdf-bilder/kugelwelle.png" alt="Skizze einer Kreis- oder Kugelwelle mit kreisförmigen Wellenfronten" />
+          <figcaption>Kreis- oder Kugelwellen entstehen an punktförmigen Quellen. Die Wellenfronten sind kreis- oder kugelförmig.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="pdf-bilder/ebene_Welle.png" alt="Skizze einer ebenen Welle mit parallelen Wellenfronten" />
+          <figcaption>Ebene Wellen besitzen parallele Wellenfronten. In großer Entfernung kann auch eine Kreiswelle lokal fast eben wirken.</figcaption>
+        </figure>
+      </div>
+
+      <p><strong>Kreiswellen</strong> siehst du zum Beispiel, wenn ein Wassertropfen in ruhiges Wasser fällt. <strong>Ebene Wellen</strong> entstehen etwa, wenn du eine Wasseroberfläche mit einem geraden Stab oder Lineal anregst. Weit entfernt von einer punktförmigen Quelle wirken selbst Kreiswellen oft fast wie ebene Wellen, weil der gekrümmte Ausschnitt sehr groß wird.</p>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze_wellenfronten",
+          "title":"Sicherung: Begriffe einsetzen",
+          "hint":"Setze die Fachbegriffe passend ein.",
+          "bank":["Wellenfront","Wellenstrahlen","Phase","senkrecht"],
+          "segments":[
+            {"t":"text","v":"Punkte mit gleicher "},
+            {"t":"gap","a":"Phase"},
+            {"t":"text","v":" bilden zusammen eine "},
+            {"t":"gap","a":"Wellenfront"},
+            {"t":"text","v":". Die "},
+            {"t":"gap","a":"Wellenstrahlen"},
+            {"t":"text","v":" verlaufen "},
+            {"t":"gap","a":"senkrecht"},
+            {"t":"text","v":" dazu und zeigen die Ausbreitungsrichtung an."}
+          ]
+        }
+        </script>
+      </div>
+
+      <h2>Das Huygenssche Prinzip</h2>
+      <p>Das Huygenssche Prinzip beschreibt, wie sich eine Wellenfront weiterbewegt: Jeder Punkt einer Wellenfront kann als Ausgangspunkt einer neuen kleinen Elementarwelle gedacht werden. Die gemeinsame Einhüllende dieser Elementarwellen bildet nach kurzer Zeit die nächste Wellenfront.</p>
+
+      <div class="grid2">
+        <figure class="wave-figure">
+          <img src="pdf-bilder/huygens.png" alt="Skizze des Huygensschen Prinzips mit Elementarwellen" />
+          <figcaption>Aus vielen kleinen Elementarwellen entsteht die nächste Wellenfront.</figcaption>
+        </figure>
+        <div class="wb-callout">
+          <strong>Merksatz</strong>
+          <p>Für alle Wellenarten gilt: Jede Stelle einer Wellenfront kann als Ausgangspunkt einer Elementarwelle aufgefasst werden.</p>
+          <p>Damit lassen sich nicht nur gerade Ausbreitung, sondern auch <strong>Beugung</strong>, <strong>Reflexion</strong> und <strong>Brechung</strong> anschaulich erklären.</p>
+        </div>
+      </div>
+
+      <p>Besonders gut siehst du das bei der <strong>Beugung an einem schmalen Spalt</strong>: Hinter der Öffnung breitet sich die Welle nicht einfach nur gerade weiter aus. Stattdessen entstehen hinter dem Spalt neue kreisförmige oder kugelförmige Elementarwellen. Genau deshalb fächert sich die Welle auf.</p>
+
+      <div class="wt-sim-card">
+        <div class="wt-sim-grid">
+          <div>
+            <canvas id="huygensDiffractionCanvas" width="960" height="520" aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
+            <div class="wt-sim-mono" id="huygensDiffractionReadout"></div>
+          </div>
+          <div class="wt-sim-controls">
+            <h2>Simulation: Beugung am Spalt</h2>
+            <p>Von links trifft eine ebene Welle auf eine Wand mit einem Spalt. Hinter dem Spalt werden die Punkte im offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
+
+            <label for="huygensSlit">Spaltbreite</label>
+            <input id="huygensSlit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
+            <div class="wt-sim-mono">relative Spaltbreite = <span id="huygensSlitVal">0.42</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="huygensPauseBtn">Pause</button>
+              <button class="wb-btn" type="button" id="huygensResetBtn">Reset</button>
+            </div>
+
+            <div class="wb-soft-callout" style="margin-top:14px">
+              <strong>Darauf solltest du achten</strong>
+              <ul class="wave-list">
+                <li>Bei kleinem Spalt breitet sich die Welle hinter der Öffnung stärker fächerförmig aus.</li>
+                <li>Die dünnen Kreise zeigen die Elementarwellen nach Huygens.</li>
+                <li>Die kräftige Linie ist die neue Wellenfront als Einhüllende dieser Elementarwellen.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_huygens",
+          "title":"Mini-Check: Huygens anwenden",
+          "hint":"Achte auf Phase, Ausbreitungsrichtung und Beugung.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussage trifft das Huygenssche Prinzip am besten?",
+              "choices":[
+                {"id":"a","label":"Jeder Punkt einer Wellenfront kann als Ausgangspunkt einer Elementarwelle betrachtet werden."},
+                {"id":"b","label":"Nur die Quelle selbst kann neue Wellen erzeugen, Punkte auf der Wellenfront aber nicht."},
+                {"id":"c","label":"Wellenstrahlen verlaufen immer auf der Wellenfront und niemals senkrecht dazu."}
+              ],
+              "correct":["a"],
+              "explain":"Genau das ist die Kernaussage: Die neue Wellenfront entsteht als Einhüllende vieler Elementarwellen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_wellenfronten",
+          "title":"Stopp und check",
+          "hint":"Überlege erst selbst, dann vergleiche.",
+          "question":"Warum erscheinen Kreiswellen in großer Entfernung oft fast wie ebene Wellen?",
+          "answer":"Weil ein kleiner Ausschnitt einer sehr großen Kreisfront nur noch schwach gekrümmt ist. Lokal sehen die Wellenfronten dann fast parallel aus und verhalten sich ähnlich wie eine ebene Welle.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Bereit für die Simulation?</strong>
+        <p>Gehe noch einmal zur Simulation auf der vorherigen Seite oder später zu den Seiten zu Wellen und Spalt. Achte dort bewusst darauf, wie sich Wellenfronten verändern, wenn du Amplitude oder Frequenz anpasst, und wo du Wellenstrahlen mitdenken kannst.</p>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Wellenfronten verbinden Punkte gleicher Phase. Wellenstrahlen stehen senkrecht dazu und zeigen die Ausbreitungsrichtung. Mit dem Huygensschen Prinzip kannst du erklären, wie aus einer Wellenfront die nächste entsteht und warum Wellen an Öffnungen gebeugt werden.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Wellen beschreiben">
       <h1>Wie beschreibt man eine Welle?</h1>
 
       <p>Das Buch unterscheidet zwei Blickrichtungen auf dieselbe Welle. Du kannst die Welle zu einem festen Zeitpunkt entlang des Ortes anschauen oder an einem festen Ort verfolgen, wie sich die Auslenkung mit der Zeit ändert.</p>
@@ -470,7 +620,7 @@
       </div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="Wellen in Gleichungen">
+    <section data-wb-page="6" data-wb-page-title="Wellen in Gleichungen">
       <h1>Wellen in Gleichungen</h1>
 
       <p>Wenn sich die Phase innerhalb einer Schwingungsdauer \(T\) um genau eine Wellenlänge \(\lambda\) weiterbewegt, dann folgt daraus der zentrale Zusammenhang:</p>
@@ -528,7 +678,7 @@
       </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Transfer">
+    <section data-wb-page="7" data-wb-page-title="Transfer">
       <h1>Transfer: Was bedeutet das für echte Beispiele?</h1>
 
       <p>Du kennst jetzt die Grundidee. Entscheidend ist nun, dass du das auf neue Situationen übertragen kannst.</p>
@@ -576,7 +726,7 @@
       </div>
     </section>
 
-    <section data-wb-page="7" data-wb-page-title="Quellen">
+    <section data-wb-page="8" data-wb-page-title="Quellen">
       <h1>Zusammenfassung, Quellen und Weiterforschen</h1>
       <p>Jetzt hast du das gelernt: Eine Welle ist eine sich ausbreitende Störung. Du kannst Längs- und Querwellen unterscheiden, räumliche und zeitliche Beschreibung auseinanderhalten und den Zusammenhang \(c = \lambda \cdot f\) deuten.</p>
 
@@ -585,6 +735,9 @@
         <ul class="wave-list">
           <li>Dorn-Bader Physik Kursstufe, Buchseiten 138–144 aus der von dir angegebenen PDF-Datei.</li>
           <li>Vorhandene Web-Vorlage im Projekt: <code>wellen/wellen-book..html</code> beziehungsweise die entsprechende GitHub-Pages-Seite.</li>
+          <li><a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/ausblick/huygenssches-prinzip-zur-beschreibung-von-mechanischen-wellen" target="_blank" rel="noopener noreferrer">LEIFIphysik: HUYGENSsches Prinzip zur Beschreibung von mechanischen Wellen</a>.</li>
+          <li><a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/beugung" target="_blank" rel="noopener noreferrer">LEIFIphysik: Beugung</a>.</li>
+          <li><a href="https://openstax.org/books/university-physics-volume-3/pages/4-3-double-slit-diffraction" target="_blank" rel="noopener noreferrer">OpenStax University Physics Volume 3, Abschnitt 4.3 zur Deutung von Beugung mit Huygens-Wellen</a>.</li>
         </ul>
       </div>
 
@@ -820,6 +973,205 @@
       ampEl.addEventListener("input", syncLabels);
       freqEl.addEventListener("input", syncLabels);
       speedEl.addEventListener("input", syncLabels);
+      pauseBtn.addEventListener("click", () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? "Weiter" : "Pause";
+      });
+      resetBtn.addEventListener("click", () => {
+        phase = 0;
+        lastTs = 0;
+      });
+      syncLabels();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    })();
+
+    (function(){
+      const canvas = document.getElementById("huygensDiffractionCanvas");
+      const readout = document.getElementById("huygensDiffractionReadout");
+      const slitEl = document.getElementById("huygensSlit");
+      const slitVal = document.getElementById("huygensSlitVal");
+      const pauseBtn = document.getElementById("huygensPauseBtn");
+      const resetBtn = document.getElementById("huygensResetBtn");
+      if(!canvas || !readout || !slitEl || !slitVal || !pauseBtn || !resetBtn) return;
+      if(canvas.dataset.wbHuygensInit === "1") return;
+      canvas.dataset.wbHuygensInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      const wallX = W * 0.46;
+      const topPad = 52;
+      const bottomPad = H - 52;
+      const centerY = H * 0.54;
+      const leftStart = 56;
+      const wavelength = 58;
+      let phase = 0;
+      let paused = false;
+      let rafId = 0;
+      let lastTs = 0;
+
+      function syncLabels(){
+        slitVal.textContent = Number(slitEl.value).toFixed(2);
+      }
+
+      function drawIncomingFronts(nowPhase){
+        ctx.save();
+        ctx.strokeStyle = "rgba(14, 116, 144, 0.95)";
+        ctx.lineWidth = 2.3;
+        for(let x = wallX - 6; x >= leftStart; x -= wavelength){
+          const shiftedX = x + (nowPhase % wavelength);
+          if(shiftedX < leftStart || shiftedX > wallX - 6) continue;
+          ctx.beginPath();
+          ctx.moveTo(shiftedX, topPad);
+          ctx.lineTo(shiftedX, bottomPad);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawWall(slitHalf){
+        ctx.save();
+        ctx.strokeStyle = "#0f172a";
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(wallX, topPad);
+        ctx.lineTo(wallX, centerY - slitHalf);
+        ctx.moveTo(wallX, centerY + slitHalf);
+        ctx.lineTo(wallX, bottomPad);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawNormals(slitHalf){
+        ctx.save();
+        ctx.strokeStyle = "rgba(100, 116, 139, 0.55)";
+        ctx.lineWidth = 1.2;
+        const yStep = Math.max(14, slitHalf / 3);
+        for(let y = centerY - slitHalf; y <= centerY + slitHalf + 1; y += yStep){
+          ctx.beginPath();
+          ctx.moveTo(wallX - 18, y);
+          ctx.lineTo(wallX + 30, y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawWavelets(sources, radius){
+        ctx.save();
+        ctx.strokeStyle = "rgba(59, 130, 246, 0.45)";
+        ctx.lineWidth = 1;
+        sources.forEach((y) => {
+          ctx.beginPath();
+          ctx.arc(wallX, y, radius, -Math.PI / 2, Math.PI / 2);
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+
+      function drawEnvelopeCapsule(radius, slitHalf){
+        const topY = centerY - slitHalf;
+        const bottomY = centerY + slitHalf;
+        const xLine = wallX + radius;
+        ctx.save();
+        ctx.strokeStyle = "#dc2626";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(xLine, topY);
+        ctx.lineTo(xLine, bottomY);
+        ctx.moveTo(xLine, topY);
+        ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
+        ctx.moveTo(xLine, bottomY);
+        ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2, false);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawPropagatingFronts(step, slitHalf){
+        ctx.save();
+        ctx.strokeStyle = "rgba(220, 38, 38, 0.72)";
+        ctx.lineWidth = 2.2;
+        for(let n = 0; n < 5; n++){
+          const radius = 36 + ((phase + step * n) % wavelength);
+          const topY = centerY - slitHalf;
+          const bottomY = centerY + slitHalf;
+          const xLine = wallX + radius;
+          ctx.beginPath();
+          if(xLine <= W - 18){
+            ctx.moveTo(xLine, topY);
+            ctx.lineTo(xLine, bottomY);
+          }
+          ctx.moveTo(xLine, topY);
+          ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
+          ctx.moveTo(xLine, bottomY);
+          ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2, false);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawLabels(slitHalf){
+        ctx.save();
+        ctx.fillStyle = "#334155";
+        ctx.font = "20px sans-serif";
+        ctx.fillText("Ebene Welle", 70, 36);
+        ctx.fillText("Spalt", wallX - 18, topPad - 14);
+        ctx.fillText("Elementarwellen", wallX + 120, topPad + 18);
+        ctx.fillStyle = "#475569";
+        ctx.font = "16px sans-serif";
+        ctx.fillText("neue Wellenfront", wallX + 150, centerY - slitHalf - 34);
+        ctx.restore();
+      }
+
+      function draw(ts){
+        if(!canvas.isConnected) return;
+        if(!lastTs) lastTs = ts;
+        const dt = Math.min(0.05, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if(!paused){
+          phase += dt * 72;
+        }
+
+        const slitValue = Number(slitEl.value);
+        const slitHalf = 4 + slitValue * 124;
+        const radius = 36 + (phase % wavelength);
+        const sourceCount = slitValue < 0.08 ? 1 : Math.max(3, Math.round(4 + slitValue * 10));
+        const sources = [];
+        for(let i = 0; i < sourceCount; i++){
+          const t = sourceCount === 1 ? 0.5 : i / (sourceCount - 1);
+          sources.push(centerY - slitHalf + t * slitHalf * 2);
+        }
+
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "rgba(248, 250, 252, 0.96)";
+        ctx.fillRect(0, 0, W, H);
+
+        drawIncomingFronts(phase);
+        drawNormals(slitHalf);
+        drawWavelets(sources, radius);
+        drawPropagatingFronts(wavelength, slitHalf);
+        drawEnvelopeCapsule(radius, slitHalf);
+        drawWall(slitHalf);
+
+        ctx.fillStyle = "#0f766e";
+        sources.forEach((y) => {
+          ctx.beginPath();
+          ctx.arc(wallX, y, 3.6, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        drawLabels(slitHalf);
+
+        const spread = slitValue < 0.08 ? "sehr stark" : (slitValue < 0.34 ? "stark" : (slitValue < 0.62 ? "mittel" : "gering"));
+        readout.textContent =
+          "Beobachtung: Hinter dem Spalt entsteht aus vielen Elementarwellen eine neue Wellenfront, die nach rechts weiterläuft.\n" +
+          "aktuelle Beugung: " + spread + "\n" +
+          "Regel: Je schmaler der Spalt, desto deutlicher fächert sich die Welle auf.";
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      slitEl.addEventListener("input", syncLabels);
       pauseBtn.addEventListener("click", () => {
         paused = !paused;
         pauseBtn.textContent = paused ? "Weiter" : "Pause";
