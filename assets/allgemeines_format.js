@@ -623,6 +623,13 @@ function el(tag, attrs = {}, children = []) {
       chip.addEventListener("click", () => {
         const slot = chip.parentElement && chip.parentElement.closest(".wb-order-drop");
         if(slot) bank.appendChild(chip);
+        else{
+          const empty = nextEmptyDrop();
+          if(empty){
+            placeChipInDrop(chip, empty);
+            return;
+          }
+        }
         updateCheckState();
         save();
       });
@@ -633,17 +640,27 @@ function el(tag, attrs = {}, children = []) {
     const order = (cfg.shuffle === false) ? chips : shuffle(chips.slice());
     order.forEach(ch => bank.appendChild(ch));
 
+    function nextEmptyDrop(){
+      return Array.from(slotsWrap.querySelectorAll(".wb-order-drop")).find(d => !d.querySelector(".wb-order-chip")) || null;
+    }
+
+    function placeChipInDrop(chip, dropEl){
+      if(!chip || !dropEl) return false;
+      const existing = dropEl.querySelector(".wb-order-chip");
+      if(existing && existing !== chip) bank.appendChild(existing);
+      dropEl.appendChild(chip);
+      updateCheckState();
+      save();
+      return true;
+    }
+
     function allowDropSlot(dropEl){
       dropEl.addEventListener("dragover", (e) => e.preventDefault());
       dropEl.addEventListener("drop", (e) => {
         e.preventDefault();
         const chip = global.__wbOrderDrag;
         if(!chip) return;
-        const existing = dropEl.querySelector(".wb-order-chip");
-        if(existing && existing !== chip) bank.appendChild(existing);
-        dropEl.appendChild(chip);
-        updateCheckState();
-        save();
+        placeChipInDrop(chip, dropEl);
       });
     }
 
@@ -760,6 +777,173 @@ function el(tag, attrs = {}, children = []) {
     loadSaved();
     updateCheckState();
     return { node: wrapBlock("order", cfg, el("div", {}, [bank, slotsWrap, controls])), check, reset };
+  }
+
+  function createCategorize(cfg){
+    if(!Array.isArray(cfg.categories) || !cfg.categories.length) throw new Error("Categorize: cfg.categories must be a non-empty array");
+    if(!Array.isArray(cfg.items) || !cfg.items.length) throw new Error("Categorize: cfg.items must be a non-empty array");
+
+    const categories = cfg.categories.map((cat, idx) => ({
+      id: String(cat.id || `cat_${idx+1}`),
+      title: String(cat.title || `Kategorie ${idx+1}`)
+    }));
+    const items = cfg.items.map((item, idx) => ({
+      id: String(item.id || `item_${idx+1}`),
+      label: String(item.label || ""),
+      category: String(item.category || "")
+    }));
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "categorize_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "categorize");
+
+    function shuffle(arr){
+      for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    const host = el("div", {});
+    const grid = el("div", {class:"wb-categorize-grid"}, []);
+    const bank = el("div", {class:"wb-categorize-bank", "data-categorize-bank":"1"}, []);
+    const status = el("div", {class:"wb-categorize-status", "aria-live":"polite"}, ["Noch nicht überprüft."]);
+    let dragChip = null;
+    const zoneBodies = new Map();
+
+    function allChips(){
+      return qsa(".wb-categorize-chip", host);
+    }
+
+    function clearCheckState(){
+      allChips().forEach(chip => chip.classList.remove("correct", "wrong"));
+      status.textContent = "Noch nicht überprüft.";
+    }
+
+    function saveState(){
+      try{
+        const data = {};
+        items.forEach(item => {
+          const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
+          if(!chip) return;
+          const zone = chip.closest(".wb-categorize-zone");
+          data[item.id] = zone ? String(zone.getAttribute("data-category") || "") : "";
+        });
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }catch(_e){}
+    }
+
+    function makeChip(item){
+      const chip = el("div", {
+        class:"wb-categorize-chip",
+        draggable:"true",
+        "data-id": item.id,
+        "data-answer": item.category
+      }, [item.label]);
+      chip.addEventListener("dragstart", () => {
+        dragChip = chip;
+        chip.classList.remove("correct", "wrong");
+      });
+      chip.addEventListener("dragend", () => {
+        dragChip = null;
+        qsa(".wb-categorize-zone", grid).forEach(z => z.classList.remove("is-over"));
+      });
+      return chip;
+    }
+
+    categories.forEach(cat => {
+      const body = el("div", {class:"wb-categorize-zone-body", "data-category-body":cat.id}, []);
+      zoneBodies.set(cat.id, body);
+      const zone = el("div", {class:"wb-categorize-zone", "data-category":cat.id}, [
+        el("div", {class:"wb-categorize-zone-head"}, [cat.title]),
+        body
+      ]);
+      zone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        zone.classList.add("is-over");
+      });
+      zone.addEventListener("dragleave", () => zone.classList.remove("is-over"));
+      zone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        zone.classList.remove("is-over");
+        if(dragChip) body.appendChild(dragChip);
+        clearCheckState();
+        saveState();
+      });
+      grid.appendChild(zone);
+    });
+
+    bank.addEventListener("dragover", (e) => e.preventDefault());
+    bank.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if(dragChip) bank.appendChild(dragChip);
+      clearCheckState();
+      saveState();
+    });
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(storageKey);
+        if(!raw) return false;
+        const data = JSON.parse(raw);
+        items.forEach(item => {
+          const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
+          const catId = data[item.id];
+          const body = zoneBodies.get(catId);
+          if(chip && body) body.appendChild(chip);
+        });
+        return true;
+      }catch(_e){
+        return false;
+      }
+    }
+
+    function reset(){
+      items.forEach(item => {
+        const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
+        if(chip) bank.appendChild(chip);
+      });
+      if(cfg.shuffle !== false) shuffle(Array.from(bank.children)).forEach(ch => bank.appendChild(ch));
+      clearCheckState();
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
+    }
+
+    function check(){
+      let correct = 0;
+      let placed = 0;
+      items.forEach(item => {
+        const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
+        if(!chip) return;
+        const zone = chip.closest(".wb-categorize-zone");
+        const got = zone ? String(zone.getAttribute("data-category") || "") : "";
+        chip.classList.remove("correct", "wrong");
+        if(!got) return;
+        placed += 1;
+        const ok = got === item.category;
+        chip.classList.add(ok ? "correct" : "wrong");
+        if(ok) correct += 1;
+      });
+      const missing = items.length - placed;
+      status.textContent = missing > 0
+        ? `Richtig: ${correct}/${items.length}. Es fehlen noch ${missing} Karten.`
+        : `Richtig: ${correct}/${items.length}.`;
+      saveState();
+      return {correct: correct, total: items.length};
+    }
+
+    items.forEach(item => bank.appendChild(makeChip(item)));
+    if(cfg.shuffle !== false) shuffle(Array.from(bank.children)).forEach(ch => bank.appendChild(ch));
+    loadState();
+
+    const controls = el("div", {class:"wb-row"}, [
+      el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
+      el("button", {class:"wb-btn", type:"button", onclick: reset}, ["Zurücksetzen"]),
+      status
+    ]);
+
+    host.appendChild(grid);
+    host.appendChild(bank);
+    host.appendChild(controls);
+    return { node: wrapBlock("categorize", cfg, host), check, reset };
   }
 
   function createEssay(cfg){
@@ -955,6 +1139,7 @@ ${fi.input.value || ""}
   if(type === "mcq") inst = createMCQ(cfg);
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "order") inst = createOrder(cfg);
+  else if(type === "categorize") inst = createCategorize(cfg);
   else if(type === "essay") inst = createEssay(cfg);
   else if(type === "reveal") inst = createReveal(cfg);
   else if(type === "reveal-img" || type === "revealimg") inst = createRevealImage(cfg);
@@ -1051,14 +1236,25 @@ ${fi.input.value || ""}
     const gaps = qsa(".wb-gap", mountEl);
     let okCount = 0;
     const items = gaps.map(g => {
-      const expected = (g.getAttribute("data-answer") || "").trim();
+      let expectedList = [];
+      try{
+        const raw = g.getAttribute("data-answers") || "[]";
+        const parsed = JSON.parse(raw);
+        if(Array.isArray(parsed)){
+          expectedList = parsed.map(v => String(v == null ? "" : v).trim()).filter(v => v !== "");
+        }
+      }catch(_){}
+      if(expectedList.length === 0){
+        const expected = (g.getAttribute("data-answer") || "").trim();
+        if(expected) expectedList = [expected];
+      }
       const chip = qs(".wb-chip", g);
       const got = chip ? (chip.getAttribute("data-token") || "").trim() : "";
-      const ok = got !== "" && got === expected;
+      const ok = got !== "" && expectedList.includes(got);
       g.classList.remove("ok","bad");
       g.classList.add(ok ? "ok" : "bad");
       if(ok) okCount += 1;
-      return { expected, got, ok };
+      return { expected: expectedList.join(" | "), got, ok };
     });
     return { correctCount: okCount, total: gaps.length, items };
   }
@@ -1082,6 +1278,27 @@ ${fi.input.value || ""}
       return { expected, got, ok };
     });
     return { correctCount: okCount, total: drops.length, items };
+  }
+
+  function collectCategorize(mountEl){
+    const chips = qsa(".wb-categorize-chip", mountEl);
+    let okCount = 0;
+    const items = chips.map(chip => {
+      const expected = String(chip.getAttribute("data-answer") || "");
+      const zone = chip.closest(".wb-categorize-zone");
+      const got = zone ? String(zone.getAttribute("data-category") || "") : "";
+      const ok = got !== "" && got === expected;
+      chip.classList.remove("correct", "wrong");
+      if(got !== "") chip.classList.add(ok ? "correct" : "wrong");
+      if(ok) okCount += 1;
+      return {
+        label: String(chip.textContent || "").trim(),
+        expected,
+        got,
+        ok
+      };
+    });
+    return { correctCount: okCount, total: chips.length, items };
   }
 
   function collectEssay(mountEl){
@@ -1333,6 +1550,22 @@ ${fi.input.value || ""}
         textLines.push("");
       });
 
+      getBlockMounts(pageRoot, "categorize").forEach((m, idx) => {
+        const res = collectCategorize(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Kategorisieren " + (idx+1));
+        results.push({type:"categorize", title, res, page: pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach((it, ci) => {
+          textLines.push((ci+1) + ". " + it.label + " | Eingabe: " + (it.got || "-") + " | Erwartet: " + (it.expected || "-") + " | " + (it.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
       getBlockMounts(pageRoot, "essay").forEach((m, idx) => {
         const fields = collectEssay(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Text " + (idx+1));
@@ -1388,6 +1621,7 @@ ${fi.input.value || ""}
         mcq: "Multiple Choice",
         cloze: "Lueckentext",
         order: "Reihenfolge",
+        categorize: "Kategorisieren",
         puzzle: "Zuordnung",
         essay: "Essay",
         text: "Text"
@@ -1398,6 +1632,9 @@ ${fi.input.value || ""}
           return r.res.items.every(it => Array.isArray(it.selected) && it.selected.length);
         }
         if(r.type === "cloze"){
+          return r.res.items.every(it => String(it.got || "").trim() !== "");
+        }
+        if(r.type === "categorize"){
           return r.res.items.every(it => String(it.got || "").trim() !== "");
         }
         if(r.type === "essay"){
@@ -2924,7 +3161,7 @@ function autoMountPuzzle2(){
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createCloze, createOrder, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createCloze, createOrder, createCategorize, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {

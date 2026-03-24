@@ -260,6 +260,24 @@
       </div>
 
 
+      <!-- Drag and Drop Exercise -->
+      <!--  Wenn man mehrere Reihenfolgen zulassen möchte:-->
+    
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {"id":"cloze_beispiel",
+  "title":"Setze ein",
+  "bank":["(1)","(2)","(3)"],
+  "segments":[
+    {"t":"text","v":"In dieser Lücke sind zwei Antworten erlaubt: "},
+    {"t":"gap","a":["(1)","(2)"]},
+    {"t":"text","v":"."}
+  ]
+}
+        </script>
+      </div>
+          
+
       <h2>Finde Paare</h2>
 
       <!-- Puzzlepaare - Zuordnungsübung -->
@@ -347,6 +365,66 @@
       </div>
 
 
+   <!-- In Felder ziehen - 1.2.3.  -->
+     <!--  Wenn man mehrere Reihenfolgen zulassen möchte:-->
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"categorize_wellentypen",
+          "title":"Zuordnungsübung: Sortiere die Begriffe",
+          "hint":"Ziehe die Karten in das passende Feld.",
+          "categories":[
+            {"id":"transversal","title":"Transversalwelle"},
+            {"id":"longitudinal","title":"Longitudinalwelle"}
+          ],
+          "items":[
+            {"label":"Auslenkung senkrecht zur Ausbreitungsrichtung","category":"transversal"},
+            {"label":"Auslenkung parallel zur Ausbreitungsrichtung","category":"longitudinal"},
+            {"label":"Teilchen bewegen sich auf und ab","category":"transversal"},
+            {"label":"Teilchen bilden Verdichtungen und Verdünnungen","category":"longitudinal"},
+            {"label":"Beispiele: Gitarrensaite, elektromagnetische Welle","category":"transversal"},
+            {"label":"Beispiele: Schallwelle, Federdruck","category":"longitudinal"}
+          ]
+        }
+        </script>
+      </div>
+
+
+
+      <div data-p2 class="p2" data-p2-title="Zuordnung: Wellentyp und Eigenschaft" data-p2-hint="Ordne sauber zu.">
+        <div class="p2-hint">Ziehe den Wellentyp auf die passende Beschreibung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Wellentyp</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Längswelle</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Querwelle</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Schall in Luft</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">La-Ola im Stadion</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Beschreibung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Die Teilchen schwingen parallel zur Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Typisches Beispiel für Verdichtungen und Verdünnungen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Typisches Modell für eine fortschreitende Querstörung.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
 
 
       <h2>Reflexion</h2>

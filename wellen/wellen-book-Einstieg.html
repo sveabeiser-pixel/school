@@ -90,103 +90,6 @@
     .wb-book[data-theme="dark"] .wt-sim-card {
       background: rgba(255,255,255,0.14);
     }
-    .wave-sort-wrap {
-      margin: 18px 0;
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(140,210,210,0.35), rgba(200,235,232,0.55));
-      border: 1px solid #b7d6d6;
-    }
-    .wave-sort-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-    @media (max-width: 900px) {
-      .wave-sort-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .wave-dropzone {
-      min-height: 280px;
-      background: rgba(255,255,255,0.82);
-      border: 2px solid #c7d2e3;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(30, 41, 59, 0.08);
-    }
-    .wave-dropzone.is-over {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-    }
-    .wave-drop-head {
-      padding: 14px 18px;
-      font-size: 1.2rem;
-      font-weight: 800;
-      background: rgba(15, 23, 42, 0.08);
-    }
-    .wave-drop-body {
-      min-height: 210px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .wave-chip-bank {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.76);
-      border: 1px dashed #9fb9cc;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    .wave-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 180px;
-      max-width: 320px;
-      min-height: 74px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      border: 1px solid #aac0d5;
-      background: #dbe8fb;
-      color: #294774;
-      box-shadow: 0 6px 18px rgba(41, 71, 116, 0.16);
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: grab;
-      user-select: none;
-    }
-    .wave-chip:active {
-      cursor: grabbing;
-    }
-    .wave-chip.correct {
-      background: #dff4df;
-      border-color: #6aa36a;
-      color: #1f5d1f;
-    }
-    .wave-chip.wrong {
-      background: #fde2e2;
-      border-color: #d37b7b;
-      color: #8a2d2d;
-    }
-    .wave-sort-toolbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-    .wave-sort-status {
-      font-size: 0.95rem;
-      color: var(--wb-muted, #6b7280);
-    }
   </style>
 </head>
 <body>
@@ -440,30 +343,26 @@
       <h2>Zuordnungsübung: Sortiere die Begriffe</h2>
       <p>Ziehe die Karten in das passende Feld. Achte darauf, ob die Teilchen parallel oder senkrecht zur Ausbreitungsrichtung schwingen und welche Beispiele typisch sind.</p>
 
-      <div class="wave-sort-wrap" id="waveTypeSort">
-        <div class="wave-sort-grid">
-          <div class="wave-dropzone" data-kind="transversal">
-            <div class="wave-drop-head">Transversalwelle</div>
-            <div class="wave-drop-body"></div>
-          </div>
-          <div class="wave-dropzone" data-kind="longitudinal">
-            <div class="wave-drop-head">Longitudinalwelle</div>
-            <div class="wave-drop-body"></div>
-          </div>
-        </div>
-        <div class="wave-chip-bank" data-bank>
-          <div class="wave-chip" draggable="true" data-answer="transversal">Auslenkung senkrecht zur Ausbreitungsrichtung</div>
-          <div class="wave-chip" draggable="true" data-answer="longitudinal">Auslenkung parallel zur Ausbreitungsrichtung</div>
-          <div class="wave-chip" draggable="true" data-answer="transversal">Teilchen bewegen sich auf und ab</div>
-          <div class="wave-chip" draggable="true" data-answer="longitudinal">Teilchen bilden Verdichtungen und Verdünnungen</div>
-          <div class="wave-chip" draggable="true" data-answer="transversal">Beispiele: Gitarrensaite, elektromagnetische Welle</div>
-          <div class="wave-chip" draggable="true" data-answer="longitudinal">Beispiele: Schallwelle, Federdruck</div>
-        </div>
-        <div class="wave-sort-toolbar">
-          <button class="wb-btn primary" type="button" id="waveSortCheck">Überprüfen</button>
-          <button class="wb-btn" type="button" id="waveSortReset">Zurücksetzen</button>
-          <div class="wave-sort-status" id="waveSortStatus">Noch nicht überprüft.</div>
-        </div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"categorize_wellentypen",
+          "title":"Zuordnungsübung: Sortiere die Begriffe",
+          "hint":"Ziehe die Karten in das passende Feld.",
+          "categories":[
+            {"id":"transversal","title":"Transversalwelle"},
+            {"id":"longitudinal","title":"Longitudinalwelle"}
+          ],
+          "items":[
+            {"label":"Auslenkung senkrecht zur Ausbreitungsrichtung","category":"transversal"},
+            {"label":"Auslenkung parallel zur Ausbreitungsrichtung","category":"longitudinal"},
+            {"label":"Teilchen bewegen sich auf und ab","category":"transversal"},
+            {"label":"Teilchen bilden Verdichtungen und Verdünnungen","category":"longitudinal"},
+            {"label":"Beispiele: Gitarrensaite, elektromagnetische Welle","category":"transversal"},
+            {"label":"Beispiele: Schallwelle, Federdruck","category":"longitudinal"}
+          ]
+        }
+        </script>
       </div>
 
       <div data-p2 class="p2" data-p2-title="Zuordnung: Wellentyp und Eigenschaft" data-p2-hint="Ordne sauber zu.">
@@ -703,103 +602,6 @@
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
-    (function(){
-      const root = document.getElementById("waveTypeSort");
-      if(!root || root.dataset.wbWaveSortInit === "1") return;
-      root.dataset.wbWaveSortInit = "1";
-
-      const bank = root.querySelector("[data-bank]");
-      const zones = Array.from(root.querySelectorAll(".wave-dropzone"));
-      const bodies = zones.map(z => z.querySelector(".wave-drop-body"));
-      const checkBtn = document.getElementById("waveSortCheck");
-      const resetBtn = document.getElementById("waveSortReset");
-      const status = document.getElementById("waveSortStatus");
-      let dragChip = null;
-
-      function allChips(){
-        return Array.from(root.querySelectorAll(".wave-chip"));
-      }
-
-      function shuffleBank(){
-        const chips = Array.from(bank.querySelectorAll(".wave-chip"));
-        for(let i = chips.length - 1; i > 0; i--){
-          const j = Math.floor(Math.random() * (i + 1));
-          bank.appendChild(chips[j]);
-          chips.splice(j, 1);
-        }
-      }
-
-      function clearState(){
-        allChips().forEach(chip => chip.classList.remove("correct", "wrong"));
-        status.textContent = "Noch nicht überprüft.";
-      }
-
-      function reset(){
-        bodies.forEach(body => {
-          Array.from(body.children).forEach(chip => bank.appendChild(chip));
-        });
-        clearState();
-        shuffleBank();
-      }
-
-      allChips().forEach(chip => {
-        chip.addEventListener("dragstart", () => {
-          dragChip = chip;
-          chip.classList.remove("correct", "wrong");
-        });
-        chip.addEventListener("dragend", () => {
-          dragChip = null;
-          zones.forEach(z => z.classList.remove("is-over"));
-        });
-      });
-
-      zones.forEach(zone => {
-        const body = zone.querySelector(".wave-drop-body");
-        zone.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          zone.classList.add("is-over");
-        });
-        zone.addEventListener("dragleave", () => zone.classList.remove("is-over"));
-        zone.addEventListener("drop", (e) => {
-          e.preventDefault();
-          zone.classList.remove("is-over");
-          if(dragChip) body.appendChild(dragChip);
-          clearState();
-        });
-      });
-
-      bank.addEventListener("dragover", (e) => e.preventDefault());
-      bank.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if(dragChip) bank.appendChild(dragChip);
-        clearState();
-      });
-
-      checkBtn.addEventListener("click", () => {
-        let correct = 0;
-        let total = 0;
-        zones.forEach(zone => {
-          const kind = zone.getAttribute("data-kind");
-          Array.from(zone.querySelectorAll(".wave-chip")).forEach(chip => {
-            total += 1;
-            const ok = chip.getAttribute("data-answer") === kind;
-            chip.classList.toggle("correct", ok);
-            chip.classList.toggle("wrong", !ok);
-            if(ok) correct += 1;
-          });
-        });
-        const missing = bank.querySelectorAll(".wave-chip").length;
-        if(missing > 0){
-          status.textContent = "Es liegen noch " + missing + " Karten im Startbereich.";
-        } else {
-          status.textContent = "Richtig zugeordnet: " + correct + " von " + total + ".";
-        }
-      });
-
-      resetBtn.addEventListener("click", reset);
-      shuffleBank();
-    })();
-
     (function(){
       const canvas = document.getElementById("transversalWaveCanvas");
       const readout = document.getElementById("transversalWaveReadout");
