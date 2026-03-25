@@ -89,13 +89,14 @@ function el(tag, attrs = {}, children = []) {
   function buildTaskIcon(type){
     const typeMap = {
       "mcq": "mcq.png",
-      "verify": "mcq.png",
+      "verify": "verify.png",
       "reveal": "reveal.png",
       "reveal-img": "reveal.png",
       "cloze": "cloze.png",
       "essay": "essay.png",
       "p2": "p2.png",
-      "order": "order.png"
+      "order": "order.png",
+      "categorize": "categorize.png"
     };
     const key = String(type || "").toLowerCase();
     const imgName = typeMap[key];

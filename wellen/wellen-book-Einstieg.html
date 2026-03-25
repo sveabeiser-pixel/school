@@ -1,16 +1,17 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wellen: Einstieg</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
   <script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']]
-    }
-  };
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
@@ -20,9 +21,11 @@
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       margin: 16px 0;
     }
+
     .wave-figure {
       margin: 0;
     }
+
     .wave-figure img {
       width: 100%;
       height: auto;
@@ -31,45 +34,54 @@
       border: 1px solid #d8dee6;
       background: #fff;
     }
+
     .wave-figure figcaption {
       font-size: 0.95rem;
       color: #5f6b7a;
       margin-top: 6px;
     }
+
     .wave-list {
       margin: 0;
       padding-left: 18px;
     }
-    .wave-list li + li {
+
+    .wave-list li+li {
       margin-top: 6px;
     }
+
     .wt-sim-card {
       border: 1px solid var(--wb-line, #e5e7eb);
       border-radius: 14px;
       padding: 14px;
       background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
       margin: 14px 0;
     }
+
     .wt-sim-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 14px;
       align-items: start;
     }
+
     @media (max-width: 900px) {
       .wt-sim-grid {
         grid-template-columns: 1fr;
       }
     }
+
     .wt-sim-controls label {
       display: block;
       font-weight: 900;
       margin: 10px 0 6px;
     }
+
     .wt-sim-controls input[type="range"] {
       width: 100%;
     }
+
     .wt-sim-mono {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 13px;
@@ -77,6 +89,7 @@
       white-space: pre-wrap;
       margin-top: 8px;
     }
+
     #transversalWaveCanvas,
     #longitudinalWaveCanvas,
     #huygensDiffractionCanvas {
@@ -84,15 +97,17 @@
       height: 300px;
       border-radius: 12px;
       border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.55);
+      background: rgba(255, 255, 255, 0.55);
       display: block;
     }
+
     .wb-book[data-theme="grau"] .wt-sim-card,
     .wb-book[data-theme="dark"] .wt-sim-card {
-      background: rgba(255,255,255,0.14);
+      background: rgba(255, 255, 255, 0.14);
     }
   </style>
 </head>
+
 <body>
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
@@ -116,7 +131,8 @@
 
     <section data-wb-page="1" data-wb-page-title="Start">
       <h1>Was ist eine Welle?</h1>
-      <p class="wb-muted">In diesem Einstieg untersuchst du die Grundidee der Welle: Eine Welle ist keine wandernde Materie, sondern eine sich ausbreitende Störung.</p>
+      <p class="wb-muted">In diesem Einstieg untersuchst du die Grundidee der Welle: Eine Welle ist keine wandernde
+        Materie, sondern eine sich ausbreitende Störung.</p>
 
       <div class="grid2">
         <div class="wb-soft-callout">
@@ -135,7 +151,8 @@
 
       <div class="wb-callout">
         <strong>Ausgangspunkt</strong>
-        <p>Die vorhandene Einstiegsseite erklärt Wellen als fortschreitende Störungen. Das Dorn-Bader-Buch vertieft dazu Längs- und Querwellen, die Beschreibung von Wellen sowie den Zusammenhang \(c = \lambda \cdot f\).</p>
+        <p>Die vorhandene Einstiegsseite erklärt Wellen als fortschreitende Störungen. Das Dorn-Bader-Buch vertieft dazu
+          Längs- und Querwellen, die Beschreibung von Wellen sowie den Zusammenhang \(c = \lambda \cdot f\).</p>
       </div>
 
       <div data-wb-type="reveal">
@@ -157,24 +174,35 @@
       <h1>Welle = sich ausbreitende Störung</h1>
 
       <div class="wb-img">
-        <img src="pdf-bilder/wellen.png" alt="Ebene Wellen auf einem See, Kreiswellen in einer Pfütze und La Ola im Fußballstadion" style="width:100%; height:auto; max-width:none;" />
+        <img src="pdf-bilder/wellen.png"
+          alt="Ebene Wellen auf einem See, Kreiswellen in einer Pfütze und La Ola im Fußballstadion"
+          style="width:100%; height:auto; max-width:none;" />
       </div>
-      <p class="wb-muted">B1 a) Ebene Wellen auf einem See, b) Kreiswellen in einer Pfütze, c) La Ola im Fußballstadion</p>
+      <p class="wb-muted">B1 a) Ebene Wellen auf einem See, b) Kreiswellen in einer Pfütze, c) La Ola im Fußballstadion
+      </p>
 
-      <p>Wenn an einem Träger ein Teilchen ausgelenkt wird, geraten benachbarte Teilchen wegen der Kopplung ebenfalls in Bewegung. Die Störung wandert weiter, auch wenn jedes Teilchen nur um seine Ruhelage schwingt.</p>
+      <p>Wenn an einem Träger ein Teilchen ausgelenkt wird, geraten benachbarte Teilchen wegen der Kopplung ebenfalls in
+        Bewegung. Die Störung wandert weiter, auch wenn jedes Teilchen nur um seine Ruhelage schwingt.</p>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <h2>Voraussetzungen für die Entstehung von Wellen</h2>
-      <p>Die Ausbreitung <strong>mechanischer Wellen</strong> erfordert zunächst einen <strong>Träger</strong>, in dem sich schwingungsfähige Teilchen befinden. Solche Träger können feste, flüssige oder gasförmige Stoffe sein.</p>
+      <p>Die Ausbreitung <strong>mechanischer Wellen</strong> erfordert zunächst einen <strong>Träger</strong>, in dem
+        sich schwingungsfähige Teilchen befinden. Solche Träger können feste, flüssige oder gasförmige Stoffe sein.</p>
 
-      <p><strong>Elektromagnetische Wellen</strong> brauchen dagegen keinen materiellen Träger. Sie können sich auch im Vakuum ausbreiten, zum Beispiel das Licht von der Sonne zur Erde.</p>
+      <p><strong>Elektromagnetische Wellen</strong> brauchen dagegen keinen materiellen Träger. Sie können sich auch im
+        Vakuum ausbreiten, zum Beispiel das Licht von der Sonne zur Erde.</p>
 
-      <p>Bei mechanischen Wellen reicht ein Stoff allein aber noch nicht aus. Die Teilchen müssen <strong>schwingungsfähig</strong> sein und untereinander eine <strong>Kopplung</strong> besitzen. Nur dann kann sich eine von außen eingebrachte Störung über das gesamte System fortpflanzen.</p>
+      <p>Bei mechanischen Wellen reicht ein Stoff allein aber noch nicht aus. Die Teilchen müssen
+        <strong>schwingungsfähig</strong> sein und untereinander eine <strong>Kopplung</strong> besitzen. Nur dann kann
+        sich eine von außen eingebrachte Störung über das gesamte System fortpflanzen.
+      </p>
 
-      <p>Zur Veranschaulichung nutzt man oft das <strong>Kugel-Feder-Modell</strong>. Die Kugeln stehen für die Teilchen des Trägers, die Federn für die Kopplung zwischen ihnen. In vereinfachten Skizzen werden diese Federn oft nur noch als Verbindungsstriche dargestellt.</p>
+      <p>Zur Veranschaulichung nutzt man oft das <strong>Kugel-Feder-Modell</strong>. Die Kugeln stehen für die Teilchen
+        des Trägers, die Federn für die Kopplung zwischen ihnen. In vereinfachten Skizzen werden diese Federn oft nur
+        noch als Verbindungsstriche dargestellt.</p>
 
 
-     <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div class="grid2">
         <div class="wb-soft-callout">
           <strong>Für mechanische Wellen brauchst du</strong>
@@ -186,14 +214,16 @@
         </div>
         <div class="wb-soft-callout">
           <strong>Wichtiger Unterschied</strong>
-          <p>Schall braucht einen Träger. Licht nicht. Genau deshalb kann Sonnenlicht durch das Vakuum des Weltalls zur Erde gelangen, Schall aber nicht.</p>
+          <p>Schall braucht einen Träger. Licht nicht. Genau deshalb kann Sonnenlicht durch das Vakuum des Weltalls zur
+            Erde gelangen, Schall aber nicht.</p>
         </div>
       </div>
 
       <div class="grid2">
         <div class="wb-callout">
           <strong>Merke</strong>
-          <p>Bei einer mechanischen Welle führen die Teilchen des Trägers nacheinander eine Bewegung aus. Transportiert werden dabei Energie, Impuls und Information, aber nicht Materie.</p>
+          <p>Bei einer mechanischen Welle führen die Teilchen des Trägers nacheinander eine Bewegung aus. Transportiert
+            werden dabei Energie, Impuls und Information, aber nicht Materie.</p>
         </div>
         <figure class="wave-figure">
           <img src="pdf-bilder/wassertropfen.png" alt="Ein Tropfen erzeugt Wasserwellen" />
@@ -201,33 +231,51 @@
         </figure>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <h2>Wie breitet sich eine harmonische Welle aus?</h2>
       <div class="grid2">
         <div>
-          <p>Bei einer harmonischen Welle beginnt ein Oszillator am Ort \(x = 0\) mit seiner Bewegung. Danach werden weitere Oszillatoren nacheinander erfasst. Jeder einzelne schwingt harmonisch, aber nicht alle beginnen gleichzeitig.</p>
+          <p>Bei einer harmonischen Welle beginnt ein Oszillator am Ort \(x = 0\) mit seiner Bewegung. Danach werden
+            weitere Oszillatoren nacheinander erfasst. Jeder einzelne schwingt harmonisch, aber nicht alle beginnen
+            gleichzeitig.</p>
 
-          <p>Nach einer ganzen Schwingungsdauer \(T\) hat sich die Störung so weit ausgebreitet, dass wieder dieselbe Phase erreicht ist. Der Abstand zwischen zwei gleichphasigen Punkten ist dann die <strong>Wellenlänge \(\lambda\)</strong>.</p>
+          <p>Nach einer ganzen Schwingungsdauer \(T\) hat sich die Störung so weit ausgebreitet, dass wieder dieselbe
+            Phase erreicht ist. Der Abstand zwischen zwei gleichphasigen Punkten ist dann die <strong>Wellenlänge
+              \(\lambda\)</strong>.</p>
 
-          <p>Du kannst dieselbe Welle auf drei Arten betrachten. <strong>Räumlich</strong> fragst du: Wie sieht die Welle zu einem bestimmten Zeitpunkt entlang des Ortes aus? <strong>Zeitlich</strong> fragst du: Wie bewegt sich ein einzelnes Teilchen an einem festen Ort im Verlauf der Zeit? <strong>Räumlich-zeitlich</strong> verfolgst du, wie eine bestimmte Phase durch Ort und Zeit wandert.</p>
+          <p>Du kannst dieselbe Welle auf drei Arten betrachten. <strong>Räumlich</strong> fragst du: Wie sieht die
+            Welle zu einem bestimmten Zeitpunkt entlang des Ortes aus? <strong>Zeitlich</strong> fragst du: Wie bewegt
+            sich ein einzelnes Teilchen an einem festen Ort im Verlauf der Zeit? <strong>Räumlich-zeitlich</strong>
+            verfolgst du, wie eine bestimmte Phase durch Ort und Zeit wandert.</p>
 
-          <p>Gerade diese räumlich-zeitliche Sicht ist wichtig: Sie zeigt, dass die Phase mit einer bestimmten Geschwindigkeit durch den Träger läuft. Deshalb spricht man hier auch von der <strong>Phasengeschwindigkeit \(c\)</strong>. Transportiert werden dabei nicht die Teilchen selbst, sondern Information und Energie.</p>
+          <p>Gerade diese räumlich-zeitliche Sicht ist wichtig: Sie zeigt, dass die Phase mit einer bestimmten
+            Geschwindigkeit durch den Träger läuft. Deshalb spricht man hier auch von der <strong>Phasengeschwindigkeit
+              \(c\)</strong>. Transportiert werden dabei nicht die Teilchen selbst, sondern Information und Energie.</p>
         </div>
         <figure class="wave-figure">
-          <img src="pdf-bilder/zeit_raum_welle.png" alt="Räumlich-zeitliche Darstellung einer Welle" style="max-width:300px; margin:0 auto;" />
+          <img src="pdf-bilder/zeit_raum_welle.png" alt="Räumlich-zeitliche Darstellung einer Welle"
+            style="max-width:300px; margin:0 auto;" />
           <figcaption>Zeitlicher und räumlicher Blick auf eine harmonische Welle.</figcaption>
         </figure>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <h2>Genaue Beschreibung der Ausbreitung</h2>
-      <p>Ein Erreger lenkt zunächst ein erstes Teilchen aus seiner Gleichgewichtslage aus. Durch die elastische Kopplung wird diese Auslenkung zeitversetzt auf das nächste Teilchen übertragen. Genau diesen Zeitversatz beschreibt man als <strong>Phasenverschiebung</strong>. Auf diese Weise breitet sich die Störung Schritt für Schritt durch das gesamte System aus.</p>
+      <p>Ein Erreger lenkt zunächst ein erstes Teilchen aus seiner Gleichgewichtslage aus. Durch die elastische Kopplung
+        wird diese Auslenkung zeitversetzt auf das nächste Teilchen übertragen. Genau diesen Zeitversatz beschreibt man
+        als <strong>Phasenverschiebung</strong>. Auf diese Weise breitet sich die Störung Schritt für Schritt durch das
+        gesamte System aus.</p>
 
-      <p>Die <strong>Ausbreitungsgeschwindigkeit</strong> hängt dabei von zwei Dingen ab: von der Stärke der elastischen Kopplung und von der Trägheit der Teilchen. Je stärker die Kopplung, desto schneller wird das Nachbarteilchen beschleunigt. Je größer die Masse der Teilchen, desto träger reagiert das System und desto langsamer läuft die Störung weiter.</p>
+      <p>Die <strong>Ausbreitungsgeschwindigkeit</strong> hängt dabei von zwei Dingen ab: von der Stärke der elastischen
+        Kopplung und von der Trägheit der Teilchen. Je stärker die Kopplung, desto schneller wird das Nachbarteilchen
+        beschleunigt. Je größer die Masse der Teilchen, desto träger reagiert das System und desto langsamer läuft die
+        Störung weiter.</p>
 
-      <p>In der Regel ist diese Geschwindigkeit eine <strong>Eigenschaft des Systems</strong> selbst. Sie hängt also vor allem vom Träger ab und nicht einfach davon, wie stark oder wie oft du anregst. Wird ein Teilchen sinusförmig angeregt, entsteht daraus eine <strong>harmonische Welle</strong>.</p>
+      <p>In der Regel ist diese Geschwindigkeit eine <strong>Eigenschaft des Systems</strong> selbst. Sie hängt also vor
+        allem vom Träger ab und nicht einfach davon, wie stark oder wie oft du anregst. Wird ein Teilchen sinusförmig
+        angeregt, entsteht daraus eine <strong>harmonische Welle</strong>.</p>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div data-wb-type="verify">
         <script type="application/json" class="wb-config">
         {
@@ -260,7 +308,7 @@
         </script>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
         {
@@ -312,7 +360,7 @@
         </script>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
         {
@@ -343,21 +391,28 @@
         </script>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div class="wb-callout">
         <strong>Wichtig für die Deutung</strong>
-        <p>Bei einer mechanischen Welle breitet sich nicht Materie aus, sondern der Bewegungszustand der Teilchen. Die Teilchen schwingen um ihre Gleichgewichtslage und bleiben im Mittel am selben Ort.</p>
+        <p>Bei einer mechanischen Welle breitet sich nicht Materie aus, sondern der Bewegungszustand der Teilchen. Die
+          Teilchen schwingen um ihre Gleichgewichtslage und bleiben im Mittel am selben Ort.</p>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <h2>Energieformen in Wellen</h2>
-      <p>Wenn ein Teilchen die Störung an das nächste weitergibt, verrichtet es über die Kopplung zunächst Beschleunigungsarbeit und dann Spannarbeit. Dadurch wird Energie von einem Teilchen zum nächsten übertragen.</p>
+      <p>Wenn ein Teilchen die Störung an das nächste weitergibt, verrichtet es über die Kopplung zunächst
+        Beschleunigungsarbeit und dann Spannarbeit. Dadurch wird Energie von einem Teilchen zum nächsten übertragen.</p>
 
-      <p>Mit der Störung wandern deshalb <strong>Spannenergie</strong> und <strong>kinetische Energie</strong> durch das System. Ist die Spannenergie gerade maximal, dann ist die kinetische Energie null. Ist die kinetische Energie maximal, ist die Spannenergie kleiner oder null. Das kennst du vom Federpendel: Auch dort wechseln sich diese Energieformen ständig ab.</p>
+      <p>Mit der Störung wandern deshalb <strong>Spannenergie</strong> und <strong>kinetische Energie</strong> durch das
+        System. Ist die Spannenergie gerade maximal, dann ist die kinetische Energie null. Ist die kinetische Energie
+        maximal, ist die Spannenergie kleiner oder null. Das kennst du vom Federpendel: Auch dort wechseln sich diese
+        Energieformen ständig ab.</p>
 
-      <p>Die Energie steckt dabei immer in denjenigen Teilchen, die gerade von der Störung erfasst sind. Eine Welle überträgt somit nicht nur Energie, sondern auch <strong>Impuls</strong> und <strong>Information</strong> durch das System.</p>
+      <p>Die Energie steckt dabei immer in denjenigen Teilchen, die gerade von der Störung erfasst sind. Eine Welle
+        überträgt somit nicht nur Energie, sondern auch <strong>Impuls</strong> und <strong>Information</strong> durch
+        das System.</p>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
         {
@@ -381,44 +436,50 @@
         </script>
       </div>
 
-       <div class="wb-section-break"></div>
+      <div class="wb-section-break"></div>
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p>Eine Welle ist eine fortschreitende Störung. Die Teilchen schwingen lokal, aber die Störung selbst wandert durch den Träger.</p>
+        <p>Eine Welle ist eine fortschreitende Störung. Die Teilchen schwingen lokal, aber die Störung selbst wandert
+          durch den Träger.</p>
       </div>
 
       <div class="wb-section-break"></div>
       <h2>Aufgabe:</h2>
-          <p> <b>Heftaufschrieb 1:</b> Schreibe alles wichtige auf, was du über Wellen bis jetzt gelernt hast.</p>
-          <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
-          <div class="wb-section-break"></div>
+      <p> <b>Heftaufschrieb 1:</b> Schreibe alles wichtige auf, was du über Wellen bis jetzt gelernt hast.</p>
+      <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Längs- und Querwellen">
       <h1>Wellentypen</h1>
 
       <p>Es gibt <strong>Transversalwellen</strong> und <strong>Longitudinalwellen</strong>.</p>
-      <p>Als erstes betrachten wir Transversalwellen. Was bedeutet das eigentlich? Schau dir die Definition an und versuche, dir passende Beispiele selbst zu überlegen.</p>
+      <p>Als erstes betrachten wir Transversalwellen. Was bedeutet das eigentlich? Schau dir die Definition an und
+        versuche, dir passende Beispiele selbst zu überlegen.</p>
 
       <div class="wb-soft-callout">
         <strong>Transversalwelle</strong>
-        <p>Bei einer Transversalwelle schwingen die Teilchen <b>senkrecht</b> zur Ausbreitungsrichtung. Eine Momentaufnahme zeigt eine Folge von <b>Wellenbergen</b> und <b>Wellentälern</b>.</p>
+        <p>Bei einer Transversalwelle schwingen die Teilchen <b>senkrecht</b> zur Ausbreitungsrichtung. Eine
+          Momentaufnahme zeigt eine Folge von <b>Wellenbergen</b> und <b>Wellentälern</b>.</p>
       </div>
 
       <p>Was gilt dann für eine Longitudinalwelle? Überlege dir auch hierzu eigenständig Beispiele.</p>
 
       <div class="wb-soft-callout">
         <strong>Longitudinalwelle</strong>
-        <p>Bei einer Longitudinalwelle schwingen die Teilchen <b>parallel</b> zur Ausbreitungsrichtung. Eine Momentaufnahme zeigt eine Folge von <b>Verdichtungen</b> und <b>Verdünnungen</b>.</p>
+        <p>Bei einer Longitudinalwelle schwingen die Teilchen <b>parallel</b> zur Ausbreitungsrichtung. Eine
+          Momentaufnahme zeigt eine Folge von <b>Verdichtungen</b> und <b>Verdünnungen</b>.</p>
       </div>
 
       <div class="wb-section-break"></div>
-      <p>Für eine bessere Veranschaulichung kannst du die folgenden Simulationen nutzen. Beobachte genau, in welche Richtung sich die Teilchen bewegen und wie die Störung durch das System läuft.</p>
+      <p>Für eine bessere Veranschaulichung kannst du die folgenden Simulationen nutzen. Beobachte genau, in welche
+        Richtung sich die Teilchen bewegen und wie die Störung durch das System läuft.</p>
 
       <div class="wt-sim-card">
         <div class="wt-sim-grid">
           <div>
-            <canvas id="transversalWaveCanvas" width="960" height="520" aria-label="Simulation einer Transversalwelle"></canvas>
+            <canvas id="transversalWaveCanvas" width="960" height="520"
+              aria-label="Simulation einer Transversalwelle"></canvas>
             <div class="wt-sim-mono" id="transversalWaveReadout"></div>
           </div>
           <div class="wt-sim-controls">
@@ -447,7 +508,8 @@
       <div class="wt-sim-card">
         <div class="wt-sim-grid">
           <div>
-            <canvas id="longitudinalWaveCanvas" width="960" height="520" aria-label="Simulation einer Longitudinalwelle"></canvas>
+            <canvas id="longitudinalWaveCanvas" width="960" height="520"
+              aria-label="Simulation einer Longitudinalwelle"></canvas>
             <div class="wt-sim-mono" id="longitudinalWaveReadout"></div>
           </div>
           <div class="wt-sim-controls">
@@ -475,7 +537,8 @@
 
       <div class="wb-section-break"></div>
       <h2>Zuordnungsübung: Sortiere die Begriffe</h2>
-      <p>Ziehe die Karten in das passende Feld. Achte darauf, ob die Teilchen parallel oder senkrecht zur Ausbreitungsrichtung schwingen und welche Beispiele typisch sind.</p>
+      <p>Ziehe die Karten in das passende Feld. Achte darauf, ob die Teilchen parallel oder senkrecht zur
+        Ausbreitungsrichtung schwingen und welche Beispiele typisch sind.</p>
 
       <div data-wb-type="categorize">
         <script type="application/json" class="wb-config">
@@ -500,6 +563,20 @@
       </div>
 
       <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_longitudinal",
+          "title":"Wahr oder falsch?",
+          "hint":"Erinnere dich an die Definition der Longitudinalwelle.",
+          "statement":"Bei einer Longitudinalwelle schwingen die Teilchen senkrecht zur Ausbreitungsrichtung.",
+          "answer": false,
+          "explain":"Falsch. Sie schwingen parallel zur Ausbreitungsrichtung (Verdichtungen und Verdünnungen). Transversalwellen schwingen senkrecht."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
       <div data-p2 class="p2" data-p2-title="Zuordnung: Wellentyp und Eigenschaft" data-p2-hint="Ordne sauber zu.">
         <div class="p2-hint">Ziehe den Wellentyp auf die passende Beschreibung.</div>
         <div class="p2-banks">
@@ -515,10 +592,14 @@
           <div>
             <div class="p2-col-title">Beschreibung</div>
             <div class="p2-bank" data-right-bank>
-              <div class="p2-piece p2-right" data-side="R" data-pair="1">Die Teilchen schwingen parallel zur Ausbreitungsrichtung.</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="2">Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung.</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="3">Typisches Beispiel für Verdichtungen und Verdünnungen.</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="4">Typisches Modell für eine fortschreitende Querstörung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Die Teilchen schwingen parallel zur
+                Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Die Teilchen schwingen senkrecht zur
+                Ausbreitungsrichtung.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Typisches Beispiel für Verdichtungen und
+                Verdünnungen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Typisches Modell für eine fortschreitende
+                Querstörung.</div>
             </div>
           </div>
         </div>
@@ -548,39 +629,94 @@
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay_laola",
+          "title":"Kurze Reflexion",
+          "hint":"Antworte in 2–3 Sätzen. Nutze den Fachbegriff Transversalwelle.",
+          "fields":[
+            {"label":"Warum transportiert die La-Ola Energie, aber keine Materie?","key":"text","kind":"textarea","placeholder":"Schreibe hier deine Erklärung..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Aufgabe:</h2>
+      <p> <b>Heftaufschrieb 2:</b> Schreibe dir nun die Definitionen der Transveral- und Longitudinalwellen mit
+        Beispielen auf.</p>
+      <p><b>Tipp:</b> Benutze die Callout-Boxen.</p>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="4" data-wb-page-title="Wellenfronten">
       <h1>Wellenfronten, Wellenstrahlen und das Huygenssche Prinzip</h1>
 
-      <p>Zwischen der Schwingung am Erreger und der Schwingung an einem Ort im Wellenfeld liegt meist eine Phasenverschiebung. Alle Punkte, die von der Quelle gleich weit entfernt sind, haben aber dieselbe Laufzeit und schwingen deshalb in derselben Phase.</p>
+      <p>Zwischen der Schwingung am Erreger und der Schwingung an einem Ort im Wellenfeld liegt meist eine
+        Phasenverschiebung. Alle Punkte, die von der Quelle gleich weit entfernt sind, haben aber dieselbe Laufzeit und
+        schwingen deshalb in derselben Phase.</p>
 
       <div class="grid2">
         <div class="wb-soft-callout">
           <strong>Wellenfront</strong>
-          <p>Eine Wellenfront verbindet benachbarte Punkte gleicher Phase. Auf ihr liegen also alle Punkte, die die gleiche Laufzeit von der Quelle haben.</p>
+          <p>Eine Wellenfront verbindet benachbarte Punkte gleicher Phase. Auf ihr liegen also alle Punkte, die die
+            gleiche Laufzeit von der Quelle haben.</p>
         </div>
         <div class="wb-soft-callout">
           <strong>Wellenstrahl</strong>
-          <p>Wellenstrahlen oder Wellennormalen stehen senkrecht auf der Wellenfront. Sie zeigen die Ausbreitungsrichtung der Welle an.</p>
+          <p>Wellenstrahlen oder Wellennormalen stehen senkrecht auf der Wellenfront. Sie zeigen die
+            Ausbreitungsrichtung der Welle an.</p>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
-      <p>Damit kannst du zwei Darstellungen derselben Welle unterscheiden: Die <strong>Wellenfront</strong> zeigt dir Orte gleicher Phase, der <strong>Wellenstrahl</strong> zeigt dir die Richtung, in die sich die Störung fortpflanzt.</p>
+      <p>Damit kannst du zwei Darstellungen derselben Welle unterscheiden: Die <strong>Wellenfront</strong> zeigt dir
+        Orte gleicher Phase, der <strong>Wellenstrahl</strong> zeigt dir die Richtung, in die sich die Störung
+        fortpflanzt.</p>
 
       <div class="wave-img-grid">
         <figure class="wave-figure">
-          <img src="pdf-bilder/kugelwelle.png" alt="Skizze einer Kreis- oder Kugelwelle mit kreisförmigen Wellenfronten" style="width:80%; height:auto; max-width:none;" />
-          <figcaption>Kreis- oder Kugelwellen entstehen an punktförmigen Quellen. Die Wellenfronten sind kreis- oder kugelförmig.</figcaption>
+          <img src="pdf-bilder/kugelwelle.png" alt="Skizze einer Kreis- oder Kugelwelle mit kreisförmigen Wellenfronten"
+            style="width:80%; height:auto; max-width:none;" />
+          <figcaption>Kreis- oder Kugelwellen entstehen an punktförmigen Quellen. Die Wellenfronten sind kreis- oder
+            kugelförmig.</figcaption>
         </figure>
         <figure class="wave-figure">
-          <img src="pdf-bilder/ebene_Welle.png" alt="Skizze einer ebenen Welle mit parallelen Wellenfronten" style="width:100%; height:auto; max-width:none;" />
-          <figcaption>Ebene Wellen besitzen parallele Wellenfronten. In großer Entfernung kann auch eine Kreiswelle lokal fast eben wirken.</figcaption>
+          <img src="pdf-bilder/ebene_Welle.png" alt="Skizze einer ebenen Welle mit parallelen Wellenfronten"
+            style="width:100%; height:auto; max-width:none;" />
+          <figcaption>Ebene Wellen besitzen parallele Wellenfronten. In großer Entfernung kann auch eine Kreiswelle
+            lokal fast eben wirken.</figcaption>
         </figure>
       </div>
 
-      <p><strong>Kreiswellen</strong> siehst du zum Beispiel, wenn ein Wassertropfen in ruhiges Wasser fällt. <strong>Ebene Wellen</strong> entstehen etwa, wenn du eine Wasseroberfläche mit einem geraden Stab oder Lineal anregst. Weit entfernt von einer punktförmigen Quelle wirken selbst Kreiswellen oft fast wie ebene Wellen, weil der gekrümmte Ausschnitt sehr groß wird.</p>
+      <p><strong>Kreiswellen</strong> siehst du zum Beispiel, wenn ein Wassertropfen in ruhiges Wasser fällt.
+        <strong>Ebene Wellen</strong> entstehen etwa, wenn du eine Wasseroberfläche mit einem geraden Stab oder Lineal
+        anregst. Weit entfernt von einer punktförmigen Quelle wirken selbst Kreiswellen oft fast wie ebene Wellen, weil
+        der gekrümmte Ausschnitt sehr groß wird.
+      </p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cat_front_strahl",
+          "title":"Sortiere: Wellenfront vs. Wellenstrahl",
+          "hint":"Ziehe die Eigenschaften in das passende Feld.",
+          "categories":[
+            {"id":"front","title":"Wellenfront"},
+            {"id":"strahl","title":"Wellenstrahl"}
+          ],
+          "items":[
+            {"label":"Punkte mit gleicher Phase","category":"front"},
+            {"label":"Punkte haben gleiche Laufzeit von der Quelle","category":"front"},
+            {"label":"Zeigt die Ausbreitungsrichtung an","category":"strahl"},
+            {"label":"Steht senkrecht auf der Wellenfront","category":"strahl"}
+          ]
+        }
+        </script>
+      </div>
 
       <div class="wb-section-break"></div>
       <div data-wb-type="cloze">
@@ -607,7 +743,25 @@
 
       <div class="wb-section-break"></div>
       <h2>Das Huygenssche Prinzip</h2>
-      <p>Das Huygenssche Prinzip beschreibt, wie sich eine Wellenfront weiterbewegt: Jeder Punkt einer Wellenfront kann als Ausgangspunkt einer neuen kleinen Elementarwelle gedacht werden. Die gemeinsame Einhüllende dieser Elementarwellen bildet nach kurzer Zeit die nächste Wellenfront.</p>
+      <p>Das Huygenssche Prinzip beschreibt, wie sich eine Wellenfront weiterbewegt: Jeder Punkt einer Wellenfront kann
+        als Ausgangspunkt einer neuen kleinen Elementarwelle gedacht werden. Die gemeinsame Einhüllende dieser
+        Elementarwellen bildet nach kurzer Zeit die nächste Wellenfront.</p>
+
+      <div class="wb-img">
+        <img src="pdf-bilder/huygens3.png" alt="Huygenssches Prinzip"
+          style="width:100%; height:auto; max-width:none;" />
+      </div>
+
+      <div class="wb-section-break"></div>
+      <p>Besonders gut siehst du das bei der <strong>Beugung an einem schmalen Spalt</strong>:
+        Laut dem Huygensschen Prinzip wird jeder Punkt in der Öffnung des Spalts zum Ausgangspunkt neuer
+        kreisförmiger Elementarwellen. Diese überlagern sich und breiten sich hinter dem Hindernis nicht nur
+        geradlinig aus. Stattdessen fächert sich die Welle auf und dringt auch in den sogenannten
+        <strong>Schattenraum</strong>
+        (oder Schattenbereich) ein – also in die Bereiche links und rechts, die eigentlich durch das Hindernis verdeckt
+        sein müssten.
+        Das ist der Grund, weshalb sich zum Beispiel Lichtwellen oder Schallwellen auch "um die Ecke" ausdehnen können.
+      </p>
 
       <div class="grid2">
         <figure class="wave-figure">
@@ -616,23 +770,34 @@
         </figure>
         <div class="wb-callout">
           <strong>Merksatz</strong>
-          <p>Für alle Wellenarten gilt: Jede Stelle einer Wellenfront kann als Ausgangspunkt einer Elementarwelle aufgefasst werden.</p>
-          <p>Damit lassen sich nicht nur gerade Ausbreitung, sondern auch <strong>Beugung</strong>, <strong>Reflexion</strong> und <strong>Brechung</strong> anschaulich erklären.</p>
+          <p>Für alle Wellenarten gilt: Jede Stelle einer Wellenfront kann als Ausgangspunkt einer Elementarwelle
+            aufgefasst werden.</p>
+          <p>Damit lassen sich nicht nur gerade Ausbreitung, sondern auch <strong>Beugung</strong>,
+            <strong>Reflexion</strong> und <strong>Brechung</strong> anschaulich erklären.
+          </p>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
-      <p>Besonders gut siehst du das bei der <strong>Beugung an einem schmalen Spalt</strong>: Hinter der Öffnung breitet sich die Welle nicht einfach nur gerade weiter aus. Stattdessen entstehen hinter dem Spalt neue kreisförmige oder kugelförmige Elementarwellen. Genau deshalb fächert sich die Welle auf.</p>
+
+
+      <div class="wb-soft-callout">
+        <strong>Bereit für die Simulation?</strong>
+        <p>Schaue dir folgende Simulation an. Achte bewusst darauf, wie sich Wellenfronten verändern, wenn du die
+          Spaltbreite veränderst.</p>
+      </div>
 
       <div class="wt-sim-card">
         <div class="wt-sim-grid">
           <div>
-            <canvas id="huygensDiffractionCanvas" width="960" height="520" aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
+            <canvas id="huygensDiffractionCanvas" width="960" height="520"
+              aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
             <div class="wt-sim-mono" id="huygensDiffractionReadout"></div>
           </div>
           <div class="wt-sim-controls">
             <h2>Simulation: Beugung am Spalt</h2>
-            <p>Von links trifft eine ebene Welle auf eine Wand mit einem Spalt. Hinter dem Spalt werden die Punkte im offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
+            <p>Von links trifft eine ebene Welle auf eine Wand mit einem Spalt. Hinter dem Spalt werden die Punkte im
+              offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
 
             <label for="huygensSlit">Spaltbreite</label>
             <input id="huygensSlit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
@@ -680,6 +845,23 @@
       </div>
 
       <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order_huygens",
+          "title":"Ablauf: Huygenssches Prinzip am Spalt",
+          "hint":"Bring den Ablauf der Beugung in die richtige Reihenfolge.",
+          "items":[
+            "Eine ebene Wellenfront trifft auf einen Spalt in einem Hindernis.",
+            "Jeder Punkt in der Öffnung wird zum Ausgangspunkt einer neuen kleinen Kreiswelle.",
+            "Diese Elementarwellen breiten sich auch in den Schattenraum hinter dem Spalt aus.",
+            "Die gemeinsame Einhüllende der Kreiswellen bildet eine neue, aufgefächerte Wellenfront."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
       <div data-wb-type="reveal">
         <script type="application/json" class="wb-config">
         {
@@ -695,36 +877,215 @@
       </div>
 
       <div class="wb-section-break"></div>
-      <div class="wb-soft-callout">
-        <strong>Bereit für die Simulation?</strong>
-        <p>Gehe noch einmal zur Simulation auf der vorherigen Seite oder später zu den Seiten zu Wellen und Spalt. Achte dort bewusst darauf, wie sich Wellenfronten verändern, wenn du Amplitude oder Frequenz anpasst, und wo du Wellenstrahlen mitdenken kannst.</p>
-      </div>
+
 
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p>Wellenfronten verbinden Punkte gleicher Phase. Wellenstrahlen stehen senkrecht dazu und zeigen die Ausbreitungsrichtung. Mit dem Huygensschen Prinzip kannst du erklären, wie aus einer Wellenfront die nächste entsteht und warum Wellen an Öffnungen gebeugt werden.</p>
+        <p>Wellenfronten verbinden Punkte gleicher Phase. Wellenstrahlen stehen senkrecht dazu und zeigen die
+          Ausbreitungsrichtung. Mit dem Huygensschen Prinzip kannst du erklären, wie aus einer Wellenfront die nächste
+          entsteht und warum Wellen an Öffnungen gebeugt werden.</p>
       </div>
+      <div class="wb-section-break"></div>
+      <h2>Aufgabe:</h2>
+      <p> <b>Heftaufschrieb 3:</b> Schreibe nun alles über Wellenfronten und Wellenstrahlen auf. Beschreibe auch das
+        Huygenssche Prinzip.</p>
+      <p><b>Tipp:</b> Benutze die Callout-Boxen und die Simulation.</p>
+      <div class="wb-section-break"></div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="Wellen beschreiben">
+    <section data-wb-page="5" data-wb-page-title="Brechung">
+      <h1>Brechung</h1>
+      <p>Wenn Wasserwellen wie in Versuch V1 schräg auf eine Grenze zwischen tiefem und flachem Wasser treffen, ändert sich ihre Ausbreitungsrichtung. Die im Bild rot eingezeichneten Wellenstrahlen werden zum Einfallslot hin gebrochen. Das Experiment zeigt im flacheren Wasser auch kleinere Abstände der Fronten, sie kommen offenbar nur langsamer voran, ihre Ausbreitungsgeschwindigkeit ist dort kleiner.</p>
+      
+      <p>Diese Brechung an der Grenze zweier Medien mit unterschiedlichen Ausbreitungsgeschwindigkeiten beschreibt die geometrische Optik mit dem Brechungsgesetz – ohne die Ausbreitungsgeschwindigkeiten. Mit dem Huygens-Prinzip kann die Brechung nun nicht mehr nur beschrieben, sondern auch erklärt werden.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Versuch V1</strong>
+          <p>In der Wellenwanne liegt eine dicke Glasplatte, über der nur noch wenig Wasser steht. Wellenfronten, die schräg gegen die Kante der Glasplatte laufen, werden abgeknickt. Über dem Glas ist der Abstand zweier Wellenfronten kleiner, also auch die Ausbreitungsgeschwindigkeit.</p>
+        </div>
+        <div class="wb-img">
+          <img src="pdf-bilder/brechung1.png" alt="Versuch V1: Brechung an Glasplatte" style="width:100%; height:auto; max-width:none;" />
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Erklärung mit dem Huygens-Prinzip</h2>
+      <p>In Bild B3 treffen Wellenfronten mit der Geschwindigkeit \(c_1\) schräg auf eine „Grenze von tief nach flach“.</p>
+      <div class="grid2">
+        <div>
+          <p>Jede Front löst an der Grenze nacheinander viele Elementarwellen aus. Im Bild sind drei davon gezeichnet: Zuerst wird bei A eine Elementarwelle ausgelöst, zuletzt bei C. Bei C kommt die Wellenfront um \(\Delta t\) später an als bei A. Während die Wellenfront im tiefen Wasser noch die Strecke \(BC = c_1 \cdot \Delta t\) zurücklegt, hat die von A ausgehende Elementarwelle sich schon auf den Radius \(AD = c_2 \cdot \Delta t\) ausgebreitet. Es gilt \(c_2 \cdot \Delta t < c_1 \cdot \Delta t\).</p>
+          <p>Die neue Wellenfront im flachen Wasser ist die Einhüllende der Kreiswellen, die während des Zeitraums \(\Delta t\) von den Punkten zwischen A und C ausgegangen sind. Da hier \(c_2 < c_1\) ist, ändern die Wellenstrahlen an der Grenze ihre Richtung, es tritt Brechung zum Lot hin ein.</p>
+        </div>
+        <div class="wb-img">
+          <figure class="wave-figure">
+            <img src="pdf-bilder/brechung2.png" alt="Huygens Prinzip Brechung" style="width:100%; height:auto; max-width:none;" />
+            <figcaption>Brechung durch Elementarwellen</figcaption>
+          </figure>
+        </div>
+      </div>
+      
+      <p>Mit dem Huygens-Prinzip kann man also die Brechung einer ebenen Welle beschreiben, ohne die Wellenlänge zu kennen. Erst 100 Jahre nach Huygens führte Fresnel die Wellenlänge ein, um auch Interferenz beschreiben zu können.</p>
+
+      <div class="wb-section-break"></div>
+      <h2>Das Brechungsgesetz</h2>
+      <div class="grid2">
+        <div>
+          <p>In der geometrischen Optik werden Lichtstrahlen beim Übergang von einem durchsichtigen zu einem anderen durchsichtigen Stoff gebrochen. Einfallswinkel \(\alpha\) und Ausfallswinkel \(\beta\) werden gemessen und festgehalten (Bild B4).</p>
+          <p>Mit dem Huygens-Prinzip lässt sich eine Formel für das Brechungsgesetz für Wellen herleiten (Bild B3): Für die Winkel \(\alpha\) und \(\beta\) gilt:</p>
+          <p>\( \sin \alpha = \frac{c_1 \cdot \Delta t}{AC} \)<br>und<br>\( \sin \beta = \frac{c_2 \cdot \Delta t}{AC} \)</p>
+          <p>Daraus folgt:</p>
+          <p>\( \frac{\sin \alpha}{\sin \beta} = \frac{c_1 \cdot \Delta t}{c_2 \cdot \Delta t} = \frac{c_1}{c_2} = \text{konst.} = n \)</p>
+          <p>\(\alpha\) und \(\beta\) werden dabei, wie in der Optik üblich, von der Senkrechten auf der Grenzfläche – „vom Lot“ – aus gemessen. Für jeden einzelnen Übergang ist \(\frac{c_1}{c_2}\) eine Konstante, die Brechungszahl \(n\) genannt wird.</p>
+        </div>
+        <div class="wb-callout">
+          <strong>Merksatz</strong>
+          <p>Bei Licht wie bei allen Wellen gilt (Brechungsgesetz):</p>
+          <p>\[ \frac{\sin \alpha}{\sin \beta} = \frac{c_1}{c_2} = n \]</p>
+          <p>(\(n\): Brechungszahl).</p>
+          <p>Die Winkel werden gegen das Lot gemessen. Der Stoff mit der kleineren Ausbreitungsgeschwindigkeit heißt (optisch) dichter.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Beispiel</h2>
+      <div class="grid2">
+        <div>
+          <p>Licht, das mit \(\alpha = 40^\circ\) auf die Grenze von Luft nach Glas trifft, setzt seinen Weg in Glas mit \(\beta = 25,3^\circ\) fort (Bild B4). Der Quotient \(\frac{\sin 40^\circ}{\sin 25,3^\circ}\) liefert die Brechungszahl \(n = 1,5\) für Luft nach Glas. Alle Wertepaare der für Luft / Glas dokumentierten Kurve liefern diesen Quotienten.</p>
+          <p>Für Vakuum / Glas haben die Quotienten \(\frac{\sin \alpha}{\sin \beta}\) praktisch den gleichen Wert, weil sich die Lichtgeschwindigkeiten in Luft und Vakuum kaum unterscheiden.</p>
+        </div>
+        <div class="wb-img">
+          <figure class="wave-figure">
+            <img src="pdf-bilder/brechung3.png" alt="Lichtübergang von Luft in Glas" style="width:100%; height:auto; max-width:none;" />
+            <figcaption>Lichtübergang von Luft in Glas.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_brechung",
+          "title":"Wahr oder falsch?",
+          "statement":"Trifft Licht auf ein optisch dichteres Medium (in dem es sich langsamer ausbreitet), wird der Strahl vom Lot weg gebrochen.",
+          "answer": false,
+          "explain":"Falsch. Wenn die Ausbreitungsgeschwindigkeit kleiner wird, rücken die Wellenfronten enger zusammen. Der Strahl wird zum Lot hin gebrochen."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_brechung_optisch_dicht",
+          "title":"Check: Dichte und Brechung",
+          "hint":"Welcher Zusammenhang ist richtig?",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Was bewirkt eine optisch dichtere Eigenschaft eines Mediums?",
+              "choices":[
+                {"id":"a","label":"Wellen breiten sich dort schneller aus und brechen vom Lot weg."},
+                {"id":"b","label":"Wellen breiten sich dort langsamer aus und brechen zum Lot hin."},
+                {"id":"c","label":"Wellen verändern ihre Geschwindigkeit nicht, nur die Wellenlänge."}
+              ],
+              "correct":["b"],
+              "explain":"Richtig! Im optisch dichteren Medium ist die Geschwindigkeit geringer (c kleiner). Die Wellenfronten kommen schlechter voran, daher bricht der Wellenstrahl zum Lot hin."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-title="Zuordnung: Grundbegriffe der Brechung" data-p2-hint="Ordne die Fachbegriffe zu.">
+        <div class="p2-hint">Ziehe den Begriff auf die passende Beschreibung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Einfallswinkel \(\alpha\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Brechungswinkel \(\beta\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Lot</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Dichteres Medium</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Beschreibung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Winkel zwischen einfallendem Strahl und Senkrechter</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Winkel zwischen gebrochenem Strahl und Senkrechter</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Gedachte Senkrechte auf der Grenzfläche</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Stoff mit der kleineren Ausbreitungsgeschwindigkeit</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze_brechung",
+          "title":"Sicherung: Brechung",
+          "hint":"Setze die passenden Begriffe ein.",
+          "bank":["Lot","Brechungszahl","kleiner","langsamer"],
+          "segments":[
+            {"t":"text","v":"Bei der Brechung ändert sich die Ausbreitungsrichtung, weil Wellen in verschiedenen Medien unterschiedlich schnell sind. Wenn Wellen in ein (optisch) dichteres Medium übergehen, in dem sie "},
+            {"t":"gap","a":"langsamer"},
+            {"t":"text","v":" sind (kleineres c), werden sie zum "},
+            {"t":"gap","a":"Lot"},
+            {"t":"text","v":" hin gebrochen. Der Ausfallswinkel ist dann "},
+            {"t":"gap","a":"kleiner"},
+            {"t":"text","v":" als der Einfallswinkel. Das Verhältnis der Geschwindigkeiten ergibt die sogenannte "},
+            {"t":"gap","a":"Brechungszahl"},
+            {"t":"text","v":" n."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <h2>Aufgabe:</h2>
+      <p><b>Heftaufschrieb 4:</b> Schreibe dir nun den Merksatz zum Brechungsgesetz auf und erkläre in eigenen Worten, wie es mit dem Huygens-Prinzip zusammenhängt.</p>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Wellen beschreiben">
       <h1>Wie beschreibt man eine Welle?</h1>
 
-      <p>Im folgenden geht es vor allem um zwei Blickrichtungen auf dieselbe Welle. Du kannst die Welle zu einem festen Zeitpunkt entlang des Ortes anschauen oder an einem festen Ort verfolgen, wie sich die Auslenkung mit der Zeit ändert.</p>
+      <p>Im folgenden geht es vor allem um zwei Blickrichtungen auf dieselbe Welle. Du kannst die Welle zu einem festen
+        Zeitpunkt entlang des Ortes anschauen oder an einem festen Ort verfolgen, wie sich die Auslenkung mit der Zeit
+        ändert.</p>
 
       <div class="wb-soft-callout">
         <strong>Zwei Perspektiven</strong>
         <ul class="wave-list">
-          <li><strong>Räumliche Perspektive:</strong> Wie sieht die Welle an einem bestimmten Zeitpunkt entlang des Ortes aus (Momentaufnahme)?</li>
-          <li><strong>Zeitliche Perspektive:</strong> Wie schwingt ein einzelner Oszillator an einem festen Ort im Verlauf der Zeit?</li>
+          <li><strong>Räumliche Perspektive:</strong> Wie sieht die Welle an einem bestimmten Zeitpunkt entlang des
+            Ortes aus (Momentaufnahme)?</li>
+          <li><strong>Zeitliche Perspektive:</strong> Wie schwingt ein einzelner Oszillator an einem festen Ort im
+            Verlauf der Zeit?</li>
         </ul>
       </div>
 
       <div class="wb-section-break"></div>
-      <p>Um die räumliche Perspektive zu verstehen, betrachte folgende Internetseite mit einem Spiel: <a href="https://universeandmore.com/wavemaker/" target="_blank">Wavemaker</a>.</p>
+      <p>Um die räumliche Perspektive zu verstehen, betrachte folgende Internetseite mit einem Spiel: <a
+          href="https://universeandmore.com/wavemaker/" target="_blank">Wavemaker</a>.</p>
 
       <div class="wb-section-break"></div>
       <div data-wb-type="reveal">
-      <script type="application/json" class="wb-config">
+        <script type="application/json" class="wb-config">
         {
           "id":"reveal1",
           "title":"Nachdenkfrage",
@@ -777,27 +1138,31 @@
       <div class="wb-section-break"></div>
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p>Dieselbe Welle kann unterschiedlich beschrieben werden. Räumlich erkennst du die Wellenlänge, zeitlich die Schwingung eines einzelnen Teilchens.</p>
+        <p>Dieselbe Welle kann unterschiedlich beschrieben werden. Räumlich erkennst du die Wellenlänge, zeitlich die
+          Schwingung eines einzelnen Teilchens.</p>
       </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Wellen in Gleichungen">
+    <section data-wb-page="7" data-wb-page-title="Wellen in Gleichungen">
       <h1>Wellen in Gleichungen</h1>
 
-      <p>Wenn sich die Phase innerhalb einer Schwingungsdauer \(T\) um genau eine Wellenlänge \(\lambda\) weiterbewegt, dann folgt daraus der zentrale Zusammenhang:</p>
+      <p>Wenn sich die Phase innerhalb einer Schwingungsdauer \(T\) um genau eine Wellenlänge \(\lambda\) weiterbewegt,
+        dann folgt daraus der zentrale Zusammenhang:</p>
 
       <div class="wb-callout">
         <strong>Merksatz</strong>
         <p>\[
-        c = \lambda \cdot f
-        \]
-        Die Ausbreitungsgeschwindigkeit \(c\) hängt vom Träger ab, die Frequenz \(f\) vom Erreger. Daraus ergibt sich die Wellenlänge \(\lambda\).</p>
+          c = \lambda \cdot f
+          \]
+          Die Ausbreitungsgeschwindigkeit \(c\) hängt vom Träger ab, die Frequenz \(f\) vom Erreger. Daraus ergibt sich
+          die Wellenlänge \(\lambda\).</p>
       </div>
 
       <div class="wave-img-grid">
         <figure class="wave-figure">
           <img src="pdf-bilder/dorn-wellen-144.png" alt="Dorn-Bader Seite zu Wellen in Gleichungen" />
-          <figcaption>Die Phase wandert mit der Ausbreitungsgeschwindigkeit \(c\). Daraus folgt \(c = \lambda \cdot f\).</figcaption>
+          <figcaption>Die Phase wandert mit der Ausbreitungsgeschwindigkeit \(c\). Daraus folgt \(c = \lambda \cdot f\).
+          </figcaption>
         </figure>
       </div>
 
@@ -839,14 +1204,15 @@
       </div>
     </section>
 
-    <section data-wb-page="7" data-wb-page-title="Transfer">
+    <section data-wb-page="8" data-wb-page-title="Transfer">
       <h1>Transfer: Was bedeutet das für echte Beispiele?</h1>
 
       <p>Du kennst jetzt die Grundidee. Entscheidend ist nun, dass du das auf neue Situationen übertragen kannst.</p>
 
       <div class="wb-soft-callout">
         <strong>Denk weiter</strong>
-        <p>Was würdest du bei einer Lautsprecherwelle in Luft erwarten? Und woran erkennst du bei einer Seilwelle sofort, dass keine Materie transportiert wird?</p>
+        <p>Was würdest du bei einer Lautsprecherwelle in Luft erwarten? Und woran erkennst du bei einer Seilwelle
+          sofort, dass keine Materie transportiert wird?</p>
       </div>
 
       <div data-wb-type="reveal">
@@ -887,18 +1253,27 @@
       </div>
     </section>
 
-    <section data-wb-page="8" data-wb-page-title="Quellen">
+    <section data-wb-page="9" data-wb-page-title="Quellen">
       <h1>Zusammenfassung, Quellen und Weiterforschen</h1>
-      <p>Jetzt hast du das gelernt: Eine Welle ist eine sich ausbreitende Störung. Du kannst Längs- und Querwellen unterscheiden, räumliche und zeitliche Beschreibung auseinanderhalten und den Zusammenhang \(c = \lambda \cdot f\) deuten.</p>
+      <p>Jetzt hast du das gelernt: Eine Welle ist eine sich ausbreitende Störung. Du kannst Längs- und Querwellen
+        unterscheiden, räumliche und zeitliche Beschreibung auseinanderhalten und den Zusammenhang \(c = \lambda \cdot
+        f\) deuten.</p>
 
       <div class="wb-callout">
         <strong>Quellen</strong>
         <ul class="wave-list">
           <li>Dorn-Bader Physik Kursstufe, Buchseiten 138–144 aus der von dir angegebenen PDF-Datei.</li>
-          <li>Vorhandene Web-Vorlage im Projekt: <code>wellen/wellen-book..html</code> beziehungsweise die entsprechende GitHub-Pages-Seite.</li>
-          <li><a href="https://www.leifiphysik.de/mechanik/mechanische-wellen/ausblick/huygenssches-prinzip-zur-beschreibung-von-mechanischen-wellen" target="_blank" rel="noopener noreferrer">LEIFIphysik: HUYGENSsches Prinzip zur Beschreibung von mechanischen Wellen</a>.</li>
-          <li><a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/beugung" target="_blank" rel="noopener noreferrer">LEIFIphysik: Beugung</a>.</li>
-          <li><a href="https://openstax.org/books/university-physics-volume-3/pages/4-3-double-slit-diffraction" target="_blank" rel="noopener noreferrer">OpenStax University Physics Volume 3, Abschnitt 4.3 zur Deutung von Beugung mit Huygens-Wellen</a>.</li>
+          <li>Vorhandene Web-Vorlage im Projekt: <code>wellen/wellen-book..html</code> beziehungsweise die entsprechende
+            GitHub-Pages-Seite.</li>
+          <li><a
+              href="https://www.leifiphysik.de/mechanik/mechanische-wellen/ausblick/huygenssches-prinzip-zur-beschreibung-von-mechanischen-wellen"
+              target="_blank" rel="noopener noreferrer">LEIFIphysik: HUYGENSsches Prinzip zur Beschreibung von
+              mechanischen Wellen</a>.</li>
+          <li><a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/beugung" target="_blank"
+              rel="noopener noreferrer">LEIFIphysik: Beugung</a>.</li>
+          <li><a href="https://openstax.org/books/university-physics-volume-3/pages/4-3-double-slit-diffraction"
+              target="_blank" rel="noopener noreferrer">OpenStax University Physics Volume 3, Abschnitt 4.3 zur Deutung
+              von Beugung mit Huygens-Wellen</a>.</li>
         </ul>
       </div>
 
@@ -916,7 +1291,7 @@
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
-    (function(){
+    (function () {
       const canvas = document.getElementById("transversalWaveCanvas");
       const readout = document.getElementById("transversalWaveReadout");
       const ampEl = document.getElementById("transAmp");
@@ -927,8 +1302,8 @@
       const speedVal = document.getElementById("transSpeedVal");
       const pauseBtn = document.getElementById("transPauseBtn");
       const resetBtn = document.getElementById("transResetBtn");
-      if(!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
-      if(canvas.dataset.wbTransversalInit === "1") return;
+      if (!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
+      if (canvas.dataset.wbTransversalInit === "1") return;
       canvas.dataset.wbTransversalInit = "1";
 
       const ctx = canvas.getContext("2d");
@@ -943,13 +1318,13 @@
       let rafId = 0;
       let lastTs = 0;
 
-      function syncLabels(){
+      function syncLabels() {
         ampVal.textContent = Number(ampEl.value).toFixed(2);
         freqVal.textContent = Number(freqEl.value).toFixed(2);
         speedVal.textContent = Number(speedEl.value).toFixed(2);
       }
 
-      function drawAxes(){
+      function drawAxes() {
         ctx.strokeStyle = "#64748b";
         ctx.lineWidth = 1.4;
         ctx.beginPath();
@@ -966,12 +1341,12 @@
         ctx.stroke();
       }
 
-      function draw(ts){
-        if(!canvas.isConnected) return;
-        if(!lastTs) lastTs = ts;
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
         const dt = Math.min(0.05, (ts - lastTs) / 1000);
         lastTs = ts;
-        if(!paused){
+        if (!paused) {
           phase += dt * Number(freqEl.value) * 2.3;
         }
 
@@ -985,15 +1360,15 @@
         ctx.strokeStyle = "#e11d48";
         ctx.lineWidth = 3;
         ctx.beginPath();
-        for(let i = 0; i < 360; i++){
+        for (let i = 0; i < 360; i++) {
           const x = left + (right - left) * (i / 359);
           const y = baseY - A * Math.sin((x / lambdaPx) - phase * c);
-          if(i === 0) ctx.moveTo(x, y);
+          if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
         ctx.stroke();
 
-        for(let i = 0; i < points; i++){
+        for (let i = 0; i < points; i++) {
           const x0 = left + (right - left) * (i / (points - 1));
           const y = baseY - A * Math.sin((x0 / lambdaPx) - phase * c);
 
@@ -1036,7 +1411,7 @@
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     })();
 
-    (function(){
+    (function () {
       const canvas = document.getElementById("longitudinalWaveCanvas");
       const readout = document.getElementById("longitudinalWaveReadout");
       const ampEl = document.getElementById("longAmp");
@@ -1047,8 +1422,8 @@
       const speedVal = document.getElementById("longSpeedVal");
       const pauseBtn = document.getElementById("longPauseBtn");
       const resetBtn = document.getElementById("longResetBtn");
-      if(!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
-      if(canvas.dataset.wbLongitudinalInit === "1") return;
+      if (!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
+      if (canvas.dataset.wbLongitudinalInit === "1") return;
       canvas.dataset.wbLongitudinalInit = "1";
 
       const ctx = canvas.getContext("2d");
@@ -1063,18 +1438,18 @@
       let rafId = 0;
       let lastTs = 0;
 
-      function syncLabels(){
+      function syncLabels() {
         ampVal.textContent = Number(ampEl.value).toFixed(2);
         freqVal.textContent = Number(freqEl.value).toFixed(2);
         speedVal.textContent = Number(speedEl.value).toFixed(2);
       }
 
-      function draw(ts){
-        if(!canvas.isConnected) return;
-        if(!lastTs) lastTs = ts;
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
         const dt = Math.min(0.05, (ts - lastTs) / 1000);
         lastTs = ts;
-        if(!paused){
+        if (!paused) {
           phase += dt * Number(freqEl.value) * 2.3;
         }
 
@@ -1092,7 +1467,7 @@
         ctx.stroke();
 
         let compressionScore = 0;
-        for(let i = 0; i < points; i++){
+        for (let i = 0; i < points; i++) {
           const xRest = left + spacing * i;
           const offset = A * Math.sin((xRest / lambdaPx) - phase * c);
           const x = xRest + offset;
@@ -1147,15 +1522,15 @@
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     })();
 
-    (function(){
+    (function () {
       const canvas = document.getElementById("huygensDiffractionCanvas");
       const readout = document.getElementById("huygensDiffractionReadout");
       const slitEl = document.getElementById("huygensSlit");
       const slitVal = document.getElementById("huygensSlitVal");
       const pauseBtn = document.getElementById("huygensPauseBtn");
       const resetBtn = document.getElementById("huygensResetBtn");
-      if(!canvas || !readout || !slitEl || !slitVal || !pauseBtn || !resetBtn) return;
-      if(canvas.dataset.wbHuygensInit === "1") return;
+      if (!canvas || !readout || !slitEl || !slitVal || !pauseBtn || !resetBtn) return;
+      if (canvas.dataset.wbHuygensInit === "1") return;
       canvas.dataset.wbHuygensInit = "1";
 
       const ctx = canvas.getContext("2d");
@@ -1172,17 +1547,17 @@
       let rafId = 0;
       let lastTs = 0;
 
-      function syncLabels(){
+      function syncLabels() {
         slitVal.textContent = Number(slitEl.value).toFixed(2);
       }
 
-      function drawIncomingFronts(nowPhase){
+      function drawIncomingFronts(nowPhase) {
         ctx.save();
         ctx.strokeStyle = "rgba(14, 116, 144, 0.95)";
         ctx.lineWidth = 2.3;
-        for(let x = wallX - 6; x >= leftStart; x -= wavelength){
+        for (let x = wallX - 6; x >= leftStart; x -= wavelength) {
           const shiftedX = x + (nowPhase % wavelength);
-          if(shiftedX < leftStart || shiftedX > wallX - 6) continue;
+          if (shiftedX < leftStart || shiftedX > wallX - 6) continue;
           ctx.beginPath();
           ctx.moveTo(shiftedX, topPad);
           ctx.lineTo(shiftedX, bottomPad);
@@ -1191,7 +1566,7 @@
         ctx.restore();
       }
 
-      function drawWall(slitHalf){
+      function drawWall(slitHalf) {
         ctx.save();
         ctx.strokeStyle = "#0f172a";
         ctx.lineWidth = 10;
@@ -1204,12 +1579,12 @@
         ctx.restore();
       }
 
-      function drawNormals(slitHalf){
+      function drawNormals(slitHalf) {
         ctx.save();
         ctx.strokeStyle = "rgba(100, 116, 139, 0.55)";
         ctx.lineWidth = 1.2;
         const yStep = Math.max(14, slitHalf / 3);
-        for(let y = centerY - slitHalf; y <= centerY + slitHalf + 1; y += yStep){
+        for (let y = centerY - slitHalf; y <= centerY + slitHalf + 1; y += yStep) {
           ctx.beginPath();
           ctx.moveTo(wallX - 18, y);
           ctx.lineTo(wallX + 30, y);
@@ -1218,7 +1593,7 @@
         ctx.restore();
       }
 
-      function drawWavelets(sources, radius){
+      function drawWavelets(sources, radius) {
         ctx.save();
         ctx.strokeStyle = "rgba(59, 130, 246, 0.45)";
         ctx.lineWidth = 1;
@@ -1230,7 +1605,7 @@
         ctx.restore();
       }
 
-      function drawEnvelopeCapsule(radius, slitHalf){
+      function drawEnvelopeCapsule(radius, slitHalf) {
         const topY = centerY - slitHalf;
         const bottomY = centerY + slitHalf;
         const xLine = wallX + radius;
@@ -1248,17 +1623,17 @@
         ctx.restore();
       }
 
-      function drawPropagatingFronts(step, slitHalf){
+      function drawPropagatingFronts(step, slitHalf) {
         ctx.save();
         ctx.strokeStyle = "rgba(220, 38, 38, 0.72)";
         ctx.lineWidth = 2.2;
-        for(let n = 0; n < 5; n++){
+        for (let n = 0; n < 5; n++) {
           const radius = 36 + ((phase + step * n) % wavelength);
           const topY = centerY - slitHalf;
           const bottomY = centerY + slitHalf;
           const xLine = wallX + radius;
           ctx.beginPath();
-          if(xLine <= W - 18){
+          if (xLine <= W - 18) {
             ctx.moveTo(xLine, topY);
             ctx.lineTo(xLine, bottomY);
           }
@@ -1271,7 +1646,7 @@
         ctx.restore();
       }
 
-      function drawLabels(slitHalf){
+      function drawLabels(slitHalf) {
         ctx.save();
         ctx.fillStyle = "#334155";
         ctx.font = "20px sans-serif";
@@ -1284,12 +1659,12 @@
         ctx.restore();
       }
 
-      function draw(ts){
-        if(!canvas.isConnected) return;
-        if(!lastTs) lastTs = ts;
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
         const dt = Math.min(0.05, (ts - lastTs) / 1000);
         lastTs = ts;
-        if(!paused){
+        if (!paused) {
           phase += dt * 72;
         }
 
@@ -1298,7 +1673,7 @@
         const radius = 36 + (phase % wavelength);
         const sourceCount = slitValue < 0.08 ? 1 : Math.max(3, Math.round(4 + slitValue * 10));
         const sources = [];
-        for(let i = 0; i < sourceCount; i++){
+        for (let i = 0; i < sourceCount; i++) {
           const t = sourceCount === 1 ? 0.5 : i / (sourceCount - 1);
           sources.push(centerY - slitHalf + t * slitHalf * 2);
         }
@@ -1351,4 +1726,5 @@
     SBLibrary.autoMountAll();
   </script>
 </body>
+
 </html>
