@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -14,47 +14,59 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    .int-sim-card{
+    .sw-sim-card {
       border: 1px solid var(--wb-line, #e5e7eb);
       border-radius: 14px;
       padding: 14px;
       background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
       margin: 14px 0;
     }
-    .int-sim-grid{
+
+    .sw-sim-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 0.8fr 1.2fr;
       gap: 14px;
       align-items: start;
     }
-    @media (max-width: 900px){
-      .int-sim-grid{ grid-template-columns: 1fr; }
+
+    @media (max-width: 900px) {
+      .sw-sim-grid {
+        grid-template-columns: 1fr;
+      }
     }
-    #coherentScreenCanvas{
+
+    #coherentScreenCanvas {
       width: 100%;
       height: 360px;
       border-radius: 12px;
       border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.6);
+      background: rgba(255, 255, 255, 0.6);
       display: block;
     }
-    .wb-book[data-theme="grau"] .int-sim-card,
-    .wb-book[data-theme="dark"] .int-sim-card{
-      background: rgba(255,255,255,0.18);
+
+    .wb-book[data-theme="grau"] .sw-sim-card,
+    .wb-book[data-theme="dark"] .sw-sim-card {
+      background: rgba(255, 255, 255, 0.18);
     }
+
     .wb-book[data-theme="grau"] #coherentScreenCanvas,
-    .wb-book[data-theme="dark"] #coherentScreenCanvas{
-      background: rgba(255,255,255,0.86);
-      border-color: rgba(255,255,255,0.4);
+    .wb-book[data-theme="dark"] #coherentScreenCanvas {
+      background: rgba(255, 255, 255, 0.86);
+      border-color: rgba(255, 255, 255, 0.4);
     }
-    .int-sim-controls label{
+
+    .sw-sim-controls label {
       display: block;
       font-weight: 900;
       margin: 10px 0 6px;
     }
-    .int-sim-controls input[type="range"]{ width: 100%; }
-    .int-sim-mono{
+
+    .sw-sim-controls input[type="range"] {
+      width: 100%;
+    }
+
+    .sw-sim-mono {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 13px;
       color: var(--wb-muted, #6b7280);
@@ -488,24 +500,20 @@
   Amplitude der Überlagerung groß ist und dunkle Steifen, wenn die Amplitude der Überlagerung 
   Null ist. 
 </p>
-<div class="int-sim-card">
-  <div class="int-sim-grid">
-    <div>
-      <canvas id="coherentScreenCanvas" width="980" height="560" aria-label="Interferenz von zwei kohärenten Quellen"></canvas>
-      <div class="int-sim-mono" id="coherentScreenReadout"></div>
-    </div>
-    <div class="int-sim-controls">
+<div class="sw-sim-card">
+  <div class="sw-sim-grid">
+    <div class="sw-sim-controls">
       <label for="cohCursorY">Cursorposition auf dem Schirm</label>
       <input id="cohCursorY" type="range" min="-180" max="180" value="0" step="1" />
-      <div class="int-sim-mono">y(E) = <span id="cohCursorYVal">0</span></div>
+      <div class="sw-sim-mono">y(E) = <span id="cohCursorYVal">0</span></div>
 
       <label for="cohFreq">Frequenz</label>
       <input id="cohFreq" type="range" min="1.0" max="3.0" value="1.1" step="0.1" />
-      <div class="int-sim-mono">f = <span id="cohFreqVal">1.1</span></div>
+      <div class="sw-sim-mono">f = <span id="cohFreqVal">1.1</span></div>
 
       <label for="cohSpeed">Animationsgeschwindigkeit</label>
       <input id="cohSpeed" type="range" min="0.2" max="1.8" value="0.8" step="0.1" />
-      <div class="int-sim-mono">v = <span id="cohSpeedVal">0.8</span></div>
+      <div class="sw-sim-mono">v = <span id="cohSpeedVal">0.8</span></div>
       <div class="wb-row" style="margin-top:10px">
         <button class="wb-btn" type="button" id="cohToggleAlphaBtn">Alpha ausblenden</button>
         <button class="wb-btn" type="button" id="cohToggleDsBtn">Delta s ausblenden</button>
@@ -514,6 +522,10 @@
         <button class="wb-btn primary" type="button" id="cohStartBtn">Start</button>
         <button class="wb-btn" type="button" id="cohResetBtn">Reset</button>
       </div>
+    </div>
+    <div>
+      <canvas id="coherentScreenCanvas" width="980" height="560" aria-label="Interferenz von zwei kohärenten Quellen"></canvas>
+      <div class="sw-sim-mono" id="coherentScreenReadout"></div>
     </div>
   </div>
 </div>

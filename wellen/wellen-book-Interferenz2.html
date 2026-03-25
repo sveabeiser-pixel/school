@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -14,81 +14,66 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    .sim-card{
+    .sw-sim-card {
       border: 1px solid var(--wb-line, #e5e7eb);
       border-radius: 14px;
       padding: 14px;
       background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08));
+      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
       margin: 14px 0;
     }
-    .sim-grid{
+
+    .sw-sim-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 0.8fr 1.2fr;
       gap: 14px;
       align-items: start;
     }
-    @media (max-width: 900px){
-      .sim-grid{ grid-template-columns: 1fr; }
+
+    @media (max-width: 900px) {
+      .sw-sim-grid {
+        grid-template-columns: 1fr;
+      }
     }
-    .sim-controls label{
-      display:block;
+
+    .sw-sim-controls label {
+      display: block;
       font-weight: 900;
       margin: 10px 0 6px;
     }
-    .sim-controls input[type="range"]{ width: 100%; }
-    .sim-mono{
+
+    .sw-sim-controls input[type="range"] {
+      width: 100%;
+    }
+
+    .sw-sim-mono {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 13px;
       color: var(--wb-muted, #6b7280);
       white-space: pre-wrap;
       margin-top: 8px;
     }
-    #singleSlitCanvas{
-      width: 100%;
-      height: 260px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.5);
-      display:block;
-    }
-    #dsCanvas{
-      width: 100%;
-      height: 260px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.5);
-      display:block;
-    }
-    #gratingCanvas{
-      width: 100%;
-      height: 260px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.5);
-      display:block;
-    }
+
+    #singleSlitCanvas,
+    #dsCanvas,
+    #gratingCanvas,
     #phasorCanvas,
-    #phasorPatternCanvas{
+    #phasorPatternCanvas,
+    #dsParticleCanvas {
       width: 100%;
       height: 260px;
       border-radius: 12px;
       border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.5);
-      display:block;
+      background: rgba(255, 255, 255, 0.5);
+      display: block;
     }
-    #dsParticleCanvas{
-      width: 100%;
-      height: 360px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255,255,255,0.5);
-      display:block;
+    #dsParticleCanvas { height: 360px; }
+
+    .wb-book[data-theme="grau"] .sw-sim-card,
+    .wb-book[data-theme="dark"] .sw-sim-card {
+      background: rgba(255, 255, 255, 0.18);
     }
-    .wb-book[data-theme="grau"] .sim-card,
-    .wb-book[data-theme="dark"] .sim-card{
-      background: rgba(255,255,255,0.18);
-    }
+
     .wb-book[data-theme="grau"] #singleSlitCanvas,
     .wb-book[data-theme="grau"] #dsCanvas,
     .wb-book[data-theme="grau"] #gratingCanvas,
@@ -100,9 +85,9 @@
     .wb-book[data-theme="dark"] #gratingCanvas,
     .wb-book[data-theme="dark"] #phasorCanvas,
     .wb-book[data-theme="dark"] #phasorPatternCanvas,
-    .wb-book[data-theme="dark"] #dsParticleCanvas{
-      background: rgba(255,255,255,0.86);
-      border-color: rgba(255,255,255,0.4);
+    .wb-book[data-theme="dark"] #dsParticleCanvas {
+      background: rgba(255, 255, 255, 0.86);
+      border-color: rgba(255, 255, 255, 0.4);
     }
     .mini-list li{ margin: 6px 0; }
   </style>
@@ -473,12 +458,9 @@
         (Summe der Einzelverteilungen) und beide Spalte ohne Welcher-Weg-Information
         (Interferenzmuster).
       </p>
-      <div class="sim-card">
-        <div class="sim-grid">
-          <div>
-            <canvas id="dsParticleCanvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
-          </div>
-          <div class="sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <label for="dspMode">Modus</label>
             <select id="dspMode">
               <option value="slitA">Nur durch Spalt A</option>
@@ -489,14 +471,17 @@
 
             <label for="dspRate">Teilchenrate</label>
             <input id="dspRate" type="range" min="5" max="80" step="1" value="34" />
-            <div class="sim-mono">Teilchen/s = <span id="dspRateVal">34</span></div>
+            <div class="sw-sim-mono">Teilchen/s = <span id="dspRateVal">34</span></div>
 
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="dspStartBtn">Start</button>
               <button class="wb-btn" type="button" id="dspResetBtn">Reset</button>
             </div>
 
-            <div class="sim-mono" id="dspReadout"></div>
+            <div class="sw-sim-mono" id="dspReadout"></div>
+          </div>
+          <div>
+            <canvas id="dsParticleCanvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
           </div>
         </div>
       </div>
@@ -1823,30 +1808,28 @@ Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das er
         Experimentiere mit \(\lambda\), \(d\), \(e\) und dem Winkel \(\alpha\).
         Vergleichssimulation: <a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/einzelspalt" target="_blank" rel="noopener">LEIFI-Einzelspalt</a>
       </p>
-      <div class="sim-card">
-        <div class="sim-grid">
-          <div>
-            <canvas id="singleSlitCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
-            <div class="sim-mono" id="singleSlitReadout"></div>
-          </div>
-          <div class="sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <label for="esLamNm">Wellenlänge \(\lambda\) (nm)</label>
             <input id="esLamNm" type="range" min="380" max="700" value="633" />
-            <div class="sim-mono">\(\lambda\) = <span id="esLamNmVal">633</span> nm</div>
+            <div class="sw-sim-mono">\(\lambda\) = <span id="esLamNmVal">633</span> nm</div>
 
             <label for="esLMm">Spaltbreite \(d\) (mm)</label>
             <input id="esLMm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
-            <div class="sim-mono">\(l\) = <span id="esLMmVal">0.020</span> mm</div>
+            <div class="sw-sim-mono">\(l\) = <span id="esLMmVal">0.020</span> mm</div>
 
             <label for="esAM">Abstand \(e\) (m)</label>
             <input id="esAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sim-mono">\(e\) = <span id="esAMVal">2.5</span> m</div>
+            <div class="sw-sim-mono">\(e\) = <span id="esAMVal">2.5</span> m</div>
 
             <label for="esThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
             <input id="esThetaDeg" type="range" min="-12" max="12" value="2" step="0.1" />
-            <div class="sim-mono">\(\alpha\) = <span id="esThetaDegVal">2.0</span> °</div>
-
-            
+            <div class="sw-sim-mono">\(\alpha\) = <span id="esThetaDegVal">2.0</span> °</div>
+          </div>
+          <div>
+            <canvas id="singleSlitCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
+            <div class="sw-sim-mono" id="singleSlitReadout"></div>
           </div>
         </div>
       </div>
@@ -1895,35 +1878,32 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         </ul>
       </div>
 
-      <div class="sim-card">
-        <div class="sim-grid">
-          <div>
-            <canvas id="dsCanvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
-            <div class="sim-mono" id="dsReadout"></div>
-          </div>
-
-          <div class="sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <label for="dsLamNm">Wellenlänge \(\lambda\) (nm)</label>
             <input id="dsLamNm" type="range" min="380" max="700" value="633" />
-            <div class="sim-mono">\(\lambda\) = <span id="dsLamNmVal">633</span> nm</div>
+            <div class="sw-sim-mono">\(\lambda\) = <span id="dsLamNmVal">633</span> nm</div>
 
             <label for="dsbMm">Spaltbreite \(b\) (mm)</label>
             <input id="dsbMm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
-            <div class="sim-mono">\(b\) = <span id="dsbMmVal">0.020</span> mm</div>
+            <div class="sw-sim-mono">\(b\) = <span id="dsbMmVal">0.020</span> mm</div>
 
             <label for="dsgMm">Spaltabstand \(g\) (mm) (Mitte-Mitte)</label>
             <input id="dsgMm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
-            <div class="sim-mono">\(g\) = <span id="dsgMmVal">0.100</span> mm</div>
+            <div class="sw-sim-mono">\(g\) = <span id="dsgMmVal">0.100</span> mm</div>
 
             <label for="dsAM">Abstand \(e\) (m) (nur für \(y\approx a\cdot\tan\alpha\))</label>
             <input id="dsAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sim-mono">\(e\) = <span id="dsAMVal">2.5</span> m</div>
+            <div class="sw-sim-mono">\(e\) = <span id="dsAMVal">2.5</span> m</div>
 
             <label for="dsThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
             <input id="dsThetaDeg" type="range" min="-12" max="12" value="1.5" step="0.1" />
-            <div class="sim-mono">\(\alpha\) = <span id="dsThetaDegVal">1.5</span> °</div>
-
-            
+            <div class="sw-sim-mono">\(\alpha\) = <span id="dsThetaDegVal">1.5</span> °</div>
+          </div>
+          <div>
+            <canvas id="dsCanvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
+            <div class="sw-sim-mono" id="dsReadout"></div>
           </div>
         </div>
       </div>
@@ -2136,26 +2116,26 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         So siehst du direkt, wie sich das Zeigerpolygon mit der Spaltzahl \(N\) ver&auml;ndert.
         Vergleich: <a href="https://physikbuch.schule/grid-diffraction.html" target="_blank" rel="noopener">physikbuch.schule (Bild 11.151)</a>
       </p>
-      <div class="sim-card">
-        <div class="sim-grid">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="phN">Spaltzahl \(N\)</label>
+            <input id="phN" type="range" min="2" max="10" value="3" step="1" />
+            <div class="sw-sim-mono">\(N\) = <span id="phNVal">3</span></div>
+
+            <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
+            <input id="phU" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
+            <div class="sw-sim-mono">\(u\) = <span id="phUVal">0.180</span></div>
+
+            <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
+            <input id="phScale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">Skalierung = <span id="phScaleVal">1.00</span></div>
+            <div class="sw-sim-mono" id="phasorReadout"></div>
+          </div>
           <div>
             <canvas id="phasorCanvas" width="900" height="520" aria-label="Zeigerpolygon für Spaltgitter"></canvas>
             <div class="wb-section-break"></div>
             <canvas id="phasorPatternCanvas" width="900" height="300" aria-label="Intensität in Abhängigkeit von u"></canvas>
-          </div>
-          <div class="sim-controls">
-            <label for="phN">Spaltzahl \(N\)</label>
-            <input id="phN" type="range" min="2" max="10" value="3" step="1" />
-            <div class="sim-mono">\(N\) = <span id="phNVal">3</span></div>
-
-            <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
-            <input id="phU" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
-            <div class="sim-mono">\(u\) = <span id="phUVal">0.180</span></div>
-
-            <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
-            <input id="phScale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
-            <div class="sim-mono">Skalierung = <span id="phScaleVal">1.00</span></div>
-            <div class="sim-mono" id="phasorReadout"></div>
           </div>
         </div>
       </div>
@@ -2262,36 +2242,36 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         \]</p>
       </div>
 
-      <div class="sim-card">
-        <div class="sim-grid">
-          <div>
-            <canvas id="gratingCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
-            <div class="sim-mono" id="gratingReadout"></div>
-          </div>
-          <div class="sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <label for="gtLamNm">Wellenlänge \(\lambda\) (nm)</label>
             <input id="gtLamNm" type="range" min="380" max="700" value="550" />
-            <div class="sim-mono">\(\lambda\) = <span id="gtLamNmVal">550</span> nm</div>
+            <div class="sw-sim-mono">\(\lambda\) = <span id="gtLamNmVal">550</span> nm</div>
 
             <label for="gtGUm">Gitterkonstante \(g\) (\(\mu\)m)</label>
             <input id="gtGUm" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
-            <div class="sim-mono">\(g\) = <span id="gtGUmVal">4.0</span> \(\mu\)m</div>
+            <div class="sw-sim-mono">\(g\) = <span id="gtGUmVal">4.0</span> \(\mu\)m</div>
 
             <label for="gtBUm">Spaltbreite \(b\) (\(\mu\)m)</label>
             <input id="gtBUm" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
-            <div class="sim-mono">\(b\) = <span id="gtBUmVal">0.8</span> \(\mu\)m</div>
+            <div class="sw-sim-mono">\(b\) = <span id="gtBUmVal">0.8</span> \(\mu\)m</div>
 
             <label for="gtN">Spaltzahl \(N\)</label>
             <input id="gtN" type="range" min="2" max="14" value="6" step="1" />
-            <div class="sim-mono">\(N\) = <span id="gtNVal">6</span></div>
+            <div class="sw-sim-mono">\(N\) = <span id="gtNVal">6</span></div>
 
             <label for="gtEM">Schirmabstand \(e\) (m)</label>
             <input id="gtEM" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
-            <div class="sim-mono">\(e\) = <span id="gtEMVal">2.0</span> m</div>
+            <div class="sw-sim-mono">\(e\) = <span id="gtEMVal">2.0</span> m</div>
 
             <label for="gtThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
             <input id="gtThetaDeg" type="range" min="-25" max="25" value="3" step="0.1" />
-            <div class="sim-mono">\(\alpha\) = <span id="gtThetaDegVal">3.0</span> °</div>
+            <div class="sw-sim-mono">\(\alpha\) = <span id="gtThetaDegVal">3.0</span> °</div>
+          </div>
+          <div>
+            <canvas id="gratingCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
+            <div class="sw-sim-mono" id="gratingReadout"></div>
           </div>
         </div>
       </div>

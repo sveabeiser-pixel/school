@@ -50,7 +50,7 @@
       margin-top: 6px;
     }
 
-    .wt-sim-card {
+    .sw-sim-card {
       border: 1px solid var(--wb-line, #e5e7eb);
       border-radius: 14px;
       padding: 14px;
@@ -59,30 +59,30 @@
       margin: 14px 0;
     }
 
-    .wt-sim-grid {
+    .sw-sim-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 0.8fr 1.2fr;
       gap: 14px;
       align-items: start;
     }
 
     @media (max-width: 900px) {
-      .wt-sim-grid {
+      .sw-sim-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .wt-sim-controls label {
+    .sw-sim-controls label {
       display: block;
       font-weight: 900;
       margin: 10px 0 6px;
     }
 
-    .wt-sim-controls input[type="range"] {
+    .sw-sim-controls input[type="range"] {
       width: 100%;
     }
 
-    .wt-sim-mono {
+    .sw-sim-mono {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 13px;
       color: var(--wb-muted, #6b7280);
@@ -101,8 +101,8 @@
       display: block;
     }
 
-    .wb-book[data-theme="grau"] .wt-sim-card,
-    .wb-book[data-theme="dark"] .wt-sim-card {
+    .wb-book[data-theme="grau"] .sw-sim-card,
+    .wb-book[data-theme="dark"] .sw-sim-card {
       background: rgba(255, 255, 255, 0.14);
     }
   </style>
@@ -475,62 +475,62 @@
       <p>Für eine bessere Veranschaulichung kannst du die folgenden Simulationen nutzen. Beobachte genau, in welche
         Richtung sich die Teilchen bewegen und wie die Störung durch das System läuft.</p>
 
-      <div class="wt-sim-card">
-        <div class="wt-sim-grid">
-          <div>
-            <canvas id="transversalWaveCanvas" width="960" height="520"
-              aria-label="Simulation einer Transversalwelle"></canvas>
-            <div class="wt-sim-mono" id="transversalWaveReadout"></div>
-          </div>
-          <div class="wt-sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <h2>Simulation: Transversalwelle</h2>
             <p>Die Teilchen schwingen auf und ab, während die Welle nach rechts läuft.</p>
             <label for="transAmp">Amplitude A</label>
             <input id="transAmp" type="range" min="0.3" max="1.4" value="0.9" step="0.05" />
-            <div class="wt-sim-mono">A = <span id="transAmpVal">0.90</span></div>
+            <div class="sw-sim-mono">A = <span id="transAmpVal">0.90</span></div>
 
             <label for="transFreq">Frequenz f</label>
             <input id="transFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
-            <div class="wt-sim-mono">f = <span id="transFreqVal">1.00</span></div>
+            <div class="sw-sim-mono">f = <span id="transFreqVal">1.00</span></div>
 
             <label for="transSpeed">Ausbreitungsgeschwindigkeit c</label>
             <input id="transSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
-            <div class="wt-sim-mono">c = <span id="transSpeedVal">0.80</span></div>
+            <div class="sw-sim-mono">c = <span id="transSpeedVal">0.80</span></div>
 
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="transPauseBtn">Pause</button>
               <button class="wb-btn" type="button" id="transResetBtn">Reset</button>
             </div>
           </div>
+          <div>
+            <canvas id="transversalWaveCanvas" width="960" height="520"
+              aria-label="Simulation einer Transversalwelle"></canvas>
+            <div class="sw-sim-mono" id="transversalWaveReadout"></div>
+          </div>
         </div>
       </div>
 
-      <div class="wt-sim-card">
-        <div class="wt-sim-grid">
-          <div>
-            <canvas id="longitudinalWaveCanvas" width="960" height="520"
-              aria-label="Simulation einer Longitudinalwelle"></canvas>
-            <div class="wt-sim-mono" id="longitudinalWaveReadout"></div>
-          </div>
-          <div class="wt-sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <h2>Simulation: Longitudinalwelle</h2>
             <p>Die Teilchen schwingen vor und zurück. Sichtbar werden Verdichtungen und Verdünnungen.</p>
             <label for="longAmp">Amplitude A</label>
             <input id="longAmp" type="range" min="0.2" max="1.0" value="0.55" step="0.05" />
-            <div class="wt-sim-mono">A = <span id="longAmpVal">0.55</span></div>
+            <div class="sw-sim-mono">A = <span id="longAmpVal">0.55</span></div>
 
             <label for="longFreq">Frequenz f</label>
             <input id="longFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
-            <div class="wt-sim-mono">f = <span id="longFreqVal">1.00</span></div>
+            <div class="sw-sim-mono">f = <span id="longFreqVal">1.00</span></div>
 
             <label for="longSpeed">Ausbreitungsgeschwindigkeit c</label>
             <input id="longSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
-            <div class="wt-sim-mono">c = <span id="longSpeedVal">0.80</span></div>
+            <div class="sw-sim-mono">c = <span id="longSpeedVal">0.80</span></div>
 
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="longPauseBtn">Pause</button>
               <button class="wb-btn" type="button" id="longResetBtn">Reset</button>
             </div>
+          </div>
+          <div>
+            <canvas id="longitudinalWaveCanvas" width="960" height="520"
+              aria-label="Simulation einer Longitudinalwelle"></canvas>
+            <div class="sw-sim-mono" id="longitudinalWaveReadout"></div>
           </div>
         </div>
       </div>
@@ -787,21 +787,16 @@
           Spaltbreite veränderst.</p>
       </div>
 
-      <div class="wt-sim-card">
-        <div class="wt-sim-grid">
-          <div>
-            <canvas id="huygensDiffractionCanvas" width="960" height="520"
-              aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
-            <div class="wt-sim-mono" id="huygensDiffractionReadout"></div>
-          </div>
-          <div class="wt-sim-controls">
+      <div class="sw-sim-card">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
             <h2>Simulation: Beugung am Spalt</h2>
             <p>Von links trifft eine ebene Welle auf eine Wand mit einem Spalt. Hinter dem Spalt werden die Punkte im
               offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
 
             <label for="huygensSlit">Spaltbreite</label>
             <input id="huygensSlit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
-            <div class="wt-sim-mono">relative Spaltbreite = <span id="huygensSlitVal">0.42</span></div>
+            <div class="sw-sim-mono">relative Spaltbreite = <span id="huygensSlitVal">0.42</span></div>
 
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="huygensPauseBtn">Pause</button>
@@ -816,6 +811,11 @@
                 <li>Die kräftige Linie ist die neue Wellenfront als Einhüllende dieser Elementarwellen.</li>
               </ul>
             </div>
+          </div>
+          <div>
+            <canvas id="huygensDiffractionCanvas" width="960" height="520"
+              aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
+            <div class="sw-sim-mono" id="huygensDiffractionReadout"></div>
           </div>
         </div>
       </div>

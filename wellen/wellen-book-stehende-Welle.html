@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -24,7 +24,7 @@
     }
     .sw-sim-grid{
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 0.8fr 1.2fr;
       gap: 14px;
       align-items: start;
     }
@@ -245,15 +245,19 @@
         Nach der Reflexion am festen Ende kommt der Puls invertiert (nach unten) zurück.
       </p>
       <div class="sw-sim-card">
-        <div>
-          <canvas id="fixedPulseCanvas" width="960" height="460" aria-label="Pulsreflexion am festen Ende"></canvas>
-          <div class="sw-sim-mono" id="fixedPulseReadout"></div>
-          <label for="fpSpeed">Animationsgeschwindigkeit</label>
-          <input id="fpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="fpSpeedVal">1.0</span></div>
-          <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn primary" type="button" id="fpStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="fpResetBtn">Reset</button>
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="fpSpeed">Animationsgeschwindigkeit</label>
+            <input id="fpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="fpSpeedVal">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="fpStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="fpResetBtn">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="fixedPulseCanvas" width="960" height="460" aria-label="Pulsreflexion am festen Ende"></canvas>
+            <div class="sw-sim-mono" id="fixedPulseReadout"></div>
           </div>
         </div>
       </div>
@@ -335,15 +339,19 @@
         der y-Achse gespiegelt (kein Phasensprung). Der pinke Punkt am rechten Ende bewegt sich mit.
       </p>
       <div class="sw-sim-card">
-        <div>
-          <canvas id="loosePulseCanvas" width="960" height="460" aria-label="Pulsreflexion am losen Ende"></canvas>
-          <div class="sw-sim-mono" id="loosePulseReadout"></div>
-          <label for="lpSpeed">Animationsgeschwindigkeit</label>
-          <input id="lpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="lpSpeedVal">1.0</span></div>
-          <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn primary" type="button" id="lpStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="lpResetBtn">Reset</button>
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="lpSpeed">Animationsgeschwindigkeit</label>
+            <input id="lpSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="lpSpeedVal">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="lpStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="lpResetBtn">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="loosePulseCanvas" width="960" height="460" aria-label="Pulsreflexion am losen Ende"></canvas>
+            <div class="sw-sim-mono" id="loosePulseReadout"></div>
           </div>
         </div>
       </div>
@@ -647,15 +655,19 @@
         Phasensprung nach links.
       </p>
       <div class="sw-sim-card">
-        <div>
-          <canvas id="thinDenseCanvas" width="960" height="520" aria-label="Transmission und Reflexion duenn nach dicht"></canvas>
-          <div class="sw-sim-mono" id="thinDenseReadout"></div>
-          <label for="tdSpeed">Animationsgeschwindigkeit</label>
-          <input id="tdSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="tdSpeedVal">0.6</span></div>
-          <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn primary" type="button" id="tdStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="tdResetBtn">Reset</button>
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="tdSpeed">Animationsgeschwindigkeit</label>
+            <input id="tdSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="tdSpeedVal">0.6</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="tdStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="tdResetBtn">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="thinDenseCanvas" width="960" height="520" aria-label="Transmission und Reflexion duenn nach dicht"></canvas>
+            <div class="sw-sim-mono" id="thinDenseReadout"></div>
           </div>
         </div>
       </div>
@@ -720,15 +732,19 @@
         Die reflektierte Welle hat kleinere Amplitude, aber die gleiche Wellenlänge wie die einlaufende.
       </p>
       <div class="sw-sim-card">
-        <div>
-          <canvas id="denseThinCanvas" width="960" height="520" aria-label="Transmission und Reflexion dicht nach duenn"></canvas>
-          <div class="sw-sim-mono" id="denseThinReadout"></div>
-          <label for="dtSpeed">Animationsgeschwindigkeit</label>
-          <input id="dtSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
-          <div class="sw-sim-mono">v = <span id="dtSpeedVal">0.6</span></div>
-          <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn primary" type="button" id="dtStartBtn">Start</button>
-            <button class="wb-btn" type="button" id="dtResetBtn">Reset</button>
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="dtSpeed">Animationsgeschwindigkeit</label>
+            <input id="dtSpeed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="dtSpeedVal">0.6</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="dtStartBtn">Start</button>
+              <button class="wb-btn" type="button" id="dtResetBtn">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="denseThinCanvas" width="960" height="520" aria-label="Transmission und Reflexion dicht nach duenn"></canvas>
+            <div class="sw-sim-mono" id="denseThinReadout"></div>
           </div>
         </div>
       </div>
@@ -979,10 +995,6 @@
 <p>Versuche zu verstehen, was genau passiert und wie genau die stehende Welle entsteht:</p>
       <div class="sw-sim-card">
         <div class="sw-sim-grid">
-          <div>
-            <canvas id="buildStandingCanvas" width="960" height="520" aria-label="Entstehung einer stehenden Welle"></canvas>
-            <div class="sw-sim-mono" id="buildStandingReadout"></div>
-          </div>
           <div class="sw-sim-controls">
             <label for="bsMode">Startmodus der beiden Quellen</label>
             <select id="bsMode">
@@ -1006,6 +1018,10 @@
               <button class="wb-btn primary" type="button" id="bsStartBtn">Start</button>
               <button class="wb-btn" type="button" id="bsResetBtn">Reset</button>
             </div>
+          </div>
+          <div>
+            <canvas id="buildStandingCanvas" width="960" height="520" aria-label="Entstehung einer stehenden Welle"></canvas>
+            <div class="sw-sim-mono" id="buildStandingReadout"></div>
           </div>
         </div>
       </div>
@@ -1196,10 +1212,6 @@
       </p>
       <div class="sw-sim-card">
         <div class="sw-sim-grid">
-          <div>
-            <canvas id="standingModesCanvas" width="960" height="520" aria-label="Simulation stehender Wellen"></canvas>
-            <div class="sw-sim-mono" id="standingModesReadout"></div>
-          </div>
           <div class="sw-sim-controls">
             <label for="standingBoundary">Randbedingungen</label>
             <select id="standingBoundary">
@@ -1223,6 +1235,10 @@
               <button class="wb-btn primary" type="button" id="smStartBtn">Start</button>
               <button class="wb-btn" type="button" id="smResetBtn">Reset</button>
             </div>
+          </div>
+          <div>
+            <canvas id="standingModesCanvas" width="960" height="520" aria-label="Simulation stehender Wellen"></canvas>
+            <div class="sw-sim-mono" id="standingModesReadout"></div>
           </div>
         </div>
       </div>
@@ -1760,10 +1776,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="sw-sim-card">
         <div class="sw-sim-grid">
-          <div>
-            <canvas id="looseReflectCanvas" width="960" height="520" aria-label="Reflexion am losen Ende"></canvas>
-            <div class="sw-sim-mono" id="looseReflectReadout"></div>
-          </div>
           <div class="sw-sim-controls">
             <label for="lrAmp">Amplitude A</label>
             <input id="lrAmp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
@@ -1779,6 +1791,10 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="lrStartBtn">Start</button>
             </div>
+          </div>
+          <div>
+            <canvas id="looseReflectCanvas" width="960" height="520" aria-label="Reflexion am losen Ende"></canvas>
+            <div class="sw-sim-mono" id="looseReflectReadout"></div>
           </div>
         </div>
       </div>
@@ -1844,10 +1860,6 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
 
       <div class="sw-sim-card">
         <div class="sw-sim-grid">
-          <div>
-            <canvas id="fixedReflectCanvas" width="960" height="520" aria-label="Reflexion am festen Ende"></canvas>
-            <div class="sw-sim-mono" id="fixedReflectReadout"></div>
-          </div>
           <div class="sw-sim-controls">
             <label for="frAmp">Amplitude A</label>
             <input id="frAmp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
@@ -1863,6 +1875,10 @@ decke sie dann aber immer wieder zu, wenn sie dich ein Stück weiter gebracht ha
             <div class="wb-row" style="margin-top:10px">
               <button class="wb-btn primary" type="button" id="frStartBtn">Start</button>
             </div>
+          </div>
+          <div>
+            <canvas id="fixedReflectCanvas" width="960" height="520" aria-label="Reflexion am festen Ende"></canvas>
+            <div class="sw-sim-mono" id="fixedReflectReadout"></div>
           </div>
         </div>
       </div>
