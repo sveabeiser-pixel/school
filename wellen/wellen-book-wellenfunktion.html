@@ -847,7 +847,7 @@
       <p>
         <b>y -
           Amplitude: </b> <br> Maximale Auslenkung der schwingenden Teilchen einer Welle aus ihrer Ruhelage bzw.
-        Gleichgewichtslage.
+        Gleichgewichtslage. Die momentane Auslenkung zu einem bestimmten Zeitpunkt nennt man auch <b>Elongation</b>.
         Wir gehen dabei davon aus, dass die Welle ungedämpft ist, d.h dass alle schwingenden Teilchen die gleiche
         Amplitude wie das erregende Teilchen besitzen.
       </p>
@@ -892,7 +892,9 @@
           einer Welle ist allein durch den Wellenträger bestimmt.</p>
       </div>
 
-
+      <p>
+        <b> v - Schnelle: </b> <br> Momentangeschwindigkeit der einzelnen Teilchen, die bei einer Welle um ihre Ruhelage schwingen. Die Schnelle $v$ ändert sich während der Schwingung andauernd, wohingegen die Ausbreitungsgeschwindigkeit $c$ der Welle (im selben Medium) konstant ist.
+      </p>
 
       <p> <b> &lambda; - Wellenlänge: </b> <br> x-Abstand eines Teilchens zum nächsten Teilchen im gleichen
         Schwingungszustand (d.h. die beiden Teilchen müssen die gleiche Auslenkung und die gleiche Geschwindigkeit
@@ -973,6 +975,56 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      
+      <h2>Exkurs: Schnelle vs. Ausbreitungsgeschwindigkeit</h2>
+      <p>In den bisherigen Überlegungen und der Simulation breitet sich eine Welle aus. Dabei kommen die einzelnen Teilchen (Körperchen) aber nicht von der Stelle; sie schwingen lediglich um ihre Ruhelage (bei einer Transversalwelle senkrecht zur Ausbreitungsrichtung des Wellenberges einmal nach oben und dann wieder zurück).</p>
+      <p>Ihre Momentangeschwindigkeit, die sich bei der Hin- und Herbewegung dauernd ändert, bezeichnet man als <b>Schnelle $v$</b>. Dieser besondere Name soll den Unterschied zur konstanten <b>Ausbreitungsgeschwindigkeit $c$</b> der Störung hervorheben.</p>
+      <div class="wb-callout">
+        <strong>Zusammenhang bei einer Transversalwelle:</strong>
+        <p>Die Vektoren der Schnelle $v$ und der Ausbreitungsgeschwindigkeit $c$ stehen hierbei orthogonal (senkrecht) zueinander.</p>
+        <p>Für eine einzelne Schwingung eines Teilchens gilt:</p>
+        <ul class="wave-list">
+          <li>Bei maximaler Elongation (y-Auslenkung im Wellenberg oder Wellental) ist die Schnelle <b>null</b>.</li>
+          <li>Bei der Elongation null (beim Nulldurchgang) ist die Schnelle <b>maximal</b>.</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_schnelle",
+          "title":"Wahr oder falsch?",
+          "statement":"Die Ausbreitungsgeschwindigkeit der Welle ändert sich ständig, während die Schnelle der Teilchen konstant ist.",
+          "answer": false,
+          "explain":"Falsch! Es ist genau umgekehrt: Die Ausbreitungsgeschwindigkeit c (der Störung) bleibt konstant, aber da die Teilchen schwingen, ändert sich ihre Schnelle v (Momentangeschwindigkeit) andauernd."
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_schnelle_max",
+          "title":"Check: Wann ist die Schnelle maximal?",
+          "hint":"Erinnere dich an die Bewegung eines Schaukel- oder Federpendels.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"An welcher Position ist die Schnelle v der Teilchen am größten?",
+              "choices":[
+                {"id":"a","label":"Bei maximaler Auslenkung (Elongation)."},
+                {"id":"b","label":"Wenn das Teilchen die Ruhelage (Elongation null) passiert."},
+                {"id":"c","label":"Die Schnelle ist überall gleich groß."}
+              ],
+              "correct":["b"],
+              "explain":"Beim Nulldurchgang ist die Bewegungsgeschwindigkeit (Schnelle) am größten. Am Umkehrpunkt (maximaler Auslenkung) steht das Teilchen kurz still (v=0)."
+            }
+          ]
+        }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
