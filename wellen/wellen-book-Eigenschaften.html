@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wellen-Eigenschaften & Elektromagnetik</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Wellen",
+      "sectionTitle":"Eigenschaften & Elektromagnetik",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Eigenschaften",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "wellen-eigenschaften-ergebnisse.txt"
+    }
+    </script>
+
+    <!-- PAGE 1 -->
+    <section data-wb-page="1" data-wb-page-title="Dopplereffekt">
+      <h1>Der Dopplereffekt</h1>
+      <p>Jedes Kind kennt den typischen, zunächst ansteigenden und dann sinkenden Ton, wenn ein Krankenwagen mit aktivierter Sirene vorbeifährt. Diesen Effekt bezeichnet man als <strong>Dopplereffekt</strong>. Man unterscheidet dabei zwei Hauptfälle:</p>
+
+      <h2>1. Bewegter Sender, ruhender Empfänger</h2>
+      <p>Ein Schallsender bewegt sich mit $v_S$ auf einen ruhenden Empfänger zu. Der Sender jagt seinen eigenen ausgesandten Wellenfronten hinterher, weshalb diese in Fahrtrichtung „zusammengeschoben“ werden. Der Empfänger hört eine <strong>verkürzte Wellenlänge $\lambda_E$</strong> und somit eine <strong>höhere Frequenz $f_E$</strong>.</p>
+      
+      <div class="wb-img" style="display:flex; justify-content:center;">
+        <figure class="wave-figure" style="width:90%;">
+          <img src="pdf-bilder/doppler.png" alt="Dopplereffekt bewegter Sender Herleitung" style="width:100%; height:auto;" />
+          <figcaption>Wellenfronten stauchen sich in Fahrtrichtung.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Formel: Bewegter Sender</strong>
+        <p>Die Ausbreitungsgeschwindigkeit $c$ im Medium bleibt konstant, nur die gemessene Wellenlänge ändert sich. Für die empfangene Frequenz gilt:</p>
+        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1}{1 \mp \frac{v_S}{c}}$</p>
+        <ul class="wave-list">
+          <li>Minus ($- \frac{v_S}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
+          <li>Plus ($+ \frac{v_S}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>2. Bewegter Empfänger, ruhender Sender</h2>
+      <p>Jetzt bewegt sich der Empfänger mit $v_E$ auf einen ruhenden Sender zu. Hierbei bleibt die räumliche Wellenlänge $\lambda_S$ völlig unbeeinflusst und konstant. Dagegen ändert sich relativ zum Empfänger aber die <strong>Ausbreitungsgeschwindigkeit</strong> der Wellenfronten, weil er ungebremst in sie „hineinfährt“ ($c_E = c + v_E$).</p>
+
+      <div class="wb-soft-callout">
+        <strong>Formel: Bewegter Empfänger</strong>
+        <p>Da die Wellenlänge $\lambda_S$ konstant bleibt, die Relativgeschwindigkeit aber wächst, berechnet sich die empfangene Frequenz so:</p>
+        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \left(1 \pm \frac{v_E}{c}\right)$</p>
+        <ul class="wave-list">
+          <li>Plus ($+ \frac{v_E}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
+          <li>Minus ($- \frac{v_E}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze_doppler_unterschied",
+          "title":"Sicherung: Die zwei Fälle unterscheiden",
+          "bank":["Ausbreitungsgeschwindigkeit","Wellenlänge"],
+          "segments":[
+            {"t":"text","v":"Beim bewegten Sender ändert sich im Raum die messbare "},
+            {"t":"gap","a":"Wellenlänge"},
+            {"t":"text","v":". Beim bewegten Empfänger ist es hingegen (relativ gesehen) die "},
+            {"t":"gap","a":"Ausbreitungsgeschwindigkeit"},
+            {"t":"text","v":", die sich zu ändern scheint."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section data-wb-page="2" data-wb-page-title="Kombination & Überschall">
+      <h1>Wenn sich Sender und Empfänger gleichzeitig bewegen</h1>
+      <p>Durch die Kombination der beiden Bewegungen ergibt sich für einen Empfänger ($v_E$) und einen Sender ($v_S$), die sich beide gleichzeitig in Bewegung befinden, eine kombinierte Gleichung.</p>
+
+      <div class="wb-callout">
+        <strong>Allgemeiner Dopplereffekt</strong>
+        <p>Bewegen sich Empfänger und Schallquelle aufeinander zu oder voneinander weg, so werden beide Effekte multipliziert:</p>
+        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1 \pm \frac{v_E}{c}}{1 \mp \frac{v_S}{c}}$</p>
+        <p>Das obere Vorzeichen steht stets für eine <strong>Annäherung</strong>, das untere für eine <strong>Entfernung</strong>. Für langsame Geschwindigkeiten ($v \ll c$) gilt näherungsweise: $\Delta f \approx f_S \cdot \frac{v_S}{c}$.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      
+      <h2>Der Überschallknall</h2>
+      <p>Kreuzt ein Flugzeug den Himmel mit Überschallgeschwindigkeit ($v > c$), so hat es den ersten und alle weiteren ausgesendeten Wellenberge bereits überholt.</p>
+
+      <div class="grid2" style="align-items: center;">
+        <div class="wb-soft-callout" style="margin:0;">
+          <strong>Die "Schallmauer"</strong>
+          <p>Die ausgesandten Wellenberge besitzen eine gemeinsame Einhüllende – den sogenannten <strong>machschen Kegel</strong>. An allen Stellen am Boden, über die dieser V-förmige Mantel hinwegstreicht, hört man wegen der massiven konstruktiven Interferenz aller Wellenberge einen explosionsartigen Knall.</p>
+          <p>Tatsächlich „schleppt“ das Flugzeug seinen Knall auf dem Mantel dieses Kegels dauernd hinter sich her und erzeugt ihn umgangssprachlich gesehen nicht nur ein einziges Mal beim „Durchbrechen“ der Schallmauer.</p>
+        </div>
+        <div class="wave-figure" style="text-align:center; margin-top:0;">
+          <img src="pdf-bilder/doppler2.png" alt="Kreissystem des Dopplereffekts bei Überschall" style="width:100%; height:auto; border-radius:8px;" />
+          <p style="font-size:0.9em; color:#555;">Entstehung des Machkegels bei Überschall ($v > c$).</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_mach",
+          "title":"Wahr oder falsch?",
+          "statement":"Der Überschallknall ist nur in exakt dem einen Moment zu hören, in dem ein Flugzeug auf Überschallgeschwindigkeit (v>c) beschleunigt.",
+          "answer": false,
+          "explain":"Falsch! Das Flugzeug zieht den gebündelten Knall dauerhaft wie eine kegelförmige Schleppe (den machschen Kegel) hinter sich her."
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section data-wb-page="3" data-wb-page-title="Elektromagnetischer Schwingkreis">
+      <h1>Der ungedämpfte elektromagnetische Schwingkreis</h1>
+      <p>Nun wechseln wir von den mechanischen Wellen und Schwingungen zur Elektrodynamik und Induktion. Ein klassischer elektromagnetischer Schwingkreis (LC-Schwingkreis) besteht aus einem <strong>Kondensator</strong> (Kapazität $C$) und einer <strong>Spule</strong> (Induktivität $L$).</p>
+
+      <img src="pdf-bilder/schaltung_schwingkreis.png" alt="Schaltskizze Schwingkreis" style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
+
+      <p>Lädt man den Kondensator auf und schließt ihn an die Spule an, kommt es zu einem fortwährenden Energieaustausch zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule.</p>
+
+      <div class="wb-callout">
+        <strong>Merksatz: Phasenverschiebung</strong>
+        <p>Im elektromagnetischen Schwingkreis kommt es zu Schwingungen der am Kondensator anliegenden Spannung und der Stromstärke durch den Kreis. Diese beiden Schwingungen sind zeitlich stets <strong>um 90° phasenverschoben</strong>.</p>
+      </div>
+
+      <h2>Die Differenzialgleichung (DGL)</h2>
+      <p>Über den Maschensatz ($U_C + U_L = 0$) ergibt sich folgende Differenzialgleichung der ungedämpften Schwingung:</p>
+      <p style="text-align:center; font-size:1.2em;">$\ddot{Q}(t) = - \frac{1}{L \cdot C} \cdot Q(t)$</p>
+      <p>Als Lösungsfunktion dieser Gleichung bietet sich die Cosinusfunktion an, da diese – bis auf das negative Vorzeichen und den nach Kettenregel entstehenden inneren Faktor $\omega$ – absolut ihrer zweiten Ableitung entspricht. Mit dem Ansatz $Q(t) = \hat{Q} \cdot \cos(\omega \cdot t)$ erhält man:</p>
+      <ul class="wave-list">
+        <li>$\dot{Q}(t) = - \omega \cdot \hat{Q} \cdot \sin(\omega \cdot t)$</li>
+        <li>$\ddot{Q}(t) = - \omega^2 \cdot \hat{Q} \cdot \cos(\omega \cdot t)$</li>
+      </ul>
+
+      <div class="wb-soft-callout">
+        <strong>Die thomsonsche Schwingungsgleichung</strong>
+        <p>Durch Einsetzen in die DGL erhält man letztlich $\omega^2 = \frac{1}{L \cdot C}$, woraus sich für die Frequenz $f$ und die Periodendauer $T$ direkt folgendes ergibt:</p>
+        <p style="text-align:center; font-size:1.2em;">$f = \frac{1}{2 \pi} \cdot \frac{1}{\sqrt{L \cdot C}} \quad \text{bzw.} \quad T = 2\pi\sqrt{L \cdot C}$</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"mcq_schwingkreis",
+          "title":"Check: Bauteile",
+          "questions":[
+            {
+              "text":"Zwischen welchen Bauteilen tauscht der LC-Schwingkreis ständig Energie aus?",
+              "choices":[
+                {"id":"a","label":"Widerstand und Spule"},
+                {"id":"b","label":"Kondensator und Spule"},
+                {"id":"c","label":"Kondensator und Spannungsquelle"}
+              ],
+              "correct":["b"],
+              "explain":"Die Energie pendelt periodisch zwischen dem elektrischen E-Feld des Kondensators und dem magnetischen B-Feld der Spule hin und her."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 4 -->
+    <section data-wb-page="4" data-wb-page-title="Gedämpfte Schwingung">
+      <h1>Der gedämpfte Schwingkreis</h1>
+      <p>Bei einem idealen Federschwinger (wie auf dem Papier) würde das System ewig schwingen. Real nimmt die mechanische Amplitude aber aufgrund der Reibungsverluste mit der Zeit ab. Analog dazu nimmt auch beim elektrischen Schwingkreis die Amplitude im Laufe der Zeit durch den <strong>ohmschen Eigenwiderstand $R$</strong> der Schaltung ab.</p>
+
+      <img src="pdf-bilder/daempfung.png" alt="Oszilloskopbild Dämpfung" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+      <p style="text-align:center; font-size:0.9em; color:#555;">Dem Schwingkreis wird regelmäßig von außen durch einen Rechteckgenerator neue Energie zugeführt, sodass die Maxima periodisch neu starten und sichtbar bleiben.</p>
+
+      <h2>Exkurs: DGL der gedämpften Schwingung</h2>
+      <p>Da nun auch der ohmsche Widerstand $R$ betrachtet werden muss, fällt auch an diesem eine Spannung $U_R = R \cdot I(t)$ ab. Die Maschengleichung ändert sich zu $U_C + U_L = U_R$. Eingesetzt führt dies zur charakteristischen DGL:</p>
+      <p style="text-align:center; font-size:1.2em;">$\frac{1}{C} \cdot Q(t) + L \cdot \ddot{Q}(t) + R \cdot \dot{Q}(t) = 0$</p>
+
+      <div class="wb-callout">
+        <strong>Mathematische Lösung</strong>
+        <p>Die analytische Bestimmung ist hier mathematisch aufwendiger. Der klassische Lösungsansatz ist eine periodische Schwingung, die mit einer e-Funktion exponentiell staucht, also abflacht:</p>
+        <p style="text-align:center;">$Q(t) = \hat{Q} \cdot e^{-\delta \cdot t} \cdot \cos(\omega \cdot t)$</p>
+        <p>Hierbei ist $\delta = \frac{R}{2L}$ die sogenannte <strong>Dämpfungskonstante</strong>. Für die neue Kreisfrequenz $\omega$ ergibt sich (durch Einsetzen der Ableitungen):</p>
+        <p style="text-align:center;">$\omega = \sqrt{\omega_0^2 - \delta^2} = \sqrt{\frac{1}{L \cdot C} - \frac{R^2}{4L^2}}$</p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Fallunterscheidungen</strong>
+        <p>Die Gleichung ist erstaunlich: Sie zeigt, dass die Frequenz im gedämpften Fall (ohne äußeren Zwang) stets minimal <strong>geringer</strong> ist als im ungedämpften Idealfall ($\omega_0$).</p> 
+        <p>Wird der Term unter der Wurzel ($\omega_0^2 - \delta^2$) null, ist der Widerstand genau so groß, dass es physikalisch gar nicht mehr zur Schwingung kommt, sondern nur zu einem exponentiellen Abfall der Ladung. Diesen kritischen Punkt nennt man <strong>aperiodischen Grenzfall</strong>. Wird $R$ noch größer, spricht man vom <strong>Kriechfall</strong>.</p>
+      </div>
+
+      <img src="pdf-bilder/schaltung_gedaempfter_schwingkreis.png" alt="Schaltung des gedämpften Schwingkreises" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+      <p style="text-align:center; font-size:0.9em; color:#555;">Typischer Versuchsaufbau mit Rechteckgenerator zum immer wiederkehrenden stupsenden „Anstoßen“ der gedämpften Schwingung (z.B. $L=2\text{mH}, C=1\mu\text{F}$).</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_daempfung",
+          "title":"Wahr oder falsch?",
+          "statement":"Da die Elektronen auf den realen Kabeln Reibung erfahren, wird ihre Schwingung langsamer, was direkt zu den Dämpfungsverlusten führt.",
+          "answer": false,
+          "explain":"Teilweise umgangssprachlich passend, aber physikalisch betrachtet entsteht am ohmschen Leitungswiderstand R thermische Verlust-Energie (Wärme), die die Schwingungsamplitude e-förmig abklingen lässt."
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 5 -->
+    <section data-wb-page="5" data-wb-page-title="Anregung & Resonanz">
+      <h1>Anregung von außen und die Resonanz</h1>
+      <p>Was passiert, wenn man den Schwingkreis nicht nur einmalig auflädt (und dann abklingen lässt), sondern eine stetige, sinusförmige Wechselspannung als Zwang (Erreger) von außen anlegt? Man ersetzt den Rechteckgenerator durch einen regelbaren <strong>Sinusgenerator</strong>. Zur Beobachtung misst man sodann die Stromstärke im Kreis in Abhängigkeit zur extern angelegten Erregerfrequenz.</p>
+
+      <img src="pdf-bilder/schaltung_angeregter_schwingkreis.png" alt="Schaltung für angeregten Schwingkreis" style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
+
+      <p>Nach einer kurzen Einschwingzeit ergibt sich eine ungedämpfte Schwingung im LC-Glied, deren Frequenz mit der des Sinusgenerators zwangsläufig übereinstimmt. Trägt man die maximal gemessene Stromstärke über der Frequenz systematisch auf, erhält man eine Resonanzkurve.</p>
+      
+      <img src="pdf-bilder/angeregter_schwingkreis.png" alt="Resonanzkurve" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+
+      <div class="wb-callout">
+        <strong>Das Maximum & Resonanz</strong>
+        <p>Die oben visualisierte Kurve besitzt ein massiv steiles Maximum. Dieses ist umso radikaler und ausgeprägter, je kleiner der dämpfende Widerstand $R$ im Kreis gewählt wird. Die zugehörige Frequenz, bei der dieses Schwingungsmaximum auftritt, entspricht genau der sogenannten Eigenfrequenz des Systems, kalkulierbar durch die thomsonsche Schwingungsgleichung.</p>
+        <p>Die erzwungene kapazitive bzw. induktive Schwingung innerhalb des LC-Glieds hinkt im genauen Resonanzfall der von außen angelegten Erregerspannung um eine präzise Viertel-Periode (90° Phasenverschiebung) hinterher.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Die Resonanzkatastrophe</h2>
+      <p>Wird ein zu Eigenschwingungen fähiger Wellenträger mit genau seiner idealen Eigenfrequenz von außen angeregt, so tritt Resonanz ein. Diese Resonanz tritt aber nicht nur elektrisch auf. Wird ein mechanischer Aufbau (wie eine Hängebrücke) dauerhaft mit seiner kritischen Eigenfrequenz angeregt, wachsen die Schwingungsbäuche durch die ständig gepumpte Energiezufuhr ungebremst ins fast grenzenlose an.</p>
+      
+      <div class="wb-soft-callout">
+        <strong>Beispiel im Alltag: Londoner Millennium Bridge</strong>
+        <p>Die nagelneue Brücke musste bereits 3 Tage nach der feierlichen Eröffnung im Jahr 2000 aufgrund gefährlicher <i>Resonanzkatastrophen</i> durch den im Gleichtakt marschierenden Menschenstrom geschlossen werden. Erst nach Einbau massiver und aufwendiger Flüssigkeitsdämpfer durfte die verhasste "Wackelbrücke" wieder gefahrlos betreten werden.</p>
+      </div>
+
+      <p>Damit Konstrukte wie Brücken intakt bleiben, darf eine Eigenschwingung immer nur soweit aufschaukeln, bis die in der Periode hineingesteckte Energie gleich groß ist wie die an Dämpfungssysteme abgegebene Verlust-Energie.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay_resonanz",
+          "title":"Transfer: Resonanzkatastrophe bei Gläsern",
+          "hint":"Erkläre in 3-4 Sätzen. Schreibe in eigenen Worten und beziehe dich direkt auf die gelernten Aspekte von Eigenfrequenz und Anregung.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Man hört oft, dass professionelle Opernsänger ein Weinglas nur durch Singen zum Zerspringen bringen können. Erkläre das Phänomen anhand der Eigenfrequenz und dem Begriff „Resonanzkatastrophe“.","key":"text","kind":"textarea","placeholder":"Schreibe hier..."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
