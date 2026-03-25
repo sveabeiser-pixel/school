@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,6 +15,7 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
 <body>
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
@@ -36,43 +38,98 @@
     </script>
 
     <!-- PAGE 1 -->
-    <section data-wb-page="1" data-wb-page-title="Dopplereffekt">
-      <h1>Der Dopplereffekt</h1>
-      <p>Jedes Kind kennt den typischen, zunächst ansteigenden und dann sinkenden Ton, wenn ein Krankenwagen mit aktivierter Sirene vorbeifährt. Diesen Effekt bezeichnet man als <strong>Dopplereffekt</strong>. Man unterscheidet dabei zwei Hauptfälle:</p>
-
-      <h2>1. Bewegter Sender, ruhender Empfänger</h2>
-      <p>Ein Schallsender bewegt sich mit $v_S$ auf einen ruhenden Empfänger zu. Der Sender jagt seinen eigenen ausgesandten Wellenfronten hinterher, weshalb diese in Fahrtrichtung „zusammengeschoben“ werden. Der Empfänger hört eine <strong>verkürzte Wellenlänge $\lambda_E$</strong> und somit eine <strong>höhere Frequenz $f_E$</strong>.</p>
+    <section data-wb-page="1" data-wb-page-title="Übersicht">
+      <h1>Herzlich Willkommen!</h1>
+      <p class="wb-muted">Hier lernst du nun wichtige reale Eigenschaften von mechanischen Wellen und wechselst anschließend zu den faszinierenden Phänomenen der Elektromagnetik.</p>
       
-      <div class="wb-img" style="display:flex; justify-content:center;">
-        <figure class="wave-figure" style="width:90%;">
-          <img src="pdf-bilder/doppler.png" alt="Dopplereffekt bewegter Sender Herleitung" style="width:100%; height:auto;" />
-          <figcaption>Wellenfronten stauchen sich in Fahrtrichtung.</figcaption>
-        </figure>
+      <div class="wb-callout">
+        <strong>Wichtig:</strong>
+        <p>Bearbeite alle Aufgaben auf dieser Internetseite. Wenn du fertig bist, schreibe deinen Namen links unten in das Namensfeld und klicke auf den Button "Ergebnisse anzeigen" darunter, um deine Antworten abzusenden. Auf der letzten Auswertungsseite findest du dann all deine Antworten. Außerdem wird parallel automatisch eine kleine Text-Datei mit den Ergebnissen heruntergeladen.</p>
       </div>
 
-      <div class="wb-soft-callout">
-        <strong>Formel: Bewegter Sender</strong>
-        <p>Die Ausbreitungsgeschwindigkeit $c$ im Medium bleibt konstant, nur die gemessene Wellenlänge ändert sich. Für die empfangene Frequenz gilt:</p>
-        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1}{1 \mp \frac{v_S}{c}}$</p>
-        <ul class="wave-list">
-          <li>Minus ($- \frac{v_S}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
-          <li>Plus ($+ \frac{v_S}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
-        </ul>
+      <h2>Inhalt dieser Lerneinheit</h2>
+      <ul class="wave-list">
+        <li><strong>Der Dopplereffekt:</strong> Was passiert physikalisch, wenn sich Sender oder Empfänger einer Welle bewegen?</li>
+        <li><strong>Der Überschallknall:</strong> Wie entsteht die Schallmauer um ein Flugzeug?</li>
+        <li><strong>Der Schwingkreis:</strong> Elektromagnetische Schwingungen, Dämpfungen und mechanische Resonanzkatastrophen.</li>
+        <li><strong>Elektromagnetische Wellen:</strong> Wie der Schotte Maxwell zeigte, dass sichtbares Licht lediglich eine transversale Welle aus wechselseitig induzierenden $E$- und $B$-Feldern ist.</li>
+      </ul>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"reveal_start",
+          "title":"Was kannst du danach?",
+          "hint":"Klappe die Zielbeschreibung auf.",
+          "question":"Was solltest du nach dieser Lerneinheit sicher erklären können?",
+          "answer":"Du kannst den Dopplereffekt bei bewegtem Sender und bewegtem Empfänger fachlich differenzieren, die zugehörigen Frequenzen berechnen, den Überschallknall skizzieren, den elektromagnetischen Schwingkreis mit DGL herleiten sowie die Entstehung der Lichtausbreitung im Vakuum nachvollziehen.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section data-wb-page="2" data-wb-page-title="Dopplereffekt">
+      <h1>Der Dopplereffekt</h1>
+      <p>Jedes Kind kennt den typischen, zunächst ansteigenden und dann sinkenden Ton, wenn ein Krankenwagen mit
+        aktivierter Sirene vorbeifährt. Diesen Effekt bezeichnet man als <strong>Dopplereffekt</strong>. Man
+        unterscheidet dabei zwei Hauptfälle:</p>
+
+      <h2>1. Bewegter Sender, ruhender Empfänger</h2>
+      <p>Ein Schallsender bewegt sich mit $v_S$ auf einen ruhenden Empfänger zu. Der Sender jagt seinen eigenen
+        ausgesandten Wellenfronten hinterher, weshalb diese in Fahrtrichtung „zusammengeschoben“ werden. Der Empfänger
+        hört eine <strong>verkürzte Wellenlänge $\lambda_E$</strong> und somit eine <strong>höhere Frequenz
+          $f_E$</strong>.</p>
+
+      <div class="grid2" style="align-items: center;">
+        <div class="wave-figure" style="text-align:center; margin-top:0;">
+          <img src="pdf-bilder/doppler1a.png" alt="Dopplereffekt bewegter Sender"
+            style="width:100%; height:auto; border-radius:8px;" />
+          <p style="font-size:0.9em; color:#555;">Wellenfronten stauchen sich in Fahrtrichtung.</p>
+        </div>
+
+        <div class="wb-soft-callout" style="margin:0;">
+          <strong>Formel: Bewegter Sender</strong>
+          <p>Die Ausbreitungsgeschwindigkeit $c$ im Medium bleibt konstant, nur die gemessene Wellenlänge ändert sich. Für
+            die empfangene Frequenz gilt:</p>
+          <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1}{1 \mp \frac{v_S}{c}}$</p>
+          <ul class="wave-list">
+            <li>Minus ($- \frac{v_S}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
+            <li>Plus ($+ \frac{v_S}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
+          </ul>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
 
       <h2>2. Bewegter Empfänger, ruhender Sender</h2>
-      <p>Jetzt bewegt sich der Empfänger mit $v_E$ auf einen ruhenden Sender zu. Hierbei bleibt die räumliche Wellenlänge $\lambda_S$ völlig unbeeinflusst und konstant. Dagegen ändert sich relativ zum Empfänger aber die <strong>Ausbreitungsgeschwindigkeit</strong> der Wellenfronten, weil er ungebremst in sie „hineinfährt“ ($c_E = c + v_E$).</p>
+      <p>Jetzt bewegt sich der Empfänger mit $v_E$ auf einen ruhenden Sender zu. Hierbei bleibt die räumliche
+        Wellenlänge $\lambda_S$ völlig unbeeinflusst und konstant. Dagegen ändert sich relativ zum Empfänger aber die
+        <strong>Ausbreitungsgeschwindigkeit</strong> der Wellenfronten, weil er ungebremst in sie „hineinfährt“ ($c_E =
+        c + v_E$).
+      </p>
 
-      <div class="wb-soft-callout">
-        <strong>Formel: Bewegter Empfänger</strong>
-        <p>Da die Wellenlänge $\lambda_S$ konstant bleibt, die Relativgeschwindigkeit aber wächst, berechnet sich die empfangene Frequenz so:</p>
-        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \left(1 \pm \frac{v_E}{c}\right)$</p>
-        <ul class="wave-list">
-          <li>Plus ($+ \frac{v_E}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
-          <li>Minus ($- \frac{v_E}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
-        </ul>
+      <div class="grid2" style="align-items: center;">
+        <div class="wave-figure" style="text-align:center; margin-top:0;">
+          <img src="pdf-bilder/doppler1b.png" alt="Dopplereffekt bewegter Empfänger"
+            style="width:100%; height:auto; border-radius:8px;" />
+          <p style="font-size:0.9em; color:#555;">Empfänger durchquert die ruhenden Wellenfronten.</p>
+        </div>
+
+        <div class="wb-soft-callout" style="margin:0;">
+          <strong>Formel: Bewegter Empfänger</strong>
+          <p>Da die Wellenlänge $\lambda_S$ konstant bleibt, die Relativgeschwindigkeit aber wächst, berechnet sich die
+            empfangene Frequenz so:</p>
+          <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \left(1 \pm \frac{v_E}{c}\right)$</p>
+          <ul class="wave-list">
+            <li>Plus ($+ \frac{v_E}{c}$): Annäherung $\rightarrow f_E > f_S$ (höher)</li>
+            <li>Minus ($- \frac{v_E}{c}$): Entfernen $\rightarrow f_E < f_S$ (tiefer)</li>
+          </ul>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -95,31 +152,42 @@
       </div>
     </section>
 
-    <!-- PAGE 2 -->
-    <section data-wb-page="2" data-wb-page-title="Kombination & Überschall">
+    <!-- PAGE 3 -->
+    <section data-wb-page="3" data-wb-page-title="Kombination & Überschall">
       <h1>Wenn sich Sender und Empfänger gleichzeitig bewegen</h1>
-      <p>Durch die Kombination der beiden Bewegungen ergibt sich für einen Empfänger ($v_E$) und einen Sender ($v_S$), die sich beide gleichzeitig in Bewegung befinden, eine kombinierte Gleichung.</p>
+      <p>Durch die Kombination der beiden Bewegungen ergibt sich für einen Empfänger ($v_E$) und einen Sender ($v_S$),
+        die sich beide gleichzeitig in Bewegung befinden, eine kombinierte Gleichung.</p>
 
       <div class="wb-callout">
         <strong>Allgemeiner Dopplereffekt</strong>
-        <p>Bewegen sich Empfänger und Schallquelle aufeinander zu oder voneinander weg, so werden beide Effekte multipliziert:</p>
-        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1 \pm \frac{v_E}{c}}{1 \mp \frac{v_S}{c}}$</p>
-        <p>Das obere Vorzeichen steht stets für eine <strong>Annäherung</strong>, das untere für eine <strong>Entfernung</strong>. Für langsame Geschwindigkeiten ($v \ll c$) gilt näherungsweise: $\Delta f \approx f_S \cdot \frac{v_S}{c}$.</p>
+        <p>Bewegen sich Empfänger und Schallquelle aufeinander zu oder voneinander weg, so werden beide Effekte
+          multipliziert:</p>
+        <p style="text-align:center; font-size:1.2em;">$f_E = f_S \cdot \frac{1 \pm \frac{v_E}{c}}{1 \mp \frac{v_S}{c}}$
+        </p>
+        <p>Das obere Vorzeichen steht stets für eine <strong>Annäherung</strong>, das untere für eine
+          <strong>Entfernung</strong>. Für langsame Geschwindigkeiten ($v \ll c$) gilt näherungsweise: $\Delta f \approx
+          f_S \cdot \frac{v_S}{c}$.
+        </p>
       </div>
 
       <div class="wb-section-break"></div>
-      
+
       <h2>Der Überschallknall</h2>
-      <p>Kreuzt ein Flugzeug den Himmel mit Überschallgeschwindigkeit ($v > c$), so hat es den ersten und alle weiteren ausgesendeten Wellenberge bereits überholt.</p>
+      <p>Kreuzt ein Flugzeug den Himmel mit Überschallgeschwindigkeit ($v > c$), so hat es den ersten und alle weiteren
+        ausgesendeten Wellenberge bereits überholt.</p>
 
       <div class="grid2" style="align-items: center;">
         <div class="wb-soft-callout" style="margin:0;">
           <strong>Die "Schallmauer"</strong>
-          <p>Die ausgesandten Wellenberge besitzen eine gemeinsame Einhüllende – den sogenannten <strong>machschen Kegel</strong>. An allen Stellen am Boden, über die dieser V-förmige Mantel hinwegstreicht, hört man wegen der massiven konstruktiven Interferenz aller Wellenberge einen explosionsartigen Knall.</p>
-          <p>Tatsächlich „schleppt“ das Flugzeug seinen Knall auf dem Mantel dieses Kegels dauernd hinter sich her und erzeugt ihn umgangssprachlich gesehen nicht nur ein einziges Mal beim „Durchbrechen“ der Schallmauer.</p>
+          <p>Die ausgesandten Wellenberge besitzen eine gemeinsame Einhüllende – den sogenannten <strong>machschen
+              Kegel</strong>. An allen Stellen am Boden, über die dieser V-förmige Mantel hinwegstreicht, hört man wegen
+            der massiven konstruktiven Interferenz aller Wellenberge einen explosionsartigen Knall.</p>
+          <p>Tatsächlich „schleppt“ das Flugzeug seinen Knall auf dem Mantel dieses Kegels dauernd hinter sich her und
+            erzeugt ihn umgangssprachlich gesehen nicht nur ein einziges Mal beim „Durchbrechen“ der Schallmauer.</p>
         </div>
         <div class="wave-figure" style="text-align:center; margin-top:0;">
-          <img src="pdf-bilder/doppler2.png" alt="Kreissystem des Dopplereffekts bei Überschall" style="width:100%; height:auto; border-radius:8px;" />
+          <img src="pdf-bilder/doppler2.png" alt="Kreissystem des Dopplereffekts bei Überschall"
+            style="width:100%; height:auto; border-radius:8px;" />
           <p style="font-size:0.9em; color:#555;">Entstehung des Machkegels bei Überschall ($v > c$).</p>
         </div>
       </div>
@@ -139,24 +207,33 @@
       </div>
     </section>
 
-    <!-- PAGE 3 -->
-    <section data-wb-page="3" data-wb-page-title="Elektromagnetischer Schwingkreis">
+    <!-- PAGE 4 -->
+    <section data-wb-page="4" data-wb-page-title="Elektromagnetischer Schwingkreis">
       <h1>Der ungedämpfte elektromagnetische Schwingkreis</h1>
-      <p>Nun wechseln wir von den mechanischen Wellen und Schwingungen zur Elektrodynamik und Induktion. Ein klassischer elektromagnetischer Schwingkreis (LC-Schwingkreis) besteht aus einem <strong>Kondensator</strong> (Kapazität $C$) und einer <strong>Spule</strong> (Induktivität $L$).</p>
+      <p>Nun wechseln wir von den mechanischen Wellen und Schwingungen zur Elektrodynamik und Induktion. Ein klassischer
+        elektromagnetischer Schwingkreis (LC-Schwingkreis) besteht aus einem <strong>Kondensator</strong> (Kapazität
+        $C$) und einer <strong>Spule</strong> (Induktivität $L$).</p>
 
-      <img src="pdf-bilder/schaltung_schwingkreis.png" alt="Schaltskizze Schwingkreis" style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
+      <img src="pdf-bilder/schaltung_schwingkreis.png" alt="Schaltskizze Schwingkreis"
+        style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
 
-      <p>Lädt man den Kondensator auf und schließt ihn an die Spule an, kommt es zu einem fortwährenden Energieaustausch zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule.</p>
+      <p>Lädt man den Kondensator auf und schließt ihn an die Spule an, kommt es zu einem fortwährenden Energieaustausch
+        zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule.</p>
 
       <div class="wb-callout">
         <strong>Merksatz: Phasenverschiebung</strong>
-        <p>Im elektromagnetischen Schwingkreis kommt es zu Schwingungen der am Kondensator anliegenden Spannung und der Stromstärke durch den Kreis. Diese beiden Schwingungen sind zeitlich stets <strong>um 90° phasenverschoben</strong>.</p>
+        <p>Im elektromagnetischen Schwingkreis kommt es zu Schwingungen der am Kondensator anliegenden Spannung und der
+          Stromstärke durch den Kreis. Diese beiden Schwingungen sind zeitlich stets <strong>um 90°
+            phasenverschoben</strong>.</p>
       </div>
 
       <h2>Die Differenzialgleichung (DGL)</h2>
-      <p>Über den Maschensatz ($U_C + U_L = 0$) ergibt sich folgende Differenzialgleichung der ungedämpften Schwingung:</p>
+      <p>Über den Maschensatz ($U_C + U_L = 0$) ergibt sich folgende Differenzialgleichung der ungedämpften Schwingung:
+      </p>
       <p style="text-align:center; font-size:1.2em;">$\ddot{Q}(t) = - \frac{1}{L \cdot C} \cdot Q(t)$</p>
-      <p>Als Lösungsfunktion dieser Gleichung bietet sich die Cosinusfunktion an, da diese – bis auf das negative Vorzeichen und den nach Kettenregel entstehenden inneren Faktor $\omega$ – absolut ihrer zweiten Ableitung entspricht. Mit dem Ansatz $Q(t) = \hat{Q} \cdot \cos(\omega \cdot t)$ erhält man:</p>
+      <p>Als Lösungsfunktion dieser Gleichung bietet sich die Cosinusfunktion an, da diese – bis auf das negative
+        Vorzeichen und den nach Kettenregel entstehenden inneren Faktor $\omega$ – absolut ihrer zweiten Ableitung
+        entspricht. Mit dem Ansatz $Q(t) = \hat{Q} \cdot \cos(\omega \cdot t)$ erhält man:</p>
       <ul class="wave-list">
         <li>$\dot{Q}(t) = - \omega \cdot \hat{Q} \cdot \sin(\omega \cdot t)$</li>
         <li>$\ddot{Q}(t) = - \omega^2 \cdot \hat{Q} \cdot \cos(\omega \cdot t)$</li>
@@ -164,8 +241,10 @@
 
       <div class="wb-soft-callout">
         <strong>Die thomsonsche Schwingungsgleichung</strong>
-        <p>Durch Einsetzen in die DGL erhält man letztlich $\omega^2 = \frac{1}{L \cdot C}$, woraus sich für die Frequenz $f$ und die Periodendauer $T$ direkt folgendes ergibt:</p>
-        <p style="text-align:center; font-size:1.2em;">$f = \frac{1}{2 \pi} \cdot \frac{1}{\sqrt{L \cdot C}} \quad \text{bzw.} \quad T = 2\pi\sqrt{L \cdot C}$</p>
+        <p>Durch Einsetzen in die DGL erhält man letztlich $\omega^2 = \frac{1}{L \cdot C}$, woraus sich für die
+          Frequenz $f$ und die Periodendauer $T$ direkt folgendes ergibt:</p>
+        <p style="text-align:center; font-size:1.2em;">$f = \frac{1}{2 \pi} \cdot \frac{1}{\sqrt{L \cdot C}} \quad
+          \text{bzw.} \quad T = 2\pi\sqrt{L \cdot C}$</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -192,34 +271,51 @@
       </div>
     </section>
 
-    <!-- PAGE 4 -->
-    <section data-wb-page="4" data-wb-page-title="Gedämpfte Schwingung">
+    <!-- PAGE 5 -->
+    <section data-wb-page="5" data-wb-page-title="Gedämpfte Schwingung">
       <h1>Der gedämpfte Schwingkreis</h1>
-      <p>Bei einem idealen Federschwinger (wie auf dem Papier) würde das System ewig schwingen. Real nimmt die mechanische Amplitude aber aufgrund der Reibungsverluste mit der Zeit ab. Analog dazu nimmt auch beim elektrischen Schwingkreis die Amplitude im Laufe der Zeit durch den <strong>ohmschen Eigenwiderstand $R$</strong> der Schaltung ab.</p>
+      <p>Bei einem idealen Federschwinger (wie auf dem Papier) würde das System ewig schwingen. Real nimmt die
+        mechanische Amplitude aber aufgrund der Reibungsverluste mit der Zeit ab. Analog dazu nimmt auch beim
+        elektrischen Schwingkreis die Amplitude im Laufe der Zeit durch den <strong>ohmschen Eigenwiderstand
+          $R$</strong> der Schaltung ab.</p>
 
-      <img src="pdf-bilder/daempfung.png" alt="Oszilloskopbild Dämpfung" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
-      <p style="text-align:center; font-size:0.9em; color:#555;">Dem Schwingkreis wird regelmäßig von außen durch einen Rechteckgenerator neue Energie zugeführt, sodass die Maxima periodisch neu starten und sichtbar bleiben.</p>
+      <img src="pdf-bilder/daempfung.png" alt="Oszilloskopbild Dämpfung"
+        style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+      <p style="text-align:center; font-size:0.9em; color:#555;">Dem Schwingkreis wird regelmäßig von außen durch einen
+        Rechteckgenerator neue Energie zugeführt, sodass die Maxima periodisch neu starten und sichtbar bleiben.</p>
 
       <h2>Exkurs: DGL der gedämpften Schwingung</h2>
-      <p>Da nun auch der ohmsche Widerstand $R$ betrachtet werden muss, fällt auch an diesem eine Spannung $U_R = R \cdot I(t)$ ab. Die Maschengleichung ändert sich zu $U_C + U_L = U_R$. Eingesetzt führt dies zur charakteristischen DGL:</p>
-      <p style="text-align:center; font-size:1.2em;">$\frac{1}{C} \cdot Q(t) + L \cdot \ddot{Q}(t) + R \cdot \dot{Q}(t) = 0$</p>
+      <p>Da nun auch der ohmsche Widerstand $R$ betrachtet werden muss, fällt auch an diesem eine Spannung $U_R = R
+        \cdot I(t)$ ab. Die Maschengleichung ändert sich zu $U_C + U_L = U_R$. Eingesetzt führt dies zur
+        charakteristischen DGL:</p>
+      <p style="text-align:center; font-size:1.2em;">$\frac{1}{C} \cdot Q(t) + L \cdot \ddot{Q}(t) + R \cdot \dot{Q}(t)
+        = 0$</p>
 
       <div class="wb-callout">
         <strong>Mathematische Lösung</strong>
-        <p>Die analytische Bestimmung ist hier mathematisch aufwendiger. Der klassische Lösungsansatz ist eine periodische Schwingung, die mit einer e-Funktion exponentiell staucht, also abflacht:</p>
+        <p>Die analytische Bestimmung ist hier mathematisch aufwendiger. Der klassische Lösungsansatz ist eine
+          periodische Schwingung, die mit einer e-Funktion exponentiell staucht, also abflacht:</p>
         <p style="text-align:center;">$Q(t) = \hat{Q} \cdot e^{-\delta \cdot t} \cdot \cos(\omega \cdot t)$</p>
-        <p>Hierbei ist $\delta = \frac{R}{2L}$ die sogenannte <strong>Dämpfungskonstante</strong>. Für die neue Kreisfrequenz $\omega$ ergibt sich (durch Einsetzen der Ableitungen):</p>
-        <p style="text-align:center;">$\omega = \sqrt{\omega_0^2 - \delta^2} = \sqrt{\frac{1}{L \cdot C} - \frac{R^2}{4L^2}}$</p>
+        <p>Hierbei ist $\delta = \frac{R}{2L}$ die sogenannte <strong>Dämpfungskonstante</strong>. Für die neue
+          Kreisfrequenz $\omega$ ergibt sich (durch Einsetzen der Ableitungen):</p>
+        <p style="text-align:center;">$\omega = \sqrt{\omega_0^2 - \delta^2} = \sqrt{\frac{1}{L \cdot C} -
+          \frac{R^2}{4L^2}}$</p>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Fallunterscheidungen</strong>
-        <p>Die Gleichung ist erstaunlich: Sie zeigt, dass die Frequenz im gedämpften Fall (ohne äußeren Zwang) stets minimal <strong>geringer</strong> ist als im ungedämpften Idealfall ($\omega_0$).</p> 
-        <p>Wird der Term unter der Wurzel ($\omega_0^2 - \delta^2$) null, ist der Widerstand genau so groß, dass es physikalisch gar nicht mehr zur Schwingung kommt, sondern nur zu einem exponentiellen Abfall der Ladung. Diesen kritischen Punkt nennt man <strong>aperiodischen Grenzfall</strong>. Wird $R$ noch größer, spricht man vom <strong>Kriechfall</strong>.</p>
+        <p>Die Gleichung ist erstaunlich: Sie zeigt, dass die Frequenz im gedämpften Fall (ohne äußeren Zwang) stets
+          minimal <strong>geringer</strong> ist als im ungedämpften Idealfall ($\omega_0$).</p>
+        <p>Wird der Term unter der Wurzel ($\omega_0^2 - \delta^2$) null, ist der Widerstand genau so groß, dass es
+          physikalisch gar nicht mehr zur Schwingung kommt, sondern nur zu einem exponentiellen Abfall der Ladung.
+          Diesen kritischen Punkt nennt man <strong>aperiodischen Grenzfall</strong>. Wird $R$ noch größer, spricht man
+          vom <strong>Kriechfall</strong>.</p>
       </div>
 
-      <img src="pdf-bilder/schaltung_gedaempfter_schwingkreis.png" alt="Schaltung des gedämpften Schwingkreises" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
-      <p style="text-align:center; font-size:0.9em; color:#555;">Typischer Versuchsaufbau mit Rechteckgenerator zum immer wiederkehrenden stupsenden „Anstoßen“ der gedämpften Schwingung (z.B. $L=2\text{mH}, C=1\mu\text{F}$).</p>
+      <img src="pdf-bilder/schaltung_gedaempfter_schwingkreis.png" alt="Schaltung des gedämpften Schwingkreises"
+        style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+      <p style="text-align:center; font-size:0.9em; color:#555;">Typischer Versuchsaufbau mit Rechteckgenerator zum
+        immer wiederkehrenden stupsenden „Anstoßen“ der gedämpften Schwingung (z.B. $L=2\text{mH}, C=1\mu\text{F}$).</p>
 
       <div class="wb-section-break"></div>
 
@@ -236,34 +332,54 @@
       </div>
     </section>
 
-    <!-- PAGE 5 -->
-    <section data-wb-page="5" data-wb-page-title="Anregung & Resonanz">
+    <!-- PAGE 6 -->
+    <section data-wb-page="6" data-wb-page-title="Anregung & Resonanz">
       <h1>Anregung von außen und die Resonanz</h1>
-      <p>Was passiert, wenn man den Schwingkreis nicht nur einmalig auflädt (und dann abklingen lässt), sondern eine stetige, sinusförmige Wechselspannung als Zwang (Erreger) von außen anlegt? Man ersetzt den Rechteckgenerator durch einen regelbaren <strong>Sinusgenerator</strong>. Zur Beobachtung misst man sodann die Stromstärke im Kreis in Abhängigkeit zur extern angelegten Erregerfrequenz.</p>
+      <p>Was passiert, wenn man den Schwingkreis nicht nur einmalig auflädt (und dann abklingen lässt), sondern eine
+        stetige, sinusförmige Wechselspannung als Zwang (Erreger) von außen anlegt? Man ersetzt den Rechteckgenerator
+        durch einen regelbaren <strong>Sinusgenerator</strong>. Zur Beobachtung misst man sodann die Stromstärke im
+        Kreis in Abhängigkeit zur extern angelegten Erregerfrequenz.</p>
 
-      <img src="pdf-bilder/schaltung_angeregter_schwingkreis.png" alt="Schaltung für angeregten Schwingkreis" style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
+      <img src="pdf-bilder/schaltung_angeregter_schwingkreis.png" alt="Schaltung für angeregten Schwingkreis"
+        style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
 
-      <p>Nach einer kurzen Einschwingzeit ergibt sich eine ungedämpfte Schwingung im LC-Glied, deren Frequenz mit der des Sinusgenerators zwangsläufig übereinstimmt. Trägt man die maximal gemessene Stromstärke über der Frequenz systematisch auf, erhält man eine Resonanzkurve.</p>
-      
-      <img src="pdf-bilder/angeregter_schwingkreis.png" alt="Resonanzkurve" style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
+      <p>Nach einer kurzen Einschwingzeit ergibt sich eine ungedämpfte Schwingung im LC-Glied, deren Frequenz mit der
+        des Sinusgenerators zwangsläufig übereinstimmt. Trägt man die maximal gemessene Stromstärke über der Frequenz
+        systematisch auf, erhält man eine Resonanzkurve.</p>
+
+      <img src="pdf-bilder/angeregter_schwingkreis.png" alt="Resonanzkurve"
+        style="width:60%; max-width:500px; display:block; margin: 1em auto;" />
 
       <div class="wb-callout">
         <strong>Das Maximum & Resonanz</strong>
-        <p>Die oben visualisierte Kurve besitzt ein massiv steiles Maximum. Dieses ist umso radikaler und ausgeprägter, je kleiner der dämpfende Widerstand $R$ im Kreis gewählt wird. Die zugehörige Frequenz, bei der dieses Schwingungsmaximum auftritt, entspricht genau der sogenannten Eigenfrequenz des Systems, kalkulierbar durch die thomsonsche Schwingungsgleichung.</p>
-        <p>Die erzwungene kapazitive bzw. induktive Schwingung innerhalb des LC-Glieds hinkt im genauen Resonanzfall der von außen angelegten Erregerspannung um eine präzise Viertel-Periode (90° Phasenverschiebung) hinterher.</p>
+        <p>Die oben visualisierte Kurve besitzt ein massiv steiles Maximum. Dieses ist umso radikaler und ausgeprägter,
+          je kleiner der dämpfende Widerstand $R$ im Kreis gewählt wird. Die zugehörige Frequenz, bei der dieses
+          Schwingungsmaximum auftritt, entspricht genau der sogenannten Eigenfrequenz des Systems, kalkulierbar durch
+          die thomsonsche Schwingungsgleichung.</p>
+        <p>Die erzwungene kapazitive bzw. induktive Schwingung innerhalb des LC-Glieds hinkt im genauen Resonanzfall der
+          von außen angelegten Erregerspannung um eine präzise Viertel-Periode (90° Phasenverschiebung) hinterher.</p>
       </div>
 
       <div class="wb-section-break"></div>
 
       <h2>Die Resonanzkatastrophe</h2>
-      <p>Wird ein zu Eigenschwingungen fähiger Wellenträger mit genau seiner idealen Eigenfrequenz von außen angeregt, so tritt Resonanz ein. Diese Resonanz tritt aber nicht nur elektrisch auf. Wird ein mechanischer Aufbau (wie eine Hängebrücke) dauerhaft mit seiner kritischen Eigenfrequenz angeregt, wachsen die Schwingungsbäuche durch die ständig gepumpte Energiezufuhr ungebremst ins fast grenzenlose an.</p>
-      
+      <p>Wird ein zu Eigenschwingungen fähiger Wellenträger mit genau seiner idealen Eigenfrequenz von außen angeregt,
+        so tritt Resonanz ein. Diese Resonanz tritt aber nicht nur elektrisch auf. Wird ein mechanischer Aufbau (wie
+        eine Hängebrücke) dauerhaft mit seiner kritischen Eigenfrequenz angeregt, wachsen die Schwingungsbäuche durch
+        die ständig gepumpte Energiezufuhr ungebremst ins fast grenzenlose an.</p>
+
       <div class="wb-soft-callout">
         <strong>Beispiel im Alltag: Londoner Millennium Bridge</strong>
-        <p>Die nagelneue Brücke musste bereits 3 Tage nach der feierlichen Eröffnung im Jahr 2000 aufgrund gefährlicher <i>Resonanzkatastrophen</i> durch den im Gleichtakt marschierenden Menschenstrom geschlossen werden. Erst nach Einbau massiver und aufwendiger Flüssigkeitsdämpfer durfte die verhasste "Wackelbrücke" wieder gefahrlos betreten werden.</p>
+        <p>Die nagelneue Brücke musste bereits 3 Tage nach der feierlichen Eröffnung im Jahr 2000 aufgrund gefährlicher
+          <i>Resonanzkatastrophen</i> durch den im Gleichtakt marschierenden Menschenstrom geschlossen werden. Erst nach
+          Einbau massiver und aufwendiger Flüssigkeitsdämpfer durfte die verhasste "Wackelbrücke" wieder gefahrlos
+          betreten werden.
+        </p>
       </div>
 
-      <p>Damit Konstrukte wie Brücken intakt bleiben, darf eine Eigenschwingung immer nur soweit aufschaukeln, bis die in der Periode hineingesteckte Energie gleich groß ist wie die an Dämpfungssysteme abgegebene Verlust-Energie.</p>
+      <p>Damit Konstrukte wie Brücken intakt bleiben, darf eine Eigenschwingung immer nur soweit aufschaukeln, bis die
+        in der Periode hineingesteckte Energie gleich groß ist wie die an Dämpfungssysteme abgegebene Verlust-Energie.
+      </p>
 
       <div class="wb-section-break"></div>
 
@@ -282,6 +398,158 @@
       </div>
     </section>
 
+    <!-- PAGE 7 -->
+    <section data-wb-page="7" data-wb-page-title="Elektromagnetische Wellen">
+      <h1>Elektromagnetische Felder erzeugen sich gegenseitig</h1>
+      <p>Bisher haben wir den Schwingkreis als ein geschlossenes, an den Ort gebundenes System betrachtet. Wie aber
+        entsteht daraus eine elektromagnetische Welle, die sich weit durch den leeren Raum ausbreiten kann?</p>
+
+      <h2>Ein bewegtes Magnetfeld erzeugt ein E-Feld</h2>
+      <p>Zunächst ruht ein Magnet. Bewegen wir in seinem Magnetfeld einen Leiterstab mit der Geschwindigkeit $v$ nach
+        links, induziert das Magnetfeld dort im Leiter eine Spannung $U_{ind}$. Dieselbe Spannung entsteht (nach dem
+        Relativitätsprinzip), wenn der Stab ruht und der Magnet mit der Geschwindigkeit $v$ nach rechts bewegt wird. Ein
+        bewegtes (sich zeitlich änderndes) Magnetfeld erzeugt also immer ein <strong>elektrisches Feld</strong> im Raum.
+      </p>
+
+      <img src="pdf-bilder/magnet1.png" alt="Bewegter Magnet induziert E-Feld"
+        style="width:40%; max-width:300px; display:block; margin: 1em auto;" />
+
+      <h2>Ein bewegtes E-Feld erzeugt ein B-Feld</h2>
+      <p>Der schottische Physiker James Clerk Maxwell zeigte ferner: Auch wandernde elektrische Felder rufen auf exakt
+        analoge Weise selbst Magnetfelder hervor! Bewegt sich z. B. ein geladenes System (wie ein Kondensator) nach
+        rechts, so erzeugen die mit ihm bewegten Ladungen real fließende Ströme. Diese Ströme erzeugen wiederum ein
+        typisches Magnetfeld, das senkrecht zu den elektrischen Feldlinien verläuft.</p>
+
+      <img src="pdf-bilder/E_B_Feld.png" alt="Bewegtes E-Feld erzeugt B-Feld"
+        style="width:50%; max-width:400px; display:block; margin: 1em auto;" />
+
+      <div class="wb-soft-callout">
+        <strong>Die unendliche Fortpflanzung im Vakuum</strong>
+        <p>Entfernt man in Gedanken die Kondensatorplatten beliebig weit voneinander oder lässt sie am Erzeuger gar ganz
+          weg, bleibt die Kausalität im Raum dennoch stets identisch: <strong>Das Magnetfeld ($B$) wird allein durch das
+            sich wandelnde elektrische Feld ($E$) erzeugt.</strong></p>
+        <p>Das Ergebnis dieser Überlegungen ist revolutionär: Das wandernde magnetische Feld induziert ein elektrisches
+          Feld und dieses wiederum umgehend ein mitwanderndes, magnetisches Feld.</p>
+      </div>
+
+      <img src="pdf-bilder/em-Feld.png" alt="Elektromagnetische Welle Ausbreitung"
+        style="width:70%; max-width:600px; display:block; margin: 1em auto;" />
+
+      <p>So breitet sich die Welle ewig frei und stabil aus, auch wenn der ursprüngliche Erreger (Dipol) aufgehört hat
+        zu schwingen. Dieser Vorgang bedarf keines mechanischen Trägermediums und findet fantastisch auch im totalen
+        Vakuum des leeren Weltraums statt.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Die Lichtgeschwindigkeit</h2>
+      <p>Wenn sich die Felder gegenseitig erzeugen und tragen, dann kann man folglich annehmen, dass die Energiedichten
+        des magnetischen und elektrischen Feldes an jedem Punkt im Raum stets gleich groß bleiben müssen ($\rho_{el} =
+        \rho_{mag}$).</p>
+      <p style="text-align:center; font-size:1.2em;">$\frac{1}{2} \varepsilon_0 \varepsilon_r E^2 = \frac{1}{2 \mu_0
+        \mu_r} B^2$</p>
+      <p>Maxwell kombinierte dies (zusammen mit der Näherung $E = B \cdot v$) und konnte die Ausbreitungsgeschwindigkeit
+        theoretisch exakt berechnen:</p>
+
+      <div class="wb-callout">
+        <strong>Merksatz: Eigenschaften der EM-Welle</strong>
+        <p>Wandernde elektrische und magnetische Felder ($\vec{E}$ und $\vec{B}$) erzeugen sich wechselseitig. Sie sind
+          stets <strong>in Phase</strong> und schwingen auf den Achsen <strong>senkrecht aufeinander</strong> und
+          senkrecht zur Ausbreitungsrichtung.</p>
+        <p>Im luftleeren Vakuum ($\varepsilon_r \approx 1, \mu_r \approx 1$) resultiert daraus stets die weltbekannte
+          Konstante $c$:</p>
+        <p style="text-align:center; font-size:1.2em;">$c = \frac{1}{\sqrt{\varepsilon_0 \cdot \mu_0}} \approx 2,998
+          \cdot 10^8 \, \frac{m}{s} \approx 3,0 \cdot 10^8 \, \frac{m}{s}$</p>
+        <p>Elektromagnetische Wellen breiten sich (wie der Name es verspricht) exakt mit
+          <strong>Lichtgeschwindigkeit</strong> aus, da das sichtbare Licht letztlich absolut nichts anderes ist, als
+          genau solch eine Welle bestimmten Spektrums!
+        </p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"verify_emwelle",
+          "title":"Wahr oder falsch?",
+          "statement":"Da sich elektrische und magnetische Wellenfelder als Ausgleich stetig gegenseitig generieren, schwingen die E- und B-Vektoren stets um genau 90° zeitlich phasenverschoben zueinander.",
+          "answer": false,
+          "explain":"Falsch! Dies ist der große Unterschied zum Schwingkreis (Spannung und Stromstärkenpegel): Bei der frei im Raum fliegenden EM-Welle schwingen das elektrische und das magnetische Feld exakt in gleicher Phase (gleichzeitig maximal). Sie stehen lediglich räumlich (Ausbreitungsachse orthogonal) im 90°-Grad Winkel."
+        }
+        </script>
+      </div>
+    </section>
+
+    <!-- PAGE 8 -->
+    <section data-wb-page="8" data-wb-page-title="Abstrahlung am Dipol">
+      <h1>Abstrahlung elektromagnetischer Wellen</h1>
+      <p>Wie genau „verlässt“ die elektromagnetische Welle beim Erschaffen nun ihren Sender? Das Verhalten lässt sich
+        sehr gut an einem <strong>Sendedipol</strong> skizzieren, der effektiv aus zwei in entgegengesetzte Richtungen
+        ragenden linearen Leitern besteht.</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout" style="margin:0;">
+          <strong>Die Phasen der Abschnürung</strong>
+          <ul class="wave-list">
+            <li>Zum Startzeitpunkt $t_0$ fließt im Dipol ein hochfrequenter Wechselstrom maximaler Stärke ($I_{max}$)
+              nach oben. Dieser ist mit einem rotierenden <strong>Magnetfeld B</strong> umzogen.</li>
+            <li>Nach exakt einer Viertel Schwingungsdauer ($\frac{1}{4} T$) hat der Stromfluss die Stabenden vollständig
+              zu Ladungspolen aufgeladen ($I=0$). Von diesen Ladungen getrieben entfaltet sich ein breites elektrisches
+              <strong>Dipolfeld E</strong> aus, das sich radial vom Draht wegbewegt.
+            </li>
+            <li>Nach weiteren $\frac{1}{4} T$ fließen die Elektronen zurück zur Mitte. Die Stabenden entladen sich und
+              die Ladungspole erlöschen. Das bereits radial weggespeiste $E$-Feld ist aber nicht verflogen! Da der Stab
+              nun ladungsleer ist, kann es dort nicht mehr verankert sein: Das Feld hat sich
+              <strong>abgeschnürt</strong> und treibt von nun an als physikalisch alleinstehende, oval geschlossene
+              Raumfeld-Blase nach außen.
+            </li>
+            <li>Kombiniert mit dem neu mitproduzierten magnetischen Umfeld haben sich beide abgelösten Felder nun zur
+              perfekten EM-Wellenstrahlung emanzipiert.</li>
+          </ul>
+        </div>
+        <div class="wave-figure" style="text-align:center; margin-top:0;">
+          <img src="pdf-bilder/em-Feld2.png" alt="Abstrahlung am Sendedipol" style="width:70%; height:auto;" />
+          <p style="font-size:0.9em; color:#555;">Ein Zyklus am offenen Dipol. Generiert nach den Originalaufschrieben
+            des Erstdemonstrators Heinrich Hertz.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Eigenfrequenzen des Sendestabs</strong>
+        <p>Die Resonanz-Eigenfrequenzen $f_k$ der hochfrequenten Schwingungen innerhalb eines leitenden Sendestabes
+          verhalten sich analog zur etablierten Akustik. Sie variieren anhand seiner physischen Drahtlänge $l$ sowie der
+          finalen Lichtgeschwindigkeit $c$. Es gilt:</p>
+        <p style="text-align:center; font-size:1.2em;">$f_k = \frac{k \cdot c}{2 \cdot l} \quad \text{mit} \quad k = 1,
+          2, 3, \ldots$</p>
+      </div>
+
+      <p>Der physikalisch durchgerechnete mikroskopische Verlauf der verschlungenen Raum-Feldlinien ergibt sich in der
+        Hochschulphysik mathematisch aus den vier berühmten differentiellen <strong>Maxwell-Gleichungen</strong>, welche
+        gänzlich alle elektrischen und magnetischen Makro-Phänomene in einem einheitlichen Gerüst vereinen.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order_dipol",
+          "title":"Ablauf: Genese der Strahlung am Dipol",
+          "hint":"Bring den Ablauf am Radiosender in die richtige chronologische Reihenfolge.",
+          "items":[
+            "Wechselstrom flutet den Dipol in eine Richtung und erzeugt das primäre rotierende B-Feld.",
+            "Am Stabe-Ende erzeugen die dort aufgestauten Ladungen ein weitreichendes E-Feld.",
+            "Die Wechselrichtung kippt: Der Strom fällt zurück, der Dipol entlädt die physischen Spannungsenden.",
+            "Mangels Ladungsankern schnürt sich die E-Feldblase vom Draht ab und schließt sich ins inwendige Oval.",
+            "E- und B-Feld tragen sich fortan gegenseitig und migrieren als unabhängige EM-Welle unaufhaltsam in den fernen Weltraum."
+          ]
+        }
+        </script>
+      </div>
+
+    </section>
+
   </div>
 
   <script src="../assets/wb-webhook-loader.js"></script>
@@ -292,4 +560,5 @@
     SBLibrary.autoMountAll();
   </script>
 </body>
+
 </html>
