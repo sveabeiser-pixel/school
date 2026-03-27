@@ -44,8 +44,8 @@ unified_css = """
       margin-top: 8px;
     }
 
-    .wb-book[data-theme="grau"] .sw-sim-card,
-    .wb-book[data-theme="dark"] .sw-sim-card {
+    .wb-book[data-theme="dark"] .sw-sim-card,
+    .wb-book[data-theme="dark-blue"] .sw-sim-card {
       background: rgba(255, 255, 255, 0.18);
     }
   </style>

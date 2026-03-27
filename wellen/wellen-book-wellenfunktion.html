@@ -58,15 +58,15 @@
       display: block;
     }
 
-    .wb-book[data-theme="grau"] .sw-sim-card,
-    .wb-book[data-theme="dark"] .sw-sim-card {
+    .wb-book[data-theme="dark"] .sw-sim-card,
+    .wb-book[data-theme="dark-blue"] .sw-sim-card {
       background: rgba(255, 255, 255, 0.18);
     }
 
-    .wb-book[data-theme="grau"] #leifiWaveCanvas,
     .wb-book[data-theme="dark"] #leifiWaveCanvas,
-    .wb-book[data-theme="grau"] #coupledWaveCanvas,
-    .wb-book[data-theme="dark"] #coupledWaveCanvas {
+    .wb-book[data-theme="dark-blue"] #leifiWaveCanvas,
+    .wb-book[data-theme="dark"] #coupledWaveCanvas,
+    .wb-book[data-theme="dark-blue"] #coupledWaveCanvas {
       background: rgba(255, 255, 255, 0.86) !important;
       border-color: rgba(255, 255, 255, 0.4) !important;
     }
@@ -126,11 +126,11 @@
           <strong>Hier siehst du den Graphen einer Wellenfunktion, die vom Ort $x$ und der Zeit $t$ abhängt.</strong>
           <p>In dem Graphen nebenan ist</p>
           <ul style="margin:0; padding-left:18px">
-            <li>auf der x-Achse der Ort $x$ aufgetragen.</li>
-            <li>auf der y-Achse die Zeit $t$ aufgetragen.</li>
-            <li>auf der z-Achse die Auslenkung $y$ aufgetragen.</li>
+            <li>auf der $x$-Achse der Ort $x$ aufgetragen.</li>
+            <li>auf der $y$-Achse die Zeit $t$ aufgetragen.</li>
+            <li>auf der $z$-Achse die Auslenkung $y$ aufgetragen.</li>
           </ul>
-          <p>Die Welle bewegt sich mit der Zeit in positive x-Richtung</p>
+          <p>Die Welle bewegt sich mit der Zeit in positive $x$-Richtung</p>
         </div>
 
         <div class="wb-img">
@@ -141,7 +141,7 @@
 
       <div class="wb-callout">
         <strong>Wichtig:</strong>
-        <p>y(x,t) ist eine Funktion mit zwei „Eingaben“ (<b>Ort und Zeit</b>), deshalb kann man die Funktion nicht
+        <p>$y(x,t)$ ist eine Funktion mit zwei „Eingaben“ (<b>Ort und Zeit</b>), deshalb kann man die Funktion nicht
           einfach zeichnen,
           es wäre eine dreidimensionale Fläche. Vielleicht probierst du es mit Geogebra selber aus? </p>
       </div>
@@ -155,8 +155,8 @@
             {
               "id":"reveal-wf-1",
               "title":"Nachdenkfrage",
-              "question":"Warum kann man y(x,t) nicht einfach als 2D-Diagramm zeichnen?",
-              "answer":"Weil y von zwei Variablen abhängt (Ort und Zeit). Das wäre eine 3D-Fläche. Zum Zeichnen fixiert man entweder x oder t.",
+              "question":"Warum kann man $y(x,t)$ nicht einfach als 2D-Diagramm zeichnen?",
+              "answer":"Weil $y$ von zwei Variablen abhängt (Ort und Zeit). Das wäre eine 3D-Fläche. Zum Zeichnen fixiert man entweder $x$ oder $t$.",
               "buttonLabel":"Antwort anzeigen",
               "buttonHideLabel":"Antwort verbergen"
             }
@@ -184,8 +184,8 @@
         wie es sich mit der Zeit bewegt. </p>
 
       <p>Dann wird aus <b>y(x,t)</b> eine reine Zeitfunktion <b>y(t)</b>. </p>
-      <p>Auf die <b>x-Achse</b> kommt die <b>Zeit t</b>. </p>
-      <p>Auf die <b>y-Achse</b> kommt die <b>Auslenkung y</b>. </p>
+      <p>Auf die <b>$x$-Achse</b> kommt die <b>Zeit $t$</b>. </p>
+      <p>Auf die <b>$y$-Achse</b> kommt die <b>Auslenkung $y$</b>. </p>
 
       <p><b>Ergebnis:</b> Das
         $t$-$y$ Diagramm ist ebenfalls eine Sinuskurve. </p>
@@ -201,7 +201,7 @@
 
 
 
-      <p><b>Diagramm:</b> y gegen t bei festem x. </p>
+      <p><b>Diagramm:</b> $y$ gegen $t$ bei festem $x$. </p>
       <p>Da sich die Welle erst durch die Kopplungen der Teilchen ausbreitet, sind die einzelnen Sinusschwingungen der
         von der Welle erfassten
         Teilchen phasenverschoben. Die Phasenverschiebung $\Delta \phi = \omega t$ hängt davon ab wie weit das
@@ -267,7 +267,7 @@
     "title": "Ziehe die Schritte in die richtige Reihenfolge",
     "items": [
       "Berechne den Zeitpunkt, wann die Welle an dem betrachteten Ort ankommt: $t_0 = \\frac{x_0}{c}$",
-      "Zeichne ein Koordinatensystem mit der Zeit $t$ auf der x-Achse.",
+      "Zeichne ein Koordinatensystem mit der Zeit $t$ auf der $x$-Achse.",
       "Zeichne ab $t_0$ die Sinuskurve mit Amplitude $A$ und Periodendauer $ T= \\frac{\\lambda}{c}$ nach rechts."
     ],
     "shuffle": true,
@@ -301,7 +301,7 @@
           "id":"revealkoch1",
           "title":"Schreibe die Vorgehensweise, wie man ein $t$-$y$ Diagramm an einem bestimmten Ort zeichnet in dein Heft.",
           "question":"Schreibe es wie ein Kochrezept auf, damit du es immer wiederholen kannst.",
-          "answerHtml":"<p>1. Berechne den Zeitpunkt, <b>wann</b> die Welle an dem betrachteten Ort ankommt: <b>$t_0 = \\frac{x_0}{c}$</b>, dabei ist $x_0$ der Abstand zur Quelle, $c$ ist die Ausbreitungsgeschwindigkeit der Welle.</p> <p> 2. Zeichne ein Koordinatensystem mit der <b>Zeit</b> $t$ auf der x-Achse. </p> <p>3. Periodendauer $ T= \\frac{\\lambda}{c}$ und Amplitude $A$ bestimmen.</p> <p>4. Starte die Sinuskurve mit Amplitude $A$ und Periodendauer $T$, die erst ab dem Zeitpunkt $t_0 = \\frac{x_0}{c}$ zu schwingen beginnt (davor y=0) nach <b>rechts</b>. </p> <p>5. Die Kurve sieht aus, wie die Schwingung der Quelle, nur um $t_0 = \\frac{x_0}{c}$ nach rechts verschoben, davor ist sie Null. </p>",
+          "answerHtml":"<p>1. Berechne den Zeitpunkt, <b>wann</b> die Welle an dem betrachteten Ort ankommt: <b>$t_0 = \\frac{x_0}{c}$</b>, dabei ist $x_0$ der Abstand zur Quelle, $c$ ist die Ausbreitungsgeschwindigkeit der Welle.</p> <p> 2. Zeichne ein Koordinatensystem mit der <b>Zeit</b> $t$ auf der $x$-Achse. </p> <p>3. Periodendauer $ T= \\frac{\\lambda}{c}$ und Amplitude $A$ bestimmen.</p> <p>4. Starte die Sinuskurve mit Amplitude $A$ und Periodendauer $T$, die erst ab dem Zeitpunkt $t_0 = \\frac{x_0}{c}$ zu schwingen beginnt (davor y=0) nach <b>rechts</b>. </p> <p>5. Die Kurve sieht aus, wie die Schwingung der Quelle, nur um $t_0 = \\frac{x_0}{c}$ nach rechts verschoben, davor ist sie Null. </p>",
           "buttonLabel":"Antwort anzeigen",
           "buttonHideLabel":"Antwort verbergen"
         }
@@ -377,7 +377,7 @@
     "title": "Ziehe die Schritte in die richtige Reihenfolge",
     "items": [
       "Berechne den Ort, bis wohin die Welle in der Zeit $t_0$ gekommen ist: $x_0 = c \\cdot t_0$.",
-      "Zeichne ein Koordinatensystem mit dem Ort $x$ auf der x-Achse.",
+      "Zeichne ein Koordinatensystem mit dem Ort $x$ auf der $x$-Achse.",
       "Zeichne ab $x_0$ die Sinuskurve mit Amplitude $A$ und Periode $\\lambda=c\\cdot T$ rückwärts nach links"
     ],
     "shuffle": true,
@@ -450,7 +450,7 @@
           "id":"reveal-koch2",
           "title":"Schreibe die Vorgehensweise, wie man ein $x$-$y$ Diagramm zu einem bestimmten Zeitpunkt zeichnet in dein Heft.",
           "question":"Schreibe es wie ein Kochrezept auf, damit du es immer wiederholen kannst.",
-          "answerHtml":"<p>1. Berechne den Ort, <b>bis wohin</b> die Welle in der Zeit $t_0$ gekommen ist: $x_0 = c \\cdot t_0$. </p> <p> 2. Zeichne ein Koordinatensystem mit dem <b>Ort</b> $x$ auf der x-Achse. </p> <p>3. Periode $ \\lambda= c \\cdot T$ und Amplitude $A$ bestimmen.</p> <p>4. Starte die Sinuskurve mit Amplitude $A$ und Periode $\\lambda$, von da an <b>rückwärts nach links</b> (ab $x_0$ nach rechts ist y=0). </p>  <p>5. Fängt die Quelle an, zuerst nach oben zu schwingen, dann zeichnest du auch erst nach oben.</p>",
+          "answerHtml":"<p>1. Berechne den Ort, <b>bis wohin</b> die Welle in der Zeit $t_0$ gekommen ist: $x_0 = c \\cdot t_0$. </p> <p> 2. Zeichne ein Koordinatensystem mit dem <b>Ort</b> $x$ auf der $x$-Achse. </p> <p>3. Periode $ \\lambda= c \\cdot T$ und Amplitude $A$ bestimmen.</p> <p>4. Starte die Sinuskurve mit Amplitude $A$ und Periode $\\lambda$, von da an <b>rückwärts nach links</b> (ab $x_0$ nach rechts ist $y=0$). </p>  <p>5. Fängt die Quelle an, zuerst nach oben zu schwingen, dann zeichnest du auch erst nach oben.</p>",
           "buttonLabel":"Antwort anzeigen",
           "buttonHideLabel":"Antwort verbergen"
         }
@@ -624,9 +624,9 @@
   {
     "text": "Welche Achsen gehören zum Diagramm einer Momentaufnahme?",
     "choices": [
-      { "id": "a", "label": "x-Achse: Ort x, y-Achse: Auslenkung y." },
-      { "id": "b", "label": "x-Achse: Zeit t, y-Achse: Auslenkung y." },
-      { "id": "c", "label": "x-Achse: Ort x, y-Achse: Zeit t." }
+      { "id": "a", "label": "$x$-Achse: Ort $x$, $y$-Achse: Auslenkung $y$." },
+      { "id": "b", "label": "$x$-Achse: Zeit $t$, $y$-Achse: Auslenkung $y$." },
+      { "id": "c", "label": "$x$-Achse: Ort $x$, $y$-Achse: Zeit $t$." }
     ],
     "correct": ["a"],
     "explain": "Im $x$-$y$ Diagramm wird die Auslenkung über dem Ort dargestellt (Zeit ist fest)."
@@ -802,7 +802,7 @@
       </div>
 
       <div class="wb-soft-callout">
-        <p><b>b)</b> Zeichne für $0s\leq t \leq 2,5s$ ein y-t-Diagramm der Schwingung des Seilpunkts B,
+        <p><b>b)</b> Zeichne für $0s\leq t \leq 2,5s$ ein $t$-$y$ Diagramm der Schwingung des Seilpunkts B,
           der zu Schingungsbeginn $25cm$ vom Punkt Aentfernt ist.</p>
       </div>
       <div class="wb-section-break"></div>
@@ -893,10 +893,12 @@
       </div>
 
       <p>
-        <b> v - Schnelle: </b> <br> Momentangeschwindigkeit der einzelnen Teilchen, die bei einer Welle um ihre Ruhelage schwingen. Die Schnelle $v$ ändert sich während der Schwingung andauernd, wohingegen die Ausbreitungsgeschwindigkeit $c$ der Welle (im selben Medium) konstant ist.
+        <b> v - Schnelle: </b> <br> Momentangeschwindigkeit der einzelnen Teilchen, die bei einer Welle um ihre Ruhelage
+        schwingen. Die Schnelle $v$ ändert sich während der Schwingung andauernd, wohingegen die
+        Ausbreitungsgeschwindigkeit $c$ der Welle (im selben Medium) konstant ist.
       </p>
 
-      <p> <b> &lambda; - Wellenlänge: </b> <br> x-Abstand eines Teilchens zum nächsten Teilchen im gleichen
+      <p> <b> &lambda; - Wellenlänge: </b> <br> $x$-Abstand eines Teilchens zum nächsten Teilchen im gleichen
         Schwingungszustand (d.h. die beiden Teilchen müssen die gleiche Auslenkung und die gleiche Geschwindigkeit
         haben).
         <b>Anmerkung:</b> Zu Teilchen mit gleichem Schwingungszustand sagt man auch gleichphasig schwingende Teilchen.
@@ -978,16 +980,23 @@
       </div>
 
       <div class="wb-section-break"></div>
-      
+
       <h2>Exkurs: Schnelle vs. Ausbreitungsgeschwindigkeit</h2>
-      <p>In den bisherigen Überlegungen und der Simulation breitet sich eine Welle aus. Dabei kommen die einzelnen Teilchen (Körperchen) aber nicht von der Stelle; sie schwingen lediglich um ihre Ruhelage (bei einer Transversalwelle senkrecht zur Ausbreitungsrichtung des Wellenberges einmal nach oben und dann wieder zurück).</p>
-      <p>Ihre Momentangeschwindigkeit, die sich bei der Hin- und Herbewegung dauernd ändert, bezeichnet man als <b>Schnelle $v$</b>. Dieser besondere Name soll den Unterschied zur konstanten <b>Ausbreitungsgeschwindigkeit $c$</b> der Störung hervorheben.</p>
+      <p>In den bisherigen Überlegungen und der Simulation breitet sich eine Welle aus. Dabei kommen die einzelnen
+        Teilchen (Körperchen) aber nicht von der Stelle; sie schwingen lediglich um ihre Ruhelage (bei einer
+        Transversalwelle senkrecht zur Ausbreitungsrichtung des Wellenberges einmal nach oben und dann wieder zurück).
+      </p>
+      <p>Ihre Momentangeschwindigkeit, die sich bei der Hin- und Herbewegung dauernd ändert, bezeichnet man als
+        <b>Schnelle $v$</b>. Dieser besondere Name soll den Unterschied zur konstanten <b>Ausbreitungsgeschwindigkeit
+          $c$</b> der Störung hervorheben.
+      </p>
       <div class="wb-callout">
         <strong>Zusammenhang bei einer Transversalwelle:</strong>
-        <p>Die Vektoren der Schnelle $v$ und der Ausbreitungsgeschwindigkeit $c$ stehen hierbei orthogonal (senkrecht) zueinander.</p>
+        <p>Die Vektoren der Schnelle $v$ und der Ausbreitungsgeschwindigkeit $c$ stehen hierbei orthogonal (senkrecht)
+          zueinander.</p>
         <p>Für eine einzelne Schwingung eines Teilchens gilt:</p>
         <ul class="wave-list">
-          <li>Bei maximaler Elongation (y-Auslenkung im Wellenberg oder Wellental) ist die Schnelle <b>null</b>.</li>
+          <li>Bei maximaler Elongation ($y$-Auslenkung im Wellenberg oder Wellental) ist die Schnelle <b>null</b>.</li>
           <li>Bei der Elongation null (beim Nulldurchgang) ist die Schnelle <b>maximal</b>.</li>
         </ul>
       </div>
@@ -1251,7 +1260,7 @@
       </p>
       <p>Im Bild darunter hat Körper A schon eine gewisse Auslenkung, der zweite Körper wird gerade von der Störung
         erfasst
-        und beginnt gerade in positive y-Richtung zu schwingen usw.</p>
+        und beginnt gerade in positive $y$-Richtung zu schwingen usw.</p>
       <p>Ziel ist es, die Auslenkung eines von der Welle erfassten Teilchens in
         <b>y-Richtung</b> an einem
         <b> beliebigen Ort x</b> und zu einer
@@ -1272,8 +1281,8 @@
       <h2>Mathematische Überlegungen</h2>
       <p> Die Funktion, die die Schwingung des Körpers A beschreibt, lautet: </p>
       <p> \[y(t)\ =\ \hat{y} · sin(\omega · t)\quad \text{ mit } \quad\omega = 2\pi f =\frac{2\pi}{T}\]</p>
-      <p> Aufgrund der Kopplung der Teilchen wandert die Störung mit der Geschwindigkeit c
-        entlang der positiven x-Richtung. </p>
+      <p> Aufgrund der Kopplung der Teilchen wandert die Störung mit der Geschwindigkeit $c$
+        entlang der positiven $x$-Richtung. </p>
       <p> Somit wird der Punkt P erst nach einer gewissen Zeit $\Delta t$ von der Störung erfasst, es gilt: </p>
       <p> \[ \Delta t = \frac{x}{c} \] </p>
       <p>Der Körper P fängt also um die Zeit $\Delta t$ verspätet an zu schwingen. Somit gilt für die Funktion, die

@@ -2793,15 +2793,20 @@ ${fi.input.value || ""}
     {id: "candy", label: "Candy"},
     {id: "mint", label: "Mint"},
     {id: "sunset", label: "Sunset"},
-    {id: "grau", label: "Dark"},
-    {id: "dark", label: "Dark Blue"}
+    {id: "dark", label: "Dark"},
+    {id: "dark-blue", label: "Dark Blue"}
   ];
+
+  function normalizeThemeId(id){
+    const value = String(id || "");
+    return value === "grau" ? "dark" : value;
+  }
 
   function normalizeThemes(list){
     const src = Array.isArray(list) && list.length ? list : DEFAULT_THEMES;
     return src.map(t => {
-      if(typeof t === "string") return {id: t, label: t};
-      if(t && typeof t === "object") return {id: String(t.id || ""), label: String(t.label || t.id || "")};
+      if(typeof t === "string") return {id: normalizeThemeId(t), label: t};
+      if(t && typeof t === "object") return {id: normalizeThemeId(t.id), label: String(t.label || t.id || "")};
       return null;
     }).filter(t => t && t.id);
   }
@@ -2815,13 +2820,14 @@ ${fi.input.value || ""}
 
     const cfg = root.__wbConfig || {};
     const themes = normalizeThemes(cfg.themes);
-    const isKnown = (id) => themes.some(t => t.id === id);
-    const defaultTheme = isKnown(cfg.themeDefault) ? String(cfg.themeDefault) : "default";
+    const isKnown = (id) => themes.some(t => t.id === normalizeThemeId(id));
+    const defaultTheme = isKnown(cfg.themeDefault) ? normalizeThemeId(cfg.themeDefault) : "default";
     const storageKey = String(cfg.themeStorageKey || "wbTheme");
     const stored = localStorage.getItem(storageKey);
-    const active = isKnown(stored) ? stored : defaultTheme;
+    const active = isKnown(stored) ? normalizeThemeId(stored) : defaultTheme;
 
     const applyTheme = (id) => {
+      id = normalizeThemeId(id);
       if(id === "default") root.removeAttribute("data-theme");
       else root.setAttribute("data-theme", id);
     };
@@ -2844,8 +2850,9 @@ ${fi.input.value || ""}
     });
     select.value = active;
     select.addEventListener("change", () => {
-      applyTheme(select.value);
-      localStorage.setItem(storageKey, select.value);
+      const nextTheme = normalizeThemeId(select.value);
+      applyTheme(nextTheme);
+      localStorage.setItem(storageKey, nextTheme);
     });
 
     wrap.appendChild(label);
