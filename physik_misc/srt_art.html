@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spezielle und allgemeine Relativitätstheorie</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --srt-accent: #8a1c3a;
+      --srt-accent-soft: #f4dde5;
+      --srt-ink: #172033;
+      --srt-panel: #f8fafc;
+      --srt-border: #d8e0ec;
+    }
+    .srt-hero {
+      background: linear-gradient(135deg, #f7e5c9 0%, #f7f4ff 52%, #dce8f8 100%);
+      border: 1px solid var(--srt-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+    }
+    .srt-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--srt-accent-soft);
+      color: var(--srt-accent);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .srt-grid,
+    .srt-grid-3 {
+      display: grid;
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .srt-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .srt-grid-3 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+    .srt-card {
+      background: var(--srt-panel);
+      border: 1px solid var(--srt-border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .srt-card h3, .srt-card h4 { margin-top: 0; }
+    .srt-figure {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid var(--srt-border);
+      border-radius: 18px;
+      background: #fff;
+    }
+    .srt-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .srt-figure figcaption {
+      margin-top: 10px;
+      color: #536077;
+      font-size: 0.95rem;
+    }
+    .srt-formula {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--srt-accent);
+      border-radius: 14px;
+      background: #fff8fb;
+      font-size: 1.05rem;
+    }
+    .srt-timeline {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 20px;
+    }
+    .srt-step {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--srt-border);
+    }
+    .srt-step strong { color: var(--srt-accent); }
+    .srt-quote {
+      margin: 18px 0;
+      padding: 16px 18px;
+      background: linear-gradient(90deg, #fff4df 0%, #fff 100%);
+      border: 1px solid #eed9b2;
+      border-radius: 18px;
+      font-style: italic;
+    }
+    .srt-checklist {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .srt-checklist li + li { margin-top: 8px; }
+    .wb-book[data-theme="dark"] .wb-callout,
+    .wb-book[data-theme="dark-blue"] .wb-callout,
+    .wb-book[data-theme="dark"] .wb-soft-callout,
+    .wb-book[data-theme="dark-blue"] .wb-soft-callout {
+      color: #111;
+    }
+    .wb-book[data-theme="dark"] .wb-callout p,
+    .wb-book[data-theme="dark-blue"] .wb-callout p,
+    .wb-book[data-theme="dark"] .wb-callout li,
+    .wb-book[data-theme="dark-blue"] .wb-callout li,
+    .wb-book[data-theme="dark"] .wb-callout strong,
+    .wb-book[data-theme="dark-blue"] .wb-callout strong,
+    .wb-book[data-theme="dark"] .wb-soft-callout p,
+    .wb-book[data-theme="dark-blue"] .wb-soft-callout p,
+    .wb-book[data-theme="dark"] .wb-soft-callout li,
+    .wb-book[data-theme="dark-blue"] .wb-soft-callout li,
+    .wb-book[data-theme="dark"] .wb-soft-callout strong,
+    .wb-book[data-theme="dark-blue"] .wb-soft-callout strong,
+    .wb-book[data-theme="dark"] .wb-soft-callout a,
+    .wb-book[data-theme="dark-blue"] .wb-soft-callout a {
+      color: #111;
+    }
+    @media (max-width: 760px) {
+      .srt-hero { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Physik Oberstufe",
+      "sectionTitle":"Spezielle und allgemeine Relativitätstheorie",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse & Zusammenfassung",
+      "onSubmit":"alert",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Einsteins Gedankenreise",
+      "themeDefault": "default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start & Leitfrage">
+      <div class="srt-hero">
+        <div class="srt-kicker">Start & Leitfrage</div>
+        <h1>Spezielle und allgemeine Relativitätstheorie</h1>
+        <p class="wb-muted">Eine Gedankenreise mit Albert Einstein für die Oberstufe</p>
+        <p>Was passiert, wenn du versuchst, Licht wie einen geworfenen Ball zu behandeln? Genau an dieser Stelle beginnt der Bruch mit der klassischen Physik. In dieser Lerneinheit gehst du denselben Fragen nach, die Einstein von der speziellen Relativitätstheorie bis zur allgemeinen Relativitätstheorie geführt haben.</p>
+      </div>
+
+      <div class="srt-grid">
+        <div class="wb-soft-callout">
+          <strong>Das lernst du hier</strong>
+          <ul class="srt-checklist">
+            <li>Warum Newtons Bild von Raum, Zeit und Gravitation nicht ausreicht.</li>
+            <li>Wie Zeitdilatation, Längenkontraktion und relative Gleichzeitigkeit zusammenhängen.</li>
+            <li>Warum Gravitation in der ART als Krümmung der Raumzeit beschrieben wird.</li>
+            <li>Wie aus diesen Ideen Anwendungen wie GPS oder Gravitationslinsen folgen.</li>
+          </ul>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>So arbeitest du</strong>
+          <ul class="srt-checklist">
+            <li>Lies die Abschnitte der Reihe nach.</li>
+            <li>Bearbeite die Aufgaben direkt auf der Seite.</li>
+            <li>Nutze am Ende die Ergebnisseite in der Sidebar.</li>
+            <li>Schreibe bei den Freitexten so, dass man deine Begründung nachvollziehen kann.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="srt-quote">"Was passiert, wenn ich auf einem Lichtstrahl reite?" Diese Schülerfrage Einsteins ist der rote Faden dieser Seite.</div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-start-reveal",
+          "title":"Was kannst du danach?",
+          "question":"Öffne die Leitfrage für diese Lerneinheit.",
+          "answer":"Du kannst danach erklären, warum die Lichtgeschwindigkeit in allen Inertialsystemen gleich bleibt, warum bewegte Uhren langsamer gehen, warum Gleichzeitigkeit nicht absolut ist und warum Gravitation in der allgemeinen Relativitätstheorie keine gewöhnliche Kraft mehr ist.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Warum eine neue Theorie?">
+      <h1>Warum eine neue Theorie? </h1>
+      <p>Beginnen wir mit einem Konflikt: In der klassischen Physik nach Newton sind Raum und Zeit absolut. Das heißt: Alle Beobachter könnten sich im Prinzip auf eine gemeinsame Uhr und auf eine universelle Gleichzeitigkeit einigen. Einstein merkt aber, dass dieses Bild nicht mehr sauber funktioniert, sobald Licht eine Rolle spielt.</p>
+
+      <div class="srt-grid">
+        <div class="srt-card">
+          <h3>Newtons Bild</h3>
+          <p>Zeit vergeht überall gleich schnell, Raum ist eine feste Bühne und Gravitation wirkt als Kraft über Distanz.</p>
+        </div>
+        <div class="srt-card">
+          <h3>Einsteins Problem</h3>
+          <p>Wenn Licht immer dieselbe Geschwindigkeit hat, kann es keinen Beobachter geben, für den ein Lichtstrahl stillsteht. Genau das widerspricht der klassischen Addition von Geschwindigkeiten.</p>
+        </div>
+      </div>
+       <div class="wb-section-break"></div>
+      <p>Hier kommt ein Gedankenexperiment: Wir betrachten ein Haus, das sich nicht bewegt und einen Zug, der mit $100 \frac{km}{h}$ nach links vorbei fährt.
+        Ein Meteor fliegt mit einer Geschindigkeit von $20000 \frac{km}{h}$ von rechts auf das Haus zu, aus Sicht des Beobachters im Haus. Aus Sicht eines Beobachters im Zug bewegt sich der Meteor mit der 
+        Geschwindigkeit $20100 \frac{km}{h}$. Das ist die klassische Addition von Geschwindigkeiten. Aber was passiert, wenn der Meteor ein Lichtstrahl ist, der mit Lichtgeschwindigkeit unterwegs ist? 
+        Genau hier liegt das Problem: Für den Beobachter im Zug hätte das Licht eine größere Geschwindigkeit als Lichtgeschwindigkeit, was nicht sein kann. Deshalb muss es eine neue Theorie geben, die erklärt, 
+        wie das mit der Lichtgeschwindigkeit zusammenpasst und trotzdem die Naturgesetze in  
+        allen Inertialsystemen gleich sein.</p>
+      </p>
+      <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/relativität1.png" alt="Gedankenexperiment mit Haus, Zug und heranfliegendem Meteor" />
+          <figcaption>Ausgangssituation: Bewegung ist relativ. Die Frage ist nur, ob das auch für Licht gilt.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/relativ.png" alt="Skizze zur klassischen Geschwindigkeitsaddition" />
+          <figcaption>Klassisch würdest du Geschwindigkeiten addieren. Für Licht funktioniert das laut Einstein gerade nicht.</figcaption>
+        </figure>
+      </div>
+        <div class="wb-section-break"></div>
+      <h2>Die zwei Grundannahmen der SRT</h2>
+      <div class="srt-grid">
+        <div class="srt-card">
+          <h3>1. Relativitätsprinzip</h3>
+          <p>Alle Naturgesetze haben in allen Inertialsystemen dieselbe Form. Kein gleichförmig bewegtes System ist physikalisch bevorzugt.</p>
+        </div>
+        <div class="srt-card">
+          <h3>2. Konstanz der Lichtgeschwindigkeit</h3>
+          <p>Die Lichtgeschwindigkeit <strong>c</strong> ist in jedem Inertialsystem gleich. Nichts ist schneller.</p>
+        </div>
+      </div>
+
+      <p class="wb-mini-note">Merke: Die spezielle Relativitätstheorie von 1905 gilt für gleichförmig bewegte Systeme, also ohne Beschleunigung und ohne Gravitation.</p>
+       <div class="wb-section-break"></div>
+      <h2>Was ist ein Inertialsystem?</h2>
+      <div class="wb-soft-callout">
+        <strong>Begriff klären</strong>
+        <p>Ein Inertialsystem ist ein Bezugssystem, in dem das Trägheitsgesetz gilt: Jeder Körper, auf den die Gesamtkraft Null wirkt, ist entweder in Ruhe oder bewegt sich geradlinig gleichförmig. Ein beschleunigtes System ist deshalb kein Inertialsystem, weil dort genau dieses einfache Bewegungsverhalten nicht mehr ohne zusätzliche Scheinkräfte beschrieben werden kann.</p>
+      </div>
+      <p>Für die spezielle Relativitätstheorie ist das zentral: Beide Einstein-Postulate beziehen sich auf Inertialsysteme. Wenn sich zwei Systeme nur gleichförmig geradlinig zueinander bewegen, sind beide gleichberechtigt. Sobald ein System beschleunigt oder rotiert, verlässt du diesen Rahmen.</p>
+       <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-cloze-postulate",
+          "title":"Sicherung: Die Grundidee der SRT",
+          "hint":"Setze die passenden Begriffe aus der Wortbank ein.",
+          "bank":["absolut","Inertialsystemen","Lichtgeschwindigkeit","gleich","neu","klassischen"],
+          "segments":[
+            {"t":"text","v":"Einstein widersprach der "},
+            {"t":"gap","a":"klassischen"},
+            {"t":"text","v":" Vorstellung, dass Raum und Zeit "},
+            {"t":"gap","a":"absolut"},
+            {"t":"text","v":" sind. Er forderte, dass die Naturgesetze in allen "},
+            {"t":"gap","a":"Inertialsystemen"},
+            {"t":"text","v":" gelten und dass die "},
+            {"t":"gap","a":"Lichtgeschwindigkeit"},
+            {"t":"text","v":" immer "},
+            {"t":"gap","a":"gleich"},
+            {"t":"text","v":" bleibt. Deshalb mussten Raum und Zeit "},
+            {"t":"gap","a":"neu"},
+            {"t":"text","v":" gedacht werden."}
+          ]
+        }
+        </script>
+      </div>
+       <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"srt-verify-newton",
+          "title":"Stopp & check",
+          "hint":"Prüfe die Aussage genau.",
+          "statement":"Die spezielle Relativitätstheorie behauptet, dass es ein ausgezeichnetes Ruhesystem im Universum geben muss.",
+          "answer": false,
+          "explain":"Gerade das lehnt Einstein ab: Für alle Inertialsysteme gelten dieselben Naturgesetze. Es gibt kein physikalisch bevorzugtes Ruhesystem."
+        }
+        </script>
+      </div>
+       <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Die SRT entsteht nicht aus einer neuen Formel, sondern aus einem Konflikt zwischen klassischer Physik und der Konstanz der Lichtgeschwindigkeit. Der Preis dafür ist hoch: Raum und Zeit sind nicht mehr absolut.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Zeitdilatation, Kontraktion, Gleichzeitigkeit">
+      <h1>Zeitdilatation, Längenkontraktion und Gleichzeitigkeit:</h1>
+      <p>Nun werden die Folgen der beiden Postulate sichtbar: dieselbe Lichtgeschwindigkeit zwingt uns dazu, Zeit, Länge und Gleichzeitigkeit neu zu definieren.</p>
+
+      <h2>Beispiel 1: Die Lichtuhr in der Rakete</h2>
+      <p>Eine Lichtuhr ist ein Gedankenmodell für eine Uhr: Ein Lichtblitz läuft zwischen zwei Spiegeln hin und her. Wenn der Lichtblitz einmal nach oben und wieder nach unten läuft, ist eine Sekunde vergangen. In der ruhenden Rakete verläuft dieser Weg einfach senkrecht auf und ab. In der bewegten Rakete sieht ein äußerer Beobachter aber keinen senkrechten Weg mehr, sondern einen schrägen Zickzack-Weg, weil sich die Rakete währenddessen weiterbewegt.</p>
+      <p>Der entscheidende Unterschied ist also nicht das Licht selbst, sondern die Länge des beobachteten Weges: In der bewegten Rakete ist der Weg des Lichts viel länger. Weil die Lichtgeschwindigkeit trotzdem gleich bleiben muss, kann nur eine Sache anders sein: Für den äußeren Beobachter muss mehr Zeit vergehen. Genau das ist die Zeitdilatation.</p>
+      <p>\[c\ =\ \frac{\text{Weg}_\text{lang}}{\text{Zeit}_\text{lang}}\ =\ \frac{\text{Weg}_\text{kurz}}{\text{Zeit}_\text{kurz}}\]</p>
+      <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/zeituhr1.png" alt="Lichtuhr in ruhender und bewegter Rakete" />
+          <figcaption>In der bewegten Rakete legt das Licht aus Sicht des Bahnsteigs einen längeren Weg zurück.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/zeituhr2.png" alt="Zweiter Ausschnitt zur Lichtuhr" />
+          <figcaption>Wenn <strong>c</strong> gleich bleibt, muss bei längerem Weg mehr Zeit vergehen. Deshalb gehen bewegte Uhren langsamer.</figcaption>
+        </figure>
+      </div>
+
+      <div class="srt-formula"><strong>Zeitdilatation:</strong> Bewegte Uhren gehen aus Sicht eines ruhenden Beobachters langsamer. Vereinfacht: Je näher <strong>v</strong> an <strong>c</strong> kommt, desto stärker wird der Effekt.</div>
+      <div class="srt-formula"><strong>Formel:</strong> $t = \gamma \cdot t_0$ mit $\gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$. Dabei ist $t_0$ die Eigenzeit in der ruhenden Uhr und $t$ die längere Zeit, die ein äußerer Beobachter für die bewegte Uhr misst.</div>
+
+        <div class="wb-section-break"></div>
+      <h2>Herleitung der Formel für die Zeitdilatation</h2>
+      <p>Für die Herleitung vergleichst du zwei Zeiten: Im Ruhesystem der Rakete legt das Licht nur die Höhe zwischen den Spiegeln zurück. Von außen betrachtet bewegt sich die Rakete aber gleichzeitig weiter, deshalb entsteht ein längerer schräger Weg. Genau dieses Dreieck liefert mit dem Satz des Pythagoras die gesuchte Beziehung.</p>
+      <div class="grid2">
+        <div>
+          <div class="wb-soft-callout">
+            <strong>Im Ruhesystem der Rakete gilt:</strong>
+            <ul class="srt-checklist">
+              <li>Hin- und Rückweg des Lichtblitzes: $\quad t = \frac{2h}{c}$</li>
+              <li>Von außen gemessen ist der Weg länger: $\quad t' = \frac{2l}{c}$</li>
+              <li>Für eine Hälfte des Weges entsteht ein rechtwinkliges Dreieck mit Hypotenuse $l$, Höhe $h$ und Grundseite $\frac{v \cdot t'}{2}$.</li>
+              <li>Mit Pythagoras folgt: $\quad l^2 = \left(\frac{v t'}{2}\right)^2 + h^2$.</li>
+              <li>Setze $l$ in $t' = \frac{2l}{c}$ ein: $\quad t' = 2 \cdot \frac{\sqrt{\left(\frac{v t'}{2}\right)^2+h^2}}{c}$.</li>
+              <li>Multipliziere mit $c$ und quadriere: $\quad c^2 t'^2 = 4 \left(\frac{v t'}{2}\right)^2 + 4 h^2$.</li>
+              <li>Multipliziere aus und klammere $t'$ aus: $\quad (c^2-v^2) t'^2 = 4 h^2$.</li>
+              <li>Löse nach $t'$ auf: $\quad t' = \frac{2 h}{\sqrt{c^2-v^2}}$.</li>
+              <li>Stelle um: $\quad t' = \frac{2 h}{c} \cdot \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}$.</li>
+              <li>Setze $t = \frac{2h}{c}$ ein: $\quad t' = \frac{t}{\sqrt{1-\frac{v^2}{c^2}}}$.</li>
+              <li>Das ist die gesuchte Formel für die Zeitdilatation.</li>
+              <li>Die bewegte Uhr braucht also mehr Zeit für denselben Lichtweg.</li>
+            </ul>
+          </div>
+          
+        </div>
+        <figure class="srt-figure">
+          <img src="bilder/zeitdilatation2.png" alt="Herleitung der Zeitdilatationsformel aus der GFS" style="width:100%; height:auto; max-width:none;" />
+          <figcaption>Herleitung im Überblick: Lichtweg, Dreieck, Pythagoras und Umformung zur Zeitdilatationsformel.</figcaption>
+        </figure>
+      </div>
+
+        <div class="wb-section-break"></div>
+      <h2>Beispiel 2: Zug und Bahnsteig</h2>
+      <div class="grid2">
+        <figure class="srt-figure">
+          <img src="bilder/Lorenzkontraktion.png" alt="Gedankenexperiment zur Lorentzkontraktion mit Zug und Bahnsteig" />
+          <figcaption>Erklärung der Längenkontraktion mit Lichtblitzen am Zug und am Bahnsteig.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <strong>So liest du das Bild</strong>
+          <ul class="srt-checklist">
+            <li>Der Zug fährt mit der Geschwindigkeit $v$ in den Bahnhof ein.</li>
+            <li>Am Anfang des Zuges wird beim Passieren des vorderen Bahnsteigendes ein Lichtblitz ausgelöst.</li>
+            <li>Am Ende des Zuges wird beim Passieren des hinteren Bahnsteigendes ein zweiter Lichtblitz ausgelöst.</li>
+            <li>Ein Beobachter in der Mitte des Bahnsteigs sieht beide Blitze gleichzeitig.</li>
+            <li>Ein Beobachter in der Mitte des Zuges sieht zuerst den vorderen und dann den hinteren Blitz.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wb-soft-callout">
+        <strong>Was ist hier los?</strong>
+        <p>Die Blitze sind für beide Beobachter gleich, aber die Reihenfolge der Blitze ist unterschiedlich. Das liegt daran, dass die Lichtblitze sich mit Lichtgeschwindigkeit ausbreiten, aber die Beobachter sich relativ zueinander bewegen. Deshalb kommt es zu einer relativen Gleichzeitigkeit: Was für den einen Beobachter gleichzeitig ist, ist für den anderen nicht gleichzeitig.</p>
+      <p>Der Beobachter in der Mitte des Bahnsteigs folgert, dass der Zug genauso groß ist wie der Bahnhof. Der Beobachter im Zug folgert dagegen, dass der Zug länger ist.</p>
+      </div>
+
+       <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Merke:</strong>
+        
+        <p>Daraus folgt zweierlei: Erstens hängt Gleichzeitigkeit vom Bezugssystem ab. Zweitens erscheinen bewegte Längen in Bewegungsrichtung kürzer.</p>
+        <p><strong>Formel:</strong> $L = L_0 \cdot \sqrt{1-\frac{v^2}{c^2}}$</p>
+      </div>
+
+        <div class="wb-section-break"></div>
+      <h2>Was ist Gleichzeitigkeit in einem Inertialsystem?</h2>
+      <div class="wb-soft-callout">
+        <strong>Definition</strong>
+        <p>Zwei Ereignisse an zwei unterschiedlichen Orten A und B sind genau dann gleichzeitig, wenn die Lichtstrahlen, die mit den Ereignissen ausgelöst werden, im gleichen Augenblick in einem Punkt ankommen, der genau in der Mitte zwischen A und B liegt.</p>
+      </div>
+      <p>Gleichzeitigkeit in einem Inertialsystem muss keine Gleichzeitigkeit in einem anderen Inertialsystem sein. Was für den Beobachter auf dem Bahnsteig gleichzeitig ist, kann für den Beobachter im Zug zeitlich versetzt sein.</p>
+      <p>Da die Lichtgeschwindigkeit die Maximalgeschwindigkeit ist, bleibt die Kausalität trotzdem erhalten: Ursache und Wirkung können sich bei einem Wechsel des Inertialsystems nicht einfach umkehren.</p>
+
+        <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-mcq-effects",
+          "title":"Mini-Check: Folgen der SRT",
+          "hint":"Wähle die richtigen Aussagen aus.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Warum ist bei der Lichtuhr die Zeit in der bewegten Rakete größer?",
+              "choices":[
+                {"id":"a","label":"Weil Licht in der Rakete schneller wird."},
+                {"id":"b","label":"Weil das Licht einen längeren Weg zurücklegt, während seine Geschwindigkeit gleich bleibt."},
+                {"id":"c","label":"Weil die Spiegel in der Rakete kleiner werden."}
+              ],
+              "correct":["b"],
+              "explain":"Das ist der Kern der Zeitdilatation: gleicher Wert für c, aber längerer Lichtweg."
+            },
+            {
+              "text":"Welche Aussage passt zur relativen Gleichzeitigkeit?",
+              "choices":[
+                {"id":"a","label":"Wenn zwei Ereignisse für einen Beobachter gleichzeitig sind, sind sie es für alle."},
+                {"id":"b","label":"Gleichzeitigkeit kann sich zwischen zwei Inertialsystemen unterscheiden."},
+                {"id":"c","label":"Gleichzeitigkeit ist nur bei Schallwellen relativ."}
+              ],
+              "correct":["b"],
+              "explain":"Genau das zeigen die Lichtblitze im Zug-Beispiel."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+  
+        <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-order-lightclock",
+          "title":"Anwendung: So leitest du die Zeitdilatation gedanklich her",
+          "hint":"Bringe die Schritte in eine sinnvolle Reihenfolge.",
+          "items":[
+            "Du gehst davon aus, dass die Lichtgeschwindigkeit für alle Beobachter gleich ist.",
+            "Du stellst fest, dass das Licht in der bewegten Rakete einen längeren Weg zurücklegt.",
+            "Du folgerst: Wenn c gleich bleibt und der Weg länger ist, muss mehr Zeit vergehen.",
+            "Du erhältst das Ergebnis: Bewegte Uhren gehen langsamer."
+          ]
+        }
+        </script>
+      </div>
+
+        <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-reveal-causality",
+          "title":"Warum kippt die Kausalität trotzdem nicht um?",
+          "question":"Wenn Gleichzeitigkeit relativ ist, warum bleibt Ursache und Wirkung dennoch erhalten?",
+          "answer":"Weil keine Information schneller als Licht übertragen werden kann. Dadurch kann ein Effekt nicht in einem anderen Inertialsystem vor seiner Ursache eintreten, solange die Ereignisse kausal verbunden sind.",
+          "buttonLabel":"Erklärung anzeigen",
+          "buttonHideLabel":"Erklärung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Zeitdilatation, Längenkontraktion und relative Gleichzeitigkeit sind keine getrennten Tricks. Sie entstehen gemeinsam aus derselben Forderung: Licht muss in allen Inertialsystemen dieselbe Geschwindigkeit haben.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Raumzeit und E = mc²">
+      <h1>Raumzeit und Masse-Energie-Äquivalenz:</h1>
+      <p>Führen wir nun zwei große Konsequenzen zusammen: Raum und Zeit werden zur Raumzeit verknüpft, und Masse ist nicht mehr strikt von Energie getrennt.</p>
+
+      <h2>Raumzeitdiagramm und Lichtkegel</h2>
+      <div class="srt-grid-3">
+        <figure class="srt-figure" style="grid-column: span 1;">
+          <img src="bilder/minkowski.png" alt="Raumzeitdiagramm mit Zukunfts- und Vergangenheitskegel" />
+          <figcaption>Der Lichtkegel trennt Ereignisse in beeinflussbare Zukunft, beeinflussende Vergangenheit und einen Bereich ohne kausalen Kontakt.</figcaption>
+        </figure>
+        <div style="display:grid; gap:16px; align-content:start; grid-column: span 2;">
+          <div class="wb-soft-callout">
+            <strong>Zukunftskegel I</strong>
+            <p>Ereignisse hier können durch das Ereignis A beeinflusst werden.</p>
+          </div>
+          <div class="wb-soft-callout">
+            <strong>Vergangenheitskegel II</strong>
+            <p>Ereignisse hier könnten A beeinflusst haben.</p>
+          </div>
+          <div class="wb-soft-callout">
+            <strong>Außerhalb des Kegels III</strong>
+            <p>Es gibt keinen kausalen Einfluss, weil dafür eine Überlichtgeschwindigkeit nötig wäre.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Energie und Masse</h2>
+      <div class="srt-formula"><strong>E = m · c²</strong><br />Die Ruheenergie eines Körpers ist proportional zu seiner Masse. Wenn die innere Energie eines Systems steigt, steigt auch seine Masse.</div>
+
+      <p>Beispiele der inneren Energie sind Erwärmen, das Aufladen einer Batterie oder radioaktiven Zerfall. Wichtig ist: Nicht die Atome werden schwerer im alltäglichen Sinn, sondern die Gesamtenergie des Systems trägt zur Masse bei.</p>
+
+       <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-categorize-spacetime",
+          "title":"Sortiere die Aussagen",
+          "hint":"Ordne jede Aussage dem passenden Bereich zu.",
+          "categories":[
+            {"id":"raumzeit","title":"Raumzeit & Lichtkegel"},
+            {"id":"energie","title":"Masse-Energie-Äquivalenz"}
+          ],
+          "items":[
+            {"label":"Trennt kausal erreichbare von nicht erreichbaren Ereignissen","category":"raumzeit"},
+            {"label":"Verknüpft Raum und Zeit zu einer gemeinsamen Beschreibung","category":"raumzeit"},
+            {"label":"Erklärt, warum Energie zur Masse eines Systems beiträgt","category":"energie"},
+            {"label":"Spielt bei Kernspaltung und radioaktivem Zerfall eine Rolle","category":"energie"}
+          ]
+        }
+        </script>
+      </div>
+
+       <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-title="Begriffe verknüpfen" data-p2-hint="Führe jeden Begriff mit der passenden Erklärung zusammen.">
+        <div class="p2-hint">Die Paare stammen direkt aus den Inhalten.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Zukunftskegel</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Vergangenheitskegel</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Ruheenergie</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">E = mc²</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Bereich aller Ereignisse, die A noch beeinflussen kann</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Bereich aller Ereignisse, die A beeinflusst haben könnten</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Energie, die ein Körper schon ohne Bewegung besitzt</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Formel für die Äquivalenz von Masse und Energie</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+       <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Die SRT verändert nicht nur Messwerte. Sie ändert das physikalische Denken: Raum und Zeit gehören zusammen, und auch Masse und Energie sind zwei Seiten derselben Beschreibung.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Vom Fahrstuhl zur Raumzeitkrümmung">
+      <h1>Vom Fahrstuhl zur Raumzeitkrümmung:</h1>
+      <p>Einstein war mit der SRT nicht zufrieden, weil sie keine beschleunigten Systeme und keine Gravitation beschreibt. 
+        Diesen Übergang erklären wir über ein Gedankenexperiment mit freiem Fall und Raketen.</p>
+
+      <h2>Der entscheidende Gedanke</h2>
+      <p>Einstein stellte sich als Patentanwalt in Bern eine Alltagsszene vor: Er beobachtete einen Fensterputzer und fragte sich, was passieren würde, wenn dieser plötzlich herunterfällt. Während des freien Falls wäre der Fensterputzer praktisch schwerelos, obwohl er sich gleichzeitig beschleunigt bewegt. Genau darin steckt die entscheidende Idee: Vielleicht passen Gravitation und Beschleunigung zusammen, weil Gravitation lokal wie eine Beschleunigung wirkt.</p>
+
+      <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/fensterputzer1.png" alt="Einstein im freien Fall als Gedankenexperiment" />
+          <figcaption>Freier Fall fühlt sich lokal wie Schwerelosigkeit an.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/fensterputzer2.png" alt="Einstein im Weltall" style="width:85%; height:auto; max-width:none;"/>
+          <figcaption>Im Weltall ist man schwerelos.</figcaption>
+        </figure>
+      </div>
+      <p>Eine Waage zeigt das Gleiche an, ob man in einer Rakete mit $a = 9{,}81\,\mathrm{m/s^2}$ beschleunigt wird oder auf der Erde steht. Beides ist lokal nicht zu unterscheiden.</p>
+
+        <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/raumschiff1.png" alt="Einstein im freien Fall als Gedankenexperiment" />
+          <figcaption>Freier Fall fühlt sich lokal wie Schwerelosigkeit an.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/raumschiff2.png" alt="Einstein im Weltall" style="width:100%; height:auto; max-width:none;"/>
+          <figcaption>Im Weltall ist man schwerelos.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Ununterscheidbar: Schwerkraft und Beschleunigung</strong>
+      </div>
+
+
+      <p>Das ist das Äquivalenzprinzip: Schwerkraft und Beschleunigung sind lokal nicht unterscheidbar. Wenn du nur die Vorgänge in einem kleinen abgeschlossenen Raum beobachtest, kannst du nicht sicher sagen, ob du auf der Erde stehst oder in einer Rakete nach oben beschleunigt wirst.</p>
+
+       <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"art-verify-equivalence",
+          "title":"Wahr oder falsch?",
+          "hint":"Denke an das Äquivalenzprinzip.",
+          "statement":"Wenn eine Rakete mit 9,81 m/s² beschleunigt, kann man im Inneren mit einer Waage eindeutig erkennen, dass man nicht auf der Erde steht.",
+          "answer": false,
+          "explain":"Genau das bestreitet das Äquivalenzprinzip: Lokal liefert die Waage dieselbe Anzeige wie im Gravitationsfeld der Erde."
+        }
+        </script>
+      </div>
+
+        <div class="wb-section-break"></div>
+      <h2>Warum wird dann Licht abgelenkt?</h2>
+      <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/gebogenerStrahl.png" alt="Lichtstrahl in beschleunigter Rakete" />
+          <figcaption>In der beschleunigten Rakete erscheint ein Lichtstrahl gebogen.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/lichtkrümmung.png" alt="Geodäte im gekrümmten Raum" />
+          <figcaption>Wenn Masse die Raumzeit krümmt, sind die geradesten Wege keine euklidischen Geraden mehr.</figcaption>
+        </figure>
+      </div>
+
+      <p>Einstein zieht daraus eine radikale Folgerung: Gravitation ist nicht einfach eine unsichtbare Kraft zwischen Massen. Masse verändert die Geometrie der Raumzeit. Licht folgt immer dem lokal geradesten beziehungsweise schnellsten Weg, aber dieser Weg kann in gekrümmter Raumzeit gebogen aussehen.</p>
+
+        <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"art-essay-transfer",
+          "title":"Transfer: Erkläre den Schritt von der SRT zur ART",
+          "hint":"Antworte in 4 bis 8 Sätzen. Nutze die Begriffe Beschleunigung, Äquivalenzprinzip und Lichtablenkung korrekt.",
+          "storagePrefix":"srt_art_",
+          "exportName":"srt-art-ergebnisse.txt",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Erklärung","key":"text","kind":"textarea","placeholder":"Warum reicht die SRT nicht mehr aus, und wie führt das Äquivalenzprinzip zur ART?"}
+          ]
+        }
+        </script>
+      </div>
+
+        <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Der Übergang zur ART beginnt mit einer Beobachtung über beschleunigte Systeme. Wenn Beschleunigung und Gravitation lokal ununterscheidbar sind, dann muss Gravitation etwas mit der Struktur von Raum und Zeit selbst zu tun haben.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="ART, Belege und Anwendungen">
+      <h1>ART, Belege und Anwendungen:</h1>
+      <p>Jetzt kommt die eigentliche Aussage der allgemeinen Relativitätstheorie, ihre spektakulären Folgen und ihre Bedeutung für moderne Technik.</p>
+
+      <h2>Die Kernaussage der ART</h2>
+      <div class="srt-grid">
+        <figure class="srt-figure">
+          <img src="bilder/art.png" alt="Darstellung der gekrümmten Raumzeit mit Massen" />
+          <figcaption>Masse und Energie formen die Raumzeit. Körper ohne weitere Kräfte folgen Geodäten in dieser Geometrie.</figcaption>
+        </figure>
+        <div class="srt-card">
+          <h3>ART in einem Satz</h3>
+          <p>Gravitation ist keine gewöhnliche Kraft zwischen zwei Körpern, sondern eine Folge gekrümmter Raumzeit.</p>
+          <p>Energie und Impuls der Materie beeinflussen die Geometrie der Raumzeit. <br> Die Geometrie der Raumzeit beeinflusst die Bewegung der Materie. <br>
+            Materie, auf die keine Kraft wirkt, bewegt sich in der Raumzeit auf Geodäten.</p>
+        </div>
+      </div>
+
+      <h2>Die Gleichung der ART</h2>
+      <div class="srt-formula"><strong>Einstein-Gleichung:</strong> $R_{\mu\nu} - \frac{1}{2}R g_{\mu\nu} + \Lambda g_{\mu\nu} = \kappa T_{\mu\nu}$</div>
+      <div class="wb-soft-callout">
+        <strong>Was bedeuten die Terme?</strong>
+        <ul class="srt-checklist">
+          <li><strong>Ricci-Tensor $R_{\mu\nu}$:</strong> Beschreibt die Krümmung der Raumzeit.</li>
+          <li><strong>Kosmologische Konstante $\Lambda g_{\mu\nu}$:</strong> oder auch Dunkle Energie, metrischer Tensor $g_{\mu\nu}$.</li>
+          <li><strong>Energie-Impuls-Tensor $T_{\mu\nu}$:</strong> Beschreibt Dichte und Fluss von Energie und Impuls.</li>
+          <li><strong>Einsteinsche Gravitationskonstante $\kappa = \frac{8 \pi G}{c^4}$:</strong> Bestimmt die Stärke der Kopplung zwischen Materie beziehungsweise Energie und Raumzeitkrümmung.</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Schwarze Löcher</h2>
+      <div class="grid2">
+        <figure class="srt-figure">
+          <img src="bilder/schwarzes_loch.png" alt="Darstellung eines Schwarzen Lochs" />
+          <figcaption>Bei extrem starker Raumzeitkrümmung kann ein Bereich entstehen, aus dem nichts mehr entkommt.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <strong>Was ist ein Schwarzes Loch?</strong>
+          <ul class="srt-checklist">
+            <li>Ein sehr schwerer Körper kann die Raumzeit so stark krümmen, dass kein Licht und keine Materie mehr entkommen können.</li>
+            <li>Die Grenze dieses Bereichs heißt <b>Ereignishorizont</b>. Wer ihn überschreitet, kann keine Information mehr nach außen senden.</li>
+            <li>Im einfachen Modell besitzt ein Schwarzes Loch im Inneren eine Singularität, also einen Bereich, in dem die bekannte Beschreibung der Physik an ihre Grenze kommt.</li>
+            <li>Karl Schwarzschild beschrieb 1916 als Erster eine exakte Lösung von Einsteins Feldgleichungen für einen kugelsymmetrischen schweren Körper.</li>
+            <li>Der zugehörige Schwarzschildradius lautet: $r_s = \frac{2GM}{c^2}$.</li>
+            <li>Schwarze Löcher sind unsichtbar. Man beobachtet sie nur indirekt, zum Beispiel über ihre Wirkung auf Sterne, über heiße Materie in ihrer Umgebung oder über die Ablenkung von Licht.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Belege für die Theorie</h2>
+      <div class="srt-grid-3">
+        <figure class="srt-figure">
+          <img src="bilder/gravitationslinse.png" alt="Schema einer Gravitationslinse" />
+          <figcaption>Große Massen können Licht ablenken und dadurch wie eine Linse wirken.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/gravitationslinse2.png" alt="Weitere Darstellung einer Gravitationslinse" />
+          <figcaption>Aus Sicht von Beobachtern erscheinen dadurch Lichtquellen verschoben, verzerrt oder vervielfacht.</figcaption>
+        </figure>
+        <figure class="srt-figure">
+          <img src="bilder/gravitationslinse3.png" alt="Gravitationslinse mit scheinbarer und tatsächlicher Position" />
+          <figcaption>Die tatsächliche Position einer Lichtquelle kann sich deutlich von ihrer scheinbaren Position unterscheiden.</figcaption>
+        </figure>
+      </div>
+
+      
+
+      <div class="srt-timeline">
+        <div class="srt-step"><strong>1915:</strong> Einstein formuliert die allgemeine Relativitätstheorie.</div>
+        <div class="srt-step"><strong>Vorhersage:</strong> Die Bahn des Merkur lässt sich präziser beschreiben als mit rein newtonscher Mechanik.</div>
+        <div class="srt-step"><strong>1919:</strong> Bei einer Sonnenfinsternis wird die Ablenkung von Sternenlicht gemessen. Einstein wird weltweit bekannt.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Anwendungen heute</h2>
+      <div class="srt-grid-3">
+        <div class="srt-card">
+          <h3>GPS</h3>
+          <p>Die Uhren von Satelliten laufen relativ zu Uhren auf der Erde anders. Ohne relativistische Korrekturen würden Navigationsdaten schnell unbrauchbar.</p>
+        </div>
+        <div class="srt-card">
+          <h3>Astrophysik</h3>
+          <p>Gravitationslinsen und Schwarze Löcher liefern Informationen über Massenverteilungen und die Struktur des Universums.</p>
+        </div>
+        <div class="srt-card">
+          <h3>Nuklearmedizin</h3>
+          <p>Bei Verfahren wie PET spielt die Masse-Energie-Äquivalenz eine zentrale Rolle.</p>
+        </div>
+      </div>
+
+
+
+      <div class="wb-section-break"></div>
+
+      <h2>Historischer Kontext:</h2>
+      <figure class="srt-figure">
+        <img src="bilder/publiziert.png" alt="Ausschnitt zu Angriffen auf Einstein" />
+        <figcaption>Einstein wurde in Deutschland heftig angefeindet; seine Relativitätstheorie wurde von Gegnern als "jüdische Physik" diffamiert.</figcaption>
+      </figure>
+      <div class="wb-soft-callout">
+        <strong>Eckdaten</strong>
+        <p>Albert Einstein wurde in Deutschland zunehmend antisemitisch angegriffen und emigrierte 1933 in die USA. Am 2. August 1939 unterzeichnete er einen von Leo Szilard entworfenen Brief an US-Präsident Franklin D. Roosevelt, der vor einer möglichen deutschen Atombombe warnte und amerikanische Forschung beschleunigen sollte.</p>
+        <p>In der historischen Rückschau wird oft betont, dass die nationalsozialistische Abwertung von Relativitätstheorie und Quantenphysik als angeblich "jüdische Physik" die deutsche Physik massiv schwächte. Das gilt als ein wichtiger Grund dafür, dass Deutschland keine funktionsfähige Atombombe entwickelte.</p>
+        <p>1952 erhielt Einstein das Angebot, Präsident von Israel zu werden. Er lehnte ab, weil er sich für ein solches politisches Amt nicht geeignet sah.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"art-mcq-evidence",
+          "title":"Mini-Check: ART verstehen",
+          "hint":"Eine oder mehrere Antworten können richtig sein.",
+          "questions":[
+            {
+              "text":"Welche Aussage trifft die ART am besten?",
+              "choices":[
+                {"id":"a","label":"Gravitation ist immer nur eine Fernkraft wie bei Newton."},
+                {"id":"b","label":"Masse und Energie beeinflussen die Geometrie der Raumzeit."},
+                {"id":"c","label":"Licht bewegt sich nur im Vakuum gekrümmt."}
+              ],
+              "correct":["b"],
+              "explain":"Das ist die Grundidee der ART."
+            },
+            {
+              "text":"Welche Beispiele gelten als Bestätigung oder Anwendung relativer Effekte?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"GPS-Satellitennavigation"},
+                {"id":"b","label":"Gravitationslinsen"},
+                {"id":"c","label":"Dass schwere Steine schneller fallen als leichte"}
+              ],
+              "correct":["a","b"],
+              "explain":"GPS und Gravitationslinsen gehören zu den Standardbeispielen. Aussage c ist falsch."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"art-reveal-blackhole",
+          "title":"Weiterdenken: Schwarzes Loch",
+          "question":"Warum sieht man ein Schwarzes Loch nicht direkt, obwohl es nach der ART ein reales Objekt ist?",
+          "answer":"Weil jenseits des Ereignishorizonts kein Licht mehr entkommt. Sichtbar werden Schwarze Löcher deshalb meist indirekt, zum Beispiel über Materie in ihrer Umgebung, über abgelenktes Licht oder über ihre Wirkung auf andere Himmelskörper.",
+          "buttonLabel":"Auflösung anzeigen",
+          "buttonHideLabel":"Auflösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Die ART beschreibt Gravitation geometrisch, erklärt Beobachtungen wie Lichtablenkung und wird in moderner Technik tatsächlich gebraucht. Sie ist also nicht nur schön gedacht, sondern messbar wirksam.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Zusammenfassung, Quellen, Abgabe">
+      <h1>Zusammenfassung, Weiterforschen und Abgabe</h1>
+
+      <h2>Das solltest du jetzt sicher können</h2>
+      <div class="srt-grid">
+        <div class="srt-card">
+          <h3>SRT</h3>
+          <p>Du kannst die beiden Postulate nennen und daraus Zeitdilatation, Längenkontraktion und relative Gleichzeitigkeit erklären.</p>
+        </div>
+        <div class="srt-card">
+          <h3>ART</h3>
+          <p>Du kannst den Weg vom Äquivalenzprinzip zur gekrümmten Raumzeit beschreiben und erklären, warum Licht im Gravitationsfeld abgelenkt wird.</p>
+        </div>
+        <div class="srt-card">
+          <h3>Anwendungen</h3>
+          <p>Du kannst mindestens zwei moderne Anwendungen oder Beobachtungen nennen, bei denen relativistische Effekte unverzichtbar sind.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Eckdaten zu Albert Einstein</h2>
+      <div class="wb-soft-callout">
+        <strong>Zeitleiste</strong>
+        <ul class="srt-checklist">
+          <li><strong>14. März 1879:</strong> Albert Einstein wird in Ulm geboren.</li>
+          <li><strong>1885 bis 1888:</strong> Besuch der Volksschule in München.</li>
+          <li><strong>1888 bis 1894:</strong> Besuch des Luitpold-Gymnasiums in München.</li>
+          <li><strong>1894:</strong> Schulabbruch nach Streit mit dem Schuldirektor und Umzug nach Italien zu seinen Eltern.</li>
+          <li><strong>1895:</strong> Seine Bewerbung an der ETH Zürich für Physik wird zunächst abgelehnt.</li>
+          <li><strong>1896:</strong> Matura an der Kantonsschule Aarau.</li>
+          <li><strong>1896 bis 1900:</strong> Studium der Mathematik und Physik an der ETH Zürich.</li>
+          <li><strong>1902:</strong> Arbeit als technischer Prüfer am Patentamt in Bern.</li>
+          <li><strong>1903:</strong> Heirat mit Mileva Maric; aus der Ehe gehen drei Kinder hervor.</li>
+          <li><strong>1905:</strong> Dissertation <em>Eine neue Bestimmung der Moleküldimensionen</em> und Veröffentlichung von <em>Zur Elektrodynamik bewegter Körper</em>, der Grundlage der speziellen Relativitätstheorie.</li>
+          <li><strong>1908:</strong> Habilitation und Ernennung zum Professor für theoretische Physik an der Universität Zürich.</li>
+          <li><strong>1911:</strong> Berufung zum Professor für theoretische Physik an die Universität Prag.</li>
+          <li><strong>1913:</strong> Mitglied der Königlich-Preußischen Akademie der Wissenschaften in Berlin.</li>
+          <li><strong>1915:</strong> Vollendung der allgemeinen Relativitätstheorie in Berlin.</li>
+          <li><strong>1919:</strong> Scheidung von Mileva Maric und Heirat mit seiner Cousine Elsa Löwenthal.</li>
+          <li><strong>1921:</strong> Nobelpreis für Physik für seine Arbeiten zum photoelektrischen Effekt.</li>
+          <li><strong>1933:</strong> Rücktritt aus der Königlich-Preußischen Akademie der Wissenschaften; beim Machtantritt der Nationalsozialisten befindet er sich bereits in den USA.</li>
+          <li><strong>1936:</strong> Elsa Einstein stirbt.</li>
+          <li><strong>2. August 1939:</strong> Unterzeichnung des Briefes an Franklin D. Roosevelt zur Warnung vor einer möglichen deutschen Atombombe und zur Beschleunigung entsprechender Forschung in den USA.</li>
+          <li><strong>1952:</strong> Angebot, Präsident von Israel zu werden; Einstein lehnt ab.</li>
+          <li><strong>18. April 1955:</strong> Tod in Princeton, New Jersey, im Alter von 76 Jahren.</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-art-final-check",
+          "title":"Abschluss-Check",
+          "hint":"Prüfe, ob du den roten Faden verstanden hast.",
+          "questions":[
+            {
+              "text":"Welcher Gedankengang führt von der SRT zur ART?",
+              "choices":[
+                {"id":"a","label":"Licht ist doch ein Teilchen, deshalb ist Gravitation unnötig."},
+                {"id":"b","label":"Die SRT gilt auch für Beschleunigung, deshalb braucht man keine neue Theorie."},
+                {"id":"c","label":"Die SRT beschreibt keine Gravitation und keine beschleunigten Systeme, daher führt das Äquivalenzprinzip weiter zur ART."}
+              ],
+              "correct":["c"],
+              "explain":"Das ist die inhaltliche Brücke."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"srt-art-reflection",
+          "title":"Abgabe: Erkläre Einstein in deinen eigenen Worten",
+          "hint":"Schreibe 5 bis 8 Sätze. Beantworte: Welche Idee der Relativitätstheorie findest du am überraschendsten und warum?",
+          "storagePrefix":"srt_art_",
+          "exportName":"srt-art-ergebnisse.txt",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Antwort","key":"answer","kind":"textarea","placeholder":"Ich finde am überraschendsten, dass ..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Weiterforschen & Quellen</h2>
+      <div class="wb-soft-callout">
+        <strong>Primärmaterial dieser Seite</strong>
+        <p><a href="https://www.youtube.com/watch?v=tzQC3uYL67U" target="_blank" rel="noopener">YouTube-Video: Die spezielle & allgemeine Relativitätstheorie</a></p>
+      </div>
+
+      <ul class="srt-checklist">
+        <li><a href="https://www.leifiphysik.de/relativitaetstheorie" target="_blank" rel="noopener">LEIFIphysik: Relativitätstheorie</a></li>
+        <li><a href="https://www.leifiphysik.de/relativitaetstheorie/spezielle-relativitaetstheorie" target="_blank" rel="noopener">LEIFIphysik: Spezielle Relativitätstheorie</a></li>
+        <li><a href="https://www.einstein-online.info/spotlights/spezRT/" target="_blank" rel="noopener">Einstein Online: Spezielle Relativitätstheorie</a></li>
+        <li><a href="https://www.einstein-online.info/explandict/allgemeine-relativitaetstheorie/" target="_blank" rel="noopener">Einstein Online: Allgemeine Relativitätstheorie</a></li>
+      </ul>
+
+      <div class="wb-callout">
+        <strong>Abgabe-Hinweis:</strong>
+        <p>Über die Sidebar kannst du dir am Ende die Zusammenfassung deiner Eingaben anzeigen lassen. Nutze besonders die beiden Freitextfelder, denn dort sieht man, ob du die Ideen wirklich verstanden und nicht nur wiedererkannt hast.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
