@@ -1,0 +1,49 @@
+name: Build and deploy Pages (bbz + public)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build site
+        run: |
+          rm -rf _site
+          mkdir -p _site/bbz
+          mkdir -p _site/public
+
+          # copy repo → both variants
+          rsync -av --exclude '.git' --exclude '.github' --exclude '_site' ./ _site/bbz/
+          rsync -av --exclude '.git' --exclude '.github' --exclude '_site' ./ _site/public/
+
+          # remove webhook only from public
+          rm -f _site/public/webhook.js
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy
+        uses: actions/deploy-pages@v4
