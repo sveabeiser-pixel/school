@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SBLibrary - Interferenz 2 (autoNav)</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/wellen-simulations.css">
   <script>
   window.MathJax = {
     tex: {
@@ -14,81 +15,6 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    .sw-sim-card {
-      border: 1px solid var(--wb-line, #e5e7eb);
-      border-radius: 14px;
-      padding: 14px;
-      background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
-      margin: 14px 0;
-    }
-
-    .sw-sim-grid {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .sw-sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .sw-sim-controls label {
-      display: block;
-      font-weight: 900;
-      margin: 10px 0 6px;
-    }
-
-    .sw-sim-controls input[type="range"] {
-      width: 100%;
-    }
-
-    .sw-sim-mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      color: var(--wb-muted, #6b7280);
-      white-space: pre-wrap;
-      margin-top: 8px;
-    }
-
-    #singleSlitCanvas,
-    #dsCanvas,
-    #gratingCanvas,
-    #phasorCanvas,
-    #phasorPatternCanvas,
-    #dsParticleCanvas {
-      width: 100%;
-      height: 260px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255, 255, 255, 0.5);
-      display: block;
-    }
-    #dsParticleCanvas { height: 360px; }
-
-    .wb-book[data-theme="dark"] .sw-sim-card,
-    .wb-book[data-theme="dark-blue"] .sw-sim-card {
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .wb-book[data-theme="dark"] #singleSlitCanvas,
-    .wb-book[data-theme="dark"] #dsCanvas,
-    .wb-book[data-theme="dark"] #gratingCanvas,
-    .wb-book[data-theme="dark"] #phasorCanvas,
-    .wb-book[data-theme="dark"] #phasorPatternCanvas,
-    .wb-book[data-theme="dark"] #dsParticleCanvas,
-    .wb-book[data-theme="dark-blue"] #singleSlitCanvas,
-    .wb-book[data-theme="dark-blue"] #dsCanvas,
-    .wb-book[data-theme="dark-blue"] #gratingCanvas,
-    .wb-book[data-theme="dark-blue"] #phasorCanvas,
-    .wb-book[data-theme="dark-blue"] #phasorPatternCanvas,
-    .wb-book[data-theme="dark-blue"] #dsParticleCanvas {
-      background: rgba(255, 255, 255, 0.86);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
     .mini-list li{ margin: 6px 0; }
   </style>
 </head>
@@ -458,11 +384,11 @@
         (Summe der Einzelverteilungen) und beide Spalte ohne Welcher-Weg-Information
         (Interferenzmuster).
       </p>
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="double-slit-particles">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="dspMode">Modus</label>
-            <select id="dspMode">
+            <select id="dspMode" data-role="mode">
               <option value="slitA">Nur durch Spalt A</option>
               <option value="slitB">Nur durch Spalt B</option>
               <option value="bothWhich">Beide Spalte mit Welcher-Weg-Information</option>
@@ -470,18 +396,18 @@
             </select>
 
             <label for="dspRate">Teilchenrate</label>
-            <input id="dspRate" type="range" min="5" max="80" step="1" value="34" />
-            <div class="sw-sim-mono">Teilchen/s = <span id="dspRateVal">34</span></div>
+            <input id="dspRate" data-role="rate" type="range" min="5" max="80" step="1" value="34" />
+            <div class="sw-sim-mono">Teilchen/s = <span id="dspRateVal" data-role="rate-value">34</span></div>
 
             <div class="wb-row" style="margin-top:10px">
-              <button class="wb-btn primary" type="button" id="dspStartBtn">Start</button>
-              <button class="wb-btn" type="button" id="dspResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="dspStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="dspResetBtn" data-role="reset">Reset</button>
             </div>
 
-            <div class="sw-sim-mono" id="dspReadout"></div>
+            <div class="sw-sim-mono" id="dspReadout" data-role="readout"></div>
           </div>
           <div>
-            <canvas id="dsParticleCanvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
+            <canvas id="dsParticleCanvas" data-role="canvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
           </div>
         </div>
       </div>
@@ -1808,28 +1734,28 @@ Es reicht bis zum ersten Einzelspalt-Minimum, das weiter außen liegt als das er
         Experimentiere mit \(\lambda\), \(d\), \(e\) und dem Winkel \(\alpha\).
         Vergleichssimulation: <a href="https://www.leifiphysik.de/optik/beugung-und-interferenz/grundwissen/einzelspalt" target="_blank" rel="noopener">LEIFI-Einzelspalt</a>
       </p>
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="single-slit">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="esLamNm">Wellenlänge \(\lambda\) (nm)</label>
-            <input id="esLamNm" type="range" min="380" max="700" value="633" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="esLamNmVal">633</span> nm</div>
+            <input id="esLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="esLamNmVal" data-role="lam-nm-value">633</span> nm</div>
 
             <label for="esLMm">Spaltbreite \(d\) (mm)</label>
-            <input id="esLMm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
-            <div class="sw-sim-mono">\(l\) = <span id="esLMmVal">0.020</span> mm</div>
+            <input id="esLMm" data-role="screen-distance-mm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
+            <div class="sw-sim-mono">\(l\) = <span id="esLMmVal" data-role="screen-distance-mm-value">0.020</span> mm</div>
 
             <label for="esAM">Abstand \(e\) (m)</label>
-            <input id="esAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="esAMVal">2.5</span> m</div>
+            <input id="esAM" data-role="slit-width-mm" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="esAMVal" data-role="slit-width-mm-value">2.5</span> m</div>
 
             <label for="esThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
-            <input id="esThetaDeg" type="range" min="-12" max="12" value="2" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="esThetaDegVal">2.0</span> °</div>
+            <input id="esThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="2" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="esThetaDegVal" data-role="theta-deg-value">2.0</span> °</div>
           </div>
           <div>
-            <canvas id="singleSlitCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
-            <div class="sw-sim-mono" id="singleSlitReadout"></div>
+            <canvas id="singleSlitCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
+            <div class="sw-sim-mono" id="singleSlitReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -1878,32 +1804,32 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         </ul>
       </div>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="double-slit-envelope">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="dsLamNm">Wellenlänge \(\lambda\) (nm)</label>
-            <input id="dsLamNm" type="range" min="380" max="700" value="633" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="dsLamNmVal">633</span> nm</div>
+            <input id="dsLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="dsLamNmVal" data-role="lam-nm-value">633</span> nm</div>
 
             <label for="dsbMm">Spaltbreite \(b\) (mm)</label>
-            <input id="dsbMm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
-            <div class="sw-sim-mono">\(b\) = <span id="dsbMmVal">0.020</span> mm</div>
+            <input id="dsbMm" data-role="slit-width-mm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
+            <div class="sw-sim-mono">\(b\) = <span id="dsbMmVal" data-role="slit-width-mm-value">0.020</span> mm</div>
 
             <label for="dsgMm">Spaltabstand \(g\) (mm) (Mitte-Mitte)</label>
-            <input id="dsgMm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
-            <div class="sw-sim-mono">\(g\) = <span id="dsgMmVal">0.100</span> mm</div>
+            <input id="dsgMm" data-role="slit-distance-mm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
+            <div class="sw-sim-mono">\(g\) = <span id="dsgMmVal" data-role="slit-distance-mm-value">0.100</span> mm</div>
 
             <label for="dsAM">Abstand \(e\) (m) (nur für \(y\approx a\cdot\tan\alpha\))</label>
-            <input id="dsAM" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="dsAMVal">2.5</span> m</div>
+            <input id="dsAM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="dsAMVal" data-role="screen-distance-m-value">2.5</span> m</div>
 
             <label for="dsThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
-            <input id="dsThetaDeg" type="range" min="-12" max="12" value="1.5" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="dsThetaDegVal">1.5</span> °</div>
+            <input id="dsThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="1.5" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="dsThetaDegVal" data-role="theta-deg-value">1.5</span> °</div>
           </div>
           <div>
-            <canvas id="dsCanvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
-            <div class="sw-sim-mono" id="dsReadout"></div>
+            <canvas id="dsCanvas" data-role="canvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
+            <div class="sw-sim-mono" id="dsReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -2116,26 +2042,26 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         So siehst du direkt, wie sich das Zeigerpolygon mit der Spaltzahl \(N\) ver&auml;ndert.
         Vergleich: <a href="https://physikbuch.schule/grid-diffraction.html" target="_blank" rel="noopener">physikbuch.schule (Bild 11.151)</a>
       </p>
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="grating-phasor">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="phN">Spaltzahl \(N\)</label>
-            <input id="phN" type="range" min="2" max="10" value="3" step="1" />
-            <div class="sw-sim-mono">\(N\) = <span id="phNVal">3</span></div>
+            <input id="phN" data-role="n" type="range" min="2" max="10" value="3" step="1" />
+            <div class="sw-sim-mono">\(N\) = <span id="phNVal" data-role="n-value">3</span></div>
 
             <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
-            <input id="phU" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
-            <div class="sw-sim-mono">\(u\) = <span id="phUVal">0.180</span></div>
+            <input id="phU" data-role="u" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
+            <div class="sw-sim-mono">\(u\) = <span id="phUVal" data-role="u-value">0.180</span></div>
 
             <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
-            <input id="phScale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
-            <div class="sw-sim-mono">Skalierung = <span id="phScaleVal">1.00</span></div>
-            <div class="sw-sim-mono" id="phasorReadout"></div>
+            <input id="phScale" data-role="scale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">Skalierung = <span id="phScaleVal" data-role="scale-value">1.00</span></div>
+            <div class="sw-sim-mono" id="phasorReadout" data-role="readout"></div>
           </div>
           <div>
-            <canvas id="phasorCanvas" width="900" height="520" aria-label="Zeigerpolygon für Spaltgitter"></canvas>
+            <canvas id="phasorCanvas" data-role="canvas" width="900" height="520" aria-label="Zeigerpolygon für Spaltgitter"></canvas>
             <div class="wb-section-break"></div>
-            <canvas id="phasorPatternCanvas" width="900" height="300" aria-label="Intensität in Abhängigkeit von u"></canvas>
+            <canvas id="phasorPatternCanvas" data-role="pattern-canvas" width="900" height="300" aria-label="Intensität in Abhängigkeit von u"></canvas>
           </div>
         </div>
       </div>
@@ -2242,36 +2168,36 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
         \]</p>
       </div>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="grating">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="gtLamNm">Wellenlänge \(\lambda\) (nm)</label>
-            <input id="gtLamNm" type="range" min="380" max="700" value="550" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="gtLamNmVal">550</span> nm</div>
+            <input id="gtLamNm" data-role="lam-nm" type="range" min="380" max="700" value="550" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="gtLamNmVal" data-role="lam-nm-value">550</span> nm</div>
 
             <label for="gtGUm">Gitterkonstante \(g\) (\(\mu\)m)</label>
-            <input id="gtGUm" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
-            <div class="sw-sim-mono">\(g\) = <span id="gtGUmVal">4.0</span> \(\mu\)m</div>
+            <input id="gtGUm" data-role="g-um" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
+            <div class="sw-sim-mono">\(g\) = <span id="gtGUmVal" data-role="g-um-value">4.0</span> \(\mu\)m</div>
 
             <label for="gtBUm">Spaltbreite \(b\) (\(\mu\)m)</label>
-            <input id="gtBUm" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
-            <div class="sw-sim-mono">\(b\) = <span id="gtBUmVal">0.8</span> \(\mu\)m</div>
+            <input id="gtBUm" data-role="b-um" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
+            <div class="sw-sim-mono">\(b\) = <span id="gtBUmVal" data-role="b-um-value">0.8</span> \(\mu\)m</div>
 
             <label for="gtN">Spaltzahl \(N\)</label>
-            <input id="gtN" type="range" min="2" max="14" value="6" step="1" />
-            <div class="sw-sim-mono">\(N\) = <span id="gtNVal">6</span></div>
+            <input id="gtN" data-role="n" type="range" min="2" max="14" value="6" step="1" />
+            <div class="sw-sim-mono">\(N\) = <span id="gtNVal" data-role="n-value">6</span></div>
 
             <label for="gtEM">Schirmabstand \(e\) (m)</label>
-            <input id="gtEM" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="gtEMVal">2.0</span> m</div>
+            <input id="gtEM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="gtEMVal" data-role="screen-distance-m-value">2.0</span> m</div>
 
             <label for="gtThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
-            <input id="gtThetaDeg" type="range" min="-25" max="25" value="3" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="gtThetaDegVal">3.0</span> °</div>
+            <input id="gtThetaDeg" data-role="theta-deg" type="range" min="-25" max="25" value="3" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="gtThetaDegVal" data-role="theta-deg-value">3.0</span> °</div>
           </div>
           <div>
-            <canvas id="gratingCanvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
-            <div class="sw-sim-mono" id="gratingReadout"></div>
+            <canvas id="gratingCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
+            <div class="sw-sim-mono" id="gratingReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -2963,1060 +2889,15 @@ Da ein Doppelspalt aus zwei Einzelspalten besteht, ist das Interferenzmuster der
     </section>
 
   </div>
-
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/wellen-simulations.js"></script>
   <script>
-    function initSingleSlitSim(){
-      const canvas = document.getElementById("singleSlitCanvas");
-      const readout = document.getElementById("singleSlitReadout");
-      if(!canvas || !readout) return;
-
-      const lamNm = document.getElementById("esLamNm");
-      const lMm = document.getElementById("esLMm");
-      const aM = document.getElementById("esAM");
-      const thetaDeg = document.getElementById("esThetaDeg");
-
-      const lamNmVal = document.getElementById("esLamNmVal");
-      const lMmVal = document.getElementById("esLMmVal");
-      const aMVal = document.getElementById("esAMVal");
-      const thetaDegVal = document.getElementById("esThetaDegVal");
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-
-      function sinc(x){
-        if(Math.abs(x) < 1e-8) return 1;
-        return Math.sin(x) / x;
-      }
-
-      function intensity(thetaRad, l, lam){
-        const beta = Math.PI * l * Math.sin(thetaRad) / lam;
-        const s = sinc(beta);
-        return s * s;
-      }
-
-      function draw(){
-        const lam = Number(lamNm.value) * 1e-9;
-        const l = Number(lMm.value) * 1e-3;
-        const a = Number(aM.value);
-        const thMark = Number(thetaDeg.value) * Math.PI / 180;
-
-        lamNmVal.textContent = String(lamNm.value);
-        lMmVal.textContent = Number(lMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
-        aMVal.textContent = Number(aM.value).toFixed(1);
-        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
-
-        const thMin = -12 * Math.PI / 180;
-        const thMax = 12 * Math.PI / 180;
-
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const N = 900;
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const I = intensity(th, l, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
-        const IM = intensity(thMark, l, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        const kMax = Math.floor(l / lam);
-        const kShow = Math.min(kMax, 8);
-        const minima = [];
-        for(let k = 1; k <= kShow; k++){
-          const s = (k * lam) / l;
-          if(s >= 1) break;
-          const thk = Math.asin(s);
-          minima.push({k, th: thk});
-          minima.push({k, th: -thk});
-        }
-        minima.forEach(m => {
-          const x = x0 + (m.th - thMin) / (thMax - thMin) * (x1 - x0);
-          if(x < x0 || x > x1) return;
-          ctx.beginPath();
-          ctx.moveTo(x, y1);
-          ctx.lineTo(x, y1 + 10);
-          ctx.stroke();
-        });
-
-        const yApprox = a * Math.tan(thMark);
-        const yCm = yApprox * 100;
-        readout.textContent =
-          "Markierung:\n" +
-          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
-          `I(alpha)/I0 ≈ ${IM.toFixed(4)}\n` +
-          `y ≈ a*tan(alpha) ≈ ${yCm.toFixed(2)} cm (a=${a.toFixed(1)} m)\n\n` +
-          "Minima (l*sin(alpha)=k*lambda):\n" +
-          (minima
-            .filter(m => m.th >= 0)
-            .map(m => `k=${m.k}: alpha_k≈${(m.th * 180 / Math.PI).toFixed(2)} deg`)
-            .join(", ") || "—");
-      }
-
-      [lamNm, lMm, aM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
-      draw();
-    }
-
-    function initDoubleSlitWithEnvelopeSim(){
-      const canvas = document.getElementById("dsCanvas");
-      const readout = document.getElementById("dsReadout");
-      if(!canvas || !readout) return;
-
-      const lamNm = document.getElementById("dsLamNm");
-      const bMm = document.getElementById("dsbMm");
-      const gMm = document.getElementById("dsgMm");
-      const aM = document.getElementById("dsAM");
-      const thetaDeg = document.getElementById("dsThetaDeg");
-
-      const lamNmVal = document.getElementById("dsLamNmVal");
-      const bMmVal = document.getElementById("dsbMmVal");
-      const gMmVal = document.getElementById("dsgMmVal");
-      const aMVal = document.getElementById("dsAMVal");
-      const thetaDegVal = document.getElementById("dsThetaDegVal");
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-
-      function sinc(x){
-        if(Math.abs(x) < 1e-8) return 1;
-        return Math.sin(x) / x;
-      }
-
-      function intensity(thetaRad, b, g, lam){
-        const s = Math.sin(thetaRad);
-        const beta = Math.PI * b * s / lam;
-        const delta = Math.PI * g * s / lam;
-        const env = sinc(beta);
-        const inter = Math.cos(delta);
-        return (env * env) * (inter * inter);
-      }
-
-      function envelope(thetaRad, b, lam){
-        const beta = Math.PI * b * Math.sin(thetaRad) / lam;
-        const env = sinc(beta);
-        return env * env;
-      }
-
-      function draw(){
-        const lam = Number(lamNm.value) * 1e-9;
-        const b = Number(bMm.value) * 1e-3;
-        const g = Number(gMm.value) * 1e-3;
-        const a = Number(aM.value);
-        const thMark = Number(thetaDeg.value) * Math.PI / 180;
-
-        lamNmVal.textContent = String(lamNm.value);
-        bMmVal.textContent = Number(bMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
-        gMmVal.textContent = Number(gMm.value).toFixed(3).replace(/0+$/,"").replace(/\.$/,"");
-        aMVal.textContent = Number(aM.value).toFixed(1);
-        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
-
-        const thMin = -12 * Math.PI / 180;
-        const thMax = 12 * Math.PI / 180;
-
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const N = 1200;
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const I = intensity(th, b, g, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        ctx.save();
-        ctx.setLineDash([8, 6]);
-        ctx.beginPath();
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const E = envelope(th, b, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - E * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-        ctx.restore();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
-        const IM = intensity(thMark, b, g, lam);
-        const EM = envelope(thMark, b, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        const kMax = Math.floor(b / lam);
-        const kShow = Math.min(kMax, 8);
-        for(let k = 1; k <= kShow; k++){
-          const s = (k * lam) / b;
-          if(s >= 1) break;
-          const thk = Math.asin(s);
-          [thk, -thk].forEach(t => {
-            const x = x0 + (t - thMin) / (thMax - thMin) * (x1 - x0);
-            if(x < x0 || x > x1) return;
-            ctx.beginPath();
-            ctx.moveTo(x, y1);
-            ctx.lineTo(x, y1 + 10);
-            ctx.stroke();
-          });
-        }
-
-        const yApprox = a * Math.tan(thMark);
-        const yCm = yApprox * 100;
-
-        readout.textContent =
-          "Markierung:\n" +
-          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
-          `I(alpha)/I0 ≈ ${IM.toFixed(4)} (Doppelspalt * Huellkurve)\n` +
-          `Huellkurve E(alpha) ≈ ${EM.toFixed(4)}\n` +
-          `y ≈ a*tan(alpha) ≈ ${yCm.toFixed(2)} cm (a=${a.toFixed(1)} m)\n\n` +
-          "Einzelspalt-Minima (b*sin(alpha)=k*lambda) sind unten markiert.\n" +
-          "Beobachte: Liegt ein Doppelspalt-Maximum in einem Einzelspalt-Minimum, verschwindet es praktisch.";
-      }
-
-      [lamNm, bMm, gMm, aM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
-      draw();
-    }
-
-    function initGratingSim(){
-      const canvas = document.getElementById("gratingCanvas");
-      const readout = document.getElementById("gratingReadout");
-      if(!canvas || !readout) return;
-
-      const lamNm = document.getElementById("gtLamNm");
-      const gUm = document.getElementById("gtGUm");
-      const bUm = document.getElementById("gtBUm");
-      const nSlits = document.getElementById("gtN");
-      const eM = document.getElementById("gtEM");
-      const thetaDeg = document.getElementById("gtThetaDeg");
-
-      const lamNmVal = document.getElementById("gtLamNmVal");
-      const gUmVal = document.getElementById("gtGUmVal");
-      const bUmVal = document.getElementById("gtBUmVal");
-      const nSlitsVal = document.getElementById("gtNVal");
-      const eMVal = document.getElementById("gtEMVal");
-      const thetaDegVal = document.getElementById("gtThetaDegVal");
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-
-      function sinc(x){
-        if(Math.abs(x) < 1e-8) return 1;
-        return Math.sin(x) / x;
-      }
-
-      function nSlitFactor(thetaRad, N, g, lam){
-        const dlt = Math.PI * g * Math.sin(thetaRad) / lam;
-        const den = Math.sin(dlt);
-        if(Math.abs(den) < 1e-8) return 1;
-        const num = Math.sin(N * dlt);
-        const q = num / (N * den);
-        return q * q;
-      }
-
-      function envelope(thetaRad, b, lam){
-        const beta = Math.PI * b * Math.sin(thetaRad) / lam;
-        const env = sinc(beta);
-        return env * env;
-      }
-
-      function intensity(thetaRad, N, b, g, lam){
-        return envelope(thetaRad, b, lam) * nSlitFactor(thetaRad, N, g, lam);
-      }
-
-      function draw(){
-        const lam = Number(lamNm.value) * 1e-9;
-        const g = Number(gUm.value) * 1e-6;
-        const b = Number(bUm.value) * 1e-6;
-        const N = Number(nSlits.value);
-        const e = Number(eM.value);
-        const thMark = Number(thetaDeg.value) * Math.PI / 180;
-
-        lamNmVal.textContent = String(lamNm.value);
-        gUmVal.textContent = Number(gUm.value).toFixed(1);
-        bUmVal.textContent = Number(bUm.value).toFixed(1);
-        nSlitsVal.textContent = String(N);
-        eMVal.textContent = Number(eM.value).toFixed(1);
-        thetaDegVal.textContent = Number(thetaDeg.value).toFixed(1);
-
-        const thMin = -25 * Math.PI / 180;
-        const thMax = 25 * Math.PI / 180;
-
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-25, -15, -5, 0, 5, 15, 25].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const steps = 1600;
-        for(let i = 0; i <= steps; i++){
-          const th = thMin + (thMax - thMin) * i / steps;
-          const I = intensity(th, N, b, g, lam);
-          const x = x0 + (i / steps) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
-        const IM = intensity(thMark, N, b, g, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        const principal = [];
-        const kMax = Math.floor(g / lam);
-        for(let k = -kMax; k <= kMax; k++){
-          const s = (k * lam) / g;
-          if(Math.abs(s) > 1) continue;
-          const th = Math.asin(s);
-          if(th < thMin || th > thMax) continue;
-          principal.push({k, th});
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y1);
-          ctx.lineTo(x, y1 + 10);
-          ctx.stroke();
-        }
-
-        const yApprox = e * Math.tan(thMark);
-        const yCm = yApprox * 100;
-        const linesPerMm = (1e-3 / g);
-        const kPos = principal.filter(p => p.k >= 0)
-          .slice(0, 5)
-          .map(p => `k=${p.k}: ${(p.th * 180 / Math.PI).toFixed(2)} deg`)
-          .join(", ");
-
-        readout.textContent =
-          "Markierung:\n" +
-          `alpha = ${(thMark * 180 / Math.PI).toFixed(2)} deg\n` +
-          `I(alpha)/I0 ≈ ${IM.toFixed(4)}\n` +
-          `y ≈ e*tan(alpha) ≈ ${yCm.toFixed(2)} cm (e=${e.toFixed(1)} m)\n` +
-          `n ≈ ${Math.round(linesPerMm)} Linien/mm\n\n` +
-          "Hauptmaxima (g*sin(alpha_k)=k*lambda):\n" +
-          (kPos || "keine im sichtbaren Winkelbereich");
-      }
-
-      [lamNm, gUm, bUm, nSlits, eM, thetaDeg].forEach(el => el && el.addEventListener("input", draw));
-      draw();
-    }
-
-    function initGratingPhasorSim(){
-      const canvas = document.getElementById("phasorCanvas");
-      const patternCanvas = document.getElementById("phasorPatternCanvas");
-      const readout = document.getElementById("phasorReadout");
-      if(!canvas || !patternCanvas || !readout){
-        if(!global.__wbPhasorObserver){
-          const observer = new MutationObserver(() => {
-            const c = document.getElementById("phasorCanvas");
-            const pc = document.getElementById("phasorPatternCanvas");
-            const r = document.getElementById("phasorReadout");
-            if(c && pc && r){
-              initGratingPhasorSim();
-            }
-          });
-          observer.observe(document.body, {childList:true, subtree:true});
-          global.__wbPhasorObserver = observer;
-        }
-        return;
-      }
-      if(canvas.dataset.wbPhasorInit === "1") return;
-      canvas.dataset.wbPhasorInit = "1";
-
-      const nEl = document.getElementById("phN");
-      const uEl = document.getElementById("phU");
-      const scaleEl = document.getElementById("phScale");
-      const nVal = document.getElementById("phNVal");
-      const uVal = document.getElementById("phUVal");
-      const scaleVal = document.getElementById("phScaleVal");
-
-      const ctx = canvas.getContext("2d");
-      const pctx = patternCanvas.getContext("2d");
-      const W = canvas.width, H = canvas.height;
-      const PW = patternCanvas.width, PH = patternCanvas.height;
-
-      function factorI(u, N){
-        const x = Math.PI * u;
-        const den = Math.sin(x);
-        if(Math.abs(den) < 1e-10) return 1;
-        const q = Math.sin(N * x) / (N * den);
-        return q * q;
-      }
-
-      function drawArrow(c, x1, y1, x2, y2){
-        c.beginPath();
-        c.moveTo(x1, y1);
-        c.lineTo(x2, y2);
-        c.stroke();
-        const ang = Math.atan2(y2 - y1, x2 - x1);
-        const hl = 9;
-        c.beginPath();
-        c.moveTo(x2, y2);
-        c.lineTo(x2 - hl * Math.cos(ang - Math.PI / 7), y2 - hl * Math.sin(ang - Math.PI / 7));
-        c.lineTo(x2 - hl * Math.cos(ang + Math.PI / 7), y2 - hl * Math.sin(ang + Math.PI / 7));
-        c.closePath();
-        c.fill();
-      }
-
-      function draw(){
-        const N = Number(nEl.value);
-        const u = Number(uEl.value);
-        const scl = Number(scaleEl.value);
-        const phi = 2 * Math.PI * u;
-
-        nVal.textContent = String(N);
-        uVal.textContent = Number(u).toFixed(3);
-        scaleVal.textContent = Number(scl).toFixed(2);
-
-        ctx.clearRect(0, 0, W, H);
-        const cx = W * 0.45;
-        const cy = H * 0.50;
-        const unit = Math.min(W, H) * 0.11 * scl;
-        const pts = [{x:0, y:0}];
-        for(let m = 0; m < N; m++){
-          const a = m * phi;
-          const last = pts[pts.length - 1];
-          pts.push({x: last.x + Math.cos(a), y: last.y + Math.sin(a)});
-        }
-        const ext = pts.reduce((o,p) => ({
-          minX: Math.min(o.minX, p.x), maxX: Math.max(o.maxX, p.x),
-          minY: Math.min(o.minY, p.y), maxY: Math.max(o.maxY, p.y)
-        }), {minX:0,maxX:0,minY:0,maxY:0});
-        const spanX = Math.max(2, ext.maxX - ext.minX);
-        const spanY = Math.max(2, ext.maxY - ext.minY);
-        const fit = Math.min((W * 0.75) / (spanX * unit), (H * 0.75) / (spanY * unit), 1.6);
-        const s = unit * fit;
-
-        ctx.strokeStyle = "rgba(110,120,140,0.45)";
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.moveTo(40, cy); ctx.lineTo(W - 20, cy);
-        ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20);
-        ctx.stroke();
-
-        ctx.fillStyle = "#111827";
-        ctx.strokeStyle = "#111827";
-        ctx.lineWidth = 2;
-        for(let i = 0; i < N; i++){
-          const p1 = pts[i], p2 = pts[i + 1];
-          const x1 = cx + p1.x * s, y1 = cy - p1.y * s;
-          const x2 = cx + p2.x * s, y2 = cy - p2.y * s;
-          drawArrow(ctx, x1, y1, x2, y2);
-          ctx.fillText(String(i + 1), x1 + 4, y1 - 6);
-        }
-
-        const r = pts[pts.length - 1];
-        const rx = cx + r.x * s, ry = cy - r.y * s;
-        ctx.strokeStyle = "#dc2626";
-        ctx.fillStyle = "#dc2626";
-        ctx.lineWidth = 3;
-        drawArrow(ctx, cx, cy, rx, ry);
-        ctx.fillText("Resultierende", rx + 8, ry - 6);
-
-        pctx.clearRect(0, 0, PW, PH);
-        const padL = 56, padR = 18, padT = 16, padB = 38;
-        const x0 = padL, x1 = PW - padR, y0 = padT, y1 = PH - padB;
-        const uMin = -1.5, uMax = 1.5;
-        pctx.strokeStyle = "#9ca3af";
-        pctx.lineWidth = 1;
-        pctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-        [0,0.25,0.5,0.75,1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          pctx.beginPath(); pctx.moveTo(x0, y); pctx.lineTo(x1, y); pctx.stroke();
-          pctx.fillStyle = "#6b7280";
-          pctx.fillText(v.toFixed(2), 10, y + 4);
-        });
-        [-1.5,-1,-0.5,0,0.5,1,1.5].forEach(uv => {
-          const x = x0 + ((uv - uMin) / (uMax - uMin)) * (x1 - x0);
-          pctx.beginPath(); pctx.moveTo(x, y0); pctx.lineTo(x, y1); pctx.stroke();
-          pctx.fillStyle = "#6b7280";
-          pctx.fillText(String(uv), x - 10, PH - 14);
-        });
-
-        pctx.strokeStyle = "#1f2937";
-        pctx.lineWidth = 2;
-        pctx.beginPath();
-        const steps = 1200;
-        for(let i = 0; i <= steps; i++){
-          const uu = uMin + (uMax - uMin) * i / steps;
-          const I = factorI(uu, N);
-          const x = x0 + (i / steps) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) pctx.moveTo(x, y); else pctx.lineTo(x, y);
-        }
-        pctx.stroke();
-
-        const Iu = factorI(u, N);
-        const xm = x0 + ((u - uMin) / (uMax - uMin)) * (x1 - x0);
-        const ym = y1 - Iu * (y1 - y0);
-        pctx.strokeStyle = "#dc2626";
-        pctx.fillStyle = "#dc2626";
-        pctx.lineWidth = 2;
-        pctx.beginPath(); pctx.moveTo(xm, y0); pctx.lineTo(xm, y1); pctx.stroke();
-        pctx.beginPath(); pctx.arc(xm, ym, 5, 0, Math.PI * 2); pctx.fill();
-
-        const amp = Math.hypot(r.x, r.y);
-        const relAmp = amp / N;
-        readout.textContent =
-          "Aktueller Ort:\n" +
-          `u = ${u.toFixed(3)}\n` +
-          `Phasenschritt Delta-phi = ${(phi * 180 / Math.PI).toFixed(2)} deg\n` +
-          `Relative Amplitude A/Amax = ${(relAmp).toFixed(4)}\n` +
-          `Relative Intensitaet I/Imax = ${(Iu).toFixed(4)}\n\n` +
-          "Merke:\n" +
-          "Hauptmaxima bei u = k (ganzzahlig).\n" +
-          "Minima zwischen zwei Hauptmaxima bei u = m/N (m=1..N-1).";
-      }
-
-      [nEl, uEl, scaleEl].forEach(elm => elm && elm.addEventListener("input", draw));
-      draw();
-    }
-
-    function initDoubleSlitParticleSim(){
-      const canvas = document.getElementById("dsParticleCanvas");
-      const modeEl = document.getElementById("dspMode");
-      const rateEl = document.getElementById("dspRate");
-      const rateVal = document.getElementById("dspRateVal");
-      const startBtn = document.getElementById("dspStartBtn");
-      const resetBtn = document.getElementById("dspResetBtn");
-      const readout = document.getElementById("dspReadout");
-      if(!canvas || !modeEl || !rateEl || !rateVal || !startBtn || !resetBtn || !readout) return;
-      if(canvas.dataset.wbDsParticleInit === "1") return;
-      canvas.dataset.wbDsParticleInit = "1";
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-
-      const sourceX = 88;
-      const sourceY = H * 0.5;
-      const barrierX = 360;
-      const slitGap = 132;
-      const slitOpen = 46;
-      const slitAY = H * 0.5 - slitGap * 0.5;
-      const slitBY = H * 0.5 + slitGap * 0.5;
-      const screenX = 742;
-      const yMin = 34;
-      const yMax = H - 34;
-      const bins = 44;
-      const binH = (yMax - yMin) / bins;
-
-      const colorA = "#0891b2";
-      const colorB = "#c026d3";
-      const colorTotal = "#0f172a";
-
-      const countsA = new Array(bins).fill(0);
-      const countsB = new Array(bins).fill(0);
-      const particles = [];
-      const flashes = [];
-      const cdfCache = new Map();
-      let displayScaleMax = 1;
-
-      let running = false;
-      let spawnAcc = 0;
-      let rafId = 0;
-      let lastTs = performance.now();
-
-      function modeLabel(mode){
-        if(mode === "slitA") return "Nur Spalt A";
-        if(mode === "slitB") return "Nur Spalt B";
-        if(mode === "bothWhich") return "Beide Spalte mit Welcher-Weg-Information";
-        return "Beide Spalte ohne Welcher-Weg-Information";
-      }
-
-      function gaussian(x, mean, sigma){
-        const z = (x - mean) / sigma;
-        return Math.exp(-0.5 * z * z);
-      }
-
-      function intensityAt(normY, mode, slit){
-        const sigma = 0.30;
-        const shift = 0.11;
-        const fringeFreq = 13.5;
-        const visibility = 1.0;
-        const iA = gaussian(normY, -shift, sigma);
-        const iB = gaussian(normY, +shift, sigma);
-
-        if(mode === "slitA") return iA;
-        if(mode === "slitB") return iB;
-        if(mode === "bothWhich") return slit === "A" ? iA : iB;
-
-        const env = iA + iB;
-        const fringe = 0.5 * (1 + visibility * Math.cos(2 * Math.PI * fringeFreq * normY));
-        return Math.max(0, env * fringe);
-      }
-
-      function buildCdf(mode, slit){
-        const key = mode + "|" + slit;
-        if(cdfCache.has(key)) return cdfCache.get(key);
-        const samples = 720;
-        const cdf = new Array(samples);
-        let sum = 0;
-        for(let i = 0; i < samples; i++){
-          const t = i / (samples - 1);
-          const n = -1 + 2 * t;
-          const w = intensityAt(n, mode, slit) + 1e-6;
-          sum += w;
-          cdf[i] = sum;
-        }
-        for(let i = 0; i < samples; i++) cdf[i] /= sum;
-        cdfCache.set(key, cdf);
-        return cdf;
-      }
-
-      function sampleNorm(mode, slit){
-        const cdf = buildCdf(mode, slit);
-        const r = Math.random();
-        let lo = 0;
-        let hi = cdf.length - 1;
-        while(lo < hi){
-          const mid = (lo + hi) >> 1;
-          if(cdf[mid] < r) lo = mid + 1;
-          else hi = mid;
-        }
-        const t = lo / (cdf.length - 1);
-        return -1 + 2 * t;
-      }
-
-      function normToY(normY){
-        const n = Math.max(-1, Math.min(1, normY));
-        return yMin + (0.5 * (n + 1)) * (yMax - yMin);
-      }
-
-      function pickSlit(mode){
-        if(mode === "slitA") return "A";
-        if(mode === "slitB") return "B";
-        return Math.random() < 0.5 ? "A" : "B";
-      }
-
-      function stepTowards(p, tx, ty, step){
-        const dx = tx - p.x;
-        const dy = ty - p.y;
-        const dist = Math.hypot(dx, dy);
-        if(dist < 1e-6 || step >= dist){
-          p.x = tx;
-          p.y = ty;
-          return true;
-        }
-        p.x += dx / dist * step;
-        p.y += dy / dist * step;
-        return false;
-      }
-
-      function registerHit(y, slit, withFlash = true){
-        const mode = modeEl.value;
-        const idx = Math.max(0, Math.min(bins - 1, Math.floor((y - yMin) / binH)));
-        let sigmaBins = 1.35;
-        let gain = 5.6;
-        if(mode === "bothWhich"){
-          sigmaBins = 1.20;
-          gain = 5.0;
-        }else if(mode === "bothInterf"){
-          sigmaBins = 0.20;
-          gain = 4.9;
-        }
-        let norm = 0;
-        const w = new Array(bins).fill(0);
-        for(let j = 0; j < bins; j++){
-          const d = (j - idx) / sigmaBins;
-          const ww = Math.exp(-0.5 * d * d);
-          w[j] = ww;
-          norm += ww;
-        }
-        const arr = slit === "A" ? countsA : countsB;
-        for(let j = 0; j < bins; j++){
-          arr[j] += gain * (w[j] / norm);
-        }
-        if(withFlash) flashes.push({y, slit, life: 0.45});
-      }
-
-      function spawnParticle(){
-        const mode = modeEl.value;
-        const slit = pickSlit(mode);
-        const slitY = slit === "A" ? slitAY : slitBY;
-        const targetNorm = sampleNorm(mode, slit);
-        const targetY = normToY(targetNorm);
-        particles.push({
-          x: sourceX,
-          y: sourceY,
-          slit,
-          phase: 1,
-          sx: barrierX - 8,
-          sy: slitY + (Math.random() - 0.5) * 8,
-          tx: screenX,
-          ty: targetY,
-          speed: 370 + Math.random() * 45
-        });
-      }
-
-      function resetAll(){
-        countsA.fill(0);
-        countsB.fill(0);
-        particles.length = 0;
-        flashes.length = 0;
-        spawnAcc = 0;
-        displayScaleMax = 1;
-      }
-
-      function drawColumn(x, title, color, data, maxCount){
-        const colW = 50;
-        ctx.fillStyle = "#111827";
-        ctx.font = "12px sans-serif";
-        ctx.fillText(title, x + 4, yMin - 12);
-
-        for(let i = 0; i < bins; i++){
-          const y = yMin + (i + 0.5) * binH;
-          ctx.strokeStyle = "rgba(107,114,128,0.35)";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + colW, y);
-          ctx.stroke();
-
-          const dots = Math.max(0, Math.round((data[i] / maxCount) * 5));
-          for(let d = 0; d < dots; d++){
-            ctx.beginPath();
-            ctx.fillStyle = color;
-            ctx.arc(x + 7 + d * 8, y, 3.2, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-      }
-
-      function drawScene(){
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = "#f5f5f5";
-        ctx.fillRect(0, 0, W, H);
-
-        ctx.strokeStyle = "#111827";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(18, 18, screenX - 2, H - 36);
-
-        ctx.fillStyle = "#9ca3af";
-        ctx.fillRect(sourceX - 36, sourceY - 18, 64, 36);
-        ctx.strokeStyle = "#111827";
-        ctx.strokeRect(sourceX - 36, sourceY - 18, 64, 36);
-        ctx.beginPath();
-        ctx.arc(sourceX + 28, sourceY, 9, 0, Math.PI * 2);
-        ctx.fillStyle = "#e5e7eb";
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.strokeStyle = "rgba(107,114,128,0.55)";
-        ctx.setLineDash([5, 5]);
-        ctx.beginPath();
-        ctx.moveTo(sourceX + 28, sourceY);
-        ctx.lineTo(barrierX - 8, slitAY);
-        ctx.lineTo(screenX, yMin + (yMax - yMin) * 0.33);
-        ctx.moveTo(sourceX + 28, sourceY);
-        ctx.lineTo(barrierX - 8, slitBY);
-        ctx.lineTo(screenX, yMin + (yMax - yMin) * 0.67);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        ctx.fillStyle = "#0b0b0b";
-        ctx.fillRect(barrierX - 8, 20, 16, H - 40);
-
-        ctx.fillStyle = "#f5f5f5";
-        ctx.fillRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
-        ctx.fillRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
-        ctx.strokeStyle = "#111827";
-        ctx.strokeRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
-        ctx.strokeRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
-
-        for(let i = 0; i < bins; i++){
-          const y = yMin + i * binH + 3;
-          ctx.strokeStyle = "#374151";
-          ctx.lineWidth = 1;
-          ctx.strokeRect(screenX - 10, y, 18, Math.max(6, binH - 6));
-        }
-
-        const total = countsA.map((v, i) => v + countsB[i]);
-        const mode = modeEl.value;
-        const theory = new Array(bins).fill(0);
-        let thMax = 0;
-        for(let i = 0; i < bins; i++){
-          const y = yMin + (i + 0.5) * binH;
-          const norm = 2 * ((y - yMin) / (yMax - yMin)) - 1;
-          let t = 0;
-          if(mode === "slitA") t = intensityAt(norm, "slitA", "A");
-          else if(mode === "slitB") t = intensityAt(norm, "slitB", "B");
-          else if(mode === "bothWhich"){
-            t = intensityAt(norm, "bothWhich", "A") + intensityAt(norm, "bothWhich", "B");
-          }else{
-            t = intensityAt(norm, "bothInterf", "A");
-          }
-          theory[i] = t;
-          if(t > thMax) thMax = t;
-        }
-        const maxCount = Math.max(1, ...total);
-        for(let i = 0; i < bins; i++){
-          const y = yMin + (i + 0.5) * binH;
-          const len = 2 + 28 * (total[i] / maxCount);
-          ctx.strokeStyle = "rgba(15,23,42,0.45)";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(screenX + 10, y);
-          ctx.lineTo(screenX + 10 + len, y);
-          ctx.stroke();
-        }
-
-        ctx.beginPath();
-        for(let i = 0; i < bins; i++){
-          const y = yMin + (i + 0.5) * binH;
-          const len = 2 + 28 * (thMax > 0 ? (theory[i] / thMax) : 0);
-          const x = screenX + 10 + len;
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        for(const p of particles){
-          ctx.beginPath();
-          ctx.fillStyle = p.slit === "A" ? colorA : colorB;
-          ctx.arc(p.x, p.y, 4.2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = "#111827";
-          ctx.lineWidth = 0.7;
-          ctx.stroke();
-        }
-
-        for(const f of flashes){
-          const alpha = Math.max(0, f.life / 0.45);
-          ctx.beginPath();
-          ctx.fillStyle = f.slit === "A" ? `rgba(8,145,178,${alpha})` : `rgba(192,38,211,${alpha})`;
-          ctx.arc(screenX + 8, f.y, 4.8, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        const xA = screenX + 44;
-        const xB = screenX + 104;
-        const xC = screenX + 164;
-        const total2 = countsA.map((v, i) => v + countsB[i]);
-        const dataA = countsA;
-        const dataB = countsB;
-        const modeHits = total2.reduce((s, v) => s + v, 0);
-        const rawMax = Math.max(1, ...dataA, ...dataB, ...total2);
-        const smoothFac = Math.min(0.35, 0.06 + modeHits / 3200);
-        displayScaleMax = Math.max(1, displayScaleMax * (1 - smoothFac) + rawMax * smoothFac);
-        drawColumn(xA, "a", colorA, dataA, displayScaleMax);
-        drawColumn(xB, "b", colorB, dataB, displayScaleMax);
-        drawColumn(xC, "c", colorTotal, total2, displayScaleMax);
-      }
-
-      function updateReadout(){
-        const total = countsA.reduce((s, v) => s + v, 0) + countsB.reduce((s, v) => s + v, 0);
-        const mode = modeEl.value;
-        const txt =
-          "Modus:\n" +
-          `${modeLabel(mode)}\n` +
-          `Treffer gesamt: ${total}\n` +
-          `Spalt A (cyan): ${countsA.reduce((s, v) => s + v, 0)}\n` +
-          `Spalt B (magenta): ${countsB.reduce((s, v) => s + v, 0)}\n\n` +
-          "Am Schirm:\n" +
-          "dunkle Balken = gemessene Treffer\n" +
-          "orange Linie = theoretische Kurve\n\n" +
-          "Rechts:\n" +
-          "a = Einzelverteilung Spalt A\n" +
-          "b = Einzelverteilung Spalt B\n" +
-          "c = Gesamtverteilung auf dem Schirm";
-        readout.textContent = txt;
-      }
-
-      function animate(ts){
-        const dt = Math.min(0.05, (ts - lastTs) / 1000);
-        lastTs = ts;
-
-        if(running){
-          const rate = Number(rateEl.value);
-          spawnAcc += rate * dt;
-          while(spawnAcc >= 1){
-            spawnParticle();
-            spawnAcc -= 1;
-            if(particles.length > 420) break;
-          }
-        }
-
-        for(let i = particles.length - 1; i >= 0; i--){
-          const p = particles[i];
-          const step = p.speed * dt;
-          if(p.phase === 1){
-            if(stepTowards(p, p.sx, p.sy, step)) p.phase = 2;
-          }else{
-            if(stepTowards(p, p.tx, p.ty, step)){
-              registerHit(p.ty, p.slit);
-              particles.splice(i, 1);
-            }
-          }
-        }
-
-        for(let i = flashes.length - 1; i >= 0; i--){
-          flashes[i].life -= dt;
-          if(flashes[i].life <= 0) flashes.splice(i, 1);
-        }
-
-        drawScene();
-        updateReadout();
-        rafId = requestAnimationFrame(animate);
-      }
-
-      function syncStartLabel(){
-        startBtn.textContent = running ? "Pause" : "Start";
-      }
-
-      rateVal.textContent = String(rateEl.value);
-      rateEl.addEventListener("input", () => {
-        rateVal.textContent = String(rateEl.value);
-      });
-      modeEl.addEventListener("change", () => {
-        resetAll();
-      });
-      startBtn.addEventListener("click", () => {
-        running = !running;
-        syncStartLabel();
-      });
-      resetBtn.addEventListener("click", () => {
-        resetAll();
-      });
-
-      syncStartLabel();
-      resetAll();
-      rafId = requestAnimationFrame(animate);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
-    }
-
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
-    initSingleSlitSim();
-    initDoubleSlitWithEnvelopeSim();
-    initGratingSim();
-    initGratingPhasorSim();
-    initDoubleSlitParticleSim();
+    WellenSim.mountAll();
   </script>
 </body>
+
 </html>
-
-
-
-
-
-

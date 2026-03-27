@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wellen: Einstieg</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="../assets/wellen-simulations.css" />
   <script>
     window.MathJax = {
       tex: {
@@ -24,86 +25,6 @@
 
     .wave-figure {
       margin: 0;
-    }
-
-    .wave-figure img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      border: 1px solid #d8dee6;
-      background: #fff;
-    }
-
-    .wave-figure figcaption {
-      font-size: 0.95rem;
-      color: #5f6b7a;
-      margin-top: 6px;
-    }
-
-    .wave-list {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .wave-list li+li {
-      margin-top: 6px;
-    }
-
-    .sw-sim-card {
-      border: 1px solid var(--wb-line, #e5e7eb);
-      border-radius: 14px;
-      padding: 14px;
-      background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
-      margin: 14px 0;
-    }
-
-    .sw-sim-grid {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .sw-sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .sw-sim-controls label {
-      display: block;
-      font-weight: 900;
-      margin: 10px 0 6px;
-    }
-
-    .sw-sim-controls input[type="range"] {
-      width: 100%;
-    }
-
-    .sw-sim-mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      color: var(--wb-muted, #6b7280);
-      white-space: pre-wrap;
-      margin-top: 8px;
-    }
-
-    #transversalWaveCanvas,
-    #longitudinalWaveCanvas,
-    #huygensDiffractionCanvas {
-      width: 100%;
-      height: 300px;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255, 255, 255, 0.55);
-      display: block;
-    }
-
-    .wb-book[data-theme="dark"] .sw-sim-card,
-    .wb-book[data-theme="dark-blue"] .sw-sim-card {
-      background: rgba(255, 255, 255, 0.14);
     }
   </style>
 </head>
@@ -475,62 +396,62 @@
       <p>Für eine bessere Veranschaulichung kannst du die folgenden Simulationen nutzen. Beobachte genau, in welche
         Richtung sich die Teilchen bewegen und wie die Störung durch das System läuft.</p>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="transversal">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <h2>Simulation: Transversalwelle</h2>
             <p>Die Teilchen schwingen auf und ab, während die Welle nach rechts läuft.</p>
             <label for="transAmp">Amplitude A</label>
-            <input id="transAmp" type="range" min="0.3" max="1.4" value="0.9" step="0.05" />
-            <div class="sw-sim-mono">A = <span id="transAmpVal">0.90</span></div>
+            <input id="transAmp" data-role="amp" type="range" min="0.3" max="1.4" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="transAmpVal" data-role="amp-value">0.90</span></div>
 
             <label for="transFreq">Frequenz f</label>
-            <input id="transFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
-            <div class="sw-sim-mono">f = <span id="transFreqVal">1.00</span></div>
+            <input id="transFreq" data-role="freq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="transFreqVal" data-role="freq-value">1.00</span></div>
 
             <label for="transSpeed">Ausbreitungsgeschwindigkeit c</label>
-            <input id="transSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
-            <div class="sw-sim-mono">c = <span id="transSpeedVal">0.80</span></div>
+            <input id="transSpeed" data-role="speed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="transSpeedVal" data-role="speed-value">0.80</span></div>
 
             <div class="wb-row" style="margin-top:10px">
-              <button class="wb-btn primary" type="button" id="transPauseBtn">Pause</button>
-              <button class="wb-btn" type="button" id="transResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="transPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="transResetBtn" data-role="reset">Reset</button>
             </div>
           </div>
           <div>
-            <canvas id="transversalWaveCanvas" width="960" height="520"
+            <canvas id="transversalWaveCanvas" data-role="canvas" width="960" height="520"
               aria-label="Simulation einer Transversalwelle"></canvas>
-            <div class="sw-sim-mono" id="transversalWaveReadout"></div>
+            <div class="sw-sim-mono" id="transversalWaveReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="longitudinal">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <h2>Simulation: Longitudinalwelle</h2>
             <p>Die Teilchen schwingen vor und zurück. Sichtbar werden Verdichtungen und Verdünnungen.</p>
             <label for="longAmp">Amplitude A</label>
-            <input id="longAmp" type="range" min="0.2" max="1.0" value="0.55" step="0.05" />
-            <div class="sw-sim-mono">A = <span id="longAmpVal">0.55</span></div>
+            <input id="longAmp" data-role="amp" type="range" min="0.2" max="1.0" value="0.55" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="longAmpVal" data-role="amp-value">0.55</span></div>
 
             <label for="longFreq">Frequenz f</label>
-            <input id="longFreq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
-            <div class="sw-sim-mono">f = <span id="longFreqVal">1.00</span></div>
+            <input id="longFreq" data-role="freq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="longFreqVal" data-role="freq-value">1.00</span></div>
 
             <label for="longSpeed">Ausbreitungsgeschwindigkeit c</label>
-            <input id="longSpeed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
-            <div class="sw-sim-mono">c = <span id="longSpeedVal">0.80</span></div>
+            <input id="longSpeed" data-role="speed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="longSpeedVal" data-role="speed-value">0.80</span></div>
 
             <div class="wb-row" style="margin-top:10px">
-              <button class="wb-btn primary" type="button" id="longPauseBtn">Pause</button>
-              <button class="wb-btn" type="button" id="longResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="longPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="longResetBtn" data-role="reset">Reset</button>
             </div>
           </div>
           <div>
-            <canvas id="longitudinalWaveCanvas" width="960" height="520"
+            <canvas id="longitudinalWaveCanvas" data-role="canvas" width="960" height="520"
               aria-label="Simulation einer Longitudinalwelle"></canvas>
-            <div class="sw-sim-mono" id="longitudinalWaveReadout"></div>
+            <div class="sw-sim-mono" id="longitudinalWaveReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -787,7 +708,7 @@
           Spaltbreite veränderst.</p>
       </div>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="huygens-diffraction">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <h2>Simulation: Beugung am Spalt</h2>
@@ -795,12 +716,12 @@
               offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
 
             <label for="huygensSlit">Spaltbreite</label>
-            <input id="huygensSlit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
-            <div class="sw-sim-mono">relative Spaltbreite = <span id="huygensSlitVal">0.42</span></div>
+            <input id="huygensSlit" data-role="slit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
+            <div class="sw-sim-mono">relative Spaltbreite = <span id="huygensSlitVal" data-role="slit-value">0.42</span></div>
 
             <div class="wb-row" style="margin-top:10px">
-              <button class="wb-btn primary" type="button" id="huygensPauseBtn">Pause</button>
-              <button class="wb-btn" type="button" id="huygensResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="huygensPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="huygensResetBtn" data-role="reset">Reset</button>
             </div>
 
             <div class="wb-soft-callout" style="margin-top:14px">
@@ -813,9 +734,9 @@
             </div>
           </div>
           <div>
-            <canvas id="huygensDiffractionCanvas" width="960" height="520"
+            <canvas id="huygensDiffractionCanvas" data-role="canvas" width="960" height="520"
               aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
-            <div class="sw-sim-mono" id="huygensDiffractionReadout"></div>
+            <div class="sw-sim-mono" id="huygensDiffractionReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -1263,443 +1184,14 @@
       </div>
     </section>
   </div>
-
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/wellen-simulations.js"></script>
   <script>
-    (function () {
-      const canvas = document.getElementById("transversalWaveCanvas");
-      const readout = document.getElementById("transversalWaveReadout");
-      const ampEl = document.getElementById("transAmp");
-      const freqEl = document.getElementById("transFreq");
-      const speedEl = document.getElementById("transSpeed");
-      const ampVal = document.getElementById("transAmpVal");
-      const freqVal = document.getElementById("transFreqVal");
-      const speedVal = document.getElementById("transSpeedVal");
-      const pauseBtn = document.getElementById("transPauseBtn");
-      const resetBtn = document.getElementById("transResetBtn");
-      if (!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
-      if (canvas.dataset.wbTransversalInit === "1") return;
-      canvas.dataset.wbTransversalInit = "1";
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-      const baseY = H * 0.58;
-      const left = 56;
-      const right = W - 48;
-      const points = 32;
-      let phase = 0;
-      let paused = false;
-      let rafId = 0;
-      let lastTs = 0;
-
-      function syncLabels() {
-        ampVal.textContent = Number(ampEl.value).toFixed(2);
-        freqVal.textContent = Number(freqEl.value).toFixed(2);
-        speedVal.textContent = Number(speedEl.value).toFixed(2);
-      }
-
-      function drawAxes() {
-        ctx.strokeStyle = "#64748b";
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.moveTo(left, baseY);
-        ctx.lineTo(right, baseY);
-        ctx.stroke();
-        ctx.fillStyle = "#64748b";
-        ctx.font = "18px sans-serif";
-        ctx.fillText("Ausbreitungsrichtung", right - 180, baseY - 14);
-        ctx.beginPath();
-        ctx.moveTo(right - 18, baseY - 8);
-        ctx.lineTo(right, baseY);
-        ctx.lineTo(right - 18, baseY + 8);
-        ctx.stroke();
-      }
-
-      function draw(ts) {
-        if (!canvas.isConnected) return;
-        if (!lastTs) lastTs = ts;
-        const dt = Math.min(0.05, (ts - lastTs) / 1000);
-        lastTs = ts;
-        if (!paused) {
-          phase += dt * Number(freqEl.value) * 2.3;
-        }
-
-        const A = Number(ampEl.value) * 70;
-        const c = Number(speedEl.value) * 2.4;
-        const lambdaPx = 230 / Math.max(0.35, Number(freqEl.value));
-
-        ctx.clearRect(0, 0, W, H);
-        drawAxes();
-
-        ctx.strokeStyle = "#e11d48";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        for (let i = 0; i < 360; i++) {
-          const x = left + (right - left) * (i / 359);
-          const y = baseY - A * Math.sin((x / lambdaPx) - phase * c);
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        for (let i = 0; i < points; i++) {
-          const x0 = left + (right - left) * (i / (points - 1));
-          const y = baseY - A * Math.sin((x0 / lambdaPx) - phase * c);
-
-          ctx.strokeStyle = "rgba(100,116,139,0.35)";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(x0, baseY - 85);
-          ctx.lineTo(x0, baseY + 85);
-          ctx.stroke();
-
-          ctx.fillStyle = "#0f766e";
-          ctx.beginPath();
-          ctx.arc(x0, y, 8.5, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.fillStyle = "#334155";
-        ctx.font = "20px sans-serif";
-        ctx.fillText("Transversalwelle", left, 36);
-        readout.textContent =
-          "Teilchenbewegung: senkrecht zur Ausbreitungsrichtung\n" +
-          "Momentaufnahme: Wellenberge und Wellentäler\n" +
-          "Beobachte: Die Punkte schwingen auf und ab, während die Form nach rechts läuft.";
-        rafId = requestAnimationFrame(draw);
-      }
-
-      ampEl.addEventListener("input", syncLabels);
-      freqEl.addEventListener("input", syncLabels);
-      speedEl.addEventListener("input", syncLabels);
-      pauseBtn.addEventListener("click", () => {
-        paused = !paused;
-        pauseBtn.textContent = paused ? "Weiter" : "Pause";
-      });
-      resetBtn.addEventListener("click", () => {
-        phase = 0;
-        lastTs = 0;
-      });
-      syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
-    })();
-
-    (function () {
-      const canvas = document.getElementById("longitudinalWaveCanvas");
-      const readout = document.getElementById("longitudinalWaveReadout");
-      const ampEl = document.getElementById("longAmp");
-      const freqEl = document.getElementById("longFreq");
-      const speedEl = document.getElementById("longSpeed");
-      const ampVal = document.getElementById("longAmpVal");
-      const freqVal = document.getElementById("longFreqVal");
-      const speedVal = document.getElementById("longSpeedVal");
-      const pauseBtn = document.getElementById("longPauseBtn");
-      const resetBtn = document.getElementById("longResetBtn");
-      if (!canvas || !readout || !ampEl || !freqEl || !speedEl || !pauseBtn || !resetBtn) return;
-      if (canvas.dataset.wbLongitudinalInit === "1") return;
-      canvas.dataset.wbLongitudinalInit = "1";
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-      const left = 56;
-      const right = W - 48;
-      const baseY = H * 0.54;
-      const points = 33;
-      let phase = 0;
-      let paused = false;
-      let rafId = 0;
-      let lastTs = 0;
-
-      function syncLabels() {
-        ampVal.textContent = Number(ampEl.value).toFixed(2);
-        freqVal.textContent = Number(freqEl.value).toFixed(2);
-        speedVal.textContent = Number(speedEl.value).toFixed(2);
-      }
-
-      function draw(ts) {
-        if (!canvas.isConnected) return;
-        if (!lastTs) lastTs = ts;
-        const dt = Math.min(0.05, (ts - lastTs) / 1000);
-        lastTs = ts;
-        if (!paused) {
-          phase += dt * Number(freqEl.value) * 2.3;
-        }
-
-        const A = Number(ampEl.value) * 34;
-        const c = Number(speedEl.value) * 2.4;
-        const lambdaPx = 230 / Math.max(0.35, Number(freqEl.value));
-        const spacing = (right - left) / (points - 1);
-
-        ctx.clearRect(0, 0, W, H);
-        ctx.strokeStyle = "#64748b";
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.moveTo(left, baseY);
-        ctx.lineTo(right, baseY);
-        ctx.stroke();
-
-        let compressionScore = 0;
-        for (let i = 0; i < points; i++) {
-          const xRest = left + spacing * i;
-          const offset = A * Math.sin((xRest / lambdaPx) - phase * c);
-          const x = xRest + offset;
-          const neighborOffset = A * Math.sin(((xRest + spacing) / lambdaPx) - phase * c);
-          compressionScore += Math.abs(neighborOffset - offset);
-
-          ctx.strokeStyle = "rgba(100,116,139,0.24)";
-          ctx.beginPath();
-          ctx.moveTo(xRest, baseY - 70);
-          ctx.lineTo(xRest, baseY + 70);
-          ctx.stroke();
-
-          ctx.fillStyle = "#2563eb";
-          ctx.beginPath();
-          ctx.arc(x, baseY, 9, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.strokeStyle = "#2563eb";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(x, baseY - 20);
-          ctx.lineTo(x + (offset >= 0 ? 18 : -18), baseY - 20);
-          ctx.stroke();
-        }
-
-        ctx.fillStyle = "#334155";
-        ctx.font = "20px sans-serif";
-        ctx.fillText("Longitudinalwelle", left, 36);
-
-        const compressionHint = compressionScore < 180 ? "gering" : (compressionScore < 270 ? "mittel" : "stark");
-        readout.textContent =
-          "Teilchenbewegung: parallel zur Ausbreitungsrichtung\n" +
-          "Momentaufnahme: Verdichtungen und Verdünnungen\n" +
-          "Aktuelle Verdichtungsstärke: " + compressionHint;
-
-        rafId = requestAnimationFrame(draw);
-      }
-
-      ampEl.addEventListener("input", syncLabels);
-      freqEl.addEventListener("input", syncLabels);
-      speedEl.addEventListener("input", syncLabels);
-      pauseBtn.addEventListener("click", () => {
-        paused = !paused;
-        pauseBtn.textContent = paused ? "Weiter" : "Pause";
-      });
-      resetBtn.addEventListener("click", () => {
-        phase = 0;
-        lastTs = 0;
-      });
-      syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
-    })();
-
-    (function () {
-      const canvas = document.getElementById("huygensDiffractionCanvas");
-      const readout = document.getElementById("huygensDiffractionReadout");
-      const slitEl = document.getElementById("huygensSlit");
-      const slitVal = document.getElementById("huygensSlitVal");
-      const pauseBtn = document.getElementById("huygensPauseBtn");
-      const resetBtn = document.getElementById("huygensResetBtn");
-      if (!canvas || !readout || !slitEl || !slitVal || !pauseBtn || !resetBtn) return;
-      if (canvas.dataset.wbHuygensInit === "1") return;
-      canvas.dataset.wbHuygensInit = "1";
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-      const wallX = W * 0.46;
-      const topPad = 52;
-      const bottomPad = H - 52;
-      const centerY = H * 0.54;
-      const leftStart = 56;
-      const wavelength = 58;
-      let phase = 0;
-      let paused = false;
-      let rafId = 0;
-      let lastTs = 0;
-
-      function syncLabels() {
-        slitVal.textContent = Number(slitEl.value).toFixed(2);
-      }
-
-      function drawIncomingFronts(nowPhase) {
-        ctx.save();
-        ctx.strokeStyle = "rgba(14, 116, 144, 0.95)";
-        ctx.lineWidth = 2.3;
-        for (let x = wallX - 6; x >= leftStart; x -= wavelength) {
-          const shiftedX = x + (nowPhase % wavelength);
-          if (shiftedX < leftStart || shiftedX > wallX - 6) continue;
-          ctx.beginPath();
-          ctx.moveTo(shiftedX, topPad);
-          ctx.lineTo(shiftedX, bottomPad);
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function drawWall(slitHalf) {
-        ctx.save();
-        ctx.strokeStyle = "#0f172a";
-        ctx.lineWidth = 10;
-        ctx.beginPath();
-        ctx.moveTo(wallX, topPad);
-        ctx.lineTo(wallX, centerY - slitHalf);
-        ctx.moveTo(wallX, centerY + slitHalf);
-        ctx.lineTo(wallX, bottomPad);
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      function drawNormals(slitHalf) {
-        ctx.save();
-        ctx.strokeStyle = "rgba(100, 116, 139, 0.55)";
-        ctx.lineWidth = 1.2;
-        const yStep = Math.max(14, slitHalf / 3);
-        for (let y = centerY - slitHalf; y <= centerY + slitHalf + 1; y += yStep) {
-          ctx.beginPath();
-          ctx.moveTo(wallX - 18, y);
-          ctx.lineTo(wallX + 30, y);
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function drawWavelets(sources, radius) {
-        ctx.save();
-        ctx.strokeStyle = "rgba(59, 130, 246, 0.45)";
-        ctx.lineWidth = 1;
-        sources.forEach((y) => {
-          ctx.beginPath();
-          ctx.arc(wallX, y, radius, -Math.PI / 2, Math.PI / 2);
-          ctx.stroke();
-        });
-        ctx.restore();
-      }
-
-      function drawEnvelopeCapsule(radius, slitHalf) {
-        const topY = centerY - slitHalf;
-        const bottomY = centerY + slitHalf;
-        const xLine = wallX + radius;
-        ctx.save();
-        ctx.strokeStyle = "#dc2626";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(xLine, topY);
-        ctx.lineTo(xLine, bottomY);
-        ctx.moveTo(xLine, topY);
-        ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
-        ctx.moveTo(xLine, bottomY);
-        ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2, false);
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      function drawPropagatingFronts(step, slitHalf) {
-        ctx.save();
-        ctx.strokeStyle = "rgba(220, 38, 38, 0.72)";
-        ctx.lineWidth = 2.2;
-        for (let n = 0; n < 5; n++) {
-          const radius = 36 + ((phase + step * n) % wavelength);
-          const topY = centerY - slitHalf;
-          const bottomY = centerY + slitHalf;
-          const xLine = wallX + radius;
-          ctx.beginPath();
-          if (xLine <= W - 18) {
-            ctx.moveTo(xLine, topY);
-            ctx.lineTo(xLine, bottomY);
-          }
-          ctx.moveTo(xLine, topY);
-          ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
-          ctx.moveTo(xLine, bottomY);
-          ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2, false);
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function drawLabels(slitHalf) {
-        ctx.save();
-        ctx.fillStyle = "#334155";
-        ctx.font = "20px sans-serif";
-        ctx.fillText("Ebene Welle", 70, 36);
-        ctx.fillText("Spalt", wallX - 18, topPad - 14);
-        ctx.fillText("Elementarwellen", wallX + 120, topPad + 18);
-        ctx.fillStyle = "#475569";
-        ctx.font = "16px sans-serif";
-        ctx.fillText("neue Wellenfront", wallX + 150, centerY - slitHalf - 34);
-        ctx.restore();
-      }
-
-      function draw(ts) {
-        if (!canvas.isConnected) return;
-        if (!lastTs) lastTs = ts;
-        const dt = Math.min(0.05, (ts - lastTs) / 1000);
-        lastTs = ts;
-        if (!paused) {
-          phase += dt * 72;
-        }
-
-        const slitValue = Number(slitEl.value);
-        const slitHalf = 4 + slitValue * 124;
-        const radius = 36 + (phase % wavelength);
-        const sourceCount = slitValue < 0.08 ? 1 : Math.max(3, Math.round(4 + slitValue * 10));
-        const sources = [];
-        for (let i = 0; i < sourceCount; i++) {
-          const t = sourceCount === 1 ? 0.5 : i / (sourceCount - 1);
-          sources.push(centerY - slitHalf + t * slitHalf * 2);
-        }
-
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = "rgba(248, 250, 252, 0.96)";
-        ctx.fillRect(0, 0, W, H);
-
-        drawIncomingFronts(phase);
-        drawNormals(slitHalf);
-        drawWavelets(sources, radius);
-        drawPropagatingFronts(wavelength, slitHalf);
-        drawEnvelopeCapsule(radius, slitHalf);
-        drawWall(slitHalf);
-
-        ctx.fillStyle = "#0f766e";
-        sources.forEach((y) => {
-          ctx.beginPath();
-          ctx.arc(wallX, y, 3.6, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        drawLabels(slitHalf);
-
-        const spread = slitValue < 0.08 ? "sehr stark" : (slitValue < 0.34 ? "stark" : (slitValue < 0.62 ? "mittel" : "gering"));
-        readout.textContent =
-          "Beobachtung: Hinter dem Spalt entsteht aus vielen Elementarwellen eine neue Wellenfront, die nach rechts weiterläuft.\n" +
-          "aktuelle Beugung: " + spread + "\n" +
-          "Regel: Je schmaler der Spalt, desto deutlicher fächert sich die Welle auf.";
-
-        rafId = requestAnimationFrame(draw);
-      }
-
-      slitEl.addEventListener("input", syncLabels);
-      pauseBtn.addEventListener("click", () => {
-        paused = !paused;
-        pauseBtn.textContent = paused ? "Weiter" : "Pause";
-      });
-      resetBtn.addEventListener("click", () => {
-        phase = 0;
-        lastTs = 0;
-      });
-      syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
-    })();
-
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    WellenSim.mountAll();
   </script>
 </body>
 

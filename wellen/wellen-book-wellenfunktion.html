@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SBLibrary – Demo (autoNav)</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/wellen-simulations.css">
   <script>
     window.MathJax = {
       tex: {
@@ -14,63 +15,6 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <style>
-    .sw-sim-card {
-      border: 1px solid var(--wb-line, #e5e7eb);
-      border-radius: 14px;
-      padding: 14px;
-      background: var(--wb-text-bg, #fff);
-      box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
-      margin: 14px 0;
-    }
-
-    .sw-sim-grid {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .sw-sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .sw-sim-controls label {
-      display: block;
-      font-weight: 900;
-      margin: 10px 0 6px;
-    }
-
-    .sw-sim-controls input[type="range"],
-    .sw-sim-controls select {
-      width: 100%;
-    }
-
-    #leifiWaveCanvas,
-    #coupledWaveCanvas {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      border: 1px solid var(--wb-line, #e5e7eb);
-      background: rgba(255, 255, 255, 0.5);
-      display: block;
-    }
-
-    .wb-book[data-theme="dark"] .sw-sim-card,
-    .wb-book[data-theme="dark-blue"] .sw-sim-card {
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .wb-book[data-theme="dark"] #leifiWaveCanvas,
-    .wb-book[data-theme="dark-blue"] #leifiWaveCanvas,
-    .wb-book[data-theme="dark"] #coupledWaveCanvas,
-    .wb-book[data-theme="dark-blue"] #coupledWaveCanvas {
-      background: rgba(255, 255, 255, 0.86) !important;
-      border-color: rgba(255, 255, 255, 0.4) !important;
-    }
-  </style>
 </head>
 
 <body>
@@ -410,34 +354,34 @@
         an einem bestimmten Ort $x_1$ unten. So siehst du, wie sich der Ort der Welle räumlich verändert, während am
         markierten Ort die Zeit für die Schwingung abläuft.</p>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="coupled-wave">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="cwAmp">Amplitude A</label>
-            <input id="cwAmp" type="range" min="0.2" max="1.5" value="1.0" step="0.1" />
-            <div class="sw-sim-mono">A = <span id="cwAmpVal">1.0</span></div>
+            <input id="cwAmp" data-role="amp" type="range" min="0.2" max="1.5" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">A = <span id="cwAmpVal" data-role="amp-value">1.0</span></div>
 
             <label for="cwFreq">Frequenz f (Hz)</label>
-            <input id="cwFreq" type="range" min="0.1" max="1.0" value="0.25" step="0.05" />
-            <div class="sw-sim-mono">f = <span id="cwFreqVal">0.25</span> Hz</div>
+            <input id="cwFreq" data-role="freq" type="range" min="0.1" max="1.0" value="0.25" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="cwFreqVal" data-role="freq-value">0.25</span> Hz</div>
 
             <label for="cwX1">Ort \(x_1\)</label>
-            <input id="cwX1" type="range" min="1" max="19" value="6" step="0.5" />
-            <div class="sw-sim-mono">\(x_1\) = <span id="cwX1Val">6.0</span> m</div>
+            <input id="cwX1" data-role="x1" type="range" min="1" max="19" value="6" step="0.5" />
+            <div class="sw-sim-mono">\(x_1\) = <span id="cwX1Val" data-role="x1-value">6.0</span> m</div>
 
             <label for="cwSpeed">Animationsgeschwindigkeit</label>
-            <input id="cwSpeed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
-            <div class="sw-sim-mono">v = <span id="cwSpeedVal">1.0</span></div>
+            <input id="cwSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="cwSpeedVal" data-role="speed-value">1.0</span></div>
 
             <div class="wb-row" style="margin-top:10px">
-              <button class="wb-btn primary" type="button" id="cwStartBtn">Start / Pause</button>
-              <button class="wb-btn" type="button" id="cwResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="cwStartBtn" data-role="start">Start / Pause</button>
+              <button class="wb-btn" type="button" id="cwResetBtn" data-role="reset">Reset</button>
             </div>
           </div>
           <div>
-            <canvas id="coupledWaveCanvas" width="960" height="600"
+            <canvas id="coupledWaveCanvas" data-role="canvas" width="960" height="600"
               aria-label="Gekoppelte y(x) und y(t) Diagramme"></canvas>
-            <div class="sw-sim-mono" id="coupledWaveReadout"></div>
+            <div class="sw-sim-mono" id="coupledWaveReadout" data-role="readout"></div>
           </div>
         </div>
       </div>
@@ -938,42 +882,42 @@
         Amplitude $\hat{y}$ und beobachte, wie sich die Wellenlänge $\lambda$ ändert. Versuche, eine Intuition dafür zu
         bekommen, wie die einzelnen Größen zusammenhängen.</p>
 
-      <div class="sw-sim-card">
+      <div class="sw-sim-card" data-wave-sim="leifi-wave">
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
-            <label for="lwAmp">Amplitude $\hat{y}$ = <span id="lwAmpVal">2.0</span> m</label>
-            <input id="lwAmp" type="range" min="0.1" max="4.0" value="2.0" step="0.1" />
+            <label for="lwAmp">Amplitude $\hat{y}$ = <span id="lwAmpVal" data-role="amp-value">2.0</span> m</label>
+            <input id="lwAmp" data-role="amp" type="range" min="0.1" max="4.0" value="2.0" step="0.1" />
 
-            <label for="lwFreq" style="color:#3b82f6;">Frequenz $f$ = <span id="lwFreqVal">0.40</span> Hz</label>
-            <input id="lwFreq" type="range" min="0.1" max="0.7" value="0.40" step="0.01" />
+            <label for="lwFreq" style="color:#3b82f6;">Frequenz $f$ = <span id="lwFreqVal" data-role="freq-value">0.40</span> Hz</label>
+            <input id="lwFreq" data-role="freq" type="range" min="0.1" max="0.7" value="0.40" step="0.01" />
 
             <label for="lwSpeed" style="color:#16a34a;">Ausbreitungsgeschwindigkeit $c$ = <span
-                id="lwSpeedVal">2.5</span> m/s</label>
-            <input id="lwSpeed" type="range" min="2.5" max="5.0" value="2.5" step="0.1" />
+                id="lwSpeedVal" data-role="speed-value">2.5</span> m/s</label>
+            <input id="lwSpeed" data-role="speed" type="range" min="2.5" max="5.0" value="2.5" step="0.1" />
 
             <div style="color:#dc2626; font-weight:bold; margin-top:20px; font-size:18px;">
-              Wellenlänge $\lambda$ = <span id="lwLamVal">6.25</span> m
+              Wellenlänge $\lambda$ = <span id="lwLamVal" data-role="lam-value">6.25</span> m
             </div>
 
             <div style="margin-top: 25px; display:flex; flex-direction:column; gap:8px;">
-              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbAmp" checked> Amplitude</label>
-              <label style="font-weight:normal; margin:0; color:#3b82f6;"><input type="checkbox" id="cbPer" checked>
+              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbAmp" data-role="show-amp" checked> Amplitude</label>
+              <label style="font-weight:normal; margin:0; color:#3b82f6;"><input type="checkbox" id="cbPer" data-role="show-period" checked>
                 Periodendauer</label>
-              <label style="font-weight:normal; margin:0; color:#16a34a;"><input type="checkbox" id="cbVel" checked>
+              <label style="font-weight:normal; margin:0; color:#16a34a;"><input type="checkbox" id="cbVel" data-role="show-velocity" checked>
                 Ausbreitungsgeschw.</label>
-              <label style="font-weight:normal; margin:0; color:#dc2626;"><input type="checkbox" id="cbLam" checked>
+              <label style="font-weight:normal; margin:0; color:#dc2626;"><input type="checkbox" id="cbLam" data-role="show-lambda" checked>
                 Wellenlänge</label>
-              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbCoord" checked>
+              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbCoord" data-role="show-coords" checked>
                 Koordinatensystem</label>
             </div>
           </div>
 
           <div>
-            <canvas id="leifiWaveCanvas" width="600" height="400" aria-label="Mechanische Welle Simulation"
+            <canvas id="leifiWaveCanvas" data-role="canvas" width="600" height="400" aria-label="Mechanische Welle Simulation"
               style="width:100%; height:auto; border: 1px solid var(--wb-line, #e5e7eb); border-radius: 12px; background: rgba(255,255,255,0.5); display:block;"></canvas>
             <div class="wb-row" style="margin-top:10px; justify-content:center; gap: 10px;">
-              <button class="wb-btn primary" type="button" id="lwPlayBtn">► / ⏸</button>
-              <button class="wb-btn" type="button" id="lwResetBtn">Reset</button>
+              <button class="wb-btn primary" type="button" id="lwPlayBtn" data-role="play">► / ⏸</button>
+              <button class="wb-btn" type="button" id="lwResetBtn" data-role="reset">Reset</button>
             </div>
           </div>
         </div>
@@ -1521,487 +1465,14 @@
     </section>
 
   </div>
-
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/wellen-simulations.js"></script>
   <script>
-    function initLeifiWaveSim() {
-      const canvas = document.getElementById("leifiWaveCanvas");
-      if (!canvas) return;
-      if (canvas.dataset.wbLeifiInit === "1") return;
-      canvas.dataset.wbLeifiInit = "1";
-
-      const ampEl = document.getElementById("lwAmp");
-      const freqEl = document.getElementById("lwFreq");
-      const speedEl = document.getElementById("lwSpeed");
-      const ampVal = document.getElementById("lwAmpVal");
-      const freqVal = document.getElementById("lwFreqVal");
-      const speedVal = document.getElementById("lwSpeedVal");
-      const lamVal = document.getElementById("lwLamVal");
-
-      const cbAmp = document.getElementById("cbAmp");
-      const cbPer = document.getElementById("cbPer");
-      const cbVel = document.getElementById("cbVel");
-      const cbLam = document.getElementById("cbLam");
-      const cbCoord = document.getElementById("cbCoord");
-
-      const playBtn = document.getElementById("lwPlayBtn");
-      const resetBtn = document.getElementById("lwResetBtn");
-
-      const ctx = canvas.getContext("2d");
-      const W = canvas.width;
-      const H = canvas.height;
-      const originX = 50;
-      const originY = H / 2;
-      const viewWidth = W - originX - 30;
-
-      let rafId = 0;
-      let t0 = performance.now();
-      let tFrozen = 0;
-      let isRunning = false;
-      let scaleX = 30; // pixels per meter
-      let scaleY = 40; // pixels per meter
-
-      function draw(now) {
-        if (!canvas.isConnected) {
-          cancelAnimationFrame(rafId);
-          return;
-        }
-
-        const A = Number(ampEl.value);
-        const f = Number(freqEl.value);
-        const c = Number(speedEl.value);
-        const lam = c / f;
-
-        ampVal.textContent = A.toFixed(1);
-        freqVal.textContent = f.toFixed(2);
-        speedVal.textContent = c.toFixed(1);
-        lamVal.textContent = lam.toFixed(2);
-
-        const realTime = isRunning ? ((now - t0) / 1000) : tFrozen;
-
-        ctx.clearRect(0, 0, W, H);
-
-        if (cbCoord.checked) {
-          ctx.strokeStyle = "#999";
-          ctx.lineWidth = 1.5;
-          // x axis
-          ctx.beginPath();
-          ctx.moveTo(originX - 20, originY);
-          ctx.lineTo(W - 10, originY);
-          ctx.stroke();
-          // y axis
-          ctx.beginPath();
-          ctx.moveTo(originX, 10);
-          ctx.lineTo(originX, H - 10);
-          ctx.stroke();
-          // arrows
-          ctx.fillStyle = "#999";
-          ctx.beginPath(); ctx.moveTo(W - 10, originY); ctx.lineTo(W - 20, originY - 5); ctx.lineTo(W - 20, originY + 5); ctx.fill();
-          ctx.beginPath(); ctx.moveTo(originX, 10); ctx.lineTo(originX - 5, 20); ctx.lineTo(originX + 5, 20); ctx.fill();
-        }
-
-        // Generate particle positions
-        const numParticles = 45;
-        const dx = viewWidth / numParticles;
-
-        let pathPts = [];
-        for (let i = 0; i <= numParticles; i++) {
-          const pixX = originX + i * dx;
-          const realX = (pixX - originX) / scaleX;
-          const phase = 2 * Math.PI * (realTime * f - realX / lam);
-          const realY = A * Math.sin(phase);
-          const pixY = originY - realY * scaleY;
-          pathPts.push({ i, x: pixX, y: pixY, realX, phase });
-        }
-
-        // Draw circles for particles
-        for (let p of pathPts) {
-          ctx.fillStyle = "#a855f7";
-          ctx.strokeStyle = "#4c1d95";
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 6.5, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.stroke();
-        }
-
-        // Find a peak
-        let bestPeak = pathPts[0];
-        let maxVal = -Infinity;
-        for (let p of pathPts) {
-          const pval = Math.sin(p.phase);
-          if (pval > maxVal) { maxVal = pval; bestPeak = p; }
-        }
-
-        if (cbAmp.checked && bestPeak) {
-          ctx.strokeStyle = "#000";
-          ctx.fillStyle = "#000";
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.moveTo(bestPeak.x, originY);
-          ctx.lineTo(bestPeak.x, originY - A * scaleY);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.arc(bestPeak.x, originY - A * scaleY, 3, 0, 2 * Math.PI);
-          ctx.fill();
-
-          ctx.font = "bold 16px sans-serif";
-          ctx.fillText("y\u0302", bestPeak.x + 8, originY - (A * scaleY) / 2 + 5);
-        }
-
-        if (cbPer.checked) {
-          const T = 1 / f;
-          ctx.fillStyle = "#3b82f6";
-          ctx.font = "bold 16px sans-serif";
-          ctx.fillText(`Periodendauer T = ${T.toFixed(2)} s`, W - 250, 30);
-
-          const p = pathPts[0];
-          ctx.fillStyle = "#3b82f6";
-          ctx.strokeStyle = "#1e3a8a";
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 9, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.stroke();
-        }
-
-        if (cbVel.checked && bestPeak) {
-          ctx.strokeStyle = "#16a34a";
-          ctx.fillStyle = "#16a34a";
-          ctx.lineWidth = 3.5;
-          ctx.beginPath();
-          ctx.moveTo(bestPeak.x, bestPeak.y - 25);
-          ctx.lineTo(bestPeak.x + 50, bestPeak.y - 25);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(bestPeak.x + 50, bestPeak.y - 25);
-          ctx.lineTo(bestPeak.x + 35, bestPeak.y - 32);
-          ctx.lineTo(bestPeak.x + 35, bestPeak.y - 18);
-          ctx.fill();
-
-          ctx.font = "bold 16px sans-serif";
-          ctx.fillText(`c`, bestPeak.x + 20, bestPeak.y - 32);
-        }
-
-        if (cbLam.checked) {
-          let peaks = [];
-          for (let i = 1; i < pathPts.length - 1; i++) {
-            // Detect peaks using y values (smaller y is higher peak on canvas)
-            if (pathPts[i].y < pathPts[i - 1].y && pathPts[i].y < pathPts[i + 1].y) {
-              peaks.push(pathPts[i]);
-            }
-          }
-          if (peaks.length >= 2) {
-            const p1 = peaks[0];
-            const p2 = peaks[1];
-            ctx.strokeStyle = "#dc2626";
-            ctx.fillStyle = "#dc2626";
-            ctx.lineWidth = 2.5;
-
-            const yLine = Math.min(p1.y, p2.y) - 55;
-
-            ctx.beginPath(); ctx.moveTo(p1.x, p1.y - 10); ctx.lineTo(p1.x, yLine - 5); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(p2.x, p2.y - 10); ctx.lineTo(p2.x, yLine - 5); ctx.stroke();
-
-            ctx.beginPath(); ctx.moveTo(p1.x, yLine); ctx.lineTo(p2.x, yLine); ctx.stroke();
-
-            ctx.beginPath(); ctx.moveTo(p1.x, yLine); ctx.lineTo(p1.x + 10, yLine - 5); ctx.lineTo(p1.x + 10, yLine + 5); ctx.fill();
-            ctx.beginPath(); ctx.moveTo(p2.x, yLine); ctx.lineTo(p2.x - 10, yLine - 5); ctx.lineTo(p2.x - 10, yLine + 5); ctx.fill();
-
-            ctx.font = "bold 18px sans-serif";
-            ctx.fillText(`\u03BB`, (p1.x + p2.x) / 2 - 6, yLine - 10);
-          }
-        }
-
-        rafId = requestAnimationFrame(draw);
-      }
-
-      function togglePlay() {
-        if (isRunning) {
-          isRunning = false;
-          tFrozen = ((performance.now() - t0) / 1000);
-        } else {
-          isRunning = true;
-          t0 = performance.now() - tFrozen * 1000;
-        }
-      }
-
-      function resetSim() {
-        isRunning = false;
-        tFrozen = 0;
-      }
-
-      if (playBtn) playBtn.addEventListener("click", togglePlay);
-      if (resetBtn) resetBtn.addEventListener("click", resetSim);
-
-      rafId = requestAnimationFrame(draw);
-    }
-
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
-    function initCoupledWaveSim() {
-      const canvas = document.getElementById("coupledWaveCanvas");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      const readout = document.getElementById("coupledWaveReadout");
-
-      const ampSlider = document.getElementById("cwAmp");
-      const freqSlider = document.getElementById("cwFreq");
-      const x1Slider = document.getElementById("cwX1");
-      const speedSlider = document.getElementById("cwSpeed");
-
-      const ampVal = document.getElementById("cwAmpVal");
-      const freqVal = document.getElementById("cwFreqVal");
-      const x1Val = document.getElementById("cwX1Val");
-      const speedVal = document.getElementById("cwSpeedVal");
-
-      const startBtn = document.getElementById("cwStartBtn");
-      const resetBtn = document.getElementById("cwResetBtn");
-
-      let isPlaying = false;
-      let lastTime = 0;
-      let simTime = 0; // physics time
-      const c = 1.0; // wave speed const
-
-      let A = parseFloat(ampSlider.value);
-      let f = parseFloat(freqSlider.value);
-      let x1 = parseFloat(x1Slider.value);
-      let simSpeed = parseFloat(speedSlider.value);
-      let rafId;
-
-      function updateVals() {
-        A = parseFloat(ampSlider.value);
-        f = parseFloat(freqSlider.value);
-        x1 = parseFloat(x1Slider.value);
-        simSpeed = parseFloat(speedSlider.value);
-
-        ampVal.textContent = A.toFixed(1);
-        freqVal.textContent = f.toFixed(2);
-        x1Val.textContent = x1.toFixed(1);
-        speedVal.textContent = simSpeed.toFixed(1);
-        if (!isPlaying) draw();
-      }
-
-      ampSlider.addEventListener("input", updateVals);
-      freqSlider.addEventListener("input", updateVals);
-      x1Slider.addEventListener("input", updateVals);
-      speedSlider.addEventListener("input", updateVals);
-
-      startBtn.addEventListener("click", () => {
-        isPlaying = !isPlaying;
-        if (isPlaying) {
-          lastTime = performance.now();
-          rafId = requestAnimationFrame(loop);
-        } else {
-          cancelAnimationFrame(rafId);
-        }
-      });
-
-      resetBtn.addEventListener("click", () => {
-        isPlaying = false;
-        cancelAnimationFrame(rafId);
-        simTime = 0;
-        updateVals(); // calls draw()
-      });
-
-      function loop(now) {
-        if (!isPlaying) return;
-        const dt = (now - lastTime) / 1000;
-        lastTime = now;
-        simTime += dt * simSpeed;
-        if (simTime > 20) {
-          simTime = 20;
-          isPlaying = false;
-        }
-        draw();
-        if (isPlaying) {
-          rafId = requestAnimationFrame(loop);
-        }
-      }
-
-      function draw() {
-        const W = canvas.width;
-        const H = canvas.height;
-        ctx.clearRect(0, 0, W, H);
-
-        const topH = H / 2;
-        const marginX = 80;
-        const graphW = W - marginX * 2;
-        const scaleX = graphW / 20; // 0 to 20
-        const scaleY = (topH / 2) - 50;
-
-        const lambda = c / f;
-        const T = 1 / f;
-
-        // --- TOP y(x) ---
-        const originX1 = marginX;
-        const originY1 = topH / 2;
-
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(originX1, originY1);
-        ctx.lineTo(originX1 + graphW + 20, originY1);
-        ctx.moveTo(originX1, originY1 - scaleY * 2);
-        ctx.lineTo(originX1, originY1 + scaleY * 2);
-        ctx.stroke();
-
-        ctx.fillStyle = "#333";
-        ctx.font = "bold 18px sans-serif";
-        ctx.fillText("y(x)", originX1 - 40, originY1 - scaleY * 1.8);
-        ctx.fillText("x", originX1 + graphW + 25, originY1 + 6);
-
-        ctx.font = "16px sans-serif";
-        for (let i = 2; i <= 20; i += 2) {
-          ctx.beginPath();
-          ctx.moveTo(originX1 + i * scaleX, originY1 - 5);
-          ctx.lineTo(originX1 + i * scaleX, originY1 + 5);
-          ctx.stroke();
-          ctx.fillText(i, originX1 + i * scaleX - 5, originY1 + 20);
-        }
-        ctx.beginPath();
-        ctx.moveTo(originX1 - 5, originY1 - scaleY); ctx.lineTo(originX1 + 5, originY1 - scaleY);
-        ctx.moveTo(originX1 - 5, originY1 + scaleY); ctx.lineTo(originX1 + 5, originY1 + scaleY);
-        ctx.stroke();
-        ctx.fillText("1", originX1 - 20, originY1 - scaleY + 5);
-        ctx.fillText("-1", originX1 - 25, originY1 + scaleY + 5);
-
-        ctx.beginPath();
-        ctx.strokeStyle = "#ef4444";
-        ctx.lineWidth = 3;
-        const waveFrontX = c * simTime;
-
-        for (let px = 0; px <= graphW; px++) {
-          const x = px / scaleX;
-          if (x > waveFrontX) break;
-          // y(x,t) = A * sin(2*pi * (t/T - x/lambda))
-          // For positive upward peak initially at x=0, we draw negative Canvas Y
-          const y = A * Math.sin(2 * Math.PI * (simTime / T - x / lambda));
-          const plotX = originX1 + px;
-          const plotY = originY1 - y * scaleY;
-          if (px === 0) ctx.moveTo(plotX, plotY);
-          else ctx.lineTo(plotX, plotY);
-        }
-        ctx.stroke();
-
-        const p1x = x1;
-        let p1y = 0;
-        if (p1x <= waveFrontX) {
-          p1y = A * Math.sin(2 * Math.PI * (simTime / T - p1x / lambda));
-        }
-        const p1PlotX = originX1 + p1x * scaleX;
-        const p1PlotY = originY1 - p1y * scaleY;
-
-        ctx.beginPath();
-        ctx.arc(p1PlotX, p1PlotY, 8, 0, Math.PI * 2);
-        ctx.fillStyle = "#1e3a8a";
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillText("x\u2081 = " + x1.toFixed(1) + " m", originX1 + graphW / 5, originY1 - scaleY * 1.5);
-        ctx.fillText("t = " + simTime.toFixed(1) + " s", originX1 + graphW / 2, originY1 - scaleY * 1.5);
-
-        // --- BOTTOM y(t) ---
-        const originX2 = marginX;
-        const originY2 = topH + topH / 2;
-
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(originX2, originY2);
-        ctx.lineTo(originX2 + graphW + 20, originY2);
-        ctx.moveTo(originX2, originY2 - scaleY * 2);
-        ctx.lineTo(originX2, originY2 + scaleY * 2);
-        ctx.stroke();
-
-        ctx.font = "bold 18px sans-serif";
-        ctx.fillText("y(t)", originX2 - 40, originY2 - scaleY * 1.8);
-        ctx.fillText("t", originX2 + graphW + 25, originY2 + 6);
-
-        ctx.font = "16px sans-serif";
-        for (let i = 2; i <= 20; i += 2) {
-          ctx.beginPath();
-          ctx.moveTo(originX2 + i * scaleX, originY2 - 5);
-          ctx.lineTo(originX2 + i * scaleX, originY2 + 5);
-          ctx.stroke();
-          ctx.fillText(i, originX2 + i * scaleX - 5, originY2 + 20);
-        }
-        ctx.beginPath();
-        ctx.moveTo(originX2 - 5, originY2 - scaleY); ctx.lineTo(originX2 + 5, originY2 - scaleY);
-        ctx.moveTo(originX2 - 5, originY2 + scaleY); ctx.lineTo(originX2 + 5, originY2 + scaleY);
-        ctx.stroke();
-        ctx.fillText("1", originX2 - 20, originY2 - scaleY + 5);
-        ctx.fillText("-1", originX2 - 25, originY2 + scaleY + 5);
-
-        ctx.beginPath();
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 3;
-
-        const timeOffset = x1 / c;
-        for (let pt = 0; pt <= graphW; pt++) {
-          const t_plot = pt / scaleX;
-          if (t_plot > simTime) break;
-
-          let y_t = 0;
-          if (t_plot >= timeOffset) {
-            y_t = A * Math.sin(2 * Math.PI * (t_plot / T - x1 / lambda));
-          }
-
-          const plotX = originX2 + pt;
-          const plotY = originY2 - y_t * scaleY;
-          if (pt === 0) ctx.moveTo(plotX, plotY);
-          else ctx.lineTo(plotX, plotY);
-        }
-        ctx.stroke();
-
-        let current_yt = 0;
-        if (simTime >= timeOffset) {
-          current_yt = A * Math.sin(2 * Math.PI * (simTime / T - x1 / lambda));
-        }
-        const p2PlotX = originX2 + simTime * scaleX;
-        const p2PlotY = originY2 - current_yt * scaleY;
-
-        ctx.beginPath();
-        ctx.arc(p2PlotX, p2PlotY, 8, 0, Math.PI * 2);
-        ctx.fillStyle = "#b45309";
-        ctx.fill();
-        ctx.stroke();
-
-        if (simTime > 0) {
-          ctx.beginPath();
-          ctx.strokeStyle = "rgba(180, 83, 9, 0.4)";
-          ctx.lineWidth = 3;
-          ctx.setLineDash([8, 6]);
-          ctx.moveTo(p1PlotX, p1PlotY);
-
-          const cpX = (p1PlotX + p2PlotX) / 2;
-          const cpY = originY1 + topH / 2;
-          ctx.quadraticCurveTo(cpX, cpY, p2PlotX, p2PlotY);
-          ctx.stroke();
-          ctx.setLineDash([]);
-
-          ctx.beginPath();
-          ctx.fillStyle = "rgba(180, 83, 9, 0.4)";
-          const dx = p2PlotX - cpX;
-          const dy = p2PlotY - cpY;
-          const ang = Math.atan2(dy, dx);
-          ctx.moveTo(p2PlotX, p2PlotY);
-          ctx.lineTo(p2PlotX - 15 * Math.cos(ang - Math.PI / 6), p2PlotY - 15 * Math.sin(ang - Math.PI / 6));
-          ctx.lineTo(p2PlotX - 15 * Math.cos(ang + Math.PI / 6), p2PlotY - 15 * Math.sin(ang + Math.PI / 6));
-          ctx.fill();
-        }
-
-        readout.textContent = `Aktuelle y-Auslenkung am Ort x1: ${p1y.toFixed(2)} m`;
-      }
-
-      updateVals();
-    }
-
-    initLeifiWaveSim();
-    initCoupledWaveSim();
+    WellenSim.mountAll();
   </script>
 </body>
 

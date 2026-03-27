@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wellen-Simulationen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="../assets/wellen-simulations.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .sim-index-list li { margin: 6px 0; }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Wellen",
+      "sectionTitle":"Simulationen",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Simulationen",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "wellen-simulationen-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Überblick">
+      <h1>Wellen-Simulationen im Überblick</h1>
+      <p class="wb-muted">Hier findest du alle ausgelagerten Simulationen an einem Ort. Jede Simulation nutzt dieselbe gemeinsame JS-Bibliothek wie die Originalseiten.</p>
+      <div class="wb-callout">
+        <strong>Hinweis:</strong>
+        <p>Die Simulationen bleiben in den ursprünglichen <code>wellen-book*</code>-Seiten an ihrer bisherigen Position. Diese Sammelseite verwendet denselben ausgelagerten Code erneut.</p>
+      </div>
+      <ul class="sim-index-list">
+        <li>Mechanische Grundwellen: transversal, longitudinal, Huygens-Beugung</li>
+        <li>Interferenz: kohärente Quellen, Einzelspalt, Doppelspalt, Gitter, Zeigerpolygon, Teilchenbild</li>
+        <li>Reflexion und stehende Wellen: Pulse, Übergänge, Moden, Reflexionsfälle</li>
+        <li>Wellenfunktion: gekoppelte Diagramme und Teilchenmodell</li>
+      </ul>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Einstieg">
+      <h1>Einstieg</h1>
+      <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
+
+<div class="sw-sim-card" data-wave-sim="transversal">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Simulation: Transversalwelle</h2>
+            <p>Die Teilchen schwingen auf und ab, während die Welle nach rechts läuft.</p>
+            <label for="transAmp">Amplitude A</label>
+            <input id="transAmp" data-role="amp" type="range" min="0.3" max="1.4" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="transAmpVal" data-role="amp-value">0.90</span></div>
+
+            <label for="transFreq">Frequenz f</label>
+            <input id="transFreq" data-role="freq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="transFreqVal" data-role="freq-value">1.00</span></div>
+
+            <label for="transSpeed">Ausbreitungsgeschwindigkeit c</label>
+            <input id="transSpeed" data-role="speed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="transSpeedVal" data-role="speed-value">0.80</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="transPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="transResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="transversalWaveCanvas" data-role="canvas" width="960" height="520"
+              aria-label="Simulation einer Transversalwelle"></canvas>
+            <div class="sw-sim-mono" id="transversalWaveReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="longitudinal">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Simulation: Longitudinalwelle</h2>
+            <p>Die Teilchen schwingen vor und zurück. Sichtbar werden Verdichtungen und Verdünnungen.</p>
+            <label for="longAmp">Amplitude A</label>
+            <input id="longAmp" data-role="amp" type="range" min="0.2" max="1.0" value="0.55" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="longAmpVal" data-role="amp-value">0.55</span></div>
+
+            <label for="longFreq">Frequenz f</label>
+            <input id="longFreq" data-role="freq" type="range" min="0.4" max="2.0" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="longFreqVal" data-role="freq-value">1.00</span></div>
+
+            <label for="longSpeed">Ausbreitungsgeschwindigkeit c</label>
+            <input id="longSpeed" data-role="speed" type="range" min="0.2" max="1.4" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="longSpeedVal" data-role="speed-value">0.80</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="longPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="longResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="longitudinalWaveCanvas" data-role="canvas" width="960" height="520"
+              aria-label="Simulation einer Longitudinalwelle"></canvas>
+            <div class="sw-sim-mono" id="longitudinalWaveReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="huygens-diffraction">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Simulation: Beugung am Spalt</h2>
+            <p>Von links trifft eine ebene Welle auf eine Wand mit einem Spalt. Hinter dem Spalt werden die Punkte im
+              offenen Bereich zu Ausgangspunkten vieler dünn gezeichneter Elementarwellen.</p>
+
+            <label for="huygensSlit">Spaltbreite</label>
+            <input id="huygensSlit" data-role="slit" type="range" min="0.005" max="0.9" value="0.42" step="0.02" />
+            <div class="sw-sim-mono">relative Spaltbreite = <span id="huygensSlitVal" data-role="slit-value">0.42</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="huygensPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="huygensResetBtn" data-role="reset">Reset</button>
+            </div>
+
+            <div class="wb-soft-callout" style="margin-top:14px">
+              <strong>Darauf solltest du achten</strong>
+              <ul class="wave-list">
+                <li>Bei kleinem Spalt breitet sich die Welle hinter der Öffnung stärker fächerförmig aus.</li>
+                <li>Die dünnen Kreise zeigen die Elementarwellen nach Huygens.</li>
+                <li>Die kräftige Linie ist die neue Wellenfront als Einhüllende dieser Elementarwellen.</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <canvas id="huygensDiffractionCanvas" data-role="canvas" width="960" height="520"
+              aria-label="Simulation zur Beugung einer ebenen Welle an einem Spalt"></canvas>
+            <div class="sw-sim-mono" id="huygensDiffractionReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Interferenz 1">
+      <h1>Interferenz 1</h1>
+      <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
+
+<div class="sw-sim-card" data-wave-sim="coherent-screen">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="cohCursorY">Cursorposition auf dem Schirm</label>
+            <input id="cohCursorY" data-role="cursor-y" type="range" min="-180" max="180" value="0" step="1" />
+            <div class="sw-sim-mono">y(E) = <span id="cohCursorYVal" data-role="cursor-y-value">0</span></div>
+
+            <label for="cohFreq">Frequenz</label>
+            <input id="cohFreq" data-role="freq" type="range" min="1.0" max="3.0" value="1.1" step="0.1" />
+            <div class="sw-sim-mono">f = <span id="cohFreqVal" data-role="freq-value">1.1</span></div>
+
+            <label for="cohSpeed">Animationsgeschwindigkeit</label>
+            <input id="cohSpeed" data-role="speed" type="range" min="0.2" max="1.8" value="0.8" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="cohSpeedVal" data-role="speed-value">0.8</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn" type="button" id="cohToggleAlphaBtn" data-role="toggle-alpha">Alpha ausblenden</button>
+              <button class="wb-btn" type="button" id="cohToggleDsBtn" data-role="toggle-ds">Delta s ausblenden</button>
+            </div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="cohStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="cohResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="coherentScreenCanvas" data-role="canvas" width="980" height="560"
+              aria-label="Interferenz von zwei kohärenten Quellen"></canvas>
+            <div class="sw-sim-mono" id="coherentScreenReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Interferenz 2">
+      <h1>Interferenz 2</h1>
+      <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
+
+<div class="sw-sim-card" data-wave-sim="double-slit-particles">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="dspMode">Modus</label>
+            <select id="dspMode" data-role="mode">
+              <option value="slitA">Nur durch Spalt A</option>
+              <option value="slitB">Nur durch Spalt B</option>
+              <option value="bothWhich">Beide Spalte mit Welcher-Weg-Information</option>
+              <option value="bothInterf" selected>Beide Spalte ohne Welcher-Weg-Information (Interferenz)</option>
+            </select>
+
+            <label for="dspRate">Teilchenrate</label>
+            <input id="dspRate" data-role="rate" type="range" min="5" max="80" step="1" value="34" />
+            <div class="sw-sim-mono">Teilchen/s = <span id="dspRateVal" data-role="rate-value">34</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="dspStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="dspResetBtn" data-role="reset">Reset</button>
+            </div>
+
+            <div class="sw-sim-mono" id="dspReadout" data-role="readout"></div>
+          </div>
+          <div>
+            <canvas id="dsParticleCanvas" data-role="canvas" width="980" height="560" aria-label="Teilchenflug durch den Doppelspalt mit Schirmverteilung"></canvas>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="single-slit">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="esLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="esLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="esLamNmVal" data-role="lam-nm-value">633</span> nm</div>
+
+            <label for="esLMm">Spaltbreite \(d\) (mm)</label>
+            <input id="esLMm" data-role="screen-distance-mm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
+            <div class="sw-sim-mono">\(l\) = <span id="esLMmVal" data-role="screen-distance-mm-value">0.020</span> mm</div>
+
+            <label for="esAM">Abstand \(e\) (m)</label>
+            <input id="esAM" data-role="slit-width-mm" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="esAMVal" data-role="slit-width-mm-value">2.5</span> m</div>
+
+            <label for="esThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="esThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="2" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="esThetaDegVal" data-role="theta-deg-value">2.0</span> °</div>
+          </div>
+          <div>
+            <canvas id="singleSlitCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
+            <div class="sw-sim-mono" id="singleSlitReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="double-slit-envelope">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="dsLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="dsLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="dsLamNmVal" data-role="lam-nm-value">633</span> nm</div>
+
+            <label for="dsbMm">Spaltbreite \(b\) (mm)</label>
+            <input id="dsbMm" data-role="slit-width-mm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
+            <div class="sw-sim-mono">\(b\) = <span id="dsbMmVal" data-role="slit-width-mm-value">0.020</span> mm</div>
+
+            <label for="dsgMm">Spaltabstand \(g\) (mm) (Mitte-Mitte)</label>
+            <input id="dsgMm" data-role="slit-distance-mm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
+            <div class="sw-sim-mono">\(g\) = <span id="dsgMmVal" data-role="slit-distance-mm-value">0.100</span> mm</div>
+
+            <label for="dsAM">Abstand \(e\) (m) (nur für \(y\approx a\cdot\tan\alpha\))</label>
+            <input id="dsAM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="dsAMVal" data-role="screen-distance-m-value">2.5</span> m</div>
+
+            <label for="dsThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="dsThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="1.5" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="dsThetaDegVal" data-role="theta-deg-value">1.5</span> °</div>
+          </div>
+          <div>
+            <canvas id="dsCanvas" data-role="canvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
+            <div class="sw-sim-mono" id="dsReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="grating-phasor">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="phN">Spaltzahl \(N\)</label>
+            <input id="phN" data-role="n" type="range" min="2" max="10" value="3" step="1" />
+            <div class="sw-sim-mono">\(N\) = <span id="phNVal" data-role="n-value">3</span></div>
+
+            <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
+            <input id="phU" data-role="u" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
+            <div class="sw-sim-mono">\(u\) = <span id="phUVal" data-role="u-value">0.180</span></div>
+
+            <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
+            <input id="phScale" data-role="scale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
+            <div class="sw-sim-mono">Skalierung = <span id="phScaleVal" data-role="scale-value">1.00</span></div>
+            <div class="sw-sim-mono" id="phasorReadout" data-role="readout"></div>
+          </div>
+          <div>
+            <canvas id="phasorCanvas" data-role="canvas" width="900" height="520" aria-label="Zeigerpolygon für Spaltgitter"></canvas>
+            <div class="wb-section-break"></div>
+            <canvas id="phasorPatternCanvas" data-role="pattern-canvas" width="900" height="300" aria-label="Intensität in Abhängigkeit von u"></canvas>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="grating">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="gtLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <input id="gtLamNm" data-role="lam-nm" type="range" min="380" max="700" value="550" />
+            <div class="sw-sim-mono">\(\lambda\) = <span id="gtLamNmVal" data-role="lam-nm-value">550</span> nm</div>
+
+            <label for="gtGUm">Gitterkonstante \(g\) (\(\mu\)m)</label>
+            <input id="gtGUm" data-role="g-um" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
+            <div class="sw-sim-mono">\(g\) = <span id="gtGUmVal" data-role="g-um-value">4.0</span> \(\mu\)m</div>
+
+            <label for="gtBUm">Spaltbreite \(b\) (\(\mu\)m)</label>
+            <input id="gtBUm" data-role="b-um" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
+            <div class="sw-sim-mono">\(b\) = <span id="gtBUmVal" data-role="b-um-value">0.8</span> \(\mu\)m</div>
+
+            <label for="gtN">Spaltzahl \(N\)</label>
+            <input id="gtN" data-role="n" type="range" min="2" max="14" value="6" step="1" />
+            <div class="sw-sim-mono">\(N\) = <span id="gtNVal" data-role="n-value">6</span></div>
+
+            <label for="gtEM">Schirmabstand \(e\) (m)</label>
+            <input id="gtEM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
+            <div class="sw-sim-mono">\(e\) = <span id="gtEMVal" data-role="screen-distance-m-value">2.0</span> m</div>
+
+            <label for="gtThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <input id="gtThetaDeg" data-role="theta-deg" type="range" min="-25" max="25" value="3" step="0.1" />
+            <div class="sw-sim-mono">\(\alpha\) = <span id="gtThetaDegVal" data-role="theta-deg-value">3.0</span> °</div>
+          </div>
+          <div>
+            <canvas id="gratingCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
+            <div class="sw-sim-mono" id="gratingReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Reflexion und stehende Wellen">
+      <h1>Reflexion und stehende Wellen</h1>
+      <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
+
+<div class="sw-sim-card" data-wave-sim="fixed-pulse-reflection">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="fpSpeed">Animationsgeschwindigkeit</label>
+            <input id="fpSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="fpSpeedVal" data-role="speed-value">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="fpStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="fpResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="fixedPulseCanvas" data-role="canvas" width="960" height="460" aria-label="Pulsreflexion am festen Ende"></canvas>
+            <div class="sw-sim-mono" id="fixedPulseReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="loose-pulse-reflection">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="lpSpeed">Animationsgeschwindigkeit</label>
+            <input id="lpSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="lpSpeedVal" data-role="speed-value">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="lpStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="lpResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="loosePulseCanvas" data-role="canvas" width="960" height="460" aria-label="Pulsreflexion am losen Ende"></canvas>
+            <div class="sw-sim-mono" id="loosePulseReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="thin-dense-transition">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="tdSpeed">Animationsgeschwindigkeit</label>
+            <input id="tdSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="tdSpeedVal" data-role="speed-value">0.6</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="tdStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="tdResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="thinDenseCanvas" data-role="canvas" width="960" height="520" aria-label="Transmission und Reflexion duenn nach dicht"></canvas>
+            <div class="sw-sim-mono" id="thinDenseReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="dense-thin-transition">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="dtSpeed">Animationsgeschwindigkeit</label>
+            <input id="dtSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="0.6" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="dtSpeedVal" data-role="speed-value">0.6</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="dtStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="dtResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="denseThinCanvas" data-role="canvas" width="960" height="520" aria-label="Transmission und Reflexion dicht nach duenn"></canvas>
+            <div class="sw-sim-mono" id="denseThinReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="build-standing">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="bsMode">Startmodus der beiden Quellen</label>
+            <select id="bsMode">
+              <option value="inphase">Im Takt (gleichphasig)</option>
+              <option value="antiphase">Gegenläufig (gegenphasig)</option>
+            </select>
+
+            <label for="bsAmp">Amplitude A</label>
+            <input id="bsAmp" data-role="amp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="bsAmpVal" data-role="amp-value">0.80</span></div>
+
+            <label for="bsFreq">Anregungsfrequenz f</label>
+            <input id="bsFreq" type="range" min="0.4" max="2.0" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="bsFreqVal">0.90</span></div>
+
+            <label for="bsC">Ausbreitungsgeschwindigkeit c</label>
+            <input id="bsC" type="range" min="0.1" max="1.0" value="0.9" step="0.05" />
+            <div class="sw-sim-mono">c = <span id="bsCVal">0.90</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="bsStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="bsResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="buildStandingCanvas" data-role="canvas" width="960" height="520" aria-label="Entstehung einer stehenden Welle"></canvas>
+            <div class="sw-sim-mono" id="buildStandingReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="standing-modes">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="standingBoundary">Randbedingungen</label>
+            <select id="standingBoundary" data-role="boundary">
+              <option value="fixed-fixed">Zwei feste Enden</option>
+              <option value="fixed-free">Ein festes und ein loses Ende</option>
+              <option value="free-free">Zwei lose Enden</option>
+            </select>
+
+            <label for="standingN">Schwingung n (1 = Grundschwingung)</label>
+            <input id="standingN" data-role="n" type="range" min="1" max="5" value="1" step="1" />
+            <div class="sw-sim-mono">n = <span id="standingNVal" data-role="n-value">1</span></div>
+
+            <label for="standingAmp">Amplitude A</label>
+            <input id="standingAmp" data-role="amp" type="range" min="0.3" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="standingAmpVal" data-role="amp-value">0.80</span></div>
+
+            <label for="standingSpeed">Animationsgeschwindigkeit</label>
+            <input id="standingSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="standingSpeedVal" data-role="speed-value">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="smStartBtn" data-role="start">Start</button>
+              <button class="wb-btn" type="button" id="smResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="standingModesCanvas" data-role="canvas" width="960" height="520" aria-label="Simulation stehender Wellen"></canvas>
+            <div class="sw-sim-mono" id="standingModesReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="loose-reflection">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="lrAmp">Amplitude A</label>
+            <input id="lrAmp" data-role="amp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="lrAmpVal" data-role="amp-value">0.80</span></div>
+
+            <label for="lrLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <input id="lrLam" data-role="lam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
+            <div class="sw-sim-mono">lambda = <span id="lrLamVal" data-role="lam-value">1.20</span></div>
+
+            <label for="lrSpeed">Animationsgeschwindigkeit</label>
+            <input id="lrSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="lrSpeedVal" data-role="speed-value">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="lrStartBtn" data-role="start">Start</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="looseReflectCanvas" data-role="canvas" width="960" height="520" aria-label="Reflexion am losen Ende"></canvas>
+            <div class="sw-sim-mono" id="looseReflectReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="fixed-reflection">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="frAmp">Amplitude A</label>
+            <input id="frAmp" data-role="amp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
+            <div class="sw-sim-mono">A = <span id="frAmpVal" data-role="amp-value">0.80</span></div>
+
+            <label for="frLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <input id="frLam" data-role="lam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
+            <div class="sw-sim-mono">lambda = <span id="frLamVal" data-role="lam-value">1.20</span></div>
+
+            <label for="frSpeed">Animationsgeschwindigkeit</label>
+            <input id="frSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="frSpeedVal" data-role="speed-value">1.0</span></div>
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="frStartBtn" data-role="start">Start</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="fixedReflectCanvas" data-role="canvas" width="960" height="520" aria-label="Reflexion am festen Ende"></canvas>
+            <div class="sw-sim-mono" id="fixedReflectReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Wellenfunktion">
+      <h1>Wellenfunktion</h1>
+      <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
+
+<div class="sw-sim-card" data-wave-sim="coupled-wave">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="cwAmp">Amplitude A</label>
+            <input id="cwAmp" data-role="amp" type="range" min="0.2" max="1.5" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">A = <span id="cwAmpVal" data-role="amp-value">1.0</span></div>
+
+            <label for="cwFreq">Frequenz f (Hz)</label>
+            <input id="cwFreq" data-role="freq" type="range" min="0.1" max="1.0" value="0.25" step="0.05" />
+            <div class="sw-sim-mono">f = <span id="cwFreqVal" data-role="freq-value">0.25</span> Hz</div>
+
+            <label for="cwX1">Ort \(x_1\)</label>
+            <input id="cwX1" data-role="x1" type="range" min="1" max="19" value="6" step="0.5" />
+            <div class="sw-sim-mono">\(x_1\) = <span id="cwX1Val" data-role="x1-value">6.0</span> m</div>
+
+            <label for="cwSpeed">Animationsgeschwindigkeit</label>
+            <input id="cwSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
+            <div class="sw-sim-mono">v = <span id="cwSpeedVal" data-role="speed-value">1.0</span></div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="cwStartBtn" data-role="start">Start / Pause</button>
+              <button class="wb-btn" type="button" id="cwResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+          <div>
+            <canvas id="coupledWaveCanvas" data-role="canvas" width="960" height="600"
+              aria-label="Gekoppelte y(x) und y(t) Diagramme"></canvas>
+            <div class="sw-sim-mono" id="coupledWaveReadout" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="sw-sim-card" data-wave-sim="leifi-wave">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <label for="lwAmp">Amplitude $\hat{y}$ = <span id="lwAmpVal" data-role="amp-value">2.0</span> m</label>
+            <input id="lwAmp" data-role="amp" type="range" min="0.1" max="4.0" value="2.0" step="0.1" />
+
+            <label for="lwFreq" style="color:#3b82f6;">Frequenz $f$ = <span id="lwFreqVal" data-role="freq-value">0.40</span> Hz</label>
+            <input id="lwFreq" data-role="freq" type="range" min="0.1" max="0.7" value="0.40" step="0.01" />
+
+            <label for="lwSpeed" style="color:#16a34a;">Ausbreitungsgeschwindigkeit $c$ = <span
+                id="lwSpeedVal" data-role="speed-value">2.5</span> m/s</label>
+            <input id="lwSpeed" data-role="speed" type="range" min="2.5" max="5.0" value="2.5" step="0.1" />
+
+            <div style="color:#dc2626; font-weight:bold; margin-top:20px; font-size:18px;">
+              Wellenlänge $\lambda$ = <span id="lwLamVal" data-role="lam-value">6.25</span> m
+            </div>
+
+            <div style="margin-top: 25px; display:flex; flex-direction:column; gap:8px;">
+              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbAmp" data-role="show-amp" checked> Amplitude</label>
+              <label style="font-weight:normal; margin:0; color:#3b82f6;"><input type="checkbox" id="cbPer" data-role="show-period" checked>
+                Periodendauer</label>
+              <label style="font-weight:normal; margin:0; color:#16a34a;"><input type="checkbox" id="cbVel" data-role="show-velocity" checked>
+                Ausbreitungsgeschw.</label>
+              <label style="font-weight:normal; margin:0; color:#dc2626;"><input type="checkbox" id="cbLam" data-role="show-lambda" checked>
+                Wellenlänge</label>
+              <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbCoord" data-role="show-coords" checked>
+                Koordinatensystem</label>
+            </div>
+          </div>
+
+          <div>
+            <canvas id="leifiWaveCanvas" data-role="canvas" width="600" height="400" aria-label="Mechanische Welle Simulation"
+              style="width:100%; height:auto; border: 1px solid var(--wb-line, #e5e7eb); border-radius: 12px; background: rgba(255,255,255,0.5); display:block;"></canvas>
+            <div class="wb-row" style="margin-top:10px; justify-content:center; gap: 10px;">
+              <button class="wb-btn primary" type="button" id="lwPlayBtn" data-role="play">&#9658; / &#9208;</button>
+              <button class="wb-btn" type="button" id="lwResetBtn" data-role="reset">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/wellen-simulations.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+    WellenSim.mountAll();
+  </script>
+</body>
+
+</html>
