@@ -32,7 +32,7 @@ jobs:
           rsync -av --exclude '.git' --exclude '.github' --exclude '_site' ./ _site/public/
 
           # remove webhook only from public
-          rm -f _site/public/webhook.js
+          rm -f _site/public/wb-webhooks.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
