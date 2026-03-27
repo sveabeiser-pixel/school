@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Physik Oberstufe: Einheiten, Formeln, Konstanten und Formelzeichen</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --ef-accent: #0e5a61;
+      --ef-accent-soft: #dff3f4;
+      --ef-ink: #172033;
+      --ef-panel: #f9fcfc;
+      --ef-border: #cfe1e3;
+      --ef-grid: rgba(14, 90, 97, 0.08);
+    }
+    .ef-hero {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(223, 243, 244, 0.95)),
+        linear-gradient(var(--ef-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ef-grid) 1px, transparent 1px);
+      background-size: auto, 26px 26px, 26px 26px;
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(23, 32, 51, 0.08);
+    }
+    .ef-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--ef-accent-soft);
+      color: var(--ef-accent);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .ef-grid,
+    .ef-grid-3 {
+      display: grid;
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .ef-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .ef-grid-3 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .ef-card {
+      background: var(--ef-panel);
+      border: 1px solid var(--ef-border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .ef-card h3,
+    .ef-card h4 { margin-top: 0; }
+    .ef-table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+    .ef-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--ef-border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .ef-table th,
+    .ef-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ef-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .ef-table th {
+      background: #eef8f8;
+      color: var(--ef-ink);
+      font-weight: 700;
+    }
+    .ef-table tr:last-child td { border-bottom: none; }
+    .ef-formula {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--ef-accent);
+      border-radius: 14px;
+      background: #f3fbfb;
+    }
+    .ef-placeholder {
+      color: #536077;
+      font-style: italic;
+    }
+    .ef-chip {
+      display: inline-block;
+      margin: 4px 6px 0 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef8f8;
+      border: 1px solid var(--ef-border);
+      font-size: 0.92rem;
+    }
+    .ef-checklist {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .ef-checklist li + li { margin-top: 8px; }
+    .wb-book[data-theme="dark"] .ef-card,
+    .wb-book[data-theme="dark-blue"] .ef-card,
+    .wb-book[data-theme="dark"] .ef-hero,
+    .wb-book[data-theme="dark-blue"] .ef-hero,
+    .wb-book[data-theme="dark"] .ef-table,
+    .wb-book[data-theme="dark-blue"] .ef-table,
+    .wb-book[data-theme="dark"] .ef-table th,
+    .wb-book[data-theme="dark-blue"] .ef-table th {
+      color: #111;
+    }
+    @media (max-width: 760px) {
+      .ef-hero { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Physik Oberstufe",
+      "sectionTitle":"Einheiten, Formeln, Konstanten und Formelzeichen",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse & Zusammenfassung",
+      "onSubmit":"alert",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Formelsammlung Physik",
+      "themeDefault": "default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start & Leitfrage">
+      <div class="ef-hero">
+        <div class="ef-kicker">Start & Leitfrage</div>
+        <h1>Deine Formelsammlung für die Kursstufe</h1>
+        <p class="wb-muted">Ein Grundgerüst zum Ergänzen: Formelzeichen, SI-Einheiten, Konstanten und wichtige Beziehungen.</p>
+        <p>Diese Seite ist als wachsendes Nachschlagewerk gedacht. Du kannst sie nach und nach mit den Formeln und Konstanten füllen, die ihr im Unterricht braucht. Der Aufbau ist absichtlich klar gehalten: erst die Idee der SI-Einheiten, dann Formelzeichen, dann Formeln, dann Konstanten.</p>
+      </div>
+
+      <h2>Mechanik</h2>
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Unterkapitel</th><th>Formel</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>Kräfte</td><td>$F = m \cdot a$</td><td>Grundgleichung der Dynamik</td></tr>
+            <tr><td>Kräfte</td><td>$F_G = m \cdot g$</td><td>Gewichtskraft</td></tr>
+            <tr><td>Kräfte</td><td>$F_G = G \frac{m M}{r^2}$</td><td>Gravitationskraft zwischen zwei Massen</td></tr>
+            <tr><td>Kräfte</td><td>$F_Z = \frac{m v^2}{r}$</td><td>Zentripetalkraft</td></tr>
+            <tr><td>Mechanische Energien</td><td>$W_\mathrm{pot} = m g h = F_G \cdot s$</td><td>Lageenergie</td></tr>
+            <tr><td>Mechanische Energien</td><td>$W_\mathrm{kin} = \frac{1}{2} m v^2$</td><td>Bewegungsenergie</td></tr>
+            <tr><td>Mechanische Energien</td><td>$W_\mathrm{spann} = \frac{1}{2} D s^2$</td><td>Spannenergie einer Feder</td></tr>
+            <tr><td>Leistung + Wirkungsgrad</td><td>$P = \frac{W}{t}$</td><td>Leistung als Arbeit pro Zeit</td></tr>
+            <tr><td>Leistung + Wirkungsgrad</td><td>$\eta = \frac{P_\mathrm{nutz}}{P_\mathrm{zu}}$</td><td>Wirkungsgrad</td></tr>
+            <tr><td>Bewegungen</td><td>$v = \frac{s}{t}$</td><td>Mittlere Geschwindigkeit</td></tr>
+            <tr><td>Bewegungen</td><td>$a = \frac{\Delta v}{\Delta t}$</td><td>Beschleunigung</td></tr>
+            <tr><td>Schwingungen</td><td>$T = \frac{1}{f}$, $f = \frac{1}{T}$</td><td>Zusammenhang von Periodendauer und Frequenz</td></tr>
+            <tr><td>Schwingungen</td><td>$\omega = 2 \pi f = \frac{2 \pi}{T}$</td><td>Winkelgeschwindigkeit</td></tr>
+            <tr><td>Schwingungen</td><td>$y(t) = \hat{y} \sin(\omega t)$ oder $y(t) = \hat{y} \cos(\omega t)$</td><td>Auslenkung einer harmonischen Schwingung</td></tr>
+            <tr><td>Schwingungen</td><td>$v(t) = \hat{y}\,\omega \cos(\omega t)$ oder $v(t) = -\hat{y}\,\omega \sin(\omega t)$</td><td>Geschwindigkeit der Schwingung</td></tr>
+            <tr><td>Schwingungen</td><td>$a(t) = -\hat{y}\,\omega^2 \sin(\omega t)$ oder $a(t) = -\hat{y}\,\omega^2 \cos(\omega t)$</td><td>Beschleunigung der Schwingung</td></tr>
+            <tr><td>Schwingungen</td><td>$F = -D\,y$</td><td>Rückstellkraft</td></tr>
+            <tr><td>Schwingungen</td><td>$\omega = \sqrt{\frac{D}{m}}$</td><td>Eigenkreisfrequenz des Federpendels</td></tr>
+            <tr><td>Schwingungen</td><td>$T = 2 \pi \sqrt{\frac{m}{D}}$</td><td>Federpendel</td></tr>
+            <tr><td>Schwingungen</td><td>$f = \frac{1}{2 \pi}\sqrt{\frac{D}{m}}$</td><td>Frequenz des Federpendels</td></tr>
+            <tr><td>Schwingungen</td><td>$T = 2 \pi \sqrt{\frac{\ell}{g}}$</td><td>Fadenpendel bei kleiner Auslenkung</td></tr>
+            <tr><td>Wellen</td><td>$y(x,t) = a \sin\!\left(\frac{2\pi}{T}t + \frac{2\pi}{\lambda}x\right)$</td><td>Wellenfunktion</td></tr>
+            <tr><td>Wellen</td><td>$c = \lambda \cdot f$</td><td>Grundgleichung der Welle</td></tr>
+            <tr><td>Wellen</td><td>$\lambda = c \cdot T$</td><td>Mit $f = \frac{1}{T}$</td></tr>
+            <tr><td>Wellen</td><td>$\sin(\alpha_k) = \frac{k\lambda}{d}$</td><td>Konstruktive Interferenz am Doppelspalt</td></tr>
+            <tr><td>Wellen</td><td>$\sin(\alpha_k) = \frac{(2k+1)\lambda}{2d}$</td><td>Destruktive Interferenz am Doppelspalt</td></tr>
+            <tr><td>Wellen</td><td>$\tan(\alpha_k) = \frac{a_k}{\ell}$</td><td>Abstand der Maxima und Minima auf dem Schirm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Elektrik</h2>
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Unterkapitel</th><th>Formel</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>Grundgleichungen</td><td>$U = R \cdot I$</td><td>Ohmsches Gesetz</td></tr>
+            <tr><td>Grundgleichungen</td><td>$P = U \cdot I$</td><td>Elektrische Leistung</td></tr>
+            <tr><td>Grundgleichungen</td><td>$W = P \cdot t = U \cdot I \cdot t = U \cdot Q$</td><td>Elektrische Energie</td></tr>
+            <tr><td>Grundgleichungen</td><td>$Q = I \cdot t$</td><td>Ladung aus Stromstärke und Zeit</td></tr>
+            <tr><td>Grundgleichungen</td><td>$F_\mathrm{el} = E \cdot Q$</td><td>Elektrische Kraft im E-Feld</td></tr>
+            <tr><td>Grundgleichungen</td><td>$F_\mathrm{el} = \frac{1}{4 \pi \varepsilon_0}\frac{Q_1 Q_2}{r^2}$</td><td>Coulomb-Kraft</td></tr>
+            <tr><td>Grundgleichungen</td><td>$F_L = B \cdot I \cdot s$</td><td>Lorentzkraft auf Leiter</td></tr>
+            <tr><td>Grundgleichungen</td><td>$F_L = q \cdot v \cdot B$</td><td>Lorentzkraft auf bewegte Ladung</td></tr>
+            <tr><td>Kondensator</td><td>$Q = C \cdot U$</td><td>Zusammenhang von Ladung, Kapazität und Spannung</td></tr>
+            <tr><td>Kondensator</td><td>$C = \varepsilon_0 \varepsilon_r \frac{A}{d}$</td><td>Plattenkondensator</td></tr>
+            <tr><td>Kondensator</td><td>$U = E \cdot d$</td><td>Spannung im homogenen E-Feld</td></tr>
+            <tr><td>Kondensator</td><td>$E = \frac{Q}{\varepsilon_0 \varepsilon_r A}$</td><td>E-Feld im Plattenkondensator</td></tr>
+            <tr><td>Kondensator</td><td>$W = \frac{1}{2} Q U = \frac{1}{2} C U^2 = \frac{Q^2}{2C}$</td><td>Gespeicherte Energie</td></tr>
+            <tr><td>Kondensator</td><td>$C_\mathrm{ges} = C_1 + C_2$</td><td>Parallelschaltung</td></tr>
+            <tr><td>Kondensator</td><td>$\frac{1}{C_\mathrm{ges}} = \frac{1}{C_1} + \frac{1}{C_2} + \dots$</td><td>Reihenschaltung</td></tr>
+            <tr><td>Spule</td><td>$B = \mu_0 \mu_r \frac{N I}{\ell}$</td><td>Magnetfeld einer langen Spule</td></tr>
+            <tr><td>Spule</td><td>$\Phi = B \cdot A \cdot \cos(\varphi)$</td><td>Magnetischer Fluss</td></tr>
+            <tr><td>Spule</td><td>$U_\mathrm{ind} = -N \cdot \dot{\Phi}$</td><td>Induktionsspannung</td></tr>
+            <tr><td>Spule</td><td>$U_\mathrm{ind} = -L \cdot \dot{I}$</td><td>Selbstinduktion</td></tr>
+            <tr><td>Spule</td><td>$L = \mu_0 \frac{A N^2}{\ell}$</td><td>Induktivität einer langen Spule</td></tr>
+            <tr><td>Spule</td><td>$W_\mathrm{mag} = \frac{1}{2} L I^2$</td><td>Magnetische Feldenergie</td></tr>
+            <tr><td>Spule</td><td>$T = 2 \pi \sqrt{L C}$</td><td>Schwingungsdauer des LC-Schwingkreises</td></tr>
+            <tr><td>Spule</td><td>$\omega = 2 \pi f = \frac{2 \pi}{T} = \frac{1}{\sqrt{LC}}$</td><td>Kreisfrequenz des Schwingkreises</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ef-grid">
+        <div class="wb-soft-callout">
+          <strong>So nutzt du die Seite</strong>
+          <ul class="ef-checklist">
+            <li>Arbeite die Seiten der Reihe nach durch.</li>
+            <li>Nutze die Tabellen als Vorlage zum Ergänzen.</li>
+            <li>Teste dich zwischendurch mit den kurzen Interaktionen.</li>
+            <li>Halte am Ende fest, was in deiner Sammlung noch fehlt.</li>
+          </ul>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Darauf kommt es an</strong>
+          <ul class="ef-checklist">
+            <li>Formelzeichen sind nicht dasselbe wie Einheiten.</li>
+            <li>Viele Größen lassen sich auf Basiseinheiten zurückführen.</li>
+            <li>Saubere Einheitenkontrolle schützt vor Rechenfehlern.</li>
+            <li>Konstanten solltest du mit Symbol, Wert und Einheit notieren.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Offizielle Formelsammlung</strong>
+        <p>Die offizielle Formelsammlung für das IQB-Abitur Physik findest du hier: <a href="https://km.baden-wuerttemberg.de/fileadmin/redaktion/m-km/intern/PDF/Dateien/Gymnasium/Dokumente_Abitur/Abitur_2024/Ph_Dokument_mit_physikalischen_Formeln_07_2024.pdf" target="_blank" rel="noopener">PDF des Kultusministeriums Baden-Württemberg</a>.</p>
+      </div>
+
+      <div class="ef-grid-3">
+        <div class="ef-card"><h3>Formelzeichen</h3><p>Zum Beispiel $F$, $m$, $t$, $v$ oder $\omega$.</p></div>
+        <div class="ef-card"><h3>Einheiten</h3><p>Zum Beispiel $\mathrm{N}$, $\mathrm{kg}$, $\mathrm{s}$ oder $\mathrm{m/s}$.</p></div>
+        <div class="ef-card"><h3>Konstanten</h3><p>Zum Beispiel $c$, $h$, $G$ oder $N_A$.</p></div>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-start-reveal",
+          "title":"Was kannst du danach?",
+          "question":"Öffne die Leitfrage für diese Seite.",
+          "answer":"Du kannst danach grundlegende SI-Einheiten sicher zuordnen, zentrale Formelzeichen aus der Kursstufe unterscheiden, typische Einheitenfehler erkennen und deine eigene Formelsammlung systematisch erweitern.",
+          "buttonLabel":"Antwort anzeigen",
+          "buttonHideLabel":"Antwort verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="SI-Grundlagen">
+      <h1>SI-Grundlagen kurz und klar</h1>
+      <p>Das SI-System ist das internationale Einheitensystem. Es sorgt dafür, dass eine Messung überall gleich verstanden wird. In der Physik der Kursstufe ist das wichtig, weil du Formeln nur dann sicher nutzen kannst, wenn die Größen sauber definiert und die Einheiten konsistent sind.</p>
+
+      <div class="ef-grid">
+        <div class="ef-card">
+          <h3>Basiseinheiten</h3>
+          <p>Sie bilden das Fundament, etwa Meter, Kilogramm und Sekunde. Viele andere Einheiten werden daraus zusammengesetzt.</p>
+          <div class="ef-chip">m</div><div class="ef-chip">kg</div><div class="ef-chip">s</div><div class="ef-chip">A</div><div class="ef-chip">K</div><div class="ef-chip">mol</div><div class="ef-chip">cd</div>
+        </div>
+        <div class="ef-card">
+          <h3>Abgeleitete Einheiten</h3>
+          <p>Sie entstehen aus Basiseinheiten, etwa $\mathrm{N = kg \cdot m/s^2}$ oder $\mathrm{Hz = 1/s}$.</p>
+          <p class="wb-mini-note">Merke: Hinter einer benannten Einheit steckt fast immer eine Kombination aus Basiseinheiten.</p>
+        </div>
+      </div>
+
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Basiseinheit</th><th>Einheitenzeichen</th><th>Zu welcher Grundgröße?</th></tr></thead>
+          <tbody>
+            <tr><td>Meter</td><td>$\mathrm{m}$</td><td>Länge</td></tr>
+            <tr><td>Kilogramm</td><td>$\mathrm{kg}$</td><td>Masse</td></tr>
+            <tr><td>Sekunde</td><td>$\mathrm{s}$</td><td>Zeit</td></tr>
+            <tr><td>Ampere</td><td>$\mathrm{A}$</td><td>Elektrische Stromstärke</td></tr>
+            <tr><td>Kelvin</td><td>$\mathrm{K}$</td><td>Temperatur</td></tr>
+            <tr><td>Mol</td><td>$\mathrm{mol}$</td><td>Stoffmenge</td></tr>
+            <tr><td>Candela</td><td>$\mathrm{cd}$</td><td>Lichtstärke</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-cloze-si",
+          "title":"Sicherung: SI-System",
+          "hint":"Setze die passenden Begriffe aus der Wortbank ein.",
+          "bank":["internationale","Basiseinheiten","abgeleitete","Sekunde","Hz"],
+          "segments":[
+            {"t":"text","v":"Das SI ist das "},
+            {"t":"gap","a":"internationale"},
+            {"t":"text","v":" Einheitensystem. Größen wie Meter, Kilogramm und "},
+            {"t":"gap","a":"Sekunde"},
+            {"t":"text","v":" gehören zu den "},
+            {"t":"gap","a":"Basiseinheiten"},
+            {"t":"text","v":". Newton oder Hertz sind dagegen "},
+            {"t":"gap","a":"abgeleitete"},
+            {"t":"text","v":" Einheiten. Die Einheit "},
+            {"t":"gap","a":"Hz"},
+            {"t":"text","v":" bedeutet genau genommen 1 pro Sekunde."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ef-verify-angle",
+          "title":"Stopp & check",
+          "hint":"Achte auf den Unterschied zwischen Alltag und SI.",
+          "statement":"Grad ist die offizielle SI-Einheit für Winkel.",
+          "answer": false,
+          "explain":"Im SI wird für den ebenen Winkel das Bogenmaß mit der Einheit Radiant verwendet. Grad ist gebräuchlich, aber nicht die SI-Einheit."
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Das SI-System schafft ein gemeinsames Fundament. Basiseinheiten stehen am Anfang, abgeleitete Einheiten bauen darauf auf. Genau deshalb lohnt sich eine Einheitenkontrolle fast immer.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Formelzeichen & Einheiten">
+      <h1>Formelzeichen und Einheiten</h1>
+      <p>Hier ist der erste Grundstock aus deinem Material. Ich habe jetzt zusätzlich wichtige Größen aus der Elektrizitätslehre und Feldlehre ergänzt. Die Tabelle kannst du später weiterführen, wenn neue Themen dazukommen.</p>
+
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Größe</th><th>Formelzeichen</th><th>SI-Einheit</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>Kraft</td><td>$F$</td><td>$\mathrm{N}$</td><td>Newton</td></tr>
+            <tr><td>Masse</td><td>$m$</td><td>$\mathrm{kg}$</td><td>Basiseinheit</td></tr>
+            <tr><td>Zeit</td><td>$t$</td><td>$\mathrm{s}$</td><td>Basiseinheit</td></tr>
+            <tr><td>Geschwindigkeit</td><td>$v$</td><td>$\mathrm{m/s}$</td><td>Vektorgröße</td></tr>
+            <tr><td>Beschleunigung</td><td>$a$</td><td>$\mathrm{m/s^2}$</td><td>Änderung der Geschwindigkeit pro Zeit</td></tr>
+            <tr><td>Abstand</td><td>$d$</td><td>$\mathrm{m}$</td><td>Längenangabe</td></tr>
+            <tr><td>Weg / Strecke</td><td>$s$</td><td>$\mathrm{m}$</td><td>In vielen Formeln für Bewegung</td></tr>
+            <tr><td>Fläche</td><td>$A$</td><td>$\mathrm{m^2}$</td><td>Nicht mit dem Ampere verwechseln</td></tr>
+            <tr><td>Volumen</td><td>$V$</td><td>$\mathrm{m^3}$</td><td>Großes $V$</td></tr>
+            <tr><td>Wellenlänge</td><td>$\lambda$</td><td>$\mathrm{m}$</td><td>Abstand zwischen zwei Punkten gleicher Phase</td></tr>
+            <tr><td>Frequenz</td><td>$f$</td><td>$\mathrm{Hz}$</td><td>$\mathrm{Hz = 1/s}$</td></tr>
+            <tr><td>Periodendauer</td><td>$T$</td><td>$\mathrm{s}$</td><td>Zeit für eine volle Periode</td></tr>
+            <tr><td>Winkelgeschwindigkeit</td><td>$\omega$</td><td>$\mathrm{rad/s}$</td><td>Oft auch als $\mathrm{s^{-1}}$ geschrieben</td></tr>
+            <tr><td>Winkel</td><td>$\alpha$, $\varphi$</td><td>$\mathrm{rad}$</td><td>Im Unterricht oft zusätzlich in Grad angegeben</td></tr>
+            <tr><td>Federhärte / Federkonstante</td><td>$D$</td><td>$\mathrm{N/m}$</td><td>Kraft pro Auslenkung</td></tr>
+            <tr><td>Wärme</td><td>$Q$</td><td>$\mathrm{J}$</td><td>Thermisch übertragene Energie</td></tr>
+            <tr><td>Temperatur</td><td>$T$</td><td>$\mathrm{K}$</td><td>Kelvin als SI-Basiseinheit</td></tr>
+            <tr><td>Ladung</td><td>$Q$</td><td>$\mathrm{C}$</td><td>Coulomb</td></tr>
+            <tr><td>Stromstärke</td><td>$I$</td><td>$\mathrm{A}$</td><td>Ampere</td></tr>
+            <tr><td>Spannung</td><td>$U$</td><td>$\mathrm{V}$</td><td>Volt</td></tr>
+            <tr><td>Elektrisches Potenzial</td><td>$\varphi$</td><td>$\mathrm{V}$</td><td>Potenzialdifferenz ist Spannung</td></tr>
+            <tr><td>Magnetischer Fluss</td><td>$\Phi$</td><td>$\mathrm{Wb}$</td><td>Weber</td></tr>
+            <tr><td>Magnetische Feldstärke</td><td>$H$</td><td>$\mathrm{A/m}$</td><td>Von der Flussdichte $B$ zu unterscheiden</td></tr>
+            <tr><td>Widerstand</td><td>$R$</td><td>$\mathrm{\Omega}$</td><td>Ohm</td></tr>
+            <tr><td>Leistung</td><td>$P$</td><td>$\mathrm{W}$</td><td>Watt</td></tr>
+            <tr><td>Energie / Arbeit</td><td>$W$</td><td>$\mathrm{J}$</td><td>Joule</td></tr>
+            <tr><td>Kapazität</td><td>$C$</td><td>$\mathrm{F}$</td><td>Farad</td></tr>
+            <tr><td>Elektrische Feldstärke</td><td>$E$</td><td>$\mathrm{V/m}$</td><td>Auch als $\mathrm{N/C}$ schreibbar</td></tr>
+            <tr><td>Magnetische Flussdichte</td><td>$B$</td><td>$\mathrm{T}$</td><td>Tesla</td></tr>
+            <tr><td>Induktivität</td><td>$L$</td><td>$\mathrm{H}$</td><td>Henry</td></tr>
+            <tr><td class="ef-placeholder">Ergänzen</td><td class="ef-placeholder">z. B. $p$</td><td class="ef-placeholder">z. B. $\mathrm{Pa}$ oder $\mathrm{kg\,m/s}$</td><td class="ef-placeholder">Druck oder Impuls je nach Kontext</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-categorize-units",
+          "title":"Sortiere die Größen",
+          "hint":"Ordne jede Karte der passenden Kategorie zu.",
+          "categories":[
+            {"id":"base","title":"Größe mit Basiseinheit"},
+            {"id":"derived","title":"Größe mit abgeleiteter Einheit"}
+          ],
+          "items":[
+            {"label":"Masse - kg","category":"base"},
+            {"label":"Zeit - s","category":"base"},
+            {"label":"Kraft - N","category":"derived"},
+            {"label":"Geschwindigkeit - m/s","category":"derived"},
+            {"label":"Frequenz - Hz","category":"derived"},
+            {"label":"Weg - m","category":"base"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-reveal-symbols",
+          "title":"Typische Stolperfalle",
+          "question":"Warum reicht es nicht, sich nur die Einheit zu merken?",
+          "answer":"Weil dieselbe Einheit zu verschiedenen Größen gehören kann. Meter gehört zum Beispiel zu Abstand, Weg, Wellenlänge oder Radius. Erst Formelzeichen, Bedeutung und Kontext zusammen machen eine Größe eindeutig.",
+          "buttonLabel":"Auflösung anzeigen",
+          "buttonHideLabel":"Auflösung verbergen"
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Formelzeichen, Größenname und Einheit gehören immer zusammen. Erst dann kannst du Formeln richtig lesen und Größen sauber voneinander trennen.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Formeln ergänzen">
+      <h1>Formeln systematisch ergänzen</h1>
+      <p>Eine gute Formelsammlung ist nicht einfach eine lange Liste. Sinnvoller ist es, Formeln nach Themen zu ordnen und bei jeder Formel direkt Bedeutung, Umstellungsidee und Einheitencheck mitzuschreiben.</p>
+
+      <div class="ef-grid">
+        <div class="ef-card">
+          <h3>Beispiel Bewegung</h3>
+          <div class="ef-formula">$v = \frac{s}{t}$</div>
+          <p>Schreibe am besten direkt dazu: Gesuchte Größe, Umstellungen und passende Einheit $\mathrm{m/s}$.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Beispiel Schwingung</h3>
+          <div class="ef-formula">$f = \frac{1}{T}$</div>
+          <p>Hier siehst du sofort den Zusammenhang zwischen Frequenz und Periodendauer.</p>
+        </div>
+      </div>
+
+   
+
+      <h2>Mechanik</h2>
+      <h3>Kräfte</h3>
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$F = m \cdot a$</td><td>Grundgleichung der Dynamik</td><td>Masse $m$, Beschleunigung $a$</td></tr>
+            <tr><td>$F_G = m \cdot g$</td><td>Gewichtskraft</td><td>Masse $m$, Ortsfaktor $g$</td></tr>
+            <tr><td>$F = -D\,y$</td><td>Rückstellkraft</td><td>Federkonstante $D$, Auslenkung $y$</td></tr>
+            <tr><td>$F_G = G \frac{m M}{r^2}$</td><td>Gravitationskraft zwischen zwei Massen</td><td>Massen $m$ und $M$, Abstand $r$</td></tr>
+             <tr><td>$F_Z = \frac{m v^2}{r}$</td><td>Zentripetalkraft</td><td>Masse $m$, Geschwindigkeit $v$, Radius $r$</td></tr>
+            </tbody>
+        </table>
+      </div>
+
+       <h3>Mechanische Energien, Leistung, Wirkungsgrad</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$W_\mathrm{pot} = m g h = F_G \cdot h$</td><td>Lageenergie</td><td>Höhe $h$ relativ zu einem Bezugspunkt</td></tr>
+            <tr><td>$W_\mathrm{kin} = \frac{1}{2} m v^2$</td><td>Bewegungsenergie</td><td>Masse $m$, Geschwindigkeit $v$</td></tr>
+            <tr><td>$W_\mathrm{spann} = \frac{1}{2} D s^2$</td><td>Spannenergie einer Feder</td><td>Federkonstante $D$, Auslenkung $s$</td></tr>
+            <tr><td>$P = \frac{W}{t}$</td><td>Leistung als Arbeit pro Zeit</td><td>Arbeit $W$, Zeit $t$</td></tr>
+            <tr><td>$\eta = \frac{P_\mathrm{nutz}}{P_\mathrm{zu}}$</td><td>Wirkungsgrad</td><td>Nützliche Leistung $P_\mathrm{nutz}$, zugeführte Leistung $P_\mathrm{zu}$</td></tr>
+            </tbody>
+        </table>
+      </div>
+
+      <h3>Bewegungen</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$v = \frac{s}{t}$</td><td>Mittlere Geschwindigkeit</td><td>gleichförmige Bewegung</td></tr>
+              <tr><td>$s=\frac{1}{2} a t^2$</td><td>Weg bei gleichmäßig beschleunigter Bewegung</td><td> Beschleunigung $a$, Zeit $t$</td></tr>
+              <tr><td>$v = a t$</td><td>Geschwindigkeit bei gleichmäßig beschleunigter Bewegung</td><td> Beschleunigung $a$, Zeit $t$</td></tr>
+            <tr><td>$a = \frac{\Delta v}{\Delta t}$</td><td>Beschleunigung</td><td>beschleunigte Bewegung</td></tr>
+            </tbody>
+        </table>
+      </div>
+
+      <h3>Schwingungen</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$T = \frac{1}{f},\quad f = \frac{1}{T}$</td><td>Zusammenhang von Periodendauer und Frequenz</td><td></td></tr>
+            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T}$</td><td>Winkelgeschwindigkeit</td><td></td></tr>
+            <tr><td>$y(t) = \hat{y} \sin(\omega t)\quad / \quad \hat{y} \cos(\omega t)$</td><td>Auslenkung einer harmonischen Schwingung</td><td></td></tr>
+            <tr><td>$v(t) = \hat{y}\,\omega \cos(\omega t)\quad / \quad -\hat{y}\,\omega \sin(\omega t)$</td><td>Geschwindigkeit der Schwingung</td><td></td></tr>
+            <tr><td>$a(t) = -\hat{y}\,\omega^2 \sin(\omega t)\quad / \quad -\hat{y}\,\omega^2 \cos(\omega t)$</td><td>Beschleunigung der Schwingung</td><td></td></tr>
+            <tr><td>$\omega = \sqrt{\frac{D}{m}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{D}{m}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Federpendels</td><td></td></tr>
+            <tr><td>$T = 2 \pi \sqrt{\frac{m}{D}}$</td><td>Periodendauer des Federpendels</td><td></td></tr>
+            <tr><td>$\omega = \sqrt{\frac{g}{\ell}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{g}{\ell}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Fadenpendels</td><td></td></tr>
+            <tr><td>$T = 2 \pi \sqrt{\frac{\ell}{g}}$</td><td>Periodendauer des Fadenpendels</td><td>gilt nur bei kleinen Auslenkungen</td></tr>
+             </tbody>
+        </table>
+      </div>
+
+      <h3>Wellen</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$y(x,t) = a \sin\!\left(\frac{2\pi}{T}t + \frac{2\pi}{\lambda}x\right)$</td><td>Wellenfunktion</td></tr>
+            <tr><td>$c = \lambda \cdot f$</td><td>Grundgleichung der Welle</td></tr>
+            <tr><td>$\lambda = c \cdot T$</td><td>Mit $f = \frac{1}{T}$</td></tr>
+            <tr><td>$\sin(\alpha_k) = \frac{k\lambda}{d}$</td><td>Konstruktive Interferenz am Doppelspalt</td></tr>
+            <tr><td>$\sin(\alpha_k) = \frac{(2k+1)\lambda}{2d}$</td><td>Destruktive Interferenz am Doppelspalt</td></tr>
+            <tr><td>$\tan(\alpha_k) = \frac{a_k}{\ell}$</td><td>Abstand der Maxima und Minima auf dem Schirm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Elektrik</h2>
+      <h3>Ladung, Strom, Spannung, Widerstand etc.</h3>
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$U = R \cdot I$</td><td>Ohmsches Gesetz</td></tr>
+            <tr><td>$P = U \cdot I$</td><td>Elektrische Leistung</td></tr>
+            <tr><td>$W = P \cdot t = U \cdot I \cdot t = U \cdot Q$</td><td>Elektrische Energie</td></tr>
+            <tr><td>$Q = I \cdot t$</td><td>Ladung aus Stromstärke und Zeit</td></tr>
+            <tr><td>$F_\mathrm{el} = E \cdot Q$</td><td>Elektrische Kraft im E-Feld</td></tr>
+            <tr><td>$F_\mathrm{el} = \frac{1}{4 \pi \varepsilon_0}\frac{Q_1 Q_2}{r^2}$</td><td>Coulomb-Kraft</td></tr>
+            <tr><td>$F_L = B \cdot I \cdot s$</td><td>Lorentzkraft auf Leiter</td></tr>
+            <tr><td>$F_L = q \cdot v \cdot B$</td><td>Lorentzkraft auf bewegte Ladung</td></tr>
+             </tbody>
+        </table>
+      </div>
+
+      <h3>Kondensator und elektrisches Feld</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$Q = C \cdot U$</td><td>Zusammenhang von Ladung, Kapazität und Spannung</td></tr>
+            <tr><td>$C = \varepsilon_0 \varepsilon_r \frac{A}{d}$</td><td>Plattenkondensator</td></tr>
+            <tr><td>$U = E \cdot d$</td><td>Spannung im homogenen E-Feld</td></tr>
+            <tr><td>$E = \frac{Q}{\varepsilon_0 \varepsilon_r A}$</td><td>E-Feld im Plattenkondensator</td></tr>
+            <tr><td>$W = \frac{1}{2} Q U = \frac{1}{2} C U^2 = \frac{Q^2}{2C}$</td><td>Gespeicherte Energie</td></tr>
+            <tr><td>$C_\mathrm{ges} = C_1 + C_2$</td><td>Parallelschaltung</td></tr>
+            <tr><td>$\frac{1}{C_\mathrm{ges}} = \frac{1}{C_1} + \frac{1}{C_2} + \dots$</td><td>Reihenschaltung</td></tr>
+             </tbody>
+        </table>
+      </div>
+
+      <h3>Spule und magnetisches Feld</h3>
+       <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>$B = \mu_0 \mu_r \frac{N I}{\ell}$</td><td>Magnetfeld einer langen Spule</td></tr>
+            <tr><td>$\Phi = B \cdot A \cdot \cos(\varphi)$</td><td>Magnetischer Fluss</td></tr>
+            <tr><td>$U_\mathrm{ind} = -N \cdot \dot{\Phi}$</td><td>Induktionsspannung</td></tr>
+            <tr><td>$U_\mathrm{ind} = -L \cdot \dot{I}$</td><td>Selbstinduktion</td></tr>
+            <tr><td>$L = \mu_0 \frac{A N^2}{\ell}$</td><td>Induktivität einer langen Spule</td></tr>
+            <tr><td>$W_\mathrm{mag} = \frac{1}{2} L I^2$</td><td>Magnetische Feldenergie</td></tr>
+            <tr><td>$T = 2 \pi \sqrt{L C}$</td><td>Schwingungsdauer des LC-Schwingkreises</td></tr>
+            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T} = \frac{1}{\sqrt{LC}}$</td><td>Kreisfrequenz des Schwingkreises</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-order-workflow",
+          "title":"Bring die Arbeit mit einer neuen Formel in eine sinnvolle Reihenfolge",
+          "hint":"Denke daran, wie du eine Formel wirklich sicher lernst.",
+          "items":[
+            "Größen und Formelzeichen klären",
+            "Einheiten notieren und prüfen",
+            "Bedeutung der Formel am Beispiel verstehen",
+            "Formel umstellen und anwenden"
+          ],
+          "shuffle": true,
+          "requireComplete": true
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Zuordnung: Größe und Einheit</h2>
+      <div data-p2 class="p2" data-p2-title="Ordne Formelzeichen und Einheit passend zu" data-p2-hint="Arbeite sauber. Manche Kürzel sehen ähnlich aus, bedeuten aber etwas anderes.">
+        <div class="p2-hint">Ziehe jede Größe zur passenden Einheit.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Größe</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Frequenz $f$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Beschleunigung $a$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Volumen $V$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Winkelgeschwindigkeit $\omega$</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Einheit</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">$\mathrm{Hz}$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">$\mathrm{m/s^2}$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">$\mathrm{m^3}$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">$\mathrm{rad/s}$</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Thema</th><th>Formel</th><th>Was du ergänzen solltest</th></tr></thead>
+          <tbody>
+            <tr><td>Bewegung</td><td>$v = \frac{s}{t}$, $a = \frac{\Delta v}{\Delta t}$</td><td>Beispielaufgabe und Umstellungen ergänzen</td></tr>
+            <tr><td>Schwingungen</td><td>$T = \frac{1}{f}$, $f = \frac{1}{T}$, $\omega = 2 \pi f$</td><td>Zusammenhang von Frequenz, Periodendauer und Winkelgeschwindigkeit notieren</td></tr>
+            <tr><td>Pendel</td><td>$T = 2 \pi \sqrt{\frac{m}{D}}$, $T = 2 \pi \sqrt{\frac{\ell}{g}}$</td><td>Federpendel und Fadenpendel unterscheiden</td></tr>
+            <tr><td>Energie</td><td>$W_\mathrm{pot} = m g h$, $W_\mathrm{spann} = \frac{1}{2} D s^2$, $W_\mathrm{kin} = \frac{1}{2} m v^2$</td><td>Bedeutung der einzelnen Energieformen ergänzen</td></tr>
+            <tr><td class="ef-placeholder">Elektrizitätslehre</td><td class="ef-placeholder">z. B. $U = R \cdot I$</td><td class="ef-placeholder">Passendes Formelzeichen-Set ergänzen</td></tr>
+            <tr><td class="ef-placeholder">Quantenphysik</td><td class="ef-placeholder">z. B. $E = h \cdot f$</td><td class="ef-placeholder">Konstante direkt verknüpfen</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Eine Formel wird erst dann nützlich, wenn du Größe, Einheit, Bedeutung und Anwendung zusammen notierst. Genau so wächst aus einer Liste eine echte Arbeitshilfe.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Konstanten & Fehlerfallen">
+      <h1>Physikalische Konstanten und typische Fehlerfallen</h1>
+      <p>Konstanten solltest du nicht nur auswendig lernen, sondern auch einordnen: Wofür stehen sie, in welchen Themen tauchen sie auf und welche Einheit gehört dazu? Ich habe jetzt auch die Konstanten aus deinem Material eingearbeitet und bei Bedarf fachlich sauber benannt.</p>
+
+      <div class="ef-grid-3">
+        <div class="ef-card">
+          <h3>Lichtgeschwindigkeit</h3>
+          <p><strong>$c$</strong><br />$\mathrm{299\,792\,458\ m/s}$</p>
+          <p>Wichtig in Relativität, Wellen und Quantenphysik.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Planck-Konstante</h3>
+          <p><strong>$h$</strong><br />$\mathrm{6{,}62607015 \cdot 10^{-34}\ J\,s}$</p>
+          <p>Wichtig für $E = h \cdot f$.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Gravitationskonstante</h3>
+          <p><strong>$G$</strong><br />$\mathrm{6{,}67430 \cdot 10^{-11}\ m^3/(kg\,s^2)}$</p>
+          <p>Wichtig bei Gravitation und Himmelsmechanik.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Ortsfaktor der Erde</h3>
+          <p><strong>$g$</strong><br />$\mathrm{9{,}81\ m/s^2}$</p>
+          <p>Kein universeller Naturwert, sondern ortsabhängig. In Schulaufgaben oft angenähert konstant.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Kreiszahl</h3>
+          <p><strong>$\pi$</strong><br />$\mathrm{3{,}14159\dots}$</p>
+          <p>Dimensionslos, aber in Schwingungen, Kreisen und Wellen ständig wichtig.</p>
+        </div>
+        <div class="ef-card">
+          <h3>Elektronenmasse</h3>
+          <p><strong>$m_\mathrm{e}$</strong><br />$\mathrm{9{,}109 \cdot 10^{-31}\ kg}$</p>
+          <p>Wichtig in Atom- und Quantenphysik.</p>
+        </div>
+      </div>
+
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Konstante</th><th>Symbol</th><th>Wert mit Einheit</th><th>Themenfeld</th></tr></thead>
+          <tbody>
+            <tr><td>Ortsfaktor</td><td>$g$</td><td>$\mathrm{9{,}81\ m/s^2}$</td><td>Erde, näherungsweise; ortsabhängig</td></tr>
+            <tr><td>Lichtgeschwindigkeit</td><td>$c$</td><td>$\mathrm{299\,792\,458\ m/s}$</td><td>Relativität, Elektrodynamik, Quantenphysik</td></tr>
+            <tr><td>Rydberg-Konstante</td><td>$R_\infty$</td><td>$\mathrm{1{,}0973731568 \cdot 10^{7}\ m^{-1}}$</td><td>Atomspektren, Quantenphysik</td></tr>
+            <tr><td>Plancksches Wirkungsquantum</td><td>$h$</td><td>$\mathrm{6{,}62607015 \cdot 10^{-34}\ J\,s}$</td><td>Quantenphysik</td></tr>
+            <tr><td>Gravitationskonstante</td><td>$G$</td><td>$\mathrm{6{,}67430 \cdot 10^{-11}\ m^3/(kg\,s^2)}$</td><td>Gravitation, Himmelsmechanik</td></tr>
+            <tr><td>Elektrische Feldkonstante</td><td>$\varepsilon_0$</td><td>$\mathrm{8{,}854 \cdot 10^{-12}\ F/m}$</td><td>Elektrische Felder</td></tr>
+            <tr><td>Magnetische Feldkonstante</td><td>$\mu_0$</td><td>$\mathrm{1{,}25663706212 \cdot 10^{-6}\ N/A^2}$</td><td>Magnetfelder</td></tr>
+            <tr><td>Elementarladung</td><td>$e$</td><td>$\mathrm{1{,}602176634 \cdot 10^{-19}\ C}$</td><td>Elektrizitätslehre, Quantenphysik</td></tr>
+            <tr><td>Faraday-Konstante</td><td>$F$</td><td>$\mathrm{96485{,}33212\ C/mol}$</td><td>Elektrochemie, Ladung pro Mol</td></tr>
+            <tr><td>Boltzmann-Konstante</td><td>$k_B$</td><td>$\mathrm{1{,}380649 \cdot 10^{-23}\ J/K}$</td><td>Wärmelehre, Statistik</td></tr>
+            <tr><td>Ideale Gaskonstante</td><td>$R$</td><td>$\mathrm{8{,}314462618\ J/(mol\,K)}$</td><td>Thermodynamik, ideale Gase</td></tr>
+            <tr><td>Avogadro-Konstante</td><td>$N_A$</td><td>$\mathrm{6{,}02214076 \cdot 10^{23}\ 1/mol}$</td><td>Teilchenzahl, Stoffmenge</td></tr>
+            <tr><td>Stefan-Boltzmann-Konstante</td><td>$\sigma$</td><td>$\mathrm{5{,}670374419 \cdot 10^{-8}\ W/(m^2\,K^4)}$</td><td>Wärmestrahlung</td></tr>
+            <tr><td>Kreiszahl</td><td>$\pi$</td><td>$\mathrm{3{,}14159\dots}$</td><td>Geometrie, Schwingungen, Wellen</td></tr>
+            <tr><td>Elektronenmasse</td><td>$m_\mathrm{e}$</td><td>$\mathrm{9{,}109 \cdot 10^{-31}\ kg}$</td><td>Atom- und Quantenphysik</td></tr>
+            <tr><td>Protonenmasse</td><td>$m_\mathrm{p}$</td><td>$\mathrm{1{,}67262192369 \cdot 10^{-27}\ kg}$</td><td>Kernphysik, Teilchenphysik</td></tr>
+            <tr><td>Neutronenmasse</td><td>$m_\mathrm{n}$</td><td>$\mathrm{1{,}67492749804 \cdot 10^{-27}\ kg}$</td><td>Kernphysik, Teilchenphysik</td></tr>
+            <tr><td>Masse des Alpha-Teilchens</td><td>$m_\alpha$</td><td>$\mathrm{6{,}644657230 \cdot 10^{-27}\ kg}$</td><td>Kernphysik</td></tr>
+            <tr><td class="ef-placeholder">Materialkonstanten</td><td class="ef-placeholder">z. B. $\varepsilon_r$, $\mu_r$</td><td class="ef-placeholder">materialabhängig</td><td class="ef-placeholder">Vom Stoff abhängig, keine Naturkonstanten</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-mcq-errors",
+          "title":"Mini-Check: Einheitenfehler erkennen",
+          "hint":"Eine oder mehrere Antworten können richtig sein.",
+          "questions":[
+            {
+              "text":"Welche Aussage passt zur Frequenz $f$?",
+              "choices":[
+                {"id":"a","label":"Die SI-Einheit ist Newton."},
+                {"id":"b","label":"Die SI-Einheit ist Hertz."},
+                {"id":"c","label":"Die SI-Einheit ist Meter pro Sekunde."}
+              ],
+              "correct":["b"],
+              "explain":"Frequenz gibt an, wie oft etwas pro Sekunde passiert. Deshalb ist Hertz = 1/s richtig."
+            },
+            {
+              "text":"Welche Einträge solltest du bei einer Konstanten möglichst immer notieren?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Symbol"},
+                {"id":"b","label":"Wert"},
+                {"id":"c","label":"Einheit"},
+                {"id":"d","label":"Lieblingsfarbe des Physikers"}
+              ],
+              "correct":["a","b","c"],
+              "explain":"Nur mit Symbol, Zahlenwert und Einheit ist eine Konstante in der Formelsammlung wirklich brauchbar."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-reveal-rad",
+          "title":"Weiterdenken",
+          "question":"Warum schreibt man bei der Winkelgeschwindigkeit oft rad/s, obwohl der Radiant dimensionslos ist?",
+          "answer":"Weil die Schreibweise den physikalischen Inhalt klarer macht. Rein formal ist der Radiant dimensionslos, praktisch zeigt rad/s aber sofort, dass es um eine Winkeländerung pro Zeit geht und nicht einfach nur um irgendein s^-1.",
+          "buttonLabel":"Erklärung anzeigen",
+          "buttonHideLabel":"Erklärung verbergen"
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Transfer & eigene Sammlung">
+      <h1>Transfer: So baust du deine Sammlung weiter aus</h1>
+      <p>Jetzt geht es nicht mehr nur ums Wiedererkennen. Du sollst entscheiden, wie du die Sammlung sinnvoll ergänzt. Genau das macht später den Unterschied zwischen stumpfem Abschreiben und echtem Verstehen.</p>
+
+      <div class="ef-grid">
+        <div class="ef-card">
+          <h3>Fragen, die du dir bei jedem neuen Eintrag stellen solltest</h3>
+          <ul class="ef-checklist">
+            <li>Welche Größe ist das genau?</li>
+            <li>Welches Formelzeichen ist in eurem Unterricht üblich?</li>
+            <li>Welche SI-Einheit gehört dazu?</li>
+            <li>Ist die Einheit Basis oder abgeleitet?</li>
+            <li>In welchen Formeln taucht die Größe auf?</li>
+          </ul>
+        </div>
+        <div class="ef-card">
+          <h3>Typische Lücken</h3>
+          <ul class="ef-checklist">
+            <li>Einheiten fehlen bei Konstanten.</li>
+            <li>Gleiche Symbole werden in verschiedenen Kontexten verwechselt.</li>
+            <li>Umstellungen der Formel werden nicht mitgedacht.</li>
+            <li>Die Bedeutung einer Größe wird nicht notiert.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-essay-plan",
+          "title":"Reflexion: Wie willst du die Sammlung erweitern?",
+          "hint":"Antworte in 4 bis 8 Sätzen. Nenne mindestens zwei Themenfelder, die du als Nächstes ergänzen willst, und begründe kurz warum.",
+          "storagePrefix":"einheiten_formeln_",
+          "exportName":"einheiten-formeln-ergebnisse.txt",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Dein Plan","key":"text","kind":"textarea","placeholder":"Ich ergänze als Nächstes ..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-mcq-transfer",
+          "title":"Abschluss-Check zum Arbeitsprinzip",
+          "hint":"Prüfe, welche Vorgehensweise wirklich sinnvoll ist.",
+          "questions":[
+            {
+              "text":"Was ist die beste Strategie für eine eigene Formelsammlung?",
+              "choices":[
+                {"id":"a","label":"Nur die Formeln abschreiben, ohne Einheiten oder Begriffe."},
+                {"id":"b","label":"Formelzeichen, Bedeutung, Einheit und Beispiel zusammen notieren."},
+                {"id":"c","label":"Nur die Konstanten aufschreiben, Formeln kann man später raten."}
+              ],
+              "correct":["b"],
+              "explain":"So kannst du mit der Sammlung wirklich arbeiten statt nur auf eine Liste zu schauen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Eine gute Formelsammlung entsteht durch Struktur. Wenn du Größe, Einheit, Formel und Bedeutung gemeinsam notierst, kannst du damit später Aufgaben lösen und nicht nur Begriffe wiedererkennen.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Quellen & Abgabe">
+      <h1>Zusammenfassung, Weiterforschen und Abgabe</h1>
+
+      <div class="ef-grid-3">
+        <div class="ef-card"><h3>SI-System</h3><p>Du kennst den Unterschied zwischen Basis- und abgeleiteten Einheiten.</p></div>
+        <div class="ef-card"><h3>Formelzeichen</h3><p>Du kannst wichtige Größen aus der Kursstufe sauber mit ihren Einheiten notieren.</p></div>
+        <div class="ef-card"><h3>Erweiterbarkeit</h3><p>Die Seite ist als Vorlage gebaut und kann von dir Abschnitt für Abschnitt ergänzt werden.</p></div>
+      </div>
+
+      <div class="ef-table-wrap">
+        <table class="ef-table">
+          <thead><tr><th>Bereich</th><th>Schon angelegt</th><th>Noch offen</th></tr></thead>
+          <tbody>
+            <tr><td>SI-Einheiten</td><td>Grundüberblick und Beispiele</td><td>Sonderfälle und Umrechnungen</td></tr>
+            <tr><td>Formelzeichen</td><td>Mechanik und Schwingungen als Start</td><td>Elektrizität, Felder, Optik, moderne Physik</td></tr>
+            <tr><td>Konstanten</td><td>Einige wichtige Startwerte</td><td>Weitere Konstanten je nach Unterrichtsthema</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Quellen & Weiterforschen</strong>
+        <ul class="ef-checklist">
+          <li><a href="https://www.bipm.org/en/measurement-units/si-brochure" target="_blank" rel="noopener">BIPM: The International System of Units (SI Brochure)</a></li>
+          <li><a href="https://www.leifiphysik.de/" target="_blank" rel="noopener">LEIFIphysik: Themenübersicht Physik</a></li>
+          <li><a href="https://www.ptb.de/cms/presseaktuelles/zeitschriften-magazine/ptb-mitteilungen/verzeichnis-der-ptb-mitteilungen/ptb-mitteilungen-2025/heft-2-das-internationale-einheitensystem-si.html" target="_blank" rel="noopener">PTB: Das Internationale Einheitensystem (SI)</a></li>
+        </ul>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-essay-submit",
+          "title":"Abgabe: Dein nächster Ausbauschritt",
+          "hint":"Schreibe kurz auf, welche drei Einträge du als Nächstes ergänzen willst. Nenne jeweils Größe, Formelzeichen und Einheit.",
+          "storagePrefix":"einheiten_formeln_",
+          "exportName":"einheiten-formeln-ergebnisse.txt",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Ergänzungen","key":"answer","kind":"textarea","placeholder":"1. ...\n2. ...\n3. ..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Abgabe-Hinweis:</strong>
+        <p>Über die Sidebar kannst du dir deine Eingaben gesammelt anzeigen lassen. Nutze besonders die beiden Freitextfelder, um festzuhalten, welche Inhalte du als Nächstes in die Formelsammlung einträgst.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>
