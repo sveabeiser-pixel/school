@@ -488,14 +488,14 @@
         <table class="ef-table">
           <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
           <tbody>
-            <tr><td>$T = \frac{1}{f},\quad f = \frac{1}{T}$</td><td>Zusammenhang von Periodendauer und Frequenz</td><td></td></tr>
-            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T}$</td><td>Winkelgeschwindigkeit</td><td></td></tr>
-            <tr><td>$y(t) = \hat{y} \sin(\omega t)\quad / \quad \hat{y} \cos(\omega t)$</td><td>Auslenkung einer harmonischen Schwingung</td><td></td></tr>
-            <tr><td>$v(t) = \hat{y}\,\omega \cos(\omega t)\quad / \quad -\hat{y}\,\omega \sin(\omega t)$</td><td>Geschwindigkeit der Schwingung</td><td></td></tr>
-            <tr><td>$a(t) = -\hat{y}\,\omega^2 \sin(\omega t)\quad / \quad -\hat{y}\,\omega^2 \cos(\omega t)$</td><td>Beschleunigung der Schwingung</td><td></td></tr>
-            <tr><td>$\omega = \sqrt{\frac{D}{m}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{D}{m}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Federpendels</td><td></td></tr>
-            <tr><td>$T = 2 \pi \sqrt{\frac{m}{D}}$</td><td>Periodendauer des Federpendels</td><td></td></tr>
-            <tr><td>$\omega = \sqrt{\frac{g}{\ell}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{g}{\ell}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Fadenpendels</td><td></td></tr>
+            <tr><td>$T = \frac{1}{f},\quad f = \frac{1}{T}$</td><td>Zusammenhang von Periodendauer und Frequenz</td><td>$f$ in $\mathrm{Hz}$, $T$ in $\mathrm{s}$.</td></tr>
+            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T}$</td><td>Winkelgeschwindigkeit</td><td>Einheit $\mathrm{rad/s}$.</td></tr>
+            <tr><td>$y(t) = \hat{y} \sin(\omega t)\quad / \quad \hat{y} \cos(\omega t)$</td><td>Auslenkung einer harmonischen Schwingung</td><td>$\hat{y}$ ist die Amplitude.</td></tr>
+            <tr><td>$v(t) = \hat{y}\,\omega \cos(\omega t)\quad / \quad -\hat{y}\,\omega \sin(\omega t)$</td><td>Geschwindigkeit der Schwingung</td><td>Die Geschwindigkeit ist um $\frac{\pi}{2}$ phasenverschoben zur Auslenkung.</td></tr>
+            <tr><td>$a(t) = -\hat{y}\,\omega^2 \sin(\omega t)\quad / \quad -\hat{y}\,\omega^2 \cos(\omega t)$</td><td>Beschleunigung der Schwingung</td><td>Beschleunigung und Auslenkung sind entgegengesetzt gerichtet.</td></tr>
+            <tr><td>$\omega = \sqrt{\frac{D}{m}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{D}{m}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Federpendels</td><td>Gilt für harmonische Schwingungen der Feder-Masse-Anordnung.</td></tr>
+            <tr><td>$T = 2 \pi \sqrt{\frac{m}{D}}$</td><td>Periodendauer des Federpendels</td><td>Größere Masse führt zu größerer Periodendauer.</td></tr>
+            <tr><td>$\omega = \sqrt{\frac{g}{\ell}}, \quad f = \frac{1}{2 \pi}\sqrt{\frac{g}{\ell}}$</td><td>Winkelgeschwindigkeit/ Frequenz des Fadenpendels</td><td>Nur für kleine Auslenkungen näherungsweise gültig.</td></tr>
             <tr><td>$T = 2 \pi \sqrt{\frac{\ell}{g}}$</td><td>Periodendauer des Fadenpendels</td><td>gilt nur bei kleinen Auslenkungen</td></tr>
              </tbody>
         </table>
@@ -506,9 +506,9 @@
         <table class="ef-table">
           <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
           <tbody>
-            <tr><td>$y(x,t) = a \sin\!\left(\frac{2\pi}{T}t - \frac{2\pi}{\lambda}x\right)$</td><td>Wellenfunktion</td></tr>
-            <tr><td>$c = \lambda \cdot f$</td><td>Grundgleichung der Welle</td></tr>
-            <tr><td>$\lambda = c \cdot T$</td><td>Mit $f = \frac{1}{T}$</td></tr>
+            <tr><td>$y(x,t) = a \sin\!\left(\frac{2\pi}{T}t - \frac{2\pi}{\lambda}x\right)$</td><td>Wellenfunktion</td> <td>$a$ ist die Amplitude, $\lambda$ die Wellenlänge.</td></tr>
+            <tr><td>$c = \lambda \cdot f$</td><td>Grundgleichung der Wellenlehre</td><td>Verknüpft Ausbreitungsgeschwindigkeit, Wellenlänge und Frequenz.</td></tr>
+            <tr><td>$\lambda = c \cdot T$</td><td>Mit $f = \frac{1}{T}$</td><td>Direkte Umformung aus $c = \lambda f$.</td></tr>
             <tr><td>$f_E = f_0 \cdot \frac{c \pm v_E}{c \mp v_S}$</td><td>Dopplereffekt</td><td>$f_E$ ist die gemessene Frequenz, $f_0$ die Senderfrequenz; obere Vorzeichen für Annäherung, untere für Entfernung.</td></tr>
             <tr><td>$\sin(\alpha_k) = \frac{k\lambda}{g}$</td><td>Maxima am Doppelspalt</td><td>$k = 0, 1, 2, \dots$ und $g$ ist der Spaltmittenabstand.</td></tr>
             <tr><td>$\sin(\alpha_k) = \frac{(2k-1)\lambda}{2g}$</td><td>Minima am Doppelspalt</td><td>$k = 1, 2, 3, \dots$</td></tr>
@@ -563,15 +563,15 @@
         <table class="ef-table">
           <thead><tr><th>Formel</th><th>Bedeutung</th><th>Hinweis</th></tr></thead>
           <tbody>
-            <tr><td>$U = R \cdot I$</td><td>Ohmsches Gesetz</td></tr>
+            <tr><td>$U = R \cdot I$</td><td>Ohmsches Gesetz</td><td>Verknüpft Spannung, Widerstand und Stromstärke.</td></tr>
             <tr><td>$R = \rho \cdot \frac{\ell}{A}$</td><td>Widerstand eines Leiters</td><td>$\rho$ ist der spezifische Widerstand, $\ell$ die Leiterlänge und $A$ die Querschnittsfläche.</td></tr>
-            <tr><td>$P = U \cdot I$</td><td>Elektrische Leistung</td></tr>
-            <tr><td>$W = P \cdot t = U \cdot I \cdot t = U \cdot Q$</td><td>Elektrische Energie</td></tr>
-            <tr><td>$Q = I \cdot t$</td><td>Ladung aus Stromstärke und Zeit</td></tr>
-            <tr><td>$F_\mathrm{el} = E \cdot Q$</td><td>Elektrische Kraft im E-Feld</td></tr>
-            <tr><td>$F_\mathrm{el} = \frac{1}{4 \pi \varepsilon_0}\frac{Q_1 Q_2}{r^2}$</td><td>Coulomb-Kraft</td></tr>
-            <tr><td>$F_L = B \cdot I \cdot s$</td><td>Lorentzkraft auf Leiter</td></tr>
-            <tr><td>$F_L = q \cdot v \cdot B$</td><td>Lorentzkraft auf bewegte Ladung</td></tr>
+            <tr><td>$P = U \cdot I$</td><td>Elektrische Leistung</td><td>Einheit $\mathrm{W}$ für Watt.</td></tr>
+            <tr><td>$W = P \cdot t = U \cdot I \cdot t = U \cdot Q$</td><td>Elektrische Energie</td><td>Einheit $\mathrm{J}$; nicht mit Arbeitssymbol $W$ verwechseln.</td></tr>
+            <tr><td>$Q = I \cdot t$</td><td>Ladung aus Stromstärke und Zeit</td><td>Einheit $\mathrm{C = A \, s}$.</td></tr>
+            <tr><td>$F_\mathrm{el} = E \cdot Q$</td><td>Elektrische Kraft im E-Feld</td><td>Für eine Ladung $Q$ in einem homogenen elektrischen Feld.</td></tr>
+            <tr><td>$F_\mathrm{el} = \frac{1}{4 \pi \varepsilon_0}\frac{Q_1 Q_2}{r^2}$</td><td>Coulomb-Kraft</td><td>Gilt für punktförmige Ladungen im Vakuum.</td></tr>
+            <tr><td>$F_L = B \cdot I \cdot s$</td><td>Lorentzkraft auf Leiter</td><td>Für einen Leiter senkrecht zum Magnetfeld.</td></tr>
+            <tr><td>$F_L = q \cdot v \cdot B$</td><td>Lorentzkraft auf bewegte Ladung</td><td>Gilt im Spezialfall $\vec{v} \perp \vec{B}$.</td></tr>
              </tbody>
         </table>
       </div>
@@ -602,17 +602,17 @@
           <tbody>
             <tr><td>$H = \frac{N I}{\ell}$</td><td>Magnetische Feldstärke innerhalb einer langen Spule</td><td>$N$ ist die Windungszahl, $\ell$ die Länge der Spule.</td></tr>
             <tr><td>$H = \frac{I}{2 \pi r}$</td><td>Magnetische Feldstärke außerhalb eines geraden stromdurchflossenen Leiters</td><td>$r$ ist der Abstand vom Leiter.</td></tr>
-            <tr><td>$B = \mu_0 \mu_r \frac{N I}{\ell}$</td><td>Magnetfeld einer langen Spule</td></tr>
-            <tr><td>$\Phi = B \cdot A \cdot \cos(\varphi)$</td><td>Magnetischer Fluss</td></tr>
+            <tr><td>$B = \mu_0 \mu_r \frac{N I}{\ell}$</td><td>Magnetfeld einer langen Spule</td><td>$\mu_r$ beschreibt das Material im Inneren der Spule.</td></tr>
+            <tr><td>$\Phi = B \cdot A \cdot \cos(\varphi)$</td><td>Magnetischer Fluss</td><td>$\varphi$ ist der Winkel zwischen Feldrichtung und Flächennormale.</td></tr>
             <tr><td>$\vec{F}_L = q(\vec{v} \times \vec{B})$</td><td>Lorentz-Kraft auf bewegte Ladungsträger, allgemein</td><td>Vektorform mit Kreuzprodukt.</td></tr>
             <tr><td>$F_L = q \cdot v \cdot B \cdot \sin(\alpha)$</td><td>Betrag der Lorentz-Kraft</td><td>$\alpha$ ist der Winkel zwischen $\vec{v}$ und $\vec{B}$.</td></tr>
             <tr><td>$F_L = q \cdot v \cdot B$</td><td>Lorentz-Kraft für $\vec{v} \perp \vec{B}$</td><td>Spezialfall bei senkrechter Bewegung zum Magnetfeld.</td></tr>
-            <tr><td>$U_\mathrm{ind} = -N \cdot \dot{\Phi}$</td><td>Induktionsspannung</td></tr>
-            <tr><td>$U_\mathrm{ind} = -L \cdot \dot{I}$</td><td>Selbstinduktion</td></tr>
+            <tr><td>$U_\mathrm{ind} = -N \cdot \dot{\Phi}$</td><td>Induktionsspannung</td><td>Minuszeichen nach der Lenzschen Regel.</td></tr>
+            <tr><td>$U_\mathrm{ind} = -L \cdot \dot{I}$</td><td>Selbstinduktion</td><td>Je schneller sich der Strom ändert, desto größer ist die Induktionsspannung.</td></tr>
             <tr><td>$L = \mu_0 \mu_r \frac{A N^2}{\ell}$</td><td>Induktivität einer langen Spule</td><td>$\mu_r$ ist die Permeabilität des Mediums.</td></tr>
-            <tr><td>$W_\mathrm{mag} = \frac{1}{2} L I^2$</td><td>Magnetische Feldenergie</td></tr>
-            <tr><td>$T = 2 \pi \sqrt{L C}$</td><td>Schwingungsdauer des LC-Schwingkreises</td></tr>
-            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T} = \frac{1}{\sqrt{LC}}$</td><td>Kreisfrequenz des Schwingkreises</td></tr>
+            <tr><td>$W_\mathrm{mag} = \frac{1}{2} L I^2$</td><td>Magnetische Feldenergie</td><td>Energie ist im Magnetfeld der Spule gespeichert.</td></tr>
+            <tr><td>$T = 2 \pi \sqrt{L C}$</td><td>Schwingungsdauer des LC-Schwingkreises</td><td>Gilt für den idealen verlustfreien Schwingkreis.</td></tr>
+            <tr><td>$\omega = 2 \pi f = \frac{2 \pi}{T} = \frac{1}{\sqrt{LC}}$</td><td>Kreisfrequenz des Schwingkreises</td><td>Steigt bei kleinerem $L$ oder kleinerem $C$.</td></tr>
           </tbody>
         </table>
       </div>
@@ -692,6 +692,8 @@
       </div>
 
       <div class="wb-section-break"></div>
+      <h3>Eigene Formelsammlung</h3>
+      <p>Wenn du dir die wichtigsten Formeln selber zusammenstellen möchtest, kannst du die folgende Tabelle als Vorlage verwenden:</p>
       <div class="ef-table-wrap">
         <table class="ef-table">
           <thead><tr><th>Thema</th><th>Formel</th><th>Was du ergänzen solltest</th></tr></thead>
