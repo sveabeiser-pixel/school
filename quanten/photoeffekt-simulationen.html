@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photoeffekt-Simulationen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="../assets/photoeffekt-simulation.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Quantenphysik",
+      "sectionTitle":"Photoeffekt-Simulationen",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Simulationen",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "photoeffekt-simulationen-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="�berblick">
+      <h1>Photoeffekt-Simulationen</h1>
+      <p class="wb-muted">Diese Seite b�ndelt die ausgelagerte Photoeffekt-Simulation getrennt von der inhaltlichen
+        Buchseite. Du kannst sie damit unabh�ngig wiederverwenden.</p>
+
+      <div class="wb-callout">
+        <strong>Hinweis</strong>
+        <p>Die Simulation verwendet denselben ausgelagerten Code wie die Buchseite
+          <code>photoeffekt.html</code>. Du arbeitest also immer mit demselben physikalischen Modell.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="�u�erer Photoeffekt">
+      <h1>Simulation: �u�erer Photoeffekt</h1>
+      <p>Untersuche den Einfluss von Wellenl�nge, Material, Intensit�t und Gegenfeldspannung auf den �u�eren
+        Photoeffekt.</p>
+
+      <div class="pe-sim-card" data-photoeffect-sim="outer-photoeffect">
+        <div class="pe-sim-intro">
+          <h2>Steuern und beobachten</h2>
+          <p>Die Elektronen werden nur dann ausgel�st, wenn \(hf > E_A\) gilt. Mit der Gegenfeldspannung kannst du
+            testen, ab wann selbst die schnellsten Elektronen die Anode nicht mehr erreichen.</p>
+        </div>
+
+        <div class="pe-spectrum">
+          <div class="pe-spectrum-scale">
+            <span>280<br>UV</span>
+            <span>380<br>V</span>
+            <span>450<br>B</span>
+            <span>495<br>Gr�n</span>
+            <span>570<br>G</span>
+            <span>590<br>O</span>
+            <span>620<br>Rot</span>
+            <span>750</span>
+          </div>
+          <div class="pe-spectrum-band"></div>
+          <div class="pe-spectrum-axis">
+            <span>10</span>
+            <span>9</span>
+            <span>8</span>
+            <span>7</span>
+            <span>6</span>
+            <span>5</span>
+            <span>4</span>
+          </div>
+          <div class="pe-spectrum-note">Wellenl�nge oben, grobe Frequenzskala unten.</div>
+        </div>
+
+        <div class="pe-sim-grid">
+          <div class="pe-sim-controls">
+            <h2>Steuerung</h2>
+            <label>Material</label>
+            <select data-role="material">
+              <option value="sodium">Natrium</option>
+              <option value="zinc">Zink</option>
+              <option value="copper">Kupfer</option>
+              <option value="platinum">Platin</option>
+              <option value="calcium">Calcium</option>
+            </select>
+            <div class="pe-control-readout">Austrittsenergie: <span data-role="phi-value">2.28 eV</span></div>
+
+            <label>Wellenl�nge</label>
+            <input data-role="wavelength" type="range" min="100" max="850" step="1" value="420" />
+            <div class="pe-control-readout"><span data-role="wavelength-value">420 nm</span></div>
+
+            <label>Intensit�t</label>
+            <input data-role="intensity" type="range" min="1" max="100" step="1" value="52" />
+            <div class="pe-control-readout"><span data-role="intensity-value">52 %</span></div>
+
+            <label>Gegenfeldspannung</label>
+            <input data-role="voltage" type="range" min="0" max="5" step="0.01" value="0" />
+            <div class="pe-control-readout"><span data-role="voltage-value">0.00 V</span></div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+
+            <div class="pe-sim-hint">Je gr��er die Gegenfeldspannung ist, desto schwerer erreichen die ausgel�sten Elektronen die Anode.</div>
+          </div>
+
+          <div class="pe-sim-stage">
+            <canvas data-role="canvas" width="1200" height="760" aria-label="Simulation des �u�eren Photoeffekts"></canvas>
+
+            <div class="pe-sim-readout">
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Wellenl�nge</span>
+                <span class="pe-readout-value" data-role="lambda-out">420 nm</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Frequenz</span>
+                <span class="pe-readout-value" data-role="freq-out">7.14 � 10^14 Hz</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Photonenenergie</span>
+                <span class="pe-readout-value" data-role="eph-out">2.95 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Austrittsenergie</span>
+                <span class="pe-readout-value" data-role="phi-out">2.28 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Max. kinetische Energie</span>
+                <span class="pe-readout-value" data-role="ekin-out">0.67 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Stoppspannung</span>
+                <span class="pe-readout-value" data-role="ustop-out">0.67 V</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Eingestellte Spannung</span>
+                <span class="pe-readout-value" data-role="voltage-readout">0.00 V</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Gesammelte Elektronen</span>
+                <span class="pe-readout-value" data-role="collection-out">48 %</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Photostrom</span>
+                <span class="pe-readout-value" data-role="current-out">0.000 �A</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Grenze des Materials</span>
+                <span class="pe-readout-value" data-role="threshold-out">544 nm / 5.51 � 10^14 Hz</span>
+              </div>
+            </div>
+
+            <div class="pe-status pe-status-on" data-role="status">
+              <strong>Status</strong>
+              <span data-role="status-text">Photoeffekt aktiv.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/photoeffekt-simulation.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+    PhotoeffektSim.mountAll();
+  </script>
+</body>
+
+</html>
+

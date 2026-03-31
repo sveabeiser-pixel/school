@@ -1,0 +1,1167 @@
+﻿<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantenphysik: Der Photoeffekt</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="../assets/photoeffekt-simulation.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .wave-figure {
+      margin: 0;
+    }
+
+    section[data-wb-page="2"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure {
+      align-self: center;
+    }
+
+    .wave-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .wave-figure.photo3-center {
+      justify-self: center;
+      text-align: center;
+    }
+
+    .wave-figure.photo3-center img {
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    section[data-wb-page="7"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="7"] .grid2 > * {
+      align-self: center;
+    }
+
+    section[data-wb-page="7"] .grid2 > .wave-figure {
+      justify-self: center;
+      text-align: center;
+      width: min(100%, 92%);
+    }
+
+    section[data-wb-page="7"] .grid2 > .wave-figure img {
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    section[data-wb-page="7"] .grid2:first-of-type > .wave-figure img {
+      max-height: 340px;
+      object-fit: contain;
+    }
+
+    .wave-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #4a5b6a;
+    }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Quantenphysik",
+      "sectionTitle":"Der Photoeffekt",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Photoeffekt",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "photoeffekt-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>Photoeffekt: Warum Licht mehr sein muss als nur eine Welle</h1>
+      <p class="wb-muted">Du arbeitest hier Schritt für Schritt vom Hallwachs-Versuch bis zu Einsteins Deutung mit
+        Photonen. Ziel ist nicht nur, die Formel auswendig zu kennen, sondern zu verstehen, warum die klassische
+        Wellentheorie an dieser Stelle scheitert.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Leitfrage</strong>
+        <p>Warum lösen manche Lichtsorten sofort Elektronen aus einem Metall, obwohl helleres Licht allein dafür nicht
+          ausreicht?</p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Das kannst du danach</strong>
+        <ul class="wave-list">
+          <li>den Hallwachs-Effekt beschreiben,</li>
+          <li>die Rolle von Grenzfrequenz und Austrittsenergie erklären,</li>
+          <li>die Gleichung \(E_{\text{kin}} = hf - E_A\) deuten,</li>
+          <li>zwischen Einfluss von Frequenz und Intensität unterscheiden.</li>
+        </ul>
+      </div>
+
+      <figure class="wave-figure">
+        <img src="bilder/foto1.png"
+          alt="Handschriftliche Notiz dazu, warum das Wellenmodell den Photoeffekt nicht erklären kann" />
+        <figcaption>Dein erster Denkanker: Die Notiz fasst die Kernwidersprüche zur Wellentheorie bereits zusammen.
+        </figcaption>
+      </figure>
+
+      <div class="wb-soft-callout">
+        <h2>So benutzt du diese Seite</h2>
+        <p>Lies jede Seite aktiv. Nach jeder Erklärung folgt eine Sicherung oder Anwendung. Nutze die Bilder nicht nur
+          als Deko, sondern als Beobachtungsmaterial: Was siehst du, was lässt sich daraus begründen, und wo passt das
+          noch nicht zur klassischen Physik?</p>
+        <p><strong>Merke:</strong> In der Oberstufe zählt beim Photoeffekt vor allem die Begründung. Du solltest am
+          Ende erklären können, warum Intensität und Frequenz unterschiedliche Rollen spielen.</p>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_start_reveal",
+          "title":"Was ist die eigentliche Überraschung?",
+          "hint":"Klappe die Antwort erst auf, nachdem du selbst kurz überlegt hast.",
+          "question":"Was macht den Photoeffekt historisch so bedeutsam?",
+          "answer":"Er zeigt ein Verhalten des Lichts, das mit der klassischen Wellentheorie nicht erklärt werden kann: Nicht die Helligkeit entscheidet über die Energie einzelner Elektronen, sondern die Frequenz des Lichts. Genau dieser Widerspruch führte zur Lichtquantenhypothese und damit in die Quantenphysik."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Äußerer Photoeffekt">
+      <h1>Äußerer Photoeffekt</h1>
+      <p class="wb-muted">Auf dieser Seite arbeitest du die klassische Experimentalkette des äußeren Photoeffekts durch:
+        Hallwachs-Versuch, Gegenfeldmethode, Widersprüche zur Wellentheorie und Einsteins Deutung mit Photonen.</p>
+
+      <h2>Hallwachs - erster Versuch zum Fotoeffekt (qualitativ)</h2>
+        <p>Ein erster Versuch wurde von W. Hallwachs (1888) durchgeführt, der qualitativ den Fotoeffekt zeigt.</p>
+      <div class="grid2" style="align-items:center;">
+        <figure class="wave-figure">
+          <img src="bilder/hallwachs.png"
+            alt="Hallwachs-Versuch mit Quecksilberdampflampe, Glasplatte und Elektroskop" />
+          <figcaption>a) UV-Licht der Quecksilberdampflampe entlädt eine negativ geladene Zinkplatte. b) Bei positiver
+            Ladung geschieht das nicht. c) Mit Glasplatte verschwindet der Effekt. d) Sichtbares Licht einer Glühbirne
+            reicht ebenfalls nicht.</figcaption>
+        </figure>
+          <div class="wb-soft-callout">
+        <div class="wb-soft-callout">
+          <h2>Beobachtung in kleinen Schritten</h2>
+          <p>Eine negativ geladene Zinkplatte verliert unter UV-haltigem Licht ihre Ladung und wird sogar positiv
+            geladen. Eine positive Platte wird nicht entladen. Die naheliegende Deutung:
+            Licht kann Elektronen aus dem Metall herauslösen. Genau das nennt man <b>Photoeffekt</b> oder
+            <b>Hallwachs-Effekt</b>.
+          </p>
+          <p>Wichtig ist aber der Vergleich der Varianten: Sichtbares Licht genügt nicht, selbst wenn die Lampe heller
+            wirkt. Eine Glasplatte stoppt den Effekt, weil sie den UV-Anteil absorbiert. Daraus folgt: Entscheidend ist
+            die <b>Frequenz</b>, nicht die Helligkeit.</p>
+        </div>
+      </div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Licht kann Elektronen aus Metall schlagen, allerdings nicht jedes Licht. 
+          Es reicht nicht, mit „mehr Licht“ und damit mit höherer Intensität das Metall zu bestrahlen, 
+          sondern Licht muss eine genügend hohe Frequenz haben.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_verify_hallwachs",
+          "title":"Stopp & check: Beobachtungen richtig deuten",
+          "hint":"Prüfe jede Aussage anhand des Versuchsbildes.",
+          "questions":[
+            {
+              "text":"Wenn die negativ geladene Zinkplatte entladen wird, spricht das dafür, dass Elektronen das Metall verlassen.",
+              "answer": true,
+              "explain":"Genau. Die negative Ladung nimmt ab, weil negative Ladungsträger aus der Platte herausgelöst werden."
+            },
+            {
+              "text":"Dass die Glasplatte den Effekt verhindert, obwohl sichtbares Licht weiter durchkommt, zeigt die Bedeutung der Frequenz.",
+              "answer": true,
+              "explain":"Richtig. Die Glasplatte blockiert den UV-Anteil. Sichtbares Licht allein reicht bei Zink nicht aus."
+            },
+            {
+              "text":"Eine hellere Glühbirne müsste bei genügend großer Intensität jede Zinkplatte entladen.",
+              "answer": false,
+              "explain":"Falsch. Genau das passiert nicht. Unterhalb der Grenzfrequenz hilft auch höhere Intensität nicht."
+            },
+            {
+              "text":"Bei positiver Ladung der Platte tritt keine Entladung auf, weil herausgelöste Elektronen dann nicht einfach das Metall verlassen können.",
+              "answer": true,
+              "explain":"Richtig. Die positive Ladung wirkt der Emission entgegen und bestätigt so die Deutung mit Elektronen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Gegenfeld - zweiter Grundversuch zum Fotoeffekt (quantitativ)</h2>
+      <h3>Mit der Gegenfeldmethode misst du Elektronenenergie</h3>
+      <p>Um den Fotoeffekt genauer zu betrachten, soll jetzt die kinetische Energie $E_{\text{kin}}$ der von Licht ausgelösten Elektronen 
+        (auch Photoelektronen
+          genannt) untersucht werden. </p>
+
+       
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/gegenfeld.png"
+            alt="Photozelle mit Caesium-Kathode, Ringanode, Photostrom und Gegenspannung" />
+          <figcaption>Die Gegenspannung \(U_g\) wird so weit erhöht, bis selbst die schnellsten Photoelektronen die
+            Anode nicht mehr erreichen.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <div> <h2>Was wird hier gemessen?</h2>
+          <p>In der Photozelle werden durch Licht Elektronen aus einer Caesium-Schicht gelöst und fliegen nach links. Eine Gegenspannung bremst sie auf
+            dem Weg zur Ringanode ab. Wird der Photostrom null, gilt für die schnellsten Elektronen:</p>
+          <p style="font-size:1.15rem; font-weight:600; margin:14px 0;">\(E_{\text{kin,max}} = e \cdot U_g\)</p>
+        </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+       <div class="grid2" style="align-items:start;">
+          <div class="wb-soft-callout">
+        <h2>Was fällt auf?</h2>
+          <p>Violettes Licht liefert eine größere Gegenspannung als blaues Licht, blaues Licht eine größere als grünes Licht und grünes eine größere als gelbes Licht. Die Elektronen starten also mit größerer
+            kinetischer Energie. Verdunkelst du den Lichtfleck nur mit einer Blende, dann sinkt der Photostrom, aber
+            nicht die maximale Energie einzelner Elektronen.</p></div>
+            
+          <figure class="wave-figure">
+          <img src="bilder/foto1.png"
+            alt="Photozelle mit Caesium-Kathode, Ringanode, Photostrom und Gegenspannung" />
+          <figcaption>Kinetische Energie $E_{\text{kin}} = e \cdot U_g$ der schnellsten Photoelektronen bei verschiedenen Wellenlängen von Caesium.</figcaption>
+        </figure>
+      </div>
+
+
+       <div class="wb-section-break"></div>
+
+       <div class="grid2" style="align-items:start;">
+          <div class="wb-soft-callout">
+        <h2>Wie hängen Energie und Frequenz zusammen?</h2>
+          <p>Zeichnet man nun die maximale kinetische Energie der Photoelektronen, wie oben ermittelt, gegen die Frequenz des einfallenden Lichts auf, dann ergibt sich eine lineare Beziehung. 
+            Diese Beziehung wird durch die nebenstehende Graphik veranschaulicht. Es wird auch deutlich, dass es eine Grenzfrequenz gibt, d.h. eine Frequenz, unterhalb derer kein Photoelektron ausgelöst wird.</p>
+          <p>Betrachtet man den $y$-Achsenabschnitt, dann kann man das Austrittsenergie $E_A$ interpretieren, die die Elektronen benötigen, um das
+            Metall verlassen zu können</p></div>
+            
+          <figure class="wave-figure">
+          <img src="bilder/foto2.png"
+            alt="Photozelle mit Caesium-Kathode, Ringanode, Photostrom und Gegenspannung" />
+          <figcaption>Die Energien der Photoelektronen steigen linear in Abhängigkeit von der Frequenz des einfallenden Lichts.</figcaption>
+        </figure>
+      </div>
+
+     
+
+      <div class="wb-callout">
+        <strong>Folgerung</strong>
+        <p>Die Energie eines einzelnen Photoelektrons hängt von der <b>Frequenz</b> ab. Die Intensität verändert vor allem,
+          <b>wie viele</b> Elektronen pro Zeit ausgelöst werden.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_cloze_grundbegriffe",
+          "title":"Sicherung: Setze die Fachbegriffe passend ein",
+          "hint":"Ziehe die Begriffe in die Lücken.",
+          "bank":["Gegenspannung","Frequenz","Intensität","Austrittsenergie","Grenzfrequenz","Photostrom"],
+          "segments":[
+            {"t":"text","v":"In der Gegenfeldmethode wird die "},
+            {"t":"gap","a":"Gegenspannung"},
+            {"t":"text","v":" so weit erhöht, bis der "},
+            {"t":"gap","a":"Photostrom"},
+            {"t":"text","v":" verschwindet. Dann gilt für die schnellsten Elektronen $E_{\\text{kin}} = e \\cdot U_g$. Die maximale kinetische Energie steigt mit der "},
+            {"t":"gap","a":"Frequenz"},
+            {"t":"text","v":" des eingestrahlten Lichts. Unterhalb einer stoffabhängigen "},
+            {"t":"gap","a":"Grenzfrequenz"},
+            {"t":"text","v":" tritt der Effekt gar nicht auf. Die "},
+            {"t":"gap","a":"Austrittsenergie"},
+            {"t":"text","v":" muss zuerst überwunden werden. Eine größere "},
+            {"t":"gap","a":"Intensität"},
+            {"t":"text","v":" erhöht dagegen vor allem die Zahl der ausgelösten Elektronen."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Drei harte Widersprüche</h2>
+      <h3>Warum die Wellentheorie hier nicht mehr ausreicht</h3>
+      <p>Die klassische Wellentheorie des Lichts kann die Beobachtungen nicht erklären. Sie sagt voraus, 
+        dass die Energie eines Elektrons von der Intensität des Lichts abhängen müsste, weil die Energie über die 
+        Wellenamplitude verteilt ist. Das Experiment zeigt aber, dass die Energie von der Frequenz abhängt, während die 
+        Intensität vor allem die Zahl der Elektronen beeinflusst.</p>
+          <p>Nach dem klassischen Wellenmodell müsste helleres Licht (größere Intensität) also mehr Energie übertragen und Elektronen dadurch
+            schneller machen. Genau das zeigt das Experiment aber nicht, es werden mehr Elektronen mit der gleichen Energie ausgelöst.</p>
+          <p>Außerdem müsste sich Energie bei zu schwachem Licht über längere Zeit ansammeln. Dann dürfte es keine harte
+            Grenzfrequenz geben und es müsste eine Verzögerung bis zur Emission auftreten. Tatsächlich werden Elektronen
+            oberhalb der Grenzfrequenz praktisch sofort ausgelöst.</p>
+        
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <table style="width:100%; border-collapse:collapse; margin-top:12px;">
+          <thead>
+            <tr>
+              <th style="text-align:left; border:1px solid #c9d5e2; padding:10px; background:#eef4fa;">Vorhersage Wellenmodell</th>
+              <th style="text-align:left; border:1px solid #c9d5e2; padding:10px; background:#eef4fa;">Beobachtung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Verzögerter Einsatz des Fotoeffekts, da die Austrittsarbeit erst angehäuft werden muss</td>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Fotoeffekt setzt sofort ein</td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Lichtenergie ist abhängig von Intensität, nicht von Frequenz</td>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Die kinetische Energie der Fotoelektronen hängt von der Frequenz ab, nicht von der Intensität; bei größerer Intensität werden mehr Elektronen ausgelöst</td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Keine Grenzfrequenz</td>
+              <td style="border:1px solid #c9d5e2; padding:10px;">Existenz einer Grenzfrequenz</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;">Die Beobachtungen widersprechen dem Grundgedanken der Wellentheorie, dass die Energie kontinuierlich verteilt ist.</p>
+      </div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_mcq_wellentheorie",
+          "title":"Mini-Check: Wo scheitert das klassische Modell?",
+          "hint":"Markiere alle Aussagen, die den Widerspruch korrekt beschreiben.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Beobachtungen sprechen direkt gegen eine rein klassische Wellentheorie des Lichts?",
+              "choices":[
+                {"id":"a","label":"Höhere Intensität führt zu mehr Elektronen, aber nicht zu größerer Maximalenergie einzelner Elektronen."},
+                {"id":"b","label":"Es gibt eine Grenzfrequenz, unterhalb der kein Photoeffekt einsetzt."},
+                {"id":"c","label":"Elektronen erscheinen oberhalb der Grenzfrequenz sofort, ohne messbare Aufladezeit."},
+                {"id":"d","label":"Die Farbe des Metalls ist völlig bedeutungslos für den Effekt."},
+                {"id":"e","label":"Die maximale Elektronenenergie wächst mit der Frequenz des Lichts."}
+              ],
+              "correct":["a","b","c","e"],
+              "explain":"Genau diese vier Punkte kollidieren mit der Vorstellung, dass Lichtenergie kontinuierlich über die Wellenamplitude verteilt und nach Belichtungsdauer aufgesammelt wird."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Einstein">
+      <h1>Einstein und die Lichtquantenhypothese</h1>
+
+      <div class="wb-section-break"></div>
+      <h2>Einsteins Deutung: Licht kommt in Portionen</h2>
+
+    
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure photo3-center">
+          <img src="bilder/foto3.png"
+            alt="Handschriftliche Notiz zur Einstein-Gleichung und zur Photonenenergie" />
+          <figcaption>Die Steigung aller ermittelten Geraden ist für jedes Metall gleich, die Grenzfrequenz ist unterschiedlich.</figcaption>
+        </figure>
+         <div class="wb-soft-callout">
+        <p>Wird die Gegenfeldmethode mit verschiedenen Metallen durchgeführt, so erhält man
+        nebenstehende Diagramme. <br>Es fällt zum einen auf, dass der Achsenabschnitt für jede Gerade, und damit jedes
+        Metall, ein anderer ist. <br>Die vorangegangene Deutung als
+        Austrittsenergie $E_A$, wird dadurch unterstützt. In
+        jedem Metall sind die Elektronen unterschiedlich stark
+        gebunden und brauchen deswegen unterschiedlich viel
+        Energie, um abgelöst zu werden. <br> Zum anderen ist zu 
+        erkennen, dass alle Geraden dieselbe Steigung besitzen.
+        Die kinetische Energie der Photoelektronen wächst
+        also mit steigender Frequenz des einstrahlenden Lichts
+        immer auf gleiche Weise und ist damit unabhängig vom
+        verwendeten Metall. <br> Alle Geraden können demnach
+        mit der Gleichung $E_{\text{kin}} = hf – E_A$ beschrieben werden,
+        wobei $h$ die für alle Geraden gleiche Steigung ist.
+        </p>
+        </div>
+      </div>
+      
+         <div class="wb-section-break"></div>
+
+       <h2>Das neue Modell - wofür Einstein den Nobelpreis bekam</h2>
+
+       <p>Wenn alle Metalle dieselbe Steigung besitzen, dann ist die Umrechnung von Frequenz in Photonenenergie
+            offenbar eine universelle Natureigenschaft. Genau diese Steigung ist $h$.</p>
+          <p>Unterschiedlich ist nur die Austrittsenergie. Deshalb verschiebt sich die Gerade je nach Material nach
+            oben oder unten, aber sie kippt nicht anders.</p>
+          <p>Einstein deutete Licht so, als bestünde es aus einzelnen Energieportionen, heute
+            <strong>Photonen</strong> genannt. Jedes Photon trägt die Energie $E_{\text{ph}} = hf$.
+          </p>
+          <p>Trifft ein Photon auf ein Elektron im Metall, dann gibt es seine Energie auf einmal ab. Zuerst muss die
+            Austrittsenergie $E_A$ überwunden werden. Nur der Rest erscheint als kinetische Energie des
+            Photoelektrons:</p>
+          <p style="font-size:1.15rem; font-weight:600; margin:14px 0;">$E_{\text{kin}} = hf - E_A$</p>
+          <p>Das erklärt sofort, warum blaues Licht energiereicher als rotes Licht ist und warum helleres Licht zwar
+            mehr Elektronen auslösen kann, aber nicht energiereichere Photonen liefert.</p>
+          <p>Die Quantisierung der Energie in Einsteins Deutung war deshalb so revolutionär, weil Licht damit
+            Eigenschaften eines Teilchens zugeschrieben werden. Nach seiner Idee wird die Energie eines Photons
+            $E_{\text{ph}} = hf$ auf ein Elektron im Metall übertragen.</p>
+          <p>So kam auch das Welle-Teilchen-Paradox auf: Manche Beobachtungen kann man nur durch den Wellencharakter
+            des Lichts erklären, andere nur mit dem Teilchencharakter. Interferenz spricht für den Wellencharakter,
+            der Photoeffekt für den Teilchencharakter.</p>
+
+      <div class="wb-callout">
+        <strong>Merksatz</strong>
+        <p>Die Energie elektromagnetischer Strahlung ist quantisiert, verfügbar nur in Quanten mit der Energie
+          $E_{\text{ph}} = hf$, den Photonen. Deren Energie hängt nur von der Frequenz $f$, nicht von der
+          Intensität ab: Helles Licht hat mehr Quanten, nicht Quanten größerer Energie.</p>
+      </div>
+        
+         <div class="wb-section-break"></div>
+
+      <h2>Begriffe sinnvoll zuordnen</h2>
+      <div data-p2 class="p2">
+        <div class="p2-hint">Ordne jedem Begriff die passende Aussage zu. Überprüfe danach, ob dein Modell wirklich
+          stimmig ist.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Photon</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Planck-Konstante \(h\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Austrittsenergie \(E_A\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Grenzfrequenz \(f_{\text{gr}}\)</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Passende Aussage</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Minimale Energie, die nötig ist, um ein
+                Elektron aus dem Metall zu lösen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Ein einzelnes Lichtquant mit der Energie
+                \(E_{\text{ph}} = hf\)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Frequenz, bei der \(hf\) gerade ausreicht,
+                damit \(E_{\text{kin}} = 0\) wird</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Naturkonstante, die Frequenz in Energie pro
+                Photon umrechnet</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Wie man \(h\) aus den Daten erhält</h2>
+     
+      <div class="wb-soft-callout">
+        <strong>Schritt für Schritt mit Messdaten</strong>
+        <p>Nimm zwei Punkte aus der Messgeraden von Caesium:</p>
+        <ul class="wave-list">
+          <li>gelb: $\qquad  f_g = 5{,}19 \cdot 10^{14}\,\text{Hz}$, $\quad E_{\text{kin},g} = 0{,}13\,\text{eV}$</li>
+          <li>violett: $\ \quad f_v = 7{,}41 \cdot 10^{14}\,\text{Hz}$, $\quad E_{\text{kin},v} = 1{,}02\,\text{eV}$</li>
+        </ul>
+        <p>Dann berechnest du die Steigung:</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">$h = \frac{\Delta E_{\text{kin}}}{\Delta f}$</p>
+        <p>mit</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">$\Delta E_{\text{kin}} = 1{,}02 - 0{,}13 = 0{,}89\,\text{eV}$</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">$\Delta f = (7{,}41 - 5{,}19)\cdot 10^{14}\,\text{Hz} = 2{,}22 \cdot 10^{14}\,\text{Hz}$</p>
+        <p>Also:</p> 
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">$h \approx \frac{0{,}89\,\text{eV}}{2{,}22 \cdot 10^{14}\,\text{Hz}} \approx 4{,}01 \cdot 10^{-15}\,\text{eV s}$</p>
+        <p>Nun rechnest du von eV·s in J·s um:</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">$h \approx 4{,}01 \cdot 10^{-15}\,\text{eV s}\cdot 1{,}602 \cdot 10^{-19}\,\frac{\text{J}}{\text{eV}} \approx 6{,}4 \cdot 10^{-34}\,\text{J s}$</p>
+        <p>Damit landest du sehr nahe am bekannten Wert $6{,}626 \cdot 10^{-34}\,\text{J s}$.</p>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Die Steigung der Geraden $E_{\text{kin}}(f)$ liefert die Planck-Konstante $h$. Aus den Messdaten des
+          Photoeffekts kann man also direkt eine fundamentale Naturkonstante bestimmen.</p>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_order_h",
+          "title":"Anwendung: Bringe die Auswertung zu $h$ in die richtige Reihenfolge",
+          "hint":"Ordne die Schritte so, wie man aus Messdaten die Planck-Konstante bestimmt.",
+          "items":[
+            "Lies für zwei Lichtfarben Frequenz $f$ und maximale kinetische Energie $E_{\\text{kin}}$ aus den Daten ab.",
+            "Berechne die Differenzen $\\Delta E_{\\text{kin}}$ und $\\Delta f$.",
+            "Setze die Werte in die Steigungsformel $h = \\frac{\\Delta E_{\\text{kin}}}{\\Delta f}$ ein.",
+            "Wandle das Ergebnis von $eV·s$ in $J·s$ um.",
+            "Vergleiche dein Ergebnis mit dem Literaturwert der Planck-Konstante."
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Simulation">
+      <h1>Simulation: Äußerer Photoeffekt</h1>
+      <p class="wb-muted">Hier kannst du das Modell direkt ausprobieren. Verändere Material, Wellenlänge,
+        Gegenfeldspannung und Intensität und beobachte, wie sich Photostrom, kinetische Energie und Anzahl der
+        ausgelösten Elektronen ändern.</p>
+
+      <div class="pe-sim-card" data-photoeffect-sim="outer-photoeffect">
+        <div class="pe-sim-intro">
+          <h2>Was du untersuchen kannst</h2>
+          <p>Teste die Einstein-Gleichung \(E_{\text{kin,max}} = hf - E_A\) an einer animierten Photozelle. Wenn die
+            Photonenenergie zu klein ist, bleibt die Kathode dunkel. Erhöhst du nur die Intensität, steigen vor allem
+            Elektronenzahl und Photostrom.</p>
+        </div>
+
+        <div class="pe-spectrum">
+          <div class="pe-spectrum-scale">
+            <span>280<br>UV</span>
+            <span>380<br>V</span>
+            <span>450<br>B</span>
+            <span>495<br>Grün</span>
+            <span>570<br>G</span>
+            <span>590<br>O</span>
+            <span>620<br>Rot</span>
+            <span>750</span>
+          </div>
+          <div class="pe-spectrum-band"></div>
+          <div class="pe-spectrum-axis">
+            <span>10</span>
+            <span>9</span>
+            <span>8</span>
+            <span>7</span>
+            <span>6</span>
+            <span>5</span>
+            <span>4</span>
+          </div>
+          <div class="pe-spectrum-note">Oben ist die Wellenlänge in nm, unten grob die zugehörige Frequenz in
+            \(10^{14}\,\text{Hz}\) skizziert.</div>
+        </div>
+
+        <div class="pe-sim-grid">
+          <div class="pe-sim-controls">
+            <h2>Steuerung</h2>
+            <label>Material</label>
+            <select data-role="material">
+              <option value="sodium">Natrium</option>
+              <option value="zinc">Zink</option>
+              <option value="copper">Kupfer</option>
+              <option value="platinum">Platin</option>
+              <option value="calcium">Calcium</option>
+            </select>
+            <div class="pe-control-readout">Austrittsenergie: <span data-role="phi-value">2.28 eV</span></div>
+
+            <label>Wellenlänge</label>
+            <input data-role="wavelength" type="range" min="100" max="850" step="1" value="420" />
+            <div class="pe-control-readout"><span data-role="wavelength-value">420 nm</span></div>
+
+            <label>Intensität</label>
+            <input data-role="intensity" type="range" min="1" max="100" step="1" value="52" />
+            <div class="pe-control-readout"><span data-role="intensity-value">52 %</span></div>
+
+            <label>Gegenfeldspannung</label>
+            <input data-role="voltage" type="range" min="0" max="5" step="0.01" value="0" />
+            <div class="pe-control-readout"><span data-role="voltage-value">0.00 V</span></div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+
+            <div class="pe-sim-hint">
+              Je größer die Gegenfeldspannung ist, desto schwerer erreichen die ausgelösten Elektronen die Anode.
+            </div>
+          </div>
+
+          <div class="pe-sim-stage">
+            <canvas data-role="canvas" width="1200" height="760" aria-label="Simulation des äußeren Photoeffekts"></canvas>
+
+            <div class="pe-sim-readout">
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Wellenlänge</span>
+                <span class="pe-readout-value" data-role="lambda-out">420 nm</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Frequenz</span>
+                <span class="pe-readout-value" data-role="freq-out">7.14 · 10^14 Hz</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Photonenenergie</span>
+                <span class="pe-readout-value" data-role="eph-out">2.95 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Austrittsenergie</span>
+                <span class="pe-readout-value" data-role="phi-out">2.28 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Max. kinetische Energie</span>
+                <span class="pe-readout-value" data-role="ekin-out">0.67 eV</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Stoppspannung</span>
+                <span class="pe-readout-value" data-role="ustop-out">0.67 V</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Eingestellte Spannung</span>
+                <span class="pe-readout-value" data-role="voltage-readout">0.00 V</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Gesammelte Elektronen</span>
+                <span class="pe-readout-value" data-role="collection-out">48 %</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Photostrom</span>
+                <span class="pe-readout-value" data-role="current-out">0.000 µA</span>
+              </div>
+              <div class="pe-readout-card">
+                <span class="pe-readout-label">Grenze des Materials</span>
+                <span class="pe-readout-value" data-role="threshold-out">544 nm / 5.51 · 10^14 Hz</span>
+              </div>
+            </div>
+
+            <div class="pe-status pe-status-on" data-role="status">
+              <strong>Status</strong>
+              <span data-role="status-text">Photoeffekt aktiv.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Modellhinweis</strong>
+        <p>Die Simulation nutzt typische Austrittsenergien für die gewählten Metalle und ein vereinfachtes
+          Schulmodell für den Photostrom. Physikalisch exakt ist die Kernaussage: \(E_{\text{kin,max}}\) hängt von
+          Frequenz und Material ab, nicht von der Intensität.</p>
+      </div>
+    </section>
+
+    <div hidden>
+      <h1>Quanten statt Kontinuum: Wie man \(h\) aus den Daten erkennt</h1>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/foto3.png"
+            alt="Weitere Skizze zum Photoeffekt und zur Deutung mit Photonen" />
+          <figcaption>Zusatzbild aus deinen Materialien: gut geeignet, um die Idee „mehr Photonen statt energiereichere
+            Photonen“ noch einmal festzuhalten.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <h2>Lineare Auswertung</h2>
+          <p>Trägst du $E_{\text{kin}}$ gegen die Frequenz $f$ auf, entsteht eine Gerade. Ihre Steigung ist für
+            verschiedene Metalle gleich und entspricht der Planck-Konstante $h$. Der Achsenabschnitt ändert sich
+            dagegen, weil unterschiedliche Metalle unterschiedliche Austrittsenergien besitzen.</p>
+          <p>Für Caesium gilt näherungsweise $E_A \approx 1{,}93 \,\text{eV}$. Daraus folgt eine Grenzfrequenz von
+            ungefähr $4{,}7 \cdot 10^{14}\,\text{Hz}$. Sichtbares orangenes Licht liegt also bereits in der Nähe der
+            Schwelle.</p>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Merke</strong>
+        <p>Gleiche Steigung bedeutet: Das „Umrechnen“ von Frequenz in Photonenenergie ist eine universelle
+          Natureigenschaft und nicht vom Metall abhängig.</p>
+      </div>
+
+      <div data-wb-disabled="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_order_h",
+          "title":"Anwendung: Bringe die Argumentation in die richtige Reihenfolge",
+          "hint":"Ordne die Schritte so, wie man aus Messdaten zur Deutung mit Photonen gelangt.",
+          "items":[
+            "Für verschiedene Lichtfrequenzen wird die Gegenspannung gemessen, bei der der Photostrom verschwindet.",
+            "Aus $E_{\\text{kin}} = e \\cdot U_g$ wird die maximale kinetische Energie der schnellsten Elektronen bestimmt.",
+            "Die Werte $E_{\\text{kin}}$ werden gegen die Frequenz $f$ aufgetragen und ergeben näherungsweise eine Gerade.",
+            "Aus der Geraden liest man die konstante Steigung $h$ und den stoffabhängigen Achsenabschnitt $-E_A$ ab.",
+            "Damit folgt die Gleichung $E_{\\text{kin}} = hf - E_A$ als Deutung des Photoeffekts."
+          ]
+        }
+        </script>
+      </div>
+    </div>
+
+    <section data-wb-page="5" data-wb-page-title="Transfer">
+      <h1>Transfer: Was ändert sich bei Frequenz und Intensität wirklich?</h1>
+
+      <p>Hier zeigt sich, ob du das Modell verstanden hast. Entscheidend ist nicht, ob du Formeln wiederholst, sondern
+        ob du Vorhersagen für neue Situationen begründen kannst.</p>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_categorize_transfer",
+          "title":"Sortiere die Folgen richtig ein",
+          "hint":"Ordne jede Aussage der passenden Größe zu.",
+          "categories":[
+            {"id":"freq","title":"Änderung der Frequenz"},
+            {"id":"int","title":"Änderung der Intensität"}
+          ],
+          "items":[
+            {"id":"1","label":"Kann die maximale kinetische Energie der ausgelösten Elektronen erhöhen","category":"freq"},
+            {"id":"2","label":"Kann den Photoeffekt überhaupt erst ermöglichen, wenn die Grenzfrequenz überschritten wird","category":"freq"},
+            {"id":"3","label":"Erhöht vor allem die Zahl der Photonen pro Zeit","category":"int"},
+            {"id":"4","label":"Kann bei gleicher Frequenz zu größerem Photostrom führen","category":"int"},
+            {"id":"5","label":"Ändert die Energie eines einzelnen Photons","category":"freq"},
+            {"id":"6","label":"Macht Photonen nicht automatisch energiereicher","category":"int"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_essay_transfer",
+          "title":"Reflexion: Begründe eine Alltagssituation",
+          "hint":"Antworte in 4 bis 8 Sätzen. Nutze mindestens die Begriffe Frequenz, Photon und Austrittsenergie korrekt.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Erklärung","key":"text","kind":"textarea","placeholder":"Warum kann UV-Licht Sonnenbrand auslösen, während sichtbares Licht einer starken Lampe deine Haut meist nicht auf dieselbe Weise schädigt?"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Innerer Photoeffekt">
+      <h1>Innerer Photoeffekt</h1>
+      <p class="wb-muted">Beim inneren Photoeffekt verlassen Elektronen den Festkörper nicht. Stattdessen werden sie im
+        Halbleiter zu frei beweglichen Leitungselektronen. Genau das macht Solarzellen möglich.</p>
+
+      <h2>Energieniveaus und Leitfähigkeit</h2>
+      <p>In einem Halbleiter sind viele Elektronen zunächst an feste Plätze in der Kristallstruktur gebunden. Erhalten
+        sie genügend Energie, können sie auf ein höheres Energieniveau wechseln und sich danach im Halbleiter frei
+        bewegen. Sie werden dann zu <strong>Leitungselektronen</strong>. Je mehr solcher Elektronen vorhanden sind,
+        desto größer ist die Leitfähigkeit.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Merke</strong>
+        <p>Beim inneren Photoeffekt werden Elektronen also nicht aus dem Material herausgelöst, sondern innerhalb des
+          Halbleiters beweglich gemacht.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Dotierung</h2>
+      <p>Die Leitfähigkeit eines Halbleiters lässt sich schon bei Raumtemperatur durch <strong>Dotierung</strong>
+        erhöhen. Dabei ersetzt man einige Siliciumatome gezielt durch Fremdatome.</p>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/n-dotierung.png" alt="Schema einer n-Dotierung" />
+          <figcaption>n-Dotierung: Atome wie Phosphor besitzen ein Valenzelektron mehr als Silicium.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="bilder/p-dotierung.png" alt="Schema einer p-Dotierung" />
+          <figcaption>p-Dotierung: Atome wie Bor besitzen ein Valenzelektron weniger als Silicium.</figcaption>
+        </figure>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/n-dotierung-silizium.png" alt="n-dotiertes Silizium mit freien Elektronen" />
+          <figcaption>Im n-dotierten Halbleiter stehen zusätzliche freie Elektronen als Leitungselektronen bereit.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="bilder/p-dotierung-silizium.png" alt="p-dotiertes Silizium mit Löchern" />
+          <figcaption>Im p-dotierten Halbleiter entstehen Löcher, an die benachbarte Elektronen nachrücken können.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>n-Dotierung liefert zusätzliche freie Elektronen. p-Dotierung erzeugt Löcher. In beiden Fällen wird der
+          Halbleiter leitfähiger.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Solarzelle und p-n-Übergang</h2>
+      <p>Eine Solarzelle besteht aus einer n-dotierten und einer p-dotierten Halbleiterschicht. An der Grenzfläche
+        diffundieren Elektronen aus der n-Schicht und Löcher aus der p-Schicht aufeinander zu. Treffen sie dort
+        zusammen, rekombinieren sie: Das Elektron besetzt das Loch und wird wieder Teil einer Bindung.</p>
+      <p>In der direkten Umgebung der Grenzfläche bleibt dadurch ein Bereich zurück, in dem weder freie
+        Leitungselektronen noch Löcher in großer Zahl vorliegen. Diese <strong>Grenzschicht</strong> trägt
+        Raumladungen. Genau diese Raumladungen sorgen später dafür, dass getrennte Elektronen und Löcher zu
+        unterschiedlichen Seiten der Solarzelle beschleunigt werden.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Raumladungen in der Grenzschicht</strong>
+        <p>Durch die Rekombination entstehen im p-n-Übergang feste Raumladungen. Sie bauen ein inneres elektrisches Feld
+          auf. Dieses Feld trennt die durch Licht erzeugten Elektronen und Löcher und macht so eine Spannung an der
+          Solarzelle messbar.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Wie der innere Photoeffekt in der Solarzelle wirkt</h2>
+      <p>Trifft Licht auf die Solarzelle, erhalten gebundene Elektronen Energie von Photonen. Ist diese Energie groß
+        genug, verlassen sie ihre gebundene Position und werden zu frei beweglichen Leitungselektronen. Gleichzeitig
+        bleiben Löcher zurück. Das innere elektrische Feld im p-n-Übergang trennt beide Ladungsträger.</p>
+      <p>Dadurch sammeln sich Elektronen bevorzugt auf der n-Seite und Löcher auf der p-Seite. Diese Ladungstrennung
+        kann als Spannung abgegriffen werden und liefert elektrische Energie.</p>
+      <p>Wie beim äußeren Photoeffekt gilt auch hier: Die Energie kommt nicht nach und nach von vielen Wellenbergen,
+        sondern in Portionen von einzelnen Photonen. Fachlich korrekt heißt das: Ein Photon kann ein Elektron nur dann
+        in den leitfähigen Zustand bringen, wenn seine Energie mindestens groß genug ist, um die nötige Energielücke im
+        Halbleiter zu überbrücken.</p>
+
+      <div class="wb-callout">
+        <strong>Merksatz</strong>
+        <p>Innerer Photoeffekt: In Halbleiter-Solarzellen erhalten gebundene Elektronen Energie von Photonen. Sie werden
+          im Halbleiter zu frei beweglichen Ladungsträgern. Das elektrische Feld der Grenzschicht trennt Elektronen und
+          Löcher und erzeugt so eine nutzbare Spannung.</p>
+      </div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_verify_innerer",
+          "title":"Check: Innerer Photoeffekt verstehen",
+          "hint":"Prüfe die Aussagen zu Dotierung, Grenzschicht und Solarzelle.",
+          "questions":[
+            {
+              "text":"Bei der n-Dotierung werden Fremdatome eingebaut, die ein Valenzelektron mehr als Silicium besitzen.",
+              "answer": true,
+              "explain":"Richtig. Diese zusätzlichen Elektronen können leicht zu Leitungselektronen werden."
+            },
+            {
+              "text":"Im p-dotierten Halbleiter sind Löcher Plätze, an die benachbarte Elektronen springen können.",
+              "answer": true,
+              "explain":"Richtig. Dadurch wird auch ohne frei bewegte Elektronen Ladungstransport möglich."
+            },
+            {
+              "text":"Beim inneren Photoeffekt verlassen die Elektronen den Halbleiter vollständig wie beim Hallwachs-Effekt.",
+              "answer": false,
+              "explain":"Falsch. Die Elektronen bleiben im Halbleiter, werden aber zu beweglichen Leitungselektronen."
+            },
+            {
+              "text":"Die Raumladungen in der Grenzschicht helfen dabei, lichtgetrennte Elektronen und Löcher auf verschiedene Seiten der Solarzelle zu lenken.",
+              "answer": true,
+              "explain":"Richtig. Das innere Feld des p-n-Übergangs trennt die Ladungsträger und macht eine Spannung nutzbar."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Röntgen">
+      <h1>Umkehrung des Photoeffekts: Röntgenstrahlung und Bragg-Bedingung</h1>
+      <p class="wb-muted">Beim äußeren Photoeffekt gibt Licht Energie an Elektronen ab. In der Röntgenröhre läuft das
+        Prinzip umgekehrt: Schnelle Elektronen geben beim Abbremsen Energie ab, und diese erscheint als
+        elektromagnetische Strahlung sehr hoher Frequenz.</p>
+
+      <h2>Geschichte und Idee</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/roentgen4.png" alt="Historische Darstellung zur Röntgenstrahlung und ihrer Anwendung" />
+          <figcaption>Seit Wilhelm Conrad Röntgens Entdeckung 1895 wird Röntgenstrahlung in Medizin, Technik und
+            Materialprüfung eingesetzt.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Wilhelm Conrad Röntgen entdeckte 1895 eine neue, unsichtbare Strahlung, die er selbst X-Strahlen nannte.
+            Heute spricht man im deutschsprachigen Raum von <strong>Röntgenstrahlung</strong>. Sie wird von Stoffen mit
+            großer Elektronendichte, etwa Blei, stark abgeschwächt und eignet sich deshalb für Durchleuchtungen.</p>
+          <p>Wichtig ist aber auch die Kehrseite: Röntgenstrahlung ionisiert Materie. Deshalb sind bei medizinischen und
+            technischen Anwendungen Strahlenschutz und geringe Dosis entscheidend.</p>
+        </div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Merksatz</strong>
+        <p>Treffen energiereiche Elektronen auf ein Metall hoher Ordnungszahl, entsteht unsichtbare Strahlung sehr
+          kleiner Wellenlänge: Röntgenstrahlung.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Umkehrung des Photoeffekts in der Röntgenröhre</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/roentgen1.png" alt="Röntgenröhre mit LiF-Kristall und Zählrohr" />
+          <figcaption>Elektronen werden in der Röntgenröhre beschleunigt, an der Anode abgebremst und erzeugen dabei
+            Röntgenstrahlung. Ein LiF-Kristall dient danach als Beugungsobjekt.</figcaption>
+        </figure>
+        <div>
+          <div class="wb-soft-callout">
+          <p>In einer Röntgenröhre werden Elektronen durch eine hohe Spannung \(U\) beschleunigt. Bei \(U = 30\,\text{kV}\)
+            besitzt jedes Elektron die Energie</p>
+          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(E_{\text{el}} = eU = 30\,\text{keV}\)</p>
+          <p>Wenn ein Elektron diese Energie in einem einzigen Vorgang vollständig an ein Photon abgibt, entsteht das
+            energiereichste mögliche Röntgenquant. Genau dann gilt die Umkehrung des Photoeffekts:</p>
+          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(E_{\text{ph,max}} = hf_{\text{max}} = eU\)</p>
+          <p>Daraus folgen die maximale Frequenz und die minimale Wellenlänge:</p>
+          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(f_{\text{max}} = \frac{eU}{h}\), \(\lambda_{\text{min}} = \frac{ch}{eU}\)</p>
+          <p>Für \(U = 30\,\text{kV}\) ergibt sich \(f_{\text{max}} \approx 7{,}3 \cdot 10^{18}\,\text{Hz}\) und
+            \(\lambda_{\text{min}} \approx 42\,\text{pm}\).</p>
+        </div>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Die Beschleunigungsspannung legt die maximale Quantenenergie der Röntgenstrahlung fest. Je größer \(U\), desto
+          kleiner wird \(\lambda_{\text{min}}\) und desto größer wird \(f_{\text{max}}\).</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Bragg-Bedingung: Wann ein Kristall „glänzt“</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/bragg1.png" alt="Geometrie der Bragg-Reflexion" />
+          <figcaption>Nur wenn der Wegunterschied zwischen zwei reflektierten Teilwellen ein ganzzahliges Vielfaches
+            der Wellenlänge ist, entsteht konstruktive Interferenz.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="bilder/bragg2.png" alt="Kristallebenen mit verschiedenen Netzebenenabständen" />
+          <figcaption>In einem Kristall gibt es verschiedene Scharen paralleler Netzebenen. Jede besitzt ihren eigenen
+            Netzebenenabstand \(d\).</figcaption>
+        </figure>
+      </div>
+
+      
+
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout"><p>Röntgenstrahlung hat Wellenlängen deutlich unter \(1\,\text{nm}\). Gewöhnliche optische Gitter sind dafür viel
+        zu grob. Kristalle besitzen aber Netzebenenabstände in genau dieser Größenordnung. Deshalb können Kristalle als
+        Beugungsobjekte für Röntgenstrahlung dienen.</p>
+      <p>Starke Reflexion tritt nur dann auf, wenn die <strong>Bragg-Bedingung</strong> erfüllt ist:</p>
+      <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(k \cdot \lambda = 2d \cdot \sin \varphi\), \(k = 1,2,3,\dots\)</p>
+      <p>Der Winkel \(\varphi\) wird gegen die Netzebene gemessen. Er heißt auch <strong>Glanzwinkel</strong>, weil bei
+        genau diesem Winkel konstruktive Interferenz auftritt.</p></div>
+        <figure class="wave-figure">
+          <img src="bilder/bragg3.png" alt="Röntgenspektrum mit markanten Linien und kontinuierlichem Anteil" />
+          <figcaption>Das Spektrum zeigt charakteristische Linien und einen kontinuierlichen Untergrund mit einer
+            materialunabhängigen Grenzwellenlänge.</figcaption>
+        </figure>
+      </div>
+
+      
+
+      <div class="wb-section-break"></div>
+      <h2>Kontinuierliches und charakteristisches Spektrum</h2>
+
+           <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/bragg4.png" alt="Kontinuierliche Röntgenspektren verschiedener Anodenmaterialien" />
+          <figcaption>Das kontinuierliche Spektrum endet immer bei derselben Grenzwellenlänge, wenn die Spannung gleich
+            bleibt. Unterschiede zwischen den Materialien zeigen sich vor allem in Intensität und charakteristischen
+            Linien.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Das Röntgenspektrum besteht aus zwei Teilen. Der <strong>kontinuierliche Untergrund</strong> entsteht durch
+            das Abbremsen der Elektronen in mehreren Stufen. Die Elektronen geben dabei unterschiedlich große Anteile
+            ihrer Energie ab, deshalb entstehen Photonen vieler verschiedener Wellenlängen.</p>
+          <p>Darauf liegen <strong>charakteristische Linien</strong>, die vom Anodenmaterial abhängen. Sie entstehen durch
+            atomare Übergänge in der Anode. Das erklärt, warum verschiedene Materialien unterschiedliche markante Linien
+            zeigen, die Grenzwellenlänge bei gleicher Spannung aber gleich bleibt.</p>
+        </div>
+      </div>
+
+      <p>Die hohen Linien ① und ② werden bei kleinen Winkeln gemessen. Wir deuten sie als Beugungsmaxima
+        1. Ordnung für zwei verschiedene Wellenlängen. Aus dem Netzebenenabstand \(d = 282\,\text{pm}\) für NaCl und
+        den Winkeln \(\varphi_1 = 15^\circ\) und \(\varphi_2 = 16^\circ\) berechnet man mit der Bragg-Gleichung die
+        Wellenlängen \(\lambda_1 = 0{,}14\,\text{nm}\) und \(\lambda_2 = 0{,}15\,\text{nm}\) für die
+        Röntgenstrahlung. Bei den Linien ③, ④, ⑤ und ⑥ handelt es sich um Maxima zweiter und dritter Ordnung der
+        gleichen Wellenlängen, entsprechend den Wegunterschieden \(2s = 2d \cdot \sin\varphi = 2\lambda\) und
+        \(3\lambda\).</p>
+
+        <div class="wb-section-break"></div>
+        <h2>Minimale Wellenlänge und kleinsteter Winkel</h2>
+
+        <p>Wie bei dem Versuch oben werden in einer Röntgenröhre Elektronen mit der Spannung \(U = 30\,\text{kV}\) beschleunigt. Jedes Elektron
+        erhält die Energie \(E_{\text{el}} = eU = 30\,\text{keV}\), die es an der Anode abgibt. Wenn sich dort diese
+        Energie vollständig in ein Röntgenquant umsetzt, wird der Photoeffekt umgekehrt. Dann gilt für die
+        energiereichsten Quanten \(E_{\text{ph,max}} = hf = eU\).</p>
+         <p>Das Experiment zeigt, dass die Röntgenstrahlen erst bei einem kleinsten Winkel $\varphi_{\text{min}}$ und auch 
+        erst ab einer minimalen Wellenlänge $\lambda_{\text{min}}$ auftreten:</p>
+       <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/roentgen2.png" alt="Drehkristallmethode mit NaCl-Kristall und Zählrohr" />
+          <figcaption>Bei der Drehkristallmethode wird der Kristall gedreht, während das Zählrohr mit doppeltem Winkel
+            mitgeführt wird.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="bilder/roentgen3.png" alt="Röntgenspektrum mit markanten Linien und kontinuierlichem Anteil" />
+          <figcaption>Das Spektrum zeigt charakteristische Linien und einen kontinuierlichen Untergrund mit einer
+            materialunabhängigen Grenzwellenlänge.</figcaption>
+        </figure>
+      </div>
+      
+     <p>Dies kann man folgendermaßen erklären:</p>
+     <p>Da für die energiereichsten Quanten \(E_{\text{ph,max}} = hf = eU\) gilt, sollten
+       Röntgenstrahlen mit der maximalen Frequenz
+        \(f_{\text{max}} = \frac{eU}{h} \approx 7{,}3 \cdot 10^{18}\,\text{Hz}\) entstehen. </p> 
+        <p>Das bedeutet, es existiert eine 
+        minimale Wellenlänge \(\lambda_{\text{min}} = \frac{c}{f_{\text{max}}} = \frac{ch}{eU} \approx 42\,\text{pm}\). </p>
+        <p>Das Experiment liefert tatsächlich ein kontinuierliches Röntgenspektrum, das beim Grenzwinkel
+        \(\varphi_{\text{min}} = 6^\circ\) beginnt. Mit der Bragg-Gleichung
+        \(k \cdot \lambda_{\text{min}} = 2d \cdot \sin \varphi_{\text{min}}\) folgt bei
+        \(d = 201 \cdot 10^{-12}\,\text{m}\) und \(k = 1\) erneut
+        \(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} \approx 42\,\text{pm}\).</p>
+
+      <div class="wb-callout">
+        <strong>Wichtiges Ergebnis</strong>
+        <p>Die energiereichsten Röntgenquanten entstehen dann, wenn ein Elektron seine gesamte Beschleunigungsenergie in
+          genau einem Vorgang an ein Photon abgibt. Deshalb gilt für die Grenzwerte der Röntgenstrahlung:
+          \(E_{\text{ph,max}} = hf_{\text{max}} = eU\) und damit \(\lambda_{\text{min}} = \frac{ch}{eU}\).</p>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Beispielrechnung</strong>
+        <p>Für den LiF-Kristall mit \(d = 201\,\text{pm}\) und den gemessenen Grenzwinkel \(\varphi_{\text{min}} = 6^\circ\)
+          folgt in 1. Ordnung \(k = 1\):</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">\(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} = 2 \cdot 201\,\text{pm} \cdot \sin 6^\circ \approx 42\,\text{pm}\)</p>
+        <p>Das passt genau zu der über \(E_{\text{ph,max}} = eU\) vorhergesagten Grenzwellenlänge.</p>
+      </div>
+
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_mcq_roentgen",
+          "title":"Check: Röntgenstrahlung und Bragg-Bedingung",
+          "hint":"Markiere alle richtigen Aussagen.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen sind fachlich korrekt?",
+              "choices":[
+                {"id":"a","label":"Die maximale Quantenenergie der Röntgenstrahlung ist durch \\(E_{\\\\text{ph,max}} = eU\\) bestimmt."},
+                {"id":"b","label":"Die Bragg-Bedingung lautet \\(k\\\\lambda = 2d\\\\sin\\\\varphi\\)."},
+                {"id":"c","label":"Die Grenzwellenlänge eines kontinuierlichen Röntgenspektrums hängt bei gleicher Spannung stark vom Anodenmaterial ab."},
+                {"id":"d","label":"Charakteristische Linien verraten etwas über das Anodenmaterial."},
+                {"id":"e","label":"Kristalle können Röntgenstrahlung beugen, weil ihre Netzebenenabstände zur kleinen Wellenlänge passen."}
+              ],
+              "correct":["a","b","d","e"],
+              "explain":"Richtig sind a, b, d und e. Falsch ist c, denn die Grenzwellenlänge hängt bei gleicher Spannung nicht vom Material, sondern von \\(U\\) ab."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Zusammenfassung">
+      <h1>Jetzt hast du das gelernt</h1>
+
+      <div class="wb-callout">
+        <strong>Kernideen</strong>
+        <ul class="wave-list">
+          <li>Der Photoeffekt beschreibt das Herauslösen von Elektronen aus einer Metalloberfläche durch Licht.</li>
+          <li>Ob der Effekt auftritt, hängt von der Frequenz des Lichts und von der Austrittsenergie des Metalls ab.
+          </li>
+          <li>Die maximale kinetische Energie folgt der Einstein-Gleichung $E_{\text{kin}} = hf - E_A$.</li>
+          <li>Höhere Intensität bedeutet mehr Photonen, nicht energiereichere Photonen.</li>
+          <li>Beim inneren Photoeffekt werden Elektronen im Halbleiter zu Leitungselektronen und ermöglichen so die
+            Funktion von Solarzellen.</li>
+          <li>Bei Röntgenstrahlung zeigt die Umkehrung des Photoeffekts, dass auch hier Quantenenergie und
+            Beschleunigungsspannung direkt zusammenhängen.</li>
+        </ul>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Weiterdenken</strong>
+        <p>Warum reagieren Nachtsichtgeräte schon auf Infrarot, Zink aber erst auf UV? Der Unterschied steckt in der
+          materialabhängigen Austrittsenergie.</p>
+        <p>Wenn du die Gerade $E_{\text{kin}}(f)$ für zwei Metalle vergleichst, verrät dir ihre gemeinsame Steigung
+          etwas Universelles über Licht.</p>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_mcq_abschluss",
+          "title":"Abschluss-Check",
+          "hint":"Wähle die richtigen Aussagen aus. Prüfe danach, ob du jede davon auch begründen kannst.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen zum Photoeffekt sind fachlich korrekt?",
+              "choices":[
+                {"id":"a","label":"Unterhalb der Grenzfrequenz kann auch sehr intensives Licht keinen Photoeffekt auslösen."},
+                {"id":"b","label":"Die Austrittsenergie ist für jedes Metall gleich groß."},
+                {"id":"c","label":"Bei gleicher Frequenz erhöht stärkere Intensität vor allem den Photostrom."},
+                {"id":"d","label":"Die Energie eines Photons ist \\(E = hf\\)."},
+                {"id":"e","label":"Die maximale kinetische Energie der Photoelektronen wächst mit steigender Frequenz."}
+              ],
+              "correct":["a","c","d","e"],
+              "explain":"Richtig sind a, c, d und e. Falsch ist b, weil die Austrittsenergie vom Material abhängt."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Quellen & Weiterforschen</h2>
+      <ul class="wave-list">
+        <li>Dorn-Bader Physik Kursstufe, Seiten 237 bis 245: Hallwachs-Effekt, Gegenfeldmethode, Einstein-Deutung und
+          Planck-Konstante als Primärgrundlage für diese Seite.</li>
+        <li><a href="https://www.leifiphysik.de/quantenphysik/quantenobjekte/grundwissen/photoeffekt"
+            target="_blank" rel="noreferrer">LEIFIphysik: Photoeffekt</a> für eine schulnahe Ergänzung zu
+          Grenzfrequenz, Austrittsarbeit und Gegenfeldmethode.</li>
+        <li><a href="https://www.britannica.com/science/quantum-mechanics-physics/Einstein-and-the-photoelectric-effect"
+            target="_blank" rel="noreferrer">Encyclopaedia Britannica: Einstein and the photoelectric effect</a> für den
+          historischen Zusammenhang und die Einordnung in die Quantentheorie.</li>
+        <li><a href="https://www.nobelprize.org/physics-prize-2/" target="_blank" rel="noreferrer">Nobel Prize:
+            Albert Einstein</a> zur historischen Bedeutung des Gesetzes des photoelektrischen Effekts.</li>
+      </ul>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_reveal_weiterforschen",
+          "title":"Weiterforschen",
+          "hint":"Klappe die Impulse auf, wenn du noch tiefer gehen willst.",
+          "question":"Welche Fragen lohnen sich als nächstes?",
+          "answer":"Untersuche den inneren Photoeffekt in Solarzellen, vergleiche verschiedene Metalle über ihre Austrittsenergien oder verknüpfe den Photoeffekt mit dem Welle-Teilchen-Dualismus und dem Compton-Effekt."
+        }
+        </script>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/photoeffekt-simulation.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+    PhotoeffektSim.mountAll();
+  </script>
+</body>
+
+</html>

@@ -822,23 +822,23 @@
               "text":"Welche Umrechnungen sind richtig?",
               "multiple": true,
               "choices":[
-                {"id":"a","label":"0,25 m = 25 cm"},
-                {"id":"b","label":"4,2 ms = 0,0042 s"},
-                {"id":"c","label":"7,5 kN = 750 N"},
-                {"id":"d","label":"3 µF = 0,000003 F"}
+                {"id":"a","label":"$0,25 m = 25 cm$"},
+                {"id":"b","label":"$4,2 ms = 0,0042 s$"},
+                {"id":"c","label":"$7,5 kN = 750 N$"},
+                {"id":"d","label":"$3 µF = 0,000003 F$"}
               ],
               "correct":["a","b","d"],
-              "explain":"Zenti bedeutet 10^-2, Milli 10^-3, Mikro 10^-6. Kilo steht für 10^3, daher ist c falsch."
+              "explain":"Zenti bedeutet $10^-2$, Milli $10^-3$, Mikro $10^-6$. Kilo steht für $10^3$, daher ist c falsch."
             },
             {
               "text":"Welche Umrechnung ist richtig?",
               "choices":[
-                {"id":"a","label":"2,4 GHz = 2,4 · 10^6 Hz"},
-                {"id":"b","label":"2,4 GHz = 2,4 · 10^9 Hz"},
-                {"id":"c","label":"2,4 GHz = 2,4 · 10^12 Hz"}
+                {"id":"a","label":"$2,4 GHz = 2,4 · 10^6 Hz$"},
+                {"id":"b","label":"$2,4 GHz = 2,4 · 10^9 Hz$"},
+                {"id":"c","label":"$2,4 GHz = 2,4 · 10^{12} Hz$"}
               ],
               "correct":["b"],
-              "explain":"Giga steht für 10^9."
+              "explain":"Giga steht für $10^9$."
             }
           ]
         }
@@ -851,19 +851,78 @@
           "id":"ef-task-cloze-convert",
           "title":"Setze die richtigen Umrechnungen ein",
           "hint":"Nutze die Wortbank.",
-          "bank":["0,0035","1200","0,0000008","8 · 10^5","Milli"],
+          "bank":["$0{,}0035$","$1200$","$0{,}0000008$","$8 \\cdot 10^5$","$\\mathrm{Milli}$"],
           "segments":[
-            {"t":"text","v":"3,5 mm sind "},
-            {"t":"gap","a":"0,0035"},
-            {"t":"text","v":" m. 1,2 km sind "},
-            {"t":"gap","a":"1200"},
-            {"t":"text","v":" m. 0,8 µs sind "},
-            {"t":"gap","a":"0,0000008"},
-            {"t":"text","v":" s. 800 kHz entsprechen "},
-            {"t":"gap","a":"8 · 10^5"},
-            {"t":"text","v":" Hz. Der Vorsatz "},
-            {"t":"gap","a":"Milli"},
-            {"t":"text","v":" steht für 10^-3."}
+            {"t":"text","v":"$3{,}5\\,\\mathrm{mm}$ sind "},
+            {"t":"gap","a":"$0{,}0035$"},
+            {"t":"text","v":" $\\mathrm{m}$. $1{,}2\\,\\mathrm{km}$ sind "},
+            {"t":"gap","a":"$1200$"},
+            {"t":"text","v":" $\\mathrm{m}$. $0{,}8\\,\\mathrm{\\mu s}$ sind "},
+            {"t":"gap","a":"$0{,}0000008$"},
+            {"t":"text","v":" $\\mathrm{s}$. $800\\,\\mathrm{kHz}$ entsprechen "},
+            {"t":"gap","a":"$8 \\cdot 10^5$"},
+            {"t":"text","v":" $\\mathrm{Hz}$. Der Vorsatz "},
+            {"t":"gap","a":"$\\mathrm{Milli}$"},
+            {"t":"text","v":" steht für 10⁻³."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-task-mcq-convert-2",
+          "title":"Noch mehr Umrechnungen",
+          "hint":"Achte genau auf Zehnerpotenzen und Vorsätze.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Welche Umrechnungen sind richtig?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"$0,0045 kg = 4,5 g$"},
+                {"id":"b","label":"$36 km/h = 10 m/s$"},
+                {"id":"c","label":"$250 mA = 0,25 A$"},
+                {"id":"d","label":"$6,2 nF = 6,2 · 10^{-6} F$"}
+              ],
+              "correct":["a","b","c"],
+              "explain":"Kilo zu Gramm ergibt $1000, km/h$ zu $m/s$ bedeutet durch $3,6$ teilen, Milli steht für $10^-3$. Nano steht für $10^-9$, daher ist d falsch."
+            },
+            {
+              "text":"Welche Umrechnung ist richtig?",
+              "choices":[
+                {"id":"a","label":"$0,75 MPa = 7,5 · 10^5 Pa$"},
+                {"id":"b","label":"$0,75 MPa = 7,5 · 10^4 Pa$"},
+                {"id":"c","label":"$0,75 MPa = 7,5 · 10^7 Pa$"}
+              ],
+              "correct":["a"],
+              "explain":"Mega steht für $10^6$. Also gilt $0,75 MPa = 0,75 · 10^6 Pa = 7,5 · 10^5 Pa$."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"ef-task-cloze-convert-2",
+          "title":"Umrechnen ohne Taschenrechner",
+          "hint":"Setze nur die passenden Ergebnisse aus der Wortbank ein.",
+          "bank":["$4500$","$0,25$","$0,00012$","$750000$","$72$"],
+          "segments":[
+            {"t":"text","v":"$4,5$ km sind "},
+            {"t":"gap","a":"$4500$"},
+            {"t":"text","v":"$ m$. $250 mA$ sind "},
+            {"t":"gap","a":"$0,25$"},
+            {"t":"text","v":"$ A$. $120 µA$ sind "},
+            {"t":"gap","a":"$0,00012$"},
+            {"t":"text","v":"$ A$. $0,75 MPa$ sind "},
+            {"t":"gap","a":"$750000$"},
+            {"t":"text","v":"$ Pa$. $20 m/s$ sind "},
+            {"t":"gap","a":"$72$"},
+            {"t":"text","v":" $km/h$."}
           ]
         }
         </script>
@@ -908,10 +967,10 @@
           <div>
             <div class="p2-col-title">Rechts</div>
             <div class="p2-bank" data-right-bank>
-              <div class="p2-piece p2-right" data-side="R" data-pair="1">\\(\\rho\\), \\(\\mathrm{kg/m^3}\\)</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="2">\\(\\vec{p}\\), \\(\\mathrm{kg\\,m/s}\\)</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="3">\\(H\\), \\(\\mathrm{A/m}\\)</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="4">\\(C\\), \\(\\mathrm{F}\\)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">$\left(\rho\right), \left(\mathrm{kg/m^3}\right)$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">$\left(\vec{p}\right), \left(\mathrm{kg\,m/s}\right)$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">$\left(H\right), \left(\mathrm{A/m}\right)$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">$\left(C\right), \left(\mathrm{F}\right)$</div>
             </div>
           </div>
         </div>
@@ -933,8 +992,8 @@
         {
           "id":"ef-task-cloze-formulas",
           "title":"Ergänze die fehlenden Teile",
-          "hint":"Achte auf Formelzeichen und Indizes.",
-          "bank":["R","I","C","U","\\lambda","f","\\frac{1}{2}","D","s^2"],
+          "hint":"Hier ist absichtlich Klartext statt LaTeX verwendet, damit die Formeln sauber erscheinen.",
+          "bank":["R","I","C","U","λ","f","1/2","D","s²"],
           "segments":[
             {"t":"text","v":"Ohmsches Gesetz: U = "},
             {"t":"gap","a":"R"},
@@ -945,15 +1004,15 @@
             {"t":"text","v":" · "},
             {"t":"gap","a":"U"},
             {"t":"text","v":"; Wellengleichung: c = "},
-            {"t":"gap","a":"\\lambda"},
+            {"t":"gap","a":"λ"},
             {"t":"text","v":" · "},
             {"t":"gap","a":"f"},
             {"t":"text","v":"; Spannenergie: W_spann = "},
-            {"t":"gap","a":"\\frac{1}{2}"},
+            {"t":"gap","a":"1/2"},
             {"t":"text","v":" · "},
             {"t":"gap","a":"D"},
             {"t":"text","v":" · "},
-            {"t":"gap","a":"s^2"},
+            {"t":"gap","a":"s²"},
             {"t":"text","v":"."}
           ]
         }
@@ -1001,7 +1060,6 @@
           "storagePrefix":"einheiten_formeln_",
           "exportName":"einheiten-formeln-aufgaben.txt",
           "fields":[
-            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
             {"label":"Deine Erklärung","key":"text","kind":"textarea","placeholder":"Ich prüfe zuerst den Vorsatz, dann ..."}
           ]
         }
