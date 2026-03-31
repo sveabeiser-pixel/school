@@ -980,10 +980,10 @@
             Linien.</figcaption>
         </figure>
         <div class="wb-soft-callout">
-          <p>Das Röntgenspektrum besteht aus zwei Teilen. Der <strong>kontinuierliche Untergrund</strong> entsteht durch
+          <p>Das Röntgenspektrum besteht aus zwei Teilen. Der <b>kontinuierliche Untergrund</b> entsteht durch
             das Abbremsen der Elektronen in mehreren Stufen. Die Elektronen geben dabei unterschiedlich große Anteile
             ihrer Energie ab, deshalb entstehen Photonen vieler verschiedener Wellenlängen.</p>
-          <p>Darauf liegen <strong>charakteristische Linien</strong>, die vom Anodenmaterial abhängen. Sie entstehen durch
+          <p>Darauf liegen <b>charakteristische Linien</b>, die vom Anodenmaterial abhängen. Sie entstehen durch
             atomare Übergänge in der Anode. Das erklärt, warum verschiedene Materialien unterschiedliche markante Linien
             zeigen, die Grenzwellenlänge bei gleicher Spannung aber gleich bleibt.</p>
         </div>
@@ -1025,11 +1025,15 @@
         \(f_{\text{max}} = \frac{eU}{h} \approx 7{,}3 \cdot 10^{18}\,\text{Hz}\) entstehen. </p> 
         <p>Das bedeutet, es existiert eine 
         minimale Wellenlänge \(\lambda_{\text{min}} = \frac{c}{f_{\text{max}}} = \frac{ch}{eU} \approx 42\,\text{pm}\). </p>
-        <p>Das Experiment liefert tatsächlich ein kontinuierliches Röntgenspektrum, das beim Grenzwinkel
-        \(\varphi_{\text{min}} = 6^\circ\) beginnt. Mit der Bragg-Gleichung
-        \(k \cdot \lambda_{\text{min}} = 2d \cdot \sin \varphi_{\text{min}}\) folgt bei
-        \(d = 201 \cdot 10^{-12}\,\text{m}\) und \(k = 1\) erneut
-        \(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} \approx 42\,\text{pm}\).</p>
+          <div class="wb-soft-callout">
+        <strong>Beispielrechnung</strong>
+        Das Experiment liefert tatsächlich ein kontinuierliches Röntgenspektrum, das beim Grenzwinkel
+        \(\varphi_{\text{min}} = 6^\circ\) beginnt. </p>
+        <p>Für den LiF-Kristall mit \(d = 201\,\text{pm} = 201 \cdot 10^{-12}\,\text{m}\) und den gemessenen Grenzwinkel \(\varphi_{\text{min}} = 6^\circ\)
+          folgt in 1. Ordnung \(k = 1\) mit der Bragg-Gleichung:</p>
+        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">\(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} = 2 \cdot 201\,\text{pm} \cdot \sin 6^\circ \approx 42\,\text{pm}\)</p>
+        <p>Das passt genau zu der über \(E_{\text{ph,max}} = eU\) vorhergesagten Grenzwellenlänge.</p>
+      </div>
 
       <div class="wb-callout">
         <strong>Wichtiges Ergebnis</strong>
@@ -1038,14 +1042,8 @@
           \(E_{\text{ph,max}} = hf_{\text{max}} = eU\) und damit \(\lambda_{\text{min}} = \frac{ch}{eU}\).</p>
       </div>
 
-      <div class="wb-callout">
-        <strong>Beispielrechnung</strong>
-        <p>Für den LiF-Kristall mit \(d = 201\,\text{pm}\) und den gemessenen Grenzwinkel \(\varphi_{\text{min}} = 6^\circ\)
-          folgt in 1. Ordnung \(k = 1\):</p>
-        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">\(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} = 2 \cdot 201\,\text{pm} \cdot \sin 6^\circ \approx 42\,\text{pm}\)</p>
-        <p>Das passt genau zu der über \(E_{\text{ph,max}} = eU\) vorhergesagten Grenzwellenlänge.</p>
-      </div>
-
+    
+  <div class="wb-section-break"></div>
 
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
@@ -1057,9 +1055,10 @@
           "questions":[
             {
               "text":"Welche Aussagen sind fachlich korrekt?",
+              "multiple": true,
               "choices":[
-                {"id":"a","label":"Die maximale Quantenenergie der Röntgenstrahlung ist durch \\(E_{\\\\text{ph,max}} = eU\\) bestimmt."},
-                {"id":"b","label":"Die Bragg-Bedingung lautet \\(k\\\\lambda = 2d\\\\sin\\\\varphi\\)."},
+                {"id":"a","label":"Die maximale Quantenenergie der Röntgenstrahlung ist durch $E_{\\text{ph,max}} = eU$ bestimmt."},
+                {"id":"b","label":"Die Bragg-Bedingung lautet $k\\lambda = 2d\\sin\\varphi$."},
                 {"id":"c","label":"Die Grenzwellenlänge eines kontinuierlichen Röntgenspektrums hängt bei gleicher Spannung stark vom Anodenmaterial ab."},
                 {"id":"d","label":"Charakteristische Linien verraten etwas über das Anodenmaterial."},
                 {"id":"e","label":"Kristalle können Röntgenstrahlung beugen, weil ihre Netzebenenabstände zur kleinen Wellenlänge passen."}
