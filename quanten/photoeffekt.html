@@ -46,31 +46,6 @@
       margin: 0 auto;
     }
 
-    section[data-wb-page="7"] .grid2 {
-      align-items: center !important;
-    }
-
-    section[data-wb-page="7"] .grid2 > * {
-      align-self: center;
-    }
-
-    section[data-wb-page="7"] .grid2 > .wave-figure {
-      justify-self: center;
-      text-align: center;
-      width: min(100%, 92%);
-    }
-
-    section[data-wb-page="7"] .grid2 > .wave-figure img {
-      width: auto;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    section[data-wb-page="7"] .grid2:first-of-type > .wave-figure img {
-      max-height: 340px;
-      object-fit: contain;
-    }
-
     .wave-figure figcaption {
       margin-top: 8px;
       font-size: 0.95rem;
@@ -714,7 +689,7 @@
       </div>
     </div>
 
-    <section data-wb-page="5" data-wb-page-title="Transfer">
+    <section data-wb-page="6" data-wb-page-title="Transfer">
       <h1>Transfer: Was ändert sich bei Frequenz und Intensität wirklich?</h1>
 
       <p>Hier zeigt sich, ob du das Modell verstanden hast. Entscheidend ist nicht, ob du Formeln wiederholst, sondern
@@ -756,9 +731,123 @@
         }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_verify_transfer_neu",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage mit dem Photonenmodell.",
+          "statement":"Wenn die Frequenz unter der Grenzfrequenz liegt, kann man den Photoeffekt allein durch sehr hohe Intensität erzwingen.",
+          "answer": false,
+          "explain":"Falsch. Unterhalb der Grenzfrequenz hat jedes Photon zu wenig Energie, unabhängig davon, wie viele Photonen pro Sekunde ankommen."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_mcq_transfer_neu",
+          "title":"Transfer-Check",
+          "hint":"Markiere alle richtigen Aussagen.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen sind mit dem Photonmodell vereinbar?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Erhöhte Intensität erhöht bei gleicher Frequenz vor allem den Photostrom."},
+                {"id":"b","label":"Erhöhte Frequenz kann die maximale kinetische Energie der Elektronen erhöhen."},
+                {"id":"c","label":"Die Austrittsenergie hängt von der Farbe des einfallenden Lichts ab."},
+                {"id":"d","label":"Unterhalb der Grenzfrequenz bleibt der Photoeffekt aus."},
+                {"id":"e","label":"Die Energie eines einzelnen Photons ist proportional zur Intensität."}
+              ],
+              "correct":["a","b","d"],
+              "explain":"Richtig sind a, b und d. Die Austrittsenergie ist materialabhängig, und die Photonenenergie hängt von der Frequenz ab, nicht von der Intensität."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_cloze_transfer_neu",
+          "title":"Lückentext: Modell anwenden",
+          "bank":["Frequenz","Intensität","Grenzfrequenz","Photostrom"],
+          "segments":[
+            {"t":"text","v":"Ob der Photoeffekt einsetzt, entscheidet zuerst die "},
+            {"t":"gap","a":"Frequenz"},
+            {"t":"text","v":" im Vergleich zur "},
+            {"t":"gap","a":"Grenzfrequenz"},
+            {"t":"text","v":" . Bei gleicher Frequenz erhöht größere "},
+            {"t":"gap","a":"Intensität"},
+            {"t":"text","v":" hauptsächlich den "},
+            {"t":"gap","a":"Photostrom"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_order_transfer_neu",
+          "title":"Ablauf ordnen",
+          "items":[
+            "Du wählst ein Metall mit gegebener Austrittsenergie.",
+            "Du stellst die Frequenz des einfallenden Lichts ein.",
+            "Du prüfst, ob \\(hf\\) die Austrittsenergie übertrifft.",
+            "Nur wenn ja, werden Elektronen ausgelöst.",
+            "Dann verändert höhere Intensität vor allem die Anzahl ausgelöster Elektronen."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 data-p2-id="photoeffekt_transfer_p2_v1" data-p2-title="Paare finden" data-p2-hint="Ordne jeder Größe die passende Wirkung zu." class="p2">
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Größe</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Frequenz \(f\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Intensität</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Austrittsenergie \(E_A\)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Gegenspannung \(U_g\)</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Wirkung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">bestimmt bei gleicher Frequenz vor allem die Anzahl der ausgelösten Elektronen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">bestimmt die Energie eines einzelnen Photons \(E = hf\)</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">liefert über \(E_{\text{kin,max}} = eU_g\) die maximale kinetische Energie</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">materialabhängige Mindestenergie zum Lösen eines Elektrons</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Innerer Photoeffekt">
+    <section data-wb-page="5" data-wb-page-title="Innerer Photoeffekt">
       <h1>Innerer Photoeffekt</h1>
       <p class="wb-muted">Beim inneren Photoeffekt verlassen Elektronen den Festkörper nicht. Stattdessen werden sie im
         Halbleiter zu frei beweglichen Leitungselektronen. Genau das macht Solarzellen möglich.</p>
@@ -875,181 +964,13 @@
         }
         </script>
       </div>
-    </section>
-
-    <section data-wb-page="7" data-wb-page-title="Röntgen">
-      <h1>Umkehrung des Photoeffekts: Röntgenstrahlung und Bragg-Bedingung</h1>
-      <p class="wb-muted">Beim äußeren Photoeffekt gibt Licht Energie an Elektronen ab. In der Röntgenröhre läuft das
-        Prinzip umgekehrt: Schnelle Elektronen geben beim Abbremsen Energie ab, und diese erscheint als
-        elektromagnetische Strahlung sehr hoher Frequenz.</p>
-
-      <h2>Geschichte und Idee</h2>
-      <div class="grid2" style="align-items:start;">
-        <figure class="wave-figure">
-          <img src="bilder/roentgen4.png" alt="Historische Darstellung zur Röntgenstrahlung und ihrer Anwendung" />
-          <figcaption>Seit Wilhelm Conrad Röntgens Entdeckung 1895 wird Röntgenstrahlung in Medizin, Technik und
-            Materialprüfung eingesetzt.</figcaption>
-        </figure>
-        <div class="wb-soft-callout">
-          <p>Wilhelm Conrad Röntgen entdeckte 1895 eine neue, unsichtbare Strahlung, die er selbst X-Strahlen nannte.
-            Heute spricht man im deutschsprachigen Raum von <strong>Röntgenstrahlung</strong>. Sie wird von Stoffen mit
-            großer Elektronendichte, etwa Blei, stark abgeschwächt und eignet sich deshalb für Durchleuchtungen.</p>
-          <p>Wichtig ist aber auch die Kehrseite: Röntgenstrahlung ionisiert Materie. Deshalb sind bei medizinischen und
-            technischen Anwendungen Strahlenschutz und geringe Dosis entscheidend.</p>
-        </div>
-      </div>
-
-      <div class="wb-callout">
-        <strong>Merksatz</strong>
-        <p>Treffen energiereiche Elektronen auf ein Metall hoher Ordnungszahl, entsteht unsichtbare Strahlung sehr
-          kleiner Wellenlänge: Röntgenstrahlung.</p>
-      </div>
 
       <div class="wb-section-break"></div>
-      <h2>Umkehrung des Photoeffekts in der Röntgenröhre</h2>
-      <div class="grid2" style="align-items:start;">
-        <figure class="wave-figure">
-          <img src="bilder/roentgen1.png" alt="Röntgenröhre mit LiF-Kristall und Zählrohr" />
-          <figcaption>Elektronen werden in der Röntgenröhre beschleunigt, an der Anode abgebremst und erzeugen dabei
-            Röntgenstrahlung. Ein LiF-Kristall dient danach als Beugungsobjekt.</figcaption>
-        </figure>
-        <div>
-          <div class="wb-soft-callout">
-          <p>In einer Röntgenröhre werden Elektronen durch eine hohe Spannung \(U\) beschleunigt. Bei \(U = 30\,\text{kV}\)
-            besitzt jedes Elektron die Energie</p>
-          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(E_{\text{el}} = eU = 30\,\text{keV}\)</p>
-          <p>Wenn ein Elektron diese Energie in einem einzigen Vorgang vollständig an ein Photon abgibt, entsteht das
-            energiereichste mögliche Röntgenquant. Genau dann gilt die Umkehrung des Photoeffekts:</p>
-          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(E_{\text{ph,max}} = hf_{\text{max}} = eU\)</p>
-          <p>Daraus folgen die maximale Frequenz und die minimale Wellenlänge:</p>
-          <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(f_{\text{max}} = \frac{eU}{h}\), \(\lambda_{\text{min}} = \frac{ch}{eU}\)</p>
-          <p>Für \(U = 30\,\text{kV}\) ergibt sich \(f_{\text{max}} \approx 7{,}3 \cdot 10^{18}\,\text{Hz}\) und
-            \(\lambda_{\text{min}} \approx 42\,\text{pm}\).</p>
-        </div>
-        </div>
-      </div>
-
-      <div class="wb-soft-callout">
-        <strong>Jetzt hast du das gelernt</strong>
-        <p>Die Beschleunigungsspannung legt die maximale Quantenenergie der Röntgenstrahlung fest. Je größer \(U\), desto
-          kleiner wird \(\lambda_{\text{min}}\) und desto größer wird \(f_{\text{max}}\).</p>
-      </div>
-
-      <div class="wb-section-break"></div>
-      <h2>Bragg-Bedingung: Wann ein Kristall „glänzt“</h2>
-      <div class="grid2" style="align-items:start;">
-        <figure class="wave-figure">
-          <img src="bilder/bragg1.png" alt="Geometrie der Bragg-Reflexion" />
-          <figcaption>Nur wenn der Wegunterschied zwischen zwei reflektierten Teilwellen ein ganzzahliges Vielfaches
-            der Wellenlänge ist, entsteht konstruktive Interferenz.</figcaption>
-        </figure>
-        <figure class="wave-figure">
-          <img src="bilder/bragg2.png" alt="Kristallebenen mit verschiedenen Netzebenenabständen" />
-          <figcaption>In einem Kristall gibt es verschiedene Scharen paralleler Netzebenen. Jede besitzt ihren eigenen
-            Netzebenenabstand \(d\).</figcaption>
-        </figure>
-      </div>
-
-      
-
-      <div class="grid2" style="align-items:start;">
-        <div class="wb-soft-callout"><p>Röntgenstrahlung hat Wellenlängen deutlich unter \(1\,\text{nm}\). Gewöhnliche optische Gitter sind dafür viel
-        zu grob. Kristalle besitzen aber Netzebenenabstände in genau dieser Größenordnung. Deshalb können Kristalle als
-        Beugungsobjekte für Röntgenstrahlung dienen.</p>
-      <p>Starke Reflexion tritt nur dann auf, wenn die <strong>Bragg-Bedingung</strong> erfüllt ist:</p>
-      <p style="font-size:1.1rem; font-weight:600; margin:12px 0;">\(k \cdot \lambda = 2d \cdot \sin \varphi\), \(k = 1,2,3,\dots\)</p>
-      <p>Der Winkel \(\varphi\) wird gegen die Netzebene gemessen. Er heißt auch <strong>Glanzwinkel</strong>, weil bei
-        genau diesem Winkel konstruktive Interferenz auftritt.</p></div>
-        <figure class="wave-figure">
-          <img src="bilder/bragg3.png" alt="Röntgenspektrum mit markanten Linien und kontinuierlichem Anteil" />
-          <figcaption>Das Spektrum zeigt charakteristische Linien und einen kontinuierlichen Untergrund mit einer
-            materialunabhängigen Grenzwellenlänge.</figcaption>
-        </figure>
-      </div>
-
-      
-
-      <div class="wb-section-break"></div>
-      <h2>Kontinuierliches und charakteristisches Spektrum</h2>
-
-           <div class="grid2" style="align-items:start;">
-        <figure class="wave-figure">
-          <img src="bilder/bragg4.png" alt="Kontinuierliche Röntgenspektren verschiedener Anodenmaterialien" />
-          <figcaption>Das kontinuierliche Spektrum endet immer bei derselben Grenzwellenlänge, wenn die Spannung gleich
-            bleibt. Unterschiede zwischen den Materialien zeigen sich vor allem in Intensität und charakteristischen
-            Linien.</figcaption>
-        </figure>
-        <div class="wb-soft-callout">
-          <p>Das Röntgenspektrum besteht aus zwei Teilen. Der <b>kontinuierliche Untergrund</b> entsteht durch
-            das Abbremsen der Elektronen in mehreren Stufen. Die Elektronen geben dabei unterschiedlich große Anteile
-            ihrer Energie ab, deshalb entstehen Photonen vieler verschiedener Wellenlängen.</p>
-          <p>Darauf liegen <b>charakteristische Linien</b>, die vom Anodenmaterial abhängen. Sie entstehen durch
-            atomare Übergänge in der Anode. Das erklärt, warum verschiedene Materialien unterschiedliche markante Linien
-            zeigen, die Grenzwellenlänge bei gleicher Spannung aber gleich bleibt.</p>
-        </div>
-      </div>
-
-      <p>Die hohen Linien ① und ② werden bei kleinen Winkeln gemessen. Wir deuten sie als Beugungsmaxima
-        1. Ordnung für zwei verschiedene Wellenlängen. Aus dem Netzebenenabstand \(d = 282\,\text{pm}\) für NaCl und
-        den Winkeln \(\varphi_1 = 15^\circ\) und \(\varphi_2 = 16^\circ\) berechnet man mit der Bragg-Gleichung die
-        Wellenlängen \(\lambda_1 = 0{,}14\,\text{nm}\) und \(\lambda_2 = 0{,}15\,\text{nm}\) für die
-        Röntgenstrahlung. Bei den Linien ③, ④, ⑤ und ⑥ handelt es sich um Maxima zweiter und dritter Ordnung der
-        gleichen Wellenlängen, entsprechend den Wegunterschieden \(2s = 2d \cdot \sin\varphi = 2\lambda\) und
-        \(3\lambda\).</p>
-
-        <div class="wb-section-break"></div>
-        <h2>Minimale Wellenlänge und kleinsteter Winkel</h2>
-
-        <p>Wie bei dem Versuch oben werden in einer Röntgenröhre Elektronen mit der Spannung \(U = 30\,\text{kV}\) beschleunigt. Jedes Elektron
-        erhält die Energie \(E_{\text{el}} = eU = 30\,\text{keV}\), die es an der Anode abgibt. Wenn sich dort diese
-        Energie vollständig in ein Röntgenquant umsetzt, wird der Photoeffekt umgekehrt. Dann gilt für die
-        energiereichsten Quanten \(E_{\text{ph,max}} = hf = eU\).</p>
-         <p>Das Experiment zeigt, dass die Röntgenstrahlen erst bei einem kleinsten Winkel $\varphi_{\text{min}}$ und auch 
-        erst ab einer minimalen Wellenlänge $\lambda_{\text{min}}$ auftreten:</p>
-       <div class="grid2" style="align-items:start;">
-        <figure class="wave-figure">
-          <img src="bilder/roentgen2.png" alt="Drehkristallmethode mit NaCl-Kristall und Zählrohr" />
-          <figcaption>Bei der Drehkristallmethode wird der Kristall gedreht, während das Zählrohr mit doppeltem Winkel
-            mitgeführt wird.</figcaption>
-        </figure>
-        <figure class="wave-figure">
-          <img src="bilder/roentgen3.png" alt="Röntgenspektrum mit markanten Linien und kontinuierlichem Anteil" />
-          <figcaption>Das Spektrum zeigt charakteristische Linien und einen kontinuierlichen Untergrund mit einer
-            materialunabhängigen Grenzwellenlänge.</figcaption>
-        </figure>
-      </div>
-      
-     <p>Dies kann man folgendermaßen erklären:</p>
-     <p>Da für die energiereichsten Quanten \(E_{\text{ph,max}} = hf = eU\) gilt, sollten
-       Röntgenstrahlen mit der maximalen Frequenz
-        \(f_{\text{max}} = \frac{eU}{h} \approx 7{,}3 \cdot 10^{18}\,\text{Hz}\) entstehen. </p> 
-        <p>Das bedeutet, es existiert eine 
-        minimale Wellenlänge \(\lambda_{\text{min}} = \frac{c}{f_{\text{max}}} = \frac{ch}{eU} \approx 42\,\text{pm}\). </p>
-          <div class="wb-soft-callout">
-        <strong>Beispielrechnung</strong>
-        Das Experiment liefert tatsächlich ein kontinuierliches Röntgenspektrum, das beim Grenzwinkel
-        \(\varphi_{\text{min}} = 6^\circ\) beginnt. </p>
-        <p>Für den LiF-Kristall mit \(d = 201\,\text{pm} = 201 \cdot 10^{-12}\,\text{m}\) und den gemessenen Grenzwinkel \(\varphi_{\text{min}} = 6^\circ\)
-          folgt in 1. Ordnung \(k = 1\) mit der Bragg-Gleichung:</p>
-        <p style="font-size:1.05rem; font-weight:600; margin:12px 0;">\(\lambda_{\text{min}} = 2d \sin \varphi_{\text{min}} = 2 \cdot 201\,\text{pm} \cdot \sin 6^\circ \approx 42\,\text{pm}\)</p>
-        <p>Das passt genau zu der über \(E_{\text{ph,max}} = eU\) vorhergesagten Grenzwellenlänge.</p>
-      </div>
-
-      <div class="wb-callout">
-        <strong>Wichtiges Ergebnis</strong>
-        <p>Die energiereichsten Röntgenquanten entstehen dann, wenn ein Elektron seine gesamte Beschleunigungsenergie in
-          genau einem Vorgang an ein Photon abgibt. Deshalb gilt für die Grenzwerte der Röntgenstrahlung:
-          \(E_{\text{ph,max}} = hf_{\text{max}} = eU\) und damit \(\lambda_{\text{min}} = \frac{ch}{eU}\).</p>
-      </div>
-
-    
-  <div class="wb-section-break"></div>
-
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
         {
-          "id":"photoeffekt_mcq_roentgen",
-          "title":"Check: Röntgenstrahlung und Bragg-Bedingung",
+          "id":"photoeffekt_mcq_innerer_neu",
+          "title":"Check: Innerer Photoeffekt",
           "hint":"Markiere alle richtigen Aussagen.",
           "shuffleChoices": true,
           "questions":[
@@ -1057,22 +978,39 @@
               "text":"Welche Aussagen sind fachlich korrekt?",
               "multiple": true,
               "choices":[
-                {"id":"a","label":"Die maximale Quantenenergie der Röntgenstrahlung ist durch $E_{\\text{ph,max}} = eU$ bestimmt."},
-                {"id":"b","label":"Die Bragg-Bedingung lautet $k\\lambda = 2d\\sin\\varphi$."},
-                {"id":"c","label":"Die Grenzwellenlänge eines kontinuierlichen Röntgenspektrums hängt bei gleicher Spannung stark vom Anodenmaterial ab."},
-                {"id":"d","label":"Charakteristische Linien verraten etwas über das Anodenmaterial."},
-                {"id":"e","label":"Kristalle können Röntgenstrahlung beugen, weil ihre Netzebenenabstände zur kleinen Wellenlänge passen."}
+                {"id":"a","label":"Beim inneren Photoeffekt verlassen Elektronen den Halbleiter vollständig."},
+                {"id":"b","label":"Dotierung erhöht die Leitfähigkeit des Halbleiters."},
+                {"id":"c","label":"Die Grenzschicht im p-n-Übergang trägt Raumladungen."},
+                {"id":"d","label":"Das innere Feld trennt Elektronen und Löcher räumlich."},
+                {"id":"e","label":"Auch beim inneren Photoeffekt ist die Photonenenergie frequenzabhängig."}
               ],
-              "correct":["a","b","d","e"],
-              "explain":"Richtig sind a, b, d und e. Falsch ist c, denn die Grenzwellenlänge hängt bei gleicher Spannung nicht vom Material, sondern von \\(U\\) ab."
+              "correct":["b","c","d","e"],
+              "explain":"Richtig sind b, c, d und e. Beim inneren Photoeffekt bleiben die Elektronen im Halbleiter und werden dort zu Leitungselektronen."
             }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"photoeffekt_order_innerer_neu",
+          "title":"Ablauf in der Solarzelle",
+          "items":[
+            "Licht trifft auf den p-n-Übergang.",
+            "Gebundene Elektronen erhalten Photonenenergie und werden beweglich.",
+            "Es entstehen Elektronen-Loch-Paare.",
+            "Das innere Feld trennt die Ladungsträger.",
+            "Zwischen den Kontakten der Solarzelle wird eine Spannung messbar."
           ]
         }
         </script>
       </div>
     </section>
 
-    <section data-wb-page="8" data-wb-page-title="Zusammenfassung">
+    <section data-wb-page="7" data-wb-page-title="Zusammenfassung">
       <h1>Jetzt hast du das gelernt</h1>
 
       <div class="wb-callout">
@@ -1085,8 +1023,6 @@
           <li>Höhere Intensität bedeutet mehr Photonen, nicht energiereichere Photonen.</li>
           <li>Beim inneren Photoeffekt werden Elektronen im Halbleiter zu Leitungselektronen und ermöglichen so die
             Funktion von Solarzellen.</li>
-          <li>Bei Röntgenstrahlung zeigt die Umkehrung des Photoeffekts, dass auch hier Quantenenergie und
-            Beschleunigungsspannung direkt zusammenhängen.</li>
         </ul>
       </div>
 

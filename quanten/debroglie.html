@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantenphysik: De-Broglie-Wellen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .formula-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .formula-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #eef6ff 100%);
+      box-shadow: 0 12px 24px rgba(26, 68, 96, 0.08);
+    }
+
+    .formula-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .equation-line {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+
+    .timeline-step {
+      padding: 14px 16px;
+      border-left: 4px solid #2f6da1;
+      background: #f6fbff;
+      border-radius: 0 14px 14px 0;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Quantenphysik",
+      "sectionTitle":"De-Broglie-Wellen",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "de Broglie",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "debroglie-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>De-Broglie-Wellen: Haben auch Elektronen einen Wellencharakter?</h1>
+      <p class="wb-muted">Nach dem Photoeffekt war klar: Licht verhält sich nicht nur wie eine Welle, sondern auch wie
+        ein Teilchenstrom aus Photonen. Louis de Broglie drehte die Frage um: Könnten dann Teilchen wie Elektronen
+        nicht auch Welleneigenschaften besitzen?</p>
+
+      <div class="wb-soft-callout">
+        <strong>Leitfrage</strong>
+        <p>Warum kann man Elektronen nicht nur als kleine Teilchen, sondern auch als Wellen beschreiben?</p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Das kannst du danach</strong>
+        <ul class="wave-list">
+          <li>die De-Broglie-Gleichung \(\lambda_B = \frac{h}{p}\) erklären,</li>
+          <li>den Zusammenhang zwischen Impuls und Wellenlänge begründen,</li>
+          <li>Photonenimpuls und Materiewellen vergleichen,</li>
+          <li>verstehen, warum Elektronen Beugung und Interferenz zeigen können.</li>
+        </ul>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_reveal_start",
+          "title":"Einstieg",
+          "hint":"Überlege zuerst selbst kurz.",
+          "question":"Was ist der eigentliche Symmetriegedanke hinter de Broglies Idee?",
+          "answer":"Wenn Licht sowohl Wellen- als auch Teilcheneigenschaften zeigt, dann sollte man bei Teilchen wie Elektronen umgekehrt ebenfalls nicht vorschnell nur das Teilchenbild zulassen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Idee">
+      <h1>Die Grundidee von de Broglie</h1>
+
+      <div class="formula-grid">
+        <div class="formula-card">
+          <strong>de Broglie-Gleichung</strong>
+          <p class="equation-line">\(\lambda_B = \frac{h}{p}\)</p>
+          <p>Jedem Teilchen mit Impuls \(p\) wird eine Wellenlänge zugeordnet.</p>
+        </div>
+        <div class="formula-card">
+          <strong>Impuls</strong>
+          <p class="equation-line">\(p = m \cdot v\)</p>
+          <p>Für langsame Elektronen in der Schulphysik genügt diese klassische Form des Impulses.</p>
+        </div>
+        <div class="formula-card">
+          <strong>Energie der Welle</strong>
+          <p class="equation-line">\(E_{\Psi} = h \cdot f\)</p>
+          <p>Auch der Materiewelle wird eine Frequenz \(f\) zugeordnet.</p>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <p>de Broglie übernahm die Beziehung \(\lambda = \frac{h}{p}\), die man bei Photonen kennt, formal auch für
+          Elektronen und andere Teilchen. Die dazugehörige Welle nennt man <strong>De-Broglie-Welle</strong>,
+          <strong>Materiewelle</strong> oder <strong>\(\Psi\)-Welle</strong>.</p>
+        <p>Das war 1924 eine radikale Idee, weil es zunächst keine direkten Experimente gab, die solche Wellen
+          sichtbar machten.</p>
+      </div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_verify_idee",
+          "title":"Stopp & check",
+          "hint":"Prüfe die Aussage genau.",
+          "statement":"Nach de Broglie gilt eine Wellenbeschreibung nur für Photonen, nicht aber für Elektronen.",
+          "answer": false,
+          "explain":"Gerade das Gegenteil ist die neue Idee: Auch Elektronen und andere Teilchen sollen Welleneigenschaften besitzen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Rechnen">
+      <h1>Wie du mit \(\lambda_B = \frac{h}{p}\) arbeitest</h1>
+
+      <div class="timeline-step">
+        <strong>1. Impuls bestimmen</strong>
+        <p>Für Elektronen nutzt du zunächst \(p = m \cdot v\).</p>
+      </div>
+      <div class="timeline-step">
+        <strong>2. In die De-Broglie-Gleichung einsetzen</strong>
+        <p>Dann gilt \(\lambda_B = \frac{h}{p}\).</p>
+      </div>
+      <div class="timeline-step">
+        <strong>3. Ergebnis deuten</strong>
+        <p>Je größer der Impuls, desto kleiner die Wellenlänge. Sehr schnelle Teilchen haben also eine sehr kleine
+          Materiewelle.</p>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_order_rechnen",
+          "title":"Rechenschritte sortieren",
+          "items":[
+            "Geschwindigkeit oder Impuls des Elektrons bestimmen.",
+            "Mit \\(p = m \\cdot v\\) den Impuls berechnen.",
+            "Die Gleichung \\(\\lambda_B = h/p\\) anwenden.",
+            "Die Größe der Wellenlänge fachlich deuten."
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_cloze_rechnen",
+          "title":"Sicherung: Begriffe einsetzen",
+          "bank":["Impuls","kleiner","h/p","größer"],
+          "segments":[
+            {"t":"text","v":"Die De-Broglie-Wellenlänge hängt vom "},
+            {"t":"gap","a":"Impuls"},
+            {"t":"text","v":" ab. Je größer dieser ist, desto "},
+            {"t":"gap","a":"kleiner"},
+            {"t":"text","v":" wird die Wellenlänge, denn es gilt \\(\\lambda_B = \\) "},
+            {"t":"gap","a":"h/p"},
+            {"t":"text","v":" . Kleine Impulse führen also zu "},
+            {"t":"gap","a":"größer"},
+            {"t":"text","v":" en Materiewellen."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Photonen">
+      <h1>Brücke zu Photonen: Masse, Energie und Impuls</h1>
+
+      <div class="wb-soft-callout">
+        <p>Einstein zeigte mit \(E = mc^2\), dass Energie und Masse zusammenhängen. Photonen haben keine Ruhemasse,
+          tragen aber Energie \(E_{\text{ph}} = hf\). Deshalb kann man ihnen einen zugehörigen Massewert
+          \(m = \frac{hf}{c^2}\) und einen Impuls \(p = \frac{h}{\lambda}\) zuschreiben.</p>
+        <p>Damit entsteht eine starke Analogie: Bei Photonen hängt der Impuls von der Wellenlänge ab, und bei
+          Elektronen wird über den Impuls eine Wellenlänge definiert.</p>
+      </div>
+
+      <div data-p2 data-p2-title="Analogie erkennen" data-p2-hint="Ordne Formel und Bedeutung zusammen.">
+        <div data-side="L" data-pair="1">\(E_{\text{ph}} = hf\)</div>
+        <div data-side="R" data-pair="1">Photonenenergie hängt von der Frequenz ab</div>
+        <div data-side="L" data-pair="2">\(p_{\text{ph}} = \frac{h}{\lambda}\)</div>
+        <div data-side="R" data-pair="2">Photonen besitzen Impuls</div>
+        <div data-side="L" data-pair="3">\(\lambda_B = \frac{h}{p}\)</div>
+        <div data-side="R" data-pair="3">Teilchen mit Impuls erhalten eine Materiewellenlänge</div>
+      </div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_cat_vergleich",
+          "title":"Sortiere die Aussagen",
+          "hint":"Ordne nach dem passenden Objekt.",
+          "categories":[
+            {"id":"photon","title":"passt direkt zu Photonen"},
+            {"id":"materie","title":"passt direkt zu Elektronen/Materiewellen"}
+          ],
+          "items":[
+            {"label":"hat keine Ruhemasse","category":"photon"},
+            {"label":"zeigt Beugung trotz Teilchencharakter","category":"materie"},
+            {"label":"trägt Impuls \\(h/\\lambda\\)","category":"photon"},
+            {"label":"besitzt De-Broglie-Wellenlänge \\(\\lambda_B\\)","category":"materie"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Nachweis">
+      <h1>Warum de Broglies Idee experimentell wichtig wurde</h1>
+
+      <div class="wb-soft-callout">
+        <p>Die Idee war zunächst kühn, weil es noch keine Messung gab, die Materiewellen direkt zeigte. Entscheidend
+          wurde deshalb der Nachweis von <strong>Beugung und Interferenz bei Elektronen</strong>.</p>
+        <p>Genau wie Licht an Spalten oder Gittern Interferenz zeigt, können Elektronen unter geeigneten Bedingungen
+          Beugungsmuster erzeugen. Das funktioniert aber nur dann gut, wenn ihre De-Broglie-Wellenlänge in die
+          Größenordnung der Strukturabstände passt.</p>
+      </div>
+
+      <div class="formula-card">
+        <strong>Merksatz</strong>
+        <p>Beugung und Interferenz gibt es auch bei Elektronen. Mit dem Impuls \(p = m \cdot v\) ist ihre
+          De-Broglie-Wellenlänge \(\lambda_B = \frac{h}{p}\).</p>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_mcq_nachweis",
+          "title":"Mini-Check",
+          "hint":"Markiere alle richtigen Aussagen.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen passen zur De-Broglie-Idee?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Elektronen können Interferenz zeigen."},
+                {"id":"b","label":"Je größer der Impuls eines Elektrons, desto größer ist seine De-Broglie-Wellenlänge."},
+                {"id":"c","label":"Die De-Broglie-Gleichung lautet \\(\\lambda_B = h/p\\)."},
+                {"id":"d","label":"Materiewellen wurden interessant, weil sie eine Symmetrie zum Licht herstellen."},
+                {"id":"e","label":"Nur ruhende Teilchen können eine Materiewelle besitzen."}
+              ],
+              "correct":["a","c","d"],
+              "explain":"Richtig sind a, c und d. Falsch sind b und e: Mit größerem Impuls wird die Wellenlänge kleiner, und Materiewellen sind gerade für bewegte Teilchen relevant."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Transfer">
+      <h1>Transfer: Wann merkt man den Wellencharakter?</h1>
+
+      <div class="wb-soft-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Die De-Broglie-Wellenlänge ist keine Zusatzidee ohne Folgen. Sie erklärt, warum selbst Teilchen unter
+          passenden Bedingungen Wellenphänomene zeigen können.</p>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_essay_transfer",
+          "title":"Reflexion",
+          "hint":"Antworte in 4 bis 8 Sätzen. Nutze mindestens ein Fachwort wie Impuls, Interferenz oder Wellenlänge korrekt.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Warum ist der Wellencharakter eines Fußballs im Alltag unsichtbar, der von Elektronen aber experimentell nachweisbar?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"debroglie_reveal_transfer",
+          "title":"Denkhilfe",
+          "hint":"Nutze die Auflösung nur als Stütze.",
+          "question":"In welche Richtung sollte deine Begründung gehen?",
+          "answer":"Ein Fußball hat wegen seiner großen Masse schon bei kleiner Geschwindigkeit einen riesigen Impuls. Dadurch wird \\(\\lambda_B = h/p\\) extrem klein und praktisch unmessbar. Bei Elektronen ist der Impuls viel kleiner, deshalb kann ihre Wellenlänge in einen experimentell zugänglichen Bereich fallen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Zusammenfassung">
+      <h1>Zusammenfassung und Quellen</h1>
+
+      <div class="wb-callout">
+        <strong>Kernideen</strong>
+        <ul class="wave-list">
+          <li>de Broglie übertrug die Beziehung \(\lambda = h/p\) von Photonen auf Teilchen.</li>
+          <li>Die Materiewelle eines Teilchens heißt De-Broglie-Welle oder \(\Psi\)-Welle.</li>
+          <li>Je größer der Impuls, desto kleiner ist die De-Broglie-Wellenlänge.</li>
+          <li>Elektronen können deshalb unter geeigneten Bedingungen Beugung und Interferenz zeigen.</li>
+          <li>Photonenimpuls und Materiewellen verbinden Wellen- und Teilchenbild auf neue Weise.</li>
+        </ul>
+      </div>
+
+      <h2>Quellen & Weiterforschen</h2>
+      <ul class="wave-list">
+        <li>Dorn-Bader Physik Kursstufe: de Broglie, Materiewellen, Photonenimpuls und Symmetriegedanke.</li>
+        <li><a href="https://www.leifiphysik.de/quantenphysik/wellencharakter-von-materie" target="_blank" rel="noreferrer">LEIFIphysik: Wellencharakter von Materie</a></li>
+        <li><a href="https://www.nobelprize.org/prizes/physics/1929/broglie/facts/" target="_blank" rel="noreferrer">Nobel Prize: Louis de Broglie</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+
+</html>
