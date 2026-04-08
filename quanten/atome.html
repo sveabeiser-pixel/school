@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantenphysik: Atommodelle</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .wave-figure {
+      margin: 0;
+    }
+
+    .wave-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .wave-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #4a5b6a;
+    }
+
+    section[data-wb-page="2"] .grid2,
+    section[data-wb-page="3"] .grid2,
+    section[data-wb-page="4"] .grid2,
+    section[data-wb-page="5"] .grid2,
+    section[data-wb-page="6"] .grid2,
+    section[data-wb-page="7"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="2"] .grid2 > *,
+    section[data-wb-page="3"] .grid2 > *,
+    section[data-wb-page="4"] .grid2 > *,
+    section[data-wb-page="5"] .grid2 > *,
+    section[data-wb-page="6"] .grid2 > *,
+    section[data-wb-page="7"] .grid2 > * {
+      align-self: center;
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure,
+    section[data-wb-page="3"] .grid2 > .wave-figure,
+    section[data-wb-page="4"] .grid2 > .wave-figure,
+    section[data-wb-page="5"] .grid2 > .wave-figure,
+    section[data-wb-page="6"] .grid2 > .wave-figure,
+    section[data-wb-page="7"] .grid2 > .wave-figure {
+      justify-self: center;
+      text-align: center;
+      width: min(100%, 92%);
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure img,
+    section[data-wb-page="3"] .grid2 > .wave-figure img,
+    section[data-wb-page="4"] .grid2 > .wave-figure img,
+    section[data-wb-page="5"] .grid2 > .wave-figure img,
+    section[data-wb-page="6"] .grid2 > .wave-figure img,
+    section[data-wb-page="7"] .grid2 > .wave-figure img {
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .model-step {
+      padding: 14px 16px;
+      border-left: 4px solid #2f6da1;
+      background: #f6fbff;
+      border-radius: 0 14px 14px 0;
+      margin-bottom: 12px;
+    }
+
+    .formula-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #edf5fb 100%);
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.08);
+    }
+
+    .formula-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .source-list li + li {
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Quantenphysik",
+      "sectionTitle":"Atommodelle",
+      "startPage": 1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav": true,
+      "autoNavHeadings": ["h1","h2"],
+      "autoNavIncludeBlocks": false,
+      "autoNavGroupTitle": "Atome",
+      "resultsPageTitle": "Auswertung",
+      "themeDefault": "default",
+      "studentNameLabel": "Name",
+      "studentNamePlaceholder": "Vorname Nachname",
+      "exportName": "atommodelle-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>Atommodelle: Wie sich unser Bild vom Atom verändert hat</h1>
+      <p class="wb-muted">Du arbeitest hier nicht nur eine Abfolge von Namen ab. Du untersuchst, warum alte Modelle nützlich waren, wo sie scheiterten und weshalb in der Physik neue Modelle entstehen mussten.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Leitfrage</strong>
+        <p>Wie kann ein Atom gleichzeitig aus fast leerem Raum bestehen, eine kleine massereiche Mitte besitzen und trotzdem nur bestimmte Energieniveaus zulassen?</p>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <strong>Das kannst du danach</strong>
+          <ul class="wave-list">
+            <li>die wichtigsten Atommodelle zeitlich einordnen,</li>
+            <li>zu jedem Modell die zentrale Idee und seine Grenze benennen,</li>
+            <li>Rutherfords Streuversuch fachlich deuten,</li>
+            <li>Linienspektren, Bohr-Modell und Franck-Hertz-Versuch miteinander verknüpfen,</li>
+            <li>Quantisierung, Kernladungszahl, Isotope und Kernspaltung einordnen,</li>
+            <li>mit dem Potentialtopf begründen, warum nur bestimmte Energien erlaubt sind.</li>
+          </ul>
+        </div>
+
+        <figure class="wave-figure">
+          <img src="bilder/atom1.png" alt="Vergleich von Atomkern und Atomhülle mit stark unterschiedlicher Größenordnung" />
+          <figcaption>Ein wichtiger Denkanker: Der Atomkern ist extrem klein im Vergleich zur gesamten Atomhülle.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Lernroute</strong>
+        <p>Du startest mit der Übersicht. Danach gehst du auf einer großen Inhaltsseite von Demokrit bis zum Orbitalmodell. Anschließend arbeitest du an Linienspektren, dem Franck-Hertz-Versuch und dem Potentialtopf weiter. Danach festigst du alles auf einer Transferseite. Am Ende sicherst du die Kerngedanken und überprüfst deine Ergebnisse über die Auswertung.</p>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_start_reveal",
+          "title":"Vorwissen aktivieren",
+          "hint":"Denk erst selbst kurz nach.",
+          "question":"Warum braucht die Physik überhaupt verschiedene Atommodelle statt nur einer einzigen endgültigen Skizze?",
+          "answer":"Modelle sind Werkzeuge. Ein Modell ist gut, wenn es Beobachtungen erklärt und Vorhersagen erlaubt. Sobald neue Experimente Widersprüche zeigen, reicht das alte Modell nicht mehr aus. Dann braucht man ein genaueres Modell, ohne dass das alte völlig nutzlos wird."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Atommodelle">
+      <h1>Vom unteilbaren Teilchen zur Elektronenwolke</h1>
+      <p class="wb-muted">Hier verfolgst du, wie sich das Atombild Schritt für Schritt verändert hat. Achte immer auf zwei Fragen: Was konnte das Modell erklären, und an welcher Beobachtung kam es an seine Grenze?</p>
+
+      <h2>1. Erste Ideen: Demokrit und Dalton</h2>
+      <div class="grid2" style="align-items:start;">
+        <div>
+          <div class="model-step">
+            <strong>Demokrit und Leukipp</strong>
+            <p>Schon im 5. Jahrhundert v. Chr. entstand die Idee, dass Materie nicht beliebig teilbar ist. Irgendwann müsse man bei kleinsten Teilchen ankommen, die nicht weiter zerlegt werden können. Diese Teilchen nannten sie <em>atomos</em>, also unteilbar.</p>
+          </div>
+          <div class="model-step">
+            <strong>Dalton</strong>
+            <p>Dalton machte daraus Anfang des 19. Jahrhunderts ein naturwissenschaftliches Modell. Atome eines Elements sind in seinem Bild gleichartig, Atome verschiedener Elemente unterscheiden sich vor allem durch ihre Masse. Verbindungen entstehen, wenn sich Atome in festen Zahlenverhältnissen zu Molekülen verbinden.</p>
+          </div>
+        </div>
+        <figure class="wave-figure">
+          <img src="bilder/dalton.png" alt="Schematische Darstellung verschiedener Kugelatome nach Dalton" style="width:80%; height:auto; max-width:none;"/>
+          <figcaption>Daltons Kugelmodell half besonders in der Chemie, Massenverhältnisse und Verbindungen zu beschreiben.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Mit Demokrit beginnt die Idee kleinster Bausteine. Dalton macht daraus ein brauchbares Modell für Elemente und chemische Verbindungen. Das Atom ist hier aber noch eine kompakte, unteilbare Kugel.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_verify_dalton",
+          "title":"Stopp & check",
+          "hint":"Prüfe, ob die Aussage wirklich zum Modell passt.",
+          "statement":"Im Dalton-Modell unterscheiden sich Atome verschiedener Elemente vor allem durch ihre Masse und bilden Verbindungen in festen Verhältnissen.",
+          "answer": true,
+          "explain":"Genau das ist die Stärke des Dalton-Modells: Es erklärt chemische Reaktionen und Massenverhältnisse mit verschiedenen Atomsorten."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>2. Thomson: Das Atom ist doch nicht unteilbar</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/thomson.png" alt="Thomsons Rosinenkuchenmodell mit eingebetteten Elektronen" style="width:60%; height:auto; max-width:none;"/>
+          <figcaption>Im Thomson-Modell sind Elektronen in eine positiv geladene Kugel eingebettet.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Ende des 19. Jahrhunderts entdeckte J. J. Thomson das Elektron. Damit war klar: Das Atom ist nicht unteilbar. Es muss aus kleineren geladenen Bestandteilen bestehen.</p>
+          <p>Sein Vorschlag war das <b>Rosinenkuchenmodell</b>: Eine positiv geladene Masse füllt das Atom aus, darin sitzen die negativ geladenen Elektronen. So bleibt das Atom insgesamt nach außen neutral.</p>
+          <p>Dieses Modell erklärt, dass Atome Elektronen verlieren oder aufnehmen können und dadurch Ionen entstehen. Es erklärt aber noch nicht, warum sich Ladung und Masse im Atom so ungleich verteilen.</p>
+        </div>
+      </div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_cloze_thomson",
+          "title":"Sicherung: Thomsons Modell",
+          "hint":"Setze die Begriffe passend ein.",
+          "bank":["Elektronen","positiv","neutral","Ionen"],
+          "segments":[
+            {"t":"text","v":"Im Thomson-Modell sind die "},
+            {"t":"gap","a":"Elektronen"},
+            {"t":"text","v":" in eine "},
+            {"t":"gap","a":"positiv"},
+            {"t":"text","v":" geladene Kugel eingebettet. Dadurch ist das Atom nach außen "},
+            {"t":"gap","a":"neutral"},
+            {"t":"text","v":" und kann durch Abgabe oder Aufnahme von Elektronen zu "},
+            {"t":"gap","a":"Ionen"},
+            {"t":"text","v":" werden."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>3. Rutherford: Kern und Hülle</h2>
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <p>Um 1910 arbeitete Rutherford an der Streuung von $\alpha$-Teilchen und führte sein bahnbrechendes Experiment durch. Diese Teilchen sind zweifach positiv geladene Heliumkerne. Er ließ sie aus einem radioaktiven Präparat auf eine sehr dünne Goldfolie treffen und registrierte mit einem Szintillationszähler, unter welchen Winkeln die Teilchen weiterflogen.</p>
+          <p>Das Experiment war deshalb so stark, weil man den inneren Aufbau des Atoms nicht direkt sehen musste. Die beobachteten Streuwinkel reichten aus, um das bisherige Atommodell grundlegend infrage zu stellen.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="bilder/rutherford3.png" alt="Versuchsaufbau des Rutherford-Streuexperiments mit Quelle, Goldfolie und Szintillationszähler" style="width:70%; height:auto; max-width:none;"/>
+          <figcaption>Die Versuchsanordnung: Eine radioaktive Quelle sendet $\alpha$-Teilchen aus, die an einer dünnen Goldfolie gestreut und von einem Detektor nachgewiesen werden.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Das Streuexperiment</strong>
+        <div class="model-step">
+          <p><b>1.</b> Ein radioaktives Präparat sendet $\alpha$-Strahlung in Form von Heliumkernen aus.</p>
+        </div>
+        <div class="model-step">
+          <p><b>2.</b> Die $\alpha$-Teilchen treffen auf eine sehr dünne Goldfolie und werden dort gestreut.</p>
+        </div>
+        <div class="model-step">
+          <p><b>3.</b> Der Großteil der $\alpha$-Strahlung passiert die Folie ohne große Ablenkung.</p>
+        </div>
+        <div class="model-step">
+          <p><b>4.</b> Ein kleiner Teil wird stark abgelenkt, einzelne Teilchen werden sogar in Richtung der Quelle zurückgeworfen.</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/rutherford4.png" alt="Typische Bahnen von Alphateilchen beim Rutherford-Streuversuch" style="width:95%; height:auto; max-width:none;"/>
+          <figcaption>Die Streubilder zeigen: Die meisten Teilchen fliegen durch, nur wenige kommen einem kleinen, stark positiv geladenen Bereich sehr nahe.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Genau diese Beobachtungen machten ältere Vorstellungen vom Atom als massiver Kugel unbrauchbar. Wenn Atome kompakte Objekte wären, müssten viel mehr Teilchen stark gestreut werden.</p>
+          <p>Rutherfords Lösung lautete deshalb: <b>Atome bestehen zum Großteil aus einer leeren Hülle.</b> Im Zentrum sitzt konzentriert die positive Ladung, also ein sehr kleiner, massereicher <b>Atomkern</b>. Die Elektronen befinden sich in der weit ausgedehnten <b>Hülle</b>.</p>
+          <p>Typische Größenordnung: Ein Atom hat etwa einen Durchmesser von $10^{-10}\,\mathrm{m}$, der Kern aber nur etwa $10^{-15}\,\mathrm{m}$. Wäre der Kern 1 mm groß, dann hätte die Hülle ungefähr 100 m Durchmesser.</p>
+        </div>
+      </div>
+
+      <div class="formula-card">
+        <strong>Merke</strong>
+        <p>Die Kernladungszahl $Z$ gibt die Zahl der Protonen im Kern an. Bei einem elektrisch neutralen Atom ist $Z$ zugleich die Zahl der Elektronen in der Hülle.</p>
+      </div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_order_rutherford",
+          "title":"Bring die Argumentation in die richtige Reihenfolge",
+          "hint":"Ordne vom Experiment zur Schlussfolgerung.",
+          "items":[
+            "Alpha-Teilchen treffen auf eine dünne Goldfolie.",
+            "Die meisten Teilchen fliegen geradlinig durch die Folie.",
+            "Einige wenige Teilchen werden stark abgelenkt oder zurückgestreut.",
+            "Positive Ladung und fast die gesamte Masse müssen in einem winzigen Kern konzentriert sein.",
+            "Der größte Teil des Atoms ist leerer Raum mit einer Elektronenhülle."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Mit Rutherford zerbricht das Bild der kompakten Kugel. Das Atom besteht aus Kern und Hülle. Der Kern ist winzig, positiv geladen und enthält fast die gesamte Masse.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>4. Bohr und das quantenmechanische Modell</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/orbitale.png" alt="Schematische Darstellung von Orbitalen als Aufenthaltsbereiche von Elektronen" style="width:70%; height:auto; max-width:none;"/>
+          <figcaption>Im modernen Modell werden Elektronen nicht mehr als Teilchen auf festen Bahnen, sondern über Aufenthaltswahrscheinlichkeiten beschrieben.</figcaption>
+        </figure>
+        <div>
+          <div class="model-step">
+            <strong>Bohr</strong>
+            <p>Bohr übernahm den Kern-Hülle-Aufbau, ergänzte aber einen entscheidenden Punkt: Elektronen dürfen sich nur auf bestimmten Bahnen oder Schalen aufhalten. Beim Wechsel zwischen diesen Zuständen nehmen sie Energie auf oder geben sie ab. So lassen sich Spektrallinien des Wasserstoffatoms erklären.</p>
+          </div>
+          <div class="model-step">
+            <strong>Quantenmechanisches Modell</strong>
+            <p>Seit 1926 beschreibt man Elektronen noch genauer mit der Quantenmechanik. Elektronen haben keine klassisch exakt festgelegten Bahnen. Stattdessen berechnet man Wahrscheinlichkeiten für Aufenthaltsbereiche, die als Orbitale dargestellt werden.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Das Orbitalmodell (1927): Ein Ausblick</strong>
+        <p>In den 1920er- und 1930er-Jahren wurde die Quantenmechanik theoretisch ausgearbeitet. Damit ließ sich die Elektronenhülle von Atomen viel genauer beschreiben als mit den älteren Modellen. An die Stelle fester Bahnen traten <b>Orbitale</b>, also räumliche Bereiche, in denen ein Elektron mit hoher Wahrscheinlichkeit anzutreffen ist.</p>
+        <p>Zentral sind dabei drei Gedanken: Die Position eines Elektrons ist nur mit einer gewissen Wahrscheinlichkeit beschreibbar, diese wahrscheinlichen Aufenthaltsbereiche heißen Orbitale, und Form sowie Größe eines Orbitals hängen vom jeweiligen Energiezustand ab.</p>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <strong>Beschreibung durch Quantenzahlen</strong>
+          <p>Im quantenmechanischen Modell werden Orbitale durch vier Quantenzahlen beschrieben. Die Werte für $l$, $m$ und $s$ sind hier eine Folgerung aus der Quantenmechanik.</p>
+          <ul class="wave-list">
+            <li><strong>Hauptquantenzahl $n$:</strong> $n = 1, 2, 3, \dots$; sie beschreibt vor allem Größe und Energieniveau des Orbitals.</li>
+            <li><strong>Nebenquantenzahl $l$:</strong> $l = 0, 1, 2, \dots, n-1$; sie beschreibt die Form des Orbitals.</li>
+            <li><strong>Magnetische Quantenzahl $m$:</strong> $m = -l, \dots, 0, \dots, +l$; sie beschreibt die Orientierung des Orbitals im Raum.</li>
+            <li><strong>Spin-Quantenzahl $s$:</strong> $s = +\frac{1}{2}$ oder $-\frac{1}{2}$; sie beschreibt eine rein quantenmechanische Eigenschaft des Elektrons, den Spin.</li>
+          </ul>
+          <p>Spätestens sobald mehr als ein Elektron vorhanden ist, spielt die Spin-Quantenzahl eine wichtige Rolle.</p>
+        </div>
+
+        
+        <figure class="wave-figure">
+          <img src="bilder/orbitale2.png" alt="Weitere Orbitalformen als Elektronenwolken unterschiedlicher Form" />
+          <figcaption>Orbitale können je nach Quantenzustand unterschiedliche Formen haben, etwa kugelförmig oder hantelförmig.</figcaption>
+        </figure>
+      </div>
+
+        <div data-wb-type="reveal">
+          <script type="application/json" class="wb-config">
+          {
+            "id":"atome_reveal_quantenzahlen",
+            "title":"Quantenzahlen verstehen",
+            "hint":"Klappe erst auf, wenn du die vier Bedeutungen selbst zuordnen kannst.",
+            "question":"Wie kannst du dir die Bedeutung der ersten drei Quantenzahlen merken?",
+            "answer":"Die Hauptquantenzahl beschreibt vor allem die Größe und das Energieniveau eines Orbitals. Die Nebenquantenzahl beschreibt seine Form. Die magnetische Quantenzahl beschreibt die Orientierung im Raum. Die Spin-Quantenzahl hat kein klassisches Gegenstück, sondern beschreibt den Spin des Elektrons."
+          }
+          </script>
+        </div>
+   
+
+     
+        <div data-wb-type="categorize">
+          <script type="application/json" class="wb-config">
+          {
+            "id":"atome_cat_modelle",
+            "title":"Sortiere die Aussagen zu den Modellen",
+            "hint":"Ordne jede Aussage dem passenden Modell zu.",
+            "categories":[
+              {"id":"bohr","title":"Bohr-Modell"},
+              {"id":"quant","title":"Quantenmechanisches Modell"}
+            ],
+            "items":[
+              {"label":"Elektronen dürfen nur bestimmte Energien annehmen.","category":"bohr"},
+              {"label":"Elektronen wechseln zwischen Schalen und senden oder absorbieren dabei Energie.","category":"bohr"},
+              {"label":"Elektronen werden über Aufenthaltswahrscheinlichkeiten beschrieben.","category":"quant"},
+              {"label":"Orbitale sind keine festen Kreisbahnen.","category":"quant"}
+            ]
+          }
+          </script>
+        </div>
+
+    
+
+      <div class="wb-section-break"></div>
+      <h2>5. Quantisierung und Isotope</h2>
+    
+        <div class="wb-soft-callout">
+          <p>In der klassischen Physik können Größen wie Energie oder Ladung scheinbar jeden beliebigen Wert annehmen. In der Atomphysik stößt du aber auf feste, erlaubte Werte.</p>
+          <p>Die elektrische Ladung ist quantisiert: Alle gemessenen Ladungen sind Vielfache der Elementarladung. Auch bei Atommassen findest du keine beliebige Verteilung. Atome eines Elements können gleiche chemische Eigenschaften, aber unterschiedliche Masse haben. Diese Varianten heißen <b>Isotope</b>.</p>
+          <p>Wichtig ist dabei: Bei Atomen desselben Elements bleibt die <b>Protonenzahl</b> gleich. Genau sie legt fest, um welches Element es sich handelt. Ändern kann sich dagegen die <b>Neutronenzahl</b>. Dadurch entstehen verschiedene Isotope desselben Elements.</p>
+          <p>Ein Atom $^{A}_{Z}X$ wird durch die Kernladungszahl $Z$ und die Nukleonenzahl $A = Z + N$ beschrieben. Dabei ist $N$ die Neutronenzahl. Der Kern besteht also aus $Z$ Protonen und $N$ Neutronen. Bei einem neutralen Atom gibt $Z$ zugleich die Zahl der Elektronen in der Hülle an und entspricht der Ordnungszahl im Periodensystem.</p>
+          <p>Die atomare Masseneinheit ist definiert durch</p>
+          <p style="font-size:1.1rem; font-weight:600; margin:10px 0;">$1\,\mathrm{u} = \frac{1}{12} \text{ der Masse von } {}^{12}_{6}\mathrm{C} \approx 1{,}661 \cdot 10^{-27}\,\mathrm{kg}$</p>
+        </div>
+
+      <div class="formula-card">
+        <strong>Merksatz</strong>
+        <p>Isotope eines Elements sind Atome mit gleicher Kernladungszahl $Z$ und damit gleicher Protonenzahl, aber unterschiedlicher Neutronenzahl $N$.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>6. Kernspaltung</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/kernspaltung.png" alt="Schematische Darstellung einer Kernspaltung mit frei werdenden Neutronen" />
+          <figcaption>Bei der Kernspaltung trifft ein Neutron auf einen schweren Kern. Der Kern zerfällt in zwei mittelgroße Kerne, weitere Neutronen und frei werdende Energie.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Kernspaltung kann auftreten, wenn ein einzelnes Neutron auf einen schweren Atomkern mit hoher Kernladungszahl trifft, zum Beispiel auf Uran-235. Der Kern wird instabil und zerfällt in zwei Kerne mittlerer Größe. Dabei werden zusätzlich mehrere Neutronen frei.</p>
+          <p>Außerdem wird Energie frei. Misst man die exakten Massen aller Reaktionspartner, dann ist die Masse vor der Spaltung geringfügig größer als die Masse danach. Diese Differenz nennt man <b>Massendefekt</b>.</p>
+          <p>Die fehlende Masse ist nicht verschwunden. Nach Einsteins Beziehung $E = mc^2$ sind Masse und Energie äquivalent. Ein Teil der Masse wird also bei der Kernspaltung in Energie umgewandelt. Weil Protonen und Neutronen im Kern durch starke Kräfte gebunden sind, können bei Kernreaktionen sehr große Energiemengen frei werden.</p>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Kettenreaktion</strong>
+        <p>Die bei einer Spaltung frei werdenden Neutronen können weitere schwere Kerne treffen und dort neue Spaltungen auslösen. So kann eine <b>Kettenreaktion</b> entstehen, bei der die Zahl der Spaltungen und die frei werdende Energie sehr schnell anwachsen.</p>
+        <p>1942 baute Enrico Fermi den ersten Kernreaktor. Kurz darauf wurden auf Kernspaltung beruhende Atombomben entwickelt. 1945 führten die Abwürfe auf Hiroshima und Nagasaki zu einer katastrophalen Zerstörung. Kernspaltung ist deshalb nicht nur ein physikalisches Thema, sondern auch eine historische und ethische Frage.</p>
+      </div>
+        <div data-p2 data-p2-id="atome_p2_modelle" data-p2-title="Paare finden" data-p2-hint="Ordne Modell und Kernaussage zusammen." class="p2">
+          <div class="p2-banks">
+            <div>
+              <div class="p2-col-title">Modell</div>
+              <div class="p2-bank" data-left-bank>
+                <div class="p2-piece p2-left" data-side="L" data-pair="1">Demokrit</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="2">Thomson</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="3">Rutherford</div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="4">Bohr</div>
+              </div>
+            </div>
+            <div>
+              <div class="p2-col-title">Kernaussage</div>
+              <div class="p2-bank" data-right-bank>
+                <div class="p2-piece p2-right" data-side="R" data-pair="1">Materie besteht aus kleinsten, nicht weiter teilbaren Teilchen.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="2">Elektronen sind in eine positiv geladene Kugel eingebettet.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="3">Fast die gesamte Masse sitzt in einem kleinen positiven Kern.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="4">Elektronen dürfen nur bestimmte Energiebahnen oder Schalen haben.</div>
+              </div>
+            </div>
+    
+          <div class="p2-row" style="margin-top:12px">
+            <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+            <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+            <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+            <div class="p2-score" data-score></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="p2-col-title">Gelöst</div>
+            <div class="p2-solved" data-solved></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_mcq_kern",
+          "title":"Mini-Check: Was folgt wirklich?",
+          "hint":"Markiere alle richtigen Aussagen.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen sind fachlich richtig?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Die Kernladungszahl $Z$ ist die Zahl der Protonen im Kern."},
+                {"id":"b","label":"Bei einem neutralen Atom ist $Z$ zugleich die Zahl der Elektronen in der Hülle."},
+                {"id":"c","label":"Isotope eines Elements haben verschiedene Elektronenzahlen."},
+                {"id":"d","label":"Die meisten Alpha-Teilchen wurden stark zurückgestreut."},
+                {"id":"e","label":"Quantisierung bedeutet, dass nicht beliebige Zwischenwerte erlaubt sind."}
+              ],
+              "correct":["a","b","e"],
+              "explain":"Richtig sind a, b und e. Isotope haben gleiche Protonen- und Elektronenzahl, aber unterschiedliche Neutronenzahl beziehungsweise Masse. Beim Rutherford-Versuch gingen die meisten Alpha-Teilchen gerade durch."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Linienspektren">
+      <h1>Linienspektren: Was Licht über Atome verrät</h1>
+      <p class="wb-muted">Mit Spektren kannst du in den inneren Aufbau von Atomen hineinsehen. Genau das machte Linienspektren zu einem Schlüsselthema auf dem Weg vom Rutherford-Modell zum Bohr-Modell.</p>
+
+      <h2>Kontinuierliches Spektrum und Linienspektrum</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/kontinuierliches_spektrum.png" alt="Kontinuierliches Spektrum eines glühenden Körpers von rot bis violett" />
+          <figcaption>Glühende Körper wie die Sonne, eine Kerze oder eine Glühlampe zeigen ein kontinuierliches Spektrum mit allen Farben.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Das Spektrum des Sonnenlichts oder einer Glühlampe enthält alle sichtbaren Lichtfarben. Ein solches Spektrum heißt <b>kontinuierliches Spektrum</b>.</p>
+          <p>Bringt man dagegen ein Gas zum Leuchten, etwa in einer Gasentladungslampe oder beim Verdampfen von Salzen in einer Flamme, dann sendet es nur bestimmte, diskrete Wellenlängen aus. Eine Spektralanalyse zeigt dann ein <b>Linienspektrum</b>.</p>
+          <p>Jedes Element besitzt ein charakteristisches Muster von Linien. Diese Spektren sind so etwas wie die Fingerabdrücke der Elemente und erlauben ihren Nachweis.</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/spektrum_quecksilber.png" alt="Linienspektrum einer Quecksilberdampflampe" />
+          <figcaption>Eine Quecksilberdampflampe zeigt keine kontinuierliche Farbverteilung, sondern einzelne Linien bestimmter Wellenlängen.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Spektrallampen sind Gasröhren, an die eine Spannung angelegt wird. Die Gasentladung ionisiert das Gas teilweise und bringt es zum Leuchten. Im Alltag begegnen dir solche Lampen zum Beispiel in Leuchtstoffröhren.</p>
+          <p>Mit einem Handspektroskop oder einem optischen Gitter siehst du dann: Einzelne Atome in einem Gas senden nicht beliebige Wellenlängen aus, sondern nur ganz bestimmte. Daher vermutete man früh, dass diese Linien direkt mit der inneren Struktur der Atome zusammenhängen.</p>
+        </div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Ein kontinuierliches Spektrum enthält alle Farben eines Bereichs. Ein Linienspektrum besteht aus einzelnen diskreten Wellenlängen. Jedes Element hat dabei sein eigenes charakteristisches Muster.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_cat_spektren",
+          "title":"Sortiere die Beobachtungen",
+          "hint":"Ordne jede Aussage dem passenden Spektrum zu.",
+          "categories":[
+            {"id":"kont","title":"kontinuierliches Spektrum"},
+            {"id":"linie","title":"Linienspektrum"}
+          ],
+          "items":[
+            {"label":"typisch für glühende Körper wie Sonne oder Glühlampe","category":"kont"},
+            {"label":"zeigt einzelne diskrete Farben oder Wellenlängen","category":"linie"},
+            {"label":"enthält alle sichtbaren Farben ohne Lücken","category":"kont"},
+            {"label":"ist charakteristisch für ein bestimmtes Gas oder Element","category":"linie"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Wasserstoff: das einfachste Linienspektrum</h2>
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <p>Das Wasserstoffatom ist das leichteste Atom. Daher hoffte man, gerade hier dem Aufbau der Atome besonders gut auf die Spur zu kommen.</p>
+          <p>Im sichtbaren Bereich zeigt Wasserstoff vier besonders wichtige Linien. Auffällig ist: Mit abnehmender Wellenlänge rücken die Linien immer näher zusammen. Für noch größere Frequenzen liegen weitere Linien im ultravioletten Bereich.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="bilder/spektrum_wasserstoff_balmer.png" alt="Balmer-Linien des Wasserstoffspektrums im sichtbaren Bereich" />
+          <figcaption>Die sichtbaren Linien des Wasserstoffs gehören zur Balmer-Serie und liegen im roten bis violetten Bereich.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Spektrallinien von Wasserstoff</strong>
+        <table class="wb-table">
+          <thead>
+            <tr>
+              <th>Lichtfarbe</th>
+              <th>\(\lambda\) in nm</th>
+              <th>\(f\) in \(10^{14}\,\text{Hz}\)</th>
+              <th>\(E = hf\) in eV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>rot</td>
+              <td>656,3</td>
+              <td>4,568</td>
+              <td>1,89</td>
+            </tr>
+            <tr>
+              <td>türkis</td>
+              <td>486,1</td>
+              <td>6,167</td>
+              <td>2,55</td>
+            </tr>
+            <tr>
+              <td>blau</td>
+              <td>434,0</td>
+              <td>6,908</td>
+              <td>2,86</td>
+            </tr>
+            <tr>
+              <td>violett</td>
+              <td>410,2</td>
+              <td>7,309</td>
+              <td>3,02</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Zu jeder Spektrallinie gehört also nicht nur eine Wellenlänge, sondern auch eine genau festgelegte Frequenz und Photonenergie.</p>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/spektrum_natrium.png" alt="Linienspektrum von Natrium" />
+          <figcaption>Natrium besitzt ein anderes Linienmuster als Wasserstoff.</figcaption>
+        </figure>
+        <figure class="wave-figure">
+          <img src="bilder/spektrum_helium.png" alt="Linienspektrum von Helium" />
+          <figcaption>Auch Helium zeigt ein eigenes charakteristisches Spektrum. Genau deshalb eignen sich Spektren zum Nachweis von Stoffen.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Balmer-Formel und Rydberg-Formel</h2>
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <p>Johann Balmer fand 1885 für die sichtbaren Wasserstofflinien einen erstaunlich genauen Zusammenhang. Für die Frequenzen der Balmer-Serie gilt:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(f = R \cdot \left(\frac{1}{2^{2}} - \frac{1}{n^{2}}\right)\), mit \(n = 3,4,5,\dots\)</p>
+          <p>Die Konstante \(R\) heißt heute <b>Rydberg-Frequenz</b> und hat den Wert \(R = 3{,}28964 \cdot 10^{15}\,\text{Hz}\).</p>
+          <p>Ursprünglich schrieb man die Formel oft für die Wellenlänge:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(\frac{1}{\lambda} = R_{\infty} \cdot \left(\frac{1}{2^{2}} - \frac{1}{n^{2}}\right)\)</p>
+          <p>mit \(R_{\infty} = 1{,}09737 \cdot 10^{7}\,\text{m}^{-1}\).</p>
+        </div>
+        <div class="formula-card">
+          <strong>Merke</strong>
+          <p>Die Zahlen \(n = 3,4,5,6,\dots\) nummerieren die Linien. Solche Zahlen, mit denen man Messwerte eines Linienspektrums ordnet und berechnet, nennt man <b>Quantenzahlen</b>.</p>
+          <p>Setzt man statt der 2 allgemeiner eine Zahl \(m = 1,2,3,\dots\) ein, erhält man die <b>Rydberg-Formel</b>:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(f = R \cdot \left(\frac{1}{m^{2}} - \frac{1}{n^{2}}\right)\), mit \(n &gt; m\)</p>
+          <p>So lassen sich weitere Serien vorhersagen: Lyman (\(m=1\)), Balmer (\(m=2\)), Paschen (\(m=3\)), Brackett (\(m=4\)) und Pfund (\(m=5\)).</p>
+        </div>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_mcq_balmer",
+          "title":"Check: Balmer und Rydberg",
+          "hint":"Markiere alle richtigen Aussagen.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Welche Aussagen zu den Wasserstofflinien sind richtig?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"Die sichtbaren Balmer-Linien erhält man mit \(n = 3,4,5,6\)."},
+                {"id":"b","label":"Jedes Element hat genau dasselbe Linienspektrum wie Wasserstoff."},
+                {"id":"c","label":"Mit größeren \(n\)-Werten rücken die Linien enger zusammen."},
+                {"id":"d","label":"Die Rydberg-Formel verallgemeinert die Balmer-Formel auf weitere Serien."},
+                {"id":"e","label":"Ein Linienspektrum zeigt, dass Atome beliebige Photonenergien aussenden."}
+              ],
+              "correct":["a","c","d"],
+              "explain":"Richtig sind a, c und d. Jedes Element hat ein eigenes Spektrum, und die Linien stehen gerade für diskrete, nicht beliebige Energien."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Bohr-Modell: Energieniveaus erklären die Linien</h2>
+       <div class="wb-soft-callout">
+          <p>Erst Niels Bohr konnte 1913 erklären, warum die Balmer- und Rydberg-Formel so gut funktionieren. Seine Idee: Das Wasserstoffatom darf nur bestimmte stationäre Energien besitzen.</p>
+          <p>Für diese Energien gilt im Bohr-Modell:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(E_n = -E_0 \cdot \frac{1}{n^2}\), mit \(n = 1,2,3,\dots\)</p>
+          <p>Die Grundzustandsenergie ist \(E_0 = 13{,}6\,\text{eV}\). Der Zustand \(n=1\) ist der Grundzustand. Mit wachsendem \(n\) steigt die Energie in Richtung \(0\); bei \(E=0\) ist das Elektron nicht mehr gebunden, das Atom also ionisiert.</p>
+          <p>Geht ein Elektron von einem höheren Zustand \(m\) in einen niedrigeren Zustand \(n\) über, dann wird ein Photon mit der Energie</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(E_{m,n} = E_m - E_n = hf = E_0 \cdot \left(\frac{1}{n^2} - \frac{1}{m^2}\right)\)</p>
+          <p>frei. Genau daraus entstehen die Linien des Emissionsspektrums.</p>
+        </div>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/energieniveau_wasserstoff.png" alt="Energieniveaus des Wasserstoffatoms mit Übergängen zwischen den Zuständen" />
+          <figcaption>Beim Übergang zwischen stationären Zuständen sendet oder absorbiert das Wasserstoffatom genau passende Photonen.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+       <p>Damit wird auch die Rydberg-Formel verständlich:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(f = R \cdot \left(\frac{1}{m^{2}} - \frac{1}{n^{2}}\right)\), mit \(m = 1,2,3,\dots\) und \(n &gt; m\)</p>
+          <p>Diese von Johannes Rydberg 1888 formulierte Verallgemeinerung der Balmer-Formel sagt weitere Serien von Spektrallinien voraus. Genau diese Serien lassen sich im Wasserstoffspektrum tatsächlich finden.</p>
+          <ul class="wave-list">
+            <li>Lyman-Serie: \(m = 1\)</li>
+            <li>Balmer-Serie: \(m = 2\)</li>
+            <li>Paschen-Serie: \(m = 3\)</li>
+            <li>Brackett-Serie: \(m = 4\)</li>
+            <li>Pfund-Serie: \(m = 5\)</li>
+          </ul>
+          </div>
+      </div>
+
+      
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/absorption_emission.png" alt="Vergleich von Absorptions- und Emissionsspektrum" />
+          <figcaption>Angeregte Gase zeigen Emissionsspektren. Sterne zeigen oft Absorptionsspektren, weil bestimmte Wellenlängen aus einem kontinuierlichen Spektrum herausgefiltert werden.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <strong>Emission und Absorption</strong>
+          <p>Werden Atome in einem Gas angeregt und fallen dann wieder in niedrigere Zustände zurück, senden sie Licht aus. Man beobachtet ein <b>Emissionsspektrum</b>: helle Linien vor dunklem Hintergrund.</p>
+          <p>Trifft dagegen ein kontinuierliches Spektrum auf Atome, dann können genau passende Photonen absorbiert werden. Es entstehen dunkle Linien im Spektrum: ein <b>Absorptionsspektrum</b>.</p>
+          <p>Deshalb zeigen Sterne meist Absorptionsspektren. Aus ihnen kann man die chemische Zusammensetzung von Sternen und Gaswolken bestimmen. Hier treffen sich Atomphysik und Astronomie direkt.</p>
+        </div>
+      </div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_reveal_spektren",
+          "title":"Stopp & denk nach",
+          "hint":"Überlege erst selbst, dann klappe auf.",
+          "question":"Warum war das Wasserstoffspektrum so wichtig für die Entwicklung des Bohr-Modells?",
+          "answer":"Weil Wasserstoff das einfachste Atom ist und trotzdem kein kontinuierliches, sondern ein streng geordnetes Linienspektrum zeigt. Das ließ sich nur erklären, wenn auch die Energien des Atoms selbst quantisiert sind. Genau daraus entwickelte Bohr seine Idee der stationären Zustände."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Franck-Hertz">
+      <h1>Exkurs: Franck-Hertz-Versuch</h1>
+      <p class="wb-muted">Der Franck-Hertz-Versuch zeigt experimentell, dass Atome Energie nicht beliebig, sondern nur in genau passenden Portionen aufnehmen können. Damit wird die Idee quantisierter Energieniveaus direkt messbar.</p>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/frank_hertz.png" alt="Franck-Hertz-Versuch mit Anodenstrom und periodischen Einbrüchen" />
+          <figcaption>Beim Franck-Hertz-Versuch sinkt der Anodenstrom nicht gleichmäßig, sondern zeigt periodische Einbrüche. Genau das weist auf diskrete Anregungsenergien hin.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Die Linienspektren leuchtender Gase lassen sich damit erklären, dass Elektronen in Atomen nur bestimmte Energieniveaus einnehmen können. Fällt ein Elektron von einem höheren Energieniveau auf ein niedrigeres zurück, wird ein Photon frei.</p>
+          <p>Die dafür nötige Energie muss dem Atom zuvor zugeführt worden sein. Man vermutete deshalb: Ein Atom kann Energie nur dann aufnehmen, wenn diese genau der Differenz zwischen zwei Energieniveaus entspricht.</p>
+          <p>Genau diese Energiestufen wurden im Franck-Hertz-Versuch sichtbar. Für diesen Nachweis erhielten James Franck und Gustav Hertz 1925 den Nobelpreis für Physik.</p>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Versuchsaufbau und Beobachtung</strong>
+        <p>Elektronen treten aus einer Glühkathode aus und werden in einer mit Quecksilberdampf gefüllten Glasröhre in Richtung einer Auffanganode beschleunigt. Mit steigender Beschleunigungsspannung \(U_B\) steigt zunächst auch ihre kinetische Energie.</p>
+        <p>Naheliegend wäre daher, dass der Anodenstrom mit wachsender Spannung einfach immer weiter ansteigt. Beobachtet wird aber ein anderer Verlauf: Der Anodenstrom steigt zunächst an, fällt dann plötzlich ab, steigt wieder und fällt bei einer höheren Spannung erneut ab.</p>
+      </div>
+
+      <div class="formula-card">
+        <strong>Deutung</strong>
+        <p>Erreichen die Elektronen eine Energie von \(4{,}9\,\text{eV}\), können sie bei einem Stoß ein Quecksilberatom anregen. Sie geben dabei genau diese Energie ab, weil sie der Energiedifferenz zwischen zwei erlaubten Zuständen des Quecksilberatoms entspricht.</p>
+        <p>Nach dem Stoß besitzen die Elektronen nicht mehr genug kinetische Energie, um die Gegenspannung zwischen Gitter und Anode zu überwinden. Der Anodenstrom sinkt deshalb auf ein Minimum.</p>
+        <p>Erhöht man die Beschleunigungsspannung weiter, steigt der Strom wieder an. Bei \(U_B = 9{,}8\,\text{V}\) tritt ein zweites Minimum auf, weil die Elektronen nun auf ihrem Weg sogar zweimal genug Energie für eine Anregung gesammelt haben.</p>
+      </div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_verify_franck_hertz",
+          "title":"Stopp & check",
+          "hint":"Prüfe die Deutung des Experiments genau.",
+          "statement":"Der Franck-Hertz-Versuch spricht dafür, dass Atome Energie kontinuierlich in beliebig kleinen Portionen aufnehmen können.",
+          "answer": false,
+          "explain":"Gerade das Gegenteil wird sichtbar: Die periodischen Einbrüche des Anodenstroms zeigen, dass die Atome Energie nur in diskreten Beträgen aufnehmen, hier zum Beispiel in Schritten von 4,9 eV."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Potentialtopf">
+      <h1>Potentialtopf: Warum Energieniveaus diskret sind</h1>
+      <p class="wb-muted">Bohr setzte diskrete Energieniveaus voraus. Im Potentialtopf-Modell kannst du sehen, wie diese Quantisierung aus dem Wellencharakter der Elektronen folgt und nicht nur eine bloße Annahme bleibt.</p>
+
+      <h2>Elektronen und Wellenfunktionen</h2>
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/wellenfunktion.png" alt="Schematische Darstellung einer Wellenfunktion und ihrer Wahrscheinlichkeitsdeutung" />
+          <figcaption>Elektronen werden in der Quantenmechanik durch Wellenfunktionen beschrieben. \(|\psi(x)|^2\) gibt die Aufenthaltswahrscheinlichkeit an.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Die Grundannahme des bohrschen Atommodells ist die Existenz diskreter Energieniveaus. Damit lassen sich Linienspektren und auch der Franck-Hertz-Versuch erklären. Bohr begründete diese Quantisierung aber noch nicht tiefer.</p>
+          <p>Die heute gültige Erklärung geht von de Broglies Hypothese aus, dass Elektronen einen Wellencharakter besitzen. Schrödinger, Heisenberg und andere entwickelten daraus die Quantenmechanik.</p>
+          <p>Ein Elektron mit Geschwindigkeit \(v\) besitzt nach de Broglie die Wellenlänge</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(\lambda = \frac{h}{m \cdot v}\)</p>
+          <p>Mathematisch beschreibt man diese Elektronenwelle durch eine Wellenfunktion \(\psi(x,t)\). Anders als bei einer klassischen Welle bedeutet sie aber nicht einfach eine Auslenkung: \(|\psi(x)|^2\) beschreibt die Wahrscheinlichkeit, das Elektron bei einer Messung am Ort \(x\) zu finden.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Eingesperrte Elektronen im Potentialtopf</h2>
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <p>Quantisierung tritt auf, wenn Elektronen nur einen begrenzten Raumbereich zur Verfügung haben, also gewissermaßen in einem kleinen „Kasten“ eingesperrt sind. Die Wände musst du dir dabei nicht materiell vorstellen; sie können etwa elektrischer Natur sein.</p>
+          <p>Im Modell des <b>unendlich hohen Potentialtopfs</b> gilt im Inneren des Topfs \(E_{\text{pot}} = 0\). An den Wänden bei \(x=0\) und \(x=a\) sowie außerhalb ist die potenzielle Energie unendlich groß. Das Elektron kann diese Wände also nicht durchdringen.</p>
+          <p>Weil die Wellenfunktion außerhalb verschwinden muss, wird sie zwischen den Wänden „eingespannt“. Es bilden sich stehende Wellen aus, ähnlich wie bei einer eingespannten Saite.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="bilder/potentialtopf.png" alt="Unendlich hoher Potentialtopf mit Wänden bei x gleich 0 und x gleich a" />
+          <figcaption>Das einfachste quantenmechanische Modell: Im Inneren keine Kraft, an den Rändern unendlich hohe Wände.</figcaption>
+        </figure>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <figure class="wave-figure">
+          <img src="bilder/wellenfunktion_potentialtopf.png" alt="Stehende Wellen und Wahrscheinlichkeitsdichte im Potentialtopf" />
+          <figcaption>Im Potentialtopf sind nur stehende Wellen erlaubt. An den Knoten ist die Aufenthaltswahrscheinlichkeit null.</figcaption>
+        </figure>
+        <div class="wb-soft-callout">
+          <p>Im Potentialtopf sind nur Zustände möglich, bei denen ein ganzzahliges Vielfaches der halben De-Broglie-Wellenlänge in die Breite \(a\) passt:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(\lambda_n = \frac{2a}{n}\), mit \(n = 1,2,3,\dots\)</p>
+          <p>Damit ist nicht jede Wellenlänge erlaubt. Die Elektronen können nur bestimmte Zustände annehmen, die durch die Quantenzahl \(n\) beschrieben werden.</p>
+          <p>Für den \(n\)-ten Zustand gilt im Inneren des Topfs:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(\psi_n(x) = \sin\!\left(\frac{n\pi}{a}x\right)\)</p>
+          <p>und für die Wahrscheinlichkeitsdichte:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(|\psi_n(x)|^2 = \sin^2\!\left(\frac{n\pi}{a}x\right)\)</p>
+          <p>An den Knoten gilt \(\psi_n = 0\). Dort ist die Wahrscheinlichkeit, das Elektron zu finden, gleich null.</p>
+        </div>
+      </div>
+
+      <div class="formula-card">
+        <strong>Merksatz</strong>
+        <p>Die Energie eines Elektrons in einem Potentialtopf der Breite \(a\) ist quantisiert. Sie kann nur die Werte</p>
+        <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(E_n = \frac{h^2}{8ma^2} \cdot n^2\), mit \(n = 1,2,3,\dots\)</p>
+        <p>annehmen. Zwischenwerte sind nicht erlaubt.</p>
+      </div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_verify_potentialtopf",
+          "title":"Stopp & check",
+          "hint":"Prüfe die Aussage sorgfältig.",
+          "statement":"Im unendlich hohen Potentialtopf sind alle De-Broglie-Wellenlängen eines Elektrons erlaubt, solange das Elektron nur schnell genug ist.",
+          "answer": false,
+          "explain":"Falsch. Gerade die Randbedingungen an den Wänden sorgen dafür, dass nur bestimmte stehende Wellen und damit nur bestimmte Wellenlängen und Energien möglich sind."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <h2>Absorption, Emission und Vergleich mit dem Wasserstoffatom</h2>
+      <div class="grid2" style="align-items:start;">
+        <div class="wb-soft-callout">
+          <p>Das Potentialtopfmodell erklärt, warum es einen Grundzustand \(n=1\) gibt und warum ein Elektron nur durch Absorption eines Photons in einen angeregten Zustand \(n=2,3,4,\dots\) wechseln kann.</p>
+          <p>Für einen Übergang zwischen zwei Zuständen muss die Energiebilanz erfüllt sein:</p>
+          <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(E_n - E_m = h \cdot f\)</p>
+          <p>Ein Elektron in einem angeregten Zustand fällt meist nach sehr kurzer Zeit in einen tieferen Zustand zurück. Dabei wird ein Photon emittiert. Genau dieser Zusammenhang gilt auch im Atom: Photonen können nur dann absorbiert oder emittiert werden, wenn ihre Energie genau dem Unterschied zweier erlaubter Energieniveaus entspricht.</p>
+          <p>Das nennt man <b>Resonanzabsorption</b>. Deshalb sind Absorptionslinien scharf abgegrenzt: Photonen mit leicht anderer Energie können das Atom nicht anregen und passieren es ungehindert.</p>
+        </div>
+        <figure class="wave-figure">
+          <img src="bilder/energieniveau_potentialtopf.png" alt="Energieniveaus im Potentialtopf mit Übergängen zwischen den Zuständen" />
+          <figcaption>Übergänge zwischen erlaubten Energieniveaus führen zu Absorptions- und Emissionsvorgängen mit genau festgelegten Photonenergien.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Vergleich mit dem Wasserstoffatom</strong>
+        <p>Der unendlich hohe Potentialtopf beschreibt reale Atome nur grob. Er ist eindimensional und vereinfacht den Verlauf der potenziellen Energie stark. Trotzdem zeigt er den entscheidenden Punkt: Die Gesamtenergie eines Elektrons kann nur bestimmte diskrete Werte annehmen.</p>
+        <p>Für das Wasserstoffatom gilt genauer:</p>
+        <p style="font-size:1.08rem; font-weight:600; margin:10px 0;">\(E_n = -E_0 \cdot \frac{1}{n^2}\), mit \(E_0 = 13{,}6\,\text{eV}\)</p>
+        <p>Auch hier sind also nur bestimmte Energien erlaubt. Im Unterschied zum einfachen Potentialtopf werden die Abstände zwischen benachbarten Energieniveaus mit wachsendem \(n\) immer kleiner. Genau das passt zu den beobachteten Spektrallinien des Wasserstoffs.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Transfer">
+      <h1>Transfer: Mit Modellen argumentieren</h1>
+      <p class="wb-muted">Jetzt reicht reines Wiedererkennen nicht mehr. Du sollst Verbindungen zwischen den Themen herstellen, typische Fehler erkennen und die wichtigsten Ideen noch einmal aktiv wiederholen.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Wiederholen, weiterdenken, verfestigen</strong>
+        <p>Nutze diese Seite wie einen Abschlusstrainer: erst selbst lösen, dann prüfen, dann bewusst begründen. Ziel ist nicht nur richtiges Ankreuzen, sondern ein zusammenhängendes Bild von Atommodell, Spektrum, Energieniveaus und Quantisierung.</p>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_essay_transfer",
+          "title":"Begründe deine Modellwahl",
+          "hint":"Antworte in 5 bis 8 Sätzen. Nutze mindestens drei Fachwörter korrekt.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Begründung","key":"text","kind":"textarea","placeholder":"Erkläre, welches Modell du für chemische Verbindungen, den Rutherford-Versuch, Linienspektren und Aufenthaltswahrscheinlichkeiten wählen würdest und warum."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_cloze_transfer",
+          "title":"Grundideen in einem Satz festigen",
+          "hint":"Setze die passenden Fachbegriffe ein.",
+          "bank":["Kern","Linienspektrum","diskrete","stehende Wellen","4,9 eV","Neutronenzahl"],
+          "segments":[
+            {"t":"text","v":"Rutherford zeigte, dass fast die gesamte Masse im "},
+            {"t":"gap","a":"Kern"},
+            {"t":"text","v":" sitzt. Wasserstoff zeigt ein "},
+            {"t":"gap","a":"Linienspektrum"},
+            {"t":"text","v":" , weil nur "},
+            {"t":"gap","a":"diskrete"},
+            {"t":"text","v":" Energien erlaubt sind. Im Potentialtopf entstehen nur "},
+            {"t":"gap","a":"stehende Wellen"},
+            {"t":"text","v":" . Beim Franck-Hertz-Versuch tritt die erste Anregung bei "},
+            {"t":"gap","a":"4,9 eV"},
+            {"t":"text","v":" auf. Isotope unterscheiden sich bei gleichem Element in der "},
+            {"t":"gap","a":"Neutronenzahl"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_mcq_transfer",
+          "title":"Transfer-Check",
+          "hint":"Wähle die beste Begründung.",
+          "shuffleChoices": true,
+          "questions":[
+            {
+              "text":"Warum war das Thomson-Modell nach dem Rutherford-Versuch nicht mehr haltbar?",
+              "choices":[
+                {"id":"a","label":"Weil Thomson keine Elektronen kannte."},
+                {"id":"b","label":"Weil das Modell keine starke Rückstreuung weniger Alpha-Teilchen erklären konnte."},
+                {"id":"c","label":"Weil das Modell schon Spektrallinien perfekt erklärte."},
+                {"id":"d","label":"Weil Gold keine Atome besitzt."}
+              ],
+              "correct":["b"],
+              "explain":"Die starke Ablenkung weniger Alpha-Teilchen zeigt eine sehr konzentrierte positive Ladung. Das passt nicht zu einer gleichmäßig verteilten positiven Kugel."
+            },
+            {
+              "text":"Welche Aussage beschreibt den Übergang vom Bohr-Modell zum quantenmechanischen Modell am besten?",
+              "choices":[
+                {"id":"a","label":"Elektronen verschwinden vollständig aus dem Atom."},
+                {"id":"b","label":"Feste Bahnen werden durch Aufenthaltswahrscheinlichkeiten ersetzt."},
+                {"id":"c","label":"Der Atomkern trägt keine Masse mehr."},
+                {"id":"d","label":"Es gibt keine Quantisierung mehr."}
+              ],
+              "correct":["b"],
+              "explain":"Im modernen Modell werden Elektronen nicht mehr auf klassischen Bahnen beschrieben, sondern über Wahrscheinlichkeitsverteilungen in Orbitalen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 data-p2-id="atome_transfer_p2" data-p2-title="Verbinde Thema und Kerngedanke" data-p2-hint="Ordne jedem Themenbereich die passende Kernaussage zu." class="p2">
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Thema</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Rutherford-Versuch</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Wasserstoffspektrum</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Franck-Hertz-Versuch</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Potentialtopf</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Kernaussage</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Das Atom besteht größtenteils aus leerem Raum mit kleinem positivem Kern.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Nur bestimmte Übergänge zwischen Energieniveaus erzeugen bestimmte Linien.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Atome nehmen Energie stoßweise in diskreten Beträgen auf.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Randbedingungen für Elektronenwellen führen zu erlaubten diskreten Energien.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_order_transfer",
+          "title":"Bringe die Erklärung des Emissionsspektrums in die richtige Reihenfolge",
+          "hint":"Ordne vom angeregten Atom bis zur beobachteten Linie.",
+          "items":[
+            "Ein Atom wird in einen angeregten Zustand gebracht.",
+            "Ein Elektron befindet sich auf einem höheren Energieniveau.",
+            "Das Elektron fällt in einen tieferen Zustand zurück.",
+            "Die Energiedifferenz wird als Photon mit \(E = hf\) frei.",
+            "Im Spektrum erscheint eine Linie mit genau passender Wellenlänge."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_cat_transfer",
+          "title":"Sortiere nach Beobachtung und Deutung",
+          "hint":"Ordne jede Karte der passenden Kategorie zu.",
+          "categories":[
+            {"id":"beob","title":"direkte Beobachtung"},
+            {"id":"deut","title":"physikalische Deutung"}
+          ],
+          "items":[
+            {"label":"Bei einer Quecksilberröhre erscheinen einzelne farbige Linien.","category":"beob"},
+            {"label":"Die Energiezustände eines Atoms sind quantisiert.","category":"deut"},
+            {"label":"Im Franck-Hertz-Versuch fällt der Anodenstrom periodisch ab.","category":"beob"},
+            {"label":"Nur passende Photonen können absorbiert werden.","category":"deut"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_reveal_transfer",
+          "title":"Was würde passieren, wenn ...?",
+          "hint":"Überlege erst selbst, dann klappe auf.",
+          "question":"Was würde am Rutherford-Versuch anders aussehen, wenn die positive Ladung im Atom wirklich gleichmäßig verteilt wäre?",
+          "answer":"Dann gäbe es kaum sehr starke Ablenkungen oder Rückstreuungen. Die Alpha-Teilchen würden überwiegend nur leicht beeinflusst werden. Gerade die seltenen, aber großen Ablenkwinkel zeigen ja, dass sie manchmal auf einen sehr kleinen, stark geladenen Bereich treffen: den Kern."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"atome_reveal_transfer_2",
+          "title":"Weiterdenken",
+          "hint":"Vergleiche bewusst mehrere Kapitel miteinander.",
+          "question":"Warum passen Linienspektren, Franck-Hertz-Versuch und Potentialtopf so gut zusammen?",
+          "answer":"Alle drei zeigen dieselbe Grundidee aus verschiedenen Blickwinkeln: Energie ist auf atomarer Ebene nicht kontinuierlich verteilt. Linienspektren zeigen diskrete Photonenenergien, der Franck-Hertz-Versuch zeigt diskrete Anregungsenergien bei Stößen, und der Potentialtopf begründet mathematisch, warum durch den Wellencharakter der Elektronen nur bestimmte Zustände und damit nur bestimmte Energien möglich sind."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Zusammenfassung">
+      <h1>Zusammenfassung, Weiterforschen und Quellen</h1>
+      <p class="wb-muted">Zum Schluss sicherst du die Kerngedanken noch einmal kompakt und bekommst seriöse Anlaufstellen zum Weiterarbeiten.</p>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Atommodelle wurden nicht willkürlich erfunden, sondern aus Beobachtungen entwickelt. Demokrit liefert die Grundidee kleinster Teilchen, Dalton erklärt chemische Verhältnisse, Thomson entdeckt das Elektron im Atom, Rutherford trennt Kern und Hülle, Bohr erklärt Linienspektren mit festen Energieniveaus, der Franck-Hertz-Versuch zeigt diskrete Anregungsenergien experimentell und das Potentialtopfmodell begründet die Quantisierung aus dem Wellencharakter der Elektronen. Das quantenmechanische Modell beschreibt Elektronen schließlich als Wahrscheinlichkeitswolken in Orbitalen.</p>
+      </div>
+
+      <div class="grid2" style="align-items:start;">
+        <div data-wb-type="verify">
+          <script type="application/json" class="wb-config">
+          {
+            "id":"atome_verify_summary",
+            "title":"Selbstkontrolle",
+            "hint":"Prüfe die Aussagen sorgfältig.",
+            "questions":[
+              {
+                "text":"Das Bohr-Modell war ein Schritt zwischen Rutherford und dem quantenmechanischen Modell.",
+                "answer": true,
+                "explain":"Genau. Bohr behält Kern und Hülle bei, ergänzt aber erlaubte Energieniveaus."
+              },
+              {
+                "text":"Isotope eines Elements haben unterschiedliche chemische Eigenschaften, weil sie verschiedene Protonenzahlen besitzen.",
+                "answer": false,
+                "explain":"Falsch. Isotope eines Elements haben dieselbe Protonenzahl. Sie unterscheiden sich hauptsächlich in ihrer Masse."
+              }
+            ]
+          }
+          </script>
+        </div>
+
+        <div class="wb-soft-callout">
+          <strong>Weiterforschen</strong>
+          <ul class="wave-list">
+            <li>Warum reichen Bohrs Kreisbahnen für Mehr-Elektronen-Atome nicht mehr aus?</li>
+            <li>Wie hängen Spektrallinien mit Energieunterschieden im Atom zusammen?</li>
+            <li>Welche Rolle spielen Protonen, Neutronen und Isotope in der Kernphysik?</li>
+            <li>Warum liefert der Potentialtopf schon mit einem sehr einfachen Modell diskrete Energien?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div class="wb-soft-callout">
+        <strong>Quellen & Weiterforschen</strong>
+        <ul class="source-list">
+          <li><a href="https://www.leifiphysik.de/atomphysik/atommodelle" target="_blank" rel="noreferrer">LEIFIphysik: Atommodelle</a></li>
+          <li><a href="https://www.leifiphysik.de/atomphysik/rutherfordscher-streuversuch" target="_blank" rel="noreferrer">LEIFIphysik: Rutherfordscher Streuversuch</a></li>
+          <li><a href="https://www.spektrum.de/lexikon/physik/atommodell/1003" target="_blank" rel="noreferrer">Spektrum Lexikon der Physik: Atommodell</a></li>
+          <li><a href="https://www.chemie.de/lexikon/Isotop.html" target="_blank" rel="noreferrer">chemie.de: Isotop</a></li>
+        </ul>
+        <p>Die inhaltliche Grundlage dieser Seite ist zusätzlich dein bereitgestellter Stoff zu Demokrit, Dalton, Thomson, Rutherford, Bohr, Quantisierung und Orbitalmodell.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+
+</html>
