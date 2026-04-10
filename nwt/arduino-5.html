@@ -28,7 +28,6 @@
     .panel,
     .info-box,
     .warn-box,
-    .scan-box,
     .code-card {
       border: 1px solid rgba(24, 63, 92, 0.14);
       border-radius: 16px;
@@ -55,19 +54,12 @@
       line-height: 1.45;
     }
 
-    .scan-box {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .scan-box img,
     .topic-figure img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    .scan-box figcaption,
     .topic-figure figcaption {
       padding: 10px 14px 14px;
       color: #4a5b6a;
@@ -467,16 +459,6 @@ int notenWert[] = {
 
       <div class="wb-section-break"></div>
 
-      <div class="grid2x" style="margin-top:16px;">
-        <figure class="scan-box">
-          <img src="pdf-bilder/arduino2-seite10.png" alt="Übersichtsbild zu Arrays und Melodie-Listen" />
-          <figcaption>Auf dem Bild siehst du die Übersicht zu Melodie-Array, Notenwerten und Schleife noch einmal gesammelt.</figcaption>
-        </figure>
-        <figure class="scan-box">
-          <img src="pdf-bilder/arduino2-seite11.png" alt="Übersichtsbild zu Zeichenarrays und Aufgaben" />
-          <figcaption>Auf dem Bild siehst du Zeichenarrays, Wortlisten und die vier Aufgaben noch einmal im Zusammenhang.</figcaption>
-        </figure>
-      </div>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Interrupt">
@@ -635,16 +617,6 @@ int notenWert[] = {
         <p>Interrupts lösen das Polling-Problem bei kurzen Signalen. Die ISR bleibt kurz, merkt sich nur das Ereignis, und Variablen aus der ISR müssen als <code>volatile</code> markiert werden.</p>
       </div>
 
-      <div class="grid2x" style="margin-top:16px;">
-        <figure class="scan-box">
-          <img src="pdf-bilder/arduino2-seite12.png" alt="Übersichtsbild zu Pull-Up, Pull-Down und Interrupt" />
-          <figcaption>Auf dem Bild siehst du Pull-Up, Pull-Down, Polling und den Aufbau von <code>attachInterrupt()</code> noch einmal zusammen.</figcaption>
-        </figure>
-        <figure class="scan-box">
-          <img src="pdf-bilder/arduino2-seite13.png" alt="Übersichtsbild zu ISR und volatile" />
-          <figcaption>Auf dem Bild siehst du die Regeln für ISR, <code>volatile</code> und den Umgang mit Tasterprellen noch einmal gesammelt.</figcaption>
-        </figure>
-      </div>
     </section>
 
     <section data-wb-page="4" data-wb-page-title="Troubleshooting">
@@ -805,10 +777,6 @@ if (sensorWert &gt; 500) {
         </ul>
       </div>
 
-      <figure class="scan-box" style="margin-top:16px;">
-        <img src="pdf-bilder/arduino2-seite18.png" alt="Übersichtsbild zum Troubleshooting" />
-        <figcaption>Auf dem Bild siehst du den vollständigen Prüfpfad zum Troubleshooting noch einmal in einer Übersicht.</figcaption>
-      </figure>
     </section>
   </div>
 
