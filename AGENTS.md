@@ -110,6 +110,8 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
 
 ### 4.2 Interaktions-Blöcke korrekt einbauen
 
+#### Mache immer einen Absatz mit  <div class="wb-section-break"></div> um die Interaktionsblöcke
+
 #### MCQ
 ```html
 <div data-wb-type="mcq">
@@ -236,7 +238,8 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
 ## 5. Standard-Seitenstruktur (Template, das du inhaltlich füllst)
 
 Du erstellst typischerweise **6–10 Seiten**.  
-In der Kursstufe gilt: lieber weniger Seiten, dafür inhaltlich tief und interaktiv.
+In der Kursstufe gilt: lieber weniger Seiten, dafür inhaltlich tief und interaktiv. 
+Nach Einem Absatz immer  <div class="wb-section-break"></div>
 
 ---
 

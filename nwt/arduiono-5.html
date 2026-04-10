@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arduino 5: Arrays, Interrupt und Troubleshooting</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .grid2x,
+    .grid3x {
+      display: grid;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .grid2x {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid2x-narrow-figure {
+      grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr);
+    }
+
+    .grid3x {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel,
+    .info-box,
+    .warn-box,
+    .scan-box,
+    .code-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.06);
+      background: #fff;
+    }
+
+    .info-box {
+      background: #edf6ff;
+      border-left: 5px solid #2f6da1;
+    }
+
+    .warn-box {
+      background: #fff4e8;
+      border-left: 5px solid #d9891b;
+    }
+
+    .code-card {
+      background: #0f172a;
+      color: #e8f0ff;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: 1.45;
+    }
+
+    .scan-box {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .scan-box img,
+    .topic-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .scan-box figcaption,
+    .topic-figure figcaption {
+      padding: 10px 14px 14px;
+      color: #4a5b6a;
+      font-size: 0.95rem;
+    }
+
+    .topic-figure {
+      margin: 0;
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.06);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #e8f5f7;
+      color: #0f6470;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .task-card {
+      border: 1px dashed rgba(24, 63, 92, 0.22);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #fbfdff;
+    }
+
+    .task-card h3 {
+      margin: 0 0 8px;
+    }
+
+    .source-list,
+    .check-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .source-list li + li,
+    .check-list li + li {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .grid2x,
+      .grid3x {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"NWT Arduino",
+      "sectionTitle":"Arrays, Interrupt und Troubleshooting",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2","h3"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Arduino 5",
+      "resultsPageTitle":"Auswertung",
+      "themeDefault":"default",
+      "studentNameLabel":"Name",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"arduino-5-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Überblick">
+      <h1>Arduino 5: Arrays, Interrupt und Troubleshooting</h1>
+      <p class="wb-muted">Auf dieser Lernseite arbeitest du an drei typischen Arduino-Themen: Listen mit vielen Werten, schnelle Reaktionen auf Taster und systematische Fehlersuche. Du liest, denkst nach, probierst aus und sicherst dein Wissen direkt mit Aufgaben auf der Seite.</p>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <div class="info-box">
+          <strong>Das lernst du</strong>
+          <ul class="check-list" style="margin-top:10px;">
+            <li>Du speicherst Töne, Namen oder Wörter in Arrays und greifst über Indizes darauf zu.</li>
+            <li>Du verstehst, wie Pull-Up, Polling, Interrupt und ISR zusammenhängen.</li>
+            <li>Du suchst Fehler Schritt für Schritt, statt nur zu raten.</li>
+          </ul>
+        </div>
+        <div class="warn-box">
+          <strong>So arbeitest du hier</strong>
+          <ul class="check-list" style="margin-top:10px;">
+            <li>Lies die Erklärungen aufmerksam und schau dir die Bilder genau an.</li>
+            <li>Bearbeite die Aufgaben direkt nach jedem Abschnitt.</li>
+            <li>Nutze die Bilder als Nachschlagehilfe, wenn du einen Begriff oder einen Codeausschnitt noch einmal sehen willst.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid3x" style="margin-top:16px;">
+        <div class="panel">
+          <strong>1. Arrays</strong>
+          <p>Du lernst, wie du viele Werte in einer Liste speicherst und damit zum Beispiel Melodien oder Wortlisten verwaltest.</p>
+        </div>
+        <div class="panel">
+          <strong>2. Interrupt</strong>
+          <p>Du untersuchst, wie der Arduino auf kurze Signale sofort reagieren kann, auch wenn das Hauptprogramm beschäftigt ist.</p>
+        </div>
+        <div class="panel">
+          <strong>3. Troubleshooting</strong>
+          <p>Du baust dir einen klaren Prüfpfad auf, um Compiler-, Upload-, Hardware- und Logikfehler gezielt zu finden.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_start_reveal",
+          "title":"Vor dem Start",
+          "hint":"Denk kurz selbst nach, dann klappe auf.",
+          "question":"Warum passen Arrays, Interrupts und Troubleshooting gut zusammen?",
+          "answer":"Weil du in echten Arduino-Projekten fast immer mehrere Dinge gleichzeitig brauchst: übersichtliche Datenstrukturen, schnelle Reaktionen auf Ereignisse und eine saubere Methode zur Fehlersuche. Genau diese Kombination trainierst du hier."
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Arrays">
+      <h1>Arrays: Arbeiten mit Listen</h1>
+      <p class="wb-muted">Jetzt lernst du, wie du Melodien, Notenwerte, Zeichen und Wörter als Listen speicherst. Du arbeitest Schritt für Schritt mit Tönen, Indizes, <code>char</code>-Arrays und vier passenden Übungsaufgaben.</p>
+
+      <div class="info-box">
+        <strong>Leitfrage</strong>
+        <p>Wie speicherst du viele zusammengehörige Werte so, dass dein Programm übersichtlich bleibt und du sie nacheinander verarbeiten kannst?</p>
+      </div>
+
+      <div class="grid2x grid2x-narrow-figure" style="margin-top:16px;">
+        <div>
+          <span class="tag">Grundidee</span>
+          <p>Du kannst Töne einzeln mit <code>tone(Lautsprecherpin, Frequenz)</code> ansprechen. Auf Dauer wird das aber unübersichtlich. Die Lösung sind <b>Arrays</b>: Listen, in denen mehrere Werte desselben Datentyps stehen.</p>
+          <div class="info-box">
+            <strong>Was ein Array festlegt</strong>
+            <p>Beim Deklarieren legst du Datentyp, Namen und oft auch die Länge fest. Die Länge steht in eckigen Klammern. Sind schon alle Werte eingetragen, kann man sie auch leer lassen. Jeder Listenplatz hat einen <b>Index</b>, und der beginnt immer bei <b>0</b>.</p>
+          </div>
+          <p>Wenn du einer Variablen zum ersten Mal einen Wert zuweist, nennt man das <b>Initialisieren</b>. Genau so arbeitest du auch bei Arrays: Du legst zuerst fest, was gespeichert werden soll, und füllst die Liste dann mit Werten. Hier wird eine Melodie mit sechs Frequenzen gezeigt. Zusätzlich gibt es ein zweites Array mit Notenwerten wie Achtel, Viertel oder Halbe. So legst du nicht nur fest, <b>welcher</b> Ton gespielt wird, sondern auch <b>wie lange</b>.</p>
+        </div>
+        <figure class="topic-figure">
+          <img src="pdf-bilder/array_klavier.png" alt="Klaviatur mit Frequenzen als Hilfe für Tonhöhen" style="width:52%; height:auto; max-width:none;"/>
+          <figcaption>Auf dem Bild siehst du die Zuordnung von Tönen zu Frequenzen in Hertz. So kannst du die Zahlen aus dem Programm einer Tonhöhe zuordnen.</figcaption>
+        </figure>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="topic-figure">
+          <img src="pdf-bilder/array_code.png" alt="Codeausschnitt zu Arrays mit Melodie und Indexen" />
+          <figcaption>Die Melodie liegt in einem Array. Das erste Element hat Index 0, das dritte hier Index 2.</figcaption>
+        </figure>
+        <div>
+          <div class="code-card"><pre>int Melodie[] = {175,175,196,175,262,247};
+int notenWert[] = {8,8,4,4,4,2};
+int tonDauer;
+int pauseZwischenNoten;
+
+for (int i = 0; i &lt; 6; i = i + 1) {
+  tone(8, Melodie[i]);
+  tonDauer = 1000 / notenWert[i];
+  delay(tonDauer);
+  noTone(8);
+  pauseZwischenNoten = tonDauer * 0.30;
+  delay(pauseZwischenNoten);
+}</pre></div>
+          <p>Die Schleife läuft hier von <code>i = 0</code> bis <code>i &lt; 6</code>. So werden alle sechs Listenplätze nacheinander verarbeitet. Die Tondauer wird aus dem Notenwert berechnet. Eine Achtel dauert dadurch kürzer als eine Viertel oder Halbe.</p>
+          
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="warn-box">
+            <strong>Stopp & check</strong>
+            <p>Ein häufiger Fehler ist ein falscher Index. Wenn ein Array sechs Elemente hat, sind nur die Plätze <code>0</code> bis <code>5</code> gültig.</p>
+          </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_arrays_cloze",
+          "title":"Sicherung: Wie funktionieren Arrays?",
+          "hint":"Setze die zentralen Begriffe ein.",
+          "bank":["Liste","Index","0","Tondauer","Notenwert"],
+          "segments":[
+            {"t":"text","v":"Ein Array ist eine geordnete "},
+            {"t":"gap","a":"Liste"},
+            {"t":"text","v":" von Werten. Jeder Eintrag wird über einen "},
+            {"t":"gap","a":"Index"},
+            {"t":"text","v":" angesprochen. Der erste Listenplatz hat die Nummer "},
+            {"t":"gap","a":"0"},
+            {"t":"text","v":" . Im Melodie-Beispiel berechnet man die "},
+            {"t":"gap","a":"Tondauer"},
+            {"t":"text","v":" aus dem "},
+            {"t":"gap","a":"Notenwert"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="topic-figure">
+          <img src="pdf-bilder/array_code2.png" alt="Zweiter Codeausschnitt mit Arrays" style="width:40%; height:auto; max-width:none;"/>
+          <figcaption>Auf dem Bild siehst du, wie die Melodie später erweitert wird und warum die Schleife zur Anzahl der Einträge passen muss.</figcaption>
+        </figure>
+        <figure class="topic-figure">
+          <img src="pdf-bilder/array_melodie.png" alt="Melodiebeispiel mit Noten" />
+          <figcaption>Das Array mit dem Namen Melodie enthält 6 Elemente, dabei handelt es sich um die Frequenzen für die einzelnen Töne. Das erste Element einer Liste bekommt immer
+            den Index 0. Die Frequenz mit dem Index 2 ist hier 196. Bei aufeinanderfolgenden Tönen brauchst du nicht immer eine zusätzliche <code>noTone()</code>-Anweisung dazwischen.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Zeichen und Wörter in Arrays</h2>
+      <div class="grid2x">
+        <div>
+          <p>In Arrays müssen nicht nur Zahlen stehen. Mit <code>char</code> kannst du auch einzelne Zeichen speichern. Ein Beispiel ist <code>char zeichen[] = {'P','f','e','r','d','1'};</code>. Mit <code>zeichen[3]</code> würdest du das <code>r</code> ausgeben.</p>
+          <p>Ein einzelnes Zeichen wird im Speicher als Zahl abgelegt. Dafür gibt es eine feste Tabelle, die <b>ASCII-Tabelle</b>. Die Ziffer <code>1</code> als Zeichen hat deshalb einen anderen Sinn als die Zahl 1, mit der du rechnest. Genau darum ist es wichtig, ob du etwas als <code>char</code> oder als Zahl speicherst.</p>
+          <p>Willst du ganze Wörter speichern, reicht ein normales <code>char</code>-Array nicht mehr. Dann benutzt du einen <b>Pointer</b> mit Sternchen, also zum Beispiel <code>char* mitSchueler[] = {"Martin","Volker","Frank",...};</code>. Diese Zeichenketten stehen in doppelten Anführungszeichen.</p>
+        </div>
+        <div class="info-box">
+          <strong>Wichtige Hinweise aus dem blauen Kasten</strong>
+          <ul class="check-list">
+            <li>Speicherst du eine Ziffer als <code>char</code>, wird sie als Text behandelt.</li>
+            <li>In einem <code>char</code>-Array stehen einzelne Zeichen in einfachen Anführungszeichen.</li>
+            <li>Mit einem Pointer <code>*</code> kannst du ganze Wörter speichern.</li>
+            <li>Werte in Arrays können später auch verändert werden, zum Beispiel <code>werte[3] = analogRead(A0);</code>.</li>
+            <li>Daten im RAM gehen beim Neustart des Arduino wieder verloren.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_arrays_verify",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage mit dem neuen Wissen.",
+          "statement":"Das erste Element eines Arrays hat normalerweise den Index 1.",
+          "answer": false,
+          "explain":"Falsch. Das erste Element einer Liste bekommt immer Index 0."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Hier kommen noch 4 Aufgaben:</h2>
+      <div class="grid2x">
+        <div class="task-card">
+          <h3>1. Melodie erweitern</h3>
+          <p>Tippe den Code ab, schließe einen Lautsprecher an und lass die Melodie spielen. Ergänze die restlichen Frequenzen und Notenwerte. Achte darauf: Die For-Schleife muss bis <code>i &lt; 25</code> laufen, sonst werden nur 6 Töne gespielt.</p>
+          <p>Diese zusätzlichen Werte brauchst du:</p>
+          <div class="code-card"><pre>int melodie[] = {
+196,196,220,196,262,247,196,196,220,196,
+294,262,196,196,392,330,262,247,220,349,
+349,330,262,294,262
+};
+
+int notenWert[] = {
+8,8,4,4,4,2,8,8,4,4,
+4,2,8,8,4,4,4,4,8,8,
+4,4,4,4,2
+};</pre></div>
+        </div>
+        <div class="task-card">
+          <h3>2. Tafeldienst auslosen</h3>
+          <p>Fertige ein Array mit Namen deiner Klassenkameraden an. Schreibe dann ein Programm, das mit einer Zufallsfunktion über den Index einen Namen auswählt.</p>
+          <div class="code-card"><pre>char* mitSchueler[] = {
+"Martin","Volker","Frank","Kolja",
+"Alexander","Mario","Peter","Rainer"
+};</pre></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <div class="task-card">
+          <h3>3. Literaturautomat</h3>
+          <p>Nutze den Satzanfang „Wer reitet so spät durch x und y?“. Lege Arrays mit möglichen Wörtern an und lasse per Zufall zwei Begriffe auswählen. Erfinde dann deinen eigenen Literaturautomaten.</p>
+        </div>
+        <div class="task-card">
+          <h3>4. Hausarbeiten verteilen</h3>
+          <p>Programmiere eine Maschine, die Hausdienste auf Familienmitglieder verteilt. Niemand darf doppelt eingesetzt werden. Auf dem Monitor könnte zum Beispiel stehen: „Papa darf abwaschen.“</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_arrays_mcq",
+          "title":"Mini-Check zu 6.1 bis 6.4",
+          "hint":"Wähle die jeweils beste Aussage.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Warum muss die Schleife in Aufgabe 6.1 länger laufen als im ersten kurzen Beispiel?",
+              "choices":[
+                {"id":"a","label":"Weil der Lautsprecher sonst zu laut wird."},
+                {"id":"b","label":"Weil die erweiterte Melodie mehr als 6 Töne enthält."},
+                {"id":"c","label":"Weil Arrays immer bis 25 laufen müssen."},
+                {"id":"d","label":"Weil noTone() nur dann funktioniert."}
+              ],
+              "correct":["b"],
+              "explain":"Die erweiterte Melodie enthält deutlich mehr Töne. Deshalb muss auch die Schleife mehr Elemente durchlaufen."
+            },
+            {
+              "text":"Was ist der entscheidende Unterschied zwischen einem char-Array und einem Array mit Wörtern?",
+              "choices":[
+                {"id":"a","label":"Ein char-Array speichert einzelne Zeichen, für Wörter braucht man Zeichenketten mit Pointer."},
+                {"id":"b","label":"Ein char-Array ist nur für Zahlen erlaubt."},
+                {"id":"c","label":"Wörter kann man nur in int-Arrays speichern."},
+                {"id":"d","label":"Es gibt keinen Unterschied."}
+              ],
+              "correct":["a"],
+              "explain":"Genau das gilt hier: einzelne Zeichen mit char, ganze Wörter als Zeichenketten mit Pointer."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-id="arduino5_arrays_p2" data-p2-title="Verbinde Aufgabe und Kernidee" data-p2-hint="Ordne jede Aufgabe der passenden Denkidee zu.">
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Aufgabe</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">6.1 Melodie erweitern</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">6.2 Tafeldienst</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">6.3 Literaturautomat</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">6.4 Hausarbeiten</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Kernidee</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Viele Frequenzen und Notenwerte mit zwei Arrays abarbeiten.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Einen Namen per Zufallsindex auswählen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Mit Wortlisten zufällige Sätze erzeugen.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Zuweisungen so planen, dass niemand doppelt vorkommt.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_arrays_essay",
+          "title":"Transfer: Entwickle deinen eigenen Array-Einsatz",
+          "hint":"Antworte in 4 bis 7 Sätzen. Nenne auch, welche Werte in deiner Liste stehen würden.",
+          "fields":[
+            {"label":"Deine Idee","key":"arrays_transfer","kind":"textarea","placeholder":"Beschreibe ein eigenes Arduino-Projekt, in dem Arrays sinnvoll wären, zum Beispiel für Namen, Messwerte, Töne oder Abläufe."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Arrays machen Programme kürzer und klarer. Du kannst mit ihnen Melodien, Notenwerte, Zeichen oder ganze Wörter verwalten und später über Indizes oder Schleifen darauf zugreifen.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="scan-box">
+          <img src="pdf-bilder/arduino2-seite10.png" alt="Übersichtsbild zu Arrays und Melodie-Listen" />
+          <figcaption>Auf dem Bild siehst du die Übersicht zu Melodie-Array, Notenwerten und Schleife noch einmal gesammelt.</figcaption>
+        </figure>
+        <figure class="scan-box">
+          <img src="pdf-bilder/arduino2-seite11.png" alt="Übersichtsbild zu Zeichenarrays und Aufgaben" />
+          <figcaption>Auf dem Bild siehst du Zeichenarrays, Wortlisten und die vier Aufgaben noch einmal im Zusammenhang.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Interrupt">
+      <h1>Interrupt: Auf Ereignisse sofort reagieren</h1>
+      <p class="wb-muted">Jetzt lernst du, wie du Taster sicher abfragst und wie ein Interrupt dem Arduino hilft, auf ein Ereignis sofort zu reagieren. Dazu gehören Pull-Up, Pull-Down, Polling, <code>attachInterrupt()</code>, ISR und <code>volatile</code>.</p>
+
+      <div class="info-box">
+        <strong>Leitfrage</strong>
+        <p>Wie kann der Arduino einen Tastendruck sicher erkennen, auch wenn das Hauptprogramm gerade in einer Schleife oder in einem <code>delay()</code> steckt?</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <div>
+          <p>Auf dem Bild lernst du zuerst, wie du Taster elektrisch sauber abfragst. Dafür braucht man im Prinzip einen <b>Spannungsteiler</b>. Es gibt zwei Grundschaltungen: <b>Pull-Up</b> und <b>Pull-Down</b>.</p>
+          <p>Bei offenem Schalter liegt beim Pull-Up am Pin 5V an. Beim Pull-Down liegt am Pin 0V an. Vertauschst du GND und 5V, invertierst du also das Verhalten. Sehr praktisch ist <code>INPUT_PULLUP</code>: Dann nutzt der Arduino einen internen Pull-Up-Widerstand, und du brauchst nur Taster, Pin und GND. Einen internen Pull-Down gibt es hier nicht.</p>
+          <div class="warn-box">
+            <strong>Polling und sein Problem</strong>
+            <p>Wenn ein Programm Taster nur an bestimmten Stellen prüft, nennt man das <b>Polling</b>. In langen Schleifen oder bei <code>delay()</code> kann ein kurzer Tastendruck dann leicht verpasst werden.</p>
+          </div>
+        </div>
+        <figure class="topic-figure">
+          <img src="pdf-bilder/interrupt_aufgabe.png" alt="Bild mit Lauflicht, Taster und Interrupt-Erklärung" />
+          <figcaption>Auf dem Bild siehst du die Idee direkt an einem Lauflicht mit Taster: Der Interrupt reagiert auf die Signaländerung.</figcaption>
+        </figure>
+      </div>
+
+       <div class="wb-section-break"></div>
+
+       <div class="task-card">
+          <h3><strong>Aufgabe:</strong> Lauflicht mit Interrupt</h3>
+          <p>Tippe das Programm von oben ab und baue ein Lauflicht mit acht LEDs und einem Taster. Der Interrupt reagiert auf den Tastendruck und schaltet eine rote LED ein. Dabei verstehst du, welche Funktion beim Interrupt aufgerufen wird und welches Signal ihn auslöst.</p>
+        </div>
+
+        <div class="wb-section-break"></div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="topic-figure">
+          <img src="pdf-bilder/interrupt_aufgabe2.png" alt="Bild mit zweitem Interrupt-Beispiel" />
+          <figcaption>Auf dem Bild wird die Interrupt-Idee weitergeführt: Ereignis merken und später im Hauptprogramm verarbeiten.</figcaption>
+        </figure>
+        <div>
+          <div class="info-box">
+            <strong>Zweck eines Interrupts</strong>
+            <p>Ein Interrupt unterbricht das laufende Programm kurzzeitig, damit eine hinterlegte Funktion ausgeführt werden kann. So reagiert der Arduino sofort auf ein äußeres Ereignis, ein Zeitsignal oder eintreffende Daten.</p>
+          </div>
+          <div class="code-card"><pre>attachInterrupt(digitalPinToInterrupt(taster),
+                roteLed,
+                FALLING);</pre></div>
+          <p><code>attachInterrupt()</code> hat hier drei Teile: den Interrupt-Pin, den Namen der ISR und das Signal, auf das reagiert werden soll. Du siehst auf dem Bild die Varianten <code>FALLING</code>, <code>RISING</code>, <code>LOW</code> und <code>CHANGE</code>. Außerdem gilt hier: Nur an Pin 2 und 3 kann diese Interrupt-Funktion aufgerufen werden.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+<div class="task-card">
+          <h3><strong>Aufgabe:</strong> Ereignis merken</h3>
+          <p>Tippe auch den oberen Code ab und ergänze die leere Funktion <code>machIrgendwas()</code>. Die ISR setzt nur <code>zustand = 1;</code>. Erst in <code>loop()</code> wird geprüft, ob der Zustand gesetzt wurde, dann wird die eigentliche Funktion gestartet und der Zustand wieder auf 0 zurückgesetzt.</p>
+        </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_order",
+          "title":"Ordne den Interrupt-Ablauf",
+          "hint":"Ordne vom Tastensignal bis zur Reaktion.",
+          "items":[
+            "Am Taster ändert sich das Signal am Pin.",
+            "Der Interrupt erkennt die Signaländerung.",
+            "Das Hauptprogramm wird kurz unterbrochen.",
+            "Die Interrupt Service Routine wird ausgeführt.",
+            "Nach der ISR läuft das Hauptprogramm an der unterbrochenen Stelle weiter."
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_categorize",
+          "title":"Was gehört in eine ISR, was nicht?",
+          "hint":"Nutze die Regeln aus dem Bild und aus dem Text.",
+          "categories":[
+            {"id":"ok","title":"In einer ISR sinnvoll"},
+            {"id":"nein","title":"In einer ISR vermeiden"}
+          ],
+          "items":[
+            {"label":"Nur kurz einen Zustand merken","category":"ok"},
+            {"label":"Eine Variable auf 1 setzen","category":"ok"},
+            {"label":"delay() benutzen","category":"nein"},
+            {"label":"Seriellen Monitor umfangreich benutzen","category":"nein"},
+            {"label":"LC-Display ansteuern","category":"nein"},
+            {"label":"Aufwändige Berechnungen machen","category":"nein"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_reveal",
+          "title":"Warum volatile?",
+          "hint":"Überlege erst selbst, dann klappe auf.",
+          "question":"Warum muss eine Variable, die in der ISR verändert wird, als volatile markiert werden?",
+          "answer":"Weil sich ihr Wert außerhalb des normalen Programmflusses ändern kann. Variablen im Interrupt müssen als volatile deklariert werden, damit der Compiler sie nicht falsch optimiert."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_verify",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage anhand des Gelernten.",
+          "statement":"Während einer ISR sind delay(), serieller Monitor und aufwändige Berechnungen gute Ideen, weil der Interrupt dann besonders viel erledigt.",
+          "answer": false,
+          "explain":"Falsch. Eine ISR muss kurz gehalten werden. delay(), serieller Monitor, LC-Display und aufwändige Berechnungen sollen dort nicht benutzt werden."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+    
+
+      
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_essay",
+          "title":"Transfer: Interrupt sinnvoll beschreiben",
+          "hint":"Antworte in 4 bis 6 Sätzen. Nutze die Begriffe Polling, ISR und volatile korrekt.",
+          "fields":[
+            {"label":"Deine Antwort","key":"interrupt_transfer","kind":"textarea","placeholder":"Erkläre, warum ein Interrupt bei kurzen Tastensignalen nützlich ist und wie man das Ereignis sicher im Programm weiterverarbeitet."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Interrupts lösen das Polling-Problem bei kurzen Signalen. Die ISR bleibt kurz, merkt sich nur das Ereignis, und Variablen aus der ISR müssen als <code>volatile</code> markiert werden.</p>
+      </div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="scan-box">
+          <img src="pdf-bilder/arduino2-seite12.png" alt="Übersichtsbild zu Pull-Up, Pull-Down und Interrupt" />
+          <figcaption>Auf dem Bild siehst du Pull-Up, Pull-Down, Polling und den Aufbau von <code>attachInterrupt()</code> noch einmal zusammen.</figcaption>
+        </figure>
+        <figure class="scan-box">
+          <img src="pdf-bilder/arduino2-seite13.png" alt="Übersichtsbild zu ISR und volatile" />
+          <figcaption>Auf dem Bild siehst du die Regeln für ISR, <code>volatile</code> und den Umgang mit Tasterprellen noch einmal gesammelt.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Troubleshooting">
+      <h1>Troubleshooting: Fehler systematisch finden</h1>
+      <p class="wb-muted">Jetzt lernst du, wie du Fehler systematisch findest: erst kompilieren, dann die Übertragung prüfen, dann Hardware und Programmlogik untersuchen.</p>
+
+      <div class="info-box">
+        <strong>Einstieg</strong>
+        <p>Fehler sind beim Programmieren normal. Entscheidend ist nicht, ob ein Fehler auftritt, sondern wie du ihn suchst. Das Bild zeigt dir dafür einen klaren Prüfpfad.</p>
+      </div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <figure class="topic-figure">
+          <img src="pdf-bilder/troubleshooting.png" alt="Troubleshooting-Übersicht mit Prüfpfad" />
+          <figcaption>Die Übersicht auf dem Bild verbindet Compilerfehler, Übertragungsprobleme, Hardwarefehler und Programmfehler.</figcaption>
+        </figure>
+        <div>
+          <div class="info-box">
+            <strong>1. Kompilieren erfolgreich?</strong>
+            <p>Wenn nicht, musst du zuerst die Fehlermeldung verstehen. Achte dabei auf <code>EXIT STATUS</code>, fehlendes <code>setup()</code>, fehlendes <code>loop()</code> oder eine fehlende Programmbibliothek.</p>
+          </div>
+          <div class="warn-box">
+            <strong>2. Übertragung erfolgreich?</strong>
+            <p>Wenn das Hochladen scheitert, prüfe die Einstellungen: Board, COM-Port, Treiber und ob eventuell der Programmer verstellt ist. Wichtig ist außerdem die richtige Programmer-Einstellung: <code>AVRISP mkII</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid3x" style="margin-top:16px;">
+        <div class="panel">
+          <strong>3. Hardwareprobleme?</strong>
+          <ul class="check-list" style="margin-top:10px;">
+            <li>Status-LED am Arduino aus: sofort USB abziehen, Kurzschluss suchen und beseitigen.</li>
+            <li>Kein angeschlossenes Gerät geht: zuerst Ground prüfen.</li>
+            <li>LED richtig herum einbauen und <code>pinMode()</code> definieren.</li>
+            <li>Kabel auf Kabelbruch prüfen, auch wenn das eher selten ist.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <strong>4. Fehler noch nicht gefunden?</strong>
+          <ul class="check-list" style="margin-top:10px;">
+            <li>Kleinere Testprogramme schreiben.</li>
+            <li>INPUTs und OUTPUTs im seriellen Monitor überprüfen.</li>
+            <li>Mit <code>Serial.print()</code> Markierungen setzen, um den Ablauf sichtbar zu machen.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <strong>5. Typische Programmfehler</strong>
+          <ul class="check-list" style="margin-top:10px;">
+            <li><code>=</code> statt <code>==</code></li>
+            <li>Semikolon hinter <code>if()</code>, <code>while()</code> oder <code>for()</code></li>
+            <li><code>&lt;</code> und <code>&gt;</code> vertauscht</li>
+            <li>Lokale Variable an der falschen Stelle</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid2x" style="margin-top:16px;">
+        <div>
+          <div class="warn-box">
+            <strong>Hilfen aus den Randnotizen</strong>
+            <ul class="check-list">
+              <li>Eine Bibliothek muss nicht nur im Sketch stehen, sondern auch in der IDE vorhanden sein.</li>
+              <li>In einer <code>while</code>-Schleife kannst du zum Testen zum Beispiel <code>Serial.print("Jetzt bin ich in der While-Schleife");</code> einsetzen.</li>
+              <li>Setzt man nach der runden Klammer einer Schleife oder Verzweigung ein Semikolon, wird der Block in den geschweiften Klammern übersprungen.</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="code-card"><pre>// typischer Debug-Helfer
+if (sensorWert &gt; 500) {
+  Serial.println("Zweig A");
+} else {
+  Serial.println("Zweig B");
+}</pre></div>
+          <p>Solche Markierungen helfen dir, den tatsächlichen Programmablauf zu sehen, statt nur zu raten.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_trouble_mcq",
+          "title":"Mini-Check: Troubleshooting",
+          "hint":"Wähle die jeweils beste Aussage.",
+          "questions":[
+            {
+              "text":"Was prüfst du zuerst, wenn ein Sketch gar nicht kompiliert?",
+              "choices":[
+                {"id":"a","label":"Nur das USB-Kabel austauschen."},
+                {"id":"b","label":"Die Fehlermeldung verstehen und auf setup(), loop() oder fehlende Bibliotheken achten."},
+                {"id":"c","label":"Sofort alle LEDs neu anschließen."},
+                {"id":"d","label":"Den Arduino mehrfach resetten."}
+              ],
+              "correct":["b"],
+              "explain":"Das ist der erste Schritt: Compilerfehler lesen und die eigentliche Ursache finden."
+            },
+            {
+              "text":"Welcher Fehler führt oft dazu, dass ein Block gar nicht ausgeführt wird?",
+              "choices":[
+                {"id":"a","label":"Ein zusätzliches Semikolon direkt nach if(), while() oder for()."},
+                {"id":"b","label":"Ein zu kurzes USB-Kabel."},
+                {"id":"c","label":"Ein richtiger COM-Port."},
+                {"id":"d","label":"Ein korrektes == in Bedingungen."}
+              ],
+              "correct":["a"],
+              "explain":"Genau dieser Fehler ist besonders tückisch: Dann wird der Block in den geschweiften Klammern übersprungen."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_trouble_reveal",
+          "title":"Fehlermeldung einordnen",
+          "hint":"Denk erst nach, dann klappe auf.",
+          "question":"Was bedeutet es oft, wenn der Upload nicht klappt, aber der Sketch ohne Fehler kompiliert wurde?",
+          "answer":"Dann liegt das Problem häufig nicht mehr im Quelltext, sondern bei den Einstellungen oder der Verbindung: falsches Board, falscher COM-Port, Treiberproblem oder ein verstellter Programmer."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_trouble_essay",
+          "title":"Dein Fehlersuchplan",
+          "hint":"Antworte in 5 bis 8 Sätzen. Nutze die Reihenfolge aus dem Bild.",
+          "fields":[
+            {"label":"Deine Antwort","key":"trouble_plan","kind":"textarea","placeholder":"Beschreibe Schritt für Schritt, wie du künftig vorgehst, wenn ein Arduino-Projekt nicht funktioniert."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Gute Fehlersuche folgt einer Reihenfolge: Kompilieren, Übertragen, Hardware, Testprogramme, typische Syntax- und Logikfehler. So suchst du zielgerichtet statt zufällig.</p>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Weiterdenken</strong>
+        <ul class="source-list">
+          <li>Weiterdenken: Welche deiner bisherigen Arduino-Fehler waren Compilerfehler, welche eher Upload- oder Hardwareprobleme?</li>
+          <li>Wie würdest du einen Fehler suchen, wenn nur eine LED nicht leuchtet, aber der Rest des Programms funktioniert?</li>
+          <li>Wann hilft dir <code>Serial.print()</code> mehr als bloßes Raten?</li>
+        </ul>
+      </div>
+
+      <figure class="scan-box" style="margin-top:16px;">
+        <img src="pdf-bilder/arduino2-seite18.png" alt="Übersichtsbild zum Troubleshooting" />
+        <figcaption>Auf dem Bild siehst du den vollständigen Prüfpfad zum Troubleshooting noch einmal in einer Übersicht.</figcaption>
+      </figure>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_5__" });
+  </script>
+</body>
+</html>
