@@ -12,7 +12,13 @@
   }
 
   var path = window.location.pathname || "";
-  var segments = path.split("/").filter(Boolean);
+  var segments = path.split("/").filter(Boolean).map(function (segment) {
+    try {
+      return decodeURIComponent(segment);
+    } catch (e) {
+      return segment;
+    }
+  });
   var key = "";
   if (segments.length >= 2) {
     key = segments.slice(-2).join("/");
