@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -43,6 +43,173 @@
       background: rgba(0,0,0,.03);
       color: var(--wb-text, #111827);
     }
+
+    .pudding-flow{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px;
+    }
+    .pudding-flow .wb-title{margin-bottom:4px}
+    .pudding-flow-bank{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      padding:8px;
+      border:1px dashed var(--wb-bank-border, #c7d2fe);
+      border-radius:8px;
+      background: var(--wb-bank-bg, #eef2ff);
+      margin-bottom:10px;
+      min-height:46px;
+    }
+    .pudding-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:5px 8px;
+      min-height:28px;
+      background:#fff;
+      border:1px solid #c7d2fe;
+      border-radius:6px;
+      cursor:grab;
+      font-size:11px;
+      line-height:1.2;
+      text-align:center;
+      max-width:100%;
+    }
+    .pudding-chip.selected{outline:2px solid #2563eb}
+    .pudding-flow-chart{
+      max-width:600px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:5px;
+    }
+    .pudding-oval{
+      width:96px;
+      min-height:30px;
+      border:2px solid #b9c7e8;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3px 7px;
+      background:#fff;
+    }
+    .pudding-step{
+      width:min(100%, 290px);
+      min-height:34px;
+      border:2px solid #b9c7e8;
+      border-radius:4px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3px 7px;
+      text-align:center;
+      font-size:12px;
+    }
+    .pudding-arrow{
+      color:#6b7280;
+      font-weight:700;
+      line-height:1;
+    }
+    .pudding-diamond-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      margin-top:2px;
+    }
+    .pudding-diamond{
+      width:104px;
+      height:104px;
+      transform: rotate(45deg);
+      border:2px solid #b9c7e8;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      border-radius:4px;
+      overflow:hidden;
+    }
+    .pudding-diamond .pudding-chip{
+      transform: rotate(-45deg);
+      width:126px;
+      max-width:none;
+      min-height:34px;
+      padding:3px 5px;
+      font-size:11px;
+      line-height:1.15;
+    }
+    .pudding-branch-row{
+      width:min(100%, 560px);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      align-items:start;
+      margin-top:2px;
+    }
+    .pudding-branch{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .pudding-branch-label{
+      font-size:12px;
+      color:#6b7280;
+      font-weight:700;
+    }
+    .pudding-loop-note{
+      font-size:12px;
+      color:#6b7280;
+      font-weight:700;
+      text-align:center;
+    }
+    .pudding-drop{
+      position:relative;
+      overflow:hidden;
+    }
+    .pudding-drop.filled{
+      border-color:#93c5fd;
+      background:#eff6ff;
+    }
+    .pudding-drop.ok{
+      border-color:#16a34a;
+      box-shadow:0 0 0 3px rgba(22,163,74,.12);
+    }
+    .pudding-drop.bad{
+      border-color:#dc2626;
+      box-shadow:0 0 0 3px rgba(220,38,38,.10);
+    }
+    .pudding-drop .pudding-chip{
+      width:100%;
+      max-width:none;
+      height:100%;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+    }
+    .pudding-flow-controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+    .pudding-score{
+      font-weight:700;
+      color:var(--wb-text, #111827);
+    }
+    @media (max-width: 700px){
+      .pudding-branch-row{grid-template-columns:1fr}
+      .pudding-diamond{width:96px; height:96px}
+      .pudding-diamond .pudding-chip{width:116px}
+      .pudding-step{width:min(100%, 270px)}
+    }
   </style>
 </head>
 
@@ -79,8 +246,8 @@
         <div>
           Ein digitaler Eingang kennt nur zwei Zustände:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><b>LOW</b> (0) – kein Signal / nicht gedrückt</li>
-            <li><b>HIGH</b> (1) – Signal / gedrückt</li>
+            <li><b>LOW</b> (0) - kein Signal / nicht gedrückt</li>
+            <li><b>HIGH</b> (1) - Signal / gedrückt</li>
           </ul>
           Der Arduino liest das mit <code>digitalRead(pin)</code>.
         </div>
@@ -88,17 +255,24 @@
      
 
       <div class="wb-soft-callout">
-        <strong>Grundprinzip im Code</strong>
+        <strong>So wird der Taster angeschlossen</strong>
         <div>
-          Zuerst setzt man den Pin als Eingang:
-          <pre><code>pinMode(2, INPUT);</code></pre>
-          Dann liest man den Zustand:
-          <pre><code>int state = digitalRead(2);</code></pre>
-          Und reagiert mit <code>if</code> darauf.
+          Der Taster wird <b>nicht zusammen mit der LED in denselben Stromkreis</b> gesteckt.
+          Er ist ein <b>eigener Anschluss f&uuml;r einen Eingangspin</b>.
+          <br><br>
+          Die LED geh&ouml;rt zum <b>Ausgang</b>: Der Arduino schickt dort Strom bzw. ein Signal zur Lampe.
+          <br>
+          Der Taster geh&ouml;rt zum <b>Eingang</b>: Er meldet dem Arduino nur, ob gedr&uuml;ckt wird oder nicht.
+          <br><br>
+          Bei <code>INPUT_PULLUP</code> steckst du den Taster meist so:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>eine Seite des Tasters an <b>Pin 2</b></li>
+            <li>die andere Seite an <b>GND</b></li>
+          </ul>
+          Der Taster verbindet beim Dr&uuml;cken also <b>Pin 2 mit GND</b>.
+          Die LED wird nicht direkt &uuml;ber den Taster geschaltet, sondern erst sp&auml;ter im Code &uuml;ber ihren eigenen Ausgangspin.
         </div>
       </div>
-
-    
 
       <div class="wb-soft-callout">
         <strong>Pullup / Pulldown - warum braucht man das?</strong>
@@ -111,9 +285,11 @@
           <pre><code>pinMode(2, INPUT_PULLUP);</code></pre>
           Dann gilt meist:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>Taster <b>nicht</b> gedrückt – <b>HIGH</b></li>
-            <li>Taster gedrückt – <b>LOW</b></li>
+            <li>Taster <b>nicht</b> gedrückt - <b>HIGH</b></li>
+            <li>Taster gedrückt - <b>LOW</b></li>
           </ul>
+          Der Arduino liest diesen Zustand dann zum Beispiel mit
+          <code>digitalRead(2)</code>.
         </div>
       </div>
       </div>
@@ -126,7 +302,8 @@
           Bei <code>INPUT_PULLUP</code> ist die Logik oft "umgedreht":
           gedrückt = LOW, nicht gedrückt = HIGH.
           <br>
-          Das ist kein Fehler - man muss es nur im <code>if</code> beachten.
+          Das ist kein Fehler - beim Dr&uuml;cken zieht der Taster den Eingang auf GND.
+          Man muss es nur im <code>if</code> beachten.
         </div>
       </div>
 
@@ -152,6 +329,9 @@ void loop() {
   }
 }</code></pre>
           Die LED leuchtet nur, wenn der Taster gedrückt wird.
+          <br>
+          Wichtig: Der Taster schaltet hier <b>nicht direkt</b> die LED.
+          Er liefert nur die Information an den Arduino. Der Arduino schaltet danach die LED &uuml;ber den Ausgangspin ein oder aus.
         </div>
       </div>
 
@@ -493,7 +673,7 @@ void loop() {
         <div class="pdfcaption">Original - Seite 19</div>
       </div>
     </section>
-    <section data-wb-page="3" data-wb-page-title="13. Programme planen – Denken vor dem Programmieren">
+    <section data-wb-page="3" data-wb-page-title="13. Programme planen - Denken vor dem Programmieren">
       <h2>13. Programme planen - Denken vor dem Programmieren</h2>
 
       <div class="wb-soft-callout">
@@ -507,34 +687,161 @@ void loop() {
             <li>In welcher Reihenfolge passieren die Schritte?</li>
             <li>Wo gibt es Entscheidungen oder Wiederholungen?</li>
           </ul>
-          Genau dabei helfen <b>Struktogramme</b>.
+          Genau dabei helfen <b>Flussdiagramme</b>.
         </div>
       </div>
 
-      <div class="wb-soft-callout">
-        <strong>Was ist ein Struktogramm?</strong>
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
         <div>
-          Ein <b>Struktogramm</b> (auch Nassi–Shneiderman-Diagramm)
-          ist eine grafische Darstellung eines Programms.
-          <br><br>
-          Es zeigt:
-          <ul style="margin:6px 0 0; padding-left:18px">
-            <li>die <b>Abfolge</b> von Anweisungen</li>
-            <li><b>Bedingungen</b> (if / else)</li>
-            <li><b>Wiederholungen</b> (for / while)</li>
-          </ul>
-          – ohne eine einzige Zeile echten Codes.
+          <div class="pdfpage" style="max-width:420px; margin:0 auto;">
+            <img src="pdf-bilder/flussdiagramm.png" alt="Beispiel f&uuml;r ein Flussdiagramm">
+            <div class="pdfcaption">Beispielbild: Flussdiagramm mit typischen Symbolen</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="wb-soft-callout">
+            <strong>Was ist ein Flussdiagramm?</strong>
+            <div>
+              Ein <b>Flussdiagramm</b> zeigt einen Ablauf so, dass man ihn schnell
+              &uuml;berblicken kann. Es macht sichtbar,
+              <ul style="margin:6px 0 0; padding-left:18px">
+                <li>welche Schritte nacheinander passieren,</li>
+                <li>an welchen Stellen Entscheidungen getroffen werden,</li>
+                <li>welche Informationen oder Eingaben daf&uuml;r gebraucht werden.</li>
+              </ul>
+              Ein Flussdiagramm beginnt meist mit einem <b>Start</b> oder einer
+              <b>Eingabe</b> und endet mit einem <b>Ergebnis</b> oder <b>Output</b>.
+              Dazwischen liegen Prozessschritte und Bedingungen.
+            </div>
+          </div>
+
+          <div class="wb-soft-callout">
+            <strong>So liest du das Flussdiagramm</strong>
+            <div>
+              In dem Bild erkennst du die typischen Bausteine eines Flussdiagramms:
+              <ul style="margin:6px 0 0; padding-left:18px">
+                <li><b>abgerundete Rechtecke</b> f&uuml;r Start und Ende,</li>
+                <li><b>Rechtecke</b> f&uuml;r konkrete Prozessschritte,</li>
+                <li><b>Rauten</b> f&uuml;r Entscheidungen wie "Ja oder Nein?",</li>
+                <li><b>Pfeile</b> f&uuml;r die Richtung des Ablaufs.</li>
+              </ul>
+              Manche Darstellungen enthalten au&szlig;erdem Dokumente oder ausgelagerte
+              Teilprozesse. So sieht man auf einen Blick, wie aus einem Input Schritt
+              f&uuml;r Schritt ein Output wird.
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
+        <strong>Wof&uuml;r Flussdiagramme gut sind</strong>
+        <div>
+          Flussdiagramme sind ein einfaches Werkzeug, um Prozesse zu planen,
+          zu erkl&auml;ren oder Fehler zu finden.
+          <br><br>
+          Vorteile:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>schnell gezeichnet und schnell ver&auml;ndert,</li>
+            <li>&uuml;bersichtlich bei linearen Abl&auml;ufen,</li>
+            <li>gut geeignet, um einzelne Teilschritte zu untersuchen.</li>
+          </ul>
+          Bei sehr gro&szlig;en oder verzweigten Prozessen kann ein Flussdiagramm
+          aber schnell un&uuml;bersichtlich werden.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Flussdiagramme selbst erstellen</strong>
+        <div>
+          Ein geeignetes Werkzeug daf&uuml;r ist
+          <a href="https://app.diagrams.net/?src=about" target="_blank" rel="noopener noreferrer">diagrams.net</a>.
+          Dort kannst du Flussdiagramme mit den &uuml;blichen Symbolen direkt im Browser erstellen.
+          <br><br>
+          Wenn du ein Diagramm zeichnest, achte darauf, dass es
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li>eine klare Leserichtung hat,</li>
+            <li>nicht zu viele Kreuzungen enth&auml;lt,</li>
+            <li>mit wenigen, passenden Symbolen auskommt.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
         <div>
-          Schau dir das Struktogramm genau an und beantworte die Fragen. Schreibe dir auch nochmal die einzelnen Elemente
-          (Start, Ende, Schleifen, Entscheidungen, Eingaben) mit graphischer Entsprechung (Raute, Oval, Rechteck, Abgeschnittenes Rechteck)
-          der Struktogramme auf deinen Spickzettel.
+          Schau dir das Flussdiagramm genau an und beantworte die Fragen. Schreibe dir auch die wichtigsten Elemente
+          auf deinen Spickzettel:
+          Start/Ende, Prozessschritt, Entscheidung und Eingabe.
+          Notiere jeweils das passende Symbol dazu.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block pudding-flow" data-pudding-flow>
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Drag and Drop - Kochrezept als Flussdiagramm</div>
+            <div class="wb-hint">Ziehe die Begriffe in die passenden Felder. Du kannst Begriffe auch anklicken und dann ein Feld anklicken.</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="pudding-flow-bank" data-pudding-bank>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Start">Start</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Mische Puddingpulver und Zucker">Mische Puddingpulver und Zucker</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Rühre Pulver und Zucker mit 6 EL Milch an.">Rühre Pulver und Zucker mit 6 EL Milch an.</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Bringe die übrige Milch zum Kochen">Bringe die übrige Milch zum Kochen</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Kocht der Pudding?">Kocht der Pudding?</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Nimm Milch von der Kochstelle und gib Pulver dazu">Nimm Milch von der Kochstelle und gib Pulver dazu</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Rühre stetig">Rühre stetig</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Fülle den Pudding in eine Glasschale und stelle ihn kalt.">Fülle den Pudding in eine Glasschale und stelle ihn kalt.</button>
+            <button type="button" class="pudding-chip" draggable="true" data-token="Ende">Ende</button>
+          </div>
+
+          <div class="pudding-flow-chart">
+            <div class="pudding-oval pudding-drop" data-accept="Start"></div>
+            <div class="pudding-arrow">↓</div>
+            <div class="pudding-step pudding-drop" data-accept="Mische Puddingpulver und Zucker"></div>
+            <div class="pudding-arrow">↓</div>
+            <div class="pudding-step pudding-drop" data-accept="Rühre Pulver und Zucker mit 6 EL Milch an."></div>
+            <div class="pudding-arrow">↓</div>
+            <div class="pudding-step pudding-drop" data-accept="Bringe die übrige Milch zum Kochen"></div>
+            <div class="pudding-arrow">↓</div>
+
+            <div class="pudding-diamond-wrap">
+              <div class="pudding-diamond pudding-drop" data-accept="Kocht der Pudding?"></div>
+            </div>
+
+            <div class="pudding-branch-row">
+              <div class="pudding-branch">
+                <div class="pudding-branch-label">Nein</div>
+                <div class="pudding-step pudding-drop" data-accept="Nimm Milch von der Kochstelle und gib Pulver dazu"></div>
+                <div class="pudding-arrow">↓</div>
+                <div class="pudding-step pudding-drop" data-accept="Rühre stetig"></div>
+                <div class="pudding-loop-note">↺ zurück zur Frage</div>
+              </div>
+
+              <div class="pudding-branch">
+                <div class="pudding-branch-label">Ja</div>
+                <div class="pudding-step pudding-drop" data-accept="Fülle den Pudding in eine Glasschale und stelle ihn kalt."></div>
+                <div class="pudding-arrow">↓</div>
+                <div class="pudding-oval pudding-drop" data-accept="Ende"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pudding-flow-controls">
+            <button type="button" class="wb-btn primary" data-pudding-check>Überprüfen</button>
+            <button type="button" class="wb-btn" data-pudding-reset>Zurücksetzen</button>
+            <div class="pudding-score" data-pudding-score></div>
+          </div>
         </div>
       </div>
 
@@ -546,18 +853,18 @@ void loop() {
       <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
-        <strong>Grundidee eines Struktogramms</strong>
+        <strong>Grundidee eines Flussdiagramms</strong>
         <div>
-          Ein Struktogramm besteht aus <b>Rechtecken</b>,
-          die von oben nach unten gelesen werden.
+          Ein Flussdiagramm zeigt einen Ablauf mit <b>Symbolen und Pfeilen</b>.
+          Es wird in der Richtung der Pfeile gelesen.
           <br><br>
           Wichtig:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>Kein Pfeilchaos</li>
-            <li>Keine Sprünge</li>
+            <li>Klare Pfeilrichtung</li>
+            <li>Keine unnötigen Sprünge</li>
             <li>Klare Struktur</li>
           </ul>
-          Die Leserichtung ist immer: <b>oben – unten</b>.
+          Die Leserichtung ist meist: <b>oben nach unten</b>.
         </div>
       </div>
 
@@ -572,7 +879,7 @@ void loop() {
           <pre><code>LED einschalten
 warten
 LED ausschalten</code></pre>
-          Jede Anweisung wird genau einmal ausgeführt –
+          Jede Anweisung wird genau einmal ausgeführt -
           in der angegebenen Reihenfolge.
         </div>
       </div>
@@ -582,11 +889,11 @@ LED ausschalten</code></pre>
       <div class="wb-soft-callout">
         <strong>Auswahl (if / else)</strong>
         <div>
-          Eine Entscheidung wird als geteiltes Feld dargestellt:
+          Eine Entscheidung wird im Flussdiagramm meist als <b>Raute</b> dargestellt:
           <pre><code>Ist der Taster gedrückt?
-  Ja – LED an
-  Nein – LED aus</code></pre>
-          Genau <b>ein</b> Weg wird ausgeführt –
+  Ja - LED an
+  Nein - LED aus</code></pre>
+          Genau <b>ein</b> Weg wird ausgeführt -
           abhängig von der Bedingung.
         </div>
       </div>
@@ -596,8 +903,8 @@ LED ausschalten</code></pre>
       <div class="wb-soft-callout">
         <strong>Wiederholung (for / while)</strong>
         <div>
-          Wiederholungen werden als Block dargestellt,
-          der mehrfach durchlaufen wird:
+          Wiederholungen erkennst du daran,
+          dass ein Ablauf über Pfeile zu einem früheren Schritt zurückführt:
           <pre><code>Solange Bedingung wahr:
   LED ein
   warten
@@ -610,15 +917,15 @@ LED ausschalten</code></pre>
     
 
       <div class="wb-soft-callout">
-        <strong>Wichtiger Unterschied zu Flussdiagrammen</strong>
+        <strong>Merke zum Flussdiagramm</strong>
         <div>
-          Struktogramme:
+          Flussdiagramme:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>haben <b>keine Pfeile</b></li>
-            <li>erzwingen saubere Struktur</li>
-            <li>passen direkt zu strukturiertem Code</li>
+            <li>arbeiten meist mit <b>Pfeilen</b></li>
+            <li>zeigen Abläufe sehr anschaulich</li>
+            <li>helfen beim Planen vor dem Programmieren</li>
           </ul>
-          Deshalb sind sie besonders gut für Einsteiger geeignet.
+          Deshalb sind sie besonders gut geeignet, um einen Programmablauf zuerst grob zu planen.
         </div>
       </div>
 </div>
@@ -629,12 +936,12 @@ LED ausschalten</code></pre>
         <script type="application/json" class="wb-config">
           {
             "id":"s20_vf",
-            "title":"Verständnisfragen - Struktogramme",
+            "title":"Verständnisfragen - Flussdiagramme",
             "hint":"Text wird gespeichert",
             "fields":[
               {"label":"1","key":"s20_q1","kind":"textarea","placeholder":"1) Warum ist es sinnvoll, ein Programm vor dem Codieren zu planen?"},
-              {"label":"2","key":"s20_q2","kind":"textarea","placeholder":"2) Welche drei Grundstrukturen gibt es im Struktogramm?"},
-              {"label":"3","key":"s20_q3","kind":"textarea","placeholder":"3) Warum kommen Struktogramme ohne Pfeile aus?"}
+              {"label":"2","key":"s20_q2","kind":"textarea","placeholder":"2) Welche Symbole sind in einem Flussdiagramm besonders wichtig?"},
+              {"label":"3","key":"s20_q3","kind":"textarea","placeholder":"3) Warum helfen Pfeile und Symbole beim Planen eines Programms?"}
             ]
           }
         </script>
@@ -660,8 +967,8 @@ LED ausschalten</code></pre>
               <li>anschließend stoppt</li>
             </ul>
             <br>
-            – Schreibe die Schritte so,
-            dass man daraus direkt ein Struktogramm zeichnen könnte.
+            Schreibe die Schritte so,
+            dass man daraus direkt ein Flussdiagramm zeichnen könnte.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Vom Plan zum Code" placeholder="Schritte in der richtigen Reihenfolge"></textarea>
@@ -672,28 +979,28 @@ LED ausschalten</code></pre>
               <strong>Musterlösung (in Worten):</strong><br>
               1. Warte, bis der Taster gedrückt wird.<br>
               2. Wiederhole 3-mal:<br>
-              – LED einschalten<br>
-              – warten<br>
-              – LED ausschalten<br>
-              – warten<br>
+              LED einschalten<br>
+              warten<br>
+              LED ausschalten<br>
+              warten<br>
               3. Programm endet.
             </div>
           </details>
         </div>
       </div>
     </section>
-    <section data-wb-page="4" data-wb-page-title="Vom Struktogramm zum Arduino-Code">
-      <h2>Vom Struktogramm zum Arduino-Code</h2>
+    <section data-wb-page="4" data-wb-page-title="Vom Flussdiagramm zum Arduino-Code">
+      <h2>Vom Flussdiagramm zum Arduino-Code</h2>
 
       <div class="wb-soft-callout">
         <strong>Warum diese Brücke wichtig ist</strong>
         <div>
-          Ein Struktogramm ist ein <b>Plan</b>, kein fertiges Programm.
+          Ein Flussdiagramm ist ein <b>Plan</b>, kein fertiges Programm.
           <br>
           Ziel ist es, diesen Plan <b>systematisch</b> in Code zu übersetzen,
           ohne etwas zu vergessen oder durcheinanderzubringen.
           <br><br>
-          – Jeder Block im Struktogramm entspricht später
+          Jeder Schritt im Flussdiagramm entspricht später
           einem bestimmten Teil im Code.
         </div>
       </div>
@@ -703,13 +1010,13 @@ LED ausschalten</code></pre>
       <div class="wb-soft-callout">
         <strong>Grundregel der Übersetzung</strong>
         <div>
-          <b>Struktogramm von oben nach unten lesen</b>
+          <b>Flussdiagramm Schritt für Schritt lesen</b>
           <br>
-          und jeden Block nacheinander in Code umsetzen.
+          und jeden Schritt nacheinander in Code umsetzen.
           <br><br>
           Merksatz:
           <br>
-          <i>Ein Block = eine Idee = ein Code-Abschnitt</i>
+          <i>Ein Schritt = eine Idee = ein Code-Abschnitt</i>
         </div>
       </div>
 
@@ -717,9 +1024,9 @@ LED ausschalten</code></pre>
 
   <div class="grid2">
       <div class="wb-soft-callout">
-        <strong>1. Sequenz – normaler Code</strong>
+        <strong>1. Sequenz - normaler Code</strong>
         <div>
-          <b>Struktogramm (gedanklich):</b>
+          <b>Flussdiagramm (gedanklich):</b>
           <pre><code>LED an
 warten
 LED aus</code></pre>
@@ -737,12 +1044,12 @@ digitalWrite(13, LOW);</code></pre>
       
 
       <div class="wb-soft-callout">
-        <strong>2. Auswahl – if / else</strong>
+        <strong>2. Auswahl - if / else</strong>
         <div>
-          <b>Struktogramm (gedanklich):</b>
-          <pre><code>Ist Taster gedrückt?
-  Ja – LED an
-  Nein – LED aus</code></pre>
+          <b>Flussdiagramm (gedanklich):</b>
+          <pre><code>Ist der Taster gedrückt?
+  Ja - LED an
+  Nein - LED aus</code></pre>
 
           <b>Arduino-Code:</b>
           <pre><code>if (digitalRead(BTN) == LOW) {
@@ -751,7 +1058,7 @@ digitalWrite(13, LOW);</code></pre>
   digitalWrite(LED, LOW);
 }</code></pre>
 
-          Der geteilte Block im Struktogramm
+          Die Entscheidung im Flussdiagramm
           wird zu <code>if</code> und <code>else</code>.
         </div>
       </div>
@@ -759,9 +1066,9 @@ digitalWrite(13, LOW);</code></pre>
      
 
       <div class="wb-soft-callout">
-        <strong>3. Wiederholung (fest) – for-Schleife</strong>
+        <strong>3. Wiederholung (fest) - for-Schleife</strong>
         <div>
-          <b>Struktogramm (gedanklich):</b>
+          <b>Flussdiagramm (gedanklich):</b>
           <pre><code>Wiederhole 3-mal:
   LED an
   warten
@@ -782,10 +1089,10 @@ digitalWrite(13, LOW);</code></pre>
 
 
       <div class="wb-soft-callout">
-        <strong>4. Wiederholung (Bedingung) – while-Schleife</strong>
+        <strong>4. Wiederholung (Bedingung) - while-Schleife</strong>
         <div>
-          <b>Struktogramm (gedanklich):</b>
-          <pre><code>Solange Taster nicht gedrückt:
+          <b>Flussdiagramm (gedanklich):</b>
+          <pre><code>Solange der Taster nicht gedrückt ist:
   LED blinkt</code></pre>
 
           <b>Arduino-Code:</b>
@@ -796,7 +1103,7 @@ digitalWrite(13, LOW);</code></pre>
   delay(200);
 }</code></pre>
 
-          "Solange" im Struktogramm
+          "Solange" im Flussdiagramm
           bedeutet fast immer <code>while</code>.
         </div>
       </div>
@@ -809,7 +1116,7 @@ digitalWrite(13, LOW);</code></pre>
         <div>
           Gehe immer in dieser Reihenfolge vor:
           <ol style="margin:6px 0 0; padding-left:18px">
-            <li>Struktogramm vollständig verstehen</li>
+            <li>Flussdiagramm vollständig verstehen</li>
             <li>Sequenzen umsetzen</li>
             <li>Dann Entscheidungen (if / else)</li>
             <li>Zum Schluss Wiederholungen (for / while)</li>
@@ -829,16 +1136,16 @@ digitalWrite(13, LOW);</code></pre>
         </div>
         <div class="wb-body">
           <div class="wb-muted">
-            Gegeben ist folgendes <b>Struktogramm in Worten</b>:
+            Gegeben ist folgendes <b>Flussdiagramm in Worten</b>:
             <br><br>
             1. Warte, bis der Taster gedrückt wird.<br>
             2. Wiederhole 5-mal:<br>
-            – LED einschalten<br>
-            – warten<br>
-            – LED ausschalten<br>
-            – warten
+            LED einschalten<br>
+            warten<br>
+            LED ausschalten<br>
+            warten
             <br><br>
-            – Übersetze diesen Plan in Arduino-Code.
+            Übersetze diesen Plan in Arduino-Code.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Übung - Vom Plan zum Code" placeholder="Schreibe den passenden Arduino-Code oder beschreibe die Struktur."></textarea>
@@ -891,7 +1198,7 @@ digitalWrite(13, LOW);</code></pre>
           Ein <b>16x2</b>-Display kann <b>16 Zeichen pro Zeile</b> und hat <b>2 Zeilen</b>.
           Ein <b>20x4</b>-Display kann <b>20 Zeichen pro Zeile</b> und hat <b>4 Zeilen</b>.
           <br><br>
-          Es zeigt vor allem <b>Text</b> (Zeichen) an – keine frei zeichnbaren Bilder wie ein TFT.
+          Es zeigt vor allem <b>Text</b> (Zeichen) an - keine frei zeichnbaren Bilder wie ein TFT.
         </div>
       </div>
 
@@ -916,9 +1223,9 @@ digitalWrite(13, LOW);</code></pre>
         <div>
           Häufige Stolpersteine:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><b>Kontrast</b>: Viele LCDs haben ein kleines Potentiometer – wenn der Kontrast falsch ist, siehst du "nichts".</li>
+            <li><b>Kontrast</b>: Viele LCDs haben ein kleines Potentiometer - wenn der Kontrast falsch ist, siehst du "nichts".</li>
             <li><b>5V vs. 3.3V</b>: Manche Displays sind 5V-tolerant, andere nicht (besonders bei OLED/TFT).</li>
-            <li><b>Backlight</b>: Hintergrundbeleuchtung kann an/aus sein – bei falscher Verdrahtung wirkt das Display "tot".</li>
+            <li><b>Backlight</b>: Hintergrundbeleuchtung kann an/aus sein - bei falscher Verdrahtung wirkt das Display "tot".</li>
           </ul>
         </div>
       </div>
@@ -930,10 +1237,10 @@ digitalWrite(13, LOW);</code></pre>
         <div>
           Typische Funktionen (je nach Library):
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><code>begin()</code> – Display starten</li>
-            <li><code>clear()</code> – Bildschirm leeren</li>
-            <li><code>setCursor(spalte, zeile)</code> – Schreibposition setzen</li>
-            <li><code>print("Text")</code> – Text ausgeben</li>
+            <li><code>begin()</code> - Display starten</li>
+            <li><code>clear()</code> - Bildschirm leeren</li>
+            <li><code>setCursor(spalte, zeile)</code> - Schreibposition setzen</li>
+            <li><code>print("Text")</code> - Text ausgeben</li>
           </ul>
         </div>
       </div>
@@ -1124,7 +1431,7 @@ void loop() {
           Je nach Aufgabe nutzt man unterschiedliche Motoren:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li><b>Gleichstrommotor (DC)</b> - dreht sich kontinuierlich</li>
-            <li><b>Servomotor</b> - fährt gezielt eine Position an</li>
+            <li><b>Servomotor</b> - führt gezielt eine Position an</li>
             <li><b>Schrittmotor</b> - bewegt sich in festen Schritten</li>
           </ul>
           In diesem Lernbaustein steht vor allem der <b>DC-Motor</b> im Fokus.
@@ -1185,7 +1492,7 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Motor ein- und ausschalten (Prinzip)</strong>
         <div>
-          Der Arduino steuert den Motor ähnlich wie eine LED –
+          Der Arduino steuert den Motor ähnlich wie eine LED -
           aber indirekt:
           <pre><code>digitalWrite(MOTOR, HIGH);  // Motor an
 digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
@@ -1201,7 +1508,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           Die Drehzahl eines DC-Motors kann mit
           <b>Pulsweitenmodulation (PWM)</b> verändert werden:
           <pre><code>analogWrite(MOTOR, 120);</code></pre>
-          Je größer der Wert (0–255),
+          Je größer der Wert (0-255),
           desto schneller dreht sich der Motor.
         </div>
       </div>
@@ -1332,6 +1639,117 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
     SBLibrary.autoMountAll({ storagePrefix: "arduino_lernbaustein_s18-22__" });
+
+    (function(){
+      const root = document.querySelector("[data-pudding-flow]");
+      if(!root) return;
+
+      const bank = root.querySelector("[data-pudding-bank]");
+      const drops = Array.from(root.querySelectorAll(".pudding-drop"));
+      const scoreEl = root.querySelector("[data-pudding-score]");
+      const btnCheck = root.querySelector("[data-pudding-check]");
+      const btnReset = root.querySelector("[data-pudding-reset]");
+      let dragged = null;
+      let selected = null;
+
+      function shuffleChildren(container){
+        const nodes = Array.from(container.children);
+        for(let i = nodes.length - 1; i > 0; i--){
+          const j = Math.floor(Math.random() * (i + 1));
+          [nodes[i], nodes[j]] = [nodes[j], nodes[i]];
+        }
+        nodes.forEach(node => container.appendChild(node));
+      }
+
+      function clearSelection(){
+        root.querySelectorAll(".pudding-chip.selected").forEach(el => el.classList.remove("selected"));
+        selected = null;
+      }
+
+      function bindChip(chip){
+        chip.addEventListener("dragstart", () => {
+          dragged = chip;
+          clearSelection();
+        });
+        chip.addEventListener("dragend", () => {
+          dragged = null;
+        });
+        chip.addEventListener("click", () => {
+          if(chip.parentElement && chip.parentElement.classList.contains("pudding-drop")){
+            bank.appendChild(chip);
+            chip.parentElement.classList.remove("filled","ok","bad");
+            scoreEl.textContent = "";
+            return;
+          }
+          if(selected === chip){
+            clearSelection();
+            return;
+          }
+          clearSelection();
+          selected = chip;
+          chip.classList.add("selected");
+        });
+      }
+
+      function placeChip(drop, chip){
+        if(!drop || !chip) return;
+        const existing = drop.querySelector(".pudding-chip");
+        if(existing && existing !== chip) bank.appendChild(existing);
+        drop.innerHTML = "";
+        drop.appendChild(chip);
+        drop.classList.add("filled");
+        drop.classList.remove("ok","bad");
+        clearSelection();
+      }
+
+      drops.forEach(drop => {
+        drop.addEventListener("dragover", e => e.preventDefault());
+        drop.addEventListener("drop", e => {
+          e.preventDefault();
+          placeChip(drop, dragged);
+        });
+        drop.addEventListener("click", () => {
+          if(selected) placeChip(drop, selected);
+        });
+      });
+
+      bank.addEventListener("dragover", e => e.preventDefault());
+      bank.addEventListener("drop", e => {
+        e.preventDefault();
+        if(dragged){
+          bank.appendChild(dragged);
+          clearSelection();
+        }
+      });
+
+      btnCheck.addEventListener("click", () => {
+        let okCount = 0;
+        drops.forEach(drop => {
+          const chip = drop.querySelector(".pudding-chip");
+          const expected = drop.getAttribute("data-accept") || "";
+          const got = chip ? chip.getAttribute("data-token") || "" : "";
+          const ok = got !== "" && got === expected;
+          drop.classList.remove("ok","bad");
+          drop.classList.add(ok ? "ok" : "bad");
+          if(ok) okCount += 1;
+        });
+        scoreEl.textContent = `Punkte: ${okCount}/${drops.length}`;
+      });
+
+      btnReset.addEventListener("click", () => {
+        drops.forEach(drop => {
+          const chip = drop.querySelector(".pudding-chip");
+          if(chip) bank.appendChild(chip);
+          drop.classList.remove("filled","ok","bad");
+          drop.innerHTML = "";
+        });
+        clearSelection();
+        scoreEl.textContent = "";
+      });
+
+      root.querySelectorAll(".pudding-chip").forEach(bindChip);
+      shuffleChildren(bank);
+    })();
   </script>
 </body>
 </html>
