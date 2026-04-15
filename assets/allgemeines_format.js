@@ -1215,26 +1215,16 @@ ${fi.input.value || ""}
     }, 0);
   }
 
+ 
   function postWebhook(url, payload){
     if(!url) return;
-    const body = JSON.stringify(payload || {});
-    try{
-      if(global.navigator && typeof global.navigator.sendBeacon === "function"){
-        const blob = new Blob([body], {type:"text/plain;charset=UTF-8"});
-        if(global.navigator.sendBeacon(url, blob)) return true;
-      }
-    }catch(_){}
     try{
       fetch(url, {
         method: "POST",
-        mode: "no-cors",
-        keepalive: true,
-        headers: {"Content-Type":"text/plain;charset=UTF-8"},
-        body
+        headers: {"Content-Type":"application/json;charset=utf-8"},
+        body: JSON.stringify(payload || {})
       });
-      return true;
     }catch(_){}
-    return false;
   }
 
   function getBlockMounts(root, type){
