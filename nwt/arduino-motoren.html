@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arduino: Motoren mit dem Mikrocontroller steuern</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .grid2x,
+    .grid3x { display: grid; gap: 16px; align-items: start; }
+    .grid2x { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid3x { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .motor-box,
+    .code-card,
+    .tip-box,
+    .warn-box,
+    .figure-card {
+      border: 1px solid rgba(24, 63, 92, 0.16);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px 18px;
+    }
+    .tip-box { background: #eef7ff; border-left: 4px solid #2c6aa0; }
+    .warn-box { background: #fff6eb; border-left: 4px solid #d48819; }
+    .code-card {
+      background: #0f172a;
+      color: #e8f0ff;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: 1.45;
+    }
+    .figure-card { padding: 0; overflow: hidden; }
+    .figure-card img { display: block; width: 100%; height: auto; }
+    .figure-card figcaption { padding: 12px 14px 14px; color: #475569; font-size: 0.95rem; }
+    .step-list,
+    .source-list { margin: 0; padding-left: 20px; }
+    .step-list li + li,
+    .source-list li + li { margin-top: 8px; }
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .compare-table th,
+    .compare-table td {
+      border: 1px solid rgba(24, 63, 92, 0.16);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .compare-table th { background: #eef7ff; }
+    .tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: #ecfdf3;
+      color: #166534;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .pdfpage img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid rgba(24, 63, 92, 0.16);
+      border-radius: 8px;
+    }
+    .pdfcaption { margin-top: 8px; color: #475569; font-size: 0.95rem; }
+    @media (max-width: 900px) {
+      .grid2x,
+      .grid3x { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"NWT Arduino",
+      "sectionTitle":"Motoren mit dem Arduino",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"exportResults",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2","h3"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Arduino Motoren",
+      "resultsPageTitle":"Auswertung",
+      "themeDefault":"default",
+      "studentNameLabel":"Name",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"arduino-motoren-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="15. Motoren steuern">
+      <h1>Motoren steuern</h1>
+
+      <div class="wb-soft-callout">
+        <strong>Was ist ein Motor?</strong>
+        <div>
+          Ein <b>Motor</b> wandelt elektrische Energie in <b>Bewegung</b> um.
+          <br>
+          Mit Motoren können z. B. Räder angetrieben, Arme bewegt oder Lüfter betrieben werden.
+          <br><br>
+          Motoren sind damit eine wichtige Verbindung zwischen <b>Programm</b> und <b>realer Bewegung</b>.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Es gibt verschiedene Motorarten</strong>
+        <div>
+          Je nach Aufgabe nutzt man unterschiedliche Motoren:
+          <ul style="margin:6px 0 0; padding-left:18px">
+            <li><b>Gleichstrommotor (DC)</b> - dreht sich kontinuierlich</li>
+            <li><b>Servomotor</b> - führt gezielt eine Position an</li>
+            <li><b>Schrittmotor</b> - bewegt sich in festen Schritten</li>
+          </ul>
+          In diesem Lernbaustein steht vor allem der <b>DC-Motor</b> im Fokus.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Warum darf man Motoren nicht direkt anschließen?</strong>
+          <div>
+            Motoren benötigen meist:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li>mehr Strom als ein Arduino-Pin liefern kann</li>
+              <li>eine Schutzbeschaltung gegen Spannungsspitzen</li>
+            </ul>
+            <br>
+            Deshalb steuert der Arduino den Motor <b>nicht direkt</b>, sondern über ein Hilfsbauteil (z. B. Transistor oder Motortreiber).
+          </div>
+        </div>
+
+        <div class="wb-soft-callout">
+          <strong>Transistor oder Motortreiber</strong>
+          <div>
+            Häufige Lösungen:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li><b>Transistor</b>: Ein/aus, evtl. mit PWM für Geschwindigkeit</li>
+              <li><b>Motortreiber-Modul</b> (z. B. L298N): Richtung + Geschwindigkeit</li>
+            </ul>
+            Der Arduino gibt nur Steuersignale, die eigentliche Motorleistung kommt aus einer separaten Versorgung.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Wichtiger Schutz: Freilaufdiode</strong>
+        <div>
+          Motoren sind Spulen. Beim Abschalten können <b>Spannungsspitzen</b> entstehen, die den Arduino zerstören können.
+          <br><br>
+          Eine <b>Freilaufdiode</b> schützt die Schaltung vor diesen Spannungsspitzen.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Motor ein- und ausschalten (Prinzip)</strong>
+          <div>
+            Der Arduino steuert den Motor ähnlich wie eine LED, aber indirekt:
+            <pre><code>digitalWrite(MOTOR, HIGH);  // Motor an
+digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
+            Intern schaltet dabei ein Transistor oder Treiber den Motorstrom.
+          </div>
+        </div>
+
+        <div class="wb-soft-callout">
+          <strong>Geschwindigkeit steuern</strong>
+          <div>
+            Die Drehzahl eines DC-Motors kann mit <b>Pulsweitenmodulation (PWM)</b> verändert werden:
+            <pre><code>analogWrite(MOTOR, 120);</code></pre>
+            Je größer der Wert (0-255), desto schneller dreht sich der Motor.
+          </div>
+        </div>
+      </div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"mc_s22",
+            "title":"Multiple Choice - Motoren (mehrere Antworten möglich)",
+            "questions":[
+              {
+                "text":"1) Welche Aussagen zu Motoren sind richtig?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Motoren erzeugen Bewegung"},
+                  {"id":"b","label":"Motoren benötigen oft mehr Strom"},
+                  {"id":"c","label":"Motoren können immer direkt an Pins angeschlossen werden"},
+                  {"id":"d","label":"Motoren brauchen Schutzbeschaltung"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"Motoren erzeugen Bewegung, brauchen Strom und oft Schutzbeschaltung."
+              },
+              {
+                "text":"2) Wozu dient PWM bei Motoren?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Steuerung der Geschwindigkeit"},
+                  {"id":"b","label":"Änderung der Drehrichtung"},
+                  {"id":"c","label":"Veränderung der mittleren Leistung"},
+                  {"id":"d","label":"Schutz vor Spannungsspitzen"}
+                ],
+                "correct":["a","c"],
+                "explain":"PWM verändert die mittlere Leistung und damit oft die Geschwindigkeit des Motors."
+              },
+              {
+                "text":"3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?",
+                "multiple": true,
+                "choices":[
+                  {"id":"a","label":"Transistor"},
+                  {"id":"b","label":"Motortreiber-Modul"},
+                  {"id":"c","label":"Widerstand allein"},
+                  {"id":"d","label":"Freilaufdiode"}
+                ],
+                "correct":["a","b","d"],
+                "explain":"Transistor, Motortreiber und Freilaufdiode sind typische Bauteile in Motor-Schaltungen."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-block">
+        <div class="wb-head">
+          <div>
+            <div class="wb-title">Mini-Challenge - Ventilator steuern</div>
+            <div class="wb-hint">Challenge</div>
+          </div>
+        </div>
+        <div class="wb-body">
+          <div class="wb-muted">
+            Ziel: Ein Motor soll:
+            <ul style="margin:6px 0 0; padding-left:18px">
+              <li>per Taster ein- und ausgeschaltet werden</li>
+              <li>bei eingeschaltetem Zustand langsam starten</li>
+            </ul>
+            Nutze <code>if</code>, <code>analogWrite()</code> und eine Variable für die Geschwindigkeit.
+          </div>
+          <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Ventilator steuern" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
+          <details>
+            <summary>Lösung anzeigen</summary>
+            <div>
+              <strong>Lösungsidee:</strong><br>
+              Taster mit <code>if</code> abfragen.<br>
+              Bei gedrücktem Taster: Geschwindigkeit langsam erhöhen (Variable + PWM).<br>
+              Bei losgelassenem Taster: Motor ausschalten.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="L298N richtig anschließen">
+      <h1>L298N: Der wirklich richtige Anschluss ohne Überhitzung</h1>
+      <p class="wb-muted">Wenn du einen DC-Motor sauber und belastbar steuern willst, reicht ein einzelner Ausgang nicht mehr. Dafür nutzt du ein DC-Motorsteuerungsmodul auf Basis des <code>L298N</code>-Chips.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="tip-box">
+          <strong>Grundidee</strong>
+          <p>Das Gleichstrommotor-Treibermodul in diesem Projekt basiert auf dem IC <b>L298N</b>. Im Inneren arbeitet eine <b>H-Brücke</b>, mit der sich ein Motor nicht nur ein- und ausschalten, sondern auch umpolen lässt. So kann er vorwärts und rückwärts laufen.</p>
+          <p>Damit der Treiber nicht überhitzt, ist ein großer <b>Kühlkörper</b> auf den Chip geschraubt. Er vergrößert die Oberfläche und gibt Wärme besser an die Umgebung ab.</p>
+          <p>Die Platine kann maximal <b>zwei Motoren gleichzeitig</b> betreiben.</p>
+        </div>
+        <div class="warn-box">
+          <strong>Wichtige Spannungen</strong>
+          <p>Die Stromversorgung kommt über einen 3-poligen Schraubverbinder mit den Anschlüssen <b>VS</b>, <b>GND</b> und <b>VSS</b>.</p>
+          <p><b>VS</b> ist die Versorgung für den Motor und darf hier bis zu <b>12 V</b> betragen. <b>VSS</b> versorgt den Logikteil der Platine und liegt im Bereich von <b>5 bis 7 V</b>. <b>GND</b> ist die gemeinsame Masse.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="pdfpage">
+        <img src="pdf-bilder/seite22.png" alt="L298N-Motortreiber mit beschrifteten Anschlüssen">
+        <div class="pdfcaption">Original - Seite 22</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="motor-box">
+          <h2>Die Anschlüsse im Überblick</h2>
+          <ul class="step-list">
+            <li><b>Doppelklemmen für Motoren:</b> An jede Doppelklemme kann ein Motor angeschlossen werden.</li>
+            <li><b>Input-Pins:</b> Über die rechten beiden Input-Pins wird der rechts angeschlossene Motor gesteuert. Eine Kombination aus <code>HIGH</code> und <code>LOW</code> legt die Drehrichtung fest. Sind beide gleich, steht der Motor still. Die linken beiden Pins gehören zum linken Motoranschluss.</li>
+            <li><b>GND-Stecker:</b> Dieser Stecker muss mit einer GND-Buchse des Arduino verbunden werden.</li>
+            <li><b>Motorversorgung:</b> Hier wird die Versorgung für den Motor angeschlossen, also z. B. ein Netzgerät oder ein Batteriepack mit 5 bis 12 V.</li>
+            <li><b>VS:</b> Versorgungsspannung für die Motoren.</li>
+            <li><b>GND:</b> Gemeinsame Masse für Arduino, Treiber und externe Stromquelle.</li>
+            <li><b>VSS:</b> Versorgung des Logikteils der Platine mit 5 bis 7 V.</li>
+          </ul>
+        </div>
+        <div class="wb-callout">
+          <strong>Warum überhitzt die Schaltung sonst?</strong>
+          <div>
+            Ein Motor braucht deutlich mehr Strom als ein Arduino-Pin liefern kann. Der L298N übernimmt diese Leistungsschaltung. Ohne passende Versorgung, gemeinsame Masse und Kühlkörper würde der Chip schnell zu heiß oder der Arduino würde unzuverlässig arbeiten.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>AUFGABEN</strong>
+        <div>
+          Schließe an die rechte Doppelklemme einen Motor an und verbinde die rechten beiden Input-Pins mit den Pins 3 und 4 deines Arduino.
+          <br><br>
+          Schreibe nun ein Programm, das immer wieder Pin 3 auf <code>HIGH</code> und Pin 4 auf <code>LOW</code> schaltet, zwei Sekunden wartet, danach beide Pins auf <code>HIGH</code> setzt und wieder zwei Sekunden wartet.
+          <br><br>
+          Wenn du jetzt ein Netzteil bzw. Batteriepack anschließt, sollte der Motor laufen, stehen, laufen, stehen.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"l298n_vf",
+            "title":"Verständnisfragen - L298N",
+            "hint":"Text wird gespeichert",
+            "fields":[
+              {"label":"1","key":"l298n_q1","kind":"textarea","placeholder":"1) Welche Aufgabe hat die H-Brücke im L298N-Modul?"},
+              {"label":"2","key":"l298n_q2","kind":"textarea","placeholder":"2) Wofür stehen VS, GND und VSS?"},
+              {"label":"3","key":"l298n_q3","kind":"textarea","placeholder":"3) Warum sind Kühlkörper und richtige Versorgungsspannungen hier wichtig?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"l298n_reveal_1",
+          "title":"Stopp & check",
+          "hint":"Erst selbst ordnen, dann aufklappen.",
+          "question":"Warum braucht der L298N sowohl eine Motorversorgung als auch eine Versorgung für den Logikteil?",
+          "answer":"Weil die Motoren viel Leistung brauchen, während der Logikteil nur die Steuersignale verarbeitet. VS versorgt die Motorleistung, VSS die interne Logik. Beides muss zusammen mit GND sauber verdrahtet sein."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Schrittmotor">
+      <h1>Schrittmotor: In 3 Schritten zum ersten Aufbau</h1>
+      <p class="wb-muted">Jetzt arbeitest du den Schrittmotor Schritt für Schritt durch. Du verbindest zuerst die Bauteile, richtest danach die IDE ein und verstehst am Ende den ersten Sketch.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="tip-box">
+          <strong>Leitfrage</strong>
+          <p>Wie schaffst du es, dass sich ein Schrittmotor nicht einfach nur dreht, sondern kontrolliert und reproduzierbar reagiert?</p>
+        </div>
+        <figure class="figure-card">
+          <img src="pdf-bilder/stepper1.png" alt="Schrittmotor mit Treiberplatine, Verkabelung und Beispielcode">
+          <figcaption>Die Abbildung zeigt die typische Verkabelung mit Treiberplatine und den ersten Beispielcode für einen Arduino-Schrittmotor.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid3x">
+        <div class="motor-box">
+          <span class="tag">Schritt 1</span>
+          <h2>Schaltung einrichten</h2>
+          <p>Stecke zuerst den Motorstecker in die passende Buchse der Treiberplatine. Achte auf die Form des Steckers, damit er nicht verdreht eingesteckt wird.</p>
+          <p>Verbinde danach <code>GND</code> und <code>VCC</code> der Treiberplatine mit <code>GND</code> und <code>5V</code> des Arduino. Die Signalleitungen <code>IN1</code>, <code>IN2</code>, <code>IN3</code> und <code>IN4</code> kommen an die Arduino-Pins <code>6</code>, <code>5</code>, <code>4</code> und <code>3</code>.</p>
+        </div>
+        <div class="motor-box">
+          <span class="tag">Schritt 2</span>
+          <h2>Micro-Board anschließen</h2>
+          <p>Verbinde den Arduino mit dem Rechner und starte die Arduino-IDE. Unter <b>Werkzeuge &gt; Port</b> wählst du den richtigen Anschluss aus.</p>
+          <p>Über <b>Werkzeuge &gt; Boardinformationen holen</b> kannst du prüfen, ob die Verbindung klappt. Erst wenn Board und Port stimmen, lohnt sich das Hochladen eines Sketches.</p>
+        </div>
+        <div class="motor-box">
+          <span class="tag">Schritt 3</span>
+          <h2>Schrittmotor einrichten</h2>
+          <p>Ein leerer Sketch enthält immer <code>setup()</code> und <code>loop()</code>. In <code>setup()</code> stehen Dinge, die nur einmal beim Start passieren. In <code>loop()</code> läuft dein Programm immer wieder.</p>
+          <p>Für den Motor nutzt du die Bibliothek <code>Stepper.h</code>. Sie hilft dir dabei, einzelne Schritte gezielt anzusteuern.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"stepper_reveal_1",
+          "title":"Stopp & check",
+          "hint":"Denk kurz selbst nach, dann klappe auf.",
+          "question":"Warum ist die Reihenfolge der Pins IN1 bis IN4 beim Schrittmotor so wichtig?",
+          "answer":"Weil die Spulen des Motors in einer festen Reihenfolge angesteuert werden müssen. Wenn die Reihenfolge nicht stimmt, ruckelt der Motor, läuft gar nicht oder dreht in einer unerwarteten Weise."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"stepper_order_1",
+          "title":"Bring den Ablauf in die richtige Reihenfolge",
+          "hint":"Ordne die Schritte von der Vorbereitung bis zum ersten Test.",
+          "items":[
+            "Motor an die Treiberplatine stecken",
+            "Treiberplatine mit 5V und GND des Arduino verbinden",
+            "IN1 bis IN4 mit den Pins 6, 5, 4 und 3 verbinden",
+            "Arduino per USB anschließen und Port wählen",
+            "Sketch hochladen und den Motor testen"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"stepper_cloze_1",
+          "title":"Sicherung: Wichtige Begriffe einsetzen",
+          "hint":"Ziehe die passenden Wörter in die Lücken.",
+          "bank":["setup()","loop()","Stepper.h","2048","Port"],
+          "segments":[
+            {"t":"text","v":"In der Arduino-IDE musst du zuerst den richtigen "},
+            {"t":"gap","a":"Port"},
+            {"t":"text","v":" auswählen. Die Bibliothek "},
+            {"t":"gap","a":"Stepper.h"},
+            {"t":"text","v":" stellt Funktionen für den Motor bereit. Der Code in "},
+            {"t":"gap","a":"setup()"},
+            {"t":"text","v":" läuft nur einmal beim Start, der Code in "},
+            {"t":"gap","a":"loop()"},
+            {"t":"text","v":" wiederholt sich ständig. Im Beispiel entspricht eine volle Umdrehung "},
+            {"t":"gap","a":"2048"},
+            {"t":"text","v":" Schritten."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Ein Schrittmotor braucht nicht nur Strom, sondern eine saubere Reihenfolge von Steuersignalen. Genau deshalb sind die Treiberplatine, die Pin-Reihenfolge und die richtige Auswahl von Board und Port so wichtig.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Schrittmotor-Code verstehen</h2>
+      <p class="wb-muted">Jetzt zerlegst du den ersten Sketch in seine Bausteine. Ziel ist nicht nur, dass der Code läuft, sondern dass du erklären kannst, warum er funktioniert.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="code-card"><pre><code>#include &lt;Stepper.h&gt;
+int steps = 2048;
+Stepper Schrittmotor(steps, 3, 5, 4, 6);
+
+void setup() {
+  Schrittmotor.setSpeed(5);
+}
+
+void loop() {
+  Schrittmotor.step(2048);
+  delay(1000);
+  Schrittmotor.step(-2048);
+  delay(1000);
+}</code></pre></div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="motor-box">
+          <h2>Was passiert im oberen Teil?</h2>
+          <p>Mit <code>#include &lt;Stepper.h&gt;</code> bindest du die Bibliothek ein. Danach legst du mit <code>steps = 2048</code> fest, wie viele Einzelschritte für eine volle Umdrehung nötig sind.</p>
+          <p>Die Zeile <code>Stepper Schrittmotor(steps, 3, 5, 4, 6);</code> baut ein Motor-Objekt. Es merkt sich die Schrittzahl und die verwendeten Pins.</p>
+        </div>
+        <div class="motor-box">
+          <h2>Was passiert in setup() und loop()?</h2>
+          <p>In <code>setup()</code> wird mit <code>setSpeed(5)</code> die Drehgeschwindigkeit eingestellt. Dieser Wert gibt Umdrehungen pro Minute an.</p>
+          <p>In <code>loop()</code> dreht der Motor erst eine Umdrehung vorwärts, wartet kurz und läuft dann eine Umdrehung rückwärts. Negative Schrittzahlen bedeuten die Gegenrichtung.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"stepper_verify_1",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage genau.",
+          "statement":"Wenn in step() eine negative Schrittzahl steht, bewegt sich der Schrittmotor in die andere Richtung.",
+          "answer": true,
+          "explain":"Genau so ist es: Das Vorzeichen entscheidet über die Drehrichtung, die absolute Zahl über die Anzahl der Schritte."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="motoren_stepper_p2" data-p2-title="Verbinde Code und Wirkung" data-p2-hint="Ordne jede Codezeile ihrer Funktion zu.">
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Code</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">#include &lt;Stepper.h&gt;</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">int steps = 2048;</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Schrittmotor.setSpeed(5);</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Schrittmotor.step(-2048);</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Wirkung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Die Stepper-Bibliothek wird verfügbar gemacht.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Die Zahl der Schritte pro voller Umdrehung wird festgelegt.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Die Drehgeschwindigkeit wird eingestellt.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Der Motor dreht eine Umdrehung in Gegenrichtung.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"stepper_essay_1",
+          "title":"Transfer: Verändere den Sketch gedanklich",
+          "hint":"Antworte in 4 bis 8 Sätzen. Begründe mindestens zwei Änderungen.",
+          "fields":[
+            {"label":"Deine Antwort","key":"stepper_transfer","kind":"textarea","placeholder":"Was musst du ändern, wenn sich der Motor nur eine halbe Umdrehung bewegen und danach schneller zurückdrehen soll?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Merke</strong>
+        <div>
+          Ein Schrittmotor ist stark, wenn es auf <b>kontrollierte Einzelschritte</b> ankommt.
+          <br>
+          Du steuerst hier nicht einfach nur "an" oder "aus", sondern eine genaue Anzahl von Bewegungen.
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Servomotoren">
+      <h1>Servomotoren: Winkel gezielt anfahren</h1>
+      <p class="wb-muted">Servos sind besonders praktisch, wenn du eine bestimmte Position ansteuern willst, zum Beispiel 30°, 90° oder 180°.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="tip-box">
+          <strong>Grundidee</strong>
+          <p>Ein Servo hat eine kleine eingebaute Elektronik. Sie vergleicht den gewünschten Winkel mit der aktuellen Stellung und korrigiert die Bewegung automatisch nach.</p>
+          <p>Typisch sind drei Leitungen: <b>5V</b>, <b>GND</b> und <b>Signal</b>. Das Signal wird als Pulsfolge übertragen. Die Servo-Bibliothek nimmt dir dabei viel Arbeit ab.</p>
+        </div>
+        <figure class="figure-card">
+          <img src="pdf-bilder/servo1.png" alt="Servomotor mit Anschlussbild und Beispielcode">
+          <figcaption>Der Servo wird mit drei Leitungen angeschlossen und im Programm über die Bibliothek <code>Servo.h</code> angesteuert.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="code-card"><pre><code>#include &lt;Servo.h&gt;
+Servo S1;
+
+void setup() {
+  S1.attach(9);
+}
+
+void loop() {
+  S1.write(30);
+  delay(1000);
+  S1.write(90);
+  delay(1000);
+}</code></pre></div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"motoren_categorize_1",
+          "title":"Sortiere die Eigenschaften",
+          "hint":"Ordne jede Aussage dem passenden Motortyp zu.",
+          "categories":[
+            {"id":"servo","title":"Servomotor"},
+            {"id":"stepper","title":"Schrittmotor"}
+          ],
+          "items":[
+            {"label":"Fährt gezielt einen Winkel an","category":"servo"},
+            {"label":"Bewegt sich in vielen kleinen Einzelschritten","category":"stepper"},
+            {"label":"Typisch mit Servo.h und write()","category":"servo"},
+            {"label":"Typisch mit Stepper.h und step()","category":"stepper"},
+            {"label":"Gut geeignet für Klappen oder Hebel","category":"servo"},
+            {"label":"Gut geeignet für reproduzierbare Drehbewegungen","category":"stepper"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"servo_mcq_1",
+          "title":"Mini-Check: Servos",
+          "hint":"Manche Aufgaben haben mehrere richtige Antworten.",
+          "questions":[
+            {
+              "text":"1) Welche Aussage trifft auf einen Standard-Servo zu?",
+              "choices":[
+                {"id":"a","label":"Er dreht ohne Begrenzung immer weiter."},
+                {"id":"b","label":"Er kann gezielt auf bestimmte Winkel eingestellt werden."},
+                {"id":"c","label":"Er braucht niemals eine Bibliothek."},
+                {"id":"d","label":"Er funktioniert nur mit vier Signalleitungen."}
+              ],
+              "correct":["b"],
+              "explain":"Ein Standard-Servo wird auf Winkelstellungen eingestellt und dreht sich nicht endlos weiter."
+            },
+            {
+              "text":"2) Welche Leitungen gehören typisch zu einem Servo?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"5V"},
+                {"id":"b","label":"GND"},
+                {"id":"c","label":"Signal"},
+                {"id":"d","label":"IN1 bis IN4"}
+              ],
+              "correct":["a","b","c"],
+              "explain":"Ein Servo hat typischerweise Versorgung, Masse und eine Signalleitung."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"servo_reveal_1",
+          "title":"Fehler finden",
+          "hint":"Korrigiere die Aussage gedanklich.",
+          "question":"\"Ein Servo kann immer ohne zusätzliche Stromquelle an jedem Arduino-Pin betrieben werden.\" Was ist daran problematisch?",
+          "answer":"Das ist zu allgemein. Kleine Servos funktionieren oft direkt am Board, unter Last kann der Strombedarf aber zu hoch sein. Dann braucht der Servo eine eigene 5V-Versorgung, die Masse muss trotzdem mit GND des Arduino verbunden bleiben."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Servos eignen sich dann, wenn eine genaue Position wichtiger ist als viele Einzelschritte. Du steuerst hier meist einen Winkel an, nicht eine feste Anzahl von Schritten.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="DC-Motoren">
+      <h1>DC-Motoren: schnell, einfach, aber weniger präzise</h1>
+      <p class="wb-muted">Ein Gleichstrommotor dreht sich kontinuierlich. Er ist ideal für Räder, Lüfter oder Förderbänder, wenn nicht jeder Winkel exakt getroffen werden muss.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="motor-box">
+          <h2>Was kann ein DC-Motor gut?</h2>
+          <p>Er startet schnell, ist oft günstig und lässt sich mit PWM in der Geschwindigkeit beeinflussen. Genau deshalb wird er in vielen einfachen Robotern oder Ventilatoren verwendet.</p>
+          <p>Für die Richtung brauchst du meist einen Motortreiber oder eine H-Brücke. Für nur eine Drehrichtung reicht oft schon ein Transistor plus Freilaufdiode.</p>
+        </div>
+        <div class="warn-box">
+          <strong>Typischer Denkfehler</strong>
+          <p>Ein DC-Motor weiß nicht von selbst, an welcher Position er gerade steht. Wenn du exakte Winkel brauchst, ist er ohne zusätzliche Sensorik die falsche Wahl.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Motortyp</th>
+            <th>Stärke</th>
+            <th>Grenze</th>
+            <th>Typischer Einsatz</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DC-Motor</td>
+            <td>Einfache Dauerrotation, gut für Geschwindigkeit</td>
+            <td>Keine genaue Positionsrückmeldung</td>
+            <td>Lüfter, Räder, Förderband</td>
+          </tr>
+          <tr>
+            <td>Servomotor</td>
+            <td>Gezielte Winkel</td>
+            <td>Begrenzter Drehbereich bei Standard-Servos</td>
+            <td>Greifer, Klappen, Lenkung</td>
+          </tr>
+          <tr>
+            <td>Schrittmotor</td>
+            <td>Genau reproduzierbare Schritte</td>
+            <td>Mehr Verkabelung und meist langsamer</td>
+            <td>Positionierung, Drehteller, Dosierung</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <figure class="figure-card">
+          <img src="pdf-bilder/stepper2.png" alt="Einfaches Schaltbild für einen DC-Motor mit Diode am Arduino">
+          <figcaption>Minimaler Aufbau für einen einfachen Motor-Test: Der Motor wird nicht direkt ohne Schutz betrieben, die Diode hilft gegen Spannungsspitzen.</figcaption>
+        </figure>
+        <div>
+          <div class="tip-box">
+            <strong>Einfacher Motor-Test</strong>
+            <p>Das erste Beispiel zeigt den einfachsten Fall, wie ein Motor an das Arduino angeschlossen werden kann. Die Diode schützt das Arduino-Board vor Induktionsströmen.</p>
+            <p>Der Motor kann sich dabei nur in <b>eine Richtung</b> und mit <b>einer Geschwindigkeit</b> drehen. Zum Testen lässt sich der bekannte Blink-Code verwenden, weil der Ausgangspin einfach abwechselnd auf <code>HIGH</code> und <code>LOW</code> gesetzt wird.</p>
+            <p>Wichtig ist dabei der Blick auf die Schaltung: Stromversorgung, Masse und Schutzbauteil müssen sauber verbunden sein.</p>
+          </div>
+
+          <div class="wb-section-break"></div>
+
+          <div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}</code></pre></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="tip-box">
+        <strong>Beispiel 2: Motor in beide Richtungen drehen</strong>
+        <p>Im zweiten Beispiel ist der Motor an <b>zwei Outputs</b> angeschlossen. Damit lässt sich der Motor in <b>beide Richtungen</b> drehen.</p>
+        <p>Die Geschwindigkeit lässt sich über die <b>PWM-Kanäle</b> regulieren. Bei dieser Schaltung sind <b>vier Dioden</b> nötig. In der Tabelle sind die möglichen Schaltzustände aufgeführt. <code>LOW</code> bedeutet <b>GND</b>, <code>HIGH</code> bedeutet <b>5V+</b>.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <figure class="figure-card">
+          <img src="pdf-bilder/stepper4.png" alt="Schaltung eines Motors mit zwei Ausgängen und vier Dioden">
+          <figcaption>Mit zwei Ausgängen kann der Motor je nach Schaltzustand links oder rechts drehen. Die vier Dioden schützen die Schaltung.</figcaption>
+        </figure>
+        <figure class="figure-card">
+          <img src="pdf-bilder/stepper5.png" alt="Tabelle mit Schaltzuständen für Digital 2, Digital 3 und Motorrichtung">
+          <figcaption>Die Tabelle zeigt, welche Kombination aus <code>LOW</code>, <code>HIGH</code> und PWM zu Stopp, links, rechts oder langsamer Drehung führt.</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="tip-box">
+        <strong>Ein Beispielcode</strong>
+        <p>Der folgende Sketch zeigt einen möglichen Ablauf für diese Schaltung: erst Stopp, dann Vorwärtslauf, danach Rückwärtslauf und zum Schluss eine langsame Beschleunigung über PWM.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="code-card"><pre><code>int motorPin1 = 2;
+int motorPin2 = 3;  // PWM
+
+void setup() {
+  pinMode(motorPin1, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+}
+
+void motorStop() {
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+  delay(500);
+}
+
+void loop() {
+  motorStop();
+
+  digitalWrite(motorPin1, HIGH);  // Motor vor
+  digitalWrite(motorPin2, LOW);
+  delay(1000);
+
+  motorStop();
+
+  digitalWrite(motorPin1, LOW);   // Motor zurück
+  digitalWrite(motorPin2, HIGH);
+  delay(1000);
+
+  motorStop();
+
+  digitalWrite(motorPin1, LOW);   // Motor langsam zu schnell
+  for (int i = 0; i < 255; i++) {
+    analogWrite(motorPin2, i);
+    delay(20);
+  }
+  motorStop();
+}</code></pre></div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dc_verify_1",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage mit Blick auf Präzision.",
+          "statement":"Ein einfacher DC-Motor ist ohne zusätzliche Sensorik sofort die beste Wahl, wenn du einen Arm exakt auf 45° stellen willst.",
+          "answer": false,
+          "explain":"Für eine exakte Winkelposition ist ein Standard-DC-Motor allein ungeeignet. Ein Servo oder ein Schrittmotor passt hier meist besser."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"motoren_essay_vergleich",
+          "title":"Transfer: Wähle den passenden Motor",
+          "hint":"Antworte in 4 bis 8 Sätzen und begründe deine Entscheidung mit Fachbegriffen.",
+          "fields":[
+            {"label":"Deine Antwort","key":"motorwahl","kind":"textarea","placeholder":"Du baust ein Modell mit einer Schranke, einem drehenden Lüfter und einem kleinen Drehteller. Welchen Motortyp würdest du für jede Aufgabe wählen und warum?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <p>Die Motorwahl hängt von der Aufgabe ab: Dauerrotation spricht oft für DC, Winkelsteuerung für Servo und genaue Schrittfolgen für Schrittmotor.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Zusammenfassung und Quellen">
+      <h1>Zusammenfassung, Weiterforschen und Abgabe</h1>
+      <p class="wb-muted">Zum Schluss sicherst du noch einmal die Kernideen und sammelst Anknüpfungspunkte für eigene Projekte.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2x">
+        <div class="tip-box">
+          <strong>Jetzt hast du gelernt, dass ...</strong>
+          <ul class="step-list">
+            <li>Motoren nie unüberlegt direkt an einen Arduino-Pin angeschlossen werden.</li>
+            <li>ein Schrittmotor über feste Schrittfolgen und eine Treiberplatine arbeitet.</li>
+            <li>ein Servo gezielt Winkel anfährt und dafür ein Steuersignal auswertet.</li>
+            <li>ein DC-Motor vor allem für kontinuierliche Drehbewegungen geeignet ist.</li>
+          </ul>
+        </div>
+        <div class="motor-box">
+          <strong>Weiterdenken</strong>
+          <p>Was würde sich ändern, wenn du einen Motor nicht nur bewegen, sondern seine echte Position messen willst? Dann brauchst du zusätzliche Sensoren oder Rückmeldungen, zum Beispiel Encoder oder Potentiometer.</p>
+          <p>Auch die Stromversorgung wird ab größeren Motoren schnell zum eigenen Thema: Spannung, Stromstärke und gemeinsame Masse müssen dann sauber geplant werden.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"motoren_abschluss_mcq",
+          "title":"Abschluss-Check",
+          "hint":"Prüfe, ob du die Unterschiede wirklich sauber trennen kannst.",
+          "questions":[
+            {
+              "text":"1) Für welche Aufgabe ist ein Servo besonders passend?",
+              "choices":[
+                {"id":"a","label":"Ein Lüfter soll dauerhaft rotieren."},
+                {"id":"b","label":"Eine Schranke soll zwischen 0° und 90° wechseln."},
+                {"id":"c","label":"Ein schweres Förderband soll ohne Pause laufen."},
+                {"id":"d","label":"Ein Motor soll nur über IN1 bis IN4 arbeiten."}
+              ],
+              "correct":["b"],
+              "explain":"Ein Servo ist stark, wenn definierte Winkelpositionen angefahren werden sollen."
+            },
+            {
+              "text":"2) Was passt typisch zum Schrittmotor?",
+              "multiple": true,
+              "choices":[
+                {"id":"a","label":"step()"},
+                {"id":"b","label":"Treiberplatine"},
+                {"id":"c","label":"2048 Schritte pro Umdrehung im Beispiel"},
+                {"id":"d","label":"Nur drei Leitungen wie beim Servo"}
+              ],
+              "correct":["a","b","c"],
+              "explain":"Der Beispiel-Schrittmotor arbeitet mit einer Treiberplatine und der Funktion step(); drei Leitungen sind typisch für Servos, nicht für Schrittmotoren."
+            },
+            {
+              "text":"3) Welche Aussage zu DC-Motoren stimmt?",
+              "choices":[
+                {"id":"a","label":"Sie sind ohne Sensorik automatisch positionsgenau."},
+                {"id":"b","label":"Sie sind gut für kontinuierliche Drehbewegungen."},
+                {"id":"c","label":"Sie brauchen nie Schutzbeschaltung."},
+                {"id":"d","label":"Sie werden immer mit Servo.h gesteuert."}
+              ],
+              "correct":["b"],
+              "explain":"DC-Motoren sind gut für dauerhafte Drehbewegungen, aber nicht automatisch positionsgenau."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"motoren_reveal_abschluss",
+          "title":"Was kannst du danach?",
+          "hint":"Klappe auf und vergleiche mit deinem Stand.",
+          "question":"Woran erkennst du, dass du das Thema wirklich verstanden hast?",
+          "answer":"Wenn du für eine konkrete Aufgabe begründen kannst, welcher Motortyp sinnvoll ist, wie er angeschlossen wird, welche Bibliothek oder Ansteuerung passt und welche Risiken bei Stromversorgung oder Verdrahtung beachtet werden müssen."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="motor-box">
+        <h2>Quellen & Weiterforschen</h2>
+        <ul class="source-list">
+          <li>Lokales Material aus diesem Projekt: Seite 6 von <code>nwt/arduino-4.html</code> und die Bilder <code>nwt/pdf-bilder/stepper1.png</code> und <code>nwt/pdf-bilder/servo1.png</code>.</li>
+          <li>Arduino-Dokumentation zur Programmiersprache und zu Bibliotheken: <a href="https://docs.arduino.cc/language-reference/" target="_blank" rel="noreferrer">docs.arduino.cc/language-reference</a></li>
+          <li>Arduino-Dokumentationsübersicht mit Servo-, Stepper- und Motor-Grundlagen: <a href="https://docs.arduino.cc/learn/" target="_blank" rel="noreferrer">docs.arduino.cc/learn</a></li>
+          <li>Arduino-Programmierübersicht mit Bibliotheken wie <code>Servo</code> und <code>Stepper</code>: <a href="https://docs.arduino.cc/programming" target="_blank" rel="noreferrer">docs.arduino.cc/programming</a></li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="warn-box">
+        <strong>Abgabe</strong>
+        <p>Nutze in der Sidebar den Button <b>Ergebnisse anzeigen</b>. Dort kannst du deine Antworten gesammelt prüfen und als Text exportieren.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_motoren__" });
+  </script>
+</body>
+</html>
