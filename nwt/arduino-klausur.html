@@ -193,6 +193,19 @@
           }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_grundlagen",
+            "title":"Selbstkontrolle",
+            "question":"Was sollte in deiner Erklärung zur LED-Schaltung vorkommen?",
+            "answer":"Wichtig sind diese Punkte: Der Arduino steuert einen Ausgangspin, der Strom fließt durch LED und Widerstand zu GND, der Widerstand begrenzt den Strom und schützt die LED, und der Stromkreis muss geschlossen sein. Eine gute Antwort nennt außerdem die Richtung des Stromflusses und die Funktion von HIGH oder LOW."
+          }
+        </script>
+      </div>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Programmaufbau und Upload">
@@ -435,6 +448,19 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_code",
+            "title":"Selbstkontrolle",
+            "question":"Wie läuft der Code mit wert und faktor ab?",
+            "answer":"Zuerst wird der aktuelle Wert ausgegeben. Solange der Wert kleiner als 20 ist, wird er jeweils mit 2 multipliziert: 4, dann 8, dann 16. Danach wird 16 noch einmal ausgegeben und zu 32. Ab 32 ist die Bedingung falsch, deshalb wird nun jeweils 6 abgezogen. Der Wert wächst also nicht unbegrenzt, sondern kippt nach Überschreiten der Grenze in einen anderen Ablauf."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
         <pre><code>int ton = 262;
@@ -473,6 +499,19 @@ void loop() {
             "fields":[
               {"label":"Deine Erklärung","key":"answer","kind":"textarea","placeholder":"Erkläre, was man in den ersten fünf Durchläufen hört, was im seriellen Monitor erscheint und wie ton, pause, sprung und wiederholungen zusammenwirken."}
             ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_code_komplex",
+            "title":"Selbstkontrolle",
+            "question":"Was sollte bei deiner Erklärung des komplexeren Codes vorkommen?",
+            "answer":"In den ersten vier Durchläufen wird jeweils ein Ton abgespielt, danach eine Pause gemacht, die aktuelle Tonhöhe im seriellen Monitor ausgegeben und ton um sprung erhöht. Gleichzeitig wird wiederholungen hochgezählt. Im fünften Durchlauf greift der else-Zweig: Jetzt wird pause ausgegeben, pause um 100 erhöht, ton auf 262 zurückgesetzt und wiederholungen auf 0 gesetzt. Danach beginnt das Muster erneut, aber mit einer längeren Tonpause."
           }
         </script>
       </div>
@@ -644,6 +683,19 @@ for (int runde = 0; runde < 2; runde++) {
           }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_schleifen_code",
+            "title":"Selbstkontrolle",
+            "question":"Wie entsteht die Tonfolge bei diesem Schleifen-Code?",
+            "answer":"Die äußere Schleife läuft zweimal. In jeder Runde läuft die innere Schleife dreimal und spielt drei Töne mit wachsender Frequenz: zuerst grundton, dann grundton plus 40 und grundton plus 80. Nach der ersten Runde wird grundton um 100 erhöht. Deshalb liegt die zweite Dreierfolge insgesamt höher als die erste. Insgesamt hörst du also sechs kurze Töne in zwei aufeinanderfolgenden Mustern."
+          }
+        </script>
+      </div>
     </section>
 
     <section data-wb-page="6" data-wb-page-title="Programmieren üben">
@@ -747,6 +799,19 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_syntax",
+            "title":"Selbstkontrolle",
+            "question":"Welche Syntaxfehler solltest du mindestens finden?",
+            "answer":"Wichtige Fehler sind: In setup fehlt die schließende Klammer an der richtigen Stelle, bei Serial.begin fehlt das Semikolon, in der for-Schleife fehlt eine Klammer, beim if-Block fehlt ebenfalls ein Semikolon nach der Zuweisung und die geschweiften Klammern sind nicht sauber geschlossen. Eine gute Lösung nennt mehrere formale Fehler und korrigiert die Schreibweise."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
         <pre><code>const int BTN = 2;
@@ -783,6 +848,19 @@ void loop() {
             "fields":[
               {"label":"Deine Antwort","key":"answer","kind":"textarea","placeholder":"Der Code ist formal fast in Ordnung, aber logisch ungeeignet. Beschreibe mindestens zwei semantische Probleme und erkläre, wie sich das Verhalten tatsächlich entwickeln würde."}
             ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_semantik",
+            "title":"Selbstkontrolle",
+            "question":"Welche semantischen Probleme stecken in diesem Code?",
+            "answer":"Die while-Schleife zählt extrem schnell hoch, solange der Taster nicht gedrückt ist. Dadurch wird zaehler sehr groß, noch bevor überhaupt eine sinnvolle Aktion passiert. Außerdem wird die LED praktisch nie dauerhaft wegen zaehler == 1 eingeschaltet, weil dieser Zustand kaum getroffen wird. Das Programm misst also keinen einzelnen Tastendruck, sondern produziert einen unkontrollierten Zähleranstieg."
           }
         </script>
       </div>
@@ -864,6 +942,19 @@ void loop() {
             "fields":[
               {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Warum darf ein Motor nicht direkt an einen Arduino-Pin angeschlossen werden, und welche Rolle spielen Transistor, separate Stromversorgung und Freilaufdiode?"}
             ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_transfer_essay",
+            "title":"Selbstkontrolle",
+            "question":"Was sollte in deiner Motor-Erklärung vorkommen?",
+            "answer":"Ein Motor braucht meist mehr Strom als ein Arduino-Pin liefern kann. Deshalb steuert der Arduino den Motor indirekt über Transistor oder Motortreiber. Oft braucht der Motor eine eigene Stromversorgung. Außerdem können beim Abschalten Spannungsspitzen entstehen, gegen die eine Freilaufdiode schützt. Eine gute Antwort verbindet also Strombedarf, Schutz und Steuerprinzip."
           }
         </script>
       </div>
@@ -987,6 +1078,19 @@ void loop() {
             "fields":[
               {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Wähle Aufgabe A, B, C, D oder E und schreibe eine vollständige Musterlösung."}
             ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_probe",
+            "title":"Erwartungshorizont",
+            "question":"Was wäre bei den Probeklausur-Aufgaben wichtig?",
+            "answer":"Aufgabe A: digitalWrite schaltet nur an oder aus, analogWrite nutzt PWM mit Werten etwa von 0 bis 255. Aufgabe B: Bei INPUT_PULLUP ist gedrückt gleich LOW und nicht gedrückt gleich HIGH. Aufgabe C: = weist zu, == vergleicht. Aufgabe D: Unterprogramme und Schleifen machen Code kürzer, klarer und leichter änderbar. Aufgabe E: Erwartet werden while oder if für den Taster, eine for-Schleife für die fünf Wiederholungen, tone oder noTone für den Ton und Serial.println für die Meldung."
           }
         </script>
       </div>
