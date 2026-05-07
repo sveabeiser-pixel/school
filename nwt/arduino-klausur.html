@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arduino Klausurtraining - Papierklausur vorbereiten</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .wb-soft-callout{
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding:12px;
+      background: transparent;
+      margin: 12px 0;
+    }
+    .wb-soft-callout strong{display:block; margin-bottom:6px}
+
+    .klausur-box{
+      border: 1px dashed var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 12px 0;
+      background: var(--wb-paper, #ffffff);
+    }
+
+    .code-note{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+      {
+        "bookTitle": "Arduino Klausurtraining",
+        "sectionTitle": "Papierklausur vorbereiten",
+        "submitLabel": "Summary & submit",
+        "onSubmit": "alert",
+        "webhookEmail": "",
+        "autoNav": true,
+        "autoNavHeadings": ["h1","h2"],
+        "autoNavIncludeBlocks": false
+      }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start und Leitfrage">
+      <h1>Arduino-Klausurtraining für die Papierklausur</h1>
+      <p>
+        Über die Internetseiten zu Arduino soll eine Klausur geschrieben werden. Diese Seite hilft dir dabei, die Inhalte
+        ohne Computer und ohne echten Arduino zu wiederholen. Du trainierst also genau das, was du auf Papier können musst:
+        Begriffe erklären, Code lesen, Abläufe begründen, Fehler erkennen und kleine Lösungen planen.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>So benutzt du diese Seite</strong>
+          <div>
+            Lies die Aufgaben wie eine Probeklausur. Antworte erst im Kopf oder auf Papier und prüfe dich dann mit den
+            Interaktionen. Nutze die Freitextfelder für Begründungen, nicht nur für Ein-Wort-Antworten.
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Was du danach können solltest</strong>
+          <div>
+            Du kannst die wichtigsten Arduino-Begriffe sauber erklären, typische Code-Strukturen lesen und passende
+            Lösungen oder Korrekturen aufschreiben, auch wenn kein Board vor dir liegt.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_start",
+            "title":"Leitfrage",
+            "question":"Woran merkst du in der Klausur, dass du ein Thema wirklich verstanden hast?",
+            "answer":"Wenn du nicht nur einen Befehl nennen kannst, sondern erklären kannst, warum er an dieser Stelle gebraucht wird, was ohne ihn passieren würde und wie sich eine Änderung im Code auf das Verhalten auswirkt."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_verify_start",
+            "title":"Stopp & check",
+            "hint":"Prüfe die Aussage genau.",
+            "statement":"Für diese Klausur muss man vor allem auswendig lernen, welcher Knopf in der Arduino-IDE angeklickt wird.",
+            "answer": false,
+            "explain":"Wichtiger ist, dass du Aufbau, Fachbegriffe, Programmstruktur und Begründungen verstehst. Da die Klausur auf Papier geschrieben wird, stehen Denken und Erklären im Vordergrund."
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Grundlagen wiederholen">
+      <h2>Grundlagen: Mikrocontroller, Pins, Stromkreis</h2>
+      <p>
+        Jetzt hast du das gelernt: Ein Arduino ist eine Mikrocontroller-Platine. Er verarbeitet Programme, liest Eingaben
+        und steuert Ausgänge. Zu den Grundlagen gehören außerdem HIGH und LOW, geschlossene Stromkreise, LEDs,
+        Widerstände, GND und die Idee, dass Bauteile richtig verbunden sein müssen.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Merke</strong>
+          <div>
+            HIGH bedeutet vereinfacht: An einem Pin liegt Spannung an. LOW bedeutet: Es liegt keine Ausgangsspannung an
+            oder ein Eingang wird auf das niedrige Signalniveau gezogen.
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Typischer Klausurpunkt</strong>
+          <div>
+            Du musst erklären können, warum eine LED einen Widerstand braucht und warum ein Stromkreis nur funktioniert,
+            wenn er geschlossen ist.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_cloze_grundlagen",
+            "title":"Sicherung: Setze die Begriffe passend ein",
+            "bank":["Mikrocontroller","Widerstand","geschlossener Stromkreis","HIGH","GND"],
+            "segments":[
+              {"t":"text","v":"Ein Arduino ist eine "},
+              {"t":"gap","a":"Mikrocontroller"},
+              {"t":"text","v":"-Platine. Eine LED braucht einen "},
+              {"t":"gap","a":"Widerstand"},
+              {"t":"text","v":", damit nicht zu viel Strom fließt. Ein Strom kann nur in einem "},
+              {"t":"gap","a":"geschlossener Stromkreis"},
+              {"t":"text","v":" fließen. Das Signal "},
+              {"t":"gap","a":"HIGH"},
+              {"t":"text","v":" steht vereinfacht für Spannung am Pin, und "},
+              {"t":"gap","a":"GND"},
+              {"t":"text","v":" ist der Bezugspunkt der Schaltung."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_cat_grundlagen",
+            "title":"Ordne die Begriffe",
+            "hint":"Ziehe jeden Begriff in die passende Kategorie.",
+            "categories":[
+              {"id":"bauteil","title":"Bauteil oder Anschluss"},
+              {"id":"funktion","title":"Funktion oder Bedeutung"}
+            ],
+            "items":[
+              {"label":"LED","category":"bauteil"},
+              {"label":"Widerstand","category":"bauteil"},
+              {"label":"GND","category":"bauteil"},
+              {"label":"begrenzt den Strom","category":"funktion"},
+              {"label":"leuchtet bei richtigem Stromfluss","category":"funktion"},
+              {"label":"gemeinsamer Bezugspunkt der Schaltung","category":"funktion"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_grundlagen",
+            "title":"Papieraufgabe: Erkläre die LED-Schaltung",
+            "hint":"Antworte in 4-6 Sätzen und nutze die Fachwörter LED, Widerstand, Pin und GND korrekt.",
+            "fields":[
+              {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Erkläre, wie eine einfache LED-Schaltung mit Arduino grundsätzlich funktioniert."}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Programmaufbau und Upload">
+      <h2>Programmaufbau: setup(), loop(), IDE und Upload</h2>
+      <p>
+        Jetzt hast du das gelernt: Die Arduino-IDE dient zum Schreiben, Prüfen und Übertragen von Programmen. Ein
+        Arduino-Programm hat meist die Bereiche <span class="code-note">setup()</span> und <span class="code-note">loop()</span>.
+        In Klausuren wird oft gefragt, was welcher Teil macht und warum die Reihenfolge beim Übertragen wichtig ist.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Klausurformat</strong>
+        <div>
+          Formuliere Antworten so, als würdest du sie einer Person erklären, die das Programm vor sich sieht. Ein Satz wie
+          „setup ist einmal, loop ist immer“ reicht meistens nicht. Du musst den Zweck nennen.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_aufbau",
+            "title":"Mini-Check: Programmstruktur verstehen",
+            "hint":"Eine oder mehrere Antworten können richtig sein.",
+            "shuffleChoices":true,
+            "questions":[
+              {
+                "text":"Welche Aussage zu setup() trifft zu?",
+                "choices":[
+                  {"id":"A","label":"setup() läuft nur einmal beim Start und eignet sich für Grund-Einstellungen."},
+                  {"id":"B","label":"setup() wiederholt sich ständig während des ganzen Programms."},
+                  {"id":"C","label":"setup() darf nur Zahlen speichern."},
+                  {"id":"D","label":"setup() ist nur für Fehlermeldungen zuständig."}
+                ],
+                "correct":["A"],
+                "explain":"setup() wird einmal beim Start ausgeführt. Dort richtet man zum Beispiel Pins oder die serielle Verbindung ein."
+              },
+              {
+                "text":"Warum ist loop() für viele Aufgaben unverzichtbar?",
+                "choices":[
+                  {"id":"A","label":"Weil loop() den Quellcode löscht, wenn ein Fehler auftritt."},
+                  {"id":"B","label":"Weil loop() wiederholt ablaufende Reaktionen und Steuerungen ermöglicht."},
+                  {"id":"C","label":"Weil loop() automatisch alle Widerstände ersetzt."},
+                  {"id":"D","label":"Weil ohne loop() keine Kommentare geschrieben werden dürfen."}
+                ],
+                "correct":["B"],
+                "explain":"loop() wiederholt sich ständig. Deshalb eignet sie sich für Blinken, Abfragen von Eingängen und fortlaufende Steuerungen."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_order_upload",
+            "title":"Bringe die Schritte in eine sinnvolle Reihenfolge",
+            "items":[
+              "Das Programm in der Arduino-IDE öffnen oder schreiben",
+              "Den passenden Board-Typ auswählen",
+              "Den richtigen Port auswählen",
+              "Das Programm kompilieren und hochladen"
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_upload",
+            "title":"Typischer Denkfehler",
+            "question":"Warum ist die Auswahl von Board und Port in der Klausur überhaupt wichtig, wenn du nichts hochladen musst?",
+            "answer":"Weil daran sichtbar wird, ob du verstanden hast, wie das Programm zum richtigen Gerät gelangt. Falsches Board oder falscher Port sind typische Ursachen dafür, dass ein Upload scheitert. In einer Papierklausur musst du diesen Zusammenhang erklären können."
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Code lesen und Fehler erkennen">
+      <h2>Code lesen: Variablen, Ausgabe und Fehlersuche</h2>
+      <p>
+        In der Klausur wirst du wahrscheinlich Codeausschnitte lesen und erklären müssen. Dazu gehören Variablen,
+        Blinkprogramme, serielle Ausgabe und typische Fehlermeldungen. Entscheidend ist: Du musst nicht alles auswendig
+        schreiben, sondern verstehen, was der Code bewirkt.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Jetzt hast du das gelernt</strong>
+        <div>
+          Variablen speichern veränderbare Werte. <span class="code-note">Serial.begin(9600);</span> startet die serielle
+          Verbindung. <span class="code-note">Serial.println(...);</span> gibt Werte aus. Fehlermeldungen weisen oft auf
+          fehlende Zeichen, falsche Namen oder falsche Klammern hin.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_variablen_nutzen",
+            "title":"Warum braucht man Variablen?",
+            "hint":"Mehrere Antworten können richtig sein.",
+            "questions":[
+              {
+                "text":"Wozu sind Variablen im Arduino-Code besonders nützlich?",
+                "multiple": true,
+                "choices":[
+                  {"id":"A","label":"Um Werte zu speichern, die sich ändern können."},
+                  {"id":"B","label":"Um Programme flexibler zu machen."},
+                  {"id":"C","label":"Um den Stromkreis physisch zu schließen."},
+                  {"id":"D","label":"Um Zahlen nicht an vielen Stellen einzeln ändern zu müssen."}
+                ],
+                "correct":["A","B","D"],
+                "explain":"Variablen speichern veränderbare Werte und machen Code übersichtlicher und leichter anpassbar."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-title="Ordne Befehl und Aufgabe zu" data-p2-hint="Das sind typische Papierklausur-Fragen.">
+        <div class="p2-hint">Verbinde jeweils den Befehl mit seiner Funktion.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Befehl</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">pinMode(13, OUTPUT);</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">delay(500);</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Serial.begin(9600);</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">x = x + 1;</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Funktion</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">legt fest, dass ein Pin als Ausgang arbeitet</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">erzeugt eine Wartezeit von 500 Millisekunden</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">startet die serielle Kommunikation</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">erhöht den Wert einer Variable um 1</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_order_code_bausteine_1",
+            "title":"Bringe die Codebausteine in die richtige Reihenfolge",
+            "hint":"Ziel: Eine Variable wird ausgegeben, danach abhängig von einer Bedingung verändert und am Ende begrenzt.",
+            "items":[
+              "int temperatur = 18;",
+              "int schritt = 3;",
+              "void loop() {",
+              "  Serial.println(temperatur);",
+              "  if (temperatur < 30) {",
+              "    temperatur = temperatur + schritt;",
+              "  } else {",
+              "    temperatur = temperatur - 10;",
+              "  }",
+              "}"
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_verify_code",
+            "title":"Fehlersuche",
+            "hint":"Prüfe die Aussage.",
+            "statement":"Die Fehlermeldung \"was not declared in this scope\" bedeutet meistens, dass der Arduino zu wenig Strom bekommt.",
+            "answer": false,
+            "explain":"Diese Meldung deutet meist darauf hin, dass ein Name unbekannt ist, zum Beispiel wegen eines Tippfehlers bei einer Variable oder Funktion."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Code zur Aufgabe</strong>
+        <pre><code>int wert = 4;
+int faktor = 2;
+
+void loop() {
+  Serial.println(wert);
+  if (wert < 20) {
+    wert = wert * faktor;
+  } else {
+    wert = wert - 6;
+  }
+}</code></pre>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_code",
+            "title":"Papieraufgabe: Erkläre den Code",
+            "hint":"Antworte in 6-10 Sätzen. Nutze die Begriffe Variable, Bedingung, Ausgabe und Änderung.",
+            "fields":[
+              {"label":"Deine Erklärung","key":"answer","kind":"textarea","placeholder":"Erkläre, was in den ersten Durchläufen passiert und warum der Wert nicht einfach nur immer größer wird."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Code zur Aufgabe</strong>
+        <pre><code>int ton = 262;
+int pause = 180;
+int wiederholungen = 0;
+int sprung = 35;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (wiederholungen < 4) {
+    tone(11, ton);
+    delay(pause);
+    noTone(11);
+    delay(120);
+    Serial.println(ton);
+    ton = ton + sprung;
+    wiederholungen = wiederholungen + 1;
+  } else {
+    Serial.println(pause);
+    pause = pause + 100;
+    ton = 262;
+    wiederholungen = 0;
+  }
+}</code></pre>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_code_komplex",
+            "title":"Was macht dieser Code?",
+            "hint":"Antworte in 8-12 Sätzen. Beschreibe die Reihenfolge genau und gehe auf alle Variablen ein.",
+            "fields":[
+              {"label":"Deine Erklärung","key":"answer","kind":"textarea","placeholder":"Erkläre, was man in den ersten fünf Durchläufen hört, was im seriellen Monitor erscheint und wie ton, pause, sprung und wiederholungen zusammenwirken."}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Schleifen und Bedingungen">
+      <h2>Schleifen und Bedingungen</h2>
+      <p>
+        Jetzt hast du das gelernt: <span class="code-note">for</span>-Schleifen nutzt du meist für feste Wiederholungen,
+        <span class="code-note">while</span>-Schleifen für Wiederholungen mit einer Bedingung, und
+        <span class="code-note">if / else</span> für Entscheidungen. Genau diese Unterschiede werden gern abgefragt.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_cloze_schleifen",
+            "title":"Sicherung: Schleifen und Bedingungen",
+            "bank":["for","while","if / else","bekannt","Bedingung"],
+            "segments":[
+              {"t":"text","v":"Eine "},
+              {"t":"gap","a":"for"},
+              {"t":"text","v":"-Schleife nutzt du meist, wenn die Anzahl der Wiederholungen vorher "},
+              {"t":"gap","a":"bekannt"},
+              {"t":"text","v":" ist. Eine "},
+              {"t":"gap","a":"while"},
+              {"t":"text","v":"-Schleife läuft, solange eine "},
+              {"t":"gap","a":"Bedingung"},
+              {"t":"text","v":" wahr bleibt. Mit "},
+              {"t":"gap","a":"if / else"},
+              {"t":"text","v":" trifft das Programm eine Entscheidung zwischen verschiedenen Wegen."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_cat_logik",
+            "title":"Sortiere die Aussagen",
+            "hint":"Ordne jede Karte der passenden Struktur zu.",
+            "categories":[
+              {"id":"for","title":"passt zu for"},
+              {"id":"while","title":"passt zu while"},
+              {"id":"ifelse","title":"passt zu if / else"}
+            ],
+            "items":[
+              {"label":"Die Anzahl der Wiederholungen ist vorher bekannt.","category":"for"},
+              {"label":"Der Code läuft, solange eine Bedingung wahr bleibt.","category":"while"},
+              {"label":"Das Programm entscheidet zwischen zwei Wegen.","category":"ifelse"},
+              {"label":"Typisch für 5-mal blinken.","category":"for"},
+              {"label":"Typisch für warten, bis ein Taster gedrückt wird.","category":"while"},
+              {"label":"Typisch für LED an oder aus je nach Messwert.","category":"ifelse"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_schleifen_nutzen",
+            "title":"Warum braucht man Schleifen?",
+            "hint":"Mehrere Antworten können richtig sein.",
+            "questions":[
+              {
+                "text":"Welche Vorteile haben Schleifen im Programm?",
+                "multiple": true,
+                "choices":[
+                  {"id":"A","label":"Wiederholungen müssen nicht mehrfach ausgeschrieben werden."},
+                  {"id":"B","label":"Programme werden oft kürzer und übersichtlicher."},
+                  {"id":"C","label":"Ein Widerstand wird dadurch überflüssig."},
+                  {"id":"D","label":"Man kann Abläufe gezielt mehrfach ausführen."}
+                ],
+                "correct":["A","B","D"],
+                "explain":"Schleifen strukturieren Wiederholungen. Sie ersetzen natürlich keine elektrischen Bauteile."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_logik",
+            "title":"Mini-Check: Bedingungen und Schleifen",
+            "hint":"Denke an typische Klausurfehler.",
+            "questions":[
+              {
+                "text":"Warum kann eine while-Schleife problematisch werden?",
+                "choices":[
+                  {"id":"A","label":"Weil sie nie Bedingungen enthalten darf."},
+                  {"id":"B","label":"Weil sie zu einer Endlosschleife werden kann, wenn sich die Bedingung nie ändert."},
+                  {"id":"C","label":"Weil sie nur in setup() erlaubt ist."},
+                  {"id":"D","label":"Weil sie keine Variablen benutzen darf."}
+                ],
+                "correct":["B"],
+                "explain":"Wenn die Bedingung immer wahr bleibt, läuft die while-Schleife endlos weiter."
+              },
+              {
+                "text":"Was ist der wichtige Unterschied zwischen = und == in einer Bedingung?",
+                "choices":[
+                  {"id":"A","label":"Es gibt keinen Unterschied."},
+                  {"id":"B","label":"= vergleicht zwei Werte, == speichert einen Wert."},
+                  {"id":"C","label":"= weist einen Wert zu, == vergleicht zwei Werte."},
+                  {"id":"D","label":"== darf nur mit Text benutzt werden."}
+                ],
+                "correct":["C"],
+                "explain":"Das ist ein sehr typischer Fehler: = ist Zuweisung, == ist Vergleich."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_order_denken",
+            "title":"Bringe das Denken vor dem Programmieren in eine gute Reihenfolge",
+            "items":[
+              "Ziel des Programms in Worten klären",
+              "Benötigte Eingaben und Ausgaben festlegen",
+              "Entscheidungen und Wiederholungen planen",
+              "Erst danach den Code formulieren"
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Code zur Aufgabe</strong>
+        <pre><code>int grundton = 330;
+
+for (int runde = 0; runde < 2; runde++) {
+  for (int i = 0; i < 3; i++) {
+    tone(11, grundton + i * 40);
+    delay(120);
+    noTone(11);
+    delay(80);
+  }
+  grundton = grundton + 100;
+}</code></pre>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_schleifen_code",
+            "title":"Was macht dieser Schleifen-Code?",
+            "hint":"Erkläre nicht nur das Ergebnis, sondern auch die Rolle aller Variablen und beider Schleifen.",
+            "fields":[
+              {"label":"Deine Erklärung","key":"answer","kind":"textarea","placeholder":"Beschreibe die komplette Tonfolge und erkläre, warum sich die zweite Runde von der ersten unterscheidet."}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Programmieren üben">
+      <h2>Programmieren üben: Codebausteine, Syntax und Semantik</h2>
+      <p>
+        Jetzt geht es um typische Klausuraufgaben direkt zum Programmieren. Du sollst Reihenfolgen herstellen, Fehlerarten
+        unterscheiden und begründen, was der Unterschied zwischen einem Syntaxfehler und einem semantischen Fehler ist.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Merke</strong>
+        <div>
+          Ein <b>Syntaxfehler</b> bedeutet: Der Code ist formal falsch und lässt sich oft nicht kompilieren. Ein
+          <b>semantischer Fehler</b> bedeutet: Der Code ist formal erlaubt, macht aber nicht das, was beabsichtigt war.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_cat_fehlerarten",
+            "title":"Syntax oder Semantik?",
+            "hint":"Ordne jede Fehlerbeschreibung passend zu.",
+            "categories":[
+              {"id":"syntax","title":"Syntaxfehler"},
+              {"id":"semantik","title":"Semantischer Fehler"}
+            ],
+            "items":[
+              {"label":"Am Ende einer Zeile fehlt ein Semikolon.","category":"syntax"},
+              {"label":"Eine Klammer fehlt oder ist zu viel.","category":"syntax"},
+              {"label":"Der Code nutzt den falschen Pin und steuert deshalb die falsche LED an.","category":"semantik"},
+              {"label":"Bei INPUT_PULLUP wird gedrückt mit HIGH statt LOW geprüft.","category":"semantik"},
+              {"label":"Ein Variablenname ist falsch geschrieben und daher unbekannt.","category":"syntax"},
+              {"label":"Die Schleife läuft endlos weiter, weil sich die Bedingung nie ändert.","category":"semantik"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_order_code_bausteine_2",
+            "title":"Bringe die Bausteine zu einem sinnvollen Programmablauf",
+            "hint":"Ziel: Warten, bis der Taster gedrückt ist, dann soll eine LED viermal blinken. Danach wird ein Zähler erhöht und im seriellen Monitor ausgegeben.",
+            "items":[
+              "while (digitalRead(BTN) == HIGH) { }",
+              "for (int i = 0; i < 4; i++) {",
+              "  digitalWrite(LED, HIGH);",
+              "  delay(200);",
+              "  digitalWrite(LED, LOW);",
+              "  delay(200);",
+              "}",
+              "zaehler = zaehler + 1;",
+              "Serial.println(zaehler);",
+              "}"
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Code zur Aufgabe</strong>
+        <pre><code>int basis = 200;
+int schritt = 50;
+
+void setup( {
+  Serial.begin(9600)
+}
+
+void loop() {
+  for (int i = 0; i < 3; i++ {
+    Serial.println(basis + i * schritt);
+  
+  if (basis < 500) {
+    basis = basis + schritt
+  }
+}</code></pre>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_syntax",
+            "title":"Fehler finden: Syntaxfehler",
+            "hint":"Nenne den Fehler und schreibe die Korrektur auf.",
+            "fields":[
+              {"label":"Deine Antwort","key":"answer","kind":"textarea","placeholder":"Markiere möglichst viele Syntaxfehler: fehlende Klammern, fehlende Semikolons oder formale Schreibfehler."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Code zur Aufgabe</strong>
+        <pre><code>const int BTN = 2;
+const int LED = 13;
+int zaehler = 0;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  pinMode(BTN, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  while (digitalRead(BTN) == HIGH) {
+    zaehler = zaehler + 1;
+  }
+
+  if (zaehler == 1) {
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(LED, LOW);
+  }
+
+  Serial.println(zaehler);
+}</code></pre>
+      </div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_semantik",
+            "title":"Fehler finden: semantischer Fehler",
+            "hint":"Der Code ist fast korrekt, macht aber nicht das Gewollte.",
+            "fields":[
+              {"label":"Deine Antwort","key":"answer","kind":"textarea","placeholder":"Der Code ist formal fast in Ordnung, aber logisch ungeeignet. Beschreibe mindestens zwei semantische Probleme und erkläre, wie sich das Verhalten tatsächlich entwickeln würde."}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Anwendung und Transfer">
+      <h2>Anwendung: PWM, Taster, Unterprogramme, Motoren und Displays</h2>
+      <p>
+        Auf den späteren Seiten tauchen Anwendungen auf, bei denen du Begriffe übertragen musst: PWM für Helligkeit oder
+        Geschwindigkeit, Taster mit <span class="code-note">INPUT_PULLUP</span>, Unterprogramme für wiederkehrende Abläufe,
+        Displays zur Ausgabe von Texten und Motoren mit Transistor oder Motortreiber.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>PWM und analogWrite()</strong>
+          <div>
+            Eine LED kann nicht nur an oder aus sein. Mit PWM wirkt sie heller oder dunkler. Bei Motoren kann PWM auch die
+            Geschwindigkeit beeinflussen.
+          </div>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>INPUT_PULLUP</strong>
+          <div>
+            Typischer Stolperstein: nicht gedrückt = HIGH, gedrückt = LOW. Wenn du das vergisst, drehst du die Logik im
+            Code aus Versehen um.
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-title="Begriff und Anwendung zuordnen" data-p2-hint="Arbeite sauber, das sind klassische Transferfragen.">
+        <div class="p2-hint">Verbinde den Begriff mit der passenden Erklärung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Begriff</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">analogWrite(..., 127)</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">INPUT_PULLUP</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Unterprogramm / Funktion</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Transistor oder Motortreiber</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="5">lcd.print(...)</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Erklärung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">setzt eine mittlere PWM-Stärke und wirkt zum Beispiel wie halbe Helligkeit</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">legt für einen Eingang einen definierten Grundzustand fest</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">fasst wiederkehrende Abläufe an einer Stelle zusammen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">schaltet größere Ströme, die ein Arduino-Pin nicht direkt liefern soll</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="5">gibt Text auf einem Display aus</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_transfer",
+            "title":"Transferfrage",
+            "hint":"Antworte in 6-8 Sätzen. Begründe statt nur aufzuzählen.",
+            "fields":[
+              {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Warum darf ein Motor nicht direkt an einen Arduino-Pin angeschlossen werden, und welche Rolle spielen Transistor, separate Stromversorgung und Freilaufdiode?"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_reveal_transfer",
+            "title":"Weiterdenken",
+            "question":"Was würde sich an deiner Erklärung ändern, wenn statt eines Motors eine einfache LED angeschlossen wäre?",
+            "answer":"Eine LED braucht deutlich weniger Strom und kann deshalb oft direkt über einen Ausgangspin mit Schutzwiderstand betrieben werden. Ein Motor ist dagegen ein stärkerer Verbraucher und erzeugt zusätzlich störende Spannungsspitzen. Deshalb braucht er eine aufwendigere Ansteuerung."
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Probeklausur">
+      <h2>Probeklausur auf Papier</h2>
+      <p>
+        Hier trainierst du typische Aufgabentypen, die in einer Papierklausur gut vorkommen können: erklären, vergleichen,
+        korrigieren und begründen. Schreibe deine Antworten möglichst vollständig und in Fachsprache.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Aufgabe A</strong>
+        <div>
+          Erkläre den Unterschied zwischen digitalem Schalten mit <span class="code-note">digitalWrite()</span> und dem
+          Dimmen mit <span class="code-note">analogWrite()</span>. Nenne auch einen typischen Wertebereich.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Aufgabe B</strong>
+        <div>
+          Ein Taster ist mit <span class="code-note">INPUT_PULLUP</span> angeschlossen. Beschreibe, welchen Wert der
+          Arduino liest, wenn der Taster gedrückt ist, und warum viele Schülerinnen und Schüler hier zuerst falsch denken.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Aufgabe C</strong>
+        <div>
+          Eine Schülerin schreibt: <span class="code-note">if (x = 5)</span>. Erkläre, warum das problematisch ist und
+          welche Schreibweise sie für einen Vergleich normalerweise braucht.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Aufgabe D</strong>
+        <div>
+          Erkläre, warum man für einen wiederkehrenden Ablauf eher ein Unterprogramm und eine Schleife benutzt als denselben
+          Codeblock immer wieder neu hinzuschreiben. Gehe dabei auf Übersichtlichkeit und Änderbarkeit ein.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="klausur-box">
+        <strong>Aufgabe E</strong>
+        <div>
+          Beschreibe in Worten, was dieser Ablauf macht: Zuerst wird auf einen Tastendruck gewartet, danach erklingt ein Ton
+          fünfmal kurz hintereinander, und zum Schluss wird eine Meldung im seriellen Monitor ausgegeben. Welche
+          Programmbausteine erwartest du dafür?
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_probe",
+            "title":"Mini-Check zur Probeklausur",
+            "hint":"Prüfe, ob du die Denkfehler wirklich erkannt hast.",
+            "questions":[
+              {
+                "text":"Welche Aussage zu analogWrite() passt am besten?",
+                "choices":[
+                  {"id":"A","label":"Der zweite Wert ist nur 0 oder 1."},
+                  {"id":"B","label":"Der zweite Wert steuert bei PWM die Stärke zwischen 0 und 255."},
+                  {"id":"C","label":"analogWrite() ist nur für Displays gedacht."},
+                  {"id":"D","label":"analogWrite() darf nur in setup() stehen."}
+                ],
+                "correct":["B"],
+                "explain":"Im Lernbaustein wird analogWrite() mit einem Wertebereich von 0 bis 255 genutzt, zum Beispiel für LED-Helligkeit oder Motorsteuerung."
+              },
+              {
+                "text":"Warum sind Unterprogramme in einer Klausur wichtig?",
+                "choices":[
+                  {"id":"A","label":"Weil sie zeigen, wie man wiederkehrende Abläufe übersichtlich organisiert."},
+                  {"id":"B","label":"Weil ohne Unterprogramme keine Variablen erlaubt sind."},
+                  {"id":"C","label":"Weil ein Unterprogramm den Arduino automatisch schneller macht."},
+                  {"id":"D","label":"Weil es nur mit Unterprogrammen Taster geben kann."}
+                ],
+                "correct":["A"],
+                "explain":"Unterprogramme strukturieren wiederkehrende Abläufe und machen Programme kürzer und klarer."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_probe",
+            "title":"Deine Musterlösung",
+            "hint":"Schreibe 8-12 Sätze, als würdest du sie in der Klausur abgeben.",
+            "fields":[
+              {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Wähle Aufgabe A, B, C, D oder E und schreibe eine vollständige Musterlösung."}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Zusammenfassung und Quellen">
+      <h2>Zusammenfassung, Weiterforschen und Abgabe</h2>
+      <p>
+        Jetzt hast du das gelernt: Du solltest nicht nur einzelne Befehle nennen können, sondern ihren Zweck,
+        ihre Wirkung und typische Fehler erklären. Genau das ist die Grundlage für eine gute Papierklausur.
+      </p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_mcq_abschluss",
+            "title":"Abschlusscheck",
+            "hint":"Eine oder mehrere Antworten können richtig sein.",
+            "questions":[
+              {
+                "text":"Welche Themen solltest du für die Klausur sicher beherrschen?",
+                "multiple": true,
+                "choices":[
+                  {"id":"A","label":"Aufbau mit setup() und loop()"},
+                  {"id":"B","label":"Variablen, Bedingungen und Schleifen"},
+                  {"id":"C","label":"PWM, Tasterlogik und typische Fehlersuche"},
+                  {"id":"D","label":"Nur die Farbe der Arduino-IDE"}
+                ],
+                "correct":["A","B","C"],
+                "explain":"Die Inhalte der Lernseiten drehen sich um Programmstruktur, Logik, Signale, Ausgaben, Eingaben und typische Anwendungen."
+              },
+              {
+                "text":"Was hilft dir in der Papierklausur am meisten?",
+                "multiple": true,
+                "choices":[
+                  {"id":"A","label":"Fachbegriffe sauber verwenden"},
+                  {"id":"B","label":"Code zeilenweise erklären können"},
+                  {"id":"C","label":"Begründungen zu Fehlern und Korrekturen geben"},
+                  {"id":"D","label":"Nur auswendig gelernte Einzelwörter hinschreiben"}
+                ],
+                "correct":["A","B","C"],
+                "explain":"Eine gute Klausurantwort verbindet Fachsprache, Verstehen des Codes und nachvollziehbare Begründungen."
+              }
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Quellen & Weiterforschen</strong>
+        <div>
+          Grundlage dieser Seite sind die vorhandenen Lernseiten <span class="code-note">nwt/arduino-1.html</span>,
+          <span class="code-note">nwt/arduino-2.html</span>, <span class="code-note">nwt/arduino-3.html</span> und
+          <span class="code-note">nwt/arduino-4.html</span>. Wenn du weiterforschen willst, gehe die dortigen Kapitel noch
+          einmal gezielt mit der Frage durch: „Was müsste ich dazu auf Papier erklären können?“
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino_klausur_essay_abschluss",
+            "title":"Eigene Lernplanung",
+            "hint":"Antworte ehrlich. Das hilft dir bei der Vorbereitung.",
+            "fields":[
+              {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+              {"label":"Was sitzt schon sicher?","key":"sicher","kind":"textarea","placeholder":"Welche Themen kannst du schon gut erklären?"},
+              {"label":"Was musst du noch üben?","key":"offen","kind":"textarea","placeholder":"Welche Begriffe, Codearten oder Denkfehler willst du vor der Klausur noch einmal wiederholen?"}
+            ]
+          }
+        </script>
+      </div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_klausur_training__" });
+  </script>
+</body>
+</html>
