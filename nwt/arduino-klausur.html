@@ -420,17 +420,17 @@
 
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
-        <pre><code>int wert = 4;
-int faktor = 2;
-
-void loop() {
-  Serial.println(wert);
-  if (wert < 20) {
-    wert = wert * faktor;
-  } else {
-    wert = wert - 6;
-  }
-}</code></pre>
+        <pre><code>1  int wert = 4;
+2  int faktor = 2;
+3
+4  void loop() {
+5    Serial.println(wert);
+6    if (wert < 20) {
+7      wert = wert * faktor;
+8    } else {
+9      wert = wert - 6;
+10   }
+11 }</code></pre>
       </div>
 
       <div data-wb-type="essay">
@@ -463,31 +463,31 @@ void loop() {
 
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
-        <pre><code>int ton = 262;
-int pause = 180;
-int wiederholungen = 0;
-int sprung = 35;
-
-void setup() {
-  Serial.begin(9600);
-}
-
-void loop() {
-  if (wiederholungen < 4) {
-    tone(11, ton);
-    delay(pause);
-    noTone(11);
-    delay(120);
-    Serial.println(ton);
-    ton = ton + sprung;
-    wiederholungen = wiederholungen + 1;
-  } else {
-    Serial.println(pause);
-    pause = pause + 100;
-    ton = 262;
-    wiederholungen = 0;
-  }
-}</code></pre>
+        <pre><code>1  int ton = 262;
+2  int pause = 180;
+3  int wiederholungen = 0;
+4  int sprung = 35;
+5
+6  void setup() {
+7    Serial.begin(9600);
+8  }
+9
+10 void loop() {
+11   if (wiederholungen < 4) {
+12     tone(11, ton);
+13     delay(pause);
+14     noTone(11);
+15     delay(120);
+16     Serial.println(ton);
+17     ton = ton + sprung;
+18     wiederholungen = wiederholungen + 1;
+19   } else {
+20     Serial.println(pause);
+21     pause = pause + 100;
+22     ton = 262;
+23     wiederholungen = 0;
+24   }
+25 }</code></pre>
       </div>
 
       <div data-wb-type="essay">
@@ -658,17 +658,17 @@ void loop() {
 
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
-        <pre><code>int grundton = 330;
-
-for (int runde = 0; runde < 2; runde++) {
-  for (int i = 0; i < 3; i++) {
-    tone(11, grundton + i * 40);
-    delay(120);
-    noTone(11);
-    delay(80);
-  }
-  grundton = grundton + 100;
-}</code></pre>
+        <pre><code>1  int grundton = 330;
+2
+3  for (int runde = 0; runde < 2; runde++) {
+4    for (int i = 0; i < 3; i++) {
+5      tone(11, grundton + i * 40);
+6      delay(120);
+7      noTone(11);
+8      delay(80);
+9    }
+10   grundton = grundton + 100;
+11 }</code></pre>
       </div>
 
       <div data-wb-type="essay">
@@ -767,21 +767,21 @@ for (int runde = 0; runde < 2; runde++) {
 
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
-        <pre><code>int basis = 200;
-int schritt = 50;
-
-void setup( {
-  Serial.begin(9600)
-}
-
-void loop() {
-  for (int i = 0; i < 3; i++ {
-    Serial.println(basis + i * schritt);
-  
-  if (basis < 500) {
-    basis = basis + schritt
-  }
-}</code></pre>
+        <pre><code>1  int basis = 200;
+2  int schritt = 50;
+3
+4  void setup( {
+5    Serial.begin(9600)
+6  }
+7
+8  void loop() {
+9    for (int i = 0; i < 3; i++ {
+10     Serial.println(basis + i * schritt);
+11   
+12   if (basis < 500) {
+13     basis = basis + schritt
+14   }
+15 }</code></pre>
       </div>
 
       <div data-wb-type="essay">
@@ -814,29 +814,29 @@ void loop() {
 
       <div class="klausur-box">
         <strong>Code zur Aufgabe</strong>
-        <pre><code>const int BTN = 2;
-const int LED = 13;
-int zaehler = 0;
-
-void setup() {
-  pinMode(LED, OUTPUT);
-  pinMode(BTN, INPUT_PULLUP);
-  Serial.begin(9600);
-}
-
-void loop() {
-  while (digitalRead(BTN) == HIGH) {
-    zaehler = zaehler + 1;
-  }
-
-  if (zaehler == 1) {
-    digitalWrite(LED, HIGH);
-  } else {
-    digitalWrite(LED, LOW);
-  }
-
-  Serial.println(zaehler);
-}</code></pre>
+        <pre><code>1  const int BTN = 2;
+2  const int LED = 13;
+3  int zaehler = 0;
+4
+5  void setup() {
+6    pinMode(LED, OUTPUT);
+7    pinMode(BTN, INPUT_PULLUP);
+8    Serial.begin(9600);
+9  }
+10
+11 void loop() {
+12   while (digitalRead(BTN) == HIGH) {
+13     zaehler = zaehler + 1;
+14   }
+15
+16   if (zaehler == 1) {
+17     digitalWrite(LED, HIGH);
+18   } else {
+19     digitalWrite(LED, LOW);
+20   }
+21
+22   Serial.println(zaehler);
+23 }</code></pre>
       </div>
 
       <div data-wb-type="essay">
