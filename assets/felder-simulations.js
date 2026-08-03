@@ -238,6 +238,7 @@
     var chargeVal = find(root, "charge-value");
     var voltageVal = find(root, "voltage-value");
     var fieldVal = find(root, "field-value");
+    var playBtn = find(root, "play");
     var resetBtn = find(root, "reset");
     if (!canvas || !readout || !chargeEl || !voltageEl || !fieldEl || !directionEl) return;
 
@@ -246,7 +247,9 @@
     var fixedD = 0.05;
     var particleMass = 1.2e-12;
     var vx = 36000;
-    var animT = 0;
+    var progress = 0;
+    var running = false;
+    var rafId = null;
     var lastTs = null;
     var syncing = false;
 
@@ -255,7 +258,7 @@
       syncing = true;
       fieldEl.value = String(Math.round((Number(voltageEl.value) / fixedD) * 2) / 2);
       syncing = false;
-      draw();
+      restartAtBeginning();
     }
 
     function syncFromField() {
@@ -263,7 +266,7 @@
       syncing = true;
       voltageEl.value = String(Math.round((Number(fieldEl.value) * fixedD) * 10) / 10);
       syncing = false;
-      draw();
+      restartAtBeginning();
     }
 
     function values() {
@@ -349,18 +352,39 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.strokeStyle = "#f59e0b";
-      ctx.lineWidth = 4;
+      ctx.strokeStyle = "rgba(245,158,11,.28)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([7, 7]);
       ctx.beginPath();
       for (var x = startX; x <= exitX; x += 8) {
-        var y = trajectoryPoint(v, x, startX, startY, scaleY);
-        y = Math.max(topPlate + 36, Math.min(bottomPlate - 20, y));
+        var rawY = trajectoryPoint(v, x, startX, startY, scaleY);
+        var y = Math.max(topPlate + 36, Math.min(bottomPlate - 20, rawY));
         if (x === startX) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
+        if (rawY <= topPlate + 36 || rawY >= bottomPlate - 20) break;
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      var trailEndX = startX + (progress * (exitX - startX));
+      for (var tx = startX; tx <= trailEndX; tx += 6) {
+        var trailRawY = trajectoryPoint(v, tx, startX, startY, scaleY);
+        var trailY = Math.max(topPlate + 36, Math.min(bottomPlate - 20, trailRawY));
+        if (tx === startX) ctx.moveTo(tx, trailY);
+        else ctx.lineTo(tx, trailY);
+        if (trailRawY <= topPlate + 36 || trailRawY >= bottomPlate - 20) break;
+      }
+      if (trailEndX > startX) {
+        var endRawY = trajectoryPoint(v, trailEndX, startX, startY, scaleY);
+        var endY = Math.max(topPlate + 36, Math.min(bottomPlate - 20, endRawY));
+        ctx.lineTo(trailEndX, endY);
       }
       ctx.stroke();
 
-      var pX = startX + ((animT % 1) * (exitX - startX));
+      var pX = startX + (progress * (exitX - startX));
       var pY = trajectoryPoint(v, pX, startX, startY, scaleY);
       pY = Math.max(topPlate + 36, Math.min(bottomPlate - 20, pY));
       ctx.fillStyle = v.q < 0 ? "#2563eb" : (v.q > 0 ? "#ef4444" : "#64748b");
@@ -390,23 +414,78 @@
       ctx.fillText("Feldrichtung: von Plus nach Minus", 24, 62);
       ctx.fillText("Gelbe Kurve: berechnete Bahn bei konstanter horizontaler Geschwindigkeit", 24, 84);
 
+      var finalY = trajectoryPoint(v, exitX, startX, startY, scaleY);
       var hit = pY <= topPlate + 37 || pY >= bottomPlate - 21;
+      var willHit = finalY <= topPlate + 37 || finalY >= bottomPlate - 21;
       readout.textContent =
         "q = " + formatNumber(v.q * 1e9, 2) + " nC\n" +
         "U = " + formatNumber(v.U / 1000, 2) + " kV, d = 5,0 cm\n" +
         "E = U/d = " + formatNumber(v.E / 1000, 1) + " kV/m\n" +
         "F_el = q·E = " + formatNumber(v.F * 1e6, 3) + " µN\n" +
+        "Modell: x = v_x·t, y = 1/2·a·t² wie beim waagrechten Wurf\n" +
         "Ablenkung: " + (v.F > 0 ? "nach unten" : (v.F < 0 ? "nach oben" : "keine")) + "\n" +
-        (hit ? "Hinweis: Bei diesen Werten würde das Teilchen eine Platte treffen." : "Das Teilchen verlässt den Kondensator zwischen den Platten.");
+        (hit ? "Treffer: Das Teilchen hat eine Platte erreicht." : (willHit ? "Hinweis: Bei diesen Werten wird das Teilchen eine Platte treffen." : "Das Teilchen verlässt den Kondensator zwischen den Platten."));
     }
 
     function tick(ts) {
+      if (!running) return;
       if (lastTs === null) lastTs = ts;
       var dt = Math.min(0.04, (ts - lastTs) / 1000);
       lastTs = ts;
-      animT += dt * 0.22;
+      progress = Math.min(1, progress + dt * 0.34);
       draw();
-      window.requestAnimationFrame(tick);
+      var v = values();
+      var W = canvas.width;
+      var H = canvas.height;
+      var left = 110;
+      var right = W - 70;
+      var topPlate = 100;
+      var bottomPlate = H - 105;
+      var startX = 45;
+      var startY = (topPlate + bottomPlate) / 2;
+      var exitX = right - 55;
+      var scaleY = 0.0000065;
+      var pX = startX + (progress * (exitX - startX));
+      var pY = trajectoryPoint(v, pX, startX, startY, scaleY);
+      var hit = pY <= topPlate + 37 || pY >= bottomPlate - 21;
+      if (progress >= 1 || hit) {
+        running = false;
+        if (playBtn) playBtn.textContent = "Start";
+        return;
+      }
+      rafId = window.requestAnimationFrame(tick);
+    }
+
+    function startStop() {
+      running = !running;
+      if (playBtn) playBtn.textContent = running ? "Stop" : "Start";
+      if (running) {
+        var v = values();
+        var W = canvas.width;
+        var H = canvas.height;
+        var right = W - 70;
+        var topPlate = 100;
+        var bottomPlate = H - 105;
+        var startX = 45;
+        var startY = (topPlate + bottomPlate) / 2;
+        var exitX = right - 55;
+        var pX = startX + (progress * (exitX - startX));
+        var pY = trajectoryPoint(v, pX, startX, startY, 0.0000065);
+        if (progress >= 1 || pY <= topPlate + 37 || pY >= bottomPlate - 21) progress = 0;
+        lastTs = null;
+        if (rafId) window.cancelAnimationFrame(rafId);
+        rafId = window.requestAnimationFrame(tick);
+      }
+    }
+
+    function restartAtBeginning() {
+      progress = 0;
+      running = false;
+      lastTs = null;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = null;
+      if (playBtn) playBtn.textContent = "Start";
+      draw();
     }
 
     function reset() {
@@ -414,17 +493,16 @@
       voltageEl.value = "2.0";
       fieldEl.value = "40";
       directionEl.value = "down";
-      animT = 0;
-      draw();
+      restartAtBeginning();
     }
 
-    chargeEl.addEventListener("input", draw);
+    chargeEl.addEventListener("input", restartAtBeginning);
     voltageEl.addEventListener("input", syncFromVoltage);
     fieldEl.addEventListener("input", syncFromField);
-    directionEl.addEventListener("change", draw);
+    directionEl.addEventListener("change", restartAtBeginning);
+    if (playBtn) playBtn.addEventListener("click", startStop);
     if (resetBtn) resetBtn.addEventListener("click", reset);
     draw();
-    window.requestAnimationFrame(tick);
   }
 
   function mount(root) {
