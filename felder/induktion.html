@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elektromagnetische Induktion</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">{"bookTitle":"Induktion","sectionTitle":"Änderung erzeugt Spannung","startPage":1,"submitLabel":"Ergebnisse exportieren","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Felder","themeDefault":"default"}</script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <h1>Induktion: Wenn Änderung Spannung erzeugt</h1>
+    <p class="wb-muted">Du lernst hier eines der wichtigsten Prinzipien der Elektrodynamik: Eine Änderung eines Magnetfeldes kann eine elektrische Spannung erzeugen. Damit versteht man Generatoren, Transformatoren, induktives Laden und viele technische Anwendungen.</p>
+    <p>Induktion ist zunächst ein experimentelles Phänomen. Du beobachtest eine Spannung, obwohl keine Batterie angeschlossen ist. Die Erklärung liegt nicht in einem „versteckten Strom“, sondern in der Änderung des magnetischen Flusses.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"ind_start","title":"Leitfrage","question":"Was ist die zentrale Idee der Induktion?","answer":"Nicht ein ruhendes Magnetfeld allein erzeugt Induktionsspannung, sondern eine Änderung: Entweder ändert sich das Magnetfeld, die durchsetzte Fläche, die Orientierung oder die Bewegung eines Leiters im Feld."}</script></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Grundversuche">
+    <h1>Grundversuche zur Induktion</h1>
+    <p>Typische Beobachtung: Bewegt man einen Magneten relativ zu einer Spule, zeigt ein Messgerät kurzzeitig eine Spannung. Hält man Magnet und Spule ruhig, verschwindet die Spannung wieder. Das zeigt: Nicht das Magnetfeld allein ist entscheidend, sondern seine Änderung.</p>
+    <p>Ähnlich ist es bei zwei Spulen. Ändert sich der Strom in der ersten Spule, ändert sich ihr Magnetfeld. Dadurch kann in der zweiten Spule eine Spannung entstehen. Auch hier ist der zentrale Gedanke: Änderung erzeugt Induktion.</p>
+    <p><strong>Das brauchst du sicher:</strong> Beobachten, beschreiben, Richtung qualitativ deuten. <strong>Vertiefung im Leistungsfach:</strong> Messdaten und Vorzeichenkonvention sicher auswerten.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"ind_mcq_grund","title":"Check: Wann entsteht Induktionsspannung?","hint":"Mehrere Antworten können richtig sein.","questions":[{"text":"Welche Situationen können eine Induktionsspannung erzeugen?","multiple":true,"choices":[{"id":"a","label":"Ein Magnet ruht dauerhaft unverändert neben einer Spule."},{"id":"b","label":"Ein Magnet wird in eine Spule hineingeschoben."},{"id":"c","label":"Die Stromstärke in einer benachbarten Spule ändert sich."},{"id":"d","label":"Eine Leiterschleife dreht sich in einem Magnetfeld."}],"correct":["b","c","d"],"explain":"Entscheidend ist eine Änderung des magnetischen Flusses oder eine Bewegung im Feld. Ein unveränderter Ruhezustand erzeugt keine dauerhafte Induktionsspannung."}]}</script></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Faraday und Lenz">
+    <h1>Faraday-Gesetz und Lenz'sche Regel</h1>
+    <p>Der magnetische Fluss verbindet Magnetfeld, Fläche und Orientierung. Man kann ihn sich als Maß dafür vorstellen, wie stark ein Magnetfeld eine Fläche „durchsetzt“. Wird dieser Fluss geändert, entsteht eine Induktionsspannung.</p>
+    <p>Die Lenz'sche Regel sagt: Die induzierte Wirkung ist so gerichtet, dass sie der verursachenden Änderung entgegenwirkt. Das klingt zunächst kompliziert, ist aber physikalisch sehr sinnvoll. Würde die induzierte Wirkung die Änderung verstärken, könnte man Energie aus dem Nichts gewinnen.</p>
+    <p><strong>Merke:</strong> Die Lenz'sche Regel ist die Energieerhaltung in der Sprache der Induktion.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"ind_cloze","title":"Sicherung: Induktionsidee","hint":"Setze die Begriffe ein.","bank":["Änderung","magnetischen Flusses","entgegen","Energieerhaltung"],"segments":[{"t":"text","v":"Induktion entsteht durch eine "},{"t":"gap","a":"Änderung"},{"t":"text","v":" des "},{"t":"gap","a":"magnetischen Flusses"},{"t":"text","v":". Nach der Lenz'schen Regel wirkt die induzierte Wirkung der Ursache "},{"t":"gap","a":"entgegen"},{"t":"text","v":". Das passt zur "},{"t":"gap","a":"Energieerhaltung"},{"t":"text","v":"."}]}</script></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Anwendungen">
+    <h1>Generator, Transformator und Induktionsanwendungen</h1>
+    <p>Generatoren wandeln mechanische Energie in elektrische Energie um. In einem Kraftwerk wird zum Beispiel eine Spule oder ein Magnet gedreht. Dadurch ändert sich der magnetische Fluss, und es entsteht eine Wechselspannung.</p>
+    <p>Transformatoren verändern Wechselspannungen. Zwei Spulen sind über ein gemeinsames Magnetfeld gekoppelt. Ändert sich der Strom in der Primärspule, ändert sich der magnetische Fluss, und in der Sekundärspule wird eine Spannung induziert.</p>
+    <p>Induktives Laden und Induktionskochplatten nutzen ebenfalls zeitlich veränderliche Magnetfelder. Du erkennst daran: Induktion ist kein Randthema, sondern Grundlage vieler moderner Geräte.</p>
+    <p><strong>Das brauchst du sicher:</strong> Funktionsprinzipien erklären. <strong>Vertiefung im Leistungsfach:</strong> Größenbeziehungen und Verlustmechanismen genauer analysieren.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script class="wb-config" type="application/json">{"id":"ind_order_generator","title":"Ablauf im Generator","hint":"Ordne die Energie- und Feldschritte.","items":["Eine Leiterschleife wird im Magnetfeld gedreht.","Der magnetische Fluss durch die Schleife ändert sich.","Es entsteht eine Induktionsspannung.","Bei geschlossenem Stromkreis fließt ein Wechselstrom.","Mechanische Energie wird in elektrische Energie umgewandelt."],"shuffle":true}</script></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="LF-Zusatz">
+    <h1>Vertiefung im Leistungsfach: Selbstinduktion, Spulenenergie und Wirbelströme</h1>
+    <p>Eine Spule reagiert auch auf Änderungen ihrer eigenen Stromstärke. Das nennt man Selbstinduktion. Wird der Strom größer, baut sich das Magnetfeld auf. Wird der Strom kleiner, bricht es ab. In beiden Fällen entsteht eine Induktionsspannung, die der Änderung entgegenwirkt.</p>
+    <p>Formal wird im Leistungsfach mit \(U_\mathrm{ind}=-L\dot I\) gearbeitet. Die Größe \(L\) heißt Induktivität. Sie beschreibt, wie stark eine Spule auf Stromänderungen reagiert.</p>
+    <p>Wirbelströme entstehen in ausgedehnten Leitern, wenn sich der magnetische Fluss ändert. Sie können bremsen, erwärmen oder gezielt genutzt werden, zum Beispiel bei Wirbelstrombremsen oder Induktionskochplatten.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"ind_cat","title":"Gemeinsam oder LF?","hint":"Sortiere die Inhalte.","categories":[{"id":"common","title":"BF + LF"},{"id":"lf","title":"Nur LF"}],"items":[{"label":"Grundversuch Magnet-Spule beschreiben","category":"common"},{"label":"Lenz'sche Regel qualitativ anwenden","category":"common"},{"label":"Selbstinduktion mit U_ind = -L dI/dt","category":"lf"},{"label":"Spulenenergie berechnen","category":"lf"},{"label":"Generatorprinzip erklären","category":"common"},{"label":"Wirbelstrombremse vertieft analysieren","category":"lf"}]}</script></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Abgabe">
+    <h1>Zusammenfassung und Abgabe</h1>
+    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Induktion entsteht durch Änderung des magnetischen Flusses. Faraday beschreibt den Zusammenhang, Lenz die Richtung. Selbstinduktion, Spulenenergie und Wirbelströme gehören in der Tiefe ins LF.</p></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"ind_essay","title":"Reflexion","hint":"Antworte in 4-8 Sätzen. Nutze Änderung, magnetischer Fluss und Lenz'sche Regel.","storagePrefix":"ind_","fields":[{"label":"Deine Erklärung","key":"common","kind":"textarea","placeholder":"Warum entsteht bei ruhendem Magneten in einer ruhenden Spule keine dauerhafte Induktionsspannung?"},{"label":"Anwendung","key":"lf","kind":"textarea","placeholder":"Erkläre ein Gerät, das Induktion nutzt."}]}</script></div>
+    <div class="wb-section-break"></div>
+    <p class="wb-muted">Quelle: Dorn/Bader: Physik Kursstufe, Kapitel 3 „Induktion“, sowie Bildungsplan BW Physik V3.0.</p>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+</body>
+</html>

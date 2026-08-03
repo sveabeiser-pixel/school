@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elektrische Felder 3: Energie, Laden und Entladen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <style>
+    .ef-figure{margin:0 auto;max-width:560px}
+    .ef-figure img{width:100%;max-height:350px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .ef-wide-figure img{max-height:420px}
+    .ef-caption{font-size:.92rem;color:#555;margin-top:6px}
+    .ef-img-grid{display:grid;grid-template-columns:minmax(230px,560px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .ef-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .ef-side-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .ef-formula{font-size:1.15rem;font-weight:700}
+    .ef-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+    .ef-table th,.ef-table td{border:1px solid rgba(0,0,0,.16);padding:7px;text-align:center}
+    .ef-table th{background:rgba(49,95,157,.1)}
+    .ef-task-list li{margin:.35rem 0}
+    @media (max-width:760px){.ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
+  </style>
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {
+    "bookTitle":"Elektrische Felder 3",
+    "sectionTitle":"Energie, Laden und Entladen eines Kondensators",
+    "startPage":1,
+    "submitLabel":"Ergebnisse exportieren",
+    "onSubmit":"exportResults",
+    "autoNav":true,
+    "autoNavHeadings":["h1","h2"],
+    "autoNavGroupTitle":"Felder 3",
+    "themeDefault":"default"
+  }
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <h1>Energie im Kondensator</h1>
+    <p class="wb-muted">Fortsetzung zu <a href="elektrische-felder2.html">Elektrische Felder 2</a>: Jetzt geht es darum, wie viel Energie ein Kondensator speichern kann und warum Laden und Entladen nicht gleichmäßig, sondern exponentiell ablaufen.</p>
+    <p>Eine Fahrradrückleuchte kann noch weiterleuchten, obwohl du nicht mehr trittst. In vielen solchen Schaltungen sitzt kein Akku, sondern ein Kondensator. Beim Fahren wird er geladen, danach gibt er seine gespeicherte Energie langsam an die LED ab.</p>
+    <p>Die Leitfrage dieser Seite lautet: <strong>Wie hängen Ladung, Spannung, Energie und Zeitverlauf bei einem Kondensator zusammen?</strong></p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/blitzlicht.png" alt="Kamerablitz als Anwendung eines Kondensators">
+        <figcaption class="ef-caption">Kondensatoren können Energie langsam sammeln und sehr schnell wieder abgeben, zum Beispiel beim Kamerablitz.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Worum es geht</h3>
+        <p>Beim Kondensator speicherst du Ladung getrennt auf zwei Platten. Dadurch entsteht Spannung, und im Feld zwischen den Platten steckt elektrische Energie.</p>
+        <p>Beim Laden wächst die Spannung erst schnell und dann immer langsamer. Beim Entladen fällt sie erst schnell und dann immer langsamer. Dieses Verhalten erkennst du an Exponentialkurven.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Jetzt hast du das gelernt:</strong>
+      <p>Ein Kondensator ist nicht nur ein Ladungsspeicher, sondern auch ein Energiespeicher. Entscheidend sind Kapazität \(C\), Spannung \(U\), Ladung \(Q\) und beim Laden/Entladen zusätzlich der Widerstand \(R\).</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_rev_start",
+        "title":"Was kannst du nach dieser Seite?",
+        "question":"Woran erkennst du am Ende sicher, dass du das Thema verstanden hast?",
+        "answer":"Du kannst die Energie eines Kondensators berechnen, die Energie als Feldenergie deuten, Stromstärke als Ladungstransport erklären und U-t-, Q-t- und I-t-Diagramme beim Laden und Entladen qualitativ und rechnerisch auswerten."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Energieformel">
+    <h1>Wie viel Energie speichert ein Kondensator?</h1>
+    <p>Wenn die Spannung beim Aufladen konstant wäre, könntest du die Energie einfach mit \(E_\mathrm{el}=Q\cdot U\) berechnen. Beim Kondensator ist das aber nicht der Fall: Zu Beginn ist der Kondensator ungeladen, deshalb ist seine Spannung zunächst null. Je mehr Ladung schon getrennt wurde, desto größer wird die Spannung und desto mehr Arbeit ist nötig, um weitere Ladung auf die Platten zu bringen.</p>
+    <p>Im \(U\)-\(Q\)-Diagramm entspricht die aufgewendete Energie einer Fläche. Weil \(U\) proportional zu \(Q\) wächst, ist diese Fläche beim idealen Kondensator ein Dreieck.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure ef-wide-figure">
+        <img src="bilder/elektrische_Energie.png" alt="Energie eines Kondensators im U-Q-Diagramm">
+        <figcaption class="ef-caption">Links: konstante Spannung wäre eine Rechteckfläche. Rechts: Beim Kondensator steigt \(U\) während des Aufladens, deshalb zählt die Dreiecksfläche.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Warum der Faktor 1/2 auftaucht</h3>
+        <p>Für kleine Ladungspakete \(\Delta Q\) ist die Spannung während eines Einzelschritts fast konstant. Die kleine Energie ist dann \(\Delta E_\mathrm{el}=U_i\cdot\Delta Q\).</p>
+        <p>Alle kleinen Rechtecke zusammen nähern die Dreiecksfläche unter der Geraden an. Deshalb ist die Gesamtenergie halb so groß wie \(Q\cdot U\).</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\Delta E_\mathrm{el}=U_i\cdot\Delta Q\)</p>
+      <p>So beschreibst du die Energie für ein sehr kleines zusätzliches Ladungspaket beim Aufladen.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{el}=\frac12 Q\cdot U=\frac12 C\cdot U^2=\frac{Q^2}{2C}\)</p>
+      <p>Das ist die Energie eines geladenen Kondensators. Beim Entladen kann diese Energie wieder frei werden.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_mcq_energie",
+        "title":"Check: Energiefläche",
+        "hint":"Achte darauf, ob die Spannung während des Aufladens konstant bleibt.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Warum gilt für den idealen Kondensator Eₑₗ = 1/2 · Q · U und nicht einfach Eₑₗ = Q · U?",
+            "choices":[
+              {"id":"A","label":"Weil die Ladung beim Aufladen kleiner wird."},
+              {"id":"B","label":"Weil die Spannung am Kondensator beim Aufladen von 0 bis U ansteigt."},
+              {"id":"C","label":"Weil ein Kondensator keine Energie speichern kann."},
+              {"id":"D","label":"Weil Stromstärke und Spannung immer gleich groß sind."}
+            ],
+            "correct":["B"],
+            "explain":"Beim Aufladen wächst U proportional zu Q. Im U-Q-Diagramm entsteht deshalb eine Dreiecksfläche mit dem Inhalt 1/2 Q U."
+          }
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Feldenergie">
+    <h1>Wo steckt die Energie?</h1>
+    <p>Bei einem Akku ist die Energie an chemische Vorgänge in Materie gebunden. Beim Kondensator ist die Sichtweise anders: Die Energie steckt im elektrischen Feld zwischen den Platten. Auch wenn ein Dielektrikum im Kondensator liegt, wird es beim Entladen nicht verbraucht.</p>
+    <p>Setzt du in die Energieformel eines Plattenkondensators \(U=E\cdot d\), \(C=\varepsilon_0\varepsilon_r\cdot A/d\) und \(V=A\cdot d\) ein, erhältst du eine Formel, in der die Energie vom Feld und vom durchsetzten Volumen abhängt.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{el}=\frac12\varepsilon_0\varepsilon_r E^2\cdot V\)</p>
+      <p>Die Energie eines homogenen elektrischen Feldes hängt quadratisch von der Feldstärke \(E\) und linear vom felddurchsetzten Volumen \(V\) ab.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\rho_\mathrm{el}=\frac{E_\mathrm{el}}{V}=\frac12\varepsilon_0\varepsilon_r E^2\)</p>
+      <p>Die Energiedichte gibt an, wie viel elektrische Energie pro Volumen im Feld steckt.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-two">
+      <div class="wb-soft-callout">
+        <strong>Was passiert beim Auseinanderziehen?</strong>
+        <p>Ist der geladene Kondensator von der Spannungsquelle getrennt, bleibt die Ladung auf den Platten erhalten. Wenn du die Platten auseinanderziehst, arbeitest du gegen die elektrische Anziehung. Diese Arbeit erhöht die gespeicherte Energie.</p>
+      </div>
+      <div class="wb-soft-callout">
+        <strong>Wichtig für Aufgaben</strong>
+        <p>Bei „Spannungsquelle angeschlossen“ bleibt \(U\) konstant. Bei „Spannungsquelle getrennt“ bleibt \(Q\) konstant. Diese Unterscheidung entscheidet oft darüber, ob Energie, Feldstärke und Spannung größer oder kleiner werden.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_cloze_feldenergie",
+        "title":"Sicherung: Feldenergie",
+        "bank":["elektrischen Feld","quadratisch","Volumen","Energiedichte"],
+        "segments":[
+          {"t":"text","v":"Die Energie eines Kondensators lässt sich als Energie im "},
+          {"t":"gap","a":"elektrischen Feld"},
+          {"t":"text","v":" deuten. Sie wächst mit dem felddurchsetzten "},
+          {"t":"gap","a":"Volumen"},
+          {"t":"text","v":" und mit der Feldstärke "},
+          {"t":"gap","a":"quadratisch"},
+          {"t":"text","v":". Der Quotient aus Energie und Volumen heißt "},
+          {"t":"gap","a":"Energiedichte"},
+          {"t":"text","v":"."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Strom und Schaltung">
+    <h1>Elektrischer Strom: bewegte Ladungen</h1>
+    <p>Beim Laden und Entladen bewegen sich Ladungsträger durch die Leitungen. Diese gerichtete Bewegung von elektrischen Ladungen nennt man elektrischen Strom. Je mehr Ladung in einer bestimmten Zeit durch einen festen Leiterquerschnitt transportiert wird, desto größer ist die Stromstärke.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/laden_entladen_Kondensator.png" alt="Schaltung zum Laden und Entladen eines Kondensators">
+        <figcaption class="ef-caption">Schalterstellung A: Aufladen über die Spannungsquelle. Schalterstellung E: Entladen über den Widerstand.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Versuchsidee</h3>
+        <p>Ein Kondensator mit \(C=10\,\mu\mathrm F\) wird mit einem Widerstand \(R=1\,\mathrm{M\Omega}\) kombiniert. Die Spannungsquelle liefert zum Beispiel \(U_0=20\,\mathrm V\).</p>
+        <p>Beim Aufladen misst du \(U_C(t)\), \(I(t)\) und die Zeit, nachdem der Schalter auf A gestellt wurde. Beim Entladen startest du mit geladenem Kondensator und stellst den Schalter auf E.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(I=\frac{\Delta Q}{\Delta t}\)</p>
+      <p>Bei konstanter Stromstärke ist \(I\) der Quotient aus transportierter Ladung und benötigter Zeit.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(I(t)=\dot Q(t)=\frac{\mathrm dQ(t)}{\mathrm dt}\)</p>
+      <p>Bei veränderlicher Stromstärke ist \(I(t)\) die momentane Änderungsrate der Ladung.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Einheit:</strong>
+      <p class="ef-formula">\(1\,\mathrm A=\frac{1\,\mathrm C}{1\,\mathrm s}\)</p>
+      <p>Ein Ampere bedeutet: Pro Sekunde wird die Ladungsmenge ein Coulomb transportiert.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_order_schaltung",
+        "title":"Ablauf: Kondensator laden und entladen",
+        "hint":"Sortiere die Schritte so, dass daraus ein sinnvoller Messablauf wird.",
+        "items":[
+          "Schalter auf A stellen: Der Kondensator wird an die Spannungsquelle angeschlossen.",
+          "Warten, bis die Kondensatorspannung praktisch U₀ erreicht hat.",
+          "Messung für das Entladen starten.",
+          "Schalter auf E stellen: Der Kondensator ist nur noch mit dem Widerstand verbunden.",
+          "U(t), I(t) und t aufnehmen und auswerten."
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Entladen">
+    <h1>Entladevorgang eines Kondensators</h1>
+    <p>Direkt nach dem Umschalten auf Entladen ist die Spannung am Kondensator maximal. Sie treibt einen Strom durch den Widerstand. Dadurch werden Ladungen von den Platten wegtransportiert, der Ladungsüberschuss wird kleiner und der Potenzialunterschied nimmt ab.</p>
+    <p>Weil die Spannung kleiner wird, wird auch der Strom kleiner. Dadurch wird wiederum immer weniger Ladung pro Zeit abtransportiert. Diese gegenseitige Rückkopplung führt zu einer exponentiellen Abnahme.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure ef-wide-figure">
+        <img src="bilder/diagramme_entladen_kondensator.png" alt="U-t-, Q-t- und I-t-Diagramme beim Entladen eines Kondensators">
+        <figcaption class="ef-caption">Beim Entladen fallen Spannung, Ladung und Stromstärke exponentiell gegen null.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>So liest du die Diagramme</h3>
+        <p>Das \(U\)-\(t\)-Diagramm und das \(Q\)-\(t\)-Diagramm haben dieselbe Form, weil \(Q=C\cdot U\) gilt. Das \(I\)-\(t\)-Diagramm hat ebenfalls eine Exponentialform, beschreibt aber die Änderungsrate der Ladung.</p>
+        <p>Wenn sich \(U\), \(Q\) und \(I\) in gleichen Zeitabständen jeweils halbieren, kannst du daraus die Halbwertszeit ablesen.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <table class="ef-table">
+      <thead><tr><th>\(t\) in s</th><th>0</th><th>7</th><th>14</th><th>28</th></tr></thead>
+      <tbody>
+        <tr><th>\(U\) in V</th><td>20</td><td>10</td><td>5</td><td>2,5</td></tr>
+        <tr><th>\(I\) in mA</th><td>0,020</td><td>0,010</td><td>0,005</td><td>0,003</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U(t)=U_0\cdot 0{,}5^{\,t/T_{1/2}}\)</p>
+      <p>Mit der Halbwertszeit \(T_{1/2}\) kannst du die exponentielle Abnahme der Spannung beschreiben.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q(t)=Q_0\cdot e^{-t/(RC)}\), \(\quad U_C(t)=U_0\cdot e^{-t/(RC)}\)</p>
+      <p>Diese Schreibweise nutzt die Zeitkonstante \(RC\). Nach der Zeit \(RC\) ist der Wert auf ungefähr 37 Prozent des Anfangswerts gefallen.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(I(t)=-I_0\cdot e^{-t/(RC)}\)</p>
+      <p>Das Minuszeichen hängt von der gewählten Stromrichtung ab: Beim Entladen bewegt sich Ladung entgegengesetzt zum Aufladen.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_verify_entladen",
+        "title":"Wahr oder falsch?",
+        "hint":"Prüfe die Aussage mit dem Diagramm und der Formel.",
+        "statement":"Beim idealen Entladen eines Kondensators halbieren sich Spannung, Ladung und Stromstärke in gleichen Zeitabständen.",
+        "answer":true,
+        "explain":"Ja. Das ist ein Kennzeichen exponentieller Abnahme. Die Zeitspanne für eine Halbierung heißt Halbwertszeit."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Aufladen">
+    <h1>Aufladevorgang eines Kondensators</h1>
+    <p>Beim Aufladen treibt die Spannungsquelle Ladung auf die Kondensatorplatten. Anfangs ist noch keine Gegenspannung am Kondensator vorhanden, deshalb ist die Stromstärke groß. Mit jeder zusätzlichen Ladung wächst die Kondensatorspannung und wirkt dem weiteren Laden stärker entgegen.</p>
+    <p>Deshalb steigen Spannung und Ladung nicht linear, sondern nähern sich exponentiell ihren Grenzwerten. Die Spannung nähert sich \(U_0\), die Ladung nähert sich \(Q_0=C\cdot U_0\), und die Stromstärke nähert sich null.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure ef-wide-figure">
+        <img src="bilder/aufladevorgang_kondensator.png" alt="U-t-, Q-t- und I-t-Diagramme beim Aufladen eines Kondensators">
+        <figcaption class="ef-caption">Beim Aufladen wachsen Spannung und Ladung gegen einen Maximalwert. Der Betrag der Stromstärke fällt gegen null.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Der Unterschied zum Entladen</h3>
+        <p>Beim Entladen wird der Vorrat an getrennten Ladungen kleiner. Beim Aufladen wird er größer, aber immer langsamer.</p>
+        <p>Die Stromrichtung ist beim Aufladen entgegengesetzt zur Stromrichtung beim Entladen. Deshalb sind die \(I\)-\(t\)-Diagramme je nach Vorzeichenkonvention an der \(t\)-Achse gespiegelt.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <table class="ef-table">
+      <thead><tr><th>\(t\) in s</th><th>0</th><th>7</th><th>14</th><th>28</th></tr></thead>
+      <tbody>
+        <tr><th>\(U\) in V</th><td>0</td><td>10</td><td>15</td><td>17,5</td></tr>
+        <tr><th>\(|I|\) in mA</th><td>0,020</td><td>0,010</td><td>0,005</td><td>0,003</td></tr>
+      </tbody>
+    </table>
+    <p class="wb-mini-note">Die Tabelle zeigt typische Werte zur gleichen Halbwertszeit: Die Spannung nähert sich \(20\,\mathrm V\). Der Strombetrag halbiert sich.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q(t)=Q_0\cdot\left(1-e^{-t/(RC)}\right)\)</p>
+      <p>Beim Aufladen nähert sich die Ladung exponentiell dem Grenzwert \(Q_0=C\cdot U_0\).</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U_C(t)=U_0\cdot\left(1-e^{-t/(RC)}\right)\)</p>
+      <p>Die Kondensatorspannung nähert sich der Quellspannung \(U_0\).</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(I(t)=I_0\cdot e^{-t/(RC)}\)</p>
+      <p>Der Betrag der Stromstärke nimmt beim Aufladen exponentiell ab. Das Vorzeichen hängt davon ab, welche Richtung du als positiv festlegst.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_cat_laden_entladen",
+        "title":"Sortiere: Aufladen oder Entladen?",
+        "hint":"Ziehe jede Aussage in die passende Spalte.",
+        "categories":[
+          {"id":"aufladen","title":"Aufladen"},
+          {"id":"entladen","title":"Entladen"}
+        ],
+        "items":[
+          {"label":"U_C nähert sich der Quellspannung U₀.","category":"aufladen"},
+          {"label":"Q nähert sich Q₀ = C · U₀.","category":"aufladen"},
+          {"label":"U_C fällt gegen 0 V.","category":"entladen"},
+          {"label":"Der Ladungsüberschuss auf den Platten wird kleiner.","category":"entladen"},
+          {"label":"Der Strombetrag ist zu Beginn groß und wird dann kleiner.","category":"aufladen"},
+          {"label":"Der Kondensator gibt gespeicherte Energie an den Stromkreis ab.","category":"entladen"}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Halbwertszeit und DGL">
+    <h1>Halbwertszeit, Zeitkonstante und Differenzialgleichung</h1>
+    <p>Die Halbwertszeit ist die Zeitspanne, in der sich beim Entladen Spannung, Ladung und Stromstärke jeweils halbieren. Sie hängt vom Widerstand im Entladekreis und von der Kapazität ab. Ein größerer Widerstand bremst den Ladungstransport, eine größere Kapazität bedeutet mehr gespeicherte Ladung pro Volt. Beides verlängert den Vorgang.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(T_{1/2}=R\cdot C\cdot\ln(2)\approx 0{,}69\cdot R\cdot C\)</p>
+      <p>Die Halbwertszeit ist proportional zum Widerstand \(R\) und proportional zur Kapazität \(C\).</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q(t)=-R C\cdot \dot Q(t)\)</p>
+      <p>Diese Differenzialgleichung beschreibt den Entladevorgang: Die vorhandene Ladung ist proportional zur momentanen Änderungsrate der Ladung.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q(t)=Q_0-R C\cdot \dot Q(t)\)</p>
+      <p>Diese Differenzialgleichung beschreibt den Aufladevorgang. Der Grenzwert ist \(Q_0=C\cdot U_0\).</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\Delta Q=\int I(t)\,\mathrm dt\)</p>
+      <p>Der Flächeninhalt unter dem \(I\)-\(t\)-Diagramm entspricht der übertragenen Ladungsmenge.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-two">
+      <div class="wb-soft-callout">
+        <strong>Je-desto-Sätze</strong>
+        <p>Je größer \(R\), desto größer ist \(T_{1/2}\). Je größer \(C\), desto größer ist \(T_{1/2}\). Wenn eine Größe konstant bleibt, ist die Halbwertszeit zur anderen Größe proportional.</p>
+      </div>
+      <div class="wb-soft-callout">
+        <strong>Methode: Lösung prüfen</strong>
+        <p>Um eine Lösung einer DGL zu prüfen, leitest du den vorgeschlagenen Funktionsterm ab und setzt Funktion und Ableitung in die DGL ein. Wenn beide Seiten gleich sind, erfüllt die Funktion die Gleichung.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_rev_dgl",
+        "title":"Methode: Entladefunktion prüfen",
+        "question":"Warum erfüllt Q(t) = Q₀ · exp(-ln(2) · t / T₁/₂) die Entlade-DGL?",
+        "answer":"Die Ableitung ist Q'(t) = -(ln(2) / T₁/₂) · Q₀ · exp(-ln(2) · t / T₁/₂). Setzt man Q(t) und Q'(t) in Q(t) = -R · C · Q'(t) ein, kürzt sich der Exponentialterm. Es bleibt 1 = R · C · ln(2) / T₁/₂, also T₁/₂ = R · C · ln(2)."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-p2>
+      <div data-side="L" data-pair="1">\(U_C(t)\)</div>
+      <div data-side="R" data-pair="1">Spannung am Kondensator</div>
+      <div data-side="L" data-pair="2">\(Q(t)\)</div>
+      <div data-side="R" data-pair="2">Ladung auf den Kondensatorplatten</div>
+      <div data-side="L" data-pair="3">\(I(t)\)</div>
+      <div data-side="R" data-pair="3">Änderungsrate der Ladung</div>
+      <div data-side="L" data-pair="4">\(T_{1/2}\)</div>
+      <div data-side="R" data-pair="4">Zeit bis zur Halbierung</div>
+    </div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Aufgaben Energie">
+    <h1>Rechenaufgaben: Energie und Energiedichte</h1>
+    <p>Bearbeite die Aufgaben sauber mit Formel, Einsetzen, Ergebnis und Einheit. Schreibe bei Beschreibungsaufgaben dazu, welche Größe konstant gehalten wird.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/aufgabe_energie_kondensator.png" alt="Vier Diagramme zur Energie eines Kondensators beim Aufladen">
+        <figcaption class="ef-caption">Aufgabe 5: Entscheide, welches Diagramm die Energie beim Aufladen am besten beschreibt.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Hinweis zu Aufgabe 5</h3>
+        <p>Die Energie ist proportional zu \(U^2\), wenn \(C\) konstant ist. Beim Aufladen beginnt sie bei null und wächst zunächst langsam, später stärker. Nutze diesen Gedanken für die Diagrammentscheidung.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_essay_energie_aufgaben",
+        "title":"Löse selbst: Energie eines Kondensators",
+        "hint":"Schreibe deine Rechnung vollständig auf. Die Aufgabenstellung steht jeweils über dem Schreibfeld.",
+        "storagePrefix":"ef3_",
+        "fields":[
+          {"label":"1. Ein Kondensator hat die Kapazität C = 100 µF und wird mit U = 12 V geladen. Berechne die Energiemenge, die er speichern kann.","key":"energie_1","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"2a. Ein Kondensator hat die Ladungsmenge Q = 500 C bei U = 2,50 V gespeichert. Berechne die gespeicherte Energie.","key":"energie_2a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"2b. Der Kondensator treibt ideal einen Motor an, der eine 100-g-Tafel Schokolade anheben kann. Berechne, wie hoch die Schokolade angehoben werden kann.","key":"energie_2b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"2c. Nenne Gründe, weshalb die Schokolade in Wirklichkeit nicht die berechnete Höhe erreicht.","key":"energie_2c","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"3. Ein Ultracap-Kondensator hat C = 100 F und U = 50,0 V. Berechne die gespeicherte Energie und die Geschwindigkeit, auf die damit ein Kleinwagen mit m = 500 kg gebracht werden könnte. Vernachlässige Energieverluste.","key":"energie_3","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"4a. Zwei kreisförmige Kondensatorplatten haben Durchmesser 24 cm und Abstand 4,0 mm. Berechne Energie und Energiedichte, wenn der Kondensator mit 3,0 kV geladen wird.","key":"energie_4a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"4b. Beschreibe und begründe, wie sich Energiegehalt und Energiedichte verändern, wenn nur die Spannung verdoppelt wird.","key":"energie_4b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"4c. Beschreibe und begründe, wie sich eine Verkleinerung des Plattenabstands auf die gespeicherte Energie auswirkt, wenn alle anderen Größen konstant gehalten werden.","key":"energie_4c","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"5. Ein Kondensator mit 10 µF wird auf 200 V geladen und einem auf 100 V geladenen Kondensator gleicher Kapazität parallel geschaltet, ohne dass Ladung verloren geht. Berechne die gemeinsame Spannung und die elektrische Energie, die in thermische Energie der Umgebung umgewandelt wird.","key":"energie_5","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"6. Schätze ab, welche elektrische Energie in der Erdatmosphäre gespeichert ist, wenn das elektrische Feld bis in 1000 m Höhe reicht und eine mittlere Feldstärke von 150 V/m vorliegt.","key":"energie_6","kind":"textarea","placeholder":"Schreibe deine Lösung hier."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Aufgaben Laden">
+    <h1>Rechenaufgaben: Laden und Entladen</h1>
+    <p>Bei diesen Aufgaben geht es um Diagramme, Halbwertszeit, Leuchtdauer, Energie und Differenzialgleichungen. Nutze die Formeln aus den vorherigen Seiten und schreibe Begründungen vollständig aus.</p>
+    <div class="wb-section-break"></div>
+
+    <table class="ef-table">
+      <caption>Messwerte zu Aufgabe 2: Entladung über \(R=0{,}20\,\mathrm{k\Omega}\)</caption>
+      <thead><tr><th>\(t\) in s</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+      <tbody>
+        <tr><th>\(U_C\) in V</th><td>12,0</td><td>7,3</td><td>4,4</td><td>2,7</td><td>1,6</td><td>1,0</td><td>0,6</td></tr>
+      </tbody>
+    </table>
+    <p class="wb-mini-note">Für das \(I\)-\(t\)-Diagramm gilt bei der Entladung über den Widerstand betragsmäßig \(|I|=U_C/R\). Den Flächeninhalt unter der Kurve kannst du näherungsweise mit Trapezen bestimmen.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_essay_laden_aufgaben",
+        "title":"Löse selbst: Laden und Entladen eines Kondensators",
+        "hint":"Die Aufgabenstellung bleibt sichtbar über dem Schreibfeld.",
+        "storagePrefix":"ef3_",
+        "exportName":"elektrische-felder3-ergebnisse.txt",
+        "fields":[
+          {"label":"1a. Skizziere den Verlauf des U-t-Diagramms beim Auflade- und Entladevorgang eines Kondensators.","key":"laden_1a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"1b. Erläutere anhand deiner Skizzen den Auflade- und Entladevorgang eines Kondensators.","key":"laden_1b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"1c. Erläutere, wie man mit Hilfe des U-t-Diagramms den Verlauf des Q-t- und I-t-Diagramms ermitteln kann.","key":"laden_1c","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"2. Nutze die Messwerte oben. Skizziere das zugehörige I-t-Diagramm und ermittle daraus näherungsweise die Ladungsmenge, die zu Beginn des Entladevorgangs auf dem Kondensator war.","key":"laden_2","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"3a. Formuliere Je-desto-Sätze, die die Halbwertszeit mit dem Widerstand und der Kapazität verbinden.","key":"laden_3a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"3b. Gib den mathematischen Zusammenhang zwischen Halbwertszeit und Widerstand bzw. Kapazität an, wenn jeweils eine der beiden Größen konstant bleibt.","key":"laden_3b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"3c. Beschreibe ein Experiment, mit dem man die Zusammenhänge aus 3b überprüfen kann. Gehe auf Aufbau, Durchführung und die erwarteten T₁/₂-R- und T₁/₂-C-Diagramme ein.","key":"laden_3c","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"4a. Ein Kondensator mit C = 1 F wird auf U = 4 V geladen. Schätze ab, wie lange er ein Lämpchen mit 3,8 V und 70 mA zum Leuchten bringen kann.","key":"laden_4a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"4b. Die Leuchtdauer ändert sich, wenn das Lämpchen durch eine LED ersetzt wird. Die mittlere Leistung beträgt 20 mW und die LED leuchtet nur bei einer Spannung zwischen 2 V und 4 V. Bestimme die Leuchtdauer der Diode.","key":"laden_4b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"5. Entscheide mit dem Bild auf der vorherigen Seite, welches der vier Diagramme die Energie eines Kondensators beim Aufladevorgang am besten beschreibt, und begründe deine Antwort.","key":"laden_5","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"6a. In einer Fusionsplasma-Anlage werden Kondensatorbatterien mit C = 0,10 F auf 50 kV geladen. Berechne die gespeicherte Energie.","key":"laden_6a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"6b. Die Kondensatoren werden innerhalb von 0,001 s entladen. Bestimme die mittlere Leistung und vergleiche sie mit dem Pumpspeicherkraftwerk Wehr mit 992 MW.","key":"laden_6b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"7a. Zeige, dass Q(t) = Q₀ · (1 - exp(-t / (R · C))) die Differenzialgleichung Q(t) = Q₀ - R · C · Q'(t) erfüllt.","key":"laden_7a","kind":"textarea","placeholder":"Schreibe deine Lösung hier."},
+          {"label":"7b. Stelle mit 7a einen Funktionsterm für U(t) und I(t) beim Aufladen auf. Gib insbesondere das Vorzeichen von I an.","key":"laden_7b","kind":"textarea","placeholder":"Schreibe deine Lösung hier."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Abschluss">
+    <h1>Zusammenfassung und Weiterforschen</h1>
+    <div class="wb-callout">
+      <strong>Jetzt hast du das gelernt:</strong>
+      <ul>
+        <li>Die Energie eines geladenen Kondensators ist \(E_\mathrm{el}=\frac12 Q U=\frac12 C U^2=\frac{Q^2}{2C}\).</li>
+        <li>Die Energie kann als Energie des elektrischen Feldes beschrieben werden: \(E_\mathrm{el}=\frac12\varepsilon_0\varepsilon_rE^2V\).</li>
+        <li>Die Stromstärke beschreibt Ladungstransport: \(I=\Delta Q/\Delta t\) bzw. \(I(t)=\mathrm dQ/\mathrm dt\).</li>
+        <li>Beim Entladen fallen \(U\), \(Q\) und \(|I|\) exponentiell gegen null.</li>
+        <li>Beim Aufladen wachsen \(U\) und \(Q\) exponentiell gegen ihre Grenzwerte, während \(|I|\) gegen null fällt.</li>
+        <li>Die Halbwertszeit ist \(T_{1/2}=RC\ln(2)\).</li>
+      </ul>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_mcq_abschluss",
+        "title":"Mini-Check: Alles zusammen",
+        "hint":"Es können mehrere Aussagen richtig sein.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Welche Aussagen passen zum RC-Kondensator?",
+            "choices":[
+              {"id":"A","label":"Beim Entladen nimmt U exponentiell ab."},
+              {"id":"B","label":"Beim Aufladen ist die Stromstärke dauerhaft konstant."},
+              {"id":"C","label":"Die Halbwertszeit wächst, wenn R größer wird."},
+              {"id":"D","label":"Die Energie wächst bei konstantem C proportional zu U²."}
+            ],
+            "correct":["A","C","D"],
+            "explain":"A, C und D sind richtig. Beim Aufladen nimmt der Strombetrag ab, weil die Kondensatorspannung der Quellspannung immer stärker entgegenwirkt."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Anwendungen</h2>
+    <div class="ef-two">
+      <div class="wb-soft-callout">
+        <strong>Die Anwendung bestimmt den Kondensator</strong>
+        <p>Ein Kondensator in einem technischen Produkt kann als Ladungs- und Energiespeicher dienen. Entscheidend ist nicht nur, wie viel Energie gespeichert wird, sondern auch, wie schnell sie aufgenommen und wieder abgegeben werden soll.</p>
+        <p>Bei einem Elektroauto wäre schnelles Laden und schnelles Abrufen wichtig. Bei einer Fahrradrückleuchte soll die Energie dagegen über längere Zeit langsam an die Lampe abgegeben werden.</p>
+      </div>
+      <div class="wb-soft-callout">
+        <strong>Exkurs: Kamerablitz</strong>
+        <p>In Kamerablitzen werden Kondensatoren zuerst auf mehrere Hundert Volt geladen. Beim Auslösen entladen sie sich sehr schnell über eine Blitzröhre. Das Gas in der Röhre leuchtet für kurze Zeit sehr hell.</p>
+        <p>Nach dem Blitz muss der Kondensator wieder geladen werden. Deshalb brauchen viele Blitzgeräte eine kurze Ladezeit, bevor das nächste Bild mit voller Blitzleistung möglich ist.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Quellen & Weiterforschen</h2>
+    <p class="wb-muted">Inhaltlich orientiert an Dorn/Bader: Physik Kursstufe, Kapitel zum Kondensator als Energie- und Ladungsspeicher. Der Text wurde für diese interaktive Schülerseite neu formuliert und mit den bereitgestellten Materialien abgeglichen.</p>
+    <ul>
+      <li><a href="https://www.bildungsplaene-bw.de/">Bildungspläne Baden-Württemberg</a>: Kompetenzrahmen Physik Kursstufe.</li>
+      <li><a href="felder-simulationen.html">Kondensator-Simulation</a>: Untersuche selbst, wie Spannung, Abstand, Fläche und Dielektrikum zusammenwirken.</li>
+      <li>Weiterdenkfrage: Warum ist ein Kondensator für einen Kamerablitz geeignet, aber als alleiniger Energiespeicher für lange Fahrstrecken im Auto problematisch?</li>
+    </ul>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+</body>
+</html>

@@ -12,6 +12,7 @@
 [data-wave-sim="standing-modes"] [data-role="canvas"]{ height:290px; }
 [data-wave-sim="loose-reflection"] [data-role="canvas"], [data-wave-sim="fixed-reflection"] [data-role="canvas"], [data-wave-sim="build-standing"] [data-role="canvas"], [data-wave-sim="thin-dense-transition"] [data-role="canvas"], [data-wave-sim="dense-thin-transition"] [data-role="canvas"]{ height:300px; }
 [data-wave-sim="fixed-pulse-reflection"] [data-role="canvas"], [data-wave-sim="loose-pulse-reflection"] [data-role="canvas"]{ height:280px; }
+[data-wave-sim="lc-circuit"] [data-role="canvas"]{ height:360px; background:rgba(255,255,255,.58); }
 [data-wave-sim="leifi-wave"] [data-role="canvas"], [data-wave-sim="coupled-wave"] [data-role="canvas"]{ height:auto; background:rgba(255,255,255,.5); }
 .wb-book[data-theme="dark"] .sw-sim-card, .wb-book[data-theme="dark-blue"] .sw-sim-card{ background:rgba(255,255,255,.18); }
 .wb-book[data-theme="dark"] [data-wave-sim] [data-role="canvas"], .wb-book[data-theme="dark"] [data-wave-sim] [data-role="pattern-canvas"], .wb-book[data-theme="dark-blue"] [data-wave-sim] [data-role="canvas"], .wb-book[data-theme="dark-blue"] [data-wave-sim] [data-role="pattern-canvas"]{ background:rgba(255,255,255,.86)!important; border-color:rgba(255,255,255,.4)!important; }

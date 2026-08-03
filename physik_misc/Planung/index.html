@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kursstufenplanung Physik V3.0</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <style>
+    .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+    .plan-card{border:1px solid rgba(120,120,120,.26);border-radius:8px;padding:14px;background:rgba(255,255,255,.72)}
+    .plan-card h3{margin-top:0}
+    .plan-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+    .plan-table th,.plan-table td{border:1px solid rgba(120,120,120,.28);padding:8px;vertical-align:top}
+    .plan-table th{background:rgba(0,0,0,.05);text-align:left}
+    .track-common{border-left:5px solid #2f7d57}
+    .track-lf{border-left:5px solid #8f4b1f}
+    .track-bf{border-left:5px solid #315f9d}
+    .tag{display:inline-block;border:1px solid rgba(0,0,0,.18);border-radius:999px;padding:2px 8px;margin:2px 3px 2px 0;font-size:.82rem;background:rgba(255,255,255,.7)}
+    .tag-common{border-color:#2f7d57;color:#235f43}
+    .tag-lf{border-color:#8f4b1f;color:#733a18}
+    .tag-bf{border-color:#315f9d;color:#254a7c}
+    .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
+    .change-box{border-radius:8px;padding:16px;border:2px solid transparent;background:rgba(255,255,255,.78)}
+    .change-removed{border-color:#b94343;background:#fff1f1}
+    .change-added{border-color:#2f7d57;background:#effaf3}
+    .change-box h2{margin-top:0}
+    .change-box ul{margin-bottom:0}
+    .change-box li{margin:7px 0}
+    .removed-text{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#8c2222}
+    .added-text{font-weight:700;color:#235f43}
+    .bp-label{display:inline-block;border:2px solid #555;padding:4px 12px;margin:0 0 8px 0;background:#ddd;font-weight:700}
+    .bp-label-new{border-color:#d6d000;background:#ffff43}
+    .material-link{font-weight:700}
+    .scope-ok{border-left:5px solid #2f7d57;background:#effaf3}
+    .scope-mixed{border-left:5px solid #d7a525;background:#fff8df}
+    .scope-lf{border-left:5px solid #8f4b1f;background:#fff0e7}
+    .scope-skip{border-left:5px solid #b94343;background:#fff1f1}
+    .week{font-weight:700;white-space:nowrap}
+    .compact-list li{margin:4px 0}
+    .source-list li{margin:8px 0}
+  </style>
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Kursstufenplanung Physik",
+      "sectionTitle":"V3.0: Basisfach Quantenphysik + Leistungsfach",
+      "startPage":1,
+      "submitLabel":"Planungsnotizen exportieren",
+      "onSubmit":"exportResults",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Planung",
+      "themeDefault":"default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Überblick">
+      <h1>Kursstufenplanung Physik: Basisfach und Leistungsfach parallel</h1>
+      <p class="wb-muted">Diese Seite plant die Kursstufe nach dem Bildungsplan Baden-Württemberg Physik V3.0, überarbeitete Fassung vom 08. April 2026. Betrachtet werden nur <strong>3.4 Klassen 12/13 Basisfach mit Schwerpunkt Quantenphysik</strong> und <strong>3.6 Klassen 12/13 Leistungsfach</strong>.</p>
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Planungsproblem:</strong>
+        <p>Basisfach und Leistungsfach haben viele gemeinsame Themen, aber unterschiedliche Tiefe. Du unterrichtest 3 Stunden gemeinsam. Die 2 zusätzlichen Stunden des Leistungsfachs müssen deshalb konsequent für quantitative Vertiefungen, zusätzliche Experimente, Modellgrenzen und LF-exklusive Inhalte genutzt werden.</p>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <h2>Die wichtigste Korrektur gegenüber der alten Planung</h2>
+      <div class="plan-grid">
+        <div class="plan-card track-common">
+          <h3>Gemeinsam möglich</h3>
+          <p><span class="tag tag-common">BF + LF</span> Elektrische und magnetische Felder, Induktion, Schwingungen, Wellen, Wellenoptik und Quantenphysik kommen in beiden Kursen vor. Sie gehören grundsätzlich in die gemeinsame Spur.</p>
+        </div>
+        <div class="plan-card track-lf">
+          <h3>LF-Zusatzstunden</h3>
+          <p><span class="tag tag-lf">LF-only</span> Das LF rechnet und modelliert tiefer: Coulomb-Gesetz, Influenz/Polarisation, Potential, quantitative Teilchenbewegung, Hall-Effekt, Wien-Filter, Selbstinduktion, Interferometer, Einzelspalt, Unbestimmtheit, Röntgen, Potentialtopf, vertiefendes Themengebiet.</p>
+        </div>
+        <div class="plan-card track-bf">
+          <h3>Basisfach</h3>
+          <p><span class="tag tag-bf">BF-Tiefe</span> Das Basisfach bearbeitet dieselben Leitideen meist qualitativ oder mit ausgewählten Formeln. Entscheidend ist sichere Begriffsbildung, Experimentdeutung und Modellvergleich.</p>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"rev_start_v3",
+          "title":"Leitfrage",
+          "question":"Was heißt Parallelplanung nach V3.0 praktisch?",
+          "answer":"Du führst gemeinsame Konzepte zusammen ein und trennst danach die Tiefe: Das Basisfach bleibt bei den verbindlichen BF-Kompetenzen, das Leistungsfach nutzt die Zusatzstunden für quantitative Herleitungen, komplexere Auswertungen, zusätzliche Experimente und LF-exklusive Kompetenzpunkte."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Änderungen">
+      <h1>Farbig eingepflegte Änderungen: BP2016.V2 → BP2026</h1>
+      <p>Diese Ergänzung betrifft vor allem das Leistungsfach. Rot markiert sind Inhalte, die gegenüber der alten Fassung gestrichen oder nicht mehr in dieser Form geführt werden. Grün markiert sind Inhalte, die neu oder ausdrücklich anders festgelegt sind.</p>
+      <div class="wb-section-break"></div>
+
+      <div class="change-grid">
+        <div class="change-box change-removed">
+          <div class="bp-label">BP2016.V2</div>
+          <h2>Streichungen</h2>
+          <ul>
+            <li><span class="removed-text">Gemeinsamkeiten und Unterschiede zwischen elektrischen Feldern und Gravitationsfeldern</span></li>
+            <li><span class="removed-text">Maxwell-Gleichungen im Überblick</span></li>
+            <li><span class="removed-text">Schwingungs-Differentialgleichung durch geeigneten Ansatz lösen</span></li>
+            <li><span class="removed-text">Hertz'scher Dipol</span></li>
+            <li><span class="removed-text">Interferenzphänomene im Alltag</span></li>
+            <li><span class="removed-text">geschichtliche Entwicklung von Modellvorstellungen des Lichts</span></li>
+            <li><span class="removed-text">Strahlteiler mit Phasensprüngen als eigener Schwerpunkt</span></li>
+            <li><span class="removed-text">Zerlegung polychromatischen Lichts am Gitter</span></li>
+            <li><span class="removed-text">Hallwachs-Effekt</span></li>
+          </ul>
+        </div>
+        <div class="change-box change-added">
+          <div class="bp-label bp-label-new">BP2026 / V3.0</div>
+          <h2>Neu dazugekommen oder präzisiert</h2>
+          <ul>
+            <li><span class="added-text">Dielektrizitätszahl \(\varepsilon_r\)</span> als Begrifflichkeit beim Kondensator.</li>
+            <li><span class="added-text">Kreisbahnen und Schraubenbahnen</span> im magnetischen Feld.</li>
+            <li><span class="added-text">Abhängigkeit der Periodendauer</span> von charakteristischen Größen: Federpendel, Fadenpendel mit Kleinwinkelnäherung, elektromagnetischer Schwingkreis.</li>
+            <li><span class="added-text">Michelson-Interferometer</span> ist festgelegt; der Strahlteiler ist nicht mehr als eigener Phasensprung-Schwerpunkt zu behandeln.</li>
+            <li><span class="added-text">Spektralzerlegung polychromatischen Lichts</span> nur noch am Doppelspalt einplanen, nicht am Gitter.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"verify_aenderungen_2026",
+          "title":"Änderungscheck",
+          "hint":"Prüfe die Aussage zur neuen Planung.",
+          "statement":"Die Zerlegung polychromatischen Lichts sollte nach der neuen Änderung weiterhin am Gitter als Standard eingeplant werden.",
+          "answer":false,
+          "explain":"Nein. In den Änderungen ist festgehalten: Spektralzerlegung polychromatischen Lichts nur am Doppelspalt. Das Gitter bleibt für Interferenz und Hauptmaxima relevant, aber nicht für diesen Punkt."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Stoffvergleich">
+      <h1>Vollständiger Stoffvergleich: 3.4 gegen 3.6</h1>
+      <p>Die Tabelle lässt keinen Inhaltsbereich weg. Sie übersetzt die Bildungsplan-Kompetenzen in eine unterrichtbare Trennung: gemeinsamer Kern, BF-Tiefe und LF-Zusatz.</p>
+      <div class="wb-section-break"></div>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Bereich</th>
+            <th>Gemeinsamer Kern in 3 Stunden</th>
+            <th>Basisfach: verbindliche Tiefe</th>
+            <th>Leistungsfach: Zusatz in 2 Stunden</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Denk- und Arbeitsweisen</strong></td>
+            <td>Empirische Überprüfbarkeit, Funktion von Modellen, Bedeutung von Naturkonstanten.</td>
+            <td>Modelle von Licht und Materie erläutern; Planck-Konstante als Naturkonstante einordnen.</td>
+            <td>Gleiche Grundkompetenzen, aber mit höherem Anspruch bei Modellkritik, Auswertung und Transfer.</td>
+          </tr>
+          <tr>
+            <td><strong>Elektrische und magnetische Felder</strong></td>
+            <td>Feldbegriff, Feldlinien, homogenes Feld, Radial-/Dipolfeld, Superposition zeichnerisch; \(\vec E=\vec F/q\); magnetische Flussdichte; Lorentzkraft; Plattenkondensator; Spule.</td>
+            <td>Bewegung geladener Teilchen im E-Feld und B-Feld qualitativ; Kondensatorgrößen einschließlich Dielektrizitätszahl \(\varepsilon_r\) berechnen; Entladung über Exponentialfunktion; \(B=\mu_0\mu_r nI/l\).</td>
+            <td>Coulomb-Gesetz; elektrische Felder bei Punktladung/Dipol mit Quelle/Senke; Influenz und Polarisation; Dielektrizitätszahl \(\varepsilon_r\); \(E=U/d\), \(C=Q/U\), Kondensatorenergie; U-t- und I-t-Diagramme; Spannung und Potenzial; Bewegung im E-Feld quantitativ.</td>
+          </tr>
+          <tr>
+            <td><strong>Magnetisches Feld LF-Vertiefung</strong></td>
+            <td>BF braucht Lorentzkraft und magnetische Flussdichte, aber nicht die volle quantitative Bahnkurvenanalyse.</td>
+            <td>Kraft auf Leiter und Ladung beschreiben; Bewegung senkrecht zum B-Feld qualitativ.</td>
+            <td>Feld um geraden Leiter mit Handregel; Hall-Effekt; Spulenfeld untersuchen; Kreisbahnen und Schraubenbahnen quantitativ; gekreuzte E-/B-Felder, Wien-Filter, Massenspektrograph.</td>
+          </tr>
+          <tr>
+            <td><strong>Elektrodynamik</strong></td>
+            <td>Induktion über Lorentzkraft; magnetischer Fluss; Faraday-Gesetz; Lenz'sche Regel; technische Anwendungen.</td>
+            <td>Induktionsgesetz untersuchen und beschreiben; Generator, Transformator, Induktionsladegerät, Induktionskochplatte qualitativ.</td>
+            <td>Faraday-Gesetz erläutern und anwenden; Anwendungen differenzierter; Selbstinduktion \(U_\mathrm{ind}=-L\dot I\); Spulenenergie; Wirbelströme.</td>
+          </tr>
+          <tr>
+            <td><strong>Schwingungen</strong></td>
+            <td>Periodische Bewegung, Auslenkung, Amplitude, Periodendauer, Frequenz, Kreisfrequenz; harmonische Sinus-/Cosinusbeschreibung; Federpendel; elektromagnetischer Schwingkreis; Energieumwandlungen.</td>
+            <td>Federpendel erklären; \(T=2\pi\sqrt{m/D}\); Schwingkreis und Energieumwandlungen beschreiben.</td>
+            <td>Gedämpfte Schwingung mathematisch; lineare Rückstellkraft; Abhängigkeit der Periodendauer von charakteristischen Größen: Federpendel \(T=2\pi\sqrt{m/D}\), Fadenpendel mit Kleinwinkelnäherung \(T=2\pi\sqrt{l/g}\), elektromagnetischer Schwingkreis \(T=2\pi\sqrt{LC}\); Resonanz erzwungener Schwingungen.</td>
+          </tr>
+          <tr>
+            <td><strong>Wellen</strong></td>
+            <td>Wellenlänge, Ausbreitungsgeschwindigkeit \(c=\lambda f\), Wellenfront, Polarisation; Longitudinal-/Transversalwellen; Beugung, Reflexion, Brechung, Interferenz, Energietransport; stehende Wellen; Huygens; elektromagnetisches Spektrum.</td>
+            <td>Grundphänomene beschreiben und im Alltag erkennen; stehende Wellen als Interferenzphänomen; Huygens für Beugung/Reflexion.</td>
+            <td>Wellennormale; mathematische Darstellung \(s(x,t)\); Gangunterschied zweidimensionaler kohärenter Wellen; stehende Transversalwellen präziser.</td>
+          </tr>
+          <tr>
+            <td><strong>Wellenoptik</strong></td>
+            <td>Kohärentes Licht; Strahlenmodell vs. Wellenmodell; Interferenzmuster an Doppelspalt und Gitter; Maxima im Fernfeld; Spektralzerlegung polychromatischen Lichts am Doppelspalt.</td>
+            <td>Struktur und Intensitätsverteilung beschreiben; Maxima bei Doppelspalt und Hauptmaxima beim Gitter berechnen; Spektralzerlegung polychromatischen Lichts am Doppelspalt experimentell untersuchen.</td>
+            <td>Einzelspalt zusätzlich; Michelson-Interferometer fest einplanen; reale Spaltbreite; Minima und Maxima bei Einzelspalt, Doppelspalt und Gitter; Kleinwinkelnäherung beurteilen; Spektralzerlegung polychromatischen Lichts nur am Doppelspalt, nicht am Gitter.</td>
+          </tr>
+          <tr>
+            <td><strong>Quantenphysik und Materie</strong></td>
+            <td>Versagen klassischer Modelle für Quantenobjekte; Doppelspaltvergleich; Wahrscheinlichkeitsaussagen; Komplementarität; Fotoeffekt; \(E=hf\), \(p=h/\lambda\); de Broglie; Realität und Lokalität; Linienspektren; Energiestufenmodell und Orbitale.</td>
+            <td>Quantenobjekte über Energie und Impuls beschreiben; Interferenz einzelner Quantenobjekte deuten; Fotoeffekt mit Einstein-Gleichung; Wasserstoff-Energiewerte ohne vertiefte Erweiterungen.</td>
+            <td>Quantenmechanische Wellenfunktion und \(|\psi|^2\); delayed-choice-Variante; Ort-Impuls-Unbestimmtheit; Wasserstoff- und wasserstoffähnliche Atome; Röntgenspektrum; Potentialtopf; Pauli-Prinzip; vertiefendes Themengebiet.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="wb-mini-note">Nicht als Unterrichtsmaterial verlinkt: <code>wellen-book-muster.html</code> ist ein Muster/Template; <code>wellen-book..html</code> wirkt wie eine große Sammel- oder Exportdatei und ist für die Planung weniger übersichtlich als die thematischen Einzelseiten.</p>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cat_stoffspuren_v3",
+          "title":"Sortiere V3.0-Inhalte",
+          "hint":"Ziehe jeden Inhalt in die passende Planungsspur.",
+          "categories":[
+            {"id":"common","title":"Gemeinsamer Kern"},
+            {"id":"bf","title":"BF-Tiefe"},
+            {"id":"lf","title":"LF-Zusatz"}
+          ],
+          "items":[
+            {"label":"Feldlinien, homogenes Feld und Superposition zeichnerisch","category":"common"},
+            {"label":"Bewegung geladener Teilchen im B-Feld qualitativ beschreiben","category":"bf"},
+            {"label":"Hall-Effekt, Wien-Filter und Schraubenbahnen","category":"lf"},
+            {"label":"Kohärentes Licht und Doppelspalt/Gitter","category":"common"},
+            {"label":"Michelson-Interferometer und Einzelspalt-Minima","category":"lf"},
+            {"label":"Dielektrizitätszahl epsilon_r beim Kondensator","category":"common"},
+            {"label":"Fotoeffekt mit Einstein-Gleichung","category":"common"},
+            {"label":"Potentialtopf und Röntgenspektrum","category":"lf"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Jahresplan 12">
+      <h1>Jahresplan 2026/27: Klasse 12</h1>
+      <p>Der Plan geht von Schulstart am 14.09.2026 aus. Die gemeinsame Spur enthält Inhalte, die beide Kurse brauchen. Die LF-Spur ist so gewählt, dass sie keine Voraussetzung exklusiv einführt, die das Basisfach in der nächsten gemeinsamen Stunde zwingend benötigt.</p>
+      <div class="wb-section-break"></div>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Zeitraum</th>
+            <th>Gemeinsame 3 Stunden: BF + LF</th>
+            <th>Zusätzliche 2 Stunden: nur LF</th>
+            <th>Sicherung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="week">KW 37-38<br>14.09.-25.09.2026</td>
+            <td>Denk- und Arbeitsweisen; Modellbegriff; Naturkonstanten; Einstieg elektrische Felder, Ladung, Kraft, Feldlinien.</td>
+            <td>Coulomb-Gesetz; Feld einer Punktladung und eines Dipols; Superposition parallel/senkrecht rechnerisch.</td>
+            <td>Diagnose: Mechanik, Energie, Exponentialfunktion.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 39-42<br>28.09.-23.10.2026</td>
+            <td>Elektrische Feldstärke; Plattenkondensator; Kapazität; Kondensator als Energiespeicher; Entladung qualitativ und mit Exponentialfunktion.</td>
+            <td>Influenz/Polarisation; U-t- und I-t-Auswertung; Potenzial und Äquipotenziallinien; Teilchenbewegung im E-Feld quantitativ.</td>
+            <td>Klausurbaustein: Feld und Kondensator.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 45-48<br>09.11.-04.12.2026</td>
+            <td>Magnetische Flussdichte; Kraft auf Leiter; Lorentzkraft; Bewegung im homogenen Magnetfeld qualitativ; Spule.</td>
+            <td>Hall-Effekt; Kreis- und Schraubenbahn quantitativ; Spulenfeld untersuchen; Wien-Filter und Massenspektrograph.</td>
+            <td>Experimentprotokoll Magnetfeld/Lorentzkraft.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 49-51<br>07.12.-22.12.2026</td>
+            <td>Elektromagnetische Induktion; magnetischer Fluss; Faraday-Gesetz; Lenz'sche Regel; Generator, Transformator und Induktionsanwendungen.</td>
+            <td>Faraday-Gesetz quantitativ anwenden; Selbstinduktion; Spulenenergie; Wirbelstrombremse oder Induktionskochplatte.</td>
+            <td>Klausur 1: Felder und Induktion.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 2-5<br>11.01.-05.02.2027</td>
+            <td>Mechanische Schwingungen; harmonische Beschreibung; Federpendel; elektromagnetischer Schwingkreis; Energieumwandlungen.</td>
+            <td>Gedämpfte Schwingung; lineare Rückstellkraft; Fadenpendel; \(T=2\pi\sqrt{LC}\); Resonanz.</td>
+            <td>Mini-Test: Schwingungsgrößen und Diagramme.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 6-10<br>08.02.-12.03.2027</td>
+            <td>Wellen: \(c=\lambda f\), Longitudinal/Transversal, Polarisation, Reflexion, Brechung, Beugung, Interferenz, stehende Wellen, Huygens, elektromagnetisches Spektrum.</td>
+            <td>Wellennormale; \(s(x,t)\); Gangunterschied zweidimensionaler kohärenter Wellen; stehende Transversalwellen mit Randbedingungen.</td>
+            <td>Klausur 2: Schwingungen und Wellen.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 11-16<br>15.03.-23.04.2027</td>
+            <td>Wellenoptik: kohärentes Licht; Strahlenmodell vs. Wellenmodell; Doppelspalt und Gitter; Spektralzerlegung polychromatischen Lichts am Doppelspalt; Maxima berechnen.</td>
+            <td>Einzelspalt; Michelson-Interferometer; reale Spaltbreiten; Minima/Maxima quantitativ; Kleinwinkelnäherung beurteilen.</td>
+            <td>Auswertung: Wellenlänge aus Interferenzmuster.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 17-22<br>26.04.-04.06.2027</td>
+            <td>Quantenphysik I: klassisches Teilchen, klassische Welle, Quantenobjekt; Fotoeffekt; Photonenenergie; de Broglie; Doppelspalt mit einzelnen Quantenobjekten.</td>
+            <td>Quantenmechanische Wellenfunktion, \(|\psi|^2\); delayed-choice; Unbestimmtheitsrelation; Auswertung anspruchsvoller Fotoeffekt-Daten.</td>
+            <td>Klausur 3: Wellenoptik und Quantenbeginn.</td>
+          </tr>
+          <tr>
+            <td class="week">KW 23-29<br>07.06.-23.07.2027</td>
+            <td>Quantenphysik II: Komplementarität; Realität und Lokalität; Linienspektren; Energieniveaus; Energiestufenmodell; Orbitale im Überblick.</td>
+            <td>Wasserstoffähnliche Atome; Röntgenspektrum; Potentialtopf; Pauli-Prinzip; Einstieg vertiefendes Themengebiet.</td>
+            <td>Klausur 4 oder Projekt-/Präsentationsleistung.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"order_jahr_12_v3",
+          "title":"Reihenfolge prüfen",
+          "hint":"Bringe die gemeinsame Jahresroute in eine fachlich sinnvolle Reihenfolge.",
+          "items":[
+            "Elektrische Felder und Kondensator",
+            "Magnetische Felder und Induktion",
+            "Mechanische und elektromagnetische Schwingungen",
+            "Wellen und elektromagnetisches Spektrum",
+            "Wellenoptik",
+            "Quantenphysik und Materie"
+          ],
+          "shuffle":true
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Jahr 13">
+      <h1>Jahrgangsstufe 13: Schließen, Vertiefen, Prüfen</h1>
+      <p>Wenn deine Kursstufe über 12/13 läuft, nutzt du Klasse 13 für Vertiefung, Wiederholung und Abiturformat. Falls deine Schule die Inhalte auf 11/12 legt, kannst du diese Seite als zweites Kursstufenjahr lesen.</p>
+      <div class="wb-section-break"></div>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Gemeinsame 3 Stunden</th>
+            <th>LF-only 2 Stunden</th>
+            <th>Ziel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>13.1 Start</td>
+            <td>Quantenphysik sichern: Fotoeffekt, de Broglie, Doppelspalt, Komplementarität, Realität/Lokalität, Spektren.</td>
+            <td>Potentialtopf, Röntgen, Pauli-Prinzip, \(|\psi|^2\), Unbestimmtheit wiederholen und vernetzen.</td>
+            <td>Quantenphysik prüfungsfest machen.</td>
+          </tr>
+          <tr>
+            <td>13.1 Mitte</td>
+            <td>Rückgriff Felder/Induktion und Wellenoptik über gemischte Aufgaben.</td>
+            <td>LF-Aufgaben mit mehreren Teilmodellen: E-Feld, B-Feld, Induktion, Interferenz, Quanten.</td>
+            <td>Transfer trainieren.</td>
+          </tr>
+          <tr>
+            <td>13.1 Ende</td>
+            <td>Experimentauswertung, Modellkritik, Fachsprache, Operatorentraining.</td>
+            <td>Vertiefendes Themengebiet: Relativität, Atomphysik, Laserphysik, Elementarteilchenphysik, Astrophysik, Kosmologie, Umweltphysik oder Halbleiterphysik.</td>
+            <td>Breite und Eigenständigkeit im LF.</td>
+          </tr>
+          <tr>
+            <td>13.2</td>
+            <td>Diagnosegestützte Wiederholung; mündliche Prüfungsimpulse; sichere Basiskompetenzen.</td>
+            <td>Abiturtraining mit komplexer Rechnung, Begründung, Bewertung und Materialauswertung.</td>
+            <td>Prüfungsvorbereitung ohne neue gemeinsame Abhängigkeiten.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"verify_magnetfeld_v3",
+          "title":"V3.0-Korrektur",
+          "hint":"Prüfe die Aussage.",
+          "statement":"Magnetfeld und Induktion gehören nach V3.0 im Basisfach Quantenphysik gar nicht vor.",
+          "answer":false,
+          "explain":"Falsch. In 3.4 kommen elektrische und magnetische Felder sowie Elektrodynamik ausdrücklich vor. Der Unterschied liegt vor allem in der Tiefe: Das LF behandelt deutlich mehr quantitative und zusätzliche Aspekte."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="LF-Zusatzspur">
+      <h1>Konsequente LF-Zusatzspur</h1>
+      <p>Diese Inhalte solltest du primär in die zwei zusätzlichen LF-Stunden legen. Sie vertiefen oder erweitern den gemeinsamen Stoff, ohne die Basisfachgruppe abzuhängen.</p>
+      <div class="wb-section-break"></div>
+
+      <div class="plan-grid">
+        <div class="plan-card track-lf">
+          <h3>Felder</h3>
+          <ul class="compact-list">
+            <li>Coulomb-Gesetz und rechnerische Superposition</li>
+            <li>Influenz, Polarisation, Potenzial</li>
+            <li>Teilchenbewegung im E-Feld quantitativ</li>
+            <li>Hall-Effekt, Kreis-/Schraubenbahn, Wien-Filter, Massenspektrograph</li>
+          </ul>
+        </div>
+        <div class="plan-card track-lf">
+          <h3>Induktion und Schwingungen</h3>
+          <ul class="compact-list">
+            <li>Faraday-Gesetz quantitativ anwenden</li>
+            <li>Selbstinduktion, Spulenenergie, Wirbelströme</li>
+            <li>Gedämpfte Schwingung mathematisch</li>
+            <li>Fadenpendel, Schwingkreisformel, Resonanz</li>
+          </ul>
+        </div>
+        <div class="plan-card track-lf">
+          <h3>Wellenoptik und Quanten</h3>
+          <ul class="compact-list">
+            <li>Wellengleichung \(s(x,t)\), Gangunterschied</li>
+            <li>Einzelspalt, Interferometer, Kleinwinkelnäherung</li>
+            <li>\(|\psi|^2\), delayed-choice, Unbestimmtheit</li>
+            <li>Röntgen, Potentialtopf, Pauli-Prinzip, vertiefendes Themengebiet</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-title="Zuordnung: V3.0-Trennung" data-p2-hint="Verbinde Thema und Planungsentscheidung.">
+        <div class="p2-hint">Ziehe ein linkes Teil auf die passende rechte Entscheidung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Thema</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Lorentzkraft qualitativ</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Wien-Filter</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Doppelspalt und Gitter</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Michelson-Interferometer</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Entscheidung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Gemeinsam einführen, BF qualitativ sichern.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">LF-only wegen gekreuzter Felder und quantitativer Analyse.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Gemeinsamer Kern, LF rechnet zusätzliche Fälle.</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">LF-only als zusätzliche Wellenoptik-Vertiefung.</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Gelöst</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Wochenraster">
+      <h1>Raster für jede Unterrichtswoche</h1>
+      <p>Nutze dieses Raster beim Feinplanen einzelner Wochen. Es verhindert, dass LF-Zusatzstunden heimlich zu Voraussetzungstunden für das Basisfach werden.</p>
+      <div class="wb-section-break"></div>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Frage</th>
+            <th>Gemeinsame 3 Stunden</th>
+            <th>LF-Zusatzstunden</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Was ist der gemeinsame Kern?</td>
+            <td>Der Begriff, das Phänomen, das Grundexperiment oder die Grundformel, die in 3.4 und 3.6 vorkommen.</td>
+            <td>Keine neue gemeinsame Voraussetzung, sondern Vertiefung oder Erweiterung.</td>
+          </tr>
+          <tr>
+            <td>Wie wird differenziert?</td>
+            <td>BF erhält klare Merksätze, Diagrammdeutung, qualitative Erklärungen und ausgewählte Rechnungen.</td>
+            <td>LF erhält Herleitungen, Parameterstudien, Messdaten, komplexe Transferaufgaben und zusätzliche Kompetenzpunkte.</td>
+          </tr>
+          <tr>
+            <td>Was passiert bei Zeitdruck?</td>
+            <td>Gemeinsame V3.0-BF-Kompetenzen haben Vorrang.</td>
+            <td>LF-Vertiefung kürzen, als Hausaufgabe auslagern oder in einen späteren LF-Block verschieben.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"cloze_planungsregel_v3",
+          "title":"Sicherung: Trennregel",
+          "hint":"Setze die Begriffe passend ein.",
+          "bank":["gemeinsamen Kern","Tiefe","LF-Zusatzstunden","Basisfach"],
+          "segments":[
+            {"t":"text","v":"In den drei gemeinsamen Stunden liegt der "},
+            {"t":"gap","a":"gemeinsamen Kern"},
+            {"t":"text","v":". Das "},
+            {"t":"gap","a":"Basisfach"},
+            {"t":"text","v":" braucht eine sichere reduzierte "},
+            {"t":"gap","a":"Tiefe"},
+            {"t":"text","v":". Die "},
+            {"t":"gap","a":"LF-Zusatzstunden"},
+            {"t":"text","v":" liefern quantitative Vertiefung und Zusatzkompetenzen."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Materiallinks">
+      <h1>Passende vorhandene Seiten aus Wellen und Quanten</h1>
+      <p>Diese Übersicht verlinkt deine vorhandenen und neu erstellten Materialien direkt mit der Kursstufenplanung. Grün ist gut für beide Kurse, gelb ist gemischt und muss abschnittsweise getrennt werden, orange ist vor allem LF-Zusatzstoff, rot solltest du im Basisfach nicht einsetzen oder nur stark gekürzt als Ausblick zeigen.</p>
+      <div class="wb-section-break"></div>
+
+      <h2>Felder und Induktion</h2>
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Passt zu</th>
+            <th>Einsatz in den 3 gemeinsamen Stunden</th>
+            <th>Nicht fürs Basisfach / nur LF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../felder/elektrische-felder.html">Elektrische Felder und Kondensator</a></td>
+            <td>Ladung, Feldstärke, Feldlinien, homogenes Feld, Plattenkondensator, Kapazität, \(\varepsilon_r\), Entladung.</td>
+            <td>Neu erstellt als gemeinsamer Startbaustein für BF + LF. Gut geeignet für Diagnose, Feldbegriff und Kondensatorgrundlagen.</td>
+            <td>Coulomb-Gesetz quantitativ, Potenzial/Äquipotenziallinien, Superposition rechnerisch und Bahnkurven im E-Feld gehören in LF-Zusatzstunden.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../felder/magnetische-felder.html">Magnetische Felder und Lorentzkraft</a></td>
+            <td>Magnetfeld, Flussdichte, Spulenfeld, Kraft auf Leiter, Lorentzkraft, Bewegung geladener Teilchen.</td>
+            <td>Magnetfeld und qualitative Lorentzkraft sind nach V3.0 gemeinsamer Kern, also nicht mehr komplett LF-only.</td>
+            <td>Kreisbahn, Schraubenbahn, Hall-Effekt, Wien-Filter und Massenspektrograph sind LF-Zusatzstoff.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../felder/induktion.html">Elektromagnetische Induktion</a></td>
+            <td>Grundversuche, magnetischer Fluss, Faraday-Gesetz, Lenz'sche Regel, Generator, Transformator, technische Anwendungen.</td>
+            <td>Grundversuche, Induktionsidee, Lenz-Regel und Anwendungen sind gut gemeinsam nutzbar.</td>
+            <td>Selbstinduktion, Spulenenergie, Wirbelströme und quantitative Faraday-Auswertung sind LF-Zusatzstoff.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <h2>Wellen, Schwingungen und Wellenoptik</h2>
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Passt zu</th>
+            <th>Einsatz in den 3 gemeinsamen Stunden</th>
+            <th>Nicht fürs Basisfach / nur LF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../wellen/schwingungen.html">Mechanische Schwingungen</a></td>
+            <td>Auslenkung, Amplitude, Periodendauer, Frequenz, Federpendel, Energieumwandlung.</td>
+            <td>Neu erstellt als gemeinsamer Basisbaustein vor der Wellenlehre. Gut für BF + LF, weil die Begriffe später bei Wellen und Schwingkreis wiederkehren.</td>
+            <td>Fadenpendel mit Kleinwinkelnäherung, Dämpfung, Resonanzkurve und mathematische Vertiefung nur LF.</td>
+          </tr>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../wellen/wellen-book-Einstieg.html">Wellen: Einstieg</a></td>
+            <td>Wellenbegriff, Longitudinal-/Transversalwellen, Wellenfronten, Huygens, Brechung, Wellen beschreiben.</td>
+            <td>Sehr gut als gemeinsamer Einstieg für BF und LF. Nutze Störung, Wellentypen, Wellenfronten, Brechung und Grundgrößen.</td>
+            <td>Die mathematische Beschreibung und Huygens-Vertiefung nur so weit nutzen, wie das BF sie braucht; formale Wellennormale und \(s(x,t)\) in LF-Zusatzstunden auslagern.</td>
+          </tr>
+          <tr class="scope-lf">
+            <td><a class="material-link" href="../../wellen/wellen-book-wellenfunktion.html">Wellenfunktionen verstehen</a></td>
+            <td>Zeitlicher Verlauf, Momentaufnahme, physikalische Größen, Wellenfunktion aufstellen.</td>
+            <td>Für das BF höchstens einzelne Diagrammideen verwenden.</td>
+            <td>Wellenfunktion \(y(x,t)\), Phasenlage und formales Aufstellen der Wellenfunktion sind LF-Zusatzstoff.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../wellen/wellen-book-stehende-Welle.html">Reflexion und stehende Wellen</a></td>
+            <td>Reflexion, Transmission, Entstehung stehender Wellen, Analyse.</td>
+            <td>Reflexion, Transmission und Entstehung stehender Wellen passen in den gemeinsamen Unterricht.</td>
+            <td>Analyse mit Wellenfunktion, Randbedingungen und umfangreiche Rechenaufgaben gehören ins LF.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../wellen/wellen-book-Interferenz.html">Interferenz verstehen</a></td>
+            <td>Konstruktive/destruktive Interferenz, Eigenschaften, Bedingungen, Rechenaufgaben.</td>
+            <td>Die Grundidee der Interferenz und einfache Bedingungen sind für BF und LF sinnvoll.</td>
+            <td>Die langen Rechenaufgaben, Gangunterschiede in komplexen Situationen und formale Bedingungen sind LF-Vertiefung.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../wellen/wellen-book-Interferenz2.html">Doppelspalt, Einzelspalt, Gitter, dünne Schichten</a></td>
+            <td>Wellenoptik, Doppelspalt, Einzelspalt, Gitter, dünne Schichten.</td>
+            <td>Doppelspalt, Gitter-Grundidee, Interferenzmuster und Maxima eignen sich für beide Kurse. Spektralzerlegung polychromatischen Lichts nur am Doppelspalt einplanen.</td>
+            <td>Einzelspalt, Hüllkurve, fehlende Maxima, dünne Schichten und vertiefte Gitterrechnung sind LF-Zusatzstoff. Zerlegung polychromatischen Lichts am Gitter nicht als Standard für BP2026 verwenden.</td>
+          </tr>
+          <tr class="scope-lf">
+            <td><a class="material-link" href="../../wellen/wellenoptik-lf.html">LF: Wellenoptik vertieft</a></td>
+            <td>Einzelspalt, reale Spaltbreite, Michelson-Interferometer, dünne Schichten, Kleinwinkelnäherung.</td>
+            <td>Nicht als gemeinsame Seite planen. Nur einzelne Rückblicke auf Doppelspalt/Gitter sind gemeinsam anschlussfähig.</td>
+            <td>Die Seite ist ausdrücklich LF-Zusatzstoff. Spektralzerlegung polychromatischen Lichts wird nur am Doppelspalt eingeordnet.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../wellen/wellen-book-Eigenschaften.html">Wellen-Eigenschaften und Elektromagnetik</a></td>
+            <td>Doppler-Effekt, elektromagnetischer Schwingkreis, gedämpfte Schwingung, Resonanz, elektromagnetische Wellen, Dipol.</td>
+            <td>Schwingkreis-Grundidee, Energieumwandlung, Resonanzidee und elektromagnetisches Spektrum können gemeinsam laufen.</td>
+            <td>Doppler-Effekt, gedämpfte Schwingung mathematisch, Resonanzkurven und elektromagnetische Abstrahlung vertieft sind LF. Den Hertz'schen Dipol nicht mehr als verbindlichen BP2026-Schwerpunkt einplanen.</td>
+          </tr>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../wellen/wellen-simulationen.html">Wellen-Simulationen</a></td>
+            <td>Simulationen zu Wellenausbreitung und Wellenphänomenen.</td>
+            <td>Gut als gemeinsames Diagnose- und Erarbeitungsmaterial, besonders für Begriffe, Diagramme und qualitative Phänomene.</td>
+            <td>Parameterstudien mit formaler Auswertung nur im LF verlangen.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <h2>Quantenphysik und Atomphysik</h2>
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Passt zu</th>
+            <th>Einsatz in den 3 gemeinsamen Stunden</th>
+            <th>Nicht fürs Basisfach / nur LF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../quanten/photoeffekt.html">Photoeffekt</a></td>
+            <td>Äußerer Photoeffekt, Einstein-Gleichung, Simulation, innerer Photoeffekt, Transfer.</td>
+            <td>Sehr gut für BF und LF: Befunde, Grenzfrequenz, Photonenenergie und Einstein-Gleichung gemeinsam erarbeiten.</td>
+            <td>Anspruchsvolle Messwertauswertung, lineare Regression und vertiefte Datendeutung in LF-Zusatzstunden legen.</td>
+          </tr>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../quanten/photoeffekt-simulationen.html">Photoeffekt-Simulationen</a></td>
+            <td>Simulation äußerer Photoeffekt.</td>
+            <td>Gut für beide Kurse als Erarbeitung oder Sicherung.</td>
+            <td>Nur LF: systematische Auswertung zur Bestimmung von \(h\) und Diskussion von Fehlerquellen.</td>
+          </tr>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../quanten/debroglie.html">De-Broglie-Wellen</a></td>
+            <td>Materiewellen, \(\lambda=h/p\), Nachweis, Transfer.</td>
+            <td>Für beide Kurse geeignet: de-Broglie-Idee, einfache Rechnungen und Zusammenhang mit Elektronenbeugung.</td>
+            <td>Nur LF: vertiefte quantitative Elektronenbeugung und komplexe Impuls-/Energieverknüpfungen.</td>
+          </tr>
+          <tr class="scope-ok">
+            <td><a class="material-link" href="../../quanten/quantenobjekte.html">Quantenobjekte und Doppelspalt</a></td>
+            <td>Klassisches Teilchen, klassische Welle, Quantenobjekt, Doppelspalt mit einzelnen Quantenobjekten, Komplementarität, Wahrscheinlichkeitsdeutung.</td>
+            <td>Neu erstellt als Brückenseite zwischen Photoeffekt/de Broglie und Atomphysik. Geeignet für BF + LF.</td>
+            <td>Wellenfunktion \(\psi\), \(|\psi|^2\), delayed-choice und Unbestimmtheit sind LF-Zusatzstoff.</td>
+          </tr>
+          <tr class="scope-mixed">
+            <td><a class="material-link" href="../../quanten/atome.html">Atommodelle, Spektren, Franck-Hertz, Potentialtopf</a></td>
+            <td>Atommodelle, Linienspektren, Energiestufen, Franck-Hertz, Potentialtopf, Modellargumentation.</td>
+            <td>Atommodelle, Linienspektren, Energiestufenmodell und Orbitale im Überblick passen gut für BF und LF.</td>
+            <td>Franck-Hertz-Versuch und Potentialtopf sind LF-Zusatzstoff. Modellgeschichte nur knapp nutzen, weil die geschichtliche Entwicklung von Lichtmodellen gestrichen wurde.</td>
+          </tr>
+          <tr class="scope-lf">
+            <td><a class="material-link" href="../../quanten/roentgen_compton.html">Röntgenstrahlung, Bragg, Compton, Unbestimmtheit</a></td>
+            <td>Röntgenspektrum, Bragg-Bedingung, Compton-Effekt, Wellenfunktion, Unbestimmtheitsrelation.</td>
+            <td>Für das BF höchstens als kurzer Ausblick oder Kontext, wenn Zeit bleibt.</td>
+            <td>Röntgenspektrum, Bragg-Reflexion, Compton-Effekt, Wellenfunktion und Unbestimmtheitsrelation sind LF-Zusatzstoff.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"mcq_materiallinks",
+          "title":"Materialcheck",
+          "hint":"Wähle die beste Einordnung.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Du möchtest die Spektralzerlegung polychromatischen Lichts nach BP2026 behandeln. Welches Material nutzt du wie?",
+              "choices":[
+                {"id":"A","label":"Interferenz2: Spektralzerlegung am Gitter als Standard."},
+                {"id":"B","label":"Interferenz2: Doppelspalt für Spektralzerlegung, Gitter nur für Interferenz/Hauptmaxima."},
+                {"id":"C","label":"Nur Quantenmaterial, weil Wellenoptik nicht mehr vorkommt."}
+              ],
+              "correct":["B"],
+              "explain":"Die Folienänderung legt Spektralzerlegung polychromatischen Lichts nur am Doppelspalt fest. Gitter bleibt für andere Wellenoptik-Inhalte nutzbar."
+            },
+            {
+              "text":"Welche Seite ist überwiegend LF-Zusatzstoff?",
+              "choices":[
+                {"id":"A","label":"quanten/roentgen_compton.html"},
+                {"id":"B","label":"quanten/photoeffekt.html"},
+                {"id":"C","label":"wellen/wellen-simulationen.html"}
+              ],
+              "correct":["A"],
+              "explain":"Röntgen, Bragg, Compton und Unbestimmtheit gehören in dieser Planung in die LF-Zusatzspur."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Notizen">
+      <h1>Deine Planungsnotizen</h1>
+      <p>Hier passt du die Planung an deine Schule an: Klausurfenster, Ferienverschiebungen, Praktika, Material, Experimente und lokale Schwerpunktsetzung.</p>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"essay_planung_v3",
+          "title":"Planung anpassen",
+          "hint":"Speichert lokal im Browser und wird über die Seitenleiste exportiert.",
+          "storagePrefix":"kursstufe_planung_v3_",
+          "exportName":"kursstufe-physik-v3-planungsnotizen.txt",
+          "fields":[
+            {"label":"Schuljahr / Kurs","key":"kurs","kind":"text","placeholder":"z. B. Kursstufe Physik 2026/27, BF Quantenphysik + LF parallel"},
+            {"label":"Klausur- und Terminfenster","key":"termine","kind":"textarea","placeholder":"Trage bekannte Termine ein."},
+            {"label":"Anpassungen am Stoffverlauf","key":"anpassungen","kind":"textarea","placeholder":"Was verschiebst du? Was muss gekürzt oder vertieft werden?"},
+            {"label":"Experimente und Material","key":"material","kind":"textarea","placeholder":"Welche Versuche, Simulationen, Aufgabenserien oder Geräte brauchst du?"}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"mcq_planungscheck_v3",
+          "title":"Mini-Check: V3.0 sauber geplant?",
+          "hint":"Wähle die beste Entscheidung.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Welche Aussage passt zur Planung von Magnetfeld und Induktion nach V3.0?",
+              "choices":[
+                {"id":"A","label":"Beides ist nur LF-Stoff und darf im BF nicht vorkommen."},
+                {"id":"B","label":"Beides kommt auch im BF vor; das LF vertieft quantitativ und ergänzt zusätzliche Anwendungen."},
+                {"id":"C","label":"Beides gehört erst nach der Quantenphysik in den letzten Puffer."}
+              ],
+              "correct":["B"],
+              "explain":"3.4 enthält magnetische Felder und Elektrodynamik. Das LF geht deutlich weiter, etwa mit Hall-Effekt, gekreuzten Feldern, Selbstinduktion und Wirbelströmen."
+            },
+            {
+              "text":"Welche LF-Zusatzstunde ist sauber geplant?",
+              "choices":[
+                {"id":"A","label":"LF lernt den Fotoeffekt erstmals; BF soll ihn morgen gemeinsam anwenden."},
+                {"id":"B","label":"Gemeinsam wurde der Fotoeffekt eingeführt; LF wertet zusätzlich Messdaten zur Einstein-Gleichung aus."},
+                {"id":"C","label":"LF wiederholt nur die BF-Merksätze, damit keine Unterschiede entstehen."}
+              ],
+              "correct":["B"],
+              "explain":"Der gemeinsame Kern ist für alle da. Die LF-Zeit erweitert die Tiefe, ohne eine gemeinsame Voraussetzung exklusiv einzuführen."
+            }
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="10" data-wb-page-title="Quellen">
+      <h1>Quellen und Weiterforschen</h1>
+      <p>Diese Seite paraphrasiert die offiziellen Bildungsplaninhalte und ordnet sie für deine Parallelplanung. Verbindlich bleibt die jeweils aktuelle amtliche Fassung.</p>
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen</h2>
+      <ul class="source-list">
+        <li><a href="https://www.bildungsplaene-bw.de/,Lde/DE_BW_BILDUNGSPLAENE_GEN2X_BPBW_ALLG_GYM_PH(V3.0)#3" target="_blank" rel="noopener">Bildungsplan Baden-Württemberg Physik V3.0, Inhaltsbezogene Kompetenzen</a></li>
+        <li>Relevant ausgewertet: Abschnitt 3.4 Klassen 12/13 Basisfach mit Schwerpunkt Quantenphysik und Abschnitt 3.6 Klassen 12/13 Leistungsfach.</li>
+      </ul>
+      <div class="wb-section-break"></div>
+
+      <h2>Jetzt hast du das geplant</h2>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Du hast die V3.0-Inhalte von Basisfach Quantenphysik und Leistungsfach vollständig in gemeinsame Kernstunden, Basisfach-Tiefe und LF-Zusatzstunden sortiert. Damit kannst du jede Woche prüfen, welche Inhalte gemeinsam laufen und welche in die zwei zusätzlichen LF-Stunden gehören.</p>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"rev_naechster_schritt_v3",
+          "title":"Nächster Schritt",
+          "question":"Was solltest du als Nächstes lokal ergänzen?",
+          "answer":"Trage deine realen Klausurtermine, Ferienverschiebungen, Exkursionen und Fachschaftsabsprachen ein. Prüfe danach für jede Woche: Ist der gemeinsame Kern in 3.4 und 3.6 enthalten? Ist die LF-Zusatzzeit wirklich Vertiefung oder Zusatz?"
+        }
+        </script>
+      </div>
+    </section>
+  </div>
+
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  </script>
+</body>
+</html>

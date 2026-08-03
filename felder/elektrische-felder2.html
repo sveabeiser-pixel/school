@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elektrische Felder 2: Potenzial und Kondensator</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/felder-simulations.css">
+  <style>
+    .ef-figure{margin:0 auto;max-width:520px}
+    .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .ef-caption{font-size:.92rem;color:#555;margin-top:6px}
+    .ef-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .ef-img-grid{display:grid;grid-template-columns:minmax(220px,520px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .ef-img-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .ef-formula{font-size:1.15rem;font-weight:700}
+    .ef-note-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+    @media (max-width:760px){.ef-img-grid,.ef-note-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
+  </style>
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {
+    "bookTitle":"Elektrische Felder 2",
+    "sectionTitle":"Potenzial, Spannung und Kondensator",
+    "startPage":1,
+    "submitLabel":"Ergebnisse exportieren",
+    "onSubmit":"exportResults",
+    "autoNav":true,
+    "autoNavHeadings":["h1","h2"],
+    "autoNavGroupTitle":"Felder 2",
+    "themeDefault":"default"
+  }
+  </script>
+
+<section data-wb-page="1" data-wb-page-title="Potenzial">
+    <h1>Elektrisches Potenzial und Spannung</h1>
+    <p class="wb-muted">Fortsetzung zu <a href="elektrische-felder.html">Elektrische Felder 1</a>: Hier geht es um Energie, Potenzial, Spannung, Kondensatoren und Dielektrika.</p>
+    <p>Auf der Erde bewegen sich Körper von alleine vom Berg ins Tal. Für den umgekehrten Weg musst du Energie zuführen. Eine ähnliche Idee hilft beim elektrischen Potenzial: Positive Ladungen bewegen sich von selbst von Orten höheren Potenzials zu Orten niedrigeren Potenzials. Negative Ladungen bewegen sich in die umgekehrte Richtung.</p>
+    <p>Wenn du eine Ladung gegen dieses Potenzialgefälle transportierst, musst du Energie aufbringen. In einem Kondensator kann man als Bezugspunkt zum Beispiel die negative Platte wählen. Dann lässt sich jedem Punkt im Feld ein elektrisches Potenzial zuordnen.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/homogene_felder.png" alt="Vergleich von Gravitationsfeld und elektrischem Feld im Kondensator">
+        <figcaption>Gravitationsfeld und elektrisches Feld: Bewegung entlang eines Potenzialgefälles.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Gravitationsfeld und elektrisches Feld</h3>
+        <p>a) Körper bewegen sich von alleine von hohen zu niedrigen Orten.</p>
+        <p>b) Positive Ladungen bewegen sich von alleine vom hohen zum niedrigen Potenzial, negative Ladungen vom niedrigen zum hohen Potenzial. Umgekehrt muss jeweils Energie hinzugeführt werden.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p>Werden die Platten eines geladenen Kondensators weiter auseinandergezogen, muss gegen die anziehenden Feldkräfte Arbeit verrichtet werden. Die gespeicherte elektrische Energie und die Spannung steigen. Ein Elektroskop bzw. Elektrometer kann diese Spannungsänderung sichtbar machen, weil bei größerer Spannung mehr Ladung auf das Messgerät übertragen wird.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{pot}=q\cdot \varphi(P)\)</p>
+      <p>Die potenzielle elektrische Energie einer Ladung hängt von der Ladungsmenge \(q\) und vom Potenzial \(\varphi\) am Punkt \(P\) ab.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U=\Delta\varphi=\varphi(P_2)-\varphi(P_1)\)</p>
+      <p>Die Spannung zwischen zwei Punkten ist die Differenz ihrer elektrischen Potenziale.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Einheit:</strong>
+      <p class="ef-formula">\([\varphi]=[U]=1\,\mathrm V\)</p>
+      <p>Elektrisches Potenzial und elektrische Spannung werden in Volt angegeben.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_verify_potential",
+        "title":"Wahr oder falsch?",
+        "hint":"Prüfe die Aussage.",
+        "statement":"Die Spannung zwischen zwei Punkten ist eine Potenzialdifferenz.",
+        "answer":true,
+        "explain":"Richtig. Spannung beschreibt nicht das absolute Potenzial eines Punktes, sondern den Unterschied zwischen zwei Potenzialen."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cloze_potential",
+        "title":"Sicherung: Potenzial und Spannung",
+        "hint":"Setze die Begriffe passend ein.",
+        "bank":["Potenzialdifferenz","Bezugspunkt","Volt","positive","negative"],
+        "segments":[
+          {"t":"text","v":"Die Spannung ist eine "},
+          {"t":"gap","a":"Potenzialdifferenz"},
+          {"t":"text","v":". Das Potenzial eines Punktes wird immer gegen einen "},
+          {"t":"gap","a":"Bezugspunkt"},
+          {"t":"text","v":" angegeben. Die Einheit ist "},
+          {"t":"gap","a":"Volt"},
+          {"t":"text","v":". Von selbst bewegen sich "},
+          {"t":"gap","a":"positive"},
+          {"t":"text","v":" Ladungen zum niedrigeren Potenzial; "},
+          {"t":"gap","a":"negative"},
+          {"t":"text","v":" Ladungen umgekehrt."}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef2_reveal_spannung_kondensator",
+        "title":"Stopp & check: Platten auseinanderziehen",
+        "question":"Warum steigt beim geladenen, getrennten Kondensator die Spannung, wenn du die Platten auseinanderziehst?",
+        "answer":"Du vergrößerst den Abstand entgegen der anziehenden elektrischen Kräfte und führst dem System Energie zu. Die Ladungsmenge bleibt dabei auf den Platten, aber die Energie pro Ladungsmenge wird größer. Deshalb steigt die Spannung."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Äquipotenzial">
+    <h1>Äquipotenziallinien und Energie im homogenen Feld</h1>
+    <p>Auf einer Landkarte verbinden Höhenlinien Punkte gleicher Höhe. Bewegst du dich entlang einer Höhenlinie, ändert sich deine Höhenenergie nicht. Im elektrischen Feld gibt es eine ähnliche Idee: Äquipotenziallinien verbinden Punkte gleichen elektrischen Potenzials.</p>
+    <p>Äquipotenziallinien stehen senkrecht auf elektrischen Feldlinien. Wenn du eine Ladung entlang einer Äquipotenziallinie verschiebst, ändert sich ihre elektrische potenzielle Energie nicht. Im Inneren eines Plattenkondensators verlaufen Äquipotenzialflächen näherungsweise parallel zu den Platten.</p>
+    <p>Für den Energietransport zwischen zwei Platten ist im homogenen Feld nur entscheidend, welche Potenzialdifferenz durchlaufen wird. Der genaue Weg ist dabei nicht entscheidend.</p>
+    <p>Auch in einem homogenen Leiter kann man den Potenzialverlauf betrachten. Legst du an einen Draht der Länge \(l\) die Spannung \(U\), dann steigt die Spannung gegen den Bezugspunkt entlang des Leiters gleichmäßig mit der Strecke \(x\). Der Potenzialverlauf ist also linear.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator1.png" alt="Feldlinien und Äquipotenziallinien am Plattenkondensator">
+        <figcaption>Feldlinien und Äquipotenziallinien am Plattenkondensator.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Äquipotenziallinien und -flächen</h3>
+        <p>Auf Landkarten werden Stellen gleicher Höhe mit Höhenlinien verbunden. Bewegungen von Körpern entlang dieser Linien verlaufen ohne Energieänderung.</p>
+        <p>Auch im Kondensator ist die von den Feldkräften übertragene Energie null, wenn eine Probeladung senkrecht zu den Feldlinien bewegt wird, denn die Ladung bleibt auf dem gleichen Potenzial. Entsprechend ist die Spannung zwischen zwei Punkten auf der gleichen Kondensatorplatte null.</p>
+        <p>Stellen gleichen Potenzials heißen Äquipotenziallinien. Sie verlaufen stets senkrecht zu den elektrischen Feldlinien. Im Inneren eines Plattenkondensators verlaufen sie näherungsweise parallel.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{pot}=mgh\)</p>
+      <p>Diese bekannte Formel zur Höhenenergie hilft als Analogie für elektrische potenzielle Energie.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{el}=F_\mathrm{el}\cdot d=q\cdot E\cdot d\)</p>
+      <p>Diese Energie wird benötigt, wenn eine Ladung im homogenen Feld gegen die elektrische Feldkraft über die Strecke \(d\) transportiert wird.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E_\mathrm{el}=q\cdot U\)</p>
+      <p>Die elektrische Energie hängt auch von Ladung und durchlaufener Spannung ab.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U=E\cdot d\)</p>
+      <p>Im homogenen Feld eines Plattenkondensators ist die Spannung Feldstärke mal Plattenabstand.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E=\frac{U}{d}\), \([E]=1\,\mathrm{V/m}=1\,\mathrm{N/C}\)</p>
+      <p>Damit kann man die elektrische Feldstärke im Plattenkondensator über Spannung und Plattenabstand bestimmen.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U_x=\frac{x}{l}\cdot U\)</p>
+      <p>In einem homogenen Leiter wächst die Spannung gegen den Bezugspunkt proportional zur zurückgelegten Leiterlänge \(x\).</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cat_aequipotential",
+        "title":"Sortiere Aussagen",
+        "hint":"Was gehört zu Feldlinien, was zu Äquipotenziallinien?",
+        "categories":[
+          {"id":"feld","title":"Feldlinien"},
+          {"id":"aequi","title":"Äquipotenziallinien"}
+        ],
+        "items":[
+          {"label":"zeigen die Richtung der elektrischen Feldstärke","category":"feld"},
+          {"label":"stehen senkrecht auf Äquipotenziallinien","category":"feld"},
+          {"label":"verbinden Punkte gleichen Potenzials","category":"aequi"},
+          {"label":"auf ihnen ist keine Energieänderung nötig","category":"aequi"},
+          {"label":"beginnen an positiven und enden an negativen Ladungen","category":"feld"},
+          {"label":"ähneln in der Idee Höhenlinien auf Landkarten","category":"aequi"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_spannung",
+              "title": "Aufgaben: Spannung und Energie",
+              "hint": "Bearbeite die Aufgaben mit Formel, Einsetzen und Ergebnis.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "1a. Kondensatorfeld: Zwischen zwei Platten mit d = 2,0 cm liegt U = 1,0 kV. Berechne E und die Kraft auf q = 10 nC.",
+                              "key": "kondensatorfeld",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "1b. Energie beim Transport: Bestimme die Energie, welche die Feldkräfte beim Transport dieser Ladung von einer Platte zur anderen übertragen.",
+                              "key": "energie_transport",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2a. Platten auseinanderziehen: Ein Kondensator bleibt an U = 3,0 kV angeschlossen. d wird größer. Beschreibe den Einfluss auf E.",
+                              "key": "platten_e",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2b. Aussage bewerten: Bewerte: Bei gleicher Spannung ist die benötigte Energie für eine Ladung q unabhängig vom Plattenabstand.",
+                              "key": "platten_energie",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "Abituraufgabe Metallkugel: Bearbeite die Metallkugel-Aufgabe: Skizze, α aus sin(α) = s / l, Fₑₗ über tan(α) = Fₑₗ / (m · g), E = U / d, q = Fₑₗ / E, Begründung bei größerem d.",
+                              "key": "abitur_kugel",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/aufgabe_metallkugel.png" alt="Geladene Metallkugel im Plattenkondensator">
+        <figcaption>Abituraufgabe: ausgelenkte Metallkugel.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Wie du die Skizze nutzt</h3>
+        <p>Die Kugel steht im Gleichgewicht. Waagerecht wirkt die elektrische Kraft, senkrecht die Gewichtskraft, entlang des Fadens die Fadenspannung. Aus dem rechtwinkligen Kraftdreieck folgt der Zusammenhang mit dem Auslenkwinkel.</p>
+        <p>Erst bestimmst du den Winkel aus der Geometrie, dann die elektrische Kraft und danach mit der Feldstärke die Ladung der Kugel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Flächenladung">
+    <h1>Flächenladungsdichte und elektrische Feldkonstante</h1>
+    <p>Bei einem Plattenkondensator sitzen die felderzeugenden Ladungen auf den Innenseiten der Platten. Im idealisierten homogenen Feld sind sie dort gleichmäßig verteilt. Deshalb beschreibt man nicht nur die gesamte Ladungsmenge \(Q\), sondern die Ladung pro Fläche.</p>
+    <p>Diese Größe heißt Flächenladungsdichte \(\sigma\). Sie sagt, wie dicht Ladungen auf einer Fläche sitzen. Je größer die Flächenladungsdichte, desto stärker ist das elektrische Feld.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator2.png" alt="Elektrisches Feld in einem Kondensator mit Dielektrikum">
+        <figcaption>Flächenladung und Feldstärke im Kondensatorfeld.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Leitfrage</h3>
+        <p>Erzeugt eine doppelt so große Ladungsmenge auf den Kondensatorplatten ein doppelt so starkes elektrisches Feld?</p>
+        <p>Die Antwort folgt aus \(\sigma=\frac{Q}{A}\) und \(\sigma=\varepsilon_0\cdot E\): Bei gleicher Plattenfläche bedeutet doppelte Ladungsmenge eine doppelte Flächenladungsdichte und damit ein doppelt so starkes Feld.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\sigma=\frac{Q}{A}\)</p>
+      <p>Die Flächenladungsdichte ist Ladungsmenge pro Fläche.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Einheit:</strong>
+      <p class="ef-formula">\([\sigma]=1\,\mathrm{C/m^2}\)</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\sigma=\varepsilon_0\cdot E\)</p>
+      <p>In Luft bzw. näherungsweise im Vakuum ist die Flächenladungsdichte proportional zur Feldstärke.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Konstante:</strong>
+      <p class="ef-formula">\(\varepsilon_0=8{,}85\cdot 10^{-12}\,\mathrm{\frac{C^2}{N\,m^2}}\)</p>
+      <p>\(\varepsilon_0\) heißt elektrische Feldkonstante.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\sigma=\varepsilon_0\cdot\frac{U}{d}\)</p>
+      <p>Damit kannst du die Flächenladungsdichte über Spannung und Plattenabstand bestimmen.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator3.png" alt="Testplatten werden im elektrischen Feld getrennt">
+        <figcaption>Testplatten im Feld: Influenzladung und feldfreies Inneres.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Testplatten im elektrischen Feld</h3>
+        <p>Berühren sich zwei senkrecht zu den Feldlinien stehende Testplatten im Feld, so werden zwischen ihnen durch Influenz Ladungen verschoben. Auf ihrer linken Oberfläche bildet sich die Influenzladung \(-Q_i'\), auf der rechten die gleich große Ladung \(+Q_i'\). Die Ladungssumme bleibt null.</p>
+        <p>Nach dem Trennen der Platten zeigt sich, dass die Influenzladungen die gleiche Flächendichte \(\sigma\) wie die Kondensatorplatten aufweisen. Das bedeutet: Ein elektrisches Feld der Stärke \(E\) erzeugt eine Flächenladungsdichte \(\sigma\).</p>
+        <p>Zwischen den leitend verbundenen Testplatten ist das Innere feldfrei. Das ist dieselbe Grundidee wie beim faradayschen Käfig: Frei bewegliche Ladungen ordnen sich so an, dass sich das elektrische Feld im Inneren des Leiters aufhebt.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_sigma",
+        "title":"Rechencheck: Flächenladungsdichte",
+        "hint":"Nutze σ = Q / A und achte auf Quadratzentimeter.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Ein Plattenkondensator hat A = 10 cm² und Q = 150 nC. Welche Größenordnung hat σ?",
+            "choices":[
+              {"id":"a","label":"1,5 · 10⁻⁴ C/m²"},
+              {"id":"b","label":"1,5 · 10⁻² C/m²"},
+              {"id":"c","label":"150 C/m²"}
+            ],
+            "correct":["a"],
+            "explain":"10 cm² = 1,0 · 10⁻³ m², 150 nC = 1,5 · 10⁻⁷ C. Also σ = 1,5 · 10⁻⁴ C/m²."
+          },
+          {
+            "text":"Was passiert mit E, wenn σ verdoppelt wird?",
+            "choices":[
+              {"id":"a","label":"E verdoppelt sich."},
+              {"id":"b","label":"E halbiert sich."},
+              {"id":"c","label":"E bleibt gleich."}
+            ],
+            "correct":["a"],
+            "explain":"Aus σ = ε₀ · E folgt: σ und E sind proportional."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_sigma",
+              "title": "Aufgaben: Flächenladungsdichte",
+              "hint": "Bearbeite die Aufgaben schriftlich. Nutze sinnvolle Einheiten.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "1b. Kupferkugel: Berechne die Ladungsmenge auf einer Kugel mit r = 3,0 cm und σ = 3537 C/m². Nutze die Kugeloberfläche A = 4πr².",
+                              "key": "kugel_sigma",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2. Zwei Testplatten: Zwei Testplatten haben Flächen im Verhältnis 2:1. Bei Kontakt verteilt sich Q proportional zur Fläche. Berechne für Qges = 3 C und leite eine allgemeine Formel her.",
+                              "key": "testplatten",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "3. Feldstärke aus σ: Berechne E für σ = 0,18 nC/m².",
+                              "key": "feld_sigma",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "4. ε₀ bestimmen: Beschreibe, wie du aus einem σ-E-Diagramm die elektrische Feldkonstante bestimmst.",
+                              "key": "epsilon_diagramm",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "5. Proportionalität Q und E: Zeige, dass bei konstanter Plattenfläche A die Ladungsmenge Q und die Feldstärke E proportional sind.",
+                              "key": "q_e_prop",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "6. Spannung aus σ und d: Stelle eine Formel für U auf, wenn nur d und σ gemessen werden. Beschreibe außerdem eine Messmöglichkeit für σ.",
+                              "key": "spannung_sigma",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "7. Abstand ändern: Beschreibe σ, Q, E und U, wenn der Plattenabstand bei angeschlossener bzw. getrennter Spannungsquelle verdoppelt oder allgemein verändert wird.",
+                              "key": "abstand_sigma",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Kapazität">
+    <h1>Der Kondensator als Ladungsspeicher</h1>
+    <p>Kondensatoren speichern getrennte Ladungen. Bei Superkondensatoren wird diese Eigenschaft technisch genutzt, zum Beispiel um Bremsenergie in Fahrzeugen kurzzeitig zu speichern und später wieder abzugeben.</p>
+    <p>Ein Plattenkondensator besteht aus zwei leitenden Platten, die sich nicht berühren. Zwischen ihnen befindet sich Luft, Plexiglas oder ein anderes nicht leitendes Material. Dieses Material nennt man Dielektrikum.</p>
+    <p>Ohne angeschlossene Spannungsquelle sind die beweglichen Ladungen gleich verteilt; der Kondensator ist nach außen ungeladen. Legst du eine Spannung an, dann wird die mit dem Pluspol verbundene Platte positiv und die mit dem Minuspol verbundene Platte negativ geladen. Zwischen den Platten entsteht ein elektrisches Feld, und der Kondensator speichert elektrische Energie.</p>
+    <p>Die gespeicherte Ladungsmenge hängt von der angelegten Spannung ab. Bei einem bestimmten Kondensator ist \(Q\) proportional zu \(U\). Der Quotient aus Ladung und Spannung heißt Kapazität \(C\). Sie beschreibt, wie viel Ladung pro Volt gespeichert werden kann.</p>
+    <p>Trägst du die Ladungsmenge \(Q\) gegen die Spannung \(U\) in ein Diagramm ein, erhältst du idealisiert eine Ursprungsgerade. Ihre Steigung ist die Kapazität. Anschaulich ist die Kapazität das Fassungsvermögen des Kondensators für Ladung bei einer bestimmten Spannung.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(C=\frac{Q}{U}\)</p>
+      <p>Die Kapazität ist Ladungsmenge pro Spannung.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Einheit:</strong>
+      <p class="ef-formula">\([C]=1\,\mathrm{\frac{C}{V}}=1\,\mathrm F\)</p>
+      <p>Die Einheit der Kapazität heißt Farad.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(C=\varepsilon_0\cdot\frac{A}{d}\)</p>
+      <p>Für einen luftgefüllten Plattenkondensator steigt die Kapazität mit der Plattenfläche und sinkt mit dem Plattenabstand.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(W=\frac{1}{2}\,C\,U^2\)</p>
+      <p>Bei fest angelegter Spannung ist die gespeicherte elektrische Energie proportional zur Kapazität.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef2_cat_plattenparameter",
+        "title":"Parameter am Plattenkondensator",
+        "hint":"Sortiere für den Fall: Die Spannung U bleibt angeschlossen und konstant.",
+        "categories":[
+          {"id":"abstand_groesser","title":"Plattenabstand d wird größer"},
+          {"id":"flaeche_groesser","title":"Plattenfläche A wird größer"}
+        ],
+        "items":[
+          {"label":"Kapazität C wird kleiner","category":"abstand_groesser"},
+          {"label":"Ladung Q auf den Platten wird kleiner","category":"abstand_groesser"},
+          {"label":"gespeicherte Energie W wird kleiner","category":"abstand_groesser"},
+          {"label":"Kapazität C wird größer","category":"flaeche_groesser"},
+          {"label":"Ladung Q auf den Platten wird größer","category":"flaeche_groesser"},
+          {"label":"gespeicherte Energie W wird größer","category":"flaeche_groesser"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="field-sim-card" data-field-sim="capacitor">
+      <div class="field-sim-grid">
+        <div class="field-sim-controls">
+          <h2>Simulation: Plattenkondensator</h2>
+          <p>Verändere Spannung, Plattenabstand, Plattenfläche und Dielektrizitätszahl. Beobachte, wie viele Ladungszeichen auf den Platten sitzen und wie dicht die Feldlinien im Inneren liegen.</p>
+
+          <label>Spannung U</label>
+          <input data-role="voltage" type="range" min="0.2" max="5.0" value="2.0" step="0.1">
+          <div class="field-sim-mono">U = <span data-role="voltage-value">2,0</span> kV</div>
+
+          <label style="font-weight:normal; margin-top:12px">
+            <input data-role="source-connected" type="checkbox" checked>
+            Spannungsquelle angeschlossen
+          </label>
+          <div class="field-sim-mono">Aus: Ladung \(Q\) bleibt konstant, Spannung \(U\) ändert sich mit der Kapazität.</div>
+
+          <label>Plattenabstand d</label>
+          <input data-role="distance" type="range" min="1.0" max="10.0" value="4.0" step="0.2">
+          <div class="field-sim-mono">d = <span data-role="distance-value">4,0</span> cm</div>
+
+          <label>Plattenfläche A</label>
+          <input data-role="area" type="range" min="50" max="400" value="200" step="10">
+          <div class="field-sim-mono">A = <span data-role="area-value">200</span> cm²</div>
+
+          <label>Dielektrizitätszahl εᵣ</label>
+          <input data-role="epsilon" type="range" min="1.0" max="8.0" value="1.0" step="0.1">
+          <div class="field-sim-mono">εᵣ = <span data-role="epsilon-value">1,0</span></div>
+
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            <a class="wb-btn" href="felder-simulationen.html" target="_blank" rel="noopener">Simulation einzeln öffnen</a>
+          </div>
+        </div>
+        <div>
+          <canvas data-role="canvas" width="980" height="560" aria-label="Simulation eines Plattenkondensators mit Feldlinien und Ladungen"></canvas>
+          <div class="field-sim-mono" data-role="readout"></div>
+        </div>
+      </div>
+      <div class="ef-note-grid" style="margin-top:14px">
+        <div class="field-sim-note">
+          <strong>Stopp & check</strong>
+          <p>Bei angelegter Spannung gilt im idealen Plattenkondensator \(E=U/d\). Die Feldlinien werden dichter, wenn du \(U\) erhöhst oder \(d\) verkleinerst. Die Anzahl der Ladungszeichen folgt der gespeicherten Ladung \(Q=C\cdot U\).</p>
+        </div>
+        <div class="field-sim-note">
+          <strong>Der entscheidende Unterschied</strong>
+          <p>Ist die Spannungsquelle getrennt, kann keine Ladung nachfließen: \(Q\) bleibt konstant. Ist sie angeschlossen, hält sie \(U\) konstant und kann zusätzliche Ladung auf die Platten transportieren.</p>
+          <p><a class="wb-btn primary" href="felder-simulationen.html" target="_blank" rel="noopener">Simulation einzeln öffnen</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_kapazitaet",
+        "title":"Rechencheck: Kapazität",
+        "hint":"Nutze C = Q / U und Q = C · U.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Ein Kondensator trägt Q = 10 nC bei U = 5,0 V. Wie groß ist C?",
+            "choices":[
+              {"id":"a","label":"2,0 nF"},
+              {"id":"b","label":"50 nF"},
+              {"id":"c","label":"0,5 F"}
+            ],
+            "correct":["a"],
+            "explain":"C = Q / U = 10 nC / 5,0 V = 2,0 nF."
+          },
+          {
+            "text":"Ein Kondensator hat C = 1000 µF und U = 3,3 V. Welche Ladungsmenge wird gespeichert?",
+            "choices":[
+              {"id":"a","label":"3,3 mC"},
+              {"id":"b","label":"0,33 C"},
+              {"id":"c","label":"303 C"}
+            ],
+            "correct":["a"],
+            "explain":"Q = C · U = 1000 µF · 3,3 V = 1,0 · 10⁻³ F · 3,3 V = 3,3 mC."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_kapazitaet",
+              "title": "Aufgaben: Kapazität untersuchen",
+              "hint": "Begründe mit Formeln und mit anschaulichen Argumenten.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "2. Kapazität 100-fach erhöhen: Beschreibe mehrere Möglichkeiten, die Kapazität eines Plattenkondensators stark zu erhöhen.",
+                              "key": "kap_100",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "3. Zusammenhang E und C: Stelle eine Formel auf, die elektrische Feldstärke und Kapazität eines Plattenkondensators verknüpft.",
+                              "key": "e_c",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "4. Diagramm Q-U: Bestimme die Kapazität aus den Messwerten U in V: 50, 100, 150, 200 und Q in nC: 11, 21, 29, 41.",
+                              "key": "diagramm_c",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "6. Formel prüfen: Du weißt nicht mehr, ob C = ε₀ · A / d oder C = ε₀ · d / A gilt. Beschreibe ein Verfahren, um die richtige Formel zu klären.",
+                              "key": "formel_check",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Dielektrikum">
+    <h1>Dielektrikum und Kondensatorschaltungen</h1>
+    <p>Bringt man einen Isolator wie Glas, Keramik oder Öl zwischen die Kondensatorplatten, steigt die Kapazität. Faraday nannte solche Isolatoren Dielektrika. Im Dielektrikum werden Moleküle polarisiert; dadurch entsteht ein Gegenfeld, das die Wirkung im Inneren verändert.</p>
+    <p>Ist der Kondensator von der Spannungsquelle getrennt, bleibt die Ladung erhalten. Entfernt man dann das Dielektrikum, ändert sich die Spannung. Bleibt der Kondensator dagegen an der Spannungsquelle angeschlossen, bleibt die Spannung konstant und zusätzliche Ladung kann nachfließen.</p>
+    <p>Kondensatoren können außerdem parallel oder in Reihe geschaltet werden. Die Ersatzkapazität verhält sich dabei umgekehrt zu Widerständen: Parallelkapazitäten addieren sich direkt, bei Reihenschaltungen addieren sich die Kehrwerte.</p>
+    <div class="wb-section-break"></div>
+
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(C=\varepsilon_r\cdot C_0=\varepsilon_0\varepsilon_r\frac{A}{d}\)</p>
+      <p>\(\varepsilon_r\) gibt an, um welchen Faktor ein Dielektrikum die Kapazität erhöht.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(U=\frac{1}{\varepsilon_r}\cdot U_0\)</p>
+      <p>Bei getrennter Spannungsquelle und gleicher Ladung ist die Spannung mit Dielektrikum kleiner.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q=\varepsilon_r\cdot Q_0\)</p>
+      <p>Bei angeschlossener Spannungsquelle kann durch ein Dielektrikum mehr Ladung auf den Kondensator fließen.</p>
+    </div>
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/aufgabe-plattenkondensator.png" alt="Aufgabe zum Plattenkondensator mit zusätzlicher Plattenanordnung">
+        <figcaption>Aufgabe: Parameter für möglichst große Kapazität wählen.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Zur Aufgabe „Große Kapazität“</h3>
+        <p>a) Gib an, wie man die Parameter eines Plattenkondensators wählen muss, damit er eine möglichst große Kapazität hat. Nutze \(C=\varepsilon_0\varepsilon_r\frac{A}{d}\): Eine große Plattenfläche \(A\), ein kleiner Plattenabstand \(d\) und ein Dielektrikum mit großer Dielektrizitätszahl \(\varepsilon_r\) erhöhen die Kapazität.</p>
+        <p>b) Bild a: In einen Plattenkondensator ohne Dielektrikum werden zwei weitere Metallplatten vernachlässigbarer Dicke eingesetzt. Beide sind elektrisch leitend verbunden. Bestimme die Kapazität dieser Plattenkombination und den Sonderfall \(a=0\,\mathrm{cm}\).</p>
+        <p>c) Bild b: Bei drei Metallplatten ist ein Zwischenraum mit einem Dielektrikum \(\varepsilon_r=3{,}4\) gefüllt, der andere mit Luft \(\varepsilon_r=1{,}0\). Berechne die Kapazität der Kombination.</p>
+        <p>d) Bild c: In einen vertikalen Plattenkondensator mit \(d=5{,}0\,\mathrm{cm}\), Höhe \(a=60\,\mathrm{cm}\), Breite \(b=40\,\mathrm{cm}\) wird Öl mit \(\varepsilon_r=2{,}2\) eingefüllt. Gib \(C(h)\) an und berechne \(C\) für \(h=30\,\mathrm{cm}\).</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef2_essay_grosse_kapazitaet",
+              "title": "Aufgabe: Große Kapazität und Plattenkombinationen",
+              "hint": "Nutze die Bilder a, b und c. Skizziere Ersatzschaltungen, bevor du rechnest.",
+              "storagePrefix": "ef2_",
+              "fields": [
+                      {
+                              "label": "a) Gib an, wie man A, d und Dielektrikum wählen muss, damit die Kapazität möglichst groß wird. b) Bestimme zu Bild a die Kapazität mit zwei zusätzlich eingesetzten, leitend verbundenen Metallplatten und den Fall a = 0 cm. c) Berechne zu Bild b die Kapazität bei einem Zwischenraum mit εᵣ = 3,4 und einem luftgefüllten Zwischenraum mit εᵣ = 1,0. d) Gib zu Bild c den Zusammenhang zwischen Kapazität und Füllhöhe h an und berechne C für h = 30 cm.",
+                              "key": "grosse_kapazitaet_plattenkombinationen",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(C_\mathrm{ges}=C_1+C_2+C_3\)</p>
+      <p>Für parallel geschaltete Kondensatoren addieren sich die Kapazitäten.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(\frac{1}{C_\mathrm{ges}}=\frac{1}{C_1}+\frac{1}{C_2}+\frac{1}{C_3}\)</p>
+      <p>Für in Reihe geschaltete Kondensatoren addieren sich die Kehrwerte der Kapazitäten.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(Q=C\cdot U\), \(U=\frac{Q}{C}\)</p>
+      <p>Diese Umstellungen brauchst du bei Elektrometer- und Messverstärkeraufgaben.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cat_dielektrikum",
+        "title":"Sortiere: angeschlossen oder getrennt?",
+        "hint":"Welche Größe bleibt gleich, welche verändert sich?",
+        "categories":[
+          {"id":"getrennt","title":"Spannungsquelle getrennt"},
+          {"id":"angeschlossen","title":"Spannungsquelle angeschlossen"}
+        ],
+        "items":[
+          {"label":"Ladungsmenge Q bleibt konstant","category":"getrennt"},
+          {"label":"Spannung U kann sich ändern","category":"getrennt"},
+          {"label":"Spannung U bleibt konstant","category":"angeschlossen"},
+          {"label":"zusätzliche Ladung kann nachfließen","category":"angeschlossen"},
+          {"label":"beim Dielektrikum ist U kleiner als ohne Dielektrikum","category":"getrennt"},
+          {"label":"beim Dielektrikum wird Q größer als ohne Dielektrikum","category":"angeschlossen"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator_parallelschaltung.png" alt="Parallelschaltung von Kondensatoren">
+        <figcaption>Parallelschaltung von Kondensatoren.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>So liest du die Schaltung</h3>
+        <p>Alle Kondensatoren liegen an derselben Spannung. Die Ladungen auf den einzelnen Kondensatoren addieren sich zur Gesamtladung. Deshalb addieren sich bei der Parallelschaltung die Kapazitäten direkt.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator_reihenschaltung.png" alt="Reihenschaltung von Kondensatoren">
+        <figcaption>Reihenschaltung von Kondensatoren.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>So liest du die Schaltung</h3>
+        <p>Bei der Reihenschaltung tragen die Kondensatoren betragsmäßig dieselbe Ladung. Die Teilspannungen addieren sich zur Gesamtspannung. Deshalb addieren sich die Kehrwerte der Kapazitäten.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/aufgabe-zylinderkondensator.png" alt="Zylinderkondensator zur Füllstandsmessung">
+        <figcaption>Zylinderkondensator als Füllstandssensor.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Warum das zur Aufgabe passt</h3>
+        <p>Der Metallstab und die Fasswand bilden einen Zylinderkondensator. Luft und Öl wirken als unterschiedliche Dielektrika. Wenn der Ölstand steigt, wächst der Anteil mit größerer relativer Permittivität und damit die gemessene Kapazität.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_dielektrikum_schaltungen",
+              "title": "Aufgaben: Dielektrikum und Schaltungen",
+              "hint": "Bearbeite die Aufgaben so weit wie möglich mit Formeln und Begründung.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "5. Vergleich mit Widerständen: Vergleiche Reihen- und Parallelschaltung von Kondensatoren mit den entsprechenden Formeln für Widerstände in Tabellenform.",
+                              "key": "vergleich_r",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "8a. Ersatzkapazitäten: Berechne die Ersatzkapazität für C₁ = 5 µF, C₂ = 200 nF und C₃ = 10 mF in Reihe und parallel.",
+                              "key": "ersatz",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "8b. Füllstand im Metallfass: Erkläre, warum ein Zylinderkondensator mit Dielektrikum Öl zur Füllstandsmessung genutzt werden kann, und berechne den Faktor a für 90 % Füllstand.",
+                              "key": "fuellstand",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "Elektrometer-Kapazität: Bearbeite die Aufgabe: U₀ = 3,0 kV, nach Zuschalten eines Kondensators sinkt U um 2,0 kV, A = 100 cm², d = 1,0 mm. Berechne die Kapazität des Elektrometers.",
+                              "key": "elektrometer_c",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Abgabe">
+    <h1>Abschluss: Erklärungen sammeln</h1>
+    <p>Zum Abschluss formulierst du die wichtigsten Begründungen zusammenhängend. Das hilft dir, die Aufgaben nicht nur rechnerisch, sondern auch sprachlich sicher zu beherrschen.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef2_essay_abschluss",
+              "title": "Abgabe: Potenzial und Kondensator",
+              "hint": "Schreibe jeweils 3-6 Sätze. Nutze Fachbegriffe präzise.",
+              "storagePrefix": "ef2_",
+              "exportName": "elektrische-felder2-ergebnisse.txt",
+              "fields": [
+                      {
+                              "label": "1. Potenzial und Spannung: Erkläre den Unterschied zwischen elektrischem Potenzial und Spannung. Nutze die Analogie zur Höhe und die Formel U = Δφ.",
+                              "key": "potential_spannung",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2. Äquipotenziallinien: Beschreibe, warum Äquipotenziallinien senkrecht auf Feldlinien stehen und warum entlang dieser Linien keine Energieänderung nötig ist.",
+                              "key": "aequipotential",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "3. Feldstärke im Kondensator: Erkläre mit E = U / d, wie sich die Feldstärke verändert, wenn U größer oder d kleiner wird.",
+                              "key": "feldstaerke_kondensator",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "4. Flächenladungsdichte: Erkläre σ = Q / A und den Zusammenhang σ = ε₀ · E in eigenen Worten.",
+                              "key": "sigma",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "5. Kapazität: Erkläre, was C = Q / U bedeutet und warum beim Plattenkondensator C = ε₀ · A / d gilt.",
+                              "key": "kapazitaet",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "6. Dielektrikum: Vergleiche den Fall angeschlossene Spannungsquelle mit dem Fall getrennte Spannungsquelle. Was bleibt jeweils konstant?",
+                              "key": "dielektrikum",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "7. Schaltungen: Erkläre den Unterschied zwischen Reihen- und Parallelschaltung von Kondensatoren mit den passenden Formeln.",
+                              "key": "schaltungen",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "8. Simulation auswerten: Beschreibe eine Beobachtung aus der Simulation: Welche Regler verändern die Feldliniendichte, welche vor allem die gespeicherte Ladung?",
+                              "key": "simulation",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Jetzt hast du das gelernt:</strong>
+      <p>Du kannst Potenzial und Spannung unterscheiden, Äquipotenziallinien deuten, die Feldstärke im Plattenkondensator berechnen, Flächenladungsdichte und Kapazität verwenden und den Einfluss eines Dielektrikums erklären. Außerdem kannst du Reihen- und Parallelschaltungen von Kondensatoren einordnen.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Fortsetzung:</strong>
+      <p>Im nächsten Teil untersuchst du, wie viel Energie ein Kondensator speichert und warum Laden und Entladen exponentiell verlaufen.</p>
+      <p><a class="wb-btn primary" href="elektrische-felder3.html">Elektrische Felder 3: Energie, Laden und Entladen</a></p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Quelle</h2>
+    <p class="wb-muted">Inhaltlich orientiert an Dorn/Bader: Physik Kursstufe, Kapitel 1 „Das elektrische Feld“, sowie Bildungsplan BW Physik V3.0. Der Text wurde für diese interaktive Schülerseite neu formuliert.</p>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script src="../assets/felder-simulations.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
+</body>
+</html>

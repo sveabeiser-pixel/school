@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elektrische Felder und Ladungen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <style>
+    .ef-figure{margin:0 auto;max-width:520px}
+    .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .ef-caption{font-size:.92rem;color:#555;margin-top:6px}
+    .ef-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .ef-img-grid{display:grid;grid-template-columns:minmax(220px,520px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .ef-img-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .ef-formula{font-size:1.15rem;font-weight:700}
+    @media (max-width:760px){.ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
+  </style>
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {
+    "bookTitle":"Elektrische Felder",
+    "sectionTitle":"Ladung, Feldstärke, Feldlinien",
+    "startPage":1,
+    "submitLabel":"Ergebnisse exportieren",
+    "onSubmit":"exportResults",
+    "autoNav":true,
+    "autoNavHeadings":["h1","h2"],
+    "autoNavGroupTitle":"Felder",
+    "themeDefault":"default"
+  }
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <h1>Elektrische Felder: Warum Ladungen Kräfte ausüben</h1>
+    <p class="wb-muted">Du lernst hier, wie Ladungen wirken, wie man sie nachweist und warum man den Raum um geladene Körper als elektrisches Feld beschreibt.</p>
+    <p>Elektrische Wirkungen sind oft unsichtbar. Verpackungschips kleben an der Haut, Haare stehen beim Bandgenerator ab, Blitze springen durch die Luft, und ein Elektroskop zeigt eine Ladung an, ohne dass du einzelne Elektronen sehen kannst. Die Physik beschreibt solche Vorgänge mit wenigen Grundideen: Ladung, Kraft, Feld und Energie.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-two">
+      <div>
+        <h2>Das brauchst du sicher</h2>
+        <p>Ladungsarten, Anziehung und Abstoßung, Ladungserhaltung, Elektroskop, Influenz, Polarisation, Feldstärke, Feldlinien, homogenes Feld und Faraday-Käfig.</p>
+      </div>
+      <div>
+        <h2>Vertiefung im Leistungsfach</h2>
+        <p>Quantitative Kraft-Feldstärke-Zusammenhänge, Vektoraddition, Proportionalitätsnachweise, Feldlinienkonstruktionen und schwierigere Rechenaufgaben.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/ladungen.png" alt="Anziehung und Abstoßung positiver und negativer Ladungen">
+        <figcaption class="ef-caption">Anziehung und Abstoßung bei Ladungen.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Oben ziehen sich positive und negative Ladungen an. Unten stoßen sich gleichnamige Ladungen ab. Die Pfeile zeigen die Richtung der elektrischen Kraft.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_start_reveal",
+        "title":"Leitfrage",
+        "question":"Was ist die wichtigste Idee dieser Seite?",
+        "answer":"Ladungen wirken aufeinander durch Kräfte. Um diese Wirkung an jedem Ort beschreiben zu können, benutzt man das Modell des elektrischen Feldes."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Ladungen">
+    <h1>Ladungen: positiv, negativ, neutral</h1>
+    <p>Jeder physikalische Körper besteht aus Atomen. Atome bestehen aus Elektronen, Protonen und Neutronen. Diese Teilchen unterscheiden sich unter anderem durch ihre elektrische Ladung. Elektronen sind negativ geladen, Protonen positiv, Neutronen sind elektrisch neutral.</p>
+    <p>Es gibt zwei Arten elektrischer Ladung: positive und negative. Gleichnamige Ladungen stoßen sich ab, ungleichnamige Ladungen ziehen sich an. Diese gegenseitige Kraftwirkung nennt man Wechselwirkung.</p>
+    <p>Ein Körper ist elektrisch neutral, wenn gleich viele positive und negative Ladungen vorhanden sind. Er enthält also Ladungen, zeigt aber nach außen keine elektrische Wirkung. Ein Körper ist negativ geladen, wenn er einen Elektronenüberschuss besitzt. Er ist positiv geladen, wenn ihm Elektronen fehlen.</p>
+    <p>Die Ladungsmenge wird mit \(Q\) oder \(q\) bezeichnet. Ihre Einheit ist Coulomb.</p>
+    <div class="wb-callout">
+      <strong>Neue Formel / Einheit:</strong>
+      <p class="ef-formula">\([Q]=[q]=1\,\mathrm C\)</p>
+      <p>Eine Ladungsmenge wird also in Coulomb angegeben.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/ladungen2.png" alt="Kraftpfeile bei gleichnamigen und ungleichnamigen Ladungen">
+        <figcaption class="ef-caption">Kraftpfeile bei gleichnamigen und ungleichnamigen Ladungen.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Die roten Pfeile sind Kraftvektoren. Ihre Richtung zeigt, wohin die jeweilige Ladung beschleunigt würde. Nach dem Wechselwirkungsprinzip sind die Kräfte auf beide Ladungen gleich groß und entgegengesetzt gerichtet.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Merke:</strong>
+      <p>Es gibt positive und negative Ladungen. Gleichnamige Ladungen stoßen sich ab, ungleichnamige ziehen sich an. Ladungen können transportiert, aber nicht erzeugt oder vernichtet werden: Die Gesamtladung bleibt in einem abgeschlossenen System erhalten.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cloze_ladungen",
+        "title":"Sicherung: Ladungsbegriffe",
+        "hint":"Setze die Begriffe in die Lücken.",
+        "bank":["Elektronenüberschuss","Elektronenmangel","neutral","Coulomb","Wechselwirkung"],
+        "segments":[
+          {"t":"text","v":"Ein Körper mit mehr Elektronen als Protonen besitzt einen "},
+          {"t":"gap","a":"Elektronenüberschuss"},
+          {"t":"text","v":". Fehlen Elektronen, spricht man von "},
+          {"t":"gap","a":"Elektronenmangel"},
+          {"t":"text","v":". Wenn sich positive und negative Ladungen nach außen ausgleichen, ist der Körper "},
+          {"t":"gap","a":"neutral"},
+          {"t":"text","v":". Anziehung oder Abstoßung zwischen Ladungen ist eine "},
+          {"t":"gap","a":"Wechselwirkung"},
+          {"t":"text","v":". Die Einheit der Ladungsmenge ist "},
+          {"t":"gap","a":"Coulomb"},
+          {"t":"text","v":"."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Nachweis">
+    <h1>Ladungen nachweisen: Elektroskop und Ladungserhaltung</h1>
+    <p>Mit einem Elektroskop kannst du elektrische Ladungen nachweisen. Wird das Elektroskop geladen, verteilt sich Ladung auf dem leitenden Metall. Zeiger und Halterung tragen dann gleichnamige Ladungen. Weil gleichnamige Ladungen sich abstoßen, schlägt der Zeiger aus.</p>
+    <p>Besitzt das Gerät zusätzlich eine Skala, spricht man von einem Elektrometer. Für sehr kleine Ladungsmengen verwendet man Messverstärker. Solche Messungen sind empfindlich: Luftfeuchtigkeit, Berührungen oder statische Aufladung können das Ergebnis verändern.</p>
+    <p>Beim Ladungstransport werden meist Elektronen bewegt. Ladung „wandert“ also mit ihren Ladungsträgern. In einem elektrisch isolierten System bleibt die Gesamtladung erhalten. Wenn ein Körper Ladung abgibt, nimmt ein anderer Körper sie auf.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/elektroskop.png" alt="Aufgeladenes Elektroskop mit ausgeschlagenem Zeiger">
+        <figcaption class="ef-caption">Aufgeladenes Elektroskop.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Zeiger und Halterung tragen gleichnamige Ladungen. Weil sie sich abstoßen, bewegt sich der Zeiger. Je größer der Ausschlag, desto stärker ist die elektrische Wirkung.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_order_elektroskop",
+        "title":"Ablauf: Elektroskop lädt sich auf",
+        "hint":"Bringe die Schritte in eine sinnvolle Reihenfolge.",
+        "items":[
+          "Ein geladener Körper berührt oder beeinflusst das Elektroskop.",
+          "Ladung wird auf leitende Teile des Elektroskops übertragen oder verschoben.",
+          "Zeiger und Halterung tragen gleichnamige Ladung.",
+          "Gleichnamige Ladungen stoßen sich ab.",
+          "Der Zeiger schlägt aus."
+        ],
+        "shuffle":true
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_elektroskop",
+              "title": "Aufgabe: Elektroskop erklären",
+              "hint": "Antworte in 4-6 Sätzen. Nutze die Wörter Ladung, Zeiger und Abstoßung.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "Deine Erklärung: Beschreibe den Aufbau und erkläre, warum der Zeiger ausschlägt.",
+                              "key": "text",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Trennung">
+    <h1>Ladungstrennung und elektrische Energie</h1>
+    <p>Ungleichnamige Ladungen ziehen sich an. Wenn du sie voneinander trennen willst, musst du gegen diese Anziehung arbeiten. Dabei wird Energie in das elektrische System gebracht. Lässt man die getrennten Ladungen später wieder zusammenwirken, kann diese Energie in andere Energieformen umgewandelt werden.</p>
+    <p>Dieses Prinzip steckt in Batterien, Netzgeräten und Kraftwerken. Beim Minuspol gibt es einen Überschuss an Elektronen, beim Pluspol einen Elektronenmangel. Verbindet man beide Pole über einen Verbraucher, kann elektrische Energie zum Beispiel in Licht, Wärme oder Bewegung umgewandelt werden.</p>
+    <p>Bei einer Steckdose wechseln die Pole viele Male pro Sekunde. Ein Netzgerät kann daraus je nach Bauart eine Gleichspannung mit festem Plus- und Minuspol bereitstellen.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_verify_energie",
+        "title":"Wahr oder falsch?",
+        "hint":"Prüfe die Aussage.",
+        "statement":"Wenn ungleichnamige Ladungen voneinander getrennt werden, muss Energie aufgebracht werden.",
+        "answer":true,
+        "explain":"Richtig. Die Ladungen ziehen sich an. Trennen bedeutet daher: Du arbeitest gegen die elektrische Kraft und erhöhst die elektrische Energie des Systems."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_batterie",
+        "title":"Alltagsbezug",
+        "question":"Warum kann eine Batterie eine Lampe zum Leuchten bringen?",
+        "answer":"In der Batterie sind Ladungen getrennt. Zwischen Plus- und Minuspol steht elektrische Energie zur Verfügung. Wenn du die Pole über eine Lampe verbindest, wird diese Energie in Licht und Wärme umgewandelt."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Influenz">
+    <h1>Influenz und Polarisation</h1>
+    <p>Elektrische Leiter, zum Beispiel Metalle, besitzen frei bewegliche Elektronen. Bringst du eine geladene Kugel in die Nähe eines neutralen Leiters, werden diese Elektronen verschoben: Sie werden von positiven Ladungen angezogen und von negativen abgestoßen. Dadurch entstehen im Leiter getrennte Bereiche mit Elektronenüberschuss und Elektronenmangel. Dieser Vorgang heißt Influenz.</p>
+    <p>Isolatoren besitzen keine frei beweglichen Ladungsträger wie Metalle. Trotzdem können sich ihre Atomhüllen geringfügig verformen. Die Elektronenwolke verschiebt sich ein wenig gegenüber dem Atomkern. Dadurch entstehen kleine elektrische Dipole. Diesen Vorgang nennt man Polarisation.</p>
+    <p>Influenz und Polarisation sehen ähnlich aus, sind aber nicht gleich stark: Bei Influenz bewegen sich freie Elektronen durch den Leiter. Bei Polarisation werden Ladungen nur innerhalb der Atome oder Moleküle minimal verschoben.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/influenz.png" alt="Influenz am Elektroskop durch eine geladene Kugel">
+        <figcaption class="ef-caption">Influenz am Elektroskop.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Eine geladene Kugel wird nur in die Nähe gebracht. Trotzdem verschieben sich im leitenden Elektroskop Elektronen. Dadurch entstehen getrennte Ladungsbereiche, ohne dass die Kugel das Elektroskop berühren muss.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cat_influenz_polarisation",
+        "title":"Aufgabe: Influenz oder Polarisation?",
+        "hint":"Sortiere die Gegenstände. Begründe anschließend mündlich oder schriftlich.",
+        "categories":[
+          {"id":"influenz","title":"Influenzladung im Leiter"},
+          {"id":"polarisation","title":"Dipolladungen im Isolator"}
+        ],
+        "items":[
+          {"label":"Aluminium","category":"influenz"},
+          {"label":"Eisen","category":"influenz"},
+          {"label":"Kupfer","category":"influenz"},
+          {"label":"Glas","category":"polarisation"},
+          {"label":"Porzellan","category":"polarisation"},
+          {"label":"Papier","category":"polarisation"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_influenz",
+              "title": "Aufgabe: Versuch erklären",
+              "hint": "Wähle Influenz oder Polarisation und erkläre den Vorgang in 5-8 Sätzen.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "Deine Erklärung: Erkläre, was in einem Leiter oder Isolator passiert, wenn ein geladener Körper in die Nähe gebracht wird.",
+                              "key": "text",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Kraft">
+    <h1>Elektrische Kraft und Feldstärke</h1>
+    <p>Eine Probeladung erfährt in der Nähe einer anderen Ladung eine elektrische Kraft. Um verschiedene Situationen vergleichen zu können, betrachtet man die Kraft pro Ladung. Diese Größe heißt elektrische Feldstärke.</p>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(F_\mathrm{el}=q\cdot E\)</p>
+      <p>Die elektrische Kraft ist Ladungsmenge mal elektrische Feldstärke.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel:</strong>
+      <p class="ef-formula">\(E=\frac{F_\mathrm{el}}{q}\)</p>
+      <p>Die elektrische Feldstärke ist die elektrische Kraft pro Probeladung.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Einheit:</strong>
+      <p class="ef-formula">\([E]=1\,\mathrm{N/C}\)</p>
+      <p>Elektrische Feldstärke wird in Newton pro Coulomb angegeben.</p>
+    </div>
+    <p>Ist die Probeladung doppelt so groß und das Feld gleich, dann ist auch die Kraft doppelt so groß. Genau daran erkennt man die Proportionalität zwischen \(F_\mathrm{el}\) und \(q\).</p>
+    <p>Bei einer positiven Probeladung zeigen Kraft und Feldstärke in dieselbe Richtung. Bei einer negativen Probeladung zeigt die Kraft entgegen der Feldrichtung.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kraefte_ladungen.png" alt="Vektorielle Darstellung von Kraft und elektrischer Feldstärke bei positiver und negativer Ladung">
+        <figcaption class="ef-caption">Kraft und Feldstärke als Vektoren.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Bei einer positiven Probeladung zeigen Kraft und Feldstärke gleich. Bei einer negativen Probeladung ist die Kraft entgegengesetzt zur Feldrichtung. Deshalb musst du beim Zeichnen immer auf das Vorzeichen der Ladung achten.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_rechnen",
+        "title":"Rechencheck: Kraft und Ladung",
+        "hint":"Nutze F = q · E. Achte auf Einheiten.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Ein Ladungslöffel trägt q = 10 nC und befindet sich in einem Feld mit E = 10 kN/C. Wie groß ist der Betrag der Kraft?",
+            "choices":[
+              {"id":"a","label":"0,1 µN"},
+              {"id":"b","label":"100 µN"},
+              {"id":"c","label":"10 mN"}
+            ],
+            "correct":["b"],
+            "explain":"10 nC = 1,0 · 10⁻⁸ C und 10 kN/C = 1,0 · 10⁴ N/C. Also F = 1,0 · 10⁻⁴ N = 100 µN."
+          },
+          {
+            "text":"Welche Ladung erfährt im gleichen Feld E = 10 kN/C eine Kraft von 10 µN?",
+            "choices":[
+              {"id":"a","label":"1 nC"},
+              {"id":"b","label":"10 nC"},
+              {"id":"c","label":"1 µC"}
+            ],
+            "correct":["a"],
+            "explain":"q = F / E = 10 · 10⁻⁶ N / 10⁴ N/C = 1,0 · 10⁻⁹ C = 1 nC."
+          }
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Feld">
+    <h1>Das elektrische Feld</h1>
+    <p>Der Raum um eine Ladung ist nicht leer im physikalischen Sinn: Eine Probeladung würde dort eine Kraft erfahren. Deshalb nennt man diesen Raum ein elektrisches Feld. Die Ladung, von der das Feld ausgeht, heißt felderzeugende Ladung.</p>
+    <p>Elektrische Felder benötigen kein Medium. Sie können auch im Vakuum existieren. Sichtbar werden sie nur indirekt, zum Beispiel durch die Bewegung geladener Watteflocken, durch Grießkörner in Öl oder durch die Kraft auf eine Probeladung.</p>
+    <p>Feldlinien vereinfachen die Darstellung: Ihre Richtung zeigt von positiven Ladungen weg und zu negativen Ladungen hin. Je dichter die Feldlinien liegen, desto stärker ist das Feld an dieser Stelle.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/elektrische_felder.png" alt="Radialfeld einer positiven Punktladung mit Feldlinien">
+        <figcaption class="ef-caption">Radialfeld einer positiven Ladung.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Die Grießkörner machen die Feldstruktur sichtbar. Im Modellbild zeigen die Feldlinien radial nach außen, weil die felderzeugende Ladung positiv ist.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Merke:</strong>
+      <p>In jedem Punkt eines elektrischen Feldes wird auf eine Probeladung eine Kraft ausgeübt. Feldlinien zeigen die Richtung der elektrischen Feldstärke. Sie beginnen an positiven Ladungen und enden an negativen Ladungen.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-p2 class="p2" data-p2-title="Paare: Feldlinien verstehen" data-p2-hint="Verbinde Aussage und Bedeutung.">
+      <div class="p2-hint">Ziehe eine Aussage auf die passende Deutung.</div>
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Aussage</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">Feldlinien liegen dicht.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Feldlinien zeigen nach außen.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">Eine negative Probeladung wird eingesetzt.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">Feldlinien sind parallel.</div>
+          </div>
+        </div>
+        <div>
+          <div class="p2-col-title">Deutung</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Das Feld ist dort stärker.</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Das passt zu einer positiven Ladung.</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Die Kraft zeigt entgegen der Feldrichtung.</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">Das Feld ist in diesem Bereich homogen.</div>
+          </div>
+        </div>
+      </div>
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+      <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+    </div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Feldlinienbilder">
+    <h1>Feldlinienbilder: Radialfeld, Dipolfeld und homogenes Feld</h1>
+    <p>Bei einer einzelnen Punktladung entsteht ein radialsymmetrisches Feld. Bei zwei entgegengesetzten Ladungen entsteht ein Dipolfeld: Feldlinien beginnen an der positiven Ladung und enden an der negativen. Zwischen zwei großen, parallelen Platten entsteht im Inneren näherungsweise ein homogenes Feld.</p>
+    <p>Ein homogenes Feld hat an jedem Ort im betrachteten Bereich dieselbe Richtung und denselben Betrag. Das ist idealisiert, aber im Inneren eines Plattenkondensators oft eine gute Näherung. Am Rand biegen die Feldlinien nach außen ab; dort ist das Feld nicht mehr perfekt homogen.</p>
+    <p>Im idealen Plattenkondensator erkennst du das homogene Feld daran, dass Feldlinien und Äquipotenziallinien jeweils parallel und gleichmäßig voneinander entfernt sind. Die Feldlinien zeigen überall in dieselbe Richtung, die Äquipotenziallinien stehen dazu senkrecht.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/elektrische_felder2.png" alt="Feldlinienbilder eines Dipols und eines Plattenkondensators">
+        <figcaption class="ef-caption">Dipolfeld und homogenes Feld.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Links verbinden die Feldlinien eine positive und eine negative Ladung: Das ist ein Dipolfeld. Rechts sind die Linien zwischen den Elektroden fast parallel und gleich dicht: Dort ist das Feld näherungsweise homogen. Linien gleichen Potenzials würden im homogenen Bereich parallel zu den Platten liegen.</p>
+      </div>
+    </div>
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/elektrische_felder3.png" alt="Feldlinienbild zweier gleichnamiger positiver Ladungen">
+        <figcaption class="ef-caption">Feld zweier gleichnamiger positiver Ladungen.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Beide Ladungen sind positiv. Feldlinien beginnen an positiven Ladungen und weichen zwischen den Ladungen aus. Zwischen gleichnamigen Ladungen entsteht kein verbindendes Feldlinienbild wie beim Dipol.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_cat_felder",
+        "title":"Sortiere Feldtypen",
+        "hint":"Ziehe jede Beschreibung zum passenden Feldtyp.",
+        "categories":[
+          {"id":"radial","title":"Radialfeld"},
+          {"id":"dipol","title":"Dipolfeld"},
+          {"id":"homogen","title":"homogenes Feld"}
+        ],
+        "items":[
+          {"label":"Feld einer einzelnen Punktladung","category":"radial"},
+          {"label":"Feldlinien zeigen von einer positiven zu einer negativen Ladung","category":"dipol"},
+          {"label":"Feldlinien sind im Inneren parallel und gleich dicht","category":"homogen"},
+          {"label":"Typisches Modell für den Plattenkondensator","category":"homogen"},
+          {"label":"Feldlinien gehen bei positiver Ladung radial nach außen","category":"radial"},
+          {"label":"Zwei entgegengesetzte Ladungen bestimmen das Feldbild","category":"dipol"}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Faraday">
+    <h1>Faradayscher Käfig: Warum Metall abschirmt</h1>
+    <p>Metalle enthalten frei bewegliche Elektronen. Befindet sich ein metallischer Körper in einem äußeren elektrischen Feld, verschieben sich diese Elektronen an der Oberfläche so lange, bis im Inneren kein elektrisches Feld mehr vorhanden ist. Das Innere ist dann feldfrei.</p>
+    <p>Diese Abschirmung nennt man Faraday-Käfig. Beispiele sind Auto- und Flugzeughüllen aus Metall. Bei einem Blitz verteilt sich Ladung auf der äußeren Metalloberfläche; im Inneren bleibt man geschützt.</p>
+    <p>Feldlinien treffen metallische Oberflächen im elektrostatischen Gleichgewicht senkrecht. Hätten sie eine Komponente entlang der Oberfläche, würden freie Elektronen weiter verschoben werden.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/faraday.png" alt="Feldlinien an einer Metalloberfläche und Kräfte auf Oberflächenladungen">
+        <figcaption class="ef-caption">Feldlinien an einer Metalloberfläche.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du siehst:</strong>
+        <p>Freie Elektronen werden an der Metalloberfläche verschoben, solange es eine Kraftkomponente entlang der Oberfläche gibt. Im Gleichgewicht treffen Feldlinien senkrecht auf die Metalloberfläche.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_faraday",
+        "title":"Check: Faraday-Käfig",
+        "hint":"Wähle die fachlich beste Erklärung.",
+        "questions":[
+          {
+            "text":"Warum schützt ein geschlossenes Auto aus Metall bei einem Gewitter?",
+            "choices":[
+              {"id":"a","label":"Weil Metall elektrische Felder im Inneren abschirmen kann."},
+              {"id":"b","label":"Weil Metall keine Ladungen enthält."},
+              {"id":"c","label":"Weil Blitze nur Isolatoren treffen."}
+            ],
+            "correct":["a"],
+            "explain":"Freie Elektronen im Metall verschieben sich so, dass das Innere feldfrei wird. Die Ladung bleibt außen."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_metall",
+        "title":"Fehler finden",
+        "question":"Ein Schüler sagt: Im Faraday-Käfig verschwinden die Ladungen. Was ist falsch?",
+        "answer":"Die Ladungen verschwinden nicht. Sie verschieben sich auf der Metalloberfläche so, dass das elektrische Feld im Inneren aufgehoben wird. Das ist ein Beispiel für Ladungstrennung und Ladungserhaltung."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Rechnen">
+    <h1>Rechenaufgaben: Kraft, Ladung und Feldstärke</h1>
+    <p>Hier bearbeitest du die rechnerischen Aufgaben aus dem Text. Schreibe deine Rechenwege sauber auf: gegebene Größen, Umrechnung, Formel, Einsetzen, Ergebnis mit Einheit.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Formelübersicht für diese Aufgaben:</strong>
+      <p class="ef-formula">\(F_\mathrm{el}=qE\), \(E=\frac{F_\mathrm{el}}{q}\), \(q=\frac{F_\mathrm{el}}{E}\)</p>
+      <p>Diese Umstellungen nutzt du, je nachdem welche Größe gesucht ist.</p>
+    </div>
+    <div class="wb-callout">
+      <strong>Neue Formel für Schweben im elektrischen Feld:</strong>
+      <p class="ef-formula">\(|q|E=mg\)</p>
+      <p>Ein geladener Körper schwebt, wenn elektrische Kraft und Gewichtskraft betragsmäßig gleich groß und entgegengesetzt gerichtet sind.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_rechnen_2",
+        "title":"Rechencheck: Feldstärken vergleichen",
+        "hint":"Berechne jeweils E = F/q.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Kondensator 1: q₁ = 1,0 nC, F₁ = 0,10 mN. Kondensator 2: q₂ = 3,0 nC, F₂ = 0,20 mN. Welche Feldstärke ist größer?",
+            "choices":[
+              {"id":"a","label":"Kondensator 1 hat die größere Feldstärke."},
+              {"id":"b","label":"Kondensator 2 hat die größere Feldstärke."},
+              {"id":"c","label":"Beide Feldstärken sind gleich groß."}
+            ],
+            "correct":["a"],
+            "explain":"E1 = 0,10 mN / 1,0 nC = 1,0 · 10^5 N/C. E2 = 0,20 mN / 3,0 nC ≈ 6,7 · 10^4 N/C. Kondensator 1 hat also die größere Feldstärke."
+          },
+          {
+            "text":"Ein Wassertropfen mit q = 10 nC befindet sich in einem Gewitterfeld mit E = 3,2 MN/C. Wie groß ist die Kraft?",
+            "choices":[
+              {"id":"a","label":"0,032 N"},
+              {"id":"b","label":"32 N"},
+              {"id":"c","label":"3,2 · 10⁻⁹ N"}
+            ],
+            "correct":["a"],
+            "explain":"F = q · E = 10 · 10⁻⁹ C · 3,2 · 10⁶ N/C = 3,2 · 10⁻² N = 0,032 N."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_rechnen",
+              "title": "Rechenaufgaben mit vollständigem Weg",
+              "hint": "Bearbeite die Aufgaben schriftlich. Nutze Einheiten und begründe deine Entscheidung.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "1. Proportionalität nachweisen: q in nC: 5,0; 7,0; 13,0; 25,0. F in N: 0,0009; 0,0012; 0,0025; 0,0049. Zeige auf zwei Arten, ob F und q proportional sind, und bestimme eine Proportionalitätskonstante.",
+                              "key": "prop",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2. Ping-Pong-Ball im Kondensator: Ein leitend lackierter Ping-Pong-Ball hat m = 5 g und q = -0,3 nC. Beschreibe, wie du prüfen würdest, ob er in einem Kondensator schweben kann.",
+                              "key": "pingpong",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "3. Kraftvektoren senkrecht: Ein Teilchen mit q = 5 nC erfährt zwei senkrechte Kräfte F₁ = 50 µN und F₂ = 100 µN. Bestimme zeichnerisch oder rechnerisch die resultierende Kraft und daraus die Feldstärke.",
+                              "key": "vektoren",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_pingpong",
+        "title":"Hinweis: Schweben im Kondensator",
+        "question":"Welche Bedingung muss für den Ping-Pong-Ball gelten?",
+        "answer":"Zum Schweben muss die elektrische Kraft die Gewichtskraft ausgleichen: |q|E = mg. Daraus folgt E = mg/|q|. Danach vergleichst du, ob diese Feldstärke mit den verfügbaren Kondensatorwerten erreichbar ist. Achte auch auf die Richtung: Bei negativer Ladung wirkt die elektrische Kraft entgegen der Feldrichtung."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="11" data-wb-page-title="Zeichnen">
+    <h1>Zeichen- und Analyseaufgaben zu Feldlinien</h1>
+    <p>Diese Aufgaben trainieren das, was man bei elektrischen Feldern besonders häufig braucht: Feldlinienbilder lesen, Kraftvektoren einzeichnen und begründen, wo das Feld stärker ist.</p>
+    <p>Bearbeite die Aufgaben, bevor du die Lösungen oder Hinweise nutzt. Entscheidend ist nicht nur das Ergebnis, sondern deine Begründung.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/aufgabe-felder.png" alt="Aufgabe zu einem elektrischen Feldlinienbild mit Punkten A und B">
+        <figcaption class="ef-caption">Aufgabe zu einem Feldlinienbild.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Was du untersuchen sollst:</strong>
+        <p>Vergleiche Punkt A und Punkt B. Achte auf Feldliniendichte, Feldrichtung und darauf, dass ein Elektron entgegen der Feldrichtung beschleunigt wird.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_aufgaben",
+        "title":"Aufgabencheck",
+        "hint":"Nutze Feldliniendichte und Richtung.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Im Bild liegen die Feldlinien bei Punkt A dichter als bei Punkt B. Was folgt daraus?",
+            "choices":[
+              {"id":"a","label":"Das elektrische Feld ist bei A stärker."},
+              {"id":"b","label":"Das elektrische Feld ist bei B stärker."},
+              {"id":"c","label":"Die Feldstärke ist überall gleich, weil Feldlinien nur Zeichnungen sind."}
+            ],
+            "correct":["a"],
+            "explain":"Feldliniendichte ist ein Hinweis auf Feldstärke: dichter bedeutet stärker."
+          },
+          {
+            "text":"Ein Elektron wird in ein Feld gesetzt. Wie verhält sich seine Kraft im Vergleich zur Feldrichtung?",
+            "choices":[
+              {"id":"a","label":"Die Kraft zeigt in Feldrichtung."},
+              {"id":"b","label":"Die Kraft zeigt entgegen der Feldrichtung."},
+              {"id":"c","label":"Auf ein Elektron wirkt im elektrischen Feld keine Kraft."}
+            ],
+            "correct":["b"],
+            "explain":"Das elektrische Feld ist über die Kraft auf eine positive Probeladung definiert. Ein Elektron ist negativ geladen, daher wirkt die Kraft entgegengesetzt."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_zeichen",
+              "title": "Zeichenaufgaben und Begründungen",
+              "hint": "Fertige die Skizzen auf Papier an und beschreibe hier deine Begründung.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "1. Negative Punktladung: Skizziere das Feldlinienbild einer negativen Punktladung. Was ändert sich, wenn die Ladungsmenge doppelt so groß ist?",
+                              "key": "negativ",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "2. Mehrere Ladungen: Skizziere ein Feldlinienbild für drei gleiche Punktladungen im gleichseitigen Dreieck und ein Quadrupol-Feld. Beschreibe jeweils die Symmetrie.",
+                              "key": "mehrere",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "3. Metalloberfläche: Skizziere das Feld einer Punktladung vor einer metallischen Oberfläche. Warum treffen Feldlinien dort senkrecht auf?",
+                              "key": "metall",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "4. Ungleiches Dipolfeld: Skizziere einen Dipol, bei dem eine Ladungsmenge betragsmäßig dreimal so groß ist wie die andere. Was ändert sich an der Feldliniendichte?",
+                              "key": "dipol",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+              "id": "ef_essay_feldbild_ab",
+              "title": "Aufgabe: Feldlinienbild mit A und B auswerten",
+              "hint": "Nutze das Bild oben. Antworte begründet, nicht nur mit Stichworten.",
+              "storagePrefix": "ef_",
+              "fields": [
+                      {
+                              "label": "a) Ladungen und Pfeile: Erläutere, welche Ladungen sich auf den beiden Kugeln befinden und was die schwarzen Pfeile bedeuten.",
+                              "key": "ladungen_pfeile",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "b) Beträge der Ladungen: Bestimme, welche Kugel betragsmäßig die kleinere bzw. größere Ladung trägt. Begründe mit dem Feldlinienbild.",
+                              "key": "betrag",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "c) Punkte A und B: Vergleiche die Feldstärke in A und B in Betrag und Richtung.",
+                              "key": "punkte",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      },
+                      {
+                              "label": "d) Elektron in B: Beschreibe, in welche Richtung sich ein anfänglich ruhendes Elektron vom Punkt B aus bewegen würde.",
+                              "key": "elektron",
+                              "kind": "textarea",
+                              "placeholder": "Schreibe deine Lösung hier."
+                      }
+              ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_rechnen",
+        "title":"Hinweis zur Proportionalitätsaufgabe",
+        "question":"Wie kannst du zeigen, dass elektrische Kraft und Probeladung proportional sind?",
+        "answer":"Du hast zwei Wege: Zeichne ein F-q-Diagramm und prüfe, ob eine Ursprungsgerade zu den Messpunkten passt. Oder berechne für jedes Wertepaar den Quotienten F/q. Sind die Quotienten annähernd gleich, ist das ein Hinweis auf Proportionalität."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="12" data-wb-page-title="Fortsetzung">
+    <h1>Weiter zu Potenzial und Kondensator</h1>
+    <p>Du hast jetzt Ladungen, elektrische Kräfte, Feldstärke, Feldlinien und Feldbilder erarbeitet. Die Fortsetzung behandelt elektrische Energie, Potenzial, Spannung und den Kondensator als Ladungsspeicher.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Fortsetzung öffnen:</strong>
+      <p><a class="wb-btn primary" href="elektrische-felder2.html">Elektrische Felder 2: Potenzial und Kondensator</a></p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Quelle</h2>
+    <p class="wb-muted">Inhaltlich orientiert an Dorn/Bader: Physik Kursstufe, Kapitel 1 „Das elektrische Feld“, sowie Bildungsplan BW Physik V3.0. Der Text wurde für diese interaktive Schülerseite neu formuliert.</p>
+  </section>
+
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+</body>
+</html>

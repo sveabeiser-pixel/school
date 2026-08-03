@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mechanische Schwingungen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">{"bookTitle":"Mechanische Schwingungen","sectionTitle":"Periodische Bewegungen verstehen","startPage":1,"submitLabel":"Ergebnisse exportieren","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Wellen","themeDefault":"default"}</script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <h1>Mechanische Schwingungen: periodische Bewegung verstehen</h1>
+    <p class="wb-muted">Du lernst hier, wie man periodische Bewegungen beschreibt. Eine Schaukel, ein Federpendel, eine Stimmgabel oder ein schwingendes Gebäude haben gemeinsam: Ein System wird aus einer Ruhelage ausgelenkt und kehrt immer wieder dorthin zurück.</p>
+    <p>Schwingungen sind die Grundlage für viele spätere Themen. Wellen entstehen, wenn sich Schwingungen räumlich ausbreiten. Beim elektromagnetischen Schwingkreis schwingen Spannung und Stromstärke. Deshalb lohnt es sich, die Begriffe hier sauber zu klären.</p>
+    <div class="wb-section-break"></div>
+    <div class="grid2"><div class="wb-soft-callout"><strong>Das brauchst du sicher</strong><p>Auslenkung, Amplitude, Periodendauer, Frequenz, Kreisfrequenz, harmonische Schwingung, Federpendel, Energieumwandlung.</p></div><div class="wb-soft-callout"><strong>Vertiefung im Leistungsfach</strong><p>Fadenpendel mit Kleinwinkelnäherung, gedämpfte Schwingung, erzwungene Schwingung, Resonanzkurve und formale Parameterabhängigkeiten.</p></div></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_start","title":"Leitfrage","question":"Warum sind Schwingungen vor den Wellen wichtig?","answer":"Eine Welle kann man als gekoppelte Schwingungen verstehen, die sich im Raum ausbreiten. Wer Auslenkung, Frequenz und Phase bei einer Schwingung versteht, kann Wellen deutlich leichter beschreiben."}</script></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Kenngrößen">
+    <h1>Kenngrößen einer Schwingung</h1>
+    <p>Eine Schwingung ist eine zeitlich wiederkehrende Bewegung um eine Ruhelage. Die Auslenkung gibt an, wie weit sich der Körper gerade von der Ruhelage entfernt befindet. Die Amplitude ist die größte Auslenkung.</p>
+    <p>Die Periodendauer \(T\) ist die Zeit für eine vollständige Hin-und-her-Bewegung. Die Frequenz \(f\) gibt an, wie viele vollständige Schwingungen pro Sekunde stattfinden. Es gilt \(f=1/T\). Die Kreisfrequenz \(\omega=2\pi f\) ist besonders praktisch, wenn man Schwingungen mit Sinus- oder Kosinusfunktionen beschreibt.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"schw_cloze","title":"Sicherung: Größen","hint":"Setze passende Größen ein.","bank":["Amplitude","Periodendauer","Frequenz","Ruhelage"],"segments":[{"t":"text","v":"Die maximale Auslenkung heißt "},{"t":"gap","a":"Amplitude"},{"t":"text","v":". Die Zeit für eine vollständige Schwingung heißt "},{"t":"gap","a":"Periodendauer"},{"t":"text","v":". Die Anzahl der Schwingungen pro Sekunde heißt "},{"t":"gap","a":"Frequenz"},{"t":"text","v":". Geschwungen wird um eine "},{"t":"gap","a":"Ruhelage"},{"t":"text","v":"."}]}</script></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Federpendel">
+    <h1>Federpendel und Periodendauer</h1>
+    <p>Beim Feder-Masse-Pendel zieht die Feder den Körper zur Ruhelage zurück. Je weiter die Feder gedehnt oder gestaucht ist, desto größer ist die Rückstellkraft. Wenn diese Kraft proportional zur Auslenkung ist, entsteht eine harmonische Schwingung.</p>
+    <p>Für die Periodendauer gilt \(T=2\pi\sqrt{m/D}\). Eine größere Masse macht die Schwingung langsamer, weil der Körper träger ist. Eine größere Federkonstante \(D\) macht die Schwingung schneller, weil die Feder stärker zurückzieht.</p>
+    <p><strong>Merke:</strong> Bei Schwingungsformeln musst du immer fragen: Welche Eigenschaft des Systems bestimmt die Periodendauer?</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_mcq_feder","title":"Check: Federpendel","hint":"Wähle die richtige Folgerung.","questions":[{"text":"Was passiert mit der Periodendauer, wenn die Masse vervierfacht wird und D gleich bleibt?","choices":[{"id":"a","label":"Sie wird doppelt so groß."},{"id":"b","label":"Sie wird viermal so groß."},{"id":"c","label":"Sie halbiert sich."}],"correct":["a"],"explain":"In T = 2π√(m/D) steht m unter der Wurzel. Vervierfachung der Masse führt zur Verdopplung der Periodendauer."}]}</script></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Energie">
+    <h1>Energieumwandlung bei Schwingungen</h1>
+    <p>Beim idealen Federpendel wandelt sich Energie ständig zwischen Spannenergie der Feder und Bewegungsenergie der Masse um. An den Umkehrpunkten ist die Geschwindigkeit kurz null; dafür ist die Feder maximal gespannt oder gestaucht. In der Ruhelage ist die Geschwindigkeit am größten.</p>
+    <p>In realen Systemen geht mechanische Energie durch Reibung oder Luftwiderstand in Wärme über. Die Schwingung verschwindet deshalb nicht plötzlich, sondern die Amplitude wird nach und nach kleiner. Das nennt man Dämpfung.</p>
+    <p><strong>Das brauchst du sicher:</strong> Energieumwandlung deuten. <strong>Vertiefung im Leistungsfach:</strong> gedämpfte Schwingung mathematisch beschreiben.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_verify_energie","title":"Wahr oder falsch?","hint":"Prüfe die Aussage.","statement":"Bei einer idealen ungedämpften Schwingung bleibt die Gesamtenergie erhalten, obwohl sie ihre Form wechselt.","answer":true,"explain":"Richtig. Beim Federpendel wechseln Spannenergie und Bewegungsenergie periodisch. Ohne Verluste bleibt die Summe konstant."}</script></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="LF-Zusatz">
+    <h1>Vertiefung im Leistungsfach: Fadenpendel, Dämpfung und Resonanz</h1>
+    <p>Beim Fadenpendel gilt für kleine Winkel näherungsweise \\(T=2\\pi\\sqrt{l/g}\\). Diese Formel ist nur unter der Kleinwinkelnäherung brauchbar. Bei gedämpften Schwingungen nimmt die Amplitude ab. Bei erzwungenen Schwingungen kann Resonanz auftreten, wenn die Anregungsfrequenz zur Eigenfrequenz passt.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"schw_cat","title":"BF oder LF?","hint":"Sortiere die Inhalte.","categories":[{"id":"common","title":"BF + LF"},{"id":"lf","title":"Nur LF"}],"items":[{"label":"Amplitude, Frequenz und Periodendauer unterscheiden","category":"common"},{"label":"Federpendelformel anwenden","category":"common"},{"label":"Fadenpendel mit Kleinwinkelnäherung herleiten","category":"lf"},{"label":"Resonanzkurve interpretieren","category":"lf"},{"label":"Energieumwandlung qualitativ erklären","category":"common"},{"label":"Gedämpfte Schwingung mathematisch modellieren","category":"lf"}]}</script></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Abgabe">
+    <h1>Zusammenfassung und Abgabe</h1>
+    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Schwingungen liefern die Sprache für Wellen: Auslenkung, Amplitude, Periodendauer, Frequenz, Phase und Energieumwandlung. LF-Zusatz sind vor allem Dämpfung, Resonanz und Fadenpendel-Vertiefung.</p></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_essay","title":"Reflexion","hint":"Antworte in 4-8 Sätzen. Nutze Amplitude, Periodendauer und Energie korrekt.","storagePrefix":"schw_","fields":[{"label":"Deine Erklärung","key":"common","kind":"textarea","placeholder":"Erkläre, wie sich beim Federpendel Energie während einer Schwingung umwandelt."},{"label":"Transfer","key":"lf","kind":"textarea","placeholder":"Warum kann Resonanz gefährlich werden, wenn ein System immer im richtigen Rhythmus angeregt wird?"}]}</script></div>
+    <div class="wb-section-break"></div>
+    <p class="wb-muted">Quelle: Dorn/Bader: Physik Kursstufe, Kapitel 4 „Mechanische Schwingungen“, sowie Bildungsplan BW Physik V3.0.</p>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+</body>
+</html>

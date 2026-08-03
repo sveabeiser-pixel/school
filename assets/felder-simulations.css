@@ -1,0 +1,10 @@
+.field-sim-card{border:1px solid var(--wb-line,#e5e7eb);border-radius:14px;padding:14px;background:var(--wb-text-bg,#fff);box-shadow:var(--wb-shadow,0 6px 20px rgba(0,0,0,.08));margin:14px 0}
+.field-sim-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:14px;align-items:start}
+@media (max-width:900px){.field-sim-grid{grid-template-columns:1fr}}
+.field-sim-controls label{display:block;font-weight:900;margin:10px 0 6px}
+.field-sim-controls input[type="range"]{width:100%}
+.field-sim-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:13px;color:var(--wb-muted,#6b7280);white-space:pre-wrap;margin-top:8px}
+.field-sim-note{border-left:5px solid #2563eb;background:rgba(37,99,235,.08);padding:12px;border-radius:8px;margin-top:14px}
+[data-field-sim] [data-role="canvas"]{width:100%;height:360px;border-radius:12px;border:1px solid var(--wb-line,#e5e7eb);background:rgba(255,255,255,.58);display:block}
+.wb-book[data-theme="dark"] .field-sim-card,.wb-book[data-theme="dark-blue"] .field-sim-card{background:rgba(255,255,255,.18)}
+.wb-book[data-theme="dark"] [data-field-sim] [data-role="canvas"],.wb-book[data-theme="dark-blue"] [data-field-sim] [data-role="canvas"]{background:rgba(255,255,255,.88)!important;border-color:rgba(255,255,255,.4)!important}

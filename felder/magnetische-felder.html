@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magnetische Felder und Lorentzkraft</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">{"bookTitle":"Magnetische Felder","sectionTitle":"Lorentzkraft und Teilchenbewegung","startPage":1,"submitLabel":"Ergebnisse exportieren","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Felder","themeDefault":"default"}</script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <h1>Magnetische Felder: Kräfte auf Ströme und Ladungen</h1>
+    <p class="wb-muted">Du kennst Magnetismus vielleicht von Dauermagneten. In der Kursstufe geht es genauer darum, wie Magnetfelder auf elektrische Ströme und bewegte Ladungen wirken. Damit wird verständlich, warum Motoren Kräfte erzeugen, warum Elektronen abgelenkt werden und wie Teilchen nach ihrer Masse getrennt werden können.</p>
+    <p>Das Magnetfeld ist der zweite große Feldtyp in der Elektrodynamik. Es wirkt anders als das elektrische Feld: Eine ruhende Ladung spürt kein Magnetfeld. Erst wenn sich die Ladung bewegt, kann eine magnetische Kraft auftreten.</p>
+    <div class="wb-section-break"></div>
+    <div class="grid2"><div class="wb-soft-callout"><strong>Das brauchst du sicher</strong><p>Magnetfeld, Feldlinien, Flussdichte, Kraft auf Leiter, Lorentzkraft qualitativ, Spulenfeld.</p></div><div class="wb-soft-callout"><strong>Vertiefung im Leistungsfach</strong><p>Quantitative Bahnkurven, Hall-Effekt, gekreuzte Felder, Wien-Filter, Massenspektrometer.</p></div></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"mf_start","title":"Leitfrage","question":"Warum ist das magnetische Feld für die Kursstufe zentral?","answer":"Es verbindet Strom, Kraft und Bewegung geladener Teilchen. Damit wird verständlich, wie Motoren, Ablenkung von Elektronen, Massenspektrometer und Induktion funktionieren."}</script></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Feld und Flussdichte">
+    <h1>Magnetfeld und magnetische Flussdichte</h1>
+    <p>Magnetische Feldlinien bilden geschlossene Linien. Außerhalb eines Stabmagneten verlaufen sie vom Nordpol zum Südpol, im Inneren zurück. Je dichter die Feldlinien liegen, desto stärker ist die magnetische Wirkung.</p>
+    <p>Die magnetische Flussdichte \(B\) beschreibt die Stärke des Magnetfeldes. Du kannst sie dir als Größe vorstellen, die angibt, wie stark ein Magnetfeld auf bewegte Ladungen oder auf einen stromdurchflossenen Leiter wirken kann.</p>
+    <p>Im Inneren einer langen Spule ist das Feld näherungsweise homogen. Für eine lange Spule kann im Kursstufenkontext genutzt werden: \(B=\mu_0\mu_r\frac{N}{l}I\). Mehr Windungen pro Länge und größere Stromstärke verstärken das Feld.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"mf_cloze_b","title":"Sicherung: Magnetfeldbegriffe","hint":"Setze die Begriffe passend ein.","bank":["Flussdichte","Stromstärke","Spule","homogen"],"segments":[{"t":"text","v":"Die magnetische "},{"t":"gap","a":"Flussdichte"},{"t":"text","v":" beschreibt die Feldstärke. In einer langen "},{"t":"gap","a":"Spule"},{"t":"text","v":" ist das Feld innen näherungsweise "},{"t":"gap","a":"homogen"},{"t":"text","v":". Eine größere "},{"t":"gap","a":"Stromstärke"},{"t":"text","v":" führt zu einem stärkeren Magnetfeld."}]}</script></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Lorentzkraft">
+    <h1>Lorentzkraft: Wenn bewegte Ladungen abgelenkt werden</h1>
+    <p>Auf bewegte Ladungen wirkt im Magnetfeld eine Kraft, wenn ihre Bewegung eine Komponente senkrecht zum Magnetfeld hat. Für den Betrag gilt im einfachen senkrechten Fall \(F_L=qvB\). Die Richtung ergibt sich über eine Handregel.</p>
+    <p>Wichtig ist: Die Lorentzkraft steht senkrecht zur Bewegungsrichtung und senkrecht zum Magnetfeld. Sie kann deshalb die Richtung der Bewegung ändern, aber im reinen Magnetfeld nicht direkt die Geschwindigkeit vergrößern.</p>
+    <p><strong>Das brauchst du sicher:</strong> Richtung und qualitative Wirkung der Lorentzkraft. <strong>Vertiefung im Leistungsfach:</strong> Betrag, Radius der Kreisbahn und Bewegung in gekreuzten Feldern.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"mf_verify_lorentz","title":"Wahr oder falsch?","hint":"Prüfe die Aussage.","statement":"Eine ruhende Ladung wird in einem statischen Magnetfeld durch die Lorentzkraft beschleunigt.","answer":false,"explain":"Die magnetische Lorentzkraft wirkt auf bewegte Ladungen. Ist die Ladung in Ruhe, ist der Geschwindigkeitsanteil null."}</script></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="LF-Bahnen">
+    <h1>Vertiefung im Leistungsfach: Kreisbahn, Schraubenbahn und gekreuzte Felder</h1>
+    <p>Bewegt sich eine Ladung senkrecht zum homogenen Magnetfeld, wirkt die Lorentzkraft als Zentripetalkraft. Dadurch entsteht eine Kreisbahn. Der Radius hängt von Masse, Ladung, Geschwindigkeit und Magnetfeldstärke ab.</p>
+    <p>Hat die Geschwindigkeit zusätzlich eine Komponente parallel zum Magnetfeld, wird diese Komponente nicht abgelenkt. Senkrecht zum Feld entsteht eine Kreisbewegung, parallel dazu eine gleichförmige Bewegung. Zusammen ergibt das eine Schraubenbahn.</p>
+    <p>Im Wien-Filter werden elektrisches und magnetisches Feld so kombiniert, dass nur Teilchen mit einer bestimmten Geschwindigkeit unabgelenkt passieren.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script class="wb-config" type="application/json">{"id":"mf_order_wien","title":"Ablauf: Wien-Filter","hint":"Sortiere die Idee des Geschwindigkeitsfilters.","items":["Geladene Teilchen treten in gekreuzte E- und B-Felder ein.","Die elektrische Kraft wirkt in eine Richtung.","Die magnetische Lorentzkraft wirkt bei passender Anordnung entgegengesetzt.","Für eine bestimmte Geschwindigkeit sind beide Kräfte gleich groß.","Nur diese Teilchen fliegen unabgelenkt weiter."],"shuffle":true}</script></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Einordnung">
+    <h1>Was musst du können?</h1>
+    <p>Du solltest das Magnetfeld einer Spule beschreiben, die Richtung der Lorentzkraft bestimmen und erklären können, warum bewegte Ladungen im Magnetfeld abgelenkt werden. Im Leistungsfach gehst du einen Schritt weiter und berechnest Bahnradien oder filterst Teilchen über gekreuzte Felder.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"mf_cat_trennung","title":"Sortiere die Inhalte","hint":"Was gehört gemeinsam, was nur ins LF?","categories":[{"id":"common","title":"BF + LF"},{"id":"lf","title":"Nur LF"}],"items":[{"label":"Magnetfeld einer Spule qualitativ untersuchen","category":"common"},{"label":"Kraft auf stromdurchflossenen Leiter beschreiben","category":"common"},{"label":"Radius einer Elektronenkreisbahn berechnen","category":"lf"},{"label":"Hall-Effekt quantitativ auswerten","category":"lf"},{"label":"Lorentzkraft qualitativ deuten","category":"common"},{"label":"Massenspektrograph erklären und berechnen","category":"lf"}]}</script></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Abgabe">
+    <h1>Zusammenfassung und Abgabe</h1>
+    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst Magnetfelder mit Feldlinien beschreiben, die magnetische Flussdichte einordnen und die Wirkung der Lorentzkraft auf bewegte Ladungen erklären. In der Leistungsfach-Vertiefung nutzt du dieselben Ideen für Kreisbahnen, Schraubenbahnen, Hall-Effekt, Wien-Filter und Massenspektrograph.</p></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"mf_essay","title":"Reflexion","hint":"Antworte in 4-8 Sätzen. Nutze Lorentzkraft, Magnetfeld und Bewegung korrekt.","storagePrefix":"mf_","fields":[{"label":"Deine Erklärung","key":"exp","kind":"textarea","placeholder":"Warum kann ein Magnetfeld die Richtung einer bewegten Ladung ändern?"},{"label":"Vertiefungsfrage","key":"lf","kind":"textarea","placeholder":"Warum entsteht aus Kreisbewegung plus gleichförmiger Parallelbewegung eine Schraubenbahn?"}]}</script></div>
+    <div class="wb-section-break"></div>
+    <p class="wb-muted">Quelle: Dorn/Bader: Physik Kursstufe, Kapitel 2 „Das magnetische Feld“, sowie Bildungsplan BW Physik V3.0.</p>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+</body>
+</html>

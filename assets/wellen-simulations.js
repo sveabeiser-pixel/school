@@ -3935,6 +3935,366 @@ function initCoupledWaveSim(root) {
 
       updateVals();
     }
+function initLcCircuitSim(root) {
+      var getById = createScopedIdGetter(root);
+      const canvas = getById("lcCircuitCanvas");
+      const readout = getById("lcCircuitReadout");
+      const capEl = getById("lcCap");
+      const indEl = getById("lcInd");
+      const speedEl = getById("lcSpeed");
+      const capVal = getById("lcCapVal");
+      const indVal = getById("lcIndVal");
+      const speedVal = getById("lcSpeedVal");
+      const periodVal = getById("lcPeriodVal");
+      const freqVal = getById("lcFreqVal");
+      const pauseBtn = getById("lcPauseBtn");
+      const resetBtn = getById("lcResetBtn");
+      const showEEl = getById("lcShowE");
+      const showBEl = getById("lcShowB");
+      const showVoltageEl = getById("lcShowVoltage");
+      const showCurrentEl = getById("lcShowCurrent");
+      if (!canvas || !readout || !capEl || !indEl || !speedEl || !pauseBtn || !resetBtn) return;
+      if (canvas.dataset.wbLcCircuitInit === "1") return;
+      canvas.dataset.wbLcCircuitInit = "1";
+
+      const ctx = canvas.getContext("2d");
+      const W = canvas.width;
+      const H = canvas.height;
+      let phase = 0;
+      let paused = false;
+      let rafId = 0;
+      let lastTs = 0;
+      let electronOffset = 0;
+
+      function values() {
+        const Cuf = Number(capEl.value);
+        const Lmh = Number(indEl.value);
+        const C = Cuf * 1e-6;
+        const L = Lmh * 1e-3;
+        const T = 2 * Math.PI * Math.sqrt(L * C);
+        const f = 1 / T;
+        return { Cuf, Lmh, T, f };
+      }
+
+      function syncLabels() {
+        const v = values();
+        capVal.textContent = v.Cuf.toFixed(2);
+        indVal.textContent = v.Lmh.toFixed(1);
+        speedVal.textContent = Number(speedEl.value).toFixed(1);
+        periodVal.textContent = (v.T * 1000).toFixed(2);
+        freqVal.textContent = v.f.toFixed(1);
+      }
+
+      function pointOnPath(u) {
+        const capX = W * 0.26;
+        const topY = H * 0.22;
+        const bottomY = H * 0.76;
+        const rightX = W * 0.80;
+        const coilTop = H * 0.33;
+        const coilBottom = H * 0.65;
+        const seg = [
+          { a: [capX, topY], b: [rightX, topY], len: rightX - capX, type: "line" },
+          { a: [rightX, topY], b: [rightX, coilTop], len: coilTop - topY, type: "line" },
+          { a: [rightX, coilTop], b: [rightX, coilBottom], len: coilBottom - coilTop, type: "coil" },
+          { a: [rightX, coilBottom], b: [rightX, bottomY], len: bottomY - coilBottom, type: "line" },
+          { a: [rightX, bottomY], b: [capX, bottomY], len: rightX - capX, type: "line" }
+        ];
+        const total = seg.reduce((sum, s) => sum + s.len, 0);
+        let d = ((u % 1) + 1) % 1 * total;
+        for (let i = 0; i < seg.length; i++) {
+          const s = seg[i];
+          if (d <= s.len) {
+            const t = s.len === 0 ? 0 : d / s.len;
+            if (s.type === "coil") {
+              const turns = 4.5;
+              const amp = 22;
+              return {
+                x: s.a[0] + Math.sin(t * Math.PI * 2 * turns) * amp,
+                y: s.a[1] + (s.b[1] - s.a[1]) * t
+              };
+            }
+            return {
+              x: s.a[0] + (s.b[0] - s.a[0]) * t,
+              y: s.a[1] + (s.b[1] - s.a[1]) * t
+            };
+          }
+          d -= s.len;
+        }
+        return { x: capX, y: bottomY };
+      }
+
+      function drawWire() {
+        const capX = W * 0.26;
+        const topY = H * 0.22;
+        const bottomY = H * 0.76;
+        const plateTopY = H * 0.44;
+        const plateBottomY = H * 0.54;
+        const rightX = W * 0.80;
+        const coilTop = H * 0.33;
+        const coilBottom = H * 0.65;
+
+        ctx.strokeStyle = "#334155";
+        ctx.lineWidth = 5;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(capX, topY);
+        ctx.lineTo(rightX, topY);
+        ctx.lineTo(rightX, coilTop);
+        ctx.stroke();
+
+        ctx.beginPath();
+        for (let i = 0; i <= 160; i++) {
+          const t = i / 160;
+          const x = rightX + Math.sin(t * Math.PI * 9) * 22;
+          const y = coilTop + (coilBottom - coilTop) * t;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(rightX, coilBottom);
+        ctx.lineTo(rightX, bottomY);
+        ctx.lineTo(capX, bottomY);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(capX, topY);
+        ctx.lineTo(capX, plateTopY - 12);
+        ctx.moveTo(capX, plateBottomY + 12);
+        ctx.lineTo(capX, bottomY);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#0f172a";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(capX - 62, plateTopY);
+        ctx.lineTo(capX + 62, plateTopY);
+        ctx.moveTo(capX - 62, plateBottomY);
+        ctx.lineTo(capX + 62, plateBottomY);
+        ctx.stroke();
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 24px sans-serif";
+        ctx.fillText("C", capX - 100, H * 0.51);
+        ctx.fillText("L", rightX - 72, H * 0.51);
+      }
+
+      function drawElectricField(qNorm) {
+        const capX = W * 0.26;
+        const plateTopY = H * 0.44;
+        const plateBottomY = H * 0.54;
+        const strength = Math.abs(qNorm);
+        if (strength < 0.04) return;
+        const dir = qNorm >= 0 ? -1 : 1;
+        ctx.save();
+        ctx.globalAlpha = 0.22 + strength * 0.58;
+        ctx.strokeStyle = "#f59e0b";
+        ctx.fillStyle = "#f59e0b";
+        ctx.lineWidth = 2.5;
+        for (let i = 0; i < 5; i++) {
+          const x = capX - 44 + i * 22;
+          const y1 = dir > 0 ? plateTopY + 8 : plateBottomY - 8;
+          const y2 = dir > 0 ? plateBottomY - 8 : plateTopY + 8;
+          ctx.beginPath();
+          ctx.moveTo(x, y1);
+          ctx.lineTo(x, y2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x, y2);
+          ctx.lineTo(x - 5, y2 - dir * 9);
+          ctx.lineTo(x + 5, y2 - dir * 9);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("E-Feld", capX - 34, plateTopY - 42);
+        ctx.restore();
+      }
+
+      function drawMagneticField(currentNorm) {
+        const rightX = W * 0.80;
+        const centerY = H * 0.49;
+        const strength = Math.abs(currentNorm);
+        if (strength < 0.04) return;
+        ctx.save();
+        ctx.globalAlpha = 0.20 + strength * 0.48;
+        ctx.strokeStyle = currentNorm >= 0 ? "#14b8a6" : "#ef4444";
+        ctx.lineWidth = 2.2;
+        for (let i = 0; i < 4; i++) {
+          ctx.beginPath();
+          ctx.ellipse(rightX, centerY, 42 + i * 18, 34 + i * 12, 0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("B-Feld", rightX + 54, centerY - 78);
+        ctx.restore();
+      }
+
+      function drawSignalMeters(qNorm, currentNorm) {
+        const showVoltage = !showVoltageEl || showVoltageEl.checked;
+        const showCurrent = !showCurrentEl || showCurrentEl.checked;
+        if (!showVoltage && !showCurrent) return;
+        const x = W * 0.55;
+        let y = H * 0.84;
+        const w = W * 0.33;
+        const h = 16;
+        const rowGap = 40;
+        const drawMeter = (label, value, color) => {
+          ctx.fillStyle = "#334155";
+          ctx.font = "15px sans-serif";
+          ctx.fillText(label + " = " + value.toFixed(2), x, y - 12);
+          ctx.fillStyle = "#e2e8f0";
+          ctx.fillRect(x, y, w, h);
+          ctx.fillStyle = "#94a3b8";
+          ctx.fillRect(x + w / 2 - 1, y - 2, 2, h + 4);
+          ctx.fillStyle = color;
+          const mid = x + w / 2;
+          const bar = (w / 2) * Math.abs(value);
+          ctx.fillRect(value >= 0 ? mid : mid - bar, y, bar, h);
+          y += rowGap;
+        };
+        if (showVoltage) drawMeter("Spannung U_C/Umax", qNorm, "#f59e0b");
+        if (showCurrent) drawMeter("Strom I/Imax", currentNorm, "#14b8a6");
+      }
+
+      function drawArrow(currentNorm) {
+        const p = pointOnPath(electronOffset + 0.14);
+        const p2 = pointOnPath(electronOffset + 0.14 + Math.sign(currentNorm || 1) * 0.018);
+        const a = Math.atan2(p2.y - p.y, p2.x - p.x);
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(a);
+        ctx.fillStyle = currentNorm >= 0 ? "#16a34a" : "#dc2626";
+        ctx.beginPath();
+        ctx.moveTo(20, 0);
+        ctx.lineTo(-12, -10);
+        ctx.lineTo(-6, 0);
+        ctx.lineTo(-12, 10);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawElectrons(qNorm, currentNorm) {
+        const movingAlpha = 0.25 + 0.75 * Math.abs(currentNorm);
+        for (let i = 0; i < 38; i++) {
+          const p = pointOnPath(i / 38 + electronOffset);
+          ctx.globalAlpha = movingAlpha;
+          ctx.fillStyle = "#2563eb";
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 6.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(15,23,42,0.45)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+
+        const capX = W * 0.26;
+        const plateTopY = H * 0.44;
+        const plateBottomY = H * 0.54;
+        const topCount = Math.round(4 + 14 * Math.max(0, -qNorm));
+        const bottomCount = Math.round(4 + 14 * Math.max(0, qNorm));
+        const drawPile = (count, y, sign) => {
+          for (let i = 0; i < count; i++) {
+            const col = i % 7;
+            const row = Math.floor(i / 7);
+            const x = capX - 48 + col * 16;
+            const yy = y + sign * (14 + row * 15);
+            ctx.fillStyle = "#1d4ed8";
+            ctx.beginPath();
+            ctx.arc(x, yy, 5.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        };
+        drawPile(topCount, plateTopY, -1);
+        drawPile(bottomCount, plateBottomY, 1);
+      }
+
+      function drawEnergyBars(qNorm, currentNorm) {
+        const x = W * 0.08;
+        const y = H * 0.84;
+        const w = W * 0.34;
+        const h = 14;
+        const rowGap = 40;
+        const eElec = qNorm * qNorm;
+        const eMag = currentNorm * currentNorm;
+        ctx.fillStyle = "#e2e8f0";
+        ctx.fillRect(x, y, w, h);
+        ctx.fillRect(x, y + rowGap, w, h);
+        ctx.fillStyle = "#f59e0b";
+        ctx.fillRect(x, y, w * eElec, h);
+        ctx.fillStyle = "#14b8a6";
+        ctx.fillRect(x, y + rowGap, w * eMag, h);
+        ctx.fillStyle = "#334155";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("E-Feld im Kondensator", x, y - 12);
+        ctx.fillText("B-Feld in der Spule", x, y + rowGap - 12);
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.05, (ts - lastTs) / 1000);
+        lastTs = ts;
+        const v = values();
+        const speed = Number(speedEl.value);
+        if (!paused) {
+          phase += dt * speed * 2 * Math.PI / Math.max(v.T * 900, 0.1);
+          const currentNorm = -Math.sin(phase);
+          electronOffset += currentNorm * dt * speed * 0.18;
+        }
+
+        const qNorm = Math.cos(phase);
+        const currentNorm = -Math.sin(phase);
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "rgba(248,250,252,0.95)";
+        ctx.fillRect(0, 0, W, H);
+        if (!showBEl || showBEl.checked) drawMagneticField(currentNorm);
+        drawWire();
+        if (!showEEl || showEEl.checked) drawElectricField(qNorm);
+        drawElectrons(qNorm, currentNorm);
+        if (Math.abs(currentNorm) > 0.08) drawArrow(currentNorm);
+        drawEnergyBars(qNorm, currentNorm);
+        drawSignalMeters(qNorm, currentNorm);
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("Ungedämpfter LC-Schwingkreis", W * 0.08, 38);
+        ctx.font = "16px sans-serif";
+        ctx.fillText("Blau: Modell-Elektronen, grün/rot: momentane Stromrichtung", W * 0.08, 62);
+
+        const state = Math.abs(qNorm) > 0.82
+          ? "Kondensator fast maximal geladen: Die Elektronen sammeln sich an einer Platte, der Strom ist klein."
+          : (Math.abs(currentNorm) > 0.82
+            ? "Strom fast maximal: Die Elektronen laufen schnell durch Spule und Leitungen, das Magnetfeld ist stark."
+            : "Energie wandert gerade zwischen elektrischem Feld und magnetischem Feld.");
+        readout.textContent =
+          "T = " + (v.T * 1000).toFixed(2) + " ms, f = " + v.f.toFixed(1) + " Hz\n" +
+          "Ladung Q/Qmax = " + qNorm.toFixed(2) + ", Strom I/Imax = " + currentNorm.toFixed(2) + "\n" +
+          state;
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      capEl.addEventListener("input", syncLabels);
+      indEl.addEventListener("input", syncLabels);
+      speedEl.addEventListener("input", syncLabels);
+      pauseBtn.addEventListener("click", () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? "Weiter" : "Pause";
+      });
+      resetBtn.addEventListener("click", () => {
+        phase = 0;
+        electronOffset = 0;
+        lastTs = 0;
+      });
+      syncLabels();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
   register('transversal', initTransversalSim);
   register('longitudinal', initLongitudinalSim);
   register('huygens-diffraction', initHuygensDiffractionSim);
@@ -3954,6 +4314,7 @@ function initCoupledWaveSim(root) {
   register('fixed-reflection', initFixedReflectionSim);
   register('leifi-wave', initLeifiWaveSim);
   register('coupled-wave', initCoupledWaveSim);
+  register('lc-circuit', initLcCircuitSim);
 
   window.WellenSim = { mount: mount, mountAll: mountAll, destroy: destroy };
 })(window, document);

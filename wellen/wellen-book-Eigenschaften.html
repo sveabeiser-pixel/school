@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wellen-Eigenschaften & Elektromagnetik</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="../assets/wellen-simulations.css" />
   <script>
     window.MathJax = {
       tex: {
@@ -245,6 +246,58 @@
           Frequenz $f$ und die Periodendauer $T$ direkt folgendes ergibt:</p>
         <p style="text-align:center; font-size:1.2em;">$f = \frac{1}{2 \pi} \cdot \frac{1}{\sqrt{L \cdot C}} \quad
           \text{bzw.} \quad T = 2\pi\sqrt{L \cdot C}$</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="lc-circuit">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Simulation: LC-Schwingkreis</h2>
+            <p>Verändere Kapazität und Induktivität. Beobachte, wie die Elektronen erst an einer Kondensatorplatte
+              gesammelt sind, dann durch Leitungen und Spule laufen und schließlich an der anderen Platte ankommen.</p>
+
+            <label for="lcCap">Kapazität C</label>
+            <input id="lcCap" data-role="capacitance" type="range" min="0.10" max="5.00" value="1.00" step="0.05" />
+            <div class="sw-sim-mono">C = <span id="lcCapVal" data-role="capacitance-value">1.00</span> µF</div>
+
+            <label for="lcInd">Induktivität L</label>
+            <input id="lcInd" data-role="inductance" type="range" min="0.5" max="20.0" value="5.0" step="0.5" />
+            <div class="sw-sim-mono">L = <span id="lcIndVal" data-role="inductance-value">5.0</span> mH</div>
+
+            <label for="lcSpeed">Animationsgeschwindigkeit</label>
+            <input id="lcSpeed" data-role="speed" type="range" min="0.05" max="1.2" value="0.35" step="0.05" />
+            <div class="sw-sim-mono">v = <span id="lcSpeedVal" data-role="speed-value">0.35</span></div>
+
+            <div class="sw-sim-mono">
+              T = <span id="lcPeriodVal" data-role="period-value">0.00</span> ms,
+              f = <span id="lcFreqVal" data-role="freq-value">0.0</span> Hz
+            </div>
+
+            <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+              <label style="font-weight:normal; margin:0;"><input id="lcShowE" type="checkbox" checked /> E-Feld anzeigen</label>
+              <label style="font-weight:normal; margin:0;"><input id="lcShowB" type="checkbox" checked /> B-Feld anzeigen</label>
+              <label style="font-weight:normal; margin:0;"><input id="lcShowVoltage" type="checkbox" checked /> Spannung am Kondensator anzeigen</label>
+              <label style="font-weight:normal; margin:0;"><input id="lcShowCurrent" type="checkbox" checked /> Strom anzeigen</label>
+            </div>
+
+            <div class="wb-row" style="margin-top:10px">
+              <button class="wb-btn primary" type="button" id="lcPauseBtn" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" id="lcResetBtn" data-role="reset">Reset</button>
+            </div>
+
+            <div class="wb-soft-callout" style="margin-top:14px">
+              <strong>Stopp & check</strong>
+              <p>Wenn du C oder L größer machst, wird die Schwingung langsamer: In $T=2\pi\sqrt{LC}$ steht das Produkt
+                $L\cdot C$ unter der Wurzel.</p>
+            </div>
+          </div>
+          <div>
+            <canvas id="lcCircuitCanvas" data-role="canvas" width="980" height="560"
+              aria-label="Simulation eines ungedämpften elektromagnetischen LC-Schwingkreises"></canvas>
+            <div class="sw-sim-mono" id="lcCircuitReadout" data-role="readout"></div>
+          </div>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -554,10 +607,12 @@
 
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
+  <script src="../assets/wellen-simulations.js"></script>
   <script>
     SBBook.autoMount();
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    WellenSim.mountAll();
   </script>
 </body>
 
