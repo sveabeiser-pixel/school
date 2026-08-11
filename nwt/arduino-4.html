@@ -43,6 +43,29 @@
       background: rgba(0,0,0,.03);
       color: var(--wb-text, #111827);
     }
+    .code-card{
+      background:#0f172a;
+      color:#e8f0ff;
+      border-radius:10px;
+      padding:12px 14px;
+      overflow-x:auto;
+      margin:10px 0;
+    }
+    .trace-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:10px 0;
+      font-size:14px;
+    }
+    .trace-table th,.trace-table td{
+      border:1px solid var(--wb-line, #e5e7eb);
+      padding:8px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .trace-table th{background:rgba(30,102,200,.08)}
+    .source-list{margin:0; padding-left:20px}
+    .source-list li + li{margin-top:6px}
 
     .pudding-flow{
       border: 1px solid var(--wb-line, #e5e7eb);
@@ -309,6 +332,38 @@
 
       <div class="wb-section-break"></div>
 
+      <table class="trace-table">
+        <thead>
+          <tr><th>Tasterzustand</th><th>Elektrische Verbindung</th><th><code>digitalRead(BTN)</code></th><th>Im Code bedeutet das</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>nicht gedrückt</td><td>Pin wird intern auf HIGH gezogen</td><td><code>HIGH</code></td><td>Bedingung <code>digitalRead(BTN) == LOW</code> ist falsch</td></tr>
+          <tr><td>gedrückt</td><td>Pin ist mit GND verbunden</td><td><code>LOW</code></td><td>Bedingung <code>digitalRead(BTN) == LOW</code> ist wahr</td></tr>
+        </tbody>
+      </table>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino4_pullup_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Nutze die Tabelle.",
+            "statement":"Bei INPUT_PULLUP bedeutet gedrückt meistens LOW.",
+            "answer": true,
+            "explain":"Richtig. Der Taster verbindet den Eingang beim Drücken mit GND. Deshalb liest der Arduino LOW."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Ein Taster ist beim Arduino meist ein Eingangssignal, kein direkter LED-Schalter. Bei <code>INPUT_PULLUP</code> ist gedrückt normalerweise <code>LOW</code>, und genau diese Logik muss dein <code>if</code> prüfen.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="wb-soft-callout">
         <strong>Beispiel: Taster schaltet LED</strong>
         <div>
@@ -540,6 +595,50 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
+      <table class="trace-table">
+        <thead>
+          <tr><th>Prüfung</th><th>Wert von <code>x</code> vor dem Block</th><th>Ausgabe</th><th>Wert nach <code>x = x + 5</code></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>0 &lt; 20</code> wahr</td><td>0</td><td>0</td><td>5</td></tr>
+          <tr><td><code>5 &lt; 20</code> wahr</td><td>5</td><td>5</td><td>10</td></tr>
+          <tr><td><code>10 &lt; 20</code> wahr</td><td>10</td><td>10</td><td>15</td></tr>
+          <tr><td><code>15 &lt; 20</code> wahr</td><td>15</td><td>15</td><td>20</td></tr>
+          <tr><td><code>20 &lt; 20</code> falsch</td><td>20</td><td>keine Ausgabe mehr</td><td>Schleife endet</td></tr>
+        </tbody>
+      </table>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino4_while_cloze",
+            "title":"Sicherung: while",
+            "hint":"Setze die passenden Begriffe ein.",
+            "bank":["wahr","falsch","Bedingung","verändert"],
+            "segments":[
+              {"t":"text","v":"Eine while-Schleife läuft, solange ihre "},
+              {"t":"gap","a":"Bedingung"},
+              {"t":"text","v":" "},
+              {"t":"gap","a":"wahr"},
+              {"t":"text","v":" ist. Damit sie enden kann, muss sich etwas im Ablauf "},
+              {"t":"gap","a":"verändert"},
+              {"t":"text","v":", sodass die Bedingung irgendwann "},
+              {"t":"gap","a":"falsch"},
+              {"t":"text","v":" wird."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p><code>while</code> bedeutet „solange“. Die Schleife läuft nur dann kontrolliert, wenn sich die geprüfte Bedingung irgendwann ändern kann.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="wb-soft-callout">
         <strong>Beispiel 2: Warten auf einen Tastendruck</strong>
         <div>
@@ -693,6 +792,18 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
+      <div class="wb-callout">
+        <strong>Sollte man Flussdiagramme zuerst bringen?</strong>
+        <p>
+          Nicht als erstes großes Theoriepaket. Sinnvoller ist: zuerst einen sehr einfachen bekannten Ablauf
+          wie LED an - warten - LED aus, dann den gleichen Ablauf als Mini-Flussdiagramm. Danach nutzt du
+          Flussdiagramme genau dort, wo sie helfen: bei <code>if / else</code> für Entscheidungen und bei
+          <code>while</code> oder <code>for</code> für Wiederholungen.
+        </p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="grid2">
         <div>
           <div class="pdfpage" style="max-width:420px; margin:0 auto;">
@@ -772,6 +883,28 @@ void loop() {
           </ul>
         </div>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="arduino4_flow_symbols" data-p2-title="Verbinde Symbol und Bedeutung" data-p2-hint="Diese vier Bausteine reichen für die meisten Arduino-Abläufe am Anfang.">
+        <div data-side="L" data-pair="1">Start/Ende</div>
+        <div data-side="R" data-pair="1">Beginn oder Abschluss eines Ablaufs</div>
+        <div data-side="L" data-pair="2">Rechteck</div>
+        <div data-side="R" data-pair="2">konkreter Prozessschritt, zum Beispiel LED einschalten</div>
+        <div data-side="L" data-pair="3">Raute</div>
+        <div data-side="R" data-pair="3">Entscheidung mit Ja-/Nein-Weg</div>
+        <div data-side="L" data-pair="4">Pfeil</div>
+        <div data-side="R" data-pair="4">zeigt die Reihenfolge und Leserichtung</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Flussdiagramme helfen besonders dann, wenn ein Programm mehr als nur eine feste Reihenfolge hat. Eine Raute wird später zu <code>if / else</code>, ein Rücksprung wird zu einer Schleife.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
@@ -1632,6 +1765,16 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           </details>
         </div>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Quellen & Weiterforschen</h3>
+      <ul class="source-list">
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalread/" target="_blank" rel="noopener">Arduino Reference: digitalRead()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/while/" target="_blank" rel="noopener">Arduino Reference: while</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
+        <li><a href="https://app.diagrams.net/?src=about" target="_blank" rel="noopener">diagrams.net für Flussdiagramme</a></li>
+      </ul>
     </section>
   </div>
 

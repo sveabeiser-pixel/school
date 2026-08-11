@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Smart Chicken Coop - Sensoren</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <style>
+    .sensor-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+    .sensor-table th,.sensor-table td{border:1px solid var(--wb-line,#e5e7eb);padding:7px;text-align:left;vertical-align:top}
+    .sensor-table th{background:rgba(30,102,200,.08)}
+    .code-note{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:rgba(0,0,0,.04);padding:10px;border-radius:8px}
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Smart Chicken Coop",
+      "sectionTitle":"3. Temperatur und Luftfeuchtigkeit",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"alert",
+      "webhookEmail":"",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavGroupTitle":"Kapitel 3",
+      "themeDefault":"default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Messprinzip">
+      <h1>3. Temperatur und relative Luftfeuchtigkeit</h1>
+      <p class="wb-muted">Der KY-015 liefert digitale Messwerte - aber kein vollständiges Stallklima.</p>
+
+      <h2>Was wird gemessen?</h2>
+      <p>Temperatur wird über ein temperaturabhängiges Sensorelement erfasst. Die relative Luftfeuchtigkeit beschreibt, wie stark die Luft im Verhältnis zur maximal möglichen Wasserdampfmenge bei dieser Temperatur mit Wasserdampf beladen ist. Sie wird in Prozent relativer Feuchte (%RH) angegeben.</p>
+      <div class="wb-soft-callout"><strong>Wichtig für die Interpretation</strong><p>Warme Luft kann mehr Wasserdampf aufnehmen als kalte Luft. Ein gleichbleibender Wasserdampfgehalt kann deshalb bei Temperaturänderung zu einer anderen relativen Feuchte führen.</p></div>
+      <p>Sensorwerte hängen von Messbereich, Genauigkeit, Reaktionszeit, Einbauort und Versorgung ab. Ein Lernmodul ist nicht automatisch ein kalibriertes Stallmessgerät.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"sensoren_begriffe",
+          "title":"Sicherung: Fachbegriffe",
+          "hint":"Setze die passenden Begriffe ein.",
+          "bank":["Temperatur","relative Luftfeuchtigkeit","Messbereich","digital"],
+          "segments":[
+            {"t":"text","v":"Der KY-015 gibt "},
+            {"t":"gap","a":"digital"},
+            {"t":"text","v":" codierte Werte für "},
+            {"t":"gap","a":"Temperatur"},
+            {"t":"text","v":" und "},
+            {"t":"gap","a":"relative Luftfeuchtigkeit"},
+            {"t":"text","v":" aus. Für die Bewertung müssen unter anderem der "},
+            {"t":"gap","a":"Messbereich"},
+            {"t":"text","v":" und die Genauigkeit bekannt sein."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="KY-015 anschließen">
+      <h1>KY-015 / DHT11 an den ESP32 anschließen</h1>
+      <p>Beim Joy-it X40 verwendest du den KY-015. Das ist ein fertiges DHT11-Modul mit drei Anschlüssen. Das ist einfacher als ein nackter 4-Pin-DHT11, weil die Zusatzbeschaltung auf dem Modul bereits vorbereitet ist.</p>
+
+      <h2>Verdrahtung am Joy-it NodeMCU ESP32</h2>
+      <table class="sensor-table">
+        <thead><tr><th>KY-015 / DHT11-Modul</th><th>ESP32</th><th>Begründung</th></tr></thead>
+        <tbody>
+          <tr><td>S / Signal</td><td>GPIO 4</td><td>Datenleitung; im Programm steht später dieselbe Pin-Nummer.</td></tr>
+          <tr><td>+ / VCC</td><td>3V3</td><td>Das Modul wird mit 3,3 V betrieben, damit auch das Datensignal ESP32-tauglich bleibt.</td></tr>
+          <tr><td>- / GND</td><td>GND</td><td>Gemeinsame Masse ist nötig, damit Signalpegel eindeutig sind.</td></tr>
+        </tbody>
+      </table>
+      <p>GPIO 4 ist nicht zwingend. Du kannst viele andere geeignete GPIOs verwenden. Entscheidend ist: Der Pin im Aufbau und die Pin-Nummer im Programm müssen übereinstimmen.</p>
+      <div class="wb-callout"><strong>Stopp vor dem Upload:</strong><p>Betreibe das Modul am ESP32 mit 3,3 V, nicht mit 5 V. Ein 5-V-Datensignal kann einen 3,3-V-GPIO beschädigen oder zumindest unzuverlässig machen.</p></div>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-id="dht11_verdrahtung_p2" data-p2-title="Zuordnung: KY-015 richtig anschließen" data-p2-hint="Verbinde Anschluss und ESP32-Pin.">
+        <div class="p2-hint">Verbinde passende Paare.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">KY-015</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">S / Signal</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">+ / VCC</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">- / GND</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">ESP32</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">GPIO 4</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">3V3</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">GND</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Bibliothek und Testprogramm">
+      <h1>Bibliothek installieren und ersten Messwert lesen</h1>
+      <p>Die DHT-Sensoren haben ein eigenes digitales Zeitprotokoll. Du schreibst dieses Protokoll nicht selbst, sondern nutzt eine Bibliothek.</p>
+
+      <h2>Bibliothek in der Arduino IDE</h2>
+      <ol>
+        <li>Öffne <strong>Sketch → Bibliothek einbinden → Bibliotheken verwalten</strong>.</li>
+        <li>Suche nach <strong>DHT sensor library</strong>.</li>
+        <li>Installiere <strong>DHT sensor library by Adafruit</strong>.</li>
+        <li>Wenn die IDE nach <strong>Adafruit Unified Sensor</strong> fragt, installiere diese Bibliothek ebenfalls.</li>
+      </ol>
+
+      <h2>Einfachstes Testprogramm</h2>
+      <pre><code>#include &lt;DHT.h&gt;
+
+#define DHTPIN 4
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+}
+
+void loop() {
+  float temperatur = dht.readTemperature();
+  float luftfeuchtigkeit = dht.readHumidity();
+
+  Serial.print("Temperatur: ");
+  Serial.print(temperatur);
+  Serial.println(" °C");
+
+  Serial.print("Luftfeuchtigkeit: ");
+  Serial.print(luftfeuchtigkeit);
+  Serial.println(" %");
+
+  Serial.println("----------------");
+
+  delay(2000);
+}</code></pre>
+      <p>Öffne danach den seriellen Monitor und stelle ihn auf <strong>115200 Baud</strong>. Du solltest ungefähr solche Ausgaben sehen:</p>
+      <p class="code-note">Temperatur: 21.0 °C<br>Luftfeuchtigkeit: 53.0 %<br>----------------</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dht11_start_order",
+          "title":"Reihenfolge: Vom Sensor zum Messwert",
+          "hint":"Sortiere die Schritte, bis du Werte im seriellen Monitor siehst.",
+          "items":[
+            "KY-015 mit S an GPIO 4, + an 3V3 und - an GND anschließen",
+            "DHT sensor library by Adafruit installieren",
+            "Sketch mit DHTPIN 4 und DHTTYPE DHT11 hochladen",
+            "Seriellen Monitor öffnen",
+            "Baudrate auf 115200 stellen und Messwerte prüfen"
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Code verstehen">
+      <h1>Was passiert im Programm?</h1>
+      <p>Der Sketch besteht aus wenigen wichtigen Bausteinen. Wenn du diese Bausteine verstehst, kannst du später selbst entscheiden, wann der Stall zu warm oder zu feucht ist.</p>
+
+      <h2>Die wichtigsten Zeilen</h2>
+      <table class="sensor-table">
+        <thead><tr><th>Codezeile</th><th>Bedeutung</th></tr></thead>
+        <tbody>
+          <tr><td><code>#include &lt;DHT.h&gt;</code></td><td>Bindet die DHT-Bibliothek ein.</td></tr>
+          <tr><td><code>#define DHTPIN 4</code></td><td>Legt fest, dass die Datenleitung an GPIO 4 hängt.</td></tr>
+          <tr><td><code>#define DHTTYPE DHT11</code></td><td>Legt den Sensortyp fest.</td></tr>
+          <tr><td><code>DHT dht(DHTPIN, DHTTYPE);</code></td><td>Erzeugt ein Objekt namens <code>dht</code>, das Sensorpin und Sensortyp kennt.</td></tr>
+          <tr><td><code>dht.begin();</code></td><td>Initialisiert den Sensor in <code>setup()</code>.</td></tr>
+          <tr><td><code>dht.readTemperature();</code></td><td>Liest die Temperatur in Grad Celsius.</td></tr>
+          <tr><td><code>dht.readHumidity();</code></td><td>Liest die relative Luftfeuchtigkeit in Prozent.</td></tr>
+        </tbody>
+      </table>
+      <p><code>float</code> bedeutet, dass die Variable eine Gleitkommazahl speichern kann, zum Beispiel <code>21.0</code> oder <code>53.5</code>.</p>
+
+      <h2>Aus Messwerten wird Steuerung</h2>
+      <pre><code>if (temperatur &gt; 30) {
+  Serial.println("Zu warm!");
+}</code></pre>
+      <p>Damit passiert der entscheidende Schritt: Der ESP32 liest nicht nur Werte, sondern bewertet sie. Genau daraus entstehen später Regeln für Warnungen, Lüftung oder Anzeige auf der Webseite.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dht11_code_cloze",
+          "title":"Sicherung: Codebausteine",
+          "hint":"Setze die passenden Befehle ein.",
+          "bank":["DHTPIN","DHTTYPE","dht.begin()","readTemperature()","readHumidity()"],
+          "segments":[
+            {"t":"text","v":"Mit "},
+            {"t":"gap","a":"DHTPIN"},
+            {"t":"text","v":" legst du den Signalpin fest. Mit "},
+            {"t":"gap","a":"DHTTYPE"},
+            {"t":"text","v":" wählst du den Sensortyp. In setup() startet "},
+            {"t":"gap","a":"dht.begin()"},
+            {"t":"text","v":" den Sensor. Die Temperatur liest du mit "},
+            {"t":"gap","a":"readTemperature()"},
+            {"t":"text","v":", die Luftfeuchtigkeit mit "},
+            {"t":"gap","a":"readHumidity()"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Fehlerprüfung">
+      <h1>Sinnvolle Fehlerprüfung</h1>
+      <p>Ein Sensor liefert nicht immer einen gültigen Wert. Kabel können locker sein, der Pin kann falsch sein oder die Abfrage kann fehlschlagen. Für ein Projektprogramm prüfst du deshalb, ob die Werte gültig sind.</p>
+
+      <pre><code>#include &lt;DHT.h&gt;
+
+#define DHTPIN 4
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+}
+
+void loop() {
+  float temperatur = dht.readTemperature();
+  float luftfeuchtigkeit = dht.readHumidity();
+
+  if (isnan(temperatur) || isnan(luftfeuchtigkeit)) {
+    Serial.println("Fehler beim Auslesen des DHT11!");
+    delay(2000);
+    return;
+  }
+
+  Serial.print("Temperatur: ");
+  Serial.print(temperatur);
+  Serial.println(" °C");
+
+  Serial.print("Luftfeuchtigkeit: ");
+  Serial.print(luftfeuchtigkeit);
+  Serial.println(" %");
+
+  delay(2000);
+}</code></pre>
+      <p><code>isnan(...)</code> prüft, ob ein Messwert keine gültige Zahl ist. Wenn die Fehlermeldung erscheint, prüfst du zuerst 3V3, GND, Signalpin und ob im Code wirklich GPIO 4 steht.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dht11_verify_fehler",
+          "title":"Wahr oder falsch?",
+          "hint":"Prüfe die Aussage mit Blick auf Fehlersuche.",
+          "statement":"Wenn der DHT11 keine gültigen Werte liefert, sollte man zuerst die Verdrahtung, die Versorgung und die Pin-Nummer im Code prüfen.",
+          "answer":true,
+          "explain":"Genau diese drei Punkte sind die häufigsten Fehlerquellen: 3V3/GND vertauscht, Signalpin falsch gesteckt oder DHTPIN im Sketch passt nicht zum Aufbau."
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Messprotokoll und Aufgabe">
+      <h1>Messreihe, Plausibilität und Unterrichtsaufgabe</h1>
+      <p>Nehmt mehrere Messwerte in gleichen Zeitabständen auf. Notiert Uhrzeit, Temperatur, %RH, Einbauort und besondere Ereignisse wie geöffnete Fenster oder Berührung des Sensors.</p>
+
+      <h2>Typische Fehler</h2>
+      <ul>
+        <li>Der Sensor wird zu schnell hintereinander abgefragt.</li>
+        <li>Der Datenpin ist falsch oder die Versorgung passt nicht zur Modulvariante.</li>
+        <li>Ein einzelner Wert wird als sichere Wahrheit behandelt.</li>
+        <li>Der Sensor liegt direkt an einer Wärmequelle oder im Luftstrom.</li>
+      </ul>
+
+      <h2>Aufgabe im Unterricht</h2>
+      <p>Starte zunächst nur mit der Temperaturausgabe. Wenn das funktioniert, ergänze selbstständig die Luftfeuchtigkeit mit <code>readHumidity()</code>. Dadurch wird die Aufgabe zu einer kleinen Programmierleistung statt reinem Abschreiben.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"sensoren_mcq",
+          "title":"Plausibilitätscheck",
+          "hint":"Wähle die beste Begründung.",
+          "questions":[
+            {
+              "text":"Warum sind mehrere Messungen sinnvoll?",
+              "choices":[
+                {"id":"a","label":"Sie machen jeden Sensor automatisch exakt."},
+                {"id":"b","label":"Sie zeigen Schwankungen und helfen, Ausreißer zu erkennen."},
+                {"id":"c","label":"Sie ersetzen das Datenblatt."}
+              ],
+              "correct":["b"],
+              "explain":"Mehrere Messungen machen zufällige Schwankungen sichtbar. Sie ersetzen aber weder Datenblatt noch Kalibrierung."
+            }
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dht11_reflexion",
+          "title":"Klausurtraining: Vom Messwert zur Entscheidung",
+          "hint":"Antworte in 5-7 Sätzen. Nutze mindestens die Begriffe GPIO, Temperatur, Luftfeuchtigkeit und Fehlerprüfung.",
+          "storagePrefix":"smart_coop_dht11_",
+          "fields":[
+            {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Der DHT11 ist an GPIO 4 angeschlossen ..."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst den KY-015/DHT11 am ESP32 anschließen, die passende Arduino-Bibliothek installieren, Temperatur und Luftfeuchtigkeit auslesen, ungültige Messwerte erkennen und aus Messwerten einfache Entscheidungen ableiten.</p></div>
+
+      <h2>Quellen &amp; Weiterforschen</h2>
+      <ul>
+        <li><a href="https://github.com/adafruit/DHT-sensor-library" target="_blank" rel="noopener">Adafruit: DHT sensor library</a></li>
+        <li><a href="https://learn.adafruit.com/dht/using-a-dhtxx-sensor-with-arduino" target="_blank" rel="noopener">Adafruit Learning System: Using a DHTxx Sensor with Arduino</a></li>
+        <li><a href="https://github.com/adafruit/Adafruit_Sensor" target="_blank" rel="noopener">Adafruit: Unified Sensor Driver</a></li>
+      </ul>
+    </section>
+  </div>
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>

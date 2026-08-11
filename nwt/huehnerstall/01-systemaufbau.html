@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop – Systemaufbau</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">{"bookTitle":"Smart Chicken Coop","sectionTitle":"1. Systemaufbau, Sicherheit und Datenschutz","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Kapitel 1","themeDefault":"default"}</script>
+
+    <section data-wb-page="1" data-wb-page-title="Einstieg">
+      <h1>1. Vom Hühnerstall zum technischen System</h1>
+      <p class="wb-muted">Einstieg: Ein Messwert auf einer Webseite entsteht nicht an einem einzigen Gerät.</p>
+      <h2>Die Situation</h2>
+      <p>Die Schule möchte beobachten, ob sich Temperatur, Luftfeuchtigkeit und Helligkeit im Stall verändern. Gleichzeitig soll eine Kamera Bilder liefern. Das System muss also messen, rechnen, übertragen und anzeigen.</p>
+      <div class="wb-soft-callout">
+        <strong>Systemidee</strong>
+        <p><code>Messgröße → Sensor → Rechner → Netzwerk → Darstellung</code></p>
+        <p>Jeder Pfeil beschreibt eine Schnittstelle. An jeder Schnittstelle können falsche Werte, Verbindungsprobleme oder Datenschutzfragen entstehen.</p>
+      </div>
+      <h2>Zwei Rechnerklassen</h2>
+      <div class="grid2">
+        <div class="wb-soft-callout"><strong>ESP32</strong><p>Ein Mikrocontroller für wiederholte, energiearme Aufgaben: Sensorwerte lesen, Signale verarbeiten und kleine Netzwerkdienste anbieten.</p></div>
+        <div class="wb-soft-callout"><strong>Raspberry Pi</strong><p>Ein Linux-Computer mit Betriebssystem: Kamera steuern, Dateien verwalten, Video verarbeiten und Dienste automatisch starten.</p></div>
+      </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq"><script type="application/json" class="wb-config">{"id":"system_architecture_mcq","title":"Check: Welches Gerät passt?","hint":"Begründe deine Wahl mit der typischen Aufgabe des Geräts.","questions":[{"text":"Warum ist der ESP32 für die zyklische Sensorabfrage geeignet?","choices":[{"id":"a","label":"Er führt ein vollständiges Desktop-Betriebssystem mit vielen Programmen aus."},{"id":"b","label":"Er ist für direkte Ein-/Ausgaben und wiederholte Steuerungsaufgaben ausgelegt."},{"id":"c","label":"Er ersetzt automatisch einen Streamingdienst im Internet."}],"correct":["b"],"explain":"Der ESP32 ist ein Mikrocontroller. Seine Stärke liegt in direkter Hardwareanbindung, geringer Leistungsaufnahme und wiederholten Abläufen."}]}</script></div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Sicherheit">
+      <h1>Sicherheit vor Funktion</h1>
+      <h2>Technische Sicherheitsregeln</h2>
+      <ul>
+        <li>Du arbeitest nur mit geprüfter Kleinspannung und niemals mit Netzspannung.</li>
+        <li>Ein GPIO des ESP32 darf nicht mit einer unpassenden höheren Signalspannung belastet werden.</li>
+        <li>Vor dem Anschließen prüfst du Pinbelegung, Versorgung und Datenblatt des konkreten Moduls.</li>
+        <li>Eine Kamera wird zunächst lokal getestet und nicht direkt aus dem Internet erreichbar gemacht.</li>
+      </ul>
+      <h2>Datenschutz als Systementscheidung</h2>
+      <p>Datenschutz beginnt bei der Montage: Die Kamera wird so ausgerichtet, dass möglichst nur der Hühnerbereich sichtbar ist. Audio bleibt deaktiviert. Außerdem werden Zugriff, Speicherort und Löschfrist vor der Installation geklärt.</p>
+      <div class="wb-callout"><strong>Merke:</strong><p>Technische Sicherheit schützt Hardware und Menschen. Datenschutz schützt Menschen vor unnötiger Erfassung und Veröffentlichung. Beides muss in der Planung berücksichtigt werden.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize"><script type="application/json" class="wb-config">{"id":"system_safety_categories","title":"Sortiere die Maßnahmen","hint":"Ordne jede Maßnahme dem passenden Bereich zu.","categories":[{"id":"hardware","title":"Hardware-/Betriebssicherheit"},{"id":"privacy","title":"Datenschutz"},{"id":"both","title":"Beides berücksichtigen"}],"items":[{"label":"Keine Netzspannung im Schüleraufbau","category":"hardware"},{"label":"Kamera auf den Hühnerbereich ausrichten","category":"privacy"},{"label":"Zugriffsrechte vor dem Betrieb festlegen","category":"privacy"},{"label":"Konkrete Versorgungsspannung des Sensors prüfen","category":"both"}]}</script></div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Datenweg">
+      <h1>Der Datenweg</h1>
+      <p>Das folgende Modell trennt die reale Messung von der technischen Übertragung:</p>
+      <div class="wb-soft-callout">
+        <p><strong>KY-015 / KY-018</strong> → elektrische Signale → <strong>ESP32</strong> → WLAN → <strong>lokale Webseite</strong></p>
+        <p><strong>Kamera</strong> → Bilddaten → <strong>Raspberry Pi</strong> → Videodaten → <strong>freigegebene Darstellung</strong></p>
+      </div>
+      <h2>Gemeinsame Schnittstelle</h2>
+      <p>Die Gruppen müssen später nicht denselben Rechner verwenden. Sie müssen aber festlegen, welche Informationen übergeben werden: Messwert, Einheit, Zeitstempel, Status und mögliche Fehlermeldung.</p>
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-title="Gerät und typische Aufgabe" data-p2-hint="Ordne die technischen Rollen zu.">
+        <div class="p2-hint">Ziehe ein linkes Teil auf die passende Beschreibung.</div>
+        <div class="p2-banks"><div><div class="p2-col-title">Gerät</div><div class="p2-bank" data-left-bank>
+          <div class="p2-piece p2-left" data-side="L" data-pair="1">ESP32</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="2">Raspberry Pi</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="3">Webseite</div>
+        </div></div><div><div class="p2-col-title">Aufgabe</div><div class="p2-bank" data-right-bank>
+          <div class="p2-piece p2-right" data-side="R" data-pair="1">Sensorwerte lesen und kleinen Dienst anbieten</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="2">Kamera, Linux-Prozesse und Videodateien verwalten</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="3">Informationen für Menschen darstellen</div>
+        </div></div></div>
+        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Transfer">
+      <h1>Transfer und Sicherung</h1>
+      <h2>Was passiert, wenn …?</h2>
+      <p>Die Kamera funktioniert lokal, aber die Homepage zeigt kein Bild. Begründe, an welcher Stelle der Kette du zuerst prüfst und warum.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay"><script type="application/json" class="wb-config">{"id":"system_transfer_essay","title":"Begründe deinen Diagnoseweg","hint":"Antworte in 4–8 Sätzen. Verwende mindestens die Begriffe lokaler Test, Netzwerk, Zugriff und Datenweg.","fields":[{"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Deine Begründung","key":"answer","kind":"textarea","placeholder":"Ich prüfe zuerst ..."}]}</script></div>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Das Smart-Chicken-Coop-System besteht aus mehreren Teilsystemen. Eine gute technische Lösung beschreibt den Datenweg, prüft die Sicherheit vor dem Betrieb und minimiert unnötige Bild- und Netzwerkdaten.</p></div>
+      <h2>Quellen &amp; Weiterforschen</h2>
+      <ul><li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/" target="_blank" rel="noopener">Espressif: Arduino-ESP32-Dokumentation</a></li><li><a href="https://www.raspberrypi.com/documentation/computers/camera_software.html" target="_blank" rel="noopener">Raspberry Pi: Camera software</a></li><li><a href="https://www.bfdi.bund.de/DE/Buerger/Inhalte/Allgemein/Datenschutz/Videoueberwachung.html" target="_blank" rel="noopener">BfDI: Videoüberwachung und Datenschutz</a></li></ul>
+    </section>
+  </div>
+  <script src="../../assets/wb-webhook-loader.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>

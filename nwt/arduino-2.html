@@ -43,6 +43,29 @@
       background: rgba(0,0,0,.03);
       color: var(--wb-text, #111827);
     }
+    .code-card{
+      background:#0f172a;
+      color:#e8f0ff;
+      border-radius:10px;
+      padding:12px 14px;
+      overflow-x:auto;
+      margin:10px 0;
+    }
+    .trace-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:10px 0;
+      font-size:14px;
+    }
+    .trace-table th,.trace-table td{
+      border:1px solid var(--wb-line, #e5e7eb);
+      padding:8px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .trace-table th{background:rgba(30,102,200,.08)}
+    .source-list{margin:0; padding-left:20px}
+    .source-list li + li{margin-top:6px}
   </style>
 </head>
 
@@ -90,6 +113,42 @@
           <li><b>setup()</b>: wird einmal beim Start ausgeführt</li>
           <li><b>loop()</b>: wiederholt sich ständig</li>
         </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>So liest du Arduino-Code</strong>
+        <div>
+          Lies Code immer in dieser Reihenfolge:
+          <ol style="margin:6px 0 0; padding-left:18px">
+            <li>Welche Pins oder Variablen werden vorbereitet?</li>
+            <li>Was passiert genau einmal in <code>setup()</code>?</li>
+            <li>Was wiederholt sich in <code>loop()</code>?</li>
+            <li>Welche Zeile verändert sichtbar die Hardware?</li>
+          </ol>
+          Diese Lesestrategie nutzt du ab jetzt bei jedem neuen Programm.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_setup_loop_cloze",
+            "title":"Sicherung: setup() und loop()",
+            "hint":"Setze die beiden Funktionsnamen korrekt ein.",
+            "bank":["setup()","loop()"],
+            "segments":[
+              {"t":"text","v":"Die Funktion "},
+              {"t":"gap","a":"setup()"},
+              {"t":"text","v":" läuft nach dem Start genau einmal. Die Funktion "},
+              {"t":"gap","a":"loop()"},
+              {"t":"text","v":" wird danach immer wieder ausgeführt."}
+            ]
+          }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -165,13 +224,36 @@
         <div class="pdfcaption">Original – Seite 7</div>
       </div>
 
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_upload_order",
+            "title":"Upload-Reihenfolge",
+            "hint":"Diese Reihenfolge hilft bei der Fehlersuche.",
+            "items":[
+              "Arduino per USB verbinden",
+              "Richtiges Board auswählen",
+              "Richtigen Port auswählen",
+              "Sketch kompilieren/überprüfen",
+              "Sketch auf das Board hochladen",
+              "Beobachten, ob das Board wie erwartet reagiert"
+            ],
+            "shuffle":true
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
             "id":"s7_1",
             "title":"Aufgabe 7.1 – Reihenfolge verstehen",
             "fields":[
-              {"label":"Antwort","key":"s7_1","kind":"textarea","placeholder":"Beschreibe die Schritte von: Programm öffnen ? Board auswählen ? Port auswählen ? Upload starten."}
+              {"label":"Antwort","key":"s7_1","kind":"textarea","placeholder":"Beschreibe die Schritte von: Programm öffnen -> Board auswählen -> Port auswählen -> Upload starten."}
             ]
           }
         </script>
@@ -249,6 +331,64 @@
         <div class="pdfcaption">Original – Seite 8</div>
       </div>
 
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Blink-Code als Ablauf lesen</strong>
+        <div>
+          Beim Blink-Programm geht es nicht nur darum, die LED blinken zu sehen. Du sollst verstehen,
+          welche Zeile welchen Zustand erzeugt. Markiere dir deshalb im Code: <code>OUTPUT</code>,
+          <code>HIGH</code>, <code>LOW</code> und die beiden Wartezeiten.
+        </div>
+      </div>
+
+      <div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}</code></pre></div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Schritt</th><th>Ausgeführte Zeile</th><th>Was du an der LED siehst</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Start</td><td><code>pinMode(13, OUTPUT);</code></td><td>Pin 13 wird als Ausgang vorbereitet.</td></tr>
+          <tr><td>1</td><td><code>digitalWrite(13, HIGH);</code></td><td>Die LED geht an.</td></tr>
+          <tr><td>2</td><td><code>delay(1000);</code></td><td>Die LED bleibt 1 Sekunde an.</td></tr>
+          <tr><td>3</td><td><code>digitalWrite(13, LOW);</code></td><td>Die LED geht aus.</td></tr>
+          <tr><td>4</td><td><code>delay(1000);</code></td><td>Die LED bleibt 1 Sekunde aus.</td></tr>
+          <tr><td>Dann</td><td><code>loop()</code> beginnt wieder von vorne.</td><td>Der Blink-Ablauf wiederholt sich.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p><code>setup()</code> bereitet vor. <code>loop()</code> wiederholt. Blinken entsteht nicht durch einen Spezialbefehl, sondern durch den Wechsel aus <code>HIGH</code>, Warten, <code>LOW</code>, Warten.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_blink_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Prüfe mit der Ablauf-Tabelle.",
+            "statement":"Wenn beide delay-Werte kleiner werden, blinkt die LED schneller.",
+            "answer": true,
+            "explain":"Richtig. Die Wartezeiten bestimmen, wie lange die LED an und aus bleibt. Kleinere Werte bedeuten kürzere Phasen und damit schnelleres Blinken."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
@@ -283,7 +423,7 @@
             "id":"s8_reflexion_reihenfolge",
             "title":"Reflexion – Reihenfolge verstehen",
             "fields":[
-              {"label":"Antwort","key":"s8_reflexion_reihenfolge","kind":"textarea","placeholder":"Beschreibe die Schritte von: Programm öffnen ? Board auswählen ? Port auswählen ? Upload starten."}
+              {"label":"Antwort","key":"s8_reflexion_reihenfolge","kind":"textarea","placeholder":"Beschreibe die Schritte von: Programm öffnen -> Board auswählen -> Port auswählen -> Upload starten."}
             ]
           }
         </script>
@@ -369,6 +509,30 @@
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_error_categories",
+            "title":"Fehler einordnen",
+            "hint":"Ordne nach Ursache, bevor du etwas veränderst.",
+            "categories":[
+              {"id":"compiler","title":"Compilerfehler"},
+              {"id":"upload","title":"Upload/Verbindung"},
+              {"id":"logik","title":"Programmlogik"}
+            ],
+            "items":[
+              {"label":"expected ';' before ...","category":"compiler"},
+              {"label":"falscher COM-Port ausgewählt","category":"upload"},
+              {"label":"Pin 13 wird vorbereitet, aber Pin 12 geschaltet","category":"logik"},
+              {"label":"Board-Typ falsch eingestellt","category":"upload"},
+              {"label":"Variable falsch geschrieben: ton statt Ton","category":"compiler"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <h2>Jetzt darfst du weiter üben</h2>
 
       <div class="pdfpage">
@@ -406,8 +570,8 @@
         <div>
           Die Tonhöhe hängt von der <b>Frequenz</b> ab:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>niedrige Frequenz ? tiefer Ton</li>
-            <li>hohe Frequenz ? hoher Ton</li>
+            <li>niedrige Frequenz -> tiefer Ton</li>
+            <li>hohe Frequenz -> hoher Ton</li>
           </ul>
           Beim Arduino wird die Frequenz in <b>Hertz (Hz)</b> angegeben.
         </div>
@@ -448,10 +612,10 @@
           Jede Klaviernote entspricht einer bestimmten Frequenz.
           Beispiel:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>C ? 262 Hz</li>
-            <li>D ? 294 Hz</li>
-            <li>E ? 330 Hz</li>
-            <li>G ? 392 Hz</li>
+            <li>C -> 262 Hz</li>
+            <li>D -> 294 Hz</li>
+            <li>E -> 330 Hz</li>
+            <li>G -> 392 Hz</li>
           </ul>
           Diese Frequenzen kannst du direkt im Arduino-Programm verwenden,
           um Melodien zu spielen.
@@ -478,6 +642,21 @@
         <img src="pdf-bilder/seite10.png" alt="PDF Seite 10">
         <div class="pdfcaption">Original – Seite 10</div>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="arduino2_tone_pairs" data-p2-title="Verbinde Ton-Code und Bedeutung" data-p2-hint="Nutze die Begriffe Frequenz, Dauer und Pause.">
+        <div data-side="L" data-pair="1"><code>tone(11, 262);</code></div>
+        <div data-side="R" data-pair="1">Spielt am Pin 11 einen Ton mit 262 Hz.</div>
+        <div data-side="L" data-pair="2"><code>delay(500);</code></div>
+        <div data-side="R" data-pair="2">Wartet eine halbe Sekunde.</div>
+        <div data-side="L" data-pair="3"><code>noTone(11);</code></div>
+        <div data-side="R" data-pair="3">Beendet den Ton am Pin 11.</div>
+        <div data-side="L" data-pair="4">hohe Frequenz</div>
+        <div data-side="R" data-pair="4">höher klingender Ton</div>
+      </div>
+
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Bearbeite nun die Aufgabe 5.1 auf dem Bild oberhalb</strong>
@@ -616,6 +795,33 @@
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_function_order",
+            "title":"Was passiert bei einem Funktionsaufruf?",
+            "hint":"Ordne den Ablauf, wenn im Hauptprogramm refrain(); steht.",
+            "items":[
+              "Arduino erreicht die Zeile mit dem Funktionsaufruf",
+              "Arduino springt in die Funktion",
+              "Alle Zeilen in der Funktion werden ausgeführt",
+              "Arduino kehrt zur nächsten Zeile nach dem Aufruf zurück",
+              "Das Hauptprogramm läuft weiter"
+            ],
+            "shuffle":true
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Eine Funktion ist kein zweites Programm. Sie ist ein benannter Codeabschnitt, den du gezielt aufrufst. Dadurch wird dein Programm kürzer, lesbarer und leichter zu ändern.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
@@ -722,9 +928,18 @@
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
-        OneNote einfügen.</p>
+        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine TXT-Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in OneNote einfügen.</p>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Quellen & Weiterforschen</h3>
+      <ul class="source-list">
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/sketch/setup/" target="_blank" rel="noopener">Arduino Reference: setup()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/sketch/loop/" target="_blank" rel="noopener">Arduino Reference: loop()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/" target="_blank" rel="noopener">Arduino Reference: digitalWrite()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/" target="_blank" rel="noopener">Arduino Reference: tone()</a></li>
+      </ul>
 
     </section>
   </div>

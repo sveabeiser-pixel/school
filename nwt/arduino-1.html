@@ -52,6 +52,29 @@
       background: rgba(0,0,0,.03);
       color: var(--wb-text, #111827);
     }
+    .code-card{
+      background:#0f172a;
+      color:#e8f0ff;
+      border-radius:10px;
+      padding:12px 14px;
+      overflow-x:auto;
+      margin:10px 0;
+    }
+    .trace-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:10px 0;
+      font-size:14px;
+    }
+    .trace-table th,.trace-table td{
+      border:1px solid var(--wb-line, #e5e7eb);
+      padding:8px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .trace-table th{background:rgba(30,102,200,.08)}
+    .source-list{margin:0; padding-left:20px}
+    .source-list li + li{margin-top:6px}
   </style>
 </head>
 
@@ -68,10 +91,12 @@
       }
     </script>
 
-    <section data-wb-page="1" data-wb-page-title="Einführung in den Microcontroller Arduino">
-      <h1>Einführung in den Microcontroller Arduino</h1>
+    <section data-wb-page="1" data-wb-page-title="Einführung in den Mikrocontroller Arduino">
+      <h1>Einführung in den Mikrocontroller Arduino</h1>
       <p>
-        Dieser Lernbaustein führt dich schrittweise an den Arduino heran – als „Steuerzentrale“ für kleine technische Projekte.
+        Dieser Lernbaustein führt dich schrittweise an den Arduino heran: erst verstehst du die Platine,
+        dann baust du eine sichere LED-Schaltung und erst danach wird programmiert. So erkennst du später
+        leichter, ob ein Fehler an der Hardware, am Upload oder am Code liegt.
       </p>
 
       <div class="wb-section-break"></div>
@@ -80,9 +105,11 @@
         <div class="wb-soft-callout">
           <strong>So arbeitest du hier</strong>
           <ul style="margin:0; padding-left:18px">
-            <li>Lies kurz, dann mach die Aufgaben direkt auf der Seite.</li>
+            <li><b>Vorhersagen:</b> Überlege zuerst, was passieren müsste.</li>
+            <li><b>Ausführen:</b> Baue oder teste dann nur einen kleinen Schritt.</li>
+            <li><b>Untersuchen:</b> Vergleiche Beobachtung und Erwartung.</li>
+            <li><b>Ändern:</b> Verändere erst danach gezielt eine Sache.</li>
             <li>Deine Texte werden <b>lokal im Browser</b> gespeichert (nicht an die Lehrkraft gesendet).</li>
-            <li>Wenn du abgeben sollst: nutze „Text kopieren“ und füge ihn ins Abgabe-Tool (OneNote) ein.</li>
           </ul>
         </div>
         <div class="wb-soft-callout">
@@ -96,11 +123,24 @@
 
       <div class="wb-callout">
       <strong>Wichtig:</strong> 
-      <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
-      OneNote einfügen.</p>
+      <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine TXT-Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in OneNote einfügen.</p>
     </div>
 
       <p class="wb-muted">Quelle der Inhalte: Lernbaustein-PDF, Seiten 1–5.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino1_primm_reveal",
+            "title":"Warum nicht sofort losprogrammieren?",
+            "hint":"Denke kurz an typische Fehler: Kabel, Port, Pin, Code.",
+            "question":"Warum liest und planst du zuerst, bevor du Code schreibst?",
+            "answer":"Beim Arduino hängen Hardware und Software zusammen. Wenn du zuerst vorhersagst, was passieren soll, kannst du später gezielt prüfen: Ist die LED richtig herum? Ist der Widerstand in Reihe? Ist der Pin richtig? Erst dann lohnt sich die Fehlersuche im Code."
+          }
+        </script>
+      </div>
     </section>
 
     <section data-wb-page="2" data-wb-page-title="Inhaltsverzeichnis">
@@ -121,6 +161,18 @@
         <div class="wb-kv"><b>4</b> Das erste Blinken</div>
         <div class="wb-kv"><b>5</b> Töne, Unterprogramme, Transistor</div>
         <div class="wb-kv"><b>?</b> Variablen, Schleifen, Bedingungen, Taster, Anzeigen, Motoren</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Roter Faden</strong>
+        <div>
+          Du lernst zuerst das System kennen. Danach kommt der Stromkreis. Erst wenn du erklären kannst,
+          wohin der Strom fließt und welcher Pin beteiligt ist, ist der erste Programmcode sinnvoll.
+          Flussdiagramme kommen später als Werkzeug dazu: nicht als Extra-Theorie, sondern um Entscheidungen
+          und Wiederholungen im Code sichtbar zu machen.
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -183,6 +235,37 @@
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino1_io_kategorien",
+            "title":"Sortiere: Eingabe, Verarbeitung, Ausgabe",
+            "hint":"Denke an die Rolle im technischen System.",
+            "categories":[
+              {"id":"eingabe","title":"Eingabe"},
+              {"id":"verarbeitung","title":"Verarbeitung"},
+              {"id":"ausgabe","title":"Ausgabe"}
+            ],
+            "items":[
+              {"label":"Taster oder Sensor liefert ein Signal","category":"eingabe"},
+              {"label":"Mikrocontroller führt das Programm aus","category":"verarbeitung"},
+              {"label":"LED leuchtet","category":"ausgabe"},
+              {"label":"Lautsprecher erzeugt einen Ton","category":"ausgabe"},
+              {"label":"Programm entscheidet anhand eines Messwerts","category":"verarbeitung"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Ein Arduino-Projekt ist immer eine Kette aus Eingabe, Verarbeitung und Ausgabe. Wenn du diese Kette benennen kannst, findest du Fehler viel leichter.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
@@ -231,14 +314,14 @@
         <div class="wb-soft-callout">
           <strong>LED (Buchsenseite - Pins)</strong>
           <div>
-            Die Pins liefern verschiednene Potenziale, Pin0-Pin12 sind entweder an oder aus, es gibt auch 5V oder 3,3V Anschlüsse,
-            GND steht für ground (Erde). Ein Stromkreis muss immer geschlossen sein (z.B. von einem Pin zum gnd).
+            Die Pins liefern verschiedene Potenziale. Pin 0 bis Pin 12 sind entweder an oder aus. Es gibt auch 5 V- und 3,3 V-Anschlüsse.
+            GND steht für Ground/Masse. Ein Stromkreis muss immer geschlossen sein, zum Beispiel von einem Pin über Bauteile zurück zu GND.
           </div>
         </div>
         <div class="wb-soft-callout">
           <strong>Bread Board/Steckbrett und Jump-Wires/Kabel</strong>
           <div>
-            Mit dem Steckbrettt und den Kabeln kann man einen Stromkreis bauen, ohne zu Löten.
+            Mit dem Steckbrett und den Kabeln kann man einen Stromkreis bauen, ohne zu löten.
           </div>
         </div>
       </div>
@@ -250,6 +333,37 @@
         <div>
           Verwende beim Aufbau am Breadboard passende Kabel (Jumper-Wires) und achte darauf, keine falschen Verbindungen zu stecken.
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Schaltung Schritt für Schritt lesen</strong>
+        <div>
+          Beginne nie mit „Die LED steckt irgendwo“. Lies den Stromkreis als Weg:
+          <ol style="margin:6px 0 0; padding-left:18px">
+            <li>Von einer Spannungsquelle oder einem Arduino-Pin geht es los.</li>
+            <li>Der Strom fließt durch den Widerstand.</li>
+            <li>Dann fließt er durch die LED in Durchlassrichtung.</li>
+            <li>Über GND wird der Stromkreis geschlossen.</li>
+          </ol>
+          Wenn ein Teil fehlt oder die LED falsch herum steckt, bleibt der Stromkreis unterbrochen.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino1_led_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Prüfe die Aussage am Stromweg.",
+            "statement":"Der Widerstand darf in einer LED-Reihenschaltung vor oder hinter der LED liegen, solange er im selben Stromweg liegt.",
+            "answer": true,
+            "explain":"Richtig. In einer Reihenschaltung fließt derselbe Strom durch Widerstand und LED. Wichtig ist, dass der Widerstand überhaupt in Reihe liegt und die LED richtig herum eingebaut ist."
+          }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -272,7 +386,7 @@
         <script type="application/json" class="wb-config">
           {
             "id":"pins",
-            "title":"Aufgabe 3: Für was sind die Pins, das Bead Bord und die Jump-Wires gut? Erkläre in 5–8 Sätzen.",
+            "title":"Aufgabe 3: Wofür sind die Pins, das Breadboard und die Jumper-Wires gut? Erkläre in 5–8 Sätzen.",
             "fields":[
               {"label":"Antwort","key":"pins","kind":"textarea","placeholder":"Erkläre in 5–8 Sätzen: Wie schließt man einen Stromkreis an?"}
             ]
@@ -292,14 +406,35 @@
       <div class="wb-soft-callout">
         <strong>Anmerkungen zu den Aufgaben</strong>
         <div>
-          Auf dem Bild werden verschiedene Aufgaben gezeigt. Im folgenden kannst du sie nochmals beantworten.
+          Auf dem Bild werden verschiedene Aufgaben gezeigt. Arbeite sie nicht als Rätsel ab, sondern immer nach derselben Route:
+          Aufbau lesen, Stromweg zeigen, Beobachtung notieren, Fachbegriff verwenden.
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino1_led_order",
+            "title":"Ordne den sicheren LED-Aufbau",
+            "hint":"Vom Plan bis zur Beobachtung.",
+            "items":[
+              "Schaltbild ansehen und Plus/GND markieren",
+              "LED-Polung prüfen",
+              "Widerstand in Reihe zur LED setzen",
+              "Stromkreis auf dem Breadboard schließen",
+              "Erst dann USB einstecken und Beobachtung notieren"
+            ],
+            "shuffle":true
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
  <p class="wb-muted">
-        Baue eine Schaltung aus einer LED, einem 220 O-Widerstand und einem Jumper-Wire wie im Bild beschrieben. Notiere:
+        Baue eine Schaltung aus einer LED, einem 220-Ohm-Widerstand und einem Jumper-Wire wie im Bild beschrieben. Notiere:
       </p>
       <ul>
         <li>Wie hast du erkannt, welches LED-Beinchen an den Pluspol gehört?</li>
@@ -310,7 +445,7 @@
         <script type="application/json" class="wb-config">
           {
             "id":"a21",
-            "title":"2.1 LED + 220 O (Farben laut Bild)",
+            "title":"2.1 LED + 220-Ohm-Widerstand (Farben laut Bild)",
             "hint":"Dokumentation",
             "fields":[
               {"label":"Antwort","key":"a21","kind":"textarea","placeholder":"Notizen zu 2.1 (Aufbau + Beobachtungen)"}
@@ -385,6 +520,43 @@
             "title":"Reflexion: Wo würdest du Reihe/Parallel im Alltag vermuten?",
             "fields":[
               {"label":"Antwort","key":"rp","kind":"textarea","placeholder":"Beispiel(e) + kurze Begründung"}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="arduino1_pairs" data-p2-title="Verbinde Begriff und Bedeutung" data-p2-hint="Diese Begriffe brauchst du für die nächsten Seiten.">
+        <div data-side="L" data-pair="1">GND</div>
+        <div data-side="R" data-pair="1">Bezugspunkt/Masse, über den der Stromkreis zurückgeführt wird</div>
+        <div data-side="L" data-pair="2">Pin</div>
+        <div data-side="R" data-pair="2">Anschluss, den der Arduino lesen oder schalten kann</div>
+        <div data-side="L" data-pair="3">Widerstand</div>
+        <div data-side="R" data-pair="3">Bauteil, das den Strom begrenzt</div>
+        <div data-side="L" data-pair="4">LED</div>
+        <div data-side="R" data-pair="4">Leuchtdiode, die nur in Durchlassrichtung leuchtet</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino1_led_cloze",
+            "title":"Sicherung: Stromkreis",
+            "hint":"Setze die passenden Begriffe ein.",
+            "bank":["GND","Widerstand","Reihe","LED"],
+            "segments":[
+              {"t":"text","v":"Eine "},
+              {"t":"gap","a":"LED"},
+              {"t":"text","v":" braucht einen "},
+              {"t":"gap","a":"Widerstand"},
+              {"t":"text","v":", der in "},
+              {"t":"gap","a":"Reihe"},
+              {"t":"text","v":" geschaltet wird. Der Stromkreis wird über "},
+              {"t":"gap","a":"GND"},
+              {"t":"text","v":" geschlossen."}
             ]
           }
         </script>
@@ -478,9 +650,17 @@
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
-        OneNote einfügen.</p>
+        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine TXT-Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in OneNote einfügen.</p>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <h3>Quellen & Weiterforschen</h3>
+      <ul class="source-list">
+        <li><a href="https://docs.arduino.cc/language-reference/" target="_blank" rel="noopener">Arduino Documentation: Language Reference</a></li>
+        <li><a href="https://docs.arduino.cc/built-in-examples" target="_blank" rel="noopener">Arduino Built-in Examples</a></li>
+        <li><a href="https://training-hub.raspberrypi.org/en/courses/using-primm-to-teach-programming" target="_blank" rel="noopener">Raspberry Pi Foundation: PRIMM-Unterrichtsansatz</a></li>
+      </ul>
       
     </section>
   </div>

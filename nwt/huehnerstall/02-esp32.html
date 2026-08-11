@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop – Der ESP32</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <style>
+    .pin-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+    .pin-table th,.pin-table td{border:1px solid var(--wb-line,#e5e7eb);padding:7px;text-align:left;vertical-align:top}
+    .pin-table th{background:rgba(30,102,200,.08)}
+    .esp-board{border:1px solid var(--wb-line,#e5e7eb);border-radius:14px;padding:10px;background:rgba(0,0,0,.03);margin:12px 0}
+    .esp-board img{display:block;width:100%;max-width:760px;margin:auto}
+    .source-note{font-size:.85rem;color:var(--wb-muted,#6b7280)}
+    .esp-img{border:1px solid var(--wb-line,#e5e7eb);border-radius:12px;padding:8px;background:rgba(0,0,0,.025);margin:12px 0}
+    .esp-img img{display:block;width:100%;max-width:720px;margin:auto}
+    .formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:rgba(30,102,200,.08);padding:10px;border-radius:8px}
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Smart Chicken Coop",
+      "sectionTitle":"2. Der ESP32 konkret vorgestellt",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"alert",
+      "webhookEmail":"",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavGroupTitle":"Kapitel 2",
+      "themeDefault":"default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Was ist der ESP32?">
+      <h1>2. Der ESP32 konkret vorgestellt</h1>
+      <p class="wb-muted">In diesem Kapitel lernst du das konkrete Entwicklungsboard kennen, das als Mess- und Netzwerkzentrale des Hühnerstalls arbeitet.</p>
+
+      <h2>Unser Bezugspunkt: ESP32-DevKitC V4</h2>
+      <p>Für die folgenden Erklärungen verwenden wir das <strong>Espressif ESP32-DevKitC V4</strong> mit einem <strong>ESP32-WROOM-32E</strong>-Modul. Viele preisgünstige Boards sehen ähnlich aus, sind aber nicht zwingend gleich beschriftet. Vor dem Verdrahten vergleichst du deshalb immer die Aufschrift und das Pinout deines konkreten Boards.</p>
+      <div class="esp-board">
+        <img src="bilder/esp_anschluesse.png" alt="Pinbelegung und Anschlussübersicht eines ESP32-Entwicklungsboards">
+        <p class="source-note">Pinout-Bild lokal unter <code>bilder/esp_anschluesse.png</code>. Vergleiche es immer mit der Beschriftung deines konkreten Boards.</p>
+      </div>
+
+      <h2>Was steckt auf dem Board?</h2>
+      <div class="grid2">
+        <div class="wb-soft-callout"><strong>ESP32-WROOM-32E</strong><p>Das abgeschirmte Modul enthält den ESP32-Chip, Funktechnik, Flash-Speicher und die Antenne. Hier laufen Programm und Netzwerkkommunikation.</p></div>
+        <div class="wb-soft-callout"><strong>USB-UART-Brücke</strong><p>Sie übersetzt USB-Signale des Computers in serielle Signale für den ESP32. Darüber werden Programme übertragen und Diagnosedaten ausgegeben.</p></div>
+        <div class="wb-soft-callout"><strong>Micro-USB-Buchse</strong><p>Sie versorgt das Board und verbindet es mit dem Rechner. Über USB kann ein Programm geflasht werden.</p></div>
+        <div class="wb-soft-callout"><strong>EN- und BOOT-Taste</strong><p>EN setzt den Chip zurück. BOOT wird für den Download-Modus verwendet, wenn ein Upload nicht automatisch startet.</p></div>
+      </div>
+      <div class="wb-callout"><strong>Merke:</strong><p>Der ESP32 ist nicht nur „ein Sensor“. Er ist ein programmierbarer Mikrocontroller mit digitalen Ein-/Ausgängen, analogen Eingängen, WLAN und Bluetooth.</p></div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_konkret_mcq",
+          "title":"Check: Was ist der ESP32?",
+          "hint":"Wähle die vollständigste Aussage.",
+          "questions":[
+            {
+              "text":"Welche Beschreibung passt am besten zum ESP32-DevKitC?",
+              "choices":[
+                {"id":"a","label":"Ein passiver Widerstand mit mehreren Anschlüssen"},
+                {"id":"b","label":"Ein Entwicklungsboard mit Mikrocontroller, Ein-/Ausgängen und Funktechnik"},
+                {"id":"c","label":"Ein Raspberry Pi ohne Betriebssystem"},
+                {"id":"d","label":"Ein Sensor, der Temperatur direkt in Lux misst"}
+              ],
+              "correct":["b"],
+              "explain":"Das DevKitC macht die Anschlüsse des ESP32 zugänglich und ergänzt unter anderem USB, Spannungsversorgung und Tasten. Sensoren werden angeschlossen, sind aber nicht der ESP32 selbst."
+            }
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Versorgung und Anschlüsse">
+      <h1>Versorgung und Anschlüsse</h1>
+      <h2>Die drei Versorgungswege</h2>
+      <p>Beim DevKitC gibt es drei Möglichkeiten: Micro-USB, der 5-V-Pin mit GND oder der 3V3-Pin mit GND. Verwende immer nur <strong>einen</strong> Versorgungsweg gleichzeitig. Das Board arbeitet mit 3,3-V-Logik; 5 V dürfen nicht direkt an einen GPIO gelangen.</p>
+      <table class="pin-table">
+        <thead><tr><th>Anschluss</th><th>Funktion</th><th>Wichtig</th></tr></thead>
+        <tbody>
+          <tr><td>Micro-USB</td><td>Versorgung und Datenverbindung zum Computer</td><td>Normaler Weg für Upload und Serial Monitor.</td></tr>
+          <tr><td>5V</td><td>5-V-Versorgung am Header</td><td>Nur mit geeigneter, stabiler Versorgung verwenden.</td></tr>
+          <tr><td>3V3</td><td>3,3-V-Versorgung bzw. Ausgang des Boards</td><td>Nicht mit einer zweiten Versorgung gegeneinander betreiben.</td></tr>
+          <tr><td>GND</td><td>gemeinsames Bezugspotenzial</td><td>Sensor und ESP32 brauchen eine gemeinsame Masse.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Steuer- und Programmieranschlüsse</h2>
+      <table class="pin-table">
+        <thead><tr><th>Bezeichnung</th><th>GPIO-/Chipfunktion</th><th>Verwendung</th></tr></thead>
+        <tbody>
+          <tr><td>EN</td><td>CHIP_PU / Reset</td><td>Setzt den ESP32 zurück; kein normaler Sensor-GPIO.</td></tr>
+          <tr><td>BOOT / IO0</td><td>GPIO0</td><td>Beim Start LOW halten, um den Firmware-Download-Modus zu erzwingen.</td></tr>
+          <tr><td>TX / RX</td><td>GPIO1 / GPIO3</td><td>Serielle UART-Schnittstelle; beim Upload und Serial Monitor beteiligt.</td></tr>
+          <tr><td>GND</td><td>Masse</td><td>Bezugspunkt für Spannungen und Rückleitung im Stromkreis.</td></tr>
+        </tbody>
+      </table>
+      <p class="source-note">Die genaue Pinbezeichnung bezieht sich auf das ESP32-DevKitC V4. Bei einem anderen Boardmodell kann die Position oder Beschriftung abweichen.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_anschluss_kategorien",
+          "title":"Ordne die Anschlüsse",
+          "hint":"Sortiere nach Versorgung, Steuerung oder Kommunikation.",
+          "categories":[
+            {"id":"power","title":"Versorgung"},
+            {"id":"control","title":"Steuerung"},
+            {"id":"serial","title":"Serielle Kommunikation"}
+          ],
+          "items":[
+            {"label":"3V3","category":"power"},
+            {"label":"GND","category":"power"},
+            {"label":"EN","category":"control"},
+            {"label":"BOOT / GPIO0","category":"control"},
+            {"label":"TX / GPIO1","category":"serial"},
+            {"label":"RX / GPIO3","category":"serial"}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="GPIO und Sonderfunktionen">
+      <h1>GPIO: Die vielseitigen Pins</h1>
+      <p>GPIO bedeutet <em>General Purpose Input/Output</em>. Ein Pin kann je nach Programm Eingang oder Ausgang sein. Viele GPIOs besitzen zusätzliche Funktionen.</p>
+      <table class="pin-table">
+        <thead><tr><th>Funktion</th><th>Bedeutung im Projekt</th><th>Beispiele</th></tr></thead>
+        <tbody>
+          <tr><td>Digitaler Eingang</td><td>Liest HIGH oder LOW</td><td>Taster, Schaltsignal</td></tr>
+          <tr><td>Digitaler Ausgang</td><td>Gibt HIGH oder LOW aus</td><td>LED, Relaissteuerung mit passender Schaltung</td></tr>
+          <tr><td>ADC</td><td>Misst eine Spannung und liefert einen Zahlenwert</td><td>LDR am GPIO34</td></tr>
+          <tr><td>PWM</td><td>Erzeugt ein schnelles Ein-/Ausschaltsignal mit veränderlichem Tastgrad</td><td>Helligkeit einer LED, Motordrehzahl</td></tr>
+          <tr><td>I2C / SPI / UART</td><td>Serielle Kommunikationsverfahren</td><td>Displays, Module, Computerverbindung</td></tr>
+        </tbody>
+      </table>
+      <h2>Wichtige Pin-Gruppen</h2>
+      <ul>
+        <li><strong>GPIO34–39:</strong> beim klassischen ESP32 nur Eingänge; keine Ausgänge und keine internen Pull-up/Pull-down-Widerstände.</li>
+        <li><strong>GPIO6–11:</strong> mit dem internen SPI-Flash verbunden; für normale Projekte besser nicht verwenden.</li>
+        <li><strong>GPIO0, 2, 5, 12, 15:</strong> sogenannte Boot-Strapping-Pins. Zustände beim Start können den Bootvorgang beeinflussen.</li>
+        <li><strong>GPIO1 und 3:</strong> serielle Schnittstelle; Nutzung kann Upload oder Diagnose stören.</li>
+        <li><strong>ADC2:</strong> kann beim klassischen ESP32 durch WLAN eingeschränkt sein. Für Sensorik im WLAN-Projekt ist ADC1, zum Beispiel GPIO34, die robustere Wahl.</li>
+      </ul>
+      <div class="wb-callout"><strong>Sicherheitsregel:</strong><p>„Der Pin ist frei herausgeführt“ bedeutet nicht „jede Funktion ist jederzeit unproblematisch“. Prüfe Boardvariante, Bootfunktion, Eingangsrichtung, Spannung und Mehrfachbelegung.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-title="Pin und Eigenschaft" data-p2-hint="Ordne die Pin-Gruppe ihrer Eigenschaft zu.">
+        <div class="p2-hint">Verbinde passende Paare.</div>
+        <div class="p2-banks">
+          <div><div class="p2-col-title">Pin-Gruppe</div><div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">GPIO34–39</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">GPIO6–11</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">ADC1</div>
+          </div></div>
+          <div><div class="p2-col-title">Eigenschaft</div><div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Nur Eingang beim klassischen ESP32</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Intern für Flash-Kommunikation verwendet</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Für analoge Messung im WLAN-Projekt geeignet</div>
+          </div></div>
+        </div>
+        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Pin-Fallen und Messgrenzen">
+      <h1>Pin-Fallen: Was du nicht blind anschließen darfst</h1>
+      <p>Beim ESP32 entscheidet nicht nur die Pin-Nummer, sondern auch die Sonderfunktion des Pins. Einige Pins sind intern belegt, einige beeinflussen den Bootvorgang, andere liefern beim Start kurze Pegelwechsel. Genau diese Details sind später wichtig, wenn ein Sensor scheinbar richtig angeschlossen ist, der ESP32 aber nicht mehr startet.</p>
+
+      <h2>Eingeschränkt nutzbare Pins</h2>
+      <table class="pin-table">
+        <thead><tr><th>Pin-Gruppe</th><th>Problem</th><th>Konsequenz im Projekt</th></tr></thead>
+        <tbody>
+          <tr><td>GPIO6 bis GPIO11</td><td>Intern für die SPI-Kommunikation mit dem Flash-Speicher verwendet.</td><td>Unverbunden lassen. Für Sensoren, LEDs oder Relais nicht einplanen.</td></tr>
+          <tr><td>GPIO0, GPIO1, GPIO3, GPIO5, GPIO14, GPIO15</td><td>Können beim Booten kurz HIGH sein oder Signale ausgeben.</td><td>Nicht für Aktoren verwenden, die beim Start gefährlich oder störend schalten könnten.</td></tr>
+          <tr><td>GPIO0, GPIO2, GPIO5, GPIO12, GPIO15</td><td>Strapping-Pins: Ihr Pegel beim Start beeinflusst den Bootmodus.</td><td>Nur verwenden, wenn die externe Schaltung den Bootpegel nicht verfälscht.</td></tr>
+          <tr><td>GPIO34 bis GPIO39</td><td>Reine Eingänge, keine Ausgänge und keine internen Pull-up/Pull-down-Widerstände.</td><td>Gut für Messsignale, ungeeignet für LEDs, Relais oder Ausgangssignale.</td></tr>
+          <tr><td>ADC2-Pins</td><td>ADC2 kollidiert beim klassischen ESP32 mit aktivem Wi-Fi.</td><td>Für WLAN-Projekte bevorzugt ADC1-Pins nutzen, z. B. GPIO32 bis GPIO39.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Digitale Ein- und Ausgänge</h2>
+      <p>Als digitaler Ausgang setzt du einen GPIO mit <code>pinMode(pin, OUTPUT)</code> und schaltest ihn mit <code>digitalWrite(pin, HIGH)</code> oder <code>digitalWrite(pin, LOW)</code>. Als Eingang liest du mit <code>digitalRead(pin)</code>. Anders als beim Arduino UNO arbeitet der ESP32 mit <strong>3,3 V Logikspannung</strong>. Ein 5-V-Signal ist für GPIOs nicht direkt geeignet. Plane außerdem nur kleine GPIO-Ströme ein; für Relais, Motoren oder stärkere LEDs brauchst du eine Treiberstufe.</p>
+      <p>Bei Eingängen ist wichtig: <code>INPUT</code> allein kann einen undefinierten Pegel liefern, wenn nichts angeschlossen ist. Mit <code>INPUT_PULLUP</code> oder <code>INPUT_PULLDOWN</code> nutzt du interne Widerstände. An GPIO34 bis GPIO39 stehen diese internen Widerstände nicht zur Verfügung.</p>
+
+      <h2>Analoge Messwerte</h2>
+      <p>Der klassische ESP32 besitzt zwei 12-Bit-ADCs. Ein 12-Bit-Wert reicht theoretisch von 0 bis 4095. Für eine grobe Umrechnung bei 3,3 V kannst du rechnen:</p>
+      <p class="formula">U [V] ≈ 3,3 · analogRead(pin) / 4095</p>
+      <p>In der Praxis sind ESP32-ADC-Werte verrauscht und nicht perfekt linear. Für den LDR im Hühnerstall ist das meistens beherrschbar, weil du keine Laborpräzision brauchst. Trotzdem solltest du mehrere Messwerte mitteln und bei stark schwankenden Signalen einen kleinen Kondensator am Eingang prüfen.</p>
+
+      <h2>Analoge Ausgänge: PWM und DAC</h2>
+      <p><code>analogWrite(pin, value)</code> erzeugt beim ESP32 ein PWM-Signal: Der Pin schaltet sehr schnell zwischen LOW und HIGH, und der Tastgrad bestimmt die mittlere Leistung. Das ist für LED-Helligkeit oder Motorleistung geeignet, aber kein echter analoger Spannungsverlauf. Einen echten DAC-Ausgang haben beim klassischen ESP32 nur GPIO25 und GPIO26; dort kann <code>dacWrite(pin, value)</code> einen Spannungswert zwischen ungefähr 0 V und 3,3 V ausgeben.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_pinfallen_cat",
+          "title":"Sortiere: Wie kritisch ist der Pin?",
+          "hint":"Ordne jede Pin-Gruppe der passenden technischen Einschränkung zu.",
+          "categories":[
+            {"id":"avoid","title":"Besser vermeiden"},
+            {"id":"boot","title":"Boot beachten"},
+            {"id":"analog","title":"Analoge Einschränkung"},
+            {"id":"input","title":"Nur Eingang"}
+          ],
+          "items":[
+            {"label":"GPIO6 bis GPIO11","category":"avoid"},
+            {"label":"GPIO0, GPIO2, GPIO5, GPIO12, GPIO15","category":"boot"},
+            {"label":"ADC2 bei aktivem Wi-Fi","category":"analog"},
+            {"label":"GPIO34 bis GPIO39","category":"input"}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst begründen, warum ein Pin trotz sichtbarer Stiftleiste ungeeignet sein kann: Flash-Belegung, Boot-Strapping, Startpegel, ADC2-Wi-Fi-Konflikt und fehlende Pull-Widerstände sind technische Ausschlusskriterien.</p></div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Projektpins und Sicherung">
+      <h1>Unsere Projektpins</h1>
+      <p>Für den Hühnerstall verwenden wir zunächst eine einfache und nachvollziehbare Auswahl. Die konkrete Verdrahtung wird vor dem Aufbau mit dem tatsächlichen Board verglichen.</p>
+      <table class="pin-table">
+        <thead><tr><th>Aufgabe</th><th>Vorgeschlagener Pin</th><th>Warum?</th></tr></thead>
+        <tbody>
+          <tr><td>LDR / KY-018</td><td>GPIO34</td><td>ADC1, Eingang-only passt zur Messaufgabe.</td></tr>
+          <tr><td>KY-015 Datenleitung</td><td>z. B. GPIO4</td><td>Digitaler GPIO; die konkrete Modulspannung muss vorher geprüft werden.</td></tr>
+          <tr><td>Serieller Monitor</td><td>USB, TX/RX intern</td><td>Diagnose und Upload über USB-UART.</td></tr>
+          <tr><td>Versorgung</td><td>3V3/GND oder geprüfte USB-Versorgung</td><td>Gemeinsames Bezugspotenzial; keine parallelen Versorgungen.</td></tr>
+        </tbody>
+      </table>
+      <div class="wb-callout"><strong>Stopp vor dem Verdrahten:</strong><p>Prüfe die genaue KY-015-Variante. Ein 5-V-Datensignal darf nicht direkt an einen 3,3-V-GPIO des ESP32 gelangen. Erst Datenblatt, Versorgung und Pegel klären, dann anschließen.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+        {"id":"esp32_pin_verify","title":"Wahr oder falsch?","hint":"Prüfe die Sicherheitsregel.","statement":"GPIO34 kann beim klassischen ESP32 als digitaler Ausgang für eine LED verwendet werden.","answer":false,"explain":"GPIO34–39 sind beim klassischen ESP32 Eingang-only. GPIO34 kann für den LDR als ADC-Eingang verwendet werden, aber nicht als Ausgang."}
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"esp32_abschluss","title":"Klausurtraining: Begründe eine Pinwahl","hint":"Antworte in 6–8 Sätzen. Erkläre, warum GPIO34 für den LDR sinnvoll ist und welche zwei Prüfungen vor dem Anschluss des KY-015 nötig sind.","storagePrefix":"smart_coop_esp32_detail_","fields":[{"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Antwort","key":"answer","kind":"textarea","placeholder":"GPIO34 ist geeignet, weil ..."}]}
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst das ESP32-DevKitC als Entwicklungsboard einordnen, seine Versorgungs-, Steuer- und Kommunikationsanschlüsse erklären, wichtige GPIO-Gruppen unterscheiden und eine Pinwahl fachlich begründen.</p></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Arduino IDE vorbereiten">
+      <h1>Arduino IDE für den ESP32 vorbereiten</h1>
+      <p>Die Arduino IDE kann klassische Arduino-Boards direkt programmieren. Für den ESP32 musst du zuerst das Boardpaket von Espressif nachinstallieren. Dieses Paket bringt die Boarddefinitionen, Compiler-Werkzeuge und Upload-Einstellungen mit.</p>
+      <div class="wb-callout"><strong>Wichtig zur URL:</strong><p>In älteren Anleitungen steht oft <code>https://dl.espressif.com/dl/package_esp32_index.json</code>. Die aktuelle stabile URL in der offiziellen Espressif-Dokumentation lautet <code>https://espressif.github.io/arduino-esp32/package_esp32_index.json</code>.</p></div>
+
+      <h2>Vorbereitung am Computer</h2>
+      <table class="pin-table">
+        <thead><tr><th>Schritt</th><th>Was du machst</th><th>Warum?</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Arduino IDE installieren oder aktualisieren.</td><td>Der Boardverwalter und die ESP32-Werkzeuge brauchen eine aktuelle IDE.</td></tr>
+          <tr><td>2</td><td>Datei → Voreinstellungen öffnen.</td><td>Dort werden zusätzliche Boardverwalter-Quellen eingetragen.</td></tr>
+          <tr><td>3</td><td>Bei „Zusätzliche Boardverwalter URLs“ die Espressif-URL als eigene Zeile eintragen.</td><td>Die IDE weiß dadurch, wo sie das ESP32-Paket findet.</td></tr>
+          <tr><td>4</td><td>Werkzeuge → Board → Boardverwalter öffnen, nach <code>esp32</code> suchen und „esp32 by Espressif Systems“ installieren.</td><td>Damit werden ESP32-Boards in der IDE auswählbar.</td></tr>
+          <tr><td>5</td><td>Nach der Installation ggf. die Arduino IDE neu starten.</td><td>So werden neue Boarddefinitionen zuverlässig geladen.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Board und Port auswählen</h2>
+      <p>Für viele einfache Entwicklungsboards passt zunächst <strong>ESP32 Dev Module</strong>. Wenn dein Board exakt als <strong>ESP32 DevKitC</strong> oder ähnlich auftaucht, wählst du die passendere Boarddefinition. Danach wählst du unter <strong>Werkzeuge → Port</strong> den seriellen Anschluss deines ESP32 aus. Wenn kein Port erscheint, prüfst du USB-Kabel, Treiber und ob das Board Strom bekommt.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_arduino_install_order",
+          "title":"Reihenfolge: ESP32 in Arduino IDE integrieren",
+          "hint":"Sortiere die Arbeitsschritte so, dass am Ende ein ESP32-Board auswählbar ist.",
+          "items":[
+            "Arduino IDE öffnen und Datei → Voreinstellungen aufrufen",
+            "Stabile Espressif-Boardverwalter-URL als zusätzliche URL eintragen",
+            "Werkzeuge → Board → Boardverwalter öffnen",
+            "Nach „esp32“ suchen und „esp32 by Espressif Systems“ installieren",
+            "Passendes Board und danach den Port auswählen"
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="ESP32 steuern">
+      <h1>Wie du den ESP32 steuerst</h1>
+      <p>Du steuerst den ESP32, indem du ein Programm schreibst, es kompilierst und per USB in den Flash-Speicher des Boards hochlädst. Danach läuft das Programm eigenständig auf dem Mikrocontroller. Die Arduino IDE übernimmt dabei drei Aufgaben: Code prüfen, Maschinencode erzeugen und den Upload starten.</p>
+
+      <h2>Das Grundmodell eines Arduino-Programms</h2>
+      <pre><code>void setup() {
+  Serial.begin(115200);
+  pinMode(2, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(2, HIGH);
+  delay(500);
+  digitalWrite(2, LOW);
+  delay(500);
+}</code></pre>
+      <p><code>setup()</code> läuft einmal nach Reset oder Einschalten. Dort stellst du Schnittstellen und Pin-Modi ein. <code>loop()</code> läuft danach immer wieder. Dort steht die eigentliche Steuerlogik: messen, entscheiden, schalten, senden.</p>
+
+      <h2>Upload und Diagnose</h2>
+      <table class="pin-table">
+        <thead><tr><th>Werkzeug</th><th>Funktion</th><th>Typischer Fehler</th></tr></thead>
+        <tbody>
+          <tr><td>Haken „Überprüfen“</td><td>Kompiliert den Sketch, ohne ihn hochzuladen.</td><td>Syntaxfehler oder fehlende Bibliothek.</td></tr>
+          <tr><td>Pfeil „Hochladen“</td><td>Kompiliert und überträgt das Programm über USB-UART.</td><td>Falscher Port oder falsches Board ausgewählt.</td></tr>
+          <tr><td>Serial Monitor</td><td>Zeigt Textausgaben wie Messwerte oder Fehlermeldungen.</td><td>Baudrate passt nicht zu <code>Serial.begin(...)</code>.</td></tr>
+          <tr><td>BOOT-Taste</td><td>Hilft, den Download-Modus zu erzwingen, falls Auto-Reset nicht klappt.</td><td>Zu spät gedrückt oder falscher Moment beim Upload.</td></tr>
+          <tr><td>EN-Taste</td><td>Startet den ESP32 neu.</td><td>Wird mit BOOT verwechselt; EN allein startet keinen Upload-Modus.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="wb-callout"><strong>Steuerkette im Projekt:</strong><p>Sensorwert am GPIO messen → im Programm auswerten → Entscheidung treffen → Ausgabe schalten oder Daten per WLAN senden. Genau diese Kette brauchst du später für Lichtmessung, Stallstatus und Webanzeige.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_steuerung_cloze",
+          "title":"Sicherung: Steuerung des ESP32",
+          "hint":"Setze die Begriffe passend ein.",
+          "bank":["setup()","loop()","Serial Monitor","Port","BOOT"],
+          "segments":[
+            {"t":"text","v":"In "},
+            {"t":"gap","a":"setup()"},
+            {"t":"text","v":" richtest du Pins und Schnittstellen ein. Die Funktion "},
+            {"t":"gap","a":"loop()"},
+            {"t":"text","v":" läuft danach fortlaufend. Für Messwerte und Fehlersuche nutzt du den "},
+            {"t":"gap","a":"Serial Monitor"},
+            {"t":"text","v":". Vor dem Upload muss der richtige "},
+            {"t":"gap","a":"Port"},
+            {"t":"text","v":" gewählt sein. Wenn der Upload nicht automatisch startet, kann die "},
+            {"t":"gap","a":"BOOT"},
+            {"t":"text","v":"-Taste beim Start des Uploads helfen."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_upload_fehler_reveal",
+          "title":"Fehler finden: Upload klappt nicht",
+          "question":"Du klickst auf Hochladen, aber die IDE meldet, dass keine Verbindung aufgebaut werden kann. Welche drei Prüfungen sind sinnvoll?",
+          "answer":"Prüfe zuerst, ob ein Daten-USB-Kabel verwendet wird und das Board Strom bekommt. Wähle dann den richtigen Port unter Werkzeuge → Port. Wenn das Board nicht automatisch in den Download-Modus geht, halte BOOT beim Upload-Start gedrückt und lasse es los, sobald die Übertragung beginnt."
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst die Arduino IDE für ESP32-Boards vorbereiten, ein passendes Boardpaket installieren, Board und Port auswählen, einen Sketch hochladen und die Grundstruktur aus <code>setup()</code> und <code>loop()</code> erklären.</p></div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="UART, I2C und SPI">
+      <h1>Schnittstellen: Wie der ESP32 mit Modulen spricht</h1>
+      <p>GPIOs können mehr als HIGH und LOW. Viele Sensoren, Displays und Funkmodule sprechen über standardisierte Schnittstellen. Für den Hühnerstall brauchst du vor allem das Prinzip: Jede Schnittstelle hat typische Leitungen, typische Pins und typische Fehlerquellen.</p>
+
+      <h2>UART / Serial</h2>
+      <p>UART ist eine serielle Punkt-zu-Punkt-Verbindung mit RX und TX. Beim klassischen ESP32 gibt es drei UARTs. <code>Serial</code> nutzt meist UART0 für Upload und Serial Monitor. Zusätzliche UARTs kannst du mit <code>Serial1</code> oder <code>Serial2</code> auf passende Pins legen.</p>
+      <div class="esp-img">
+        <img src="bilder/serielle_schnittstellen.png" alt="Übersicht serieller Schnittstellen am ESP32">
+        <p class="source-note">Bild lokal: <code>bilder/serielle_schnittstellen.png</code></p>
+      </div>
+      <pre><code>#define RX1 16
+#define TX1 17
+
+void setup() {
+  Serial.begin(115200);
+  Serial1.begin(115200, SERIAL_8N1, RX1, TX1);
+}
+
+void loop() {
+}</code></pre>
+      <p><code>SERIAL_8N1</code> bedeutet: 8 Datenbits, keine Parität, 1 Stoppbit. Das ist die Standardkonfiguration vieler serieller Geräte.</p>
+
+      <h2>I2C</h2>
+      <p>I2C nutzt zwei Leitungen: SDA für Daten und SCL für den Takt. Beim generischen ESP32 liegen die Standardpins häufig auf GPIO21 (SDA) und GPIO22 (SCL). I2C-Leitungen brauchen Pull-up-Widerstände zur passenden Betriebsspannung. Bei 5-V-Modulen brauchst du Pegelanpassung, weil der ESP32 mit 3,3 V arbeitet.</p>
+
+      <h2>SPI</h2>
+      <p>SPI ist schneller als I2C und nutzt typischerweise SCLK, MISO, MOSI und CS. Beim klassischen ESP32 sind zwei SPI-Busse für Projekte nutzbar: VSPI und HSPI. VSPI verwendet häufig GPIO18 als SCLK, GPIO19 als MISO, GPIO23 als MOSI und GPIO5 als CS. GPIO5 ist aber auch ein Strapping-Pin; für den Chip-Select kannst du daher bewusst einen anderen freien GPIO wählen.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-p2 class="p2" data-p2-title="Schnittstelle und typische Leitung" data-p2-hint="Ordne die Schnittstelle ihrem typischen Merkmal zu.">
+        <div class="p2-hint">Verbinde passende Paare.</div>
+        <div class="p2-banks">
+          <div><div class="p2-col-title">Schnittstelle</div><div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">UART</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">I2C</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">SPI</div>
+          </div></div>
+          <div><div class="p2-col-title">Merkmal</div><div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">RX und TX, z. B. Serial Monitor oder separates Modul</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">SDA und SCL, mehrere Geräte mit Adressen</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">SCLK, MISO, MOSI und Chip Select</div>
+          </div></div>
+        </div>
+        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst UART, I2C und SPI nach Leitungen, typischer Verwendung und ESP32-Fallstricken unterscheiden.</p></div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Touch, Interrupts, Sleep und Boardwahl">
+      <h1>Spezialfunktionen und Board-Auswahl</h1>
+      <p>Nicht jede ESP32-Funktion brauchst du sofort. Einige sind aber gute Beispiele dafür, warum der ESP32 für technische Projekte stärker ist als ein einfacher Mikrocontroller ohne Funk und Sleep-Modi.</p>
+
+      <h2>Touch Pins</h2>
+      <p>Touch-Pins reagieren auf Kapazitätsänderungen. Wenn du einen Touch-Pin oder ein angeschlossenes Kabel berührst, ändert sich der Messwert. Der Messwert wird mit <code>touchRead(pin)</code> gelesen. Je nach Aufbau kann der Wert beim Berühren kleiner werden.</p>
+      <div class="esp-img">
+        <img src="bilder/touch_pin.png" alt="Touch-Pin-Versuch am ESP32">
+        <p class="source-note">Bild lokal: <code>bilder/touch_pin.png</code></p>
+      </div>
+
+      <h2>Interrupts</h2>
+      <p>Ein Interrupt unterbricht das normale Programm, wenn ein Ereignis auftritt. Das ist sinnvoll, wenn ein Signal nicht verpasst werden darf, zum Beispiel ein Taster, ein Reedkontakt oder ein Sicherheitskontakt an einer Klappe. Beim ESP32 kannst du externe GPIO-Interrupts auch an den reinen Eingangspins GPIO34 bis GPIO39 nutzen.</p>
+      <div class="esp-img">
+        <img src="bilder/interrupt.png" alt="Interrupt-Testschaltung am ESP32">
+        <p class="source-note">Bild lokal: <code>bilder/interrupt.png</code></p>
+      </div>
+      <pre><code>volatile bool event = false;
+
+void IRAM_ATTR eventISR() {
+  event = true;
+}
+
+void setup() {
+  pinMode(4, INPUT_PULLDOWN);
+  attachInterrupt(4, eventISR, RISING);
+}</code></pre>
+
+      <h2>Strom sparen</h2>
+      <p>Wi-Fi und Bluetooth verbrauchen vergleichsweise viel Energie. Für batteriebetriebene Messstationen kannst du Funkmodule zeitweise abschalten oder Sleep-Modi verwenden. Beim Light Sleep läuft das Programm nach dem Aufwachen weiter. Beim Deep Sleep startet der ESP32 nach dem Aufwachen neu. Wecken kann ihn zum Beispiel ein Timer, ein externes Signal an einem RTC_IO-Pin oder ein Touch-Ereignis.</p>
+
+      <h2>Bluetooth als Steuerkanal</h2>
+      <p>Bluetooth kann für einfache Steuerbefehle genutzt werden, etwa um vom Smartphone aus Testsignale an den ESP32 zu senden. Für den Hühnerstall ist WLAN für die spätere Webanzeige wichtiger, Bluetooth ist aber ein gutes Beispiel für serielle Befehlssteuerung ohne Kabel.</p>
+      <div class="esp-img">
+        <img src="bilder/bluetooth_terminal.png" alt="Bluetooth-Serial-Terminal zur Steuerung eines ESP32">
+        <p class="source-note">Bild lokal: <code>bilder/bluetooth_terminal.png</code></p>
+      </div>
+
+      <h2>Warum es so viele ESP32-Boards gibt</h2>
+      <p>Für ein echtes Projekt zählt nicht nur der Chip. Du prüfst die Stromversorgung, USB-Anschluss, verfügbare Schnittstellen, Pin-Anordnung, Antenne, Formfaktor, Zusatzfunktionen und Kosten. Eine PCB-Antenne ist kompakt, eine externe Antenne über IPX kann bei schwieriger Einbaulage mehr Reichweite ermöglichen. Boards mit Akku-Ladeelektronik, OLED, Ethernet oder größerem Flash können sinnvoll sein, wenn diese Zusatzfunktionen wirklich gebraucht werden.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"esp32_boardwahl_mcq",
+          "title":"Check: Board-Auswahl",
+          "hint":"Wähle die fachlich beste Begründung.",
+          "questions":[
+            {
+              "text":"Warum reicht es nicht, bei der Board-Auswahl nur auf „ESP32“ im Namen zu achten?",
+              "choices":[
+                {"id":"a","label":"Weil alle ESP32-Boards immer andere Programmiersprachen verwenden."},
+                {"id":"b","label":"Weil Versorgung, Pinout, Antenne, Schnittstellen und Zusatzfunktionen je nach Board deutlich variieren."},
+                {"id":"c","label":"Weil ein ESP32 ohne Bluetooth grundsätzlich nicht programmierbar ist."},
+                {"id":"d","label":"Weil nur Boards mit OLED analoge Sensoren lesen können."}
+              ],
+              "correct":["b"],
+              "explain":"Der ESP32-Chip ist nur ein Teil des Entwicklungsboards. Für ein Projekt entscheiden auch Spannungsregler, USB-UART, Pinbelegung, Antennenform, Baugröße und Zusatzhardware."
+            }
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen &amp; Weiterforschen</h2>
+      <ul>
+        <li><a href="https://documentation.espressif.com/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html" target="_blank" rel="noopener">Espressif: ESP32-DevKitC V4 User Guide</a></li>
+        <li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html" target="_blank" rel="noopener">Espressif: Arduino-ESP32 installieren</a></li>
+        <li><a href="https://developer.espressif.com/blog/2025/10/arduino-get-started/" target="_blank" rel="noopener">Espressif Developer Portal: Getting Started with ESP32 Arduino</a></li>
+        <li><a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/gpio.html" target="_blank" rel="noopener">Espressif: GPIO &amp; RTC GPIO</a></li>
+        <li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html" target="_blank" rel="noopener">Espressif: Arduino-ESP32 ADC API</a></li>
+        <li><a href="https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-reference/peripherals/adc.html" target="_blank" rel="noopener">Espressif: ADC, ADC2 und Wi-Fi-Einschränkungen</a></li>
+        <li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/api/serial.html" target="_blank" rel="noopener">Espressif: Arduino-ESP32 Serial / UART API</a></li>
+        <li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/api/spi.html" target="_blank" rel="noopener">Espressif: Arduino-ESP32 SPI API</a></li>
+        <li><a href="https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/i2c.html" target="_blank" rel="noopener">Espressif: Arduino-ESP32 I2C API</a></li>
+        <li><a href="https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf" target="_blank" rel="noopener">Espressif: ESP32 Datasheet</a></li>
+        <li><a href="https://www.informatik-aktuell.de/entwicklung/methoden/der-definitive-guide-in-die-esp32-welt.html" target="_blank" rel="noopener">Informatik Aktuell: Kriterien zur Auswahl von ESP32-Modulen</a></li>
+      </ul>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst Spezialfunktionen des ESP32 einordnen und bei der Board-Auswahl technische Kriterien statt nur den Produktnamen verwenden.</p></div>
+    </section>
+  </div>
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>

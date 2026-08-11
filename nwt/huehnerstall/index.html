@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop – Projektübersicht</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Smart Chicken Coop",
+      "sectionTitle":"Projektübersicht",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"alert",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Projekt",
+      "themeDefault":"default"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Start">
+      <h1>Smart Chicken Coop</h1>
+      <p class="wb-muted">Ein NWT-Projekt zu Sensorik, Netzwerken, Kamera und verantwortungsvoller Technik.</p>
+      <h2>Unsere Leitfrage</h2>
+      <p>Wie bauen wir ein technisches System, das einen Hühnerstall beobachtet, Messwerte verständlich darstellt und nach einem Neustart möglichst selbstständig wieder funktioniert?</p>
+
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Das Endsystem</strong>
+          <p>Der ESP32 misst Temperatur, Luftfeuchtigkeit und Helligkeit. Der Raspberry Pi verarbeitet Kamerabilder und Video. Eine Webseite führt die Informationen zusammen.</p>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Dein Arbeitsziel</strong>
+          <p>Du erklärst nicht nur, dass etwas funktioniert. Du kannst Messwerte prüfen, Fehler eingrenzen und technische Entscheidungen begründen.</p>
+        </div>
+      </div>
+
+      <p class="wb-mini-note">Beginne mit <a href="01-systemaufbau.html">Kapitel 1: Systemaufbau, Sicherheit und Datenschutz</a>.</p>
+
+      <div class="wb-callout">
+        <strong>Wichtig</strong>
+        <p>Die Lern-Sensoren liefern Beobachtungswerte. Sie ersetzen keine vollständige Tierwohlbewertung und werden nur mit geprüfter Kleinspannung betrieben.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"coop_start_reveal",
+          "title":"Was kannst du nach dem Projekt erklären?",
+          "hint":"Überlege zuerst selbst, bevor du die Antwort öffnest.",
+          "question":"Welche Kette verbindet einen Sensorwert mit einer Anzeige auf einer Webseite?",
+          "answer":"Sensor und Messprinzip → elektrische Spannung oder digitales Signal → Verarbeitung durch den ESP32 → Netzwerkübertragung → Webseite als Ausgabe. Jeder Schritt kann eigene Fehlerquellen besitzen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Lernroute">
+      <h1>Deine Lernroute</h1>
+      <p>Arbeite die Themen in dieser Reihenfolge. Nach jedem Kapitel entsteht ein überprüfbares Teilergebnis für das gemeinsame System.</p>
+      <div class="wb-soft-callout">
+        <ol style="margin:0; padding-left:22px">
+          <li>Systemidee, Sicherheit und Datenschutz</li>
+          <li>ESP32 und Arduino-Grundlagen</li>
+          <li>Temperatur und relative Luftfeuchtigkeit</li>
+          <li>LDR, Spannungsteiler und ADC</li>
+          <li>Messfehler und Datenqualität</li>
+          <li>WLAN, IP und HTTP</li>
+          <li>Raspberry Pi, Linux und SSH</li>
+          <li>Kamera, NoIR und Infrarot</li>
+          <li>Video, H.264 und Streaming</li>
+          <li>Homepage, Autostart und Abnahme</li>
+        </ol>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Direkt zu den Themenseiten</strong>
+        <ul style="margin:0; padding-left:18px">
+          <li><a href="01-systemaufbau.html">1. Systemaufbau, Sicherheit und Datenschutz</a></li>
+          <li><a href="02-esp32.html">2. ESP32 und Arduino-Grundlagen</a></li>
+          <li><a href="03-sensoren.html">3. Temperatur und relative Luftfeuchtigkeit</a></li>
+          <li><a href="04-ldr-adc.html">4. LDR, Spannungsteiler und ADC</a></li>
+          <li><a href="05-messdaten.html">5. Messfehler und Datenqualität</a></li>
+          <li><a href="06-netzwerk-http.html">6. WLAN, IP und HTTP</a></li>
+          <li><a href="07-pi-linux.html">7. Raspberry Pi, Linux und SSH</a></li>
+          <li><a href="08-kamera-noir.html">8. Kamera, NoIR und Infrarot</a></li>
+          <li><a href="09-streaming-homepage.html">9. Video, Streaming und Homepage</a></li>
+          <li><a href="10-ausfallsicherheit-abgabe.html">10. Ausfallsicherheit, Abnahme und Reflexion</a></li>
+        </ul>
+      </div>
+
+      <h2>Die beiden Arbeitswege</h2>
+      <p>Alle lernen die gemeinsamen Grundlagen. Danach bearbeitest du mit deiner Gruppe eine Vertiefung und erklärst sie der anderen Gruppe.</p>
+      <div class="grid2">
+        <div class="wb-soft-callout">
+          <strong>Gruppe A: Sensorik und ESP32</strong>
+          <p><a href="gruppe-a.html">Zur Übersicht für Gruppe A</a></p>
+          <p>Messkette, ADC, WLAN, Webserver und Datenanzeige.</p>
+        </div>
+        <div class="wb-soft-callout">
+          <strong>Gruppe B: Kamera und Raspberry Pi</strong>
+          <p><a href="gruppe-b.html">Zur Übersicht für Gruppe B</a></p>
+          <p>Linux, Kamera, Infrarot, Video, Streaming und Ausfallsicherheit.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"coop_route_order",
+          "title":"Ordne die Grundidee des Datenwegs",
+          "hint":"Vom realen Vorgang bis zur Darstellung.",
+          "items":["Messgröße wird erfasst","Signal wird verarbeitet","Daten werden übertragen","Information wird angezeigt"],
+          "shuffle":true
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Arbeitsweise">
+      <h1>So arbeitest du im Team</h1>
+      <h2>Ablauf jeder Doppelstunde</h2>
+      <div class="wb-soft-callout">
+        <ol style="margin:0; padding-left:22px">
+          <li>Gemeinsamer Input und Tafelbild</li>
+          <li>Individueller Theorie-Check</li>
+          <li>Parallele Gruppenaufgabe</li>
+          <li>Technische Übergabe an die andere Gruppe</li>
+          <li>Persönliches Exit-Ticket</li>
+        </ol>
+      </div>
+      <h2>Übergabeformat</h2>
+      <p>Am Ende jeder Einheit beantwortet ihr gemeinsam vier Fragen: Was funktioniert? Woran wurde es geprüft? Welche Werte oder Dateien entstehen? Was ist der letzte bekannte Fehler?</p>
+      <h2>Rollen</h2>
+      <p>Die Rollen wechseln: Hardware, Software, Messung und Dokumentation. Jede Person lädt mindestens einmal Code hoch, prüft einen Messwert, nutzt eine Diagnoseausgabe und erklärt einen technischen Zusammenhang.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"coop_roles_categories",
+          "title":"Ordne die Aufgaben zu",
+          "hint":"Welche Rolle kümmert sich hauptsächlich um welchen Nachweis?",
+          "categories":[
+            {"id":"hardware","title":"Hardware"},
+            {"id":"software","title":"Software"},
+            {"id":"measurement","title":"Messung"},
+            {"id":"documentation","title":"Dokumentation"}
+          ],
+          "items":[
+            {"label":"Steckverbindungen und Versorgung prüfen","category":"hardware"},
+            {"label":"Fehlermeldung im Programm untersuchen","category":"software"},
+            {"label":"Messreihe mit Einheiten aufnehmen","category":"measurement"},
+            {"label":"Screenshot und Meilenstein festhalten","category":"documentation"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Klausur und Abgabe">
+      <h1>Klausurtraining und Abgabe</h1>
+      <p>Die Gruppenarbeit ist gemeinsam, die fachliche Erklärung bleibt individuell. Für die Klausur zählen vor allem Messketten, Modelle, Rechnungen, Datenwege und begründete Entscheidungen.</p>
+      <h2>Das solltest du sicher können</h2>
+      <ul>
+        <li>analoge und digitale Signale unterscheiden</li>
+        <li>einen Spannungsteiler erklären und berechnen</li>
+        <li>ADC-Rohwerte fachlich richtig einordnen</li>
+        <li>Client, Server, IP und HTTP unterscheiden</li>
+        <li>einen Fehler systematisch vom letzten funktionierenden Punkt aus eingrenzen</li>
+        <li>Auflösung, Bildrate und Bitrate in Beziehung setzen</li>
+        <li>Datenschutz- und Montageentscheidungen begründen</li>
+      </ul>
+      <h2>Abgabe des Projekts</h2>
+      <p>Jede Gruppe gibt ein Systemdiagramm, ein Schaltbild, kommentierte Kernprogramme, Messprotokolle, ein Fehlersuchprotokoll, eine Datenschutz-Checkliste und eine kurze Reflexion ab.</p>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"coop_project_reflection",
+          "title":"Deine Startreflexion",
+          "hint":"Antworte in 4–6 Sätzen: Welche Systementscheidung wird vermutlich besonders wichtig? Begründe deine Vermutung mit mindestens zwei Fachbegriffen.",
+          "fields":[
+            {"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Meine Vermutung ..."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Das Projekt verbindet Physik, Informatik und Technik über eine nachvollziehbare Mess- und Datenkette. Du arbeitest in einer Gruppe, musst das Gesamtsystem aber individuell erklären können.</p>
+      </div>
+    </section>
+  </div>
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>

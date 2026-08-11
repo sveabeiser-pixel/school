@@ -1910,6 +1910,27 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
 }
 .wb-book .wb-soft-callout strong{display:block; margin-bottom:6px}
 
+.wb-book .lf-only-box{
+  border-left:6px solid #8f4b1f;
+  background:#fff0e7;
+  color:#3f1d0b;
+  border-radius:10px;
+  padding:12px 14px;
+  margin:12px 0;
+}
+.wb-book .lf-only-box strong{display:block;color:#733a18;margin-bottom:4px}
+.wb-book .lf-only-badge{
+  display:inline-block;
+  border:1px solid #8f4b1f;
+  background:#fff0e7;
+  color:#733a18;
+  border-radius:999px;
+  padding:2px 9px;
+  font-size:.84rem;
+  font-weight:800;
+  margin:0 5px 3px 0;
+}
+
 
 
 /* Puzzle2 wrong feedback */

@@ -44,6 +44,29 @@
       background: rgba(0,0,0,.03);
       color: var(--wb-text, #111827);
     }
+    .code-card{
+      background:#0f172a;
+      color:#e8f0ff;
+      border-radius:10px;
+      padding:12px 14px;
+      overflow-x:auto;
+      margin:10px 0;
+    }
+    .trace-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:10px 0;
+      font-size:14px;
+    }
+    .trace-table th,.trace-table td{
+      border:1px solid var(--wb-line, #e5e7eb);
+      padding:8px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .trace-table th{background:rgba(30,102,200,.08)}
+    .source-list{margin:0; padding-left:20px}
+    .source-list li + li{margin-top:6px}
   </style>
 </head>
 
@@ -114,6 +137,41 @@
           Später kann der Wert wieder geändert werden:
           <pre><code>a = a + 5;</code></pre>
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Ablaufspur: Was steht wann in der Variable?</strong>
+        <div>
+          Eine Zuweisung wird immer von rechts nach links verstanden: Erst wird rechts gerechnet, dann wird das Ergebnis links gespeichert.
+        </div>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Zeile</th><th>Was passiert?</th><th>Wert von <code>a</code></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>int a;</code></td><td>Speicherplatz wird angelegt.</td><td>noch kein sinnvoller Wert</td></tr>
+          <tr><td><code>a = 10;</code></td><td>Der Wert 10 wird gespeichert.</td><td>10</td></tr>
+          <tr><td><code>a = a + 5;</code></td><td>Rechts wird zuerst <code>10 + 5</code> berechnet, dann wird 15 gespeichert.</td><td>15</td></tr>
+        </tbody>
+      </table>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino3_variable_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Nutze die Ablaufspur.",
+            "statement":"Nach der Zeile a = a + 5; enthält a weiterhin den alten Wert 10.",
+            "answer": false,
+            "explain":"Falsch. Rechts wird zuerst mit dem alten Wert gerechnet, danach wird das Ergebnis wieder in a gespeichert. Aus 10 wird 15."
+          }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -240,7 +298,7 @@ void loop() {
           <div class="wb-muted">
             Die LED blinkt aktuell langsam.
             <br>
-            ? Ändere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
+            Aufgabe: Ändere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
             ohne die <code>delay()</code>-Zeilen zu verändern.
           </div>
 
@@ -282,7 +340,7 @@ void loop() {
           <div class="wb-muted">
             Der Ton ist aktuell immer gleich.
             <br>
-            ? Sorge dafür, dass der Ton <b>bei jedem Durchlauf höher</b> wird.
+            Aufgabe: Sorge dafür, dass der Ton <b>bei jedem Durchlauf höher</b> wird.
             <br>
             Tipp: Der Wert der Variable darf sich ändern.
           </div>
@@ -326,7 +384,7 @@ void loop() {
           <div class="wb-muted">
             Du hörst immer denselben Rhythmus.
             <br>
-            ? Erkläre, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
+            Aufgabe: Erkläre, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
             erzeugen kannst, ohne neue <code>delay()</code>-Zeilen hinzuzufügen.
           </div>
 
@@ -340,9 +398,9 @@ void loop() {
               <br><br>
               Beispiel:
               <ul>
-                <li>kurz = 100, lang = 500 ? langsamer Rhythmus</li>
-                <li>kurz = 200, lang = 200 ? gleichmäßiger Rhythmus</li>
-                <li>kurz = 50, lang = 300 ? schneller Akzent</li>
+                <li>kurz = 100, lang = 500 -> langsamer Rhythmus</li>
+                <li>kurz = 200, lang = 200 -> gleichmäßiger Rhythmus</li>
+                <li>kurz = 50, lang = 300 -> schneller Akzent</li>
               </ul>
               Die Programmstruktur bleibt gleich – nur die Werte ändern sich.
             </div>
@@ -510,7 +568,7 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Die wichtigste Regel</strong>
         <div>
-          ? <b>Erst denken, dann ändern.</b><br>
+          Merke: <b>Erst denken, dann ändern.</b><br>
           Wildes Ausprobieren führt selten zum Ziel.
           Debugging heißt: Schritt für Schritt prüfen.
         </div>
@@ -606,7 +664,7 @@ void loop() {
           <div class="wb-muted">
             Im seriellen Monitor erscheint immer nur <code>0</code>.
             <br>
-            ? Warum ändert sich der Wert nicht?
+            Frage: Warum ändert sich der Wert nicht?
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 1" placeholder="Beschreibe die Ursache des Problems."></textarea>
@@ -641,7 +699,7 @@ void loop() {
           <div class="wb-muted">
             Die LED an Pin 13 leuchtet nicht.
             <br>
-            ? Wo liegt der Fehler?
+            Frage: Wo liegt der Fehler?
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 2" placeholder="Beschreibe, was nicht zusammenpasst."></textarea>
@@ -755,6 +813,53 @@ void loop() {
       <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
+        <strong>Einzelne Schleifendurchgänge sichtbar machen</strong>
+        <div>
+          Bei <code>for (int i = 0; i &lt; 5; i++)</code> startet <code>i</code> bei 0.
+          Vor jedem Durchgang wird geprüft, ob <code>i &lt; 5</code> noch wahr ist.
+          Erst nach dem Block wird <code>i</code> um 1 erhöht.
+        </div>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Prüfung</th><th>Wert von <code>i</code></th><th>Wird der Block ausgeführt?</th><th>Danach</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>0 &lt; 5</code></td><td>0</td><td>ja, LED blinkt einmal</td><td><code>i</code> wird 1</td></tr>
+          <tr><td><code>1 &lt; 5</code></td><td>1</td><td>ja, LED blinkt ein zweites Mal</td><td><code>i</code> wird 2</td></tr>
+          <tr><td><code>2 &lt; 5</code></td><td>2</td><td>ja, LED blinkt ein drittes Mal</td><td><code>i</code> wird 3</td></tr>
+          <tr><td><code>3 &lt; 5</code></td><td>3</td><td>ja, LED blinkt ein viertes Mal</td><td><code>i</code> wird 4</td></tr>
+          <tr><td><code>4 &lt; 5</code></td><td>4</td><td>ja, LED blinkt ein fünftes Mal</td><td><code>i</code> wird 5</td></tr>
+          <tr><td><code>5 &lt; 5</code></td><td>5</td><td>nein, Schleife ist fertig</td><td>Programm läuft nach der Schleife weiter</td></tr>
+        </tbody>
+      </table>
+
+      <div data-wb-type="cloze">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino3_for_cloze",
+            "title":"Sicherung: for-Schleife",
+            "hint":"Setze Start, Bedingung und Schritt ein.",
+            "bank":["Startwert","Bedingung","Schritt","Block"],
+            "segments":[
+              {"t":"text","v":"In einer for-Schleife legt der "},
+              {"t":"gap","a":"Startwert"},
+              {"t":"text","v":" fest, wo gezählt wird. Die "},
+              {"t":"gap","a":"Bedingung"},
+              {"t":"text","v":" entscheidet vor jedem Durchgang, ob der "},
+              {"t":"gap","a":"Block"},
+              {"t":"text","v":" ausgeführt wird. Der "},
+              {"t":"gap","a":"Schritt"},
+              {"t":"text","v":" verändert danach die Zählvariable."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
         <strong>Typischer Fehler</strong>
         <div>
           Wenn die Bedingung nie falsch wird,
@@ -800,7 +905,7 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Beschreibe, was dieses Programm macht,
+            Aufgabe: Beschreibe, was dieses Programm macht,
             ohne den Code umzuschreiben.
           </div>
 
@@ -868,6 +973,41 @@ void loop() {
       <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
+        <strong>Ablaufspur: außen und innen</strong>
+        <div>
+          Lies geschachtelte Schleifen von außen nach innen. Die äußere Schleife startet eine Runde.
+          In dieser Runde läuft die innere Schleife komplett. Erst dann geht die äußere Schleife weiter.
+        </div>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Äußerer Durchgang <code>i</code></th><th>Innere Werte <code>j</code></th><th>Wie oft läuft der innere Code?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
+          <tr><td>1</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
+          <tr><td>2</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
+          <tr><td>Gesamt</td><td>3 äußere Runden mal 5 innere Runden</td><td>15-mal</td></tr>
+        </tbody>
+      </table>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino3_nested_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Prüfe mit der Ablaufspur.",
+            "statement":"Bei außen 3 Durchgängen und innen 5 Durchgängen läuft der innere Code insgesamt 8-mal.",
+            "answer": false,
+            "explain":"Falsch. Die Durchgänge werden multipliziert: 3 mal 5 ergibt 15."
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
         <strong>Beispiel mit LED</strong>
         <div>
           Die LED soll in mehreren Durchgängen blinken:
@@ -880,7 +1020,7 @@ void loop() {
   }
   delay(1000);
 }</code></pre>
-          ? 3 Runden, in jeder Runde blinkt die LED 4-mal.
+          Ergebnis: 3 Runden, in jeder Runde blinkt die LED 4-mal.
         </div>
       </div>
 
@@ -893,7 +1033,7 @@ void loop() {
           <br>
           Tatsächlich gilt:
           <br>
-          ? <b>Die innere Schleife läuft vollständig, bevor die äußere weitergeht.</b>
+          Merke: <b>Die innere Schleife läuft vollständig, bevor die äußere weitergeht.</b>
         </div>
       </div>
 
@@ -935,7 +1075,7 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Beschreibe genau, was du hörst,
+            Aufgabe: Beschreibe genau, was du hörst,
             wenn dieses Programm läuft.
           </div>
 
@@ -960,7 +1100,7 @@ void loop() {
         <div>
           Bisher hast du LEDs <b>digital</b> geschaltet:
           <br>
-          ? <code>HIGH</code> = an, <code>LOW</code> = aus.
+          Merke: <code>HIGH</code> = an, <code>LOW</code> = aus.
           <br><br>
           Beim <b>Dimmen</b> geht es darum,
           die Helligkeit <b>stufenlos</b> zu verändern –
@@ -977,9 +1117,9 @@ void loop() {
           <pre><code>analogWrite(pin, wert);</code></pre>
           Der <b>Wert</b> bestimmt die Helligkeit:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>0 ? LED aus</li>
-            <li>127 ? halbe Helligkeit</li>
-            <li>255 ? volle Helligkeit</li>
+            <li>0 -> LED aus</li>
+            <li>127 -> halbe Helligkeit</li>
+            <li>255 -> volle Helligkeit</li>
           </ul>
         </div>
       </div>
@@ -1023,6 +1163,21 @@ void loop() {
           <code>analogWrite()</code> funktioniert nur an
           <b>PWM-Pins</b> (z. B. 3, 5, 6, 9, 10, 11 beim Arduino Uno).
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino3_pwm_verify",
+            "title":"Wahr oder falsch?",
+            "hint":"Denke an PWM.",
+            "statement":"analogWrite(3, 127) erzeugt beim Arduino Uno eine echte, dauerhaft halbe Spannung am Pin.",
+            "answer": false,
+            "explain":"Falsch. Der Arduino nutzt PWM: Der Pin wird sehr schnell ein- und ausgeschaltet. Für das Auge wirkt die LED dadurch ungefähr halb hell."
+          }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1076,7 +1231,7 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Erkläre, was passiert, wenn du den Wert von
+            Aufgabe: Erkläre, was passiert, wenn du den Wert von
             <code>hell</code> veränderst.
           </div>
 
@@ -1115,10 +1270,10 @@ void loop() {
         <div>
           Jede Farbe setzt sich aus Anteilen von Rot, Grün und Blau zusammen:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>Rot + Grün ? Gelb</li>
-            <li>Rot + Blau ? Magenta</li>
-            <li>Grün + Blau ? Cyan</li>
-            <li>Rot + Grün + Blau ? Weiß</li>
+            <li>Rot + Grün -> Gelb</li>
+            <li>Rot + Blau -> Magenta</li>
+            <li>Grün + Blau -> Cyan</li>
+            <li>Rot + Grün + Blau -> Weiß</li>
           </ul>
         </div>
       </div>
@@ -1149,7 +1304,7 @@ void loop() {
           <pre><code>analogWrite(rotPin, 255);
 analogWrite(gruenPin, 0);
 analogWrite(blauPin, 0);</code></pre>
-          ? Ergebnis: Die LED leuchtet rot.
+          Ergebnis: Die LED leuchtet rot.
         </div>
       </div>
 
@@ -1160,8 +1315,8 @@ analogWrite(blauPin, 0);</code></pre>
         <div>
           Für jede Farbe gilt:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>0 ? Farbe aus</li>
-            <li>255 ? maximale Helligkeit</li>
+            <li>0 -> Farbe aus</li>
+            <li>255 -> maximale Helligkeit</li>
           </ul>
           Durch unterschiedliche Kombinationen entstehen neue Farben.
         </div>
@@ -1225,7 +1380,7 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Erkläre, welche Farbe du siehst und
+            Aufgabe: Erkläre, welche Farbe du siehst und
             was du an den Variablen ändern musst,
             um z. B. <b>Violett</b> zu erzeugen.
           </div>
@@ -1302,7 +1457,7 @@ void loop() {
             <li><code>&lt;=</code> kleiner oder gleich</li>
             <li><code>&gt;=</code> größer oder gleich</li>
           </ul>
-          ? Wichtig: <code>==</code> ist ein Vergleich,
+          Wichtig: <code>==</code> ist ein Vergleich,
           <code>=</code> ist eine Zuweisung.
         </div>
       </div>
@@ -1336,9 +1491,50 @@ void loop() {
     digitalWrite(13, LOW);
   }
 }</code></pre>
-          ? Die LED leuchtet nur,
+          Ergebnis: Die LED leuchtet nur,
           wenn der Wert der Variable groß genug ist.
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Ablaufspur: if / else entscheidet genau einen Weg</strong>
+        <div>
+          Die Bedingung wird zu einem Wahr/Falsch-Ergebnis. Danach wird entweder der <code>if</code>-Block
+          oder der <code>else</code>-Block ausgeführt, nie beide gleichzeitig.
+        </div>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Wert von <code>hell</code></th><th>Prüfung</th><th>Ausgeführter Zweig</th><th>LED</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>80</td><td><code>80 &gt; 100</code> ist falsch</td><td><code>else</code></td><td>aus</td></tr>
+          <tr><td>150</td><td><code>150 &gt; 100</code> ist wahr</td><td><code>if</code></td><td>an</td></tr>
+          <tr><td>100</td><td><code>100 &gt; 100</code> ist falsch</td><td><code>else</code></td><td>aus</td></tr>
+        </tbody>
+      </table>
+
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino3_if_categories",
+            "title":"Sortiere: Vergleich oder Zuweisung?",
+            "hint":"Das ist einer der häufigsten Anfängerfehler.",
+            "categories":[
+              {"id":"vergleich","title":"Vergleich"},
+              {"id":"zuweisung","title":"Zuweisung"}
+            ],
+            "items":[
+              {"label":"x == 5","category":"vergleich"},
+              {"label":"x = 5","category":"zuweisung"},
+              {"label":"hell >= 100","category":"vergleich"},
+              {"label":"hell = 150","category":"zuweisung"}
+            ]
+          }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1394,7 +1590,7 @@ void loop() {
 }</code></pre>
 
           <div class="wb-muted">
-            ? Beschreibe, was passiert,
+            Aufgabe: Beschreibe, was passiert,
             und wie du den Wert ändern musst,
             damit der Ton erklingt.
           </div>
@@ -1508,7 +1704,7 @@ void loop() {
           Baue eine Ampel mit einer RGB-LED.
           <br>
           Die Farben sollen in der richtigen Reihenfolge wechseln:
-          <b>Rot ? Gelb ? Grün ? Gelb ? Rot</b>.
+          <b>Rot -> Gelb -> Grün -> Gelb -> Rot</b>.
         </div>
       </div>
 
@@ -1557,11 +1753,17 @@ void loop() {
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gebe deinen Namen links unten ein und klicke auf <b>summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine txt Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in 
-        OneNote einfügen.</p>
+        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine TXT-Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in OneNote einfügen.</p>
       </div>
+      <div class="wb-section-break"></div>
 
-
+      <h3>Quellen & Weiterforschen</h3>
+      <ul class="source-list">
+        <li><a href="https://docs.arduino.cc/language-reference/en/variables/data-types/int/" target="_blank" rel="noopener">Arduino Reference: int</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/for/" target="_blank" rel="noopener">Arduino Reference: for</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/else/" target="_blank" rel="noopener">Arduino Reference: if / else</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
+      </ul>
 
     </section>
   </div>

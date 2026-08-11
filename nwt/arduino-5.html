@@ -108,6 +108,26 @@
       margin-top: 6px;
     }
 
+    .trace-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .trace-table th,
+    .trace-table td {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      padding: 9px 11px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .trace-table th {
+      background: #edf6ff;
+    }
+
     @media (max-width: 900px) {
       .grid2x,
       .grid3x {
@@ -238,9 +258,29 @@ for (int i = 0; i &lt; 6; i = i + 1) {
   delay(pauseZwischenNoten);
 }</pre></div>
           <p>Die Schleife läuft hier von <code>i = 0</code> bis <code>i &lt; 6</code>. So werden alle sechs Listenplätze nacheinander verarbeitet. Die Tondauer wird aus dem Notenwert berechnet. Eine Achtel dauert dadurch kürzer als eine Viertel oder Halbe.</p>
-          
+
         </div>
       </div>
+      <div class="wb-section-break"></div>
+
+      <div class="info-box">
+        <strong>Ablaufspur: Array und Schleife zusammen lesen</strong>
+        <p>Die Zählvariable <code>i</code> wählt in beiden Arrays immer denselben Platz aus. So passen Tonhöhe und Notenwert zusammen.</p>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Durchgang</th><th><code>i</code></th><th><code>Melodie[i]</code></th><th><code>notenWert[i]</code></th><th>Ergebnis</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>0</td><td>175</td><td>8</td><td>erster Ton, kurze Dauer</td></tr>
+          <tr><td>2</td><td>1</td><td>175</td><td>8</td><td>zweiter Ton, kurze Dauer</td></tr>
+          <tr><td>3</td><td>2</td><td>196</td><td>4</td><td>dritter Ton, längere Dauer</td></tr>
+          <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>die Schleife arbeitet die Liste weiter ab</td></tr>
+          <tr><td>7</td><td>6</td><td>nicht vorhanden</td><td>nicht vorhanden</td><td>deshalb muss die Schleife bei sechs Elementen vorher stoppen</td></tr>
+        </tbody>
+      </table>
+
       <div class="wb-section-break"></div>
 
       <div class="warn-box">
@@ -512,6 +552,25 @@ int notenWert[] = {
           <p><code>attachInterrupt()</code> hat hier drei Teile: den Interrupt-Pin, den Namen der ISR und das Signal, auf das reagiert werden soll. Du siehst auf dem Bild die Varianten <code>FALLING</code>, <code>RISING</code>, <code>LOW</code> und <code>CHANGE</code>. Außerdem gilt hier: Nur an Pin 2 und 3 kann diese Interrupt-Funktion aufgerufen werden.</p>
         </div>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="warn-box">
+        <strong>Ablaufspur: Was passiert beim Tastendruck?</strong>
+        <p>Der Interrupt erledigt nicht die ganze Arbeit. Er merkt nur schnell, dass etwas passiert ist. Die längere Reaktion gehört danach in <code>loop()</code>.</p>
+      </div>
+
+      <table class="trace-table">
+        <thead>
+          <tr><th>Moment</th><th>Programmzustand</th><th>Was passiert?</th><th>Warum ist das wichtig?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vor dem Tastendruck</td><td><code>loop()</code> läuft normal</td><td>Lauflicht oder anderer Code arbeitet weiter.</td><td>Das Hauptprogramm bleibt übersichtlich.</td></tr>
+          <tr><td>Taster fällt von HIGH auf LOW</td><td>Interrupt wird ausgelöst</td><td>Die ISR wird kurz aufgerufen.</td><td>Der Tastendruck wird nicht verpasst.</td></tr>
+          <tr><td>In der ISR</td><td><code>zustand = 1;</code></td><td>Nur ein Merker wird gesetzt.</td><td>Die ISR bleibt kurz und blockiert nichts.</td></tr>
+          <tr><td>Nach der ISR</td><td><code>loop()</code> läuft weiter</td><td><code>loop()</code> prüft den Merker und führt die längere Aktion aus.</td><td>Anzeige, Ton oder Bewegung passieren kontrolliert im Hauptprogramm.</td></tr>
+        </tbody>
+      </table>
 
       <div class="wb-section-break"></div>
 
