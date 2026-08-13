@@ -930,6 +930,56 @@
     </div>
     <div class="wb-section-break"></div>
 
+    <h2>Simulation: Teilchenbahn im Kondensator</h2>
+    <p>Probiere die Formel direkt aus: In der Simulation fliegt ein geladenes Teilchen waagrecht in das homogene Feld eines Plattenkondensators. Die waagrechte Geschwindigkeit bleibt konstant, die elektrische Kraft wirkt senkrecht dazu. Dadurch entsteht die Parabelbahn wie beim waagrechten Wurf.</p>
+    <p><a class="wb-btn" href="felder-simulationen.html#page-2" target="_blank" rel="noopener">Simulation einzeln öffnen</a></p>
+    <div class="wb-section-break"></div>
+
+    <div class="field-sim-card" data-field-sim="particle-trajectory">
+      <div class="field-sim-grid">
+        <div class="field-sim-controls">
+          <h2>Parameter verändern</h2>
+
+          <label>Ladung q</label>
+          <input data-role="charge" type="range" min="-5" max="5" value="-2" step="0.1">
+          <div class="field-sim-mono">q = <span data-role="charge-value">-2,0</span> nC</div>
+
+          <label>Spannung U</label>
+          <input data-role="voltage" type="range" min="0.5" max="5.0" value="2.0" step="0.1">
+          <div class="field-sim-mono">U = <span data-role="voltage-value">2,0</span> kV</div>
+
+          <label>Feldstärke E</label>
+          <input data-role="field" type="range" min="10" max="100" value="40" step="2">
+          <div class="field-sim-mono">E = <span data-role="field-value">40</span> kV/m</div>
+
+          <label>Horizontale Geschwindigkeit v<sub>x</sub></label>
+          <input data-role="velocity" type="range" min="10" max="90" value="26" step="1">
+          <div class="field-sim-mono">v<sub>x</sub> = <span data-role="velocity-value">26</span> km/s</div>
+
+          <label>Richtung der Spannung</label>
+          <select data-role="direction">
+            <option value="down" selected>oben +, unten -</option>
+            <option value="up">oben -, unten +</option>
+          </select>
+
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" data-role="play">Start</button>
+            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+          </div>
+
+          <div class="field-sim-note">
+            <strong>Beobachte gezielt</strong>
+            <p>Erhöhe zuerst \(|q|\) oder \(E\): Die Bahn krümmt sich stärker. Erhöhe danach \(v_x\): Das Teilchen ist kürzer im Feld und kann zwischen den Platten hindurchfliegen. Wenn du das Vorzeichen von \(q\) oder die Spannungsrichtung änderst, kehrt sich die Ablenkung um.</p>
+          </div>
+        </div>
+        <div>
+          <canvas data-role="canvas" width="980" height="560" aria-label="Simulation der Flugbahn eines geladenen Teilchens im Kondensator"></canvas>
+          <div class="field-sim-mono" data-role="readout"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
     <div class="ef-img-grid">
       <figure class="ef-figure">
         <img src="bilder/brownsche_roehre.png" alt="Braunsche Röhre mit Elektronenkanone, Ablenkplatten und Leuchtschirm">
