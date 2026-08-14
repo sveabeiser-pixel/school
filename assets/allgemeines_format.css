@@ -1931,6 +1931,48 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   margin:0 5px 3px 0;
 }
 
+/* Formeln sind in allen Kursstufen-Seiten sofort als solche erkennbar. */
+.wb-book{
+  --wb-formula:#006b63;
+  --wb-formula-bg:#e9f8f5;
+  --wb-formula-border:#82cfc4;
+}
+.wb-book mjx-container,
+.wb-book .MathJax,
+.wb-book .MathJax_Display,
+.wb-book .ef-formula,
+.wb-book .formula-card,
+.wb-book .physics-formula,
+.wb-book .formula-box{
+  color:var(--wb-formula) !important;
+}
+.wb-book mjx-container[display="true"],
+.wb-book .MathJax_Display,
+.wb-book .physics-formula,
+.wb-book .formula-box{
+  display:block;
+  width:fit-content;
+  max-width:100%;
+  margin:12px auto;
+  padding:10px 14px;
+  border:1px solid var(--wb-formula-border);
+  border-left:5px solid var(--wb-formula);
+  border-radius:8px;
+  background:var(--wb-formula-bg);
+  overflow-x:auto;
+  font-weight:750;
+}
+.wb-book .formula-card{
+  border-color:var(--wb-formula-border) !important;
+  background:var(--wb-formula-bg) !important;
+}
+.wb-book[data-theme="dark"],
+.wb-book[data-theme="dark-blue"]{
+  --wb-formula:#67e8d5;
+  --wb-formula-bg:#123d3a;
+  --wb-formula-border:#2a8f84;
+}
+
 
 
 /* Puzzle2 wrong feedback */

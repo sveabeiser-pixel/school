@@ -80,28 +80,19 @@
       <div class="wb-callout"><strong>Stopp vor dem Upload:</strong><p>Betreibe das Modul am ESP32 mit 3,3 V, nicht mit 5 V. Ein 5-V-Datensignal kann einen 3,3-V-GPIO beschädigen oder zumindest unzuverlässig machen.</p></div>
 
       <div class="wb-section-break"></div>
-      <div data-p2 class="p2" data-p2-id="dht11_verdrahtung_p2" data-p2-title="Zuordnung: KY-015 richtig anschließen" data-p2-hint="Verbinde Anschluss und ESP32-Pin.">
-        <div class="p2-hint">Verbinde passende Paare.</div>
-        <div class="p2-banks">
-          <div>
-            <div class="p2-col-title">KY-015</div>
-            <div class="p2-bank" data-left-bank>
-              <div class="p2-piece p2-left" data-side="L" data-pair="1">S / Signal</div>
-              <div class="p2-piece p2-left" data-side="L" data-pair="2">+ / VCC</div>
-              <div class="p2-piece p2-left" data-side="L" data-pair="3">- / GND</div>
-            </div>
-          </div>
-          <div>
-            <div class="p2-col-title">ESP32</div>
-            <div class="p2-bank" data-right-bank>
-              <div class="p2-piece p2-right" data-side="R" data-pair="1">GPIO 4</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="2">3V3</div>
-              <div class="p2-piece p2-right" data-side="R" data-pair="3">GND</div>
-            </div>
-          </div>
-        </div>
-        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
-        <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+      <div data-wb-type="p2">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"dht11_verdrahtung_p2",
+          "title":"Zuordnung: KY-015 richtig anschließen",
+          "hint":"Verbinde Anschluss und ESP32-Pin.",
+          "pairs":[
+            {"left":"S / Signal","right":"GPIO 4"},
+            {"left":"+ / VCC","right":"3V3"},
+            {"left":"- / GND","right":"GND"}
+          ]
+        }
+        </script>
       </div>
       <div class="wb-section-break"></div>
     </section>
