@@ -1,10 +1,31 @@
 .field-sim-card{border:1px solid var(--wb-line,#e5e7eb);border-radius:14px;padding:14px;background:var(--wb-text-bg,#fff);box-shadow:var(--wb-shadow,0 6px 20px rgba(0,0,0,.08));margin:14px 0}
 .field-sim-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:14px;align-items:start}
+.field-sim-grid>*{min-width:0}
 @media (max-width:900px){.field-sim-grid{grid-template-columns:1fr}}
 .field-sim-controls label{display:block;font-weight:900;margin:10px 0 6px}
 .field-sim-controls input[type="range"]{width:100%}
+.field-sim-controls select{box-sizing:border-box;width:100%;min-height:42px;padding:8px 10px;border:1px solid var(--wb-line,#d1d5db);border-radius:7px;background:var(--wb-text-bg,#fff);color:inherit;font:inherit}
+.field-sim-controls select:focus{outline:3px solid rgba(37,99,235,.18);border-color:#2563eb}
 .field-sim-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:13px;color:var(--wb-muted,#6b7280);white-space:pre-wrap;margin-top:8px}
 .field-sim-note{border-left:5px solid #2563eb;background:rgba(37,99,235,.08);padding:12px;border-radius:8px;margin-top:14px}
 [data-field-sim] [data-role="canvas"]{width:100%;height:auto;aspect-ratio:980/560;border-radius:12px;border:1px solid var(--wb-line,#e5e7eb);background:rgba(255,255,255,.58);display:block}
 .wb-book[data-theme="dark"] .field-sim-card,.wb-book[data-theme="dark-blue"] .field-sim-card{background:rgba(255,255,255,.18)}
 .wb-book[data-theme="dark"] [data-field-sim] [data-role="canvas"],.wb-book[data-theme="dark-blue"] [data-field-sim] [data-role="canvas"]{background:rgba(255,255,255,.88)!important;border-color:rgba(255,255,255,.4)!important}
+@media (max-width:700px){
+  html,body,.wb-book{box-sizing:border-box;width:100vw;max-width:100vw;min-width:0;overflow:hidden}
+  .wb-book .wb-top-left{min-width:0;gap:6px}
+  .wb-book .wb-brand{max-width:126px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:18px}
+  .wb-book .wb-top-right{min-width:0;gap:4px}
+  .wb-book .wb-theme-wrap,.wb-book [data-wb-present],.wb-book [data-wb-fs]{display:none}
+  .wb-book .wb-page-ind{min-width:38px;font-size:14px}
+  .wb-book .wb-icon-btn{width:36px;height:36px}
+  .wb-book .wb-layout{box-sizing:border-box;width:100%;min-width:0}
+  .wb-book .wb-content{box-sizing:border-box;width:100%;max-width:100vw;min-width:0;padding:0 4px 40px}
+  .wb-book .wb-paper{box-sizing:border-box;width:100%;max-width:100%;min-width:0;margin:0;padding:22px 12px;overflow-x:hidden}
+  .wb-book [data-wb-page]{box-sizing:border-box;width:100%;min-width:0;max-width:100%}
+  .wb-book h1{font-size:27px;overflow-wrap:anywhere}
+  .wb-book h2{font-size:21px;overflow-wrap:anywhere}
+  .wb-book .wb-callout,.wb-book .wb-soft-callout,.field-sim-card{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere}
+  .field-sim-card{padding:9px}
+  .field-sim-mono{overflow-wrap:anywhere;word-break:normal}
+}

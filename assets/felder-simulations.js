@@ -1067,6 +1067,445 @@
     draw();
   }
 
+  function initInductionLab(root) {
+    if (!root || (root.dataset && root.dataset.fieldInductionMounted === "1")) return;
+
+    var canvas = find(root, "canvas");
+    var readout = find(root, "readout");
+    var modeEl = find(root, "mode");
+    var magneticEl = find(root, "magnetic");
+    var areaEl = find(root, "area");
+    var turnsEl = find(root, "turns");
+    var rateEl = find(root, "rate");
+    var directionEl = find(root, "direction");
+    var magneticVal = find(root, "magnetic-value");
+    var areaVal = find(root, "area-value");
+    var turnsVal = find(root, "turns-value");
+    var rateVal = find(root, "rate-value");
+    var modeTitle = find(root, "mode-title");
+    var modeHelp = find(root, "mode-help");
+    var playBtn = find(root, "play");
+    var resetBtn = find(root, "reset");
+    if (!canvas || !readout || !modeEl || !magneticEl || !areaEl || !turnsEl || !rateEl || !directionEl) return;
+
+    root.dataset.fieldInductionMounted = "1";
+    var ctx = canvas.getContext("2d");
+    var phase = 0;
+    var running = false;
+    var rafId = null;
+    var lastTs = null;
+    var FIELD_LEFT = 350;
+    var FIELD_RIGHT = 700;
+    var FIELD_TOP = 62;
+    var FIELD_BOTTOM = 305;
+
+    var modeCopy = {
+      translate: {
+        title: "Schleife hinein- und herausfahren",
+        help: "Beim Eintreten wächst die vom Feld durchsetzte Fläche, im vollständig eingetauchten Zustand bleibt sie konstant und beim Austreten nimmt sie wieder ab."
+      },
+      rotate: {
+        title: "Schleife im Magnetfeld drehen",
+        help: "Die Fläche bleibt gleich, aber ihre Projektion senkrecht zum Feld ändert sich. Fluss und Spannung sind um eine Viertelperiode verschoben."
+      },
+      resize: {
+        title: "Schleifenfläche verändern",
+        help: "Die Schleife bleibt vollständig im Feld. Bei gleichmäßiger Vergrößerung oder Verkleinerung ändert sich der Fluss linear und die Spannung bleibt abschnittsweise konstant."
+      },
+      "field-change": {
+        title: "Magnetfeld zeitlich verändern",
+        help: "Die Schleife ruht und ihre Fläche bleibt konstant. Nur die Dichte der Feldsymbole und damit B ändern sich; trotzdem wird eine Spannung induziert."
+      }
+    };
+
+    function wrap(value) {
+      value %= 1;
+      return value < 0 ? value + 1 : value;
+    }
+
+    function triangle(value) {
+      value = wrap(value);
+      return value < 0.5 ? value * 2 : (1 - value) * 2;
+    }
+
+    function values() {
+      return {
+        mode: modeEl.value,
+        maxB: Number(magneticEl.value) * 1e-3,
+        area: Number(areaEl.value) * 1e-4,
+        turns: Number(turnsEl.value),
+        rate: Number(rateEl.value),
+        fieldSign: directionEl.value === "out" ? 1 : -1
+      };
+    }
+
+    function visualLoopSize(v) {
+      var factor = Math.sqrt(v.area / 0.04);
+      return {
+        width: Math.max(88, Math.min(230, 170 * factor)),
+        height: Math.max(78, Math.min(205, 155 * factor))
+      };
+    }
+
+    function sampleAt(rawPhase, v) {
+      var p = wrap(rawPhase);
+      var size = visualLoopSize(v);
+      var signedB = v.maxB * v.fieldSign;
+      var areaPerp = v.area;
+      var currentB = signedB;
+      var angle = 0;
+      var scale = 1;
+      var loopX = 505;
+      var loopY = (FIELD_TOP + FIELD_BOTTOM) / 2;
+      var overlap = 1;
+
+      if (v.mode === "translate") {
+        loopX = 105 + p * 810;
+        var loopLeft = loopX - size.width / 2;
+        var loopRight = loopX + size.width / 2;
+        var overlapWidth = Math.max(0, Math.min(loopRight, FIELD_RIGHT) - Math.max(loopLeft, FIELD_LEFT));
+        overlap = overlapWidth / size.width;
+        areaPerp = v.area * overlap;
+      } else if (v.mode === "rotate") {
+        angle = p * Math.PI * 2;
+        areaPerp = v.area * Math.cos(angle);
+      } else if (v.mode === "resize") {
+        scale = 0.35 + 0.65 * triangle(p);
+        areaPerp = v.area * scale;
+      } else if (v.mode === "field-change") {
+        currentB = signedB * triangle(p);
+      }
+
+      return {
+        phase: p,
+        B: currentB,
+        areaPerp: areaPerp,
+        phi: currentB * areaPerp,
+        angle: angle,
+        scale: scale,
+        loopX: loopX,
+        loopY: loopY,
+        overlap: overlap,
+        width: size.width,
+        height: size.height
+      };
+    }
+
+    function stateAt(rawPhase, v) {
+      var sample = sampleAt(rawPhase, v);
+      var delta = 0.0005;
+      var plus = sampleAt(rawPhase + delta, v).phi;
+      var minus = sampleAt(rawPhase - delta, v).phi;
+      var cycleRate = 0.12 * v.rate;
+      var dPhiDt = (plus - minus) / (2 * delta) * cycleRate;
+      var voltage = -v.turns * dPhiDt;
+      sample.dPhiDt = dPhiDt;
+      sample.voltage = voltage;
+      sample.cycleRate = cycleRate;
+      return sample;
+    }
+
+    function syncLabels(v) {
+      if (magneticVal) magneticVal.textContent = formatNumber(v.maxB * 1000, 0);
+      if (areaVal) areaVal.textContent = formatNumber(v.area * 10000, 0);
+      if (turnsVal) turnsVal.textContent = formatNumber(v.turns, 0);
+      if (rateVal) rateVal.textContent = formatNumber(v.rate, 2);
+      var copy = modeCopy[v.mode];
+      if (modeTitle) modeTitle.textContent = copy.title;
+      if (modeHelp) modeHelp.textContent = copy.help;
+    }
+
+    function drawMagneticSymbol(x, y, sign, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = "#1d4ed8";
+      ctx.fillStyle = "#1d4ed8";
+      ctx.lineWidth = 2;
+      if (sign >= 0) {
+        ctx.beginPath();
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y - 6);
+        ctx.lineTo(x + 6, y + 6);
+        ctx.moveTo(x + 6, y - 6);
+        ctx.lineTo(x - 6, y + 6);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawField(state, v) {
+      ctx.fillStyle = "rgba(37,99,235,.075)";
+      ctx.fillRect(FIELD_LEFT, FIELD_TOP, FIELD_RIGHT - FIELD_LEFT, FIELD_BOTTOM - FIELD_TOP);
+      ctx.strokeStyle = "rgba(30,64,175,.32)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(FIELD_LEFT, FIELD_TOP, FIELD_RIGHT - FIELD_LEFT, FIELD_BOTTOM - FIELD_TOP);
+
+      var strength = Math.max(0, Math.min(1, Math.abs(state.B) / 0.1));
+      var cols = strength === 0 ? 0 : 3 + Math.round(strength * 12);
+      var rows = strength === 0 ? 0 : 2 + Math.round(strength * 7);
+      for (var row = 0; row < rows; row++) {
+        for (var col = 0; col < cols; col++) {
+          var x = FIELD_LEFT + 28 + col * ((FIELD_RIGHT - FIELD_LEFT - 56) / Math.max(1, cols - 1));
+          var y = FIELD_TOP + 30 + row * ((FIELD_BOTTOM - FIELD_TOP - 60) / Math.max(1, rows - 1));
+          drawMagneticSymbol(x, y, state.B >= 0 ? 1 : -1, 0.42 + strength * 0.4);
+        }
+      }
+
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "700 15px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      if (Math.abs(state.B) < 1e-8) {
+        ctx.fillText("B = 0", FIELD_LEFT + 12, FIELD_TOP + 22);
+      } else {
+        ctx.fillText(state.B > 0 ? "B aus der Fläche" : "B in die Fläche", FIELD_LEFT + 12, FIELD_TOP + 22);
+      }
+    }
+
+    function drawCurrentArrows(x, y, width, height, direction) {
+      if (!direction || width < 34 || height < 34) return;
+      var left = x - width / 2;
+      var right = x + width / 2;
+      var top = y - height / 2;
+      var bottom = y + height / 2;
+      var color = "#dc2626";
+      if (direction > 0) {
+        drawArrow(ctx, right - 16, top, left + 16, top, color);
+        drawArrow(ctx, left, top + 16, left, bottom - 16, color);
+        drawArrow(ctx, left + 16, bottom, right - 16, bottom, color);
+        drawArrow(ctx, right, bottom - 16, right, top + 16, color);
+      } else {
+        drawArrow(ctx, left + 16, top, right - 16, top, color);
+        drawArrow(ctx, right, top + 16, right, bottom - 16, color);
+        drawArrow(ctx, right - 16, bottom, left + 16, bottom, color);
+        drawArrow(ctx, left, bottom - 16, left, top + 16, color);
+      }
+    }
+
+    function drawLoop(state, v) {
+      var x = state.loopX;
+      var y = state.loopY;
+      var width = state.width;
+      var height = state.height;
+
+      if (v.mode === "rotate") {
+        width = Math.max(8, Math.abs(Math.cos(state.angle)) * state.width);
+      } else if (v.mode === "resize") {
+        var sideScale = Math.sqrt(state.scale);
+        width *= sideScale;
+        height *= sideScale;
+      }
+
+      ctx.strokeStyle = "#047857";
+      ctx.lineWidth = 7;
+      ctx.lineJoin = "round";
+      ctx.strokeRect(x - width / 2, y - height / 2, width, height);
+      ctx.lineJoin = "miter";
+
+      if (v.mode === "translate" && state.overlap > 0 && state.overlap < 1) {
+        var loopLeft = x - width / 2;
+        var overlapLeft = Math.max(loopLeft, FIELD_LEFT);
+        var overlapRight = Math.min(x + width / 2, FIELD_RIGHT);
+        ctx.fillStyle = "rgba(5,150,105,.17)";
+        ctx.fillRect(overlapLeft, y - height / 2, Math.max(0, overlapRight - overlapLeft), height);
+      }
+
+      if (v.mode === "rotate") {
+        var depth = Math.sin(state.angle) * 24;
+        ctx.strokeStyle = "rgba(4,120,87,.38)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x - width / 2, y - height / 2);
+        ctx.lineTo(x - width / 2 + depth, y - height / 2 - 14);
+        ctx.moveTo(x + width / 2, y - height / 2);
+        ctx.lineTo(x + width / 2 + depth, y - height / 2 - 14);
+        ctx.stroke();
+      }
+
+      if (v.mode === "resize") {
+        ctx.fillStyle = "#f59e0b";
+        [[x - width / 2, y - height / 2], [x + width / 2, y - height / 2], [x - width / 2, y + height / 2], [x + width / 2, y + height / 2]].forEach(function (point) {
+          ctx.beginPath();
+          ctx.arc(point[0], point[1], 7, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      var threshold = 1e-5;
+      drawCurrentArrows(x, y, width, height, Math.abs(state.voltage) > threshold ? Math.sign(state.voltage) : 0);
+    }
+
+    function drawMetrics(state) {
+      var x = 732;
+      var y = 66;
+      var width = 224;
+      var height = 238;
+      ctx.fillStyle = "rgba(248,250,252,.94)";
+      ctx.strokeStyle = "rgba(100,116,139,.35)";
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(x, y, width, height);
+      ctx.strokeRect(x, y, width, height);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "800 17px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("Momentanwerte", x + 14, y + 26);
+      ctx.font = "14px ui-monospace, monospace";
+      var lines = [
+        "B = " + formatNumber(state.B * 1000, 1) + " mT",
+        "A⊥ = " + formatNumber(state.areaPerp * 10000, 1) + " cm²",
+        "Φ = " + formatNumber(state.phi * 1000, 3) + " mWb",
+        "dΦ/dt = " + formatNumber(state.dPhiDt * 1000, 3) + " mWb/s",
+        "Uind = " + formatNumber(state.voltage * 1000, 2) + " mV"
+      ];
+      lines.forEach(function (line, index) {
+        ctx.fillText(line, x + 14, y + 56 + index * 25);
+      });
+      ctx.font = "700 13px system-ui, sans-serif";
+      var induced = Math.abs(state.dPhiDt) < 1e-7 ? "kein Gegenfeld" : (state.dPhiDt > 0 ? "Bind in die Fläche" : "Bind aus der Fläche");
+      ctx.fillStyle = Math.abs(state.dPhiDt) < 1e-7 ? "#64748b" : "#b91c1c";
+      ctx.fillText(induced, x + 14, y + 218);
+    }
+
+    function drawGraph(v, y, height, key, color, label, unitFactor, unit) {
+      var left = 60;
+      var right = 950;
+      var top = y;
+      var bottom = y + height;
+      var samples = [];
+      var maxAbs = 0;
+      for (var i = 0; i <= 180; i++) {
+        var p = i / 180;
+        var value = stateAt(p, v)[key] * unitFactor;
+        samples.push(value);
+        maxAbs = Math.max(maxAbs, Math.abs(value));
+      }
+      maxAbs = Math.max(maxAbs, 1e-9);
+      var mid = (top + bottom) / 2;
+      ctx.strokeStyle = "rgba(100,116,139,.34)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(left, top, right - left, height);
+      ctx.beginPath();
+      ctx.moveTo(left, mid);
+      ctx.lineTo(right, mid);
+      ctx.stroke();
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      samples.forEach(function (value, index) {
+        var x = left + index / 180 * (right - left);
+        var py = mid - value / maxAbs * (height * 0.39);
+        if (index === 0) ctx.moveTo(x, py);
+        else ctx.lineTo(x, py);
+      });
+      ctx.stroke();
+
+      var markerX = left + phase * (right - left);
+      ctx.strokeStyle = "rgba(15,23,42,.7)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(markerX, top);
+      ctx.lineTo(markerX, bottom);
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.font = "700 13px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(label + "  ±" + formatNumber(maxAbs, maxAbs < 0.1 ? 3 : 2) + " " + unit, left + 8, top + 16);
+      ctx.fillStyle = "#475569";
+      ctx.textAlign = "right";
+      ctx.fillText("eine Periode", right - 8, bottom - 7);
+    }
+
+    function draw() {
+      var v = values();
+      var state = stateAt(phase, v);
+      syncLabels(v);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "800 20px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(modeCopy[v.mode].title, 24, 32);
+      ctx.font = "14px system-ui, sans-serif";
+      ctx.fillStyle = "#475569";
+      ctx.fillText("Grün: Leiterschleife · Rot: technischer Induktionsstrom · Blau: äußeres Magnetfeld", 24, 53);
+
+      drawField(state, v);
+      drawLoop(state, v);
+      drawMetrics(state);
+      drawGraph(v, 350, 82, "phi", "#2563eb", "magnetischer Fluss Φ", 1000, "mWb");
+      drawGraph(v, 456, 82, "voltage", "#ea580c", "Induktionsspannung Uind", 1000, "mV");
+
+      var change = Math.abs(state.dPhiDt) < 1e-7 ? "konstant" : (state.dPhiDt > 0 ? "nimmt zu" : "nimmt ab");
+      var currentDirection = Math.abs(state.voltage) < 1e-5 ? "kein Induktionsstrom" : (state.voltage > 0 ? "gegen den Uhrzeigersinn" : "im Uhrzeigersinn");
+      var inducedField = Math.abs(state.dPhiDt) < 1e-7 ? "kein induziertes Gegenfeld" : (state.dPhiDt > 0 ? "in die Fläche hinein" : "aus der Fläche heraus");
+      readout.textContent =
+        modeCopy[v.mode].title + "\n" +
+        "Φ = B·A⊥ = " + formatNumber(state.phi * 1000, 4) + " mWb; der Fluss " + change + ".\n" +
+        "U_ind = -n·dΦ/dt = " + formatNumber(state.voltage * 1000, 3) + " mV\n" +
+        "Technische Stromrichtung: " + currentDirection + ".\n" +
+        "Lenz: " + inducedField + ".";
+    }
+
+    function tick(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      var dt = Math.min(0.05, (ts - lastTs) / 1000);
+      lastTs = ts;
+      phase = wrap(phase + dt * 0.12 * Number(rateEl.value));
+      draw();
+      rafId = window.requestAnimationFrame(tick);
+    }
+
+    function startStop() {
+      running = !running;
+      if (playBtn) playBtn.textContent = running ? "Stop" : "Start";
+      if (running) {
+        lastTs = null;
+        if (rafId) window.cancelAnimationFrame(rafId);
+        rafId = window.requestAnimationFrame(tick);
+      } else if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function stopAtBeginning() {
+      running = false;
+      phase = 0;
+      lastTs = null;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = null;
+      if (playBtn) playBtn.textContent = "Start";
+      draw();
+    }
+
+    function reset() {
+      modeEl.value = "translate";
+      magneticEl.value = "40";
+      areaEl.value = "400";
+      turnsEl.value = "20";
+      rateEl.value = "1";
+      directionEl.value = "out";
+      stopAtBeginning();
+    }
+
+    modeEl.addEventListener("change", stopAtBeginning);
+    [magneticEl, areaEl, turnsEl, rateEl].forEach(function (control) {
+      control.addEventListener("input", draw);
+    });
+    directionEl.addEventListener("change", draw);
+    if (playBtn) playBtn.addEventListener("click", startStop);
+    if (resetBtn) resetBtn.addEventListener("click", reset);
+    draw();
+  }
+
   function mount(root) {
     if (!root || !root.getAttribute) return;
     var key = root.getAttribute("data-field-sim");
@@ -1084,5 +1523,6 @@
   register("particle-trajectory", initParticleTrajectorySim);
   register("magnetic-trajectory", initMagneticTrajectorySim);
   register("helix-trajectory", initHelixTrajectorySim);
+  register("induction-lab", initInductionLab);
   window.FieldSim = { mountAll: mountAll, mount: mount };
 })(window, document);

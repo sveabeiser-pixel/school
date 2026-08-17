@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Felder-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260803-2">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260814-4">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -14,7 +14,7 @@
   <script class="wb-book-config" type="application/json">
   {
     "bookTitle":"Felder-Simulationen",
-    "sectionTitle":"Kondensator und Teilchenbahnen",
+    "sectionTitle":"Felder, Teilchenbahnen und Induktion",
     "startPage":1,
     "submitLabel":"Ergebnisse exportieren",
     "onSubmit":"exportResults",
@@ -312,10 +312,92 @@
       </script>
     </div>
   </section>
+
+  <section data-wb-page="5" data-wb-page-title="Induktionslabor">
+    <h1>Simulation: Induktion durch Flussänderung</h1>
+    <div class="wb-soft-callout"><strong>Basisfach und Leistungsfach</strong><p>Vergleiche vier Wege, den magnetischen Fluss zu verändern: Bewegung in ein begrenztes Magnetfeld, Drehung der Schleife, Veränderung ihrer Fläche und zeitliche Änderung der magnetischen Flussdichte.</p></div>
+    <p>Die Simulation zeigt in jedem Modus dieselben Messgrößen. Du siehst die wirksame Fläche (A_\perp), den magnetischen Fluss \(\Phi\), die induzierte Spannung \(U_\mathrm{ind}\) und bei geschlossenem Stromkreis den Induktionsstrom. Pfeile auf der Leiterschleife zeigen die technische Stromrichtung; das von diesem Strom erzeugte Magnetfeld wirkt der Flussänderung entgegen.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Gemeinsames Modell aller vier Versuche</strong>
+      <p class="ef-formula">\(\Phi=B\cdot A_\perp=B\cdot A\cos\varphi\)</p>
+      <p class="ef-formula">\(U_\mathrm{ind}=-n\frac{\mathrm d\Phi}{\mathrm dt}\)</p>
+      <p>Ein großer magnetischer Fluss allein genügt nicht. Eine Spannung entsteht nur, solange sich der Fluss ändert. Das Vorzeichen folgt dem Lenz'schen Gesetz.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="field-sim-card" data-field-sim="induction-lab">
+      <div class="field-sim-grid">
+        <div class="field-sim-controls">
+          <h2>Versuch einstellen</h2>
+
+          <label>Art der Flussänderung</label>
+          <select data-role="mode">
+            <option value="translate" selected>Schleife hinein- und herausfahren</option>
+            <option value="rotate">Schleife im Magnetfeld drehen</option>
+            <option value="resize">Schleifenfläche vergrößern und verkleinern</option>
+            <option value="field-change">Magnetfeld verstärken und abschwächen</option>
+          </select>
+
+          <label>Maximale Flussdichte B</label>
+          <input data-role="magnetic" type="range" min="5" max="100" value="40" step="1">
+          <div class="field-sim-mono">B<sub>max</sub> = <span data-role="magnetic-value">40</span> mT</div>
+
+          <label>Schleifenfläche A</label>
+          <input data-role="area" type="range" min="100" max="1000" value="400" step="20">
+          <div class="field-sim-mono">A = <span data-role="area-value">400</span> cm²</div>
+
+          <label>Windungszahl n</label>
+          <input data-role="turns" type="range" min="1" max="100" value="20" step="1">
+          <div class="field-sim-mono">n = <span data-role="turns-value">20</span></div>
+
+          <label>Ablauftempo</label>
+          <input data-role="rate" type="range" min="0.25" max="2" value="1" step="0.05">
+          <div class="field-sim-mono">Tempo = <span data-role="rate-value">1,00</span> ×</div>
+
+          <label>Richtung des äußeren Magnetfelds</label>
+          <select data-role="direction">
+            <option value="out" selected>aus der Zeichenfläche heraus</option>
+            <option value="in">in die Zeichenfläche hinein</option>
+          </select>
+
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" data-role="play">Start</button>
+            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+          </div>
+
+          <div class="field-sim-note">
+            <strong data-role="mode-title">Schleife hinein- und herausfahren</strong>
+            <p data-role="mode-help">Beim Eintreten wächst die vom Feld durchsetzte Fläche, im vollständig eingetauchten Zustand bleibt sie konstant und beim Austreten nimmt sie wieder ab.</p>
+          </div>
+        </div>
+        <div>
+          <canvas data-role="canvas" width="980" height="560" aria-label="Induktionslabor mit Leiterschleife, Magnetfeld, Stromrichtung sowie Fluss- und Spannungsdiagrammen"></canvas>
+          <div class="field-sim-mono" data-role="readout"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"felder_sim_induktion_essay",
+        "title":"Auswertung: Vier Ursachen vergleichen",
+        "hint":"Vergleiche mindestens drei Modi. Nutze magnetischen Fluss, Änderungsrate und Lenz'sches Gesetz.",
+        "storagePrefix":"felder_sim_",
+        "fields":[
+          {"label":"Wann ist die Induktionsspannung null? Wann wechselt sie das Vorzeichen? Welche Parameter verändern ihren Betrag?","key":"induktionslabor","kind":"textarea","placeholder":"Schreibe deine Beobachtung und Begründung hier."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script src="../assets/felder-simulations.js?v=20260803-2"></script>
+  <script src="../assets/felder-simulations.js?v=20260814-4"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>
