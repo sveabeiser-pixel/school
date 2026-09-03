@@ -17,6 +17,10 @@
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     .sim-index-list li { margin: 6px 0; }
+    .sim-prompt { margin: 14px 0 0; padding-left: 14px; border-left: 4px solid #2563eb; }
+    .sim-prompt strong { display:block; margin-bottom:4px; }
+    .sim-inline-check { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    .sim-inline-check label { display:flex; align-items:center; gap:6px; margin:0; font-weight:700; }
   </style>
 </head>
 
@@ -41,14 +45,234 @@
     }
     </script>
 
-    <section data-wb-page="1" data-wb-page-title="Überblick">
+    <section data-wb-page="1" data-wb-page-title="Mechanische Schwinger">
+      <h1>Mechanische Schwinger vergleichen</h1>
+      <p class="wb-muted">Untersuche zuerst drei Systeme mit linearer Rückstellkraft. Verändere immer nur einen Parameter und prüfe, ob deine Vorhersage zur Periodendauer stimmt.</p>
+      <div class="wb-callout">
+        <strong>Gemeinsame Leitfrage</strong>
+        <p>Wie können Federpendel, Flüssigkeit im U-Rohr und ein Wagen zwischen zwei Federn trotz ihres unterschiedlichen Aufbaus harmonisch schwingen?</p>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="spring-oscillator">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Federpendel: Bewegung, Diagramme und Energie</h2>
+            <p>Die Animation startet am positiven Umkehrpunkt. Vergleiche den Bewegungszustand mit den Graphen und Energieanzeigen.</p>
+
+            <label for="soMass">Masse $m$</label>
+            <input id="soMass" data-role="mass" type="range" min="0.10" max="2.00" value="0.50" step="0.05" />
+            <div class="sw-sim-mono">m = <span id="soMassVal" data-role="mass-value">0.50</span> kg</div>
+
+            <label for="soSpring">Federkonstante $D$</label>
+            <input id="soSpring" data-role="spring" type="range" min="5" max="100" value="25" step="1" />
+            <div class="sw-sim-mono">D = <span id="soSpringVal" data-role="spring-value">25</span> N/m</div>
+
+            <label for="soAmp">Amplitude $\hat s$</label>
+            <input id="soAmp" data-role="amp" type="range" min="0.02" max="0.40" value="0.20" step="0.01" />
+            <div class="sw-sim-mono">ŝ = <span id="soAmpVal" data-role="amp-value">0.20</span> m</div>
+
+            <label for="soSpeed">Animationsgeschwindigkeit</label>
+            <input id="soSpeed" data-role="speed" type="range" min="0.20" max="2.00" value="0.70" step="0.10" />
+            <div class="sw-sim-mono">Faktor = <span id="soSpeedVal" data-role="speed-value">0.70</span></div>
+
+            <div class="sim-inline-check">
+              <label><input type="checkbox" data-role="show-vectors" checked> Vektoren</label>
+              <label><input type="checkbox" data-role="show-energy" checked> Energie</label>
+            </div>
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+            <div class="sim-prompt"><strong>Untersuchungsauftrag</strong><p>Verdopple zuerst die Masse, danach die Amplitude. Welche Änderung beeinflusst $T$, welche nur Energie und Maximalgeschwindigkeit?</p></div>
+          </div>
+          <div>
+            <canvas data-role="canvas" width="980" height="620" aria-label="Federpendel mit Weg-, Geschwindigkeits-, Beschleunigungs- und Energiedarstellung"></canvas>
+            <div class="sw-sim-mono" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="u-tube-oscillator">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>U-Rohr: Schwingende Flüssigkeitssäule</h2>
+            <p>Beide Flüssigkeitsoberflächen bewegen sich entgegengesetzt. Der Höhenunterschied beträgt stets $2s$.</p>
+
+            <label for="utLength">Gesamtlänge der Flüssigkeit $l$</label>
+            <input id="utLength" data-role="length" type="range" min="0.20" max="2.00" value="0.80" step="0.05" />
+            <div class="sw-sim-mono">l = <span id="utLengthVal" data-role="length-value">0.80</span> m</div>
+
+            <label for="utDensity">Dichte $\rho$</label>
+            <input id="utDensity" data-role="density" type="range" min="500" max="1500" value="1000" step="25" />
+            <div class="sw-sim-mono">ρ = <span id="utDensityVal" data-role="density-value">1000</span> kg/m³</div>
+
+            <label for="utArea">Rohrquerschnitt $A$</label>
+            <input id="utArea" data-role="area" type="range" min="1.0" max="6.0" value="3.0" step="0.2" />
+            <div class="sw-sim-mono">A = <span id="utAreaVal" data-role="area-value">3.0</span> cm²</div>
+
+            <label for="utAmp">Amplitude</label>
+            <input id="utAmp" data-role="amp" type="range" min="0.01" max="0.15" value="0.08" step="0.01" />
+            <div class="sw-sim-mono">ŝ = <span id="utAmpVal" data-role="amp-value">0.08</span> m</div>
+
+            <label for="utGravity">Ortsfaktor $g$</label>
+            <input id="utGravity" data-role="gravity" type="range" min="1.60" max="15.00" value="9.81" step="0.10" />
+            <div class="sw-sim-mono">g = <span id="utGravityVal" data-role="gravity-value">9.81</span> m/s²</div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+            <div class="sim-prompt"><strong>Untersuchungsauftrag</strong><p>Verändere Dichte und Querschnitt. Begründe mit $m=\rho Al$ und $D^*=2\rho gA$, warum $T$ gleich bleibt.</p></div>
+          </div>
+          <div>
+            <canvas data-role="canvas" width="980" height="560" aria-label="Schwingende Flüssigkeitssäule in einem U-Rohr"></canvas>
+            <div class="sw-sim-mono" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="two-spring-cart">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Wagen zwischen zwei Federn</h2>
+            <p>Beide Federn wirken gemeinsam zurück. Bei einer Neigung verschiebt die Hangabtriebskraft die Gleichgewichtslage.</p>
+
+            <label for="tcMass">Masse $m$</label>
+            <input id="tcMass" data-role="mass" type="range" min="0.10" max="2.00" value="0.60" step="0.05" />
+            <div class="sw-sim-mono">m = <span id="tcMassVal" data-role="mass-value">0.60</span> kg</div>
+
+            <label for="tcD1">Federkonstante $D_1$</label>
+            <input id="tcD1" data-role="d1" type="range" min="2" max="50" value="12" step="1" />
+            <div class="sw-sim-mono">D₁ = <span id="tcD1Val" data-role="d1-value">12</span> N/m</div>
+
+            <label for="tcD2">Federkonstante $D_2$</label>
+            <input id="tcD2" data-role="d2" type="range" min="2" max="50" value="18" step="1" />
+            <div class="sw-sim-mono">D₂ = <span id="tcD2Val" data-role="d2-value">18</span> N/m</div>
+
+            <label for="tcAmp">Amplitude relativ zur Gleichgewichtslage</label>
+            <input id="tcAmp" data-role="amp" type="range" min="0.02" max="0.30" value="0.18" step="0.01" />
+            <div class="sw-sim-mono">ŝ = <span id="tcAmpVal" data-role="amp-value">0.18</span> m</div>
+
+            <label for="tcAngle">Neigungswinkel</label>
+            <input id="tcAngle" data-role="angle" type="range" min="0" max="30" value="0" step="1" />
+            <div class="sw-sim-mono">α = <span id="tcAngleVal" data-role="angle-value">0</span>°</div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+            <div class="sim-prompt"><strong>Untersuchungsauftrag</strong><p>Erhöhe den Neigungswinkel. Beobachte getrennt, was sich an Gleichgewichtslage und Periodendauer ändert.</p></div>
+          </div>
+          <div>
+            <canvas data-role="canvas" width="980" height="560" aria-label="Wagen zwischen zwei Federn auf einer verstellbaren schiefen Ebene"></canvas>
+            <div class="sw-sim-mono" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Pendel und Überlagerung">
+      <h1>Modellgrenzen und Überlagerung</h1>
+      <p class="wb-muted">Vergleiche beim Fadenpendel das exakte Kraftgesetz mit der harmonischen Näherung. Untersuche danach, wie sich zwei Schwingungen am selben Ort addieren.</p>
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="pendulum-comparison">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Fadenpendel: exakt oder harmonisch?</h2>
+            <p>Rot zeigt die Bewegung mit $\sin\alpha$, Blau die Kleinwinkelnäherung $\sin\alpha\approx\alpha$.</p>
+
+            <label for="pcLength">Pendellänge $l$</label>
+            <input id="pcLength" data-role="length" type="range" min="0.20" max="3.00" value="1.00" step="0.05" />
+            <div class="sw-sim-mono">l = <span id="pcLengthVal" data-role="length-value">1.00</span> m</div>
+
+            <label for="pcMass">Pendelmasse $m$</label>
+            <input id="pcMass" data-role="mass" type="range" min="0.10" max="5.00" value="1.00" step="0.10" />
+            <div class="sw-sim-mono">m = <span id="pcMassVal" data-role="mass-value">1.00</span> kg</div>
+
+            <label for="pcAngle">Anfangswinkel $\alpha_0$</label>
+            <input id="pcAngle" data-role="angle" type="range" min="2" max="60" value="12" step="1" />
+            <div class="sw-sim-mono">α₀ = <span id="pcAngleVal" data-role="angle-value">12</span>°</div>
+
+            <label for="pcGravity">Ortsfaktor $g$</label>
+            <input id="pcGravity" data-role="gravity" type="range" min="1.60" max="15.00" value="9.81" step="0.10" />
+            <div class="sw-sim-mono">g = <span id="pcGravityVal" data-role="gravity-value">9.81</span> m/s²</div>
+
+            <label for="pcSpeed">Animationsgeschwindigkeit</label>
+            <input id="pcSpeed" data-role="speed" type="range" min="0.20" max="2.00" value="0.70" step="0.10" />
+            <div class="sw-sim-mono">Faktor = <span id="pcSpeedVal" data-role="speed-value">0.70</span></div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+            <div class="sim-prompt"><strong>Untersuchungsauftrag</strong><p>Vergleiche $5°$, $20°$ und $50°$. Ab wann laufen die beiden Modelle sichtbar auseinander? Verändere danach nur die Masse.</p></div>
+          </div>
+          <div>
+            <canvas data-role="canvas" width="980" height="600" aria-label="Vergleich zwischen exaktem Fadenpendel und Kleinwinkelnäherung"></canvas>
+            <div class="sw-sim-mono" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+      <div class="wb-section-break"></div>
+
+      <div class="sw-sim-card" data-wave-sim="oscillation-superposition">
+        <div class="sw-sim-grid">
+          <div class="sw-sim-controls">
+            <h2>Überlagerung, Phase und Schwebung</h2>
+            <p>Die beiden Einzelschwingungen werden punktweise addiert. Die Zeiger rechts zeigen denselben Vorgang geometrisch.</p>
+
+            <label for="osF1">Frequenz $f_1$</label>
+            <input id="osF1" data-role="f1" type="range" min="0.20" max="5.00" value="1.00" step="0.05" />
+            <div class="sw-sim-mono">f₁ = <span id="osF1Val" data-role="f1-value">1.00</span> Hz</div>
+
+            <label for="osF2">Frequenz $f_2$</label>
+            <input id="osF2" data-role="f2" type="range" min="0.20" max="5.00" value="1.15" step="0.05" />
+            <div class="sw-sim-mono">f₂ = <span id="osF2Val" data-role="f2-value">1.15</span> Hz</div>
+
+            <label for="osA1">Amplitude $\hat s_1$</label>
+            <input id="osA1" data-role="a1" type="range" min="0.10" max="1.00" value="0.60" step="0.05" />
+            <div class="sw-sim-mono">ŝ₁ = <span id="osA1Val" data-role="a1-value">0.60</span></div>
+
+            <label for="osA2">Amplitude $\hat s_2$</label>
+            <input id="osA2" data-role="a2" type="range" min="0.10" max="1.00" value="0.60" step="0.05" />
+            <div class="sw-sim-mono">ŝ₂ = <span id="osA2Val" data-role="a2-value">0.60</span></div>
+
+            <label for="osPhase">Anfangsphase $\varphi_0$</label>
+            <input id="osPhase" data-role="phase" type="range" min="0" max="360" value="0" step="5" />
+            <div class="sw-sim-mono">φ₀ = <span id="osPhaseVal" data-role="phase-value">0</span>°</div>
+
+            <label for="osSpeed">Animationsgeschwindigkeit</label>
+            <input id="osSpeed" data-role="speed" type="range" min="0.20" max="2.00" value="0.70" step="0.10" />
+            <div class="sw-sim-mono">Faktor = <span id="osSpeedVal" data-role="speed-value">0.70</span></div>
+
+            <div class="wb-row" style="margin-top:12px">
+              <button class="wb-btn primary" type="button" data-role="pause">Pause</button>
+              <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            </div>
+            <div class="sim-prompt"><strong>Untersuchungsauftrag</strong><p>Stelle zuerst gleiche Frequenzen und $0°$, $90°$, $180°$ ein. Wähle danach zwei nahe Frequenzen und überprüfe $f_S=|f_2-f_1|$.</p></div>
+          </div>
+          <div>
+            <canvas data-role="canvas" width="980" height="620" aria-label="Überlagerung zweier Schwingungen mit Zeigerdarstellung und Schwebung"></canvas>
+            <div class="sw-sim-mono" data-role="readout"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Überblick">
       <h1>Wellen-Simulationen im Überblick</h1>
-      <p class="wb-muted">Hier findest du alle ausgelagerten Simulationen an einem Ort. Jede Simulation nutzt dieselbe gemeinsame JS-Bibliothek wie die Originalseiten.</p>
+      <p class="wb-muted">Hier findest du die neuen Simulationen zu mechanischen Schwingungen und alle ausgelagerten Wellen-Simulationen an einem Ort. Alle Modelle nutzen dieselbe gemeinsame JS-Bibliothek.</p>
       <div class="wb-callout">
         <strong>Hinweis:</strong>
-        <p>Die Simulationen bleiben in den ursprünglichen <code>wellen-book*</code>-Seiten an ihrer bisherigen Position. Diese Sammelseite verwendet denselben ausgelagerten Code erneut.</p>
+        <p>Die Seiten 1 und 2 ergänzen die mechanischen Schwingungen. Die Wellen-Simulationen ab Seite 4 bleiben außerdem in den ursprünglichen <code>wellen-book*</code>-Seiten an ihrer bisherigen Position.</p>
       </div>
       <ul class="sim-index-list">
+        <li>Mechanische Schwingungen: Feder-Masse-Pendel, U-Rohr, Wagen zwischen zwei Federn und Fadenpendel</li>
+        <li>Überlagerung: Phasenverschiebung, Zeigerdarstellung und Schwebung</li>
         <li>Mechanische Grundwellen: transversal, longitudinal, Huygens-Beugung</li>
         <li>Interferenz: kohärente Quellen, Einzelspalt, Doppelspalt, Gitter, Zeigerpolygon, Teilchenbild</li>
         <li>Reflexion und stehende Wellen: Pulse, Übergänge, Moden, Reflexionsfälle</li>
@@ -57,7 +281,7 @@
       </ul>
     </section>
 
-    <section data-wb-page="2" data-wb-page-title="Einstieg">
+    <section data-wb-page="4" data-wb-page-title="Einstieg">
       <h1>Einstieg</h1>
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
@@ -155,7 +379,7 @@
       </div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="Interferenz 1">
+    <section data-wb-page="7" data-wb-page-title="Interferenz 1">
       <h1>Interferenz 1</h1>
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
@@ -191,7 +415,7 @@
       </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Interferenz 2">
+    <section data-wb-page="8" data-wb-page-title="Interferenz 2">
       <h1>Interferenz 2</h1>
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
@@ -338,7 +562,7 @@
       </div>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Reflexion und stehende Wellen">
+    <section data-wb-page="6" data-wb-page-title="Reflexion und stehende Wellen">
       <h1>Reflexion und stehende Wellen</h1>
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
@@ -531,7 +755,7 @@
       </div>
     </section>
 
-    <section data-wb-page="3" data-wb-page-title="Wellenfunktion">
+    <section data-wb-page="5" data-wb-page-title="Wellenfunktion">
       <h1>Wellenfunktion</h1>
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
@@ -609,7 +833,7 @@
       </div>
     </section>
 
-    <section data-wb-page="7" data-wb-page-title="Elektromagnetischer Schwingkreis">
+    <section data-wb-page="9" data-wb-page-title="Elektromagnetischer Schwingkreis">
       <h1>Elektromagnetischer Schwingkreis</h1>
       <p class="wb-muted">Diese Simulation zeigt den idealisierten Energieaustausch zwischen Kondensator und Spule.</p>
 

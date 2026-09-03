@@ -23,6 +23,8 @@ You can choose the method per assignment.
 
 ## Quick start tutorial (no coding experience needed)
 
+There is also a teacher-facing web guide in this repo: open `howto-lehrkraefte.html` for a structured HowTo with workflow, prompt templates, interaction-block overview, publishing notes, and a quality checklist.
+
 ### 1) Create a GitHub account, fork the repo, and deploy your pages
 
 If you have never used GitHub before:

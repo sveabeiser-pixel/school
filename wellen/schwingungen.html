@@ -1,10 +1,33 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mechanische Schwingungen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <style>
+    .schw-figure{margin:16px 0 22px;text-align:center}
+    .schw-figure img{display:block;width:100%;max-height:520px;object-fit:contain;margin:0 auto;border:1px solid var(--wb-line,#d8dee8);border-radius:8px;background:#fff}
+    .schw-figure.compact img{max-height:340px}
+    .schw-figure.tall img{max-height:620px}
+    .schw-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
+    .schw-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+    .schw-grid>*{min-width:0}
+    .schw-table-wrap{overflow-x:auto;margin:14px 0 20px}
+    .schw-table{width:100%;border-collapse:collapse;background:var(--wb-surface,#fff)}
+    .schw-table th,.schw-table td{padding:9px 11px;border:1px solid var(--wb-line,#d8dee8);text-align:center;white-space:nowrap}
+    .schw-table th:first-child,.schw-table td:first-child{text-align:left;font-weight:750}
+    .schw-exercise{margin:18px 0 12px;padding:4px 0 4px 16px;border-left:5px solid #2563eb}
+    .schw-exercise h2,.schw-exercise h3{margin-top:0}
+    .schw-exercise p:last-child{margin-bottom:0}
+    .schw-checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;padding-left:20px}
+    .schw-checklist li{margin:0 0 7px}
+    .course-core{border-left:6px solid #087f5b;background:#eaf8f2;padding:12px 14px;margin:14px 0;border-radius:8px;color:#154638}
+    .course-core strong{display:block;margin-bottom:5px}
+    .wb-callout .physics-formula,.lf-only-box .physics-formula{border:0;border-left:0;border-radius:0;background:transparent;margin:8px 0;padding:4px 0}
+    .wb-book .physics-formula mjx-container[display="true"]{width:auto;max-width:none;margin:0;padding:0;border:0;border-left:0;border-radius:0;background:transparent;overflow:visible}
+    @media(max-width:820px){.schw-grid,.schw-checklist{grid-template-columns:1fr}.schw-figure img{max-height:none}}
+  </style>
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -12,96 +35,634 @@
 <div data-wb-book>
   <script class="wb-book-config" type="application/json">{"bookTitle":"Mechanische Schwingungen","sectionTitle":"Periodische Bewegungen verstehen","startPage":1,"submitLabel":"Ergebnisse exportieren","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Wellen","themeDefault":"default"}</script>
 
-  <section data-wb-page="1" data-wb-page-title="Start">
-    <h1>Mechanische Schwingungen: periodische Bewegung verstehen</h1>
-    <p class="wb-muted">Du lernst hier, wie man periodische Bewegungen beschreibt. Eine Schaukel, ein Federpendel, eine Stimmgabel oder ein schwingendes Gebäude haben gemeinsam: Ein System wird aus einer Ruhelage ausgelenkt und kehrt immer wieder dorthin zurück.</p>
-    <p>Schwingungen sind die Grundlage für viele spätere Themen. Wellen entstehen, wenn sich Schwingungen räumlich ausbreiten. Beim elektromagnetischen Schwingkreis schwingen Spannung und Stromstärke. Deshalb lohnt es sich, die Begriffe hier sauber zu klären.</p>
+  <section data-wb-page="1" data-wb-page-title="Start und Grundidee">
+    <h1>Mechanische Schwingungen beschreiben</h1>
+    <p class="wb-muted">Eine Schaukel, ein Uhrenpendel und die Zinken einer Stimmgabel sehen sehr verschieden aus. Trotzdem folgt ihre Bewegung demselben Grundmuster.</p>
     <div class="wb-section-break"></div>
-    <div class="grid2"><div class="wb-soft-callout"><strong>Das brauchst du sicher</strong><p>Auslenkung, Amplitude, Periodendauer, Frequenz, Kreisfrequenz, harmonische Schwingung, Federpendel, Energieumwandlung.</p></div><div class="wb-soft-callout"><strong>Vertiefung im Leistungsfach</strong><p>Fadenpendel mit Kleinwinkelnäherung, gedämpfte Schwingung, erzwungene Schwingung, Resonanzkurve und formale Parameterabhängigkeiten.</p></div></div>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_start","title":"Leitfrage","question":"Warum sind Schwingungen vor den Wellen wichtig?","answer":"Eine Welle kann man als gekoppelte Schwingungen verstehen, die sich im Raum ausbreiten. Wer Auslenkung, Frequenz und Phase bei einer Schwingung versteht, kann Wellen deutlich leichter beschreiben."}</script></div>
-  </section>
 
-  <section data-wb-page="2" data-wb-page-title="Kenngrößen">
-    <h1>Kenngrößen einer Schwingung</h1>
-    <p>Eine Schwingung ist eine zeitlich wiederkehrende Bewegung um eine Ruhelage. Die Auslenkung gibt an, wie weit sich der Körper gerade von der Ruhelage entfernt befindet. Die Amplitude ist die größte Auslenkung.</p>
-    <p>Die Periodendauer \(T\) ist die Zeit für eine vollständige Hin-und-her-Bewegung. Die Frequenz \(f\) gibt an, wie viele vollständige Schwingungen pro Sekunde stattfinden. Es gilt \(f=1/T\). Die Kreisfrequenz \(\omega=2\pi f\) ist besonders praktisch, wenn man Schwingungen mit Sinus- oder Kosinusfunktionen beschreibt.</p>
-    <div class="wb-callout"><strong>Grundbeziehungen:</strong><div class="physics-formula">\[f=\frac1T\qquad\text{und}\qquad \omega=2\pi f=\frac{2\pi}{T}\]</div></div>
-    <p>Eine ungedämpfte harmonische Schwingung ist eine Sinus- oder Kosinusschwingung. Welche Schreibweise du verwendest, hängt davon ab, wo sich der Schwinger bei $t=0$ befindet: Start in der Gleichgewichtslage passt zur Sinusform, Start am positiven Umkehrpunkt zur Kosinusform.</p>
-    <div class="wb-callout"><strong>Zeit-Elongations-Gesetz:</strong><div class="physics-formula">\[s(t)=\hat s\sin(\omega t+\varphi_0)\]</div><p>Gleichwertig ist eine Kosinusdarstellung. Die Anfangsphase $\varphi_0$ legt den Startzustand fest.</p></div>
-    <p>Geschwindigkeit und Beschleunigung erhältst du durch Ableiten. Dadurch erkennst du auch die Phasenbeziehungen: Am Umkehrpunkt ist $v=0$, in der Gleichgewichtslage ist der Betrag der Geschwindigkeit maximal. Die Beschleunigung zeigt bei einer harmonischen Schwingung stets zurück zur Gleichgewichtslage.</p>
-    <div class="wb-callout"><strong>Geschwindigkeit und Beschleunigung:</strong><div class="physics-formula">\[v(t)=\dot s(t)=\omega\hat s\cos(\omega t+\varphi_0)\]<br>\[a(t)=\ddot s(t)=-\omega^2\hat s\sin(\omega t+\varphi_0)=-\omega^2s(t)\]</div></div>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"schw_cloze","title":"Sicherung: Größen","hint":"Setze passende Größen ein.","bank":["Amplitude","Periodendauer","Frequenz","Ruhelage"],"segments":[{"t":"text","v":"Die maximale Auslenkung heißt "},{"t":"gap","a":"Amplitude"},{"t":"text","v":". Die Zeit für eine vollständige Schwingung heißt "},{"t":"gap","a":"Periodendauer"},{"t":"text","v":". Die Anzahl der Schwingungen pro Sekunde heißt "},{"t":"gap","a":"Frequenz"},{"t":"text","v":". Geschwungen wird um eine "},{"t":"gap","a":"Ruhelage"},{"t":"text","v":"."}]}</script></div>
-  </section>
-
-  <section data-wb-page="3" data-wb-page-title="Federpendel">
-    <h1>Federpendel und Periodendauer</h1>
-    <p>Beim Feder-Masse-Pendel zieht die Feder den Körper zur Ruhelage zurück. Je weiter die Feder gedehnt oder gestaucht ist, desto größer ist die Rückstellkraft. Wenn diese Kraft proportional zur Auslenkung ist, entsteht eine harmonische Schwingung.</p>
-    <div class="wb-callout"><strong>Lineare Rückstellkraft:</strong><div class="physics-formula">\[F_\mathrm R=-D\,s\]</div><p>Das Minuszeichen zeigt: Die Kraft ist immer entgegengesetzt zur Auslenkung gerichtet.</p></div>
-    <p>Für die Periodendauer gilt \(T=2\pi\sqrt{m/D}\). Eine größere Masse macht die Schwingung langsamer, weil der Körper träger ist. Eine größere Federkonstante \(D\) macht die Schwingung schneller, weil die Feder stärker zurückzieht.</p>
-    <div class="wb-callout"><strong>Periodendauer des Federpendels:</strong><div class="physics-formula">\[T=2\pi\sqrt{\frac mD}\]</div></div>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Herleitung über die Differenzialgleichung</strong><p>Aus $m\ddot s=F_\mathrm R$ und $F_\mathrm R=-Ds$ folgt:</p><div class="physics-formula">\[\ddot s(t)=-\frac Dm\,s(t)\]</div><p>Der Ansatz $s(t)=\hat s\cos(\omega t+\varphi_0)$ erfüllt die Gleichung, wenn $\omega^2=D/m$. Daraus folgt die Periodendauer oben. Die formale Lösung der DGL ist Leistungsfachstoff.</p></div>
-    <p><strong>Merke:</strong> Bei Schwingungsformeln musst du immer fragen: Welche Eigenschaft des Systems bestimmt die Periodendauer?</p>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_mcq_feder","title":"Check: Federpendel","hint":"Wähle die richtige Folgerung.","questions":[{"text":"Was passiert mit der Periodendauer, wenn die Masse vervierfacht wird und D gleich bleibt?","choices":[{"id":"a","label":"Sie wird doppelt so groß."},{"id":"b","label":"Sie wird viermal so groß."},{"id":"c","label":"Sie halbiert sich."}],"correct":["a"],"explain":"In T = 2π√(m/D) steht m unter der Wurzel. Vervierfachung der Masse führt zur Verdopplung der Periodendauer."}]}</script></div>
-  </section>
-
-  <section data-wb-page="4" data-wb-page-title="Energie">
-    <h1>Energieumwandlung bei Schwingungen</h1>
-    <p>Beim idealen Federpendel wandelt sich Energie ständig zwischen Spannenergie der Feder und Bewegungsenergie der Masse um. An den Umkehrpunkten ist die Geschwindigkeit kurz null; dafür ist die Feder maximal gespannt oder gestaucht. In der Ruhelage ist die Geschwindigkeit am größten.</p>
-    <div class="wb-callout"><strong>Energien des Federpendels:</strong><div class="physics-formula">\[E_\mathrm{spann}=\frac12Ds^2,\qquad E_\mathrm{kin}=\frac12mv^2,\qquad E_\mathrm{ges}=\text{konstant}\]</div></div>
-    <p>In realen Systemen geht mechanische Energie durch Reibung oder Luftwiderstand in Wärme über. Die Schwingung verschwindet deshalb nicht plötzlich, sondern die Amplitude wird nach und nach kleiner. Das nennt man Dämpfung.</p>
-    <p><strong>Das brauchst du sicher:</strong> Energieumwandlung deuten. <strong>Vertiefung im Leistungsfach:</strong> gedämpfte Schwingung mathematisch beschreiben.</p>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_verify_energie","title":"Wahr oder falsch?","hint":"Prüfe die Aussage.","statement":"Bei einer idealen ungedämpften Schwingung bleibt die Gesamtenergie erhalten, obwohl sie ihre Form wechselt.","answer":true,"explain":"Richtig. Beim Federpendel wechseln Spannenergie und Bewegungsenergie periodisch. Ohne Verluste bleibt die Summe konstant."}</script></div>
-  </section>
-
-  <section data-wb-page="5" data-wb-page-title="LC-Schwingkreis">
-    <h1>Elektromagnetischer Schwingkreis</h1>
-    <p>Ein idealer LC-Schwingkreis besteht aus einem Kondensator mit Kapazität $C$ und einer Spule mit Induktivität $L$. Zu Beginn ist der Kondensator geladen. Beim Entladen fließt Strom durch die Spule und baut dort ein Magnetfeld auf. Ist der Kondensator kurzzeitig ungeladen, ist die Stromstärke maximal. Durch Selbstinduktion fließt der Strom weiter und lädt den Kondensator mit umgekehrter Polung auf.</p>
-    <p>Damit schwingt die Energie zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule hin und her. Das ist die elektromagnetische Entsprechung zum Wechsel zwischen Spann- und Bewegungsenergie beim Federpendel.</p>
-    <div class="wb-callout"><strong>Energieumwandlung im LC-Kreis:</strong><div class="physics-formula">\[E_\mathrm C=\frac{Q^2}{2C}=\frac12CU^2,\qquad E_\mathrm L=\frac12LI^2\]</div></div>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> DGL und Thomson-Formel</strong><p>Mit $I=\dot Q$, $U_C=Q/C$ und $U_L=L\dot I$ folgt für den idealen Schwingkreis:</p><div class="physics-formula">\[\ddot Q(t)=-\frac1{LC}\,Q(t)\qquad\text{und}\qquad T=2\pi\sqrt{LC}\]</div><p>Ein größeres $L$ oder $C$ verlangsamt die Schwingung. Die Lösung der DGL durch einen geeigneten Ansatz ist Leistungsfachstoff.</p></div>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="order"><script class="wb-config" type="application/json">{"id":"schw_order_lc","title":"Eine Periode im LC-Kreis","hint":"Bringe die Zustände in eine sinnvolle Reihenfolge.","items":["Der Kondensator ist maximal geladen; der Strom ist null.","Der Kondensator entlädt sich und das Magnetfeld der Spule wächst.","Der Kondensator ist ungeladen; Strom und Magnetfeld sind maximal.","Die Selbstinduktion lädt den Kondensator mit umgekehrter Polung.","Der Kondensator ist entgegengesetzt maximal geladen; der Strom ist wieder null."],"shuffle":true}</script></div>
-  </section>
-
-  <section data-wb-page="6" data-wb-page-title="LF-Vertiefung">
-    <h1>Vertiefung im Leistungsfach: Fadenpendel, Dämpfung und Resonanz</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong><p>Die DGL des Fadenpendels und die Überlagerung unabhängiger Schwingungen gehören zum Leistungsfach. Dämpfung, erzwungene Schwingung und Resonanz sind hier als hilfreiche zusätzliche Vertiefung enthalten.</p></div>
-    <p>Beim Fadenpendel ist die Rückstellkraft nur für kleine Winkel näherungsweise proportional zur Auslenkung. Unter dieser Kleinwinkelnäherung gilt:</p>
-    <div class="wb-callout"><strong>Fadenpendel:</strong><div class="physics-formula">\[\ddot s(t)=-\frac gl\,s(t)\qquad\text{und}\qquad T=2\pi\sqrt{\frac lg}\]</div><p>Die Periodendauer hängt bei kleinen Auslenkungen von der Pendellänge $l$, nicht von der Pendelmasse ab.</p></div>
-    <p>Bei der Überlagerung unabhängiger Schwingungen addieren sich die momentanen Auslenkungen. Gleiche Frequenzen können sich je nach Phase verstärken oder auslöschen. Bei leicht verschiedenen Frequenzen ändert sich die Gesamtamplitude periodisch: Es entsteht eine Schwebung.</p>
-    <div class="wb-callout"><strong>Schwebungsfrequenz:</strong><div class="physics-formula">\[f_\mathrm S=|f_1-f_2|\]</div></div>
-    <p>Bei gedämpften Schwingungen nimmt die Amplitude ab. Bei erzwungenen Schwingungen kann Resonanz auftreten, wenn die Anregungsfrequenz zur Eigenfrequenz passt. Die Amplitude wird dann besonders groß; Reibung begrenzt sie in realen Systemen.</p>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"schw_cat","title":"Ordne die Schwingungsphänomene","hint":"Sortiere nach Ursache und Kennzeichen.","categories":[{"id":"frei","title":"freie harmonische Schwingung"},{"id":"gedaempft","title":"gedämpfte Schwingung"},{"id":"erzwungen","title":"erzwungene Schwingung"},{"id":"schwebung","title":"Schwebung"}],"items":[{"label":"Die Amplitude bleibt im Idealmodell konstant.","category":"frei"},{"label":"Energie wird fortlaufend in Wärme umgewandelt.","category":"gedaempft"},{"label":"Eine äußere periodische Kraft führt Energie zu.","category":"erzwungen"},{"label":"Nahe der Eigenfrequenz kann Resonanz auftreten.","category":"erzwungen"},{"label":"Zwei nahe Frequenzen erzeugen ein periodisches Lauter-und-Leiser.","category":"schwebung"}]}</script></div>
-  </section>
-
-  <section data-wb-page="7" data-wb-page-title="Vergleich">
-    <h1>Mechanische und elektromagnetische Schwingung vergleichen</h1>
-    <p>Die beiden Systeme sehen verschieden aus, folgen aber derselben mathematischen Struktur. Eine rücktreibende Wirkung führt dazu, dass eine Speichergröße periodisch ihr Vorzeichen wechselt.</p>
-    <div class="wb-section-break"></div>
-    <div data-p2>
-      <div data-side="L" data-pair="1">Auslenkung (s)</div><div data-side="R" data-pair="1">Ladung (Q)</div>
-      <div data-side="L" data-pair="2">Geschwindigkeit $v=\dot s$</div><div data-side="R" data-pair="2">Stromstärke $I=\dot Q$</div>
-      <div data-side="L" data-pair="3">Masse $m$</div><div data-side="R" data-pair="3">Induktivität $L$</div>
-      <div data-side="L" data-pair="4">Federkonstante (D)</div><div data-side="R" data-pair="4">Kehrwert der Kapazität (1/C)</div>
-      <div data-side="L" data-pair="5">Bewegungsenergie</div><div data-side="R" data-pair="5">magnetische Feldenergie der Spule</div>
-      <div data-side="L" data-pair="6">Spannenergie der Feder</div><div data-side="R" data-pair="6">elektrische Feldenergie des Kondensators</div>
+    <div class="schw-grid">
+      <div>
+        <h2>Schwingungen im Alltag</h2>
+        <p>Ein schwingungsfähiger Körper bewegt sich aus einer stabilen Ruhelage heraus. Eine rücktreibende Kraft bremst ihn, kehrt seine Bewegungsrichtung um und beschleunigt ihn wieder zur Ruhelage. Dort endet die Bewegung nicht: Wegen seiner Trägheit bewegt sich der Körper über die Ruhelage hinaus.</p>
+        <p>Dieses Wechselspiel aus <strong>Rückstellkraft</strong> und <strong>Trägheit</strong> wiederholt sich. Genau daran erkennst du einen Schwingungsvorgang.</p>
+      </div>
+      <figure class="schw-figure">
+        <img src="pdf-bilder/schaukel.png" alt="Uhrenpendel und Schaukel mit Ruhelage und maximaler Auslenkung">
+        <figcaption>Uhrenpendel und Schaukel schwingen um eine stabile Ruhelage. An den Umkehrpunkten ist die Auslenkung maximal.</figcaption>
+      </figure>
     </div>
     <div class="wb-section-break"></div>
-    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_rev_vergleich","title":"Der entscheidende Unterschied","question":"Was schwingt in den beiden Systemen tatsächlich?","answer":"Beim Federpendel ändern sich Ort und Geschwindigkeit einer Masse. Im LC-Kreis ändern sich Ladung, Spannung und Stromstärke; Energie wechselt zwischen elektrischem und magnetischem Feld. Die mathematische Analogie bedeutet nicht, dass dieselben physikalischen Größen schwingen."}</script></div>
+
+    <div class="wb-callout">
+      <strong>Merke</strong>
+      <p>Eine mechanische Schwingung ist eine zeitlich wiederkehrende Bewegung um eine stabile Gleichgewichtslage. Ohne Rückstellkraft gibt es keine Schwingung.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-grid">
+      <div class="course-core"><strong>Gemeinsamer Kern: Basisfach und Leistungsfach</strong><p>Ruhelage, Auslenkung, Amplitude, Periodendauer, Frequenz, harmonische Beschreibung, Federpendel und Energieumwandlung.</p></div>
+      <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Quantitative Vertiefung</strong><p>Lineare Rückstellkraft ausführlich untersuchen, Parameterabhängigkeiten verknüpfen, Phasenbeziehungen vertiefen sowie DGL-Ansätze und Resonanzmodelle einordnen.</p></div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_start","title":"Leitfrage","question":"Warum bewegt sich eine Schaukel nach dem Durchgang durch die Ruhelage weiter?","answer":"In der Ruhelage ist die rücktreibende Kraft momentan null, aber die Schaukel besitzt dort ihre größte Geschwindigkeit. Wegen ihrer Trägheit bewegt sie sich weiter. Erst auf der anderen Seite wächst die entgegengerichtete Rückstellkraft und bremst sie bis zum nächsten Umkehrpunkt."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_start_mcq","title":"Stopp & Check: Liegt eine Schwingung vor?","hint":"Achte auf Ruhelage, Rückstellwirkung und Wiederholung.","shuffleChoices":true,"questions":[{"text":"Welches Merkmal ist für eine mechanische Schwingung entscheidend?","choices":[{"id":"a","label":"Der Körper bewegt sich immer mit gleicher Geschwindigkeit."},{"id":"b","label":"Eine rücktreibende Wirkung führt den Körper zur stabilen Gleichgewichtslage zurück."},{"id":"c","label":"Die Bewegung verläuft ausschließlich nach unten."},{"id":"d","label":"Der Körper muss hörbaren Schall erzeugen."}],"correct":["b"],"explain":"Die Rückstellwirkung zur stabilen Gleichgewichtslage und die Trägheit erzeugen das wiederkehrende Hin und Her."}]}</script></div>
   </section>
 
-  <section data-wb-page="8" data-wb-page-title="Abgabe">
-    <h1>Zusammenfassung und Abgabe</h1>
-    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Schwingungen sind periodische Änderungen um eine Gleichgewichtslage. Du kannst harmonische Schwingungen mit $s(t)$, $v(t)$ und $a(t)$ beschreiben, die Energieumwandlung im Federpendel und LC-Kreis erklären und beide Systeme vergleichen. Im Leistungsfach kommen die DGL von Feder-, Faden- und LC-Schwinger sowie Überlagerungen und Schwebungen hinzu.</p></div>
+  <section data-wb-page="2" data-wb-page-title="Kenngrößen und Diagramme">
+    <h1>Kenngrößen und harmonische Schwingungen</h1>
+    <div class="schw-grid">
+      <figure class="schw-figure">
+        <img src="pdf-bilder/federpendel.png" alt="Federpendel mit Gleichgewichtslage, Elongation, Amplitude und Umkehrpunkt">
+        <figcaption>Die momentane Auslenkung $s$ kann kleiner als die Amplitude $\hat s$ sein. Die Amplitude ist der größte Betrag der Auslenkung.</figcaption>
+      </figure>
+      <div>
+        <h2>Vier Größen, die du sicher brauchst</h2>
+        <p>Die <strong>Auslenkung</strong> oder Elongation $s(t)$ gibt den gerichteten Abstand von der Ruhelage zu einem bestimmten Zeitpunkt an. Oberhalb und unterhalb der Ruhelage verwendet man unterschiedliche Vorzeichen.</p>
+        <p>Die <strong>Amplitude</strong> $A=\hat s$ ist die maximale Auslenkung. Die <strong>Periodendauer</strong> $T$ ist die Zeit für einen vollständigen Schwingungsdurchlauf. Die <strong>Frequenz</strong> $f$ zählt die vollständigen Schwingungen pro Sekunde.</p>
+        <div class="physics-formula">\[f=\frac{1}{T}\qquad [T]=\mathrm{s},\qquad [f]=\mathrm{Hz}=\mathrm{s}^{-1}\]</div>
+      </div>
+    </div>
     <div class="wb-section-break"></div>
-    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_essay","title":"Reflexion","hint":"Antworte in 4-8 Sätzen. Nutze Amplitude, Periodendauer und Energie korrekt.","storagePrefix":"schw_","fields":[{"label":"Deine Erklärung","key":"common","kind":"textarea","placeholder":"Erkläre, wie sich beim Federpendel Energie während einer Schwingung umwandelt."},{"label":"Transfer","key":"lf","kind":"textarea","placeholder":"Warum kann Resonanz gefährlich werden, wenn ein System immer im richtigen Rhythmus angeregt wird?"}]}</script></div>
+
+    <figure class="schw-figure">
+      <img src="pdf-bilder/schwingung-federpendel.png" alt="Federpendel an verschiedenen Zeitpunkten zusammen mit seinem sinusförmigen Weg-Zeit-Diagramm">
+      <figcaption>Eine vollständige Periode: Nach der Zeit $T$ besitzt der Schwinger wieder dieselbe Auslenkung und dieselbe Bewegungsrichtung.</figcaption>
+    </figure>
     <div class="wb-section-break"></div>
-    <p class="wb-muted">Quelle: Dorn/Bader: Physik Kursstufe, Kapitel 4 „Mechanische Schwingungen“, sowie Bildungsplan BW Physik V3.0.</p>
+
+    <h2>Harmonisch, gedämpft oder erzwungen?</h2>
+    <p>Ergibt das $s$-$t$-Diagramm eine Sinus- oder Kosinuskurve, heißt die Schwingung <strong>harmonisch</strong>. Eine freie ungedämpfte Schwingung würde ohne Energieverlust unbegrenzt weiterlaufen. Reale Schwingungen verlieren jedoch Energie durch Reibung und Schallabgabe; ihre Amplitude nimmt ab. Sie sind <strong>gedämpft</strong>.</p>
+    <p>Wird einem System von außen regelmäßig Energie zugeführt, spricht man von einer <strong>erzwungenen Schwingung</strong>. Eine Stimmgabel bestimmt ihren Rhythmus nach dem Anschlagen selbst. Eine Lautsprechermembran wird dagegen durch den angeschlossenen Generator zu dessen Frequenz gezwungen.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-grid">
+      <figure class="schw-figure compact">
+        <img src="pdf-bilder/schwingung-stimmgabel.png" alt="Mechanische Aufzeichnung einer Stimmgabelschwingung auf einer Rußplatte">
+        <figcaption>Die Stimmgabel zeichnet beim Ziehen über eine Rußplatte eine abklingende Schwingung auf. Die abnehmende Amplitude zeigt die Dämpfung.</figcaption>
+      </figure>
+      <figure class="schw-figure tall">
+        <img src="pdf-bilder/unterschiedliche-schwingungen.png" alt="Drei Sinusschwingungen mit unterschiedlichen Amplituden und Frequenzen">
+        <figcaption>Vergleiche zuerst die Scheitelwerte und dann die Abstände gleicher Phasenlagen. Blau besitzt $f=1\,\mathrm{Hz}$, Rot und Grün jeweils $f=0{,}5\,\mathrm{Hz}$; die grüne Amplitude ist doppelt so groß wie die rote.</figcaption>
+      </figure>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Harmonisches Zeitgesetz</strong>
+      <p>Startet der Schwinger bei $t=0$ in der Ruhelage und bewegt sich zunächst in positive Richtung, passt die Sinusform. Beim Start am positiven Umkehrpunkt passt die Kosinusform.</p>
+      <div class="physics-formula">\[s(t)=\hat s\sin(\omega t+\varphi_0),\qquad \omega=2\pi f=\frac{2\pi}{T}\]</div>
+      <p>Die Anfangsphase $\varphi_0$ legt fest, an welcher Stelle der Schwingung die Zeitmessung beginnt.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Geschwindigkeit und Beschleunigung</h2>
+    <p>Durch Ableiten des Zeitgesetzes erhältst du Geschwindigkeit und Beschleunigung. In der Ruhelage ist der Geschwindigkeitsbetrag maximal; an den Umkehrpunkten ist er null. Die Beschleunigung ist stets entgegengesetzt zur Auslenkung gerichtet.</p>
+    <div class="physics-formula">\[v(t)=\dot s(t)=\omega\hat s\cos(\omega t+\varphi_0)\]</div>
+    <div class="physics-formula">\[a(t)=\ddot s(t)=-\omega^2\hat s\sin(\omega t+\varphi_0)=-\omega^2s(t)\]</div>
+    <div class="wb-soft-callout"><strong>Jetzt hast du gelernt, dass …</strong><p>Amplitude und Periodendauer direkt aus dem Diagramm ablesbar sind, die Frequenz aus $f=1/T$ folgt und eine harmonische Schwingung durch Sinus- oder Kosinusfunktionen beschrieben wird.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"schw_cloze","title":"Sicherung: Kenngrößen","hint":"Setze die Begriffe passend ein.","bank":["Amplitude","Periodendauer","Frequenz","Ruhelage","Hertz"],"segments":[{"t":"text","v":"Die maximale Auslenkung heißt "},{"t":"gap","a":"Amplitude"},{"t":"text","v":". Die Zeit für eine vollständige Schwingung heißt "},{"t":"gap","a":"Periodendauer"},{"t":"text","v":". Die Anzahl vollständiger Schwingungen pro Sekunde ist die "},{"t":"gap","a":"Frequenz"},{"t":"text","v":". Ihre Einheit ist "},{"t":"gap","a":"Hertz"},{"t":"text","v":". Geschwungen wird um die "},{"t":"gap","a":"Ruhelage"},{"t":"text","v":"."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgaben zu Kenngrößen und Diagrammen</h2>
+    <div class="schw-exercise">
+      <h3>Aufgabe 1: Schwingungen im Alltag</h3>
+      <p>Nenne drei weitere Schwingungsvorgänge. Gib jeweils an, was schwingt, wo die Ruhelage liegt und wodurch die Bewegung gedämpft wird.</p>
+    </div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_alltag_essay","title":"Deine Beispiele","hint":"Nutze die Fachbegriffe Ruhelage, Rückstellkraft und Dämpfung.","storagePrefix":"schw_","fields":[{"label":"Beispiel 1","key":"b1","kind":"textarea","placeholder":"Formuliere deine Analyse."},{"label":"Beispiel 2","key":"b2","kind":"textarea","placeholder":"Formuliere deine Analyse."},{"label":"Beispiel 3","key":"b3","kind":"textarea","placeholder":"Formuliere deine Analyse."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise">
+      <h3>Aufgabe 2: Jahrmarktschaukel</h3>
+      <p>Eine Schaukel benötigt für fünf vollständige Schwingungen $16\,\mathrm{s}$. Berechne Periodendauer und Frequenz. Stelle anschließend für die Amplitude $2{,}5\,\mathrm{m}$ ein mögliches Zeitgesetz auf, wenn die Bewegung am positiven Umkehrpunkt beginnt.</p>
+    </div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_schaukel_loesung","title":"Lösung kontrollieren","question":"Welche Werte und welches Zeitgesetz erhältst du?","answer":"T = 16 s / 5 = 3,2 s und f = 1/T = 0,3125 Hz. Beim Start am positiven Umkehrpunkt passt zum Beispiel s(t) = 2,5 m · cos(2πt / 3,2 s)."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise">
+      <h3>Aufgabe 3: Charakteristische Größen ablesen</h3>
+      <p>Bestimme für jeden Graphen Amplitude, Periodendauer und Frequenz. Beachte die unterschiedlichen Einheiten an den Achsen. Begründe beim blauen Graphen, wie du trotz der unvollständig sichtbaren Periode vorgehst.</p>
+    </div>
+    <figure class="schw-figure tall">
+      <img src="pdf-bilder/aufgabe3-charakteristische-groessen.png" alt="Drei Weg-Zeit-Diagramme zur Bestimmung von Amplitude, Periodendauer und Frequenz">
+      <figcaption>Aufgabenabbildung: Lies die Skalierung für jeden Graphen neu ab.</figcaption>
+    </figure>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_diagramme_essay","title":"Deine Auswertung","hint":"Notiere für jeden Graphen A, T und f mit Einheit.","storagePrefix":"schw_","fields":[{"label":"Grüner Graph","key":"gruen","kind":"textarea","placeholder":"A = …, T = …, f = …"},{"label":"Roter Graph","key":"rot","kind":"textarea","placeholder":"A = …, T = …, f = …"},{"label":"Blauer Graph","key":"blau","kind":"textarea","placeholder":"A = …, T = …, f = …; Begründung: …"}]}</script></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_diagramme_loesung","title":"Orientierungswerte","question":"Welche Werte lassen sich ungefähr ablesen?","answer":"Grün: A ≈ 1,5 cm, T ≈ 3,0 s, f ≈ 0,33 Hz. Rot: A ≈ 2,0 cm, T ≈ 6,0 ms, f ≈ 167 Hz. Blau: A ≈ 3,0 dm; vom Nulldurchgang bis zum Maximum vergehen ungefähr 4,7 ms, also etwa T/4. Damit ist T ≈ 19 ms und f ≈ 53 Hz."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise">
+      <h3>Aufgabe 4: Messverfahren vergleichen</h3>
+      <p>Vergleiche den mechanischen Schwingungsschreiber der Stimmgabel mit einer elektronischen Aufzeichnung durch Sensor, Messwerterfassung und Computer. Gehe auf Messgröße, Zeitmessung, Vorteil und mögliche Fehlerquelle ein.</p>
+    </div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_messung_essay","title":"Vergleich der Messverfahren","hint":"Schreibe 5–8 Sätze.","storagePrefix":"schw_","fields":[{"label":"Dein Vergleich","key":"vergleich","kind":"textarea","placeholder":"Formuliere deinen Vergleich."}]}</script></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Hooke und Rückstellkraft">
+    <h1>Vom hookeschen Gesetz zur Rückstellkraft</h1>
+    <h2>Die Federkonstante messen</h2>
+    <div class="schw-grid">
+      <figure class="schw-figure compact">
+        <img src="pdf-bilder/hooksches-gesetz.png" alt="Versuchsaufbau zum Hookeschen Gesetz mit Feder, Massestücken und Skala">
+        <figcaption>Massestücke werden langsam abgesenkt, damit keine Schwingung entsteht. Gemessen wird die Verlängerung $x$ der Feder.</figcaption>
+      </figure>
+      <div>
+        <p>Hängst du verschiedene Massestücke an eine Stahlfeder, wirkt im ruhenden Zustand die Federkraft der Gewichtskraft entgegen. Im linearen Bereich wächst die Federkraft proportional mit der Verlängerung.</p>
+        <div class="physics-formula">\[F=D\,x\qquad\text{und}\qquad D=\frac{F}{x}\]</div>
+        <p>Die Federkonstante $D$ beschreibt die Federhärte. Ein großer Wert bedeutet: Für dieselbe Verlängerung ist eine größere Kraft nötig.</p>
+      </div>
+    </div>
+    <div class="schw-table-wrap">
+      <table class="schw-table">
+        <thead><tr><th>Messgröße</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+        <tbody>
+          <tr><td>$F$ in cN</td><td>0</td><td>100</td><td>200</td><td>300</td><td>400</td></tr>
+          <tr><td>$x$ in cm</td><td>0,0</td><td>5,1</td><td>10,1</td><td>15,2</td><td>20,0</td></tr>
+          <tr><td>$F/x$ in N/m</td><td>–</td><td>19,6</td><td>19,8</td><td>19,7</td><td>20,0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Der nahezu konstante Quotient bestätigt das lineare Kraftgesetz mit $D\approx20\,\mathrm{N/m}$. Das Gesetz gilt jedoch nur im elastischen linearen Bereich.</p>
+    <div class="wb-section-break"></div>
+
+    <figure class="schw-figure compact">
+      <img src="pdf-bilder/hooksches-gesetz-F-x-Diagramm.png" alt="Kraft-Verlängerungs-Diagramm einer harten und einer weichen Feder sowie eines Gummibands">
+      <figcaption>Geraden durch den Ursprung kennzeichnen das hookesche Gesetz. Ihre Steigung entspricht $D$. Das Gummiband zeigt keinen konstanten Quotienten $F/x$.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_hooke_mcq","title":"Stopp & Check: Diagramm lesen","hint":"Denke an die Steigung im F-x-Diagramm.","questions":[{"text":"Welche Aussage ist richtig?","choices":[{"id":"a","label":"Die weiche Feder besitzt die größere Federkonstante."},{"id":"b","label":"Das Gummiband erfüllt im gesamten Bereich das hookesche Gesetz."},{"id":"c","label":"Die harte Feder besitzt die steilere Gerade und damit die größere Federkonstante."},{"id":"d","label":"Bei jeder Feder ist F unabhängig von x."}],"correct":["c"],"explain":"Im F-x-Diagramm ist D die Steigung. Die Gerade der harten Feder steigt stärker an."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Warum die Gewichtskraft die Schwingungsform nicht verändert</h2>
+    <p>Beim vertikalen Federpendel legt die Gewichtskraft zunächst nur die Gleichgewichtslage fest. Dort heben sich Federkraft $F_0$ und Gewichtskraft $F_G$ auf. Wird die Masse um $s$ ausgelenkt, ändert sich die Federkraft um $D\,s$. Die resultierende Rückstellkraft zeigt stets zur Gleichgewichtslage.</p>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/federpendel-kraeftebetrachtung.png" alt="Kräfte am Federpendel in Gleichgewichtslage sowie bei positiver und negativer Auslenkung">
+      <figcaption>Vorzeichenwahl: Nach oben ist positiv. Bei $s&gt;0$ zeigt die resultierende Kraft nach unten; bei $s&lt;0$ zeigt sie nach oben.</figcaption>
+    </figure>
+    <div class="physics-formula">\[F_R=F_G+F_1=F_G+F_0-Ds=-Ds\]</div>
+    <p>Das Minuszeichen ist keine zusätzliche Kraft. Es beschreibt die Richtung: $F_R$ und $s$ haben immer entgegengesetzte Vorzeichen. Eine Rückstellkraft proportional zur Auslenkung ist das Kennzeichen einer harmonischen Schwingung.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-soft-callout"><strong>Jetzt hast du gelernt, dass …</strong><p>die Gleichgewichtslage beim vertikalen Federpendel durch die Gewichtskraft verschoben wird, für die Bewegung um diese Lage aber das lineare Rückstellgesetz $F_R=-Ds$ entscheidend ist.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise">
+      <h3>Experiment planen</h3>
+      <p>Plane eine Messung, mit der du prüfst, bis zu welcher Belastung eine vorhandene Feder das hookesche Gesetz erfüllt. Lege unabhängige, abhängige und konstant zu haltende Größen fest und beschreibe ein geeignetes Diagramm.</p>
+    </div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_hooke_plan","title":"Dein Versuchsplan","hint":"Formuliere Aufbau, Durchführung, Auswertung und Abbruchkriterium.","storagePrefix":"schw_","fields":[{"label":"Versuchsplan","key":"plan","kind":"textarea","placeholder":"Beschreibe deinen Versuchsplan."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_rueck_verify","title":"Fehler finden","hint":"Prüfe Betrag und Richtung.","statement":"Bei positiver Auslenkung s ist auch die Rückstellkraft F_R positiv.","answer":false,"explain":"Falsch. Für F_R = -D·s gilt bei s > 0 stets F_R < 0. Die Rückstellkraft zeigt zur Gleichgewichtslage."}</script></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Federpendel und Energie">
+    <h1>Periodendauer des Feder-Masse-Pendels</h1>
+    <p>Nun wird nicht nur beschrieben, <em>dass</em> ein Federpendel schwingt, sondern wovon seine Periodendauer abhängt. In jedem Teilversuch veränderst du genau eine Größe und hältst alle anderen möglichst konstant.</p>
+    <figure class="schw-figure compact">
+      <img src="pdf-bilder/3-masse-feder-pendel-versuch.png" alt="Drei Feder-Masse-Pendel mit unterschiedlichen Massen und Federkonstanten">
+      <figcaption>Für einen fairen Vergleich darf pro Messreihe nur ein Parameter verändert werden: Amplitude $A$, Masse $m$ oder Federkonstante $D$.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <h2>Teilversuch A: Ändert die Amplitude die Periodendauer?</h2>
+    <p>Für $m=0{,}15\,\mathrm{kg}$ und $D=9\,\mathrm{N/m}$ wird nur die Ausgangsauslenkung verändert.</p>
+    <div class="schw-table-wrap"><table class="schw-table"><tbody><tr><th>$A$ in m</th><td>0,03</td><td>0,04</td><td>0,05</td><td>0,06</td><td>0,07</td></tr><tr><th>$T$ in s</th><td>0,75</td><td>0,73</td><td>0,77</td><td>0,73</td><td>0,76</td></tr></tbody></table></div>
+    <p>Die Messwerte streuen ohne erkennbaren Trend. Im Gültigkeitsbereich des linearen Kraftgesetzes ist $T$ unabhängig von $A$.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Teilversuch B: Einfluss der Masse</h2>
+    <p>Nun bleiben $D=9\,\mathrm{N/m}$ und die Amplitude annähernd konstant.</p>
+    <div class="schw-table-wrap"><table class="schw-table"><tbody><tr><th>$m$ in kg</th><td>0,050</td><td>0,10</td><td>0,15</td><td>0,20</td><td>0,25</td></tr><tr><th>$T$ in s</th><td>0,52</td><td>0,72</td><td>0,88</td><td>1,00</td><td>1,12</td></tr><tr><th>$T/\sqrt m$ in s/√kg</th><td>2,33</td><td>2,28</td><td>2,27</td><td>2,24</td><td>2,24</td></tr></tbody></table></div>
+    <p>Der Quotient $T/\sqrt m$ ist näherungsweise konstant. Daraus folgt $T\sim\sqrt m$. Eine größere Masse schwingt langsamer.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Teilversuch C: Einfluss der Federkonstante</h2>
+    <p>Bei gleicher Masse und gleicher Amplitude werden unterschiedlich harte Federn untersucht. Je größer $D$, desto stärker ist bei gleicher Auslenkung die Rückstellkraft und desto kürzer wird die Periodendauer. Die Auswertung ergibt $T\sim1/\sqrt D$.</p>
+    <div class="wb-callout">
+      <strong>Ergebnis aller drei Teilversuche</strong>
+      <div class="physics-formula">\[T=2\pi\sqrt{\frac{m}{D}},\qquad f=\frac{1}{2\pi}\sqrt{\frac{D}{m}}\]</div>
+      <p>$T$ hängt nicht von der Amplitude ab, solange das lineare Kraftgesetz gilt und die Dämpfung klein ist.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_mcq_feder","title":"Parameterwirkung vorhersagen","hint":"Beachte die Quadratwurzeln.","questions":[{"text":"Die Masse wird vervierfacht, D bleibt gleich. Wie ändert sich T?","choices":[{"id":"a","label":"T wird doppelt so groß."},{"id":"b","label":"T wird viermal so groß."},{"id":"c","label":"T halbiert sich."}],"correct":["a"],"explain":"Wegen T ∼ √m führt die vierfache Masse zur doppelten Periodendauer."},{"text":"Die Federkonstante wird vervierfacht, m bleibt gleich. Wie ändert sich T?","choices":[{"id":"a","label":"T verdoppelt sich."},{"id":"b","label":"T halbiert sich."},{"id":"c","label":"T bleibt gleich."}],"correct":["b"],"explain":"Wegen T ∼ 1/√D führt die vierfache Federkonstante zur halben Periodendauer."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Rechenaufgaben</h2>
+    <div class="schw-grid">
+      <div>
+        <div class="schw-exercise">
+          <h3>Aufgabe 1: Bewegliche Rolle</h3>
+          <p>Berechne die Frequenz. Reibung sowie die Massen von Feder und Rolle werden vernachlässigt. Begründe außerdem, warum der Körper harmonisch schwingt.</p>
+        </div>
+        <figure class="schw-figure compact">
+          <img src="pdf-bilder/aufgabe1-frequenzberechnung.png" alt="Zwei-Kilogramm-Masse an beweglicher Rolle und Feder mit D gleich 50 Newton pro Meter">
+          <figcaption>Beachte: Beim Verschieben der Rolle ändert sich die Federlänge um den doppelten Weg der Masse.</figcaption>
+        </figure>
+      </div>
+      <div>
+        <div class="schw-exercise">
+          <h3>Aufgabe 2: Wiegen im Weltraum</h3>
+          <p>Ein Astronaut sitzt auf einem $10\,\mathrm{kg}$ schweren Stuhl zwischen zwei Federn. Die gesamte Richtgröße beträgt $D=840\,\mathrm{N/m}$. Fünf Schwingungen dauern $10{,}0\,\mathrm{s}$. Berechne die Masse des Astronauten und stelle bei $\hat s=0{,}50\,\mathrm{m}$ ein $s$-$t$-Gesetz für den Start am positiven Umkehrpunkt auf.</p>
+        </div>
+        <figure class="schw-figure compact">
+          <img src="pdf-bilder/aufgabe2-astronaut.png" alt="Astronaut auf einem horizontal zwischen zwei Federn eingespannten Stuhl">
+          <figcaption>Im schwerelosen Raum wird die träge Masse über die Periodendauer bestimmt.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_rechenaufgaben","title":"Deine Rechnungen","hint":"Gib Ansätze, Umformungen, Ergebnisse und Einheiten an.","storagePrefix":"schw_","fields":[{"label":"Aufgabe 1","key":"rolle","kind":"textarea","placeholder":"Rechenweg und Begründung"},{"label":"Aufgabe 2","key":"astronaut","kind":"textarea","placeholder":"Rechenweg und Zeitgesetz"}]}</script></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_rechnen_loesung","title":"Lösungsweg prüfen","question":"Welche Ergebnisse erhältst du?","answer":"Aufgabe 1: Bewegt sich die Rolle um s, ändert sich die Federlänge um 2s. Die Seilspannung ist dann 2Ds; zwei Seilabschnitte ziehen an der Rolle. Daher gilt D_eff = 4D = 200 N/m. T = 2π√(m/D_eff) ≈ 0,628 s und f ≈ 1,59 Hz. Weil die Rückstellkraft proportional zu s ist, ist die Schwingung harmonisch. Aufgabe 2: T = 10,0 s / 5 = 2,0 s. Aus m_ges = D(T/2π)² folgt m_ges ≈ 85,1 kg. Nach Abzug des Stuhls hat der Astronaut etwa 75,1 kg. Ein mögliches Zeitgesetz ist s(t) = 0,50 m · cos(πt)."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Energieumwandlung</h2>
+    <p>Bezogen auf die Gleichgewichtslage wechselt die Energie beim idealen Federpendel zwischen Bewegungsenergie und potenzieller Energie der Schwingung. Am Umkehrpunkt ist $v=0$; in der Gleichgewichtslage ist der Geschwindigkeitsbetrag maximal.</p>
+    <div class="physics-formula">\[E_\mathrm{pot}=\frac12Ds^2,\qquad E_\mathrm{kin}=\frac12mv^2,\qquad E_\mathrm{ges}=\frac12D\hat s^2=\text{konstant}\]</div>
+    <p>Bei einer realen Schwingung wird mechanische Energie durch Reibung in innere Energie umgewandelt. Deshalb nimmt die Amplitude ab.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_verify_energie","title":"Energie-Check","hint":"Unterscheide Energieform und Gesamtenergie.","statement":"Am Umkehrpunkt eines idealen Federpendels ist die Gesamtenergie null, weil die Geschwindigkeit null ist.","answer":false,"explain":"Die Bewegungsenergie ist dort null, aber die potenzielle Energie der Schwingung ist maximal. Die Gesamtenergie bleibt konstant."}</script></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Weitere Schwinger">
+    <h1>Fadenpendel, U-Rohr und horizontaler Federschwinger</h1>
+    <p>Das Feder-Masse-Pendel ist nur ein Beispiel für eine harmonische Schwingung. Entscheidend ist nicht die Bauform, sondern ein gemeinsames Kraftgesetz: Ist die Rückstellkraft proportional zur Auslenkung und entgegengesetzt gerichtet, gilt $F_R=-D^*s$. Dann kann dieselbe mathematische Beschreibung auf sehr unterschiedliche Systeme übertragen werden.</p>
+    <div class="course-core"><strong>Gemeinsamer Kern: Basisfach und Leistungsfach</strong><p>Du beschreibst die Rückstellwirkung und untersuchst qualitativ, wovon die Periodendauer abhängt. Die ausführliche Herleitung der Richtgröße und anspruchsvolle Transferaufgaben sind als LF-Vertiefung markiert.</p></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Das Fadenpendel</h2>
+    <div class="schw-grid">
+      <figure class="schw-figure">
+        <img src="pdf-bilder/foucaultsches-pendel.png" alt="Foucault-Pendel im Panthéon in Paris">
+        <figcaption>Das Foucault-Pendel im Pariser Panthéon besitzt einen etwa $67\,\mathrm{m}$ langen Faden. Seine langsame Schwingung macht über längere Zeit die Erdrotation sichtbar.</figcaption>
+      </figure>
+      <div>
+        <p>Wird ein Fadenpendel ausgelenkt, bewegt sich der Pendelkörper auf einem Kreisbogen. Die Gewichtskraft $F_G=mg$ wird in eine Komponente entlang des Fadens und eine tangentiale Komponente zerlegt. Nur die tangentiale Komponente beschleunigt den Körper entlang seiner Bahn zurück zur Ruhelage.</p>
+        <p>Die Fadenkraft hält den Abstand zum Aufhängepunkt konstant. Sie verrichtet bei der idealisierten Pendelbewegung keine Arbeit, weil sie immer senkrecht zur momentanen Bewegungsrichtung steht.</p>
+      </div>
+    </div>
+    <figure class="schw-figure compact">
+      <img src="pdf-bilder/kraeftezerlegung-fadenpendel.png" alt="Zerlegung der Gewichtskraft am ausgelenkten Fadenpendel">
+      <figcaption>Die tangentiale Komponente $F_t$ wirkt zur Ruhelage. Für große Winkel ist sie nicht proportional zur Bogenlänge $s$; das Pendel schwingt dann nicht exakt harmonisch.</figcaption>
+    </figure>
+    <div class="physics-formula">\[F_t=mg\sin\alpha,\qquad s=l\alpha\]</div>
+    <p>Für kleine Winkel im Bogenmaß gilt $\sin\alpha\approx\alpha\approx s/l$. Mit dem Vorzeichen für die rücktreibende Richtung folgt näherungsweise:</p>
+    <div class="physics-formula">\[F_R\approx-\frac{mg}{l}s=-D^*s,\qquad D^*=\frac{mg}{l}\]</div>
+    <div class="wb-callout"><strong>Merke</strong><p>Für kleine Auslenkungen schwingt das Fadenpendel näherungsweise harmonisch. Seine Periodendauer hängt von der Pendellänge $l$ und dem Ortsfaktor $g$, aber nicht von der Pendelmasse ab.</p><div class="physics-formula">\[T=2\pi\sqrt{\frac{l}{g}}\]</div></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_faden_mcq","title":"Stopp & Check: Fadenpendel","hint":"Prüfe die Formel und ihre Voraussetzungen.","shuffleChoices":true,"questions":[{"text":"Welche Änderung vergrößert die Periodendauer eines Fadenpendels im Kleinwinkelbereich?","choices":[{"id":"a","label":"Die Pendelmasse wird vervierfacht."},{"id":"b","label":"Die Pendellänge wird vervierfacht."},{"id":"c","label":"Die Amplitude wird bei kleinen Winkeln halbiert."}],"correct":["b"],"explain":"Wegen T ∼ √l führt die vierfache Länge zur doppelten Periodendauer. Masse und kleine Amplitude gehen nicht in die Formel ein."},{"text":"Warum ist die Kleinwinkelnäherung wichtig?","choices":[{"id":"a","label":"Nur dann ist sin(α) näherungsweise proportional zu α und damit zu s."},{"id":"b","label":"Nur dann verschwindet die Gewichtskraft."},{"id":"c","label":"Nur dann wird die Pendelmasse null."}],"correct":["a"],"explain":"Die lineare Rückstellkraft entsteht aus sin(α) ≈ α. Für große Winkel ist die Rückstellwirkung nicht mehr linear."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Die Wassersäule im U-Rohr</h2>
+    <div class="schw-grid">
+      <figure class="schw-figure tall">
+        <img src="pdf-bilder/wassersaeule-u-rohr.png" alt="Ausgelenkte Flüssigkeitssäule in einem U-Rohr">
+        <figcaption>Steigt die Flüssigkeit links um $s$, sinkt sie rechts um $s$. Der Höhenunterschied der beiden Oberflächen beträgt deshalb $2s$.</figcaption>
+      </figure>
+      <div>
+        <p>Das U-Rohr habe überall den Querschnitt $A$. Wird die Flüssigkeit aus ihrer Ruhelage verschoben, steht auf einer Seite eine zusätzliche Flüssigkeitssäule der Höhe $2s$. Ihre Gewichtskraft wirkt zurück zur Gleichgewichtslage.</p>
+        <div class="physics-formula">\[F_R=-\rho A(2s)g=-2\rho gA\,s\]</div>
+        <p>Damit gilt wieder ein lineares Kraftgesetz mit $D^*=2\rho gA$. Die gesamte Flüssigkeit der Länge $l$ schwingt; ihre Masse ist $m=\rho Al$.</p>
+        <div class="physics-formula">\[T=2\pi\sqrt{\frac{m}{D^*}}=2\pi\sqrt{\frac{\rho Al}{2\rho gA}}=2\pi\sqrt{\frac{l}{2g}}\]</div>
+        <p>Dichte und Rohrquerschnitt kürzen sich. Sie beeinflussen in diesem idealisierten Modell die Periodendauer nicht.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Der horizontale Federschwinger</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/horizontaler-federschwinger.png" alt="Wagen zwischen zwei Federn und zugehöriges Kraft-Auslenkungs-Diagramm">
+      <figcaption>Bei einer Auslenkung ändern beide Federn ihre Kraft. Die Änderungen addieren sich zur resultierenden Rückstellkraft.</figcaption>
+    </figure>
+    <p>Ein Wagen der Masse $m$ ist zwischen Federn mit den Federkonstanten $D_1$ und $D_2$ eingespannt. In der Ruhelage heben sich die vorgespannten Federkräfte auf. Bei einer Auslenkung $s$ nach rechts nimmt die rücktreibende Wirkung beider Federn zusammen um $(D_1+D_2)s$ zu.</p>
+    <div class="physics-formula">\[F_R=-(D_1+D_2)s,\qquad D^*=D_1+D_2\]</div>
+    <div class="physics-formula">\[T=2\pi\sqrt{\frac{m}{D_1+D_2}}\]</div>
+    <p>Wird die Anordnung ohne Reibung schräg gestellt, verschiebt die zusätzliche Hangabtriebskraft lediglich die Gleichgewichtslage. Die Periodendauer bleibt gleich, solange $D_1$, $D_2$ und $m$ unverändert bleiben.</p>
+    <div class="wb-soft-callout"><strong>Jetzt hast du gelernt, dass …</strong><p>Fadenpendel, U-Rohr und horizontaler Federschwinger trotz unterschiedlicher Ursachen harmonisch schwingen können. Entscheidend ist jeweils das lineare Rückstellgesetz $F_R=-D^*s$.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"schw_system_cat","title":"Abhängigkeiten richtig zuordnen","hint":"Ordne jede Größe dem System zu, dessen Periodendauer davon abhängt.","categories":[{"id":"faden","title":"Fadenpendel"},{"id":"urohr","title":"U-Rohr"},{"id":"wagen","title":"Horizontaler Federschwinger"},{"id":"keines","title":"In keinem der drei Idealmodelle"}],"items":[{"label":"Pendellänge l","category":"faden"},{"label":"Gesamtlänge l der Flüssigkeitssäule","category":"urohr"},{"label":"Masse m des Wagens","category":"wagen"},{"label":"Summe D₁ + D₂","category":"wagen"},{"label":"Dichte ρ der Flüssigkeit","category":"keines"},{"label":"Masse des Pendelkörpers","category":"keines"}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgaben zu weiteren Schwingern</h2>
+    <div class="schw-exercise"><h3>Aufgabe 1: Fadenpendel untersuchen</h3><p>Baue ein möglichst langes Fadenpendel. Miss für mindestens fünf Längen jeweils die Zeit von zehn Perioden. Prüfe mit einem $T$-$\sqrt l$-Diagramm die Beziehung $T\sim\sqrt l$. Wiederhole anschließend zwei Messungen mit deutlich veränderter Masse und beurteile den Einfluss der Masse.</p></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_faden_plan","title":"Versuchsplanung und Auswertung","hint":"Lege Messgrößen, Konstanten, Auswertung und Unsicherheiten fest.","storagePrefix":"schw_","fields":[{"label":"Aufbau und Durchführung","key":"aufbau","kind":"textarea","placeholder":"Beschreibe den Aufbau und die Messfolge."},{"label":"Auswertung und Fehlerquellen","key":"auswertung","kind":"textarea","placeholder":"Erkläre Diagramm, erwarteten Verlauf und Fehlerquellen."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise"><h3>Aufgaben 2 und 3: Panthéon und Sekundenpendel</h3><p>2. Das historische Foucault-Pendel im Panthéon hatte eine Fadenlänge von $67\,\mathrm{m}$. Berechne Periodendauer und Frequenz. 3. Bestimme die Länge eines Sekundenpendels mit $T=2{,}00\,\mathrm{s}$.</p></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_pendel_rechnen","title":"Ergebnisse prüfen","question":"Welche Werte ergeben sich mit g = 9,81 m/s²?","answer":"Panthéon: T = 2π√(67 m / 9,81 m/s²) ≈ 16,4 s und f ≈ 0,061 Hz. Sekundenpendel: l = g(T/2π)² ≈ 0,994 m."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Aufgaben 4 bis 8: Modellieren und übertragen</strong><p>Bei diesen Aufgaben musst du das lineare Kraftgesetz, Energieerhaltung oder eine geeignete Richtgröße selbst erkennen.</p></div>
+    <div class="schw-exercise"><h3>Aufgabe 4: Riesenschaukel</h3><p>Eine Riesenschaukel hat die Länge $5{,}0\,\mathrm{m}$. Berechne die Mindestgeschwindigkeit im tiefsten Punkt für einen vollständigen Überschlag. Unterscheide zwei Modelle: einen starren Pendelarm und ein Seil, das auch am höchsten Punkt gespannt bleiben muss.</p></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_riesenschaukel","title":"Modellannahmen prüfen","question":"Warum gibt es je nach Modell zwei Ergebnisse?","answer":"Beim starren Arm genügt im Grenzfall v_oben = 0. Mit der Höhendifferenz 2l folgt v_unten = √(4gl) ≈ 14,0 m/s. Ein Seil muss am höchsten Punkt noch gespannt sein; dafür gilt mindestens v_oben²/l = g. Dann folgt v_unten = √(5gl) ≈ 15,7 m/s. Ohne Angabe der Konstruktion ist die Aufgabe nicht eindeutig."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise"><h3>Aufgaben 5 und 6: Auftrieb und vertikales Federpendel</h3><p>5. Ein schwimmendes Reagenzglas mit $m=15\,\mathrm{g}$ und $A=2{,}0\,\mathrm{cm^2}$ wird um $s$ tiefer eingetaucht. Leite $m\ddot s=-\rho Ags$ her und berechne für Wasser die Periodendauer. Bestimme bei $\hat s=3{,}0\,\mathrm{cm}$ außerdem $v_\mathrm{max}$. 6. Eine Masse von $200\,\mathrm{g}$ dehnt eine Feder in der Ruhelage um $40\,\mathrm{cm}$. Sie wird weitere $10\,\mathrm{cm}$ ausgelenkt. Bestimme $D$, $T$, $f$, $\omega$ und $v_\mathrm{max}$.</p></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_transfer_rechnen","title":"Deine Rechnungen","hint":"Leite zuerst die Richtgröße her und rechne dann weiter.","storagePrefix":"schw_","fields":[{"label":"Aufgabe 5","key":"auftrieb","kind":"textarea","placeholder":"Herleitung und Ergebnisse mit Einheiten"},{"label":"Aufgabe 6","key":"feder","kind":"textarea","placeholder":"Rechenweg und Ergebnisse mit Einheiten"}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-grid">
+      <div><div class="schw-exercise"><h3>Aufgabe 7: Wagen zwischen zwei Federn</h3><p>Für $m=0{,}60\,\mathrm{kg}$, $D_1=9{,}50\,\mathrm{N/m}$ und $T=1{,}00\,\mathrm{s}$: Berechne $D_2$. Bestimme danach $T$ bei doppelter Masse und begründe die Periodendauer in der schrägen Anordnung.</p></div><figure class="schw-figure compact"><img src="pdf-bilder/aufgabe7c-schraewger-wagen.png" alt="Wagen zwischen zwei Federn auf einer schiefen Ebene"><figcaption>Die Hangabtriebskraft ist konstant. Prüfe, ob sie die Richtgröße oder nur die Ruhelage verändert.</figcaption></figure></div>
+      <div><div class="schw-exercise"><h3>Aufgabe 8: Schwingendes Kettenstück</h3><p>Eine gleichmäßig schwere Kette mit $l=60\,\mathrm{cm}$ und $m=600\,\mathrm{g}$ wird um $\Delta h=10\,\mathrm{cm}$ ausgelenkt. Zeige $F_R=-(2mg/l)\Delta h$, berechne $T$ und $v_\mathrm{max}$ und untersuche die Modellgrenze bei sehr großer Auslenkung.</p></div><figure class="schw-figure compact"><img src="pdf-bilder/aufgabe8-kettenstueck.png" alt="Kettenstück über einer Rolle in Ruhelage sowie bei kleiner und großer Auslenkung"><figcaption>Nur solange die Geometrie erhalten bleibt, ist die Massendifferenz beider Kettenseiten proportional zu $\Delta h$.</figcaption></figure></div>
+    </div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_wagen_kette","title":"Orientierung für Aufgaben 7 und 8","question":"Welche Ergebnisse und Modellgrenzen solltest du erhalten?","answer":"Aufgabe 7: D₁ + D₂ = m(2π/T)² ≈ 23,69 N/m, also D₂ ≈ 14,19 N/m. Bei doppelter Masse wird T um √2 größer: T ≈ 1,41 s. Die Schräglage verschiebt nur die Ruhelage. Aufgabe 8: D* = 2mg/l, daher T = 2π√(l/(2g)) ≈ 1,10 s und v_max = (2π/T)·0,10 m ≈ 0,57 m/s. Bei fast 60 cm Auslenkung ändern sich Auflage und Geometrie; das lineare Modell ist dann nicht mehr gültig."}</script></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Phase und LF-Vertiefung">
+    <h1>Phase, Kreisprojektion und formale Vertiefung</h1>
+    <div class="course-core"><strong>Gemeinsame Grundlage</strong><p>Die harmonische Bewegung wird mit $s(t)=\hat s\sin(\omega t+\varphi_0)$ oder einer gleichwertigen Kosinusfunktion beschrieben. Im Leistungsfach wird die mathematische Struktur ausführlicher begründet und auf weitere Systeme übertragen.</p></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Schwingung als Projektion einer Kreisbewegung</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/federpendel-kreisbewegung-veranschaulichung.png" alt="Federpendel und Projektion einer gleichförmigen Kreisbewegung auf eine Sinusschwingung">
+      <figcaption>Der Schatten eines gleichförmig umlaufenden Punktes bewegt sich harmonisch. Der Kreisradius entspricht der Amplitude, der Drehwinkel der Phase.</figcaption>
+    </figure>
+    <p>Ein Punkt $K'$ läuft gleichförmig auf einem Kreis mit Radius $r$. Seine Projektion auf die senkrechte Achse besitzt die Koordinate $y=r\sin\varphi$. Stimmt diese Projektion mit der Auslenkung des Federpendels überein, gilt $\hat s=r$ und $s=y$.</p>
+    <div class="physics-formula">\[s(t)=\hat s\sin\varphi(t),\qquad \varphi(t)=\omega t,\qquad \omega=\frac{2\pi}{T}=2\pi f\]</div>
+    <p>Die Phase beschreibt nicht nur einen Ort. Zwei gleiche Auslenkungen können zu unterschiedlichen Zuständen gehören, wenn die Bewegungsrichtungen verschieden sind. Ein vollständiger Zustand wird erst durch Auslenkung und Bewegungsrichtung eindeutig.</p>
+    <div class="wb-section-break"></div>
+
+    <figure class="schw-figure compact">
+      <img src="pdf-bilder/aufgabe2-phase.png" alt="Zwei harmonische Schwingungen mit Zeigerdarstellung und einer Phasendifferenz von 90 Grad">
+      <figcaption>Die beiden Schwingungen haben dieselbe Frequenz, aber eine Phasendifferenz von $90^\circ=\pi/2$.</figcaption>
+    </figure>
+    <div class="schw-exercise">
+      <h3>Aufgabe: Phase erklären</h3>
+      <p>Erläutere mithilfe der Abbildung, was die Phase einer einzelnen Schwingung und die Phasendifferenz zweier Schwingungen bedeuten. Begründe, weshalb die Zeigerdarstellung den Vergleich erleichtert.</p>
+    </div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_phase_essay","title":"Deine Phasenerklärung","hint":"Beziehe Zeigerwinkel, Zeitverschiebung und Bewegungszustand ein.","storagePrefix":"schw_","fields":[{"label":"Erklärung","key":"phase","kind":"textarea","placeholder":"Formuliere deine Erklärung."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="lf-only-box">
+      <strong><span class="lf-only-badge">LF-only</span> Differenzialgleichung des Federpendels</strong>
+      <p>Aus dem linearen Kraftgesetz $F_R=-Ds$ und dem zweiten newtonschen Gesetz $F=m\ddot s$ folgt:</p>
+      <div class="physics-formula">\[m\ddot s(t)=-D\,s(t)\qquad\Longleftrightarrow\qquad \ddot s(t)=-\frac{D}{m}s(t)\]</div>
+      <p>Die Funktion $s(t)=\hat s\sin(\omega t)$ kann als Lösung überprüft werden. Zweimaliges Ableiten liefert $\ddot s(t)=-\omega^2s(t)$. Einsetzen ergibt $\omega^2=D/m$ und damit $T=2\pi\sqrt{m/D}$.</p>
+      <p>Die formale Lösungsprüfung ist eine mathematische Vertiefung. Für den gemeinsamen Kern genügt es, die fertige Schwingungsgleichung sicher anzuwenden.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise">
+      <h3>Aufgabe: Funktionsparameter deuten</h3>
+      <p>Skizziere beide Schwingungen über mindestens zwei Perioden. Markiere jeweils Amplitude, Periodendauer und den ersten positiven Umkehrpunkt.</p>
+      <div class="physics-formula">\[s_1(t)=5\,\mathrm{cm}\sin\!\left(\frac{2\pi}{0{,}5\,\mathrm{s}}t\right),\qquad s_2(t)=0{,}5\,\mathrm{cm}\sin\!\left(\frac{2\pi}{1\,\mathrm{s}}t\right)\]</div>
+    </div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_funktion_check","title":"Parameter kontrollieren","question":"Welche Amplituden und Periodendauern müssen deine Skizzen zeigen?","answer":"Für s₁ gilt A = 5 cm und T = 0,5 s; der erste positive Umkehrpunkt liegt bei T/4 = 0,125 s. Für s₂ gilt A = 0,5 cm und T = 1 s; der erste positive Umkehrpunkt liegt bei 0,25 s."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="lf-only-box">
+      <strong><span class="lf-only-badge">LF-only</span> Weitere Schwingungssysteme</strong>
+      <p>Beim Fadenpendel ist die Rückstellwirkung nur für kleine Winkel näherungsweise linear. Dann gilt:</p>
+      <div class="physics-formula">\[T=2\pi\sqrt{\frac{l}{g}}\]</div>
+      <p>Bei einer erzwungenen Schwingung kann Resonanz auftreten, wenn Erregerfrequenz und Eigenfrequenz nahe beieinanderliegen. Dämpfung begrenzt die Amplitude. Überlagern sich zwei Schwingungen mit nahe beieinanderliegenden Frequenzen, entsteht eine Schwebung.</p>
+      <div class="physics-formula">\[f_\mathrm{S}=|f_1-f_2|\]</div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">{"id":"schw_cat","title":"Schwingungsphänomene zuordnen","hint":"Ordne Ursache und Kennzeichen zu.","categories":[{"id":"frei","title":"freie ungedämpfte Schwingung"},{"id":"gedaempft","title":"gedämpfte Schwingung"},{"id":"erzwungen","title":"erzwungene Schwingung"},{"id":"schwebung","title":"Schwebung"}],"items":[{"label":"Die Amplitude bleibt im Idealmodell konstant.","category":"frei"},{"label":"Mechanische Energie wird fortlaufend in innere Energie umgewandelt.","category":"gedaempft"},{"label":"Eine äußere periodische Kraft führt Energie zu.","category":"erzwungen"},{"label":"Nahe der Eigenfrequenz kann Resonanz auftreten.","category":"erzwungen"},{"label":"Zwei nahe Frequenzen erzeugen ein periodisches Lauter-und-Leiser.","category":"schwebung"}]}</script></div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Energie der Schwingung">
+    <h1>Energie einer harmonischen Schwingung</h1>
+    <p>Eine harmonische Schwingung lässt sich nicht nur mit Kräften und Bewegungsgleichungen beschreiben. Die Energiebetrachtung zeigt besonders anschaulich, warum ein idealer Schwinger immer wieder zwischen Umkehrpunkt und Ruhelage wechselt.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Energie als Fläche im Kraft-Weg-Diagramm</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/spannenergie-diagramme.png" alt="Kraft-Weg-Diagramme für konstante Kraft und lineare Federkraft">
+      <figcaption>Die verrichtete Arbeit entspricht der Fläche unter dem Kraft-Weg-Graphen. Bei einer linearen Federkraft entsteht eine Dreiecksfläche.</figcaption>
+    </figure>
+    <p>Bei konstanter Kraft gilt $E=Fx$. Beim Spannen einer Feder wächst die Kraft dagegen nach $F=Dx$. Für eine sehr kleine Verlängerung $\Delta x$ kann die Kraft als annähernd konstant behandelt werden. Die Summe aller schmalen Rechtecke nähert sich der Dreiecksfläche unter der Geraden.</p>
+    <div class="physics-formula">\[E_\mathrm{spann}=\frac12Fx=\frac12Dx^2\]</div>
+    <div class="wb-section-break"></div>
+
+    <h2>Elongationsenergie relativ zur Gleichgewichtslage</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/differenz-lage-spannenergie.png" alt="Kraft-Weg-Diagramm zur Abgrenzung von Spannenergie, Höhenenergie und Elongationsenergie">
+      <figcaption>Beim vertikalen Federpendel ist die Elongationsenergie die zusätzliche Energie relativ zur Gleichgewichtslage. Sie ist nicht mit der gesamten Spannenergie der bereits vorgedehnten Feder gleichzusetzen.</figcaption>
+    </figure>
+    <p>In der Gleichgewichtslage ist die Feder bereits durch die Gewichtskraft gedehnt. Wird die Masse von dort um $s$ ausgelenkt, ändern sich Spannenergie und Höhenenergie gleichzeitig. Ihre gemeinsame Änderung ist die <strong>Elongationsenergie</strong>:</p>
+    <div class="physics-formula">\[E_\mathrm{Elong}=\frac12Ds^2\]</div>
+    <p>Diese Energie hängt nur vom Betrag der Auslenkung ab. Sie ist deshalb am oberen und unteren Umkehrpunkt gleich groß.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Periodischer Energieaustausch</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/energieumwandlung-federpendel.png" alt="Energieumwandlung zwischen Elongationsenergie und Bewegungsenergie beim Federpendel">
+      <figcaption>An den Umkehrpunkten ist $E_\mathrm{Elong}$ maximal; beim Durchgang durch die Gleichgewichtslage ist $E_\mathrm{kin}$ maximal.</figcaption>
+    </figure>
+    <div class="physics-formula">\[E_\mathrm{ges}=E_\mathrm{Elong}+E_\mathrm{kin}=\frac12Ds^2+\frac12mv^2=\frac12D\hat s^2\]</div>
+    <p>Ohne Reibung bleibt die Gesamtenergie konstant. Aus $D=m\omega^2$ folgt für den Durchgang durch die Gleichgewichtslage außerdem:</p>
+    <div class="physics-formula">\[\frac12D\hat s^2=\frac12mv_\mathrm{max}^2\qquad\Longrightarrow\qquad v_\mathrm{max}=\omega\hat s\]</div>
+    <div class="wb-soft-callout"><strong>Jetzt hast du gelernt, dass …</strong><p>Elongations- und Bewegungsenergie sich periodisch ineinander umwandeln. Die Gesamtenergie ist proportional zu $\hat s^2$, die Maximalgeschwindigkeit dagegen proportional zu $\hat s$.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order"><script class="wb-config" type="application/json">{"id":"schw_energie_order","title":"Energie in einer halben Periode","hint":"Beginne am positiven Umkehrpunkt.","items":["Positiver Umkehrpunkt: v = 0, Elongationsenergie maximal.","Bewegung zur Ruhelage: Elongationsenergie wird in Bewegungsenergie umgewandelt.","Ruhelage: |v| maximal, Bewegungsenergie maximal.","Bewegung zum negativen Umkehrpunkt: Bewegungsenergie wird wieder in Elongationsenergie umgewandelt.","Negativer Umkehrpunkt: v = 0, Elongationsenergie maximal."],"shuffle":true}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_amplitude_fehler","title":"Fehler finden: Amplitude verdoppeln","hint":"Nutze entweder die Energiegleichung oder v_max = ω·ŝ.","statement":"Wird bei unverändertem m und D die Amplitude verdoppelt, wächst die Maximalgeschwindigkeit nur um den Faktor √2.","answer":false,"explain":"Falsch. Die Gesamtenergie vervierfacht sich, weil E ∼ ŝ². Da E_kin,max ∼ v_max² gilt, verdoppelt sich v_max. Direkt folgt dies auch aus v_max = ωŝ."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgaben zur Energie</h2>
+    <div class="schw-exercise"><h3>Aufgaben 1 und 2: Diagramme verstehen</h3><p>1. Vergleiche gesamte Spannenergie und Elongationsenergie für eine Auslenkung, die genauso groß ist wie die statische Dehnung $s_0$. 2. Erkläre, wie sich das Kraft-Weg-Diagramm ändert, wenn die angehängte Masse verdoppelt wird und anschließend wieder um denselben Betrag ausgelenkt wird.</p></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_energie_diagramm","title":"Deine Diagrammanalyse","hint":"Beziehe Gleichgewichtslage, Flächen und Energieänderungen ein.","storagePrefix":"schw_","fields":[{"label":"Aufgabe 1","key":"vergleich","kind":"textarea","placeholder":"Vergleiche beide Energiebegriffe."},{"label":"Aufgabe 2","key":"masse","kind":"textarea","placeholder":"Beschreibe die Änderungen im Diagramm."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise"><h3>Aufgabe 3: Idealisierte Softair-Feder</h3><p>Eine Feder speichert bei $5{,}0\,\mathrm{cm}$ Kompression $7{,}5\,\mathrm{J}$. Berechne die Federkonstante. Welche Geschwindigkeit könnte eine Kugel der Masse $0{,}20\,\mathrm{g}$ höchstens erreichen, wenn die gesamte Federenergie verlustfrei in Bewegungsenergie überginge? Bewerte anschließend die Modellannahme.</p></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_softair","title":"Rechnung prüfen","question":"Welche idealisierten Grenzwerte erhältst du?","answer":"Aus 7,5 J = ½D(0,050 m)² folgt D = 6000 N/m. Aus 7,5 J = ½·0,00020 kg·v² folgt v ≈ 274 m/s. Das ist nur eine theoretische Obergrenze: Reibung, Luftwiderstand, bewegte Bauteile und ein nicht ideales Federverhalten verringern die tatsächliche Geschwindigkeit."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Abiturtraining: Diagramm und Modellkritik</strong><p>Hier verknüpfst du Diagrammauswertung, Ableitungen und Energie.</p></div>
+    <figure class="schw-figure compact">
+      <img src="pdf-bilder/abiturvorbereitung-s-t-diagramm-harmonische-schwingung.png" alt="Auslenkungs-Zeit-Diagramm einer harmonischen Schwingung mit Amplitude 0,5 Meter und Periodendauer 3 Sekunden">
+      <figcaption>Bestimme zuerst $\hat s$ und $T$. Daraus folgen $\omega$ und $v_\mathrm{max}$.</figcaption>
+    </figure>
+    <div class="schw-exercise"><h3>Abituraufgabe: Vertikale Schwingung</h3><p>a) Lies die Periodendauer ab. b) Berechne die maximale Geschwindigkeit. c) Die Amplitude wird durch einen äußeren Eingriff um $50\,\%$ erhöht. Bestimme die neue Maximalgeschwindigkeit und den Faktor, um den die Gesamtenergie wächst.</p></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_abitur_energie","title":"Lösung mit fachlicher Korrektur","question":"Welche Ergebnisse erhältst du?","answer":"Aus dem Diagramm: T = 3,0 s und ŝ = 0,50 m. Damit ist v_max = 2πŝ/T ≈ 1,05 m/s. Eine um 50 % größere Amplitude bedeutet ŝ_neu = 1,5ŝ. Daher gilt v_max,neu = 1,5v_max ≈ 1,57 m/s. Die Gesamtenergie wächst wegen E ∼ ŝ² um den Faktor 1,5² = 2,25. Eine Skalierung von v_max mit √1,5 wäre hier falsch, weil nicht die Energie, sondern die Amplitude um 50 % erhöht wurde."}</script></div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Überlagerung und Schwebung">
+    <h1>Zwei Schwingungen am selben Ort</h1>
+    <p>Treffen Schallwellen verschiedener Instrumente am Trommelfell oder an einer Mikrofonmembran ein, führt das schwingende System nicht mehrere getrennte Bewegungen aus. Seine momentane Auslenkung ist die Summe aller Einzelauslenkungen. Dieses <strong>Superpositionsprinzip</strong> gilt, solange sich das System linear verhält.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Gleiche Frequenz: eine neue harmonische Schwingung</h2>
+    <p>Haben beide Einzelschwingungen dieselbe Frequenz, bleibt ihre Phasendifferenz $\varphi_0$ konstant. Die Summe ist wieder harmonisch und besitzt dieselbe Frequenz. Amplitude und Anfangsphase der resultierenden Schwingung hängen jedoch von beiden Amplituden und der Phasendifferenz ab.</p>
+    <div class="physics-formula">\[s_1(t)=\hat s_1\sin(\omega t),\qquad s_2(t)=\hat s_2\sin(\omega t+\varphi_0)\]</div>
+    <div class="physics-formula">\[s(t)=s_1(t)+s_2(t)\]</div>
+    <div class="wb-section-break"></div>
+
+    <h2>Zeiger addieren</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/zwei-rotierende-zeiger-ueberlagerung.png" alt="Vektorielle Addition zweier rotierender Zeiger">
+      <figcaption>Die Zeigerlängen entsprechen den Amplituden. Bei gleicher Frequenz rotiert auch der Summenzeiger mit derselben Winkelgeschwindigkeit.</figcaption>
+    </figure>
+    <p>Die Zeiger werden wie Vektoren addiert. Mit dem Kosinussatz ergibt sich für die resultierende Amplitude:</p>
+    <div class="physics-formula">\[\hat s=\sqrt{\hat s_1^2+\hat s_2^2+2\hat s_1\hat s_2\cos\varphi_0}\]</div>
+    <p>Für $\varphi_0=0$ addieren sich die Amplituden vollständig. Für $\varphi_0=\pi$ wirken sie gegeneinander; bei gleichen Amplituden löschen sich die Schwingungen aus.</p>
+    <div data-p2>
+      <div data-side="L" data-pair="1">$\varphi_0=0$</div><div data-side="R" data-pair="1">$\hat s=\hat s_1+\hat s_2$</div>
+      <div data-side="L" data-pair="2">$\varphi_0=\pi$</div><div data-side="R" data-pair="2">$\hat s=|\hat s_1-\hat s_2|$</div>
+      <div data-side="L" data-pair="3">gleiche Frequenz</div><div data-side="R" data-pair="3">konstante Phasendifferenz</div>
+      <div data-side="L" data-pair="4">Summenzeiger</div><div data-side="R" data-pair="4">resultierende harmonische Schwingung</div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Nahe Frequenzen: Schwebung</h2>
+    <figure class="schw-figure">
+      <img src="pdf-bilder/ueberlagerung-zweier-schwingungen.png" alt="Zwei Einzelschwingungen und ihre resultierende Schwingung">
+      <figcaption>Bei geringfügig verschiedenen Frequenzen verschiebt sich die Phasenlage fortlaufend. Der schnellere Zeiger überholt den langsameren regelmäßig; dadurch wächst und sinkt die resultierende Amplitude.</figcaption>
+    </figure>
+    <p>Bei zwei nahen Frequenzen ist die Summe nicht mehr harmonisch. Die Amplitude schwillt periodisch an und ab. Dieses hörbare Lauter-und-Leiser heißt <strong>Schwebung</strong>.</p>
+    <div class="physics-formula">\[f_\mathrm{S}=|f_2-f_1|\]</div>
+    <div class="wb-callout"><strong>Merke</strong><p>Zwei gleichfrequente harmonische Schwingungen ergeben wieder eine harmonische Schwingung. Zwei nahe, aber verschiedene Frequenzen erzeugen eine Schwebung mit der Differenzfrequenz.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise"><h3>Aufgabe 1: Instrument stimmen</h3><p>Gegenüber einer Stimmgabel mit $440{,}0\,\mathrm{Hz}$ schwillt der Ton eines Generators in $5{,}0\,\mathrm{s}$ zehnmal an. Bestimme beide möglichen Frequenzen des Generators.</p></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_schwebung_rechnen","title":"Schwebungsfrequenz prüfen","question":"Welche beiden Generatorfrequenzen sind möglich?","answer":"Zehn Lautstärkemaxima in 5,0 s entsprechen f_S = 2,0 Hz. Der Generator kann daher 2,0 Hz unter oder über 440,0 Hz liegen: 438,0 Hz oder 442,0 Hz."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Aufgabe 2: Zeiger quantitativ auswerten</strong><p>Zwei Schwingungen besitzen $f=50\,\mathrm{Hz}$, $\hat s_1=2{,}0\,\mathrm{cm}$, $\hat s_2=5{,}0\,\mathrm{cm}$ und $\varphi_0=\pi/3$. Ermittle Amplitude und Anfangsphase der resultierenden Schwingung.</p></div>
+    <div class="schw-exercise"><h3>Rechenweg dokumentieren</h3><p>Fertige zuerst ein maßstäbliches Zeigerdiagramm an. Kontrolliere die Amplitude anschließend mit dem Kosinussatz und bestimme die Phase des Summenzeigers.</p></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_zeiger_rechnen","title":"Deine Zeigerauswertung","hint":"Dokumentiere Konstruktion, Rechnung und Einheit.","storagePrefix":"schw_","fields":[{"label":"Amplitude und Phase","key":"rechnung","kind":"textarea","placeholder":"Notiere deinen vollständigen Rechenweg."}]}</script></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_zeiger_loesung","title":"Ergebnis kontrollieren","question":"Welche Amplitude und Phase ergeben sich?","answer":"ŝ = √(2² + 5² + 2·2·5·cos(π/3)) cm = √39 cm ≈ 6,24 cm. Für die Phase δ des Summenzeigers gilt tan δ = [5 sin(π/3)]/[2 + 5 cos(π/3)]. Daraus folgt δ ≈ 0,77 rad ≈ 43,9° relativ zum ersten Zeiger."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_super_verify","title":"Mini-Check: Superposition","hint":"Achte auf die Frequenzen.","statement":"Die Überlagerung zweier harmonischer Schwingungen ist immer wieder eine harmonische Schwingung.","answer":false,"explain":"Das gilt hier nur für gleiche Frequenzen bei linearer Überlagerung. Bei verschiedenen Frequenzen entsteht im Allgemeinen keine einzelne Sinusschwingung; nahe Frequenzen führen beispielsweise zu einer Schwebung."}</script></div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Abiturtraining">
+    <h1>Abiturtraining: Schwimmendes Reagenzglas</h1>
+    <p>In dieser Aufgabe führst du die gesamte Modellierungskette durch: Rückstellkraft bestimmen, Differenzialgleichung deuten, Periodendauer berechnen und ein Diagramm mit Ableitungsgrößen auswerten.</p>
+    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Vollständige mathematische Modellierung</strong><p>Die Herleitung der DGL und die zeitpunktgenaue Auswertung von $s(t)$, $v(t)$ und $a(t)$ sind eine Vertiefung für das Leistungsfach. Die qualitative Energie- und Diagrammdeutung ist auch im Basisfach sinnvoll.</p></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-grid">
+      <figure class="schw-figure">
+        <img src="pdf-bilder/abituraufgabe-reagenzglas.png" alt="Schwimmendes Reagenzglas in Gleichgewichtslage und bei größerer Eintauchtiefe">
+        <figcaption>Bei zusätzlicher Eintauchtiefe $s$ wird das Volumen $As$ zusätzlich verdrängt. Dadurch wächst die Auftriebskraft um $\rho gAs$.</figcaption>
+      </figure>
+      <div>
+        <h2>Vom Auftrieb zur Schwingung</h2>
+        <p>In der Gleichgewichtslage heben sich Gewichtskraft und Auftriebskraft auf. Für die folgende Rechnung zeigt die positive $s$-Richtung nach oben. Wird das Reagenzglas um den Betrag $|s|$ weiter eingetaucht, ist $s&lt;0$ und der zusätzliche Auftrieb $\rho gA|s|$ zeigt in positive Richtung. Damit lautet die Rückstellkraft:</p>
+        <div class="physics-formula">\[F_R=-\rho gA\,s\]</div>
+        <div class="physics-formula">\[m\ddot s=-\rho gA\,s\qquad\Longrightarrow\qquad T=2\pi\sqrt{\frac{m}{\rho gA}}\]</div>
+        <p>Mit $m=\rho Ah$ aus dem Gleichgewicht folgt die angegebene Form $T=2\pi\sqrt{h/g}$.</p>
+      </div>
+    </div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"schw_reagenz_sign","title":"Vorzeichen-Check","hint":"Die Kraft muss zur Gleichgewichtslage zeigen.","statement":"Bei der nach oben positiv gewählten s-Achse gilt m·s¨ = +ρAgs.","answer":false,"explain":"Falsch. Unabhängig von der Achsenwahl muss die Rückstellkraft entgegengesetzt zur Auslenkung sein. Daher gilt m·s¨ = -ρAgs. Ohne Minuszeichen wäre die Ruhelage instabil und die Lösung keine harmonische Schwingung."}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Aufgabenstellung</h2>
+    <p>Ein Reagenzglas schwimmt mit der Eintauchtiefe $h=11{,}0\,\mathrm{cm}$. Es wird aus der Gleichgewichtslage um $4{,}0\,\mathrm{cm}$ nach unten ausgelenkt und bei $t=0$ losgelassen. Reibung wird vernachlässigt.</p>
+    <div class="schw-exercise"><h3>Teilaufgaben a bis f</h3><p>a) Berechne Periodendauer und Frequenz. b) Zeichne das $s$-$t$-Diagramm für zwei Perioden. c) Berechne maximale Geschwindigkeit und maximale Beschleunigung. d) Bestimme in $0\le t\le1\,\mathrm{s}$ alle Zeitpunkte maximaler Geschwindigkeits- und Beschleunigungsbeträge. e) Berechne $a(0{,}55\,\mathrm{s})$. f) Bestimme die Bewegungsrichtung bei $t=0{,}55\,\mathrm{s}$.</p></div>
+    <figure class="schw-figure compact"><img src="pdf-bilder/abituraufgabe-reagenzglaslaesung-b.png" alt="Auslenkungs-Zeit-Diagramm des schwingenden Reagenzglases"><figcaption>Nutze die Abbildung erst zur Kontrolle deiner eigenen Skizze. Die Bewegung startet am negativen Umkehrpunkt.</figcaption></figure>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_reagenz_abitur","title":"Deine vollständige Lösung","hint":"Gib für jede Teilaufgabe Ansatz, Rechnung, Ergebnis und kurze Deutung an.","storagePrefix":"schw_","fields":[{"label":"a und b","key":"ab","kind":"textarea","placeholder":"Periodendauer, Frequenz und Beschreibung der Skizze"},{"label":"c und d","key":"cd","kind":"textarea","placeholder":"Maximalwerte und Zeitpunkte"},{"label":"e und f","key":"ef","kind":"textarea","placeholder":"Beschleunigung und Bewegungsrichtung"}]}</script></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">{"id":"schw_reagenz_loesung","title":"Lösung schrittweise prüfen","question":"Welche zentralen Ergebnisse erhältst du?","answer":"T = 2π√(0,110 m / 9,81 m/s²) ≈ 0,665 s und f ≈ 1,50 Hz. Mit ŝ = 0,040 m gilt v_max = ωŝ ≈ 0,378 m/s und a_max = ω²ŝ ≈ 3,57 m/s². |v| ist bei T/4, 3T/4 und 5T/4 maximal: etwa 0,166 s, 0,499 s und 0,831 s. |a| ist bei 0, T/2, T und 3T/2 maximal: etwa 0; 0,333; 0,665 und 0,998 s. Für den Start am unteren Umkehrpunkt und die nach oben positive Achse passt s(t) = -ŝ cos(ωt). Damit ist a(t) = +ω²ŝ cos(ωt) und a(0,55 s) ≈ +1,6 m/s², also nach oben. Weil v(0,55 s) < 0 ist, bewegt sich das Reagenzglas zu diesem Zeitpunkt dennoch nach unten und wird dabei abgebremst."}</script></div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Gesamtübersicht und Abgabe">
+    <h1>Gesamtübersicht: Mechanische Schwingungen</h1>
+    <p>Diese Seite bündelt die Begriffe, Modelle und Formeln des gesamten Materials. Nutze sie als Lernlandkarte: Decke jeweils die rechte Spalte gedanklich ab und versuche, Gesetz und Bedeutung selbst zu formulieren.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>1. Wie eine Schwingung entsteht</h2>
+    <p>Ein schwingungsfähiger Körper wird aus einer <strong>stabilen Gleichgewichtslage</strong> ausgelenkt. Dadurch entsteht eine Rückstellkraft, die zur Gleichgewichtslage zeigt. Sie bremst die Bewegung zum Umkehrpunkt hin ab und beschleunigt den Körper anschließend wieder zurück. In der Gleichgewichtslage ist die Rückstellkraft momentan null. Der Körper bewegt sich wegen seiner Trägheit trotzdem weiter und wird erst auf der anderen Seite erneut abgebremst.</p>
+    <p>Die <strong>Auslenkung</strong> $s(t)$ ist der gerichtete Abstand von der Gleichgewichtslage. Ihr größter Betrag heißt <strong>Amplitude</strong> $\hat s$. Die <strong>Periodendauer</strong> $T$ gibt an, nach welcher Zeit der Schwinger wieder denselben Ort und dieselbe Bewegungsrichtung besitzt. Die <strong>Frequenz</strong> $f$ zählt die vollständigen Perioden pro Sekunde.</p>
+    <div class="physics-formula">\[f=\frac{1}{T},\qquad [T]=\mathrm{s},\qquad [f]=\mathrm{Hz}\]</div>
+    <div class="wb-soft-callout"><strong>Wichtig beim Diagrammlesen</strong><p>Eine Periode ist nicht einfach die Zeit zwischen zwei Nulldurchgängen. Dort ist die Bewegungsrichtung jeweils verschieden. Sicher bestimmst du $T$ zwischen zwei aufeinanderfolgenden Maxima, zwei aufeinanderfolgenden Minima oder zwei Nulldurchgängen mit gleicher Bewegungsrichtung.</p></div>
+    <div class="wb-section-break"></div>
+
+    <h2>2. Wann eine Schwingung harmonisch ist</h2>
+    <p>Eine Schwingung ist harmonisch, wenn ihr $s$-$t$-Diagramm sinusförmig verläuft. Physikalisch entsteht dieser Verlauf, wenn die Rückstellkraft proportional zur Auslenkung ist und stets in die entgegengesetzte Richtung zeigt. Der Faktor $D^*$ heißt allgemein <strong>Richtgröße</strong> des Schwingungssystems.</p>
+    <div class="physics-formula">\[F_R=-D^*s\]</div>
+    <p>Das Minuszeichen beschreibt die Richtung: Für $s&gt;0$ ist $F_R&lt;0$, für $s&lt;0$ ist $F_R&gt;0$. Es bedeutet nicht, dass der Betrag der Kraft negativ wäre. Je weiter der Körper ausgelenkt ist, desto stärker wird er zur Ruhelage zurückbeschleunigt.</p>
+    <p>Eine mögliche mathematische Beschreibung lautet:</p>
+    <div class="physics-formula">\[s(t)=\hat s\sin(\omega t+\varphi_0),\qquad \omega=2\pi f=\frac{2\pi}{T}\]</div>
+    <p>Die Anfangsphase $\varphi_0$ legt fest, an welcher Stelle der Bewegung die Zeitmessung beginnt. Startet der Schwinger in der Gleichgewichtslage in positive Richtung, eignet sich die Sinusform mit $\varphi_0=0$. Beim Start am positiven Umkehrpunkt ist eine Kosinusfunktion besonders einfach.</p>
+    <div class="physics-formula">\[v(t)=\dot s(t),\qquad a(t)=\ddot s(t)=-\omega^2s(t)\]</div>
+    <p>In der Gleichgewichtslage ist der Geschwindigkeitsbetrag maximal und die Beschleunigung null. An den Umkehrpunkten ist die Geschwindigkeit null, während der Beschleunigungsbetrag maximal ist.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>3. Feder-Masse-Pendel und weitere Schwinger</h2>
+    <p>Beim vertikalen Federpendel verschiebt die Gewichtskraft die Gleichgewichtslage. Für die Bewegung um diese Lage ist jedoch nur die Änderung der Federkraft entscheidend. Aus dem hookeschen Gesetz folgt $F_R=-Ds$. Eine größere Masse führt zu einer längeren Periodendauer; eine härtere Feder mit größerem $D$ führt zu einer kürzeren Periodendauer. Die Amplitude beeinflusst $T$ nicht, solange die Feder dem linearen Kraftgesetz gehorcht.</p>
+    <div class="physics-formula">\[T_\mathrm{Feder}=2\pi\sqrt{\frac{m}{D}}\]</div>
+    <p>Beim <strong>Fadenpendel</strong> ist nur die tangentiale Komponente der Gewichtskraft für die Bewegung verantwortlich. Erst für kleine Winkel darf $\sin\alpha\approx\alpha\approx s/l$ gesetzt werden. Dann ist die Rückstellkraft näherungsweise proportional zur Auslenkung. Die Masse kürzt sich aus der Periodendauer heraus.</p>
+    <div class="physics-formula">\[F_R\approx-\frac{mg}{l}s,\qquad T_\mathrm{Faden}=2\pi\sqrt{\frac{l}{g}}\]</div>
+    <p>Beim <strong>U-Rohr</strong> entsteht bei einer Auslenkung $s$ ein Höhenunterschied $2s$ zwischen beiden Flüssigkeitsoberflächen. Die Gewichtskraft der überstehenden Flüssigkeitssäule wirkt zurück. Mit $m=\rho Al$ kürzen sich Dichte $\rho$ und Querschnitt $A$ aus der Periodendauer.</p>
+    <div class="physics-formula">\[F_R=-2\rho gA\,s,\qquad T_\mathrm{U-Rohr}=2\pi\sqrt{\frac{l}{2g}}\]</div>
+    <p>Beim <strong>horizontalen Federschwinger</strong> tragen beide Federn zur Rückstellwirkung bei. Deshalb addieren sich ihre Federkonstanten. Eine konstante zusätzliche Kraft, etwa die Hangabtriebskraft bei einer schrägen Anordnung, verschiebt nur die Gleichgewichtslage und ändert die Periodendauer nicht.</p>
+    <div class="physics-formula">\[F_R=-(D_1+D_2)s,\qquad T_\mathrm{horizontal}=2\pi\sqrt{\frac{m}{D_1+D_2}}\]</div>
+    <div class="wb-section-break"></div>
+
+    <h2>4. Energie während einer Schwingung</h2>
+    <p>Beim Auslenken eines Federpendels wird dem System Elongationsenergie zugeführt. Sie entspricht der Dreiecksfläche unter dem linearen Kraft-Weg-Graphen. Während der Schwingung wird diese Energie fortlaufend in Bewegungsenergie und wieder zurück umgewandelt.</p>
+    <div class="physics-formula">\[E_\mathrm{Elong}=\frac12Ds^2,\qquad E_\mathrm{kin}=\frac12mv^2\]</div>
+    <p>An den Umkehrpunkten gilt $v=0$: Dort liegt die Energie vollständig als Elongationsenergie vor. Beim Durchgang durch die Gleichgewichtslage gilt $s=0$: Dort ist die Bewegungsenergie maximal. Ohne Reibung bleibt ihre Summe konstant.</p>
+    <div class="physics-formula">\[E_\mathrm{ges}=\frac12Ds^2+\frac12mv^2=\frac12D\hat s^2\]</div>
+    <p>Die Gesamtenergie wächst quadratisch mit der Amplitude. Wird $\hat s$ verdoppelt, vervierfacht sich die Energie. Die Maximalgeschwindigkeit wächst dagegen linear mit der Amplitude und verdoppelt sich.</p>
+    <div class="physics-formula">\[v_\mathrm{max}=\omega\hat s\]</div>
+    <div class="wb-section-break"></div>
+
+    <h2>5. Phase, Überlagerung und Schwebung</h2>
+    <p>Die Phase beschreibt, an welcher Stelle einer Periode sich ein Schwinger befindet. Zur vollständigen Beschreibung reicht die Auslenkung allein nicht aus: Derselbe Wert von $s$ kann beim Hin- und beim Zurückschwingen auftreten. Die Zeigerdarstellung enthält zugleich Auslenkung und Bewegungszustand.</p>
+    <p>Überlagern sich zwei Schwingungen, addieren sich zu jedem Zeitpunkt ihre gerichteten Auslenkungen. Bei gleicher Frequenz bleibt die Phasendifferenz konstant und die Summe ist wieder eine harmonische Schwingung derselben Frequenz.</p>
+    <div class="physics-formula">\[s(t)=s_1(t)+s_2(t)\]</div>
+    <p>Bei gleicher Phase addieren sich die Amplituden. Bei einer Phasendifferenz von $\pi$ wirken sie gegeneinander und können sich bei gleichen Amplituden vollständig auslöschen. Unterscheiden sich die Frequenzen nur wenig, ändert sich ihre Phasendifferenz fortlaufend. Die resultierende Amplitude wird periodisch größer und kleiner: Es entsteht eine Schwebung.</p>
+    <div class="physics-formula">\[f_\mathrm{S}=|f_2-f_1|\]</div>
+    <div class="wb-section-break"></div>
+
+    <h2>6. Formeln und Abhängigkeiten auf einen Blick</h2>
+
+    <div class="schw-table-wrap"><table class="schw-table"><thead><tr><th>Bereich</th><th>Zentrale Aussage</th><th>Formel</th></tr></thead><tbody>
+      <tr><td>Kenngrößen</td><td>Frequenz und Periodendauer sind Kehrwerte.</td><td>$f=1/T$</td></tr>
+      <tr><td>Harmonische Schwingung</td><td>Die Auslenkung verläuft sinusförmig.</td><td>$s(t)=\hat s\sin(\omega t+\varphi_0)$</td></tr>
+      <tr><td>Kreisfrequenz</td><td>Eine Periode entspricht dem Winkel $2\pi$.</td><td>$\omega=2\pi f=2\pi/T$</td></tr>
+      <tr><td>Geschwindigkeit</td><td>In der Ruhelage ist der Betrag maximal.</td><td>$v_\mathrm{max}=\omega\hat s$</td></tr>
+      <tr><td>Beschleunigung</td><td>Sie zeigt entgegengesetzt zur Auslenkung.</td><td>$a=-\omega^2s$</td></tr>
+      <tr><td>Lineare Rückstellkraft</td><td>Sie kennzeichnet die harmonische Schwingung.</td><td>$F_R=-D^*s$</td></tr>
+      <tr><td>Federpendel</td><td>Große Masse verlängert, große Federkonstante verkürzt $T$.</td><td>$T=2\pi\sqrt{m/D}$</td></tr>
+      <tr><td>Fadenpendel</td><td>Gilt näherungsweise für kleine Winkel.</td><td>$T=2\pi\sqrt{l/g}$</td></tr>
+      <tr><td>U-Rohr</td><td>Dichte und Querschnitt kürzen sich.</td><td>$T=2\pi\sqrt{l/(2g)}$</td></tr>
+      <tr><td>Zwei Federn</td><td>Die Richtgrößen addieren sich.</td><td>$T=2\pi\sqrt{m/(D_1+D_2)}$</td></tr>
+      <tr><td>Energie</td><td>Elongations- und Bewegungsenergie tauschen sich aus.</td><td>$E=\frac12Ds^2+\frac12mv^2$</td></tr>
+      <tr><td>Schwebung</td><td>Nahe Frequenzen erzeugen eine wechselnde Amplitude.</td><td>$f_S=|f_2-f_1|$</td></tr>
+    </tbody></table></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-grid">
+      <figure class="schw-figure compact"><img src="pdf-bilder/zusammenfassung-u-rohr.png" alt="Zusammenfassungsskizze des U-Rohrs"><figcaption>U-Rohr: $D^*=2\rho gA$, schwingende Masse $m=\rho Al$.</figcaption></figure>
+      <figure class="schw-figure compact"><img src="pdf-bilder/zusammenfassung-horizontale-schwinger.png" alt="Zusammenfassungsskizze des horizontalen Federschwingers"><figcaption>Horizontaler Wagen: Beide Federn tragen zur Rückstellkraft bei.</figcaption></figure>
+    </div>
+    <figure class="schw-figure compact"><img src="pdf-bilder/zusammenfassung-zeigerdarstellung.png" alt="Zeigerdarstellung zweier phasenverschobener harmonischer Schwingungen"><figcaption>Die Zeigerdarstellung verbindet Amplitude, Phase, Kreisfrequenz und sinusförmigen Zeitverlauf.</figcaption></figure>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout"><strong>Jetzt hast du gelernt, dass …</strong><ul class="schw-checklist"><li>Rückstellkraft und Trägheit Schwingungen ermöglichen.</li><li>$F_R=-D^*s$ das Kennzeichen einer harmonischen Schwingung ist.</li><li>Amplitude, Periodendauer, Frequenz und Phase unterschiedliche Informationen tragen.</li><li>Sinus- und Kosinusansatz vom gewählten Startzeitpunkt abhängen.</li><li>verschiedene Schwinger über ihre Richtgröße verglichen werden können.</li><li>die Gesamtenergie einer idealen Schwingung erhalten bleibt.</li><li>Amplitude, Maximalgeschwindigkeit und Energie unterschiedlich skalieren.</li><li>gleichfrequente Schwingungen wieder harmonisch überlagert werden.</li><li>nahe Frequenzen eine Schwebung erzeugen.</li><li>jedes Modell Voraussetzungen und Grenzen besitzt.</li></ul></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">{"id":"schw_abschluss_mcq","title":"Abschlusscheck","hint":"Prüfe Formel, Voraussetzung und physikalische Bedeutung.","shuffleChoices":true,"questions":[{"text":"Welche Aussage kennzeichnet eine harmonische Schwingung?","choices":[{"id":"a","label":"Die Rückstellkraft ist proportional und entgegengesetzt zur Auslenkung."},{"id":"b","label":"Die Geschwindigkeit ist ständig konstant."},{"id":"c","label":"Die Amplitude muss mit der Zeit wachsen."}],"correct":["a"],"explain":"Das lineare Rückstellgesetz F_R = -D*s führt zur harmonischen DGL."},{"text":"Welche Größe ist am Umkehrpunkt eines idealen Federpendels maximal?","choices":[{"id":"a","label":"Der Geschwindigkeitsbetrag"},{"id":"b","label":"Die Elongationsenergie"},{"id":"c","label":"Die Bewegungsenergie"}],"correct":["b"],"explain":"Am Umkehrpunkt ist v = 0; die Energie liegt vollständig als Elongationsenergie vor."},{"text":"Was ändert sich beim idealen Fadenpendel, wenn nur die Masse verdoppelt wird?","choices":[{"id":"a","label":"Die Periodendauer verdoppelt sich."},{"id":"b","label":"Die Periodendauer wächst um √2."},{"id":"c","label":"Die Periodendauer bleibt gleich."}],"correct":["c"],"explain":"In T = 2π√(l/g) kommt die Masse nicht vor."},{"text":"Zwei Töne mit 440 Hz und 443 Hz überlagern sich. Welche Schwebungsfrequenz entsteht?","choices":[{"id":"a","label":"3 Hz"},{"id":"b","label":"441,5 Hz"},{"id":"c","label":"883 Hz"}],"correct":["a"],"explain":"Die Schwebungsfrequenz ist der Betrag der Frequenzdifferenz."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <div class="schw-exercise"><h2>Abgabe: Systemvergleich</h2><p>Wähle zwei der Systeme Federpendel, Fadenpendel, U-Rohr, horizontaler Federschwinger oder schwimmendes Reagenzglas. Erkläre für beide die Ruhelage, die Ursache der Rückstellkraft, die Richtgröße, die Abhängigkeiten der Periodendauer und eine Grenze des Modells. Schließe mit einem präzisen Vergleich.</p></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">{"id":"schw_essay","title":"Deine zusammenhängende Erklärung","hint":"Schreibe 10–14 Sätze und verwende Formeln mit definierten Größen.","storagePrefix":"schw_","fields":[{"label":"Gewählte Systeme","key":"systeme","kind":"text","placeholder":"System 1 und System 2"},{"label":"Analyse und Vergleich","key":"vergleich","kind":"textarea","placeholder":"Formuliere deine vollständige Erklärung."},{"label":"Eigene Transferfrage mit Lösung","key":"frage","kind":"textarea","placeholder":"Formuliere eine anspruchsvolle Frage und eine kurze Lösung."}]}</script></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Quellen und Weiterforschen</h2>
+    <ul>
+      <li>Dorn/Bader: <em>Physik Kursstufe</em>, Kapitel „Mechanische Schwingungen“; vom Nutzer bereitgestelltes Unterrichtsmaterial und Abbildungen.</li>
+      <li><a href="https://www.bildungsplaene-bw.de/%2CLde/DE_BW_BILDUNGSPLAENE_GEN2X_BPBW_ALLG_GYM_PH%28V3.0%29" target="_blank" rel="noopener">Bildungsplan Baden-Württemberg Physik V3.0</a></li>
+      <li><a href="https://www.leifiphysik.de/mechanik/mechanische-schwingungen" target="_blank" rel="noopener">LEIFIphysik: Mechanische Schwingungen</a></li>
+      <li><a href="https://www.leifiphysik.de/mechanik/kraft-und-das-gesetz-von-hooke/grundwissen/gesetz-von-hooke" target="_blank" rel="noopener">LEIFIphysik: Hookesches Gesetz</a></li>
+      <li><a href="https://www.paris-pantheon.fr/decouvrir/le-pendule-de-foucault" target="_blank" rel="noopener">Panthéon Paris: Das Foucault-Pendel und seine historischen Abmessungen</a></li>
+    </ul>
   </section>
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>

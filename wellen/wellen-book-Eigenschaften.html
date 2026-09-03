@@ -223,12 +223,71 @@
       <p>Lädt man den Kondensator auf und schließt ihn an die Spule an, kommt es zu einem fortwährenden Energieaustausch
         zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule.</p>
 
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Gemeinsamer Kern: Energieaustausch verstehen</strong>
+        <p>Zu Beginn ist der Kondensator maximal geladen und der Strom ist null. Beim Entladen wächst der Strom durch die Spule. Ist der Kondensator kurzzeitig ungeladen, sind Stromstärke und magnetische Feldenergie maximal. Die Selbstinduktion hält den Strom aufrecht und lädt den Kondensator anschließend mit umgekehrter Polung.</p>
+        <p style="text-align:center; font-size:1.15em;">$E_C=\dfrac{Q^2}{2C}=\dfrac12CU^2 \qquad E_L=\dfrac12LI^2$</p>
+        <p>Im idealen Schwingkreis bleibt $E_C+E_L$ konstant. In einem realen Schwingkreis wird ein Teil der Energie am ohmschen Widerstand in innere Energie umgewandelt.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"eig_lc_order",
+          "title":"Eine halbe Periode im LC-Kreis",
+          "hint":"Beginne mit dem maximal geladenen Kondensator.",
+          "items":[
+            "Der Kondensator ist maximal geladen; der Strom ist null.",
+            "Der Kondensator entlädt sich; Strom und Magnetfeld wachsen.",
+            "Der Kondensator ist ungeladen; Strom und magnetische Feldenergie sind maximal.",
+            "Die Selbstinduktion hält den Strom aufrecht und lädt den Kondensator umgekehrt.",
+            "Der Kondensator ist entgegengesetzt maximal geladen; der Strom ist wieder null."
+          ],
+          "shuffle":true
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Mechanische und elektromagnetische Schwingung vergleichen</h2>
+      <p>Federpendel und LC-Kreis speichern Energie in unterschiedlichen Formen, folgen aber derselben mathematischen Grundstruktur. Die Zuordnung hilft beim Verständnis, ersetzt jedoch nicht die physikalische Bedeutung der Größen.</p>
+      <div data-p2>
+        <div data-side="L" data-pair="1">Auslenkung $s$</div><div data-side="R" data-pair="1">Ladung $Q$</div>
+        <div data-side="L" data-pair="2">Geschwindigkeit $v=\dot s$</div><div data-side="R" data-pair="2">Stromstärke $I=\dot Q$</div>
+        <div data-side="L" data-pair="3">Masse $m$</div><div data-side="R" data-pair="3">Induktivität $L$</div>
+        <div data-side="L" data-pair="4">Federkonstante $D$</div><div data-side="R" data-pair="4">Kehrwert der Kapazität $1/C$</div>
+        <div data-side="L" data-pair="5">Bewegungsenergie</div><div data-side="R" data-pair="5">magnetische Feldenergie</div>
+        <div data-side="L" data-pair="6">Elongationsenergie</div><div data-side="R" data-pair="6">elektrische Feldenergie</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"eig_lc_compare",
+          "title":"Grenze der Analogie",
+          "question":"Was schwingt in den beiden Systemen tatsächlich?",
+          "answer":"Beim Federpendel ändern sich Ort und Geschwindigkeit einer Masse. Im LC-Kreis ändern sich Ladung, Spannung und Stromstärke; Energie wechselt zwischen elektrischem und magnetischem Feld. Die gleiche mathematische Form macht die Größen nicht physikalisch identisch."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="wb-callout">
         <strong>Merksatz: Phasenverschiebung</strong>
         <p>Im elektromagnetischen Schwingkreis kommt es zu Schwingungen der am Kondensator anliegenden Spannung und der
           Stromstärke durch den Kreis. Diese beiden Schwingungen sind zeitlich stets <strong>um 90°
             phasenverschoben</strong>.</p>
       </div>
+
+      <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Quantitative Vertiefung</strong><p>Die Differenzialgleichung, ihre Lösungsprüfung und die thomsonsche Schwingungsformel gehören zur formalen Vertiefung. Im Basisfach steht die qualitative Beschreibung des Energieaustauschs im Vordergrund.</p></div>
 
       <h2>Die Differenzialgleichung (DGL)</h2>
       <p>Über den Maschensatz ($U_C + U_L = 0$) ergibt sich folgende Differenzialgleichung der ungedämpften Schwingung:

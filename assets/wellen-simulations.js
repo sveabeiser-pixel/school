@@ -3935,6 +3935,765 @@ function initCoupledWaveSim(root) {
 
       updateVals();
     }
+function oscillationRole(root, role) {
+      return root.querySelector('[data-role="' + role + '"]');
+    }
+
+    function drawOscArrow(ctx, x1, y1, x2, y2, color, label) {
+      if (Math.hypot(x2 - x1, y2 - y1) < 1) return;
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - 11 * Math.cos(angle - Math.PI / 6), y2 - 11 * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x2 - 11 * Math.cos(angle + Math.PI / 6), y2 - 11 * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+      if (label) {
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText(label, x2 + 8, y2 - 6);
+      }
+      ctx.restore();
+    }
+
+    function drawOscSpring(ctx, x1, y1, x2, y2, turns, color) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.hypot(dx, dy) || 1;
+      const nx = -dy / length;
+      const ny = dx / length;
+      const lead = Math.min(22, length * 0.12);
+      const count = Math.max(6, turns || 12);
+      ctx.save();
+      ctx.strokeStyle = color || "#475569";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 + dx * lead / length, y1 + dy * lead / length);
+      for (let i = 0; i <= count * 2; i++) {
+        const p = lead + (length - 2 * lead) * i / (count * 2);
+        const side = i === 0 || i === count * 2 ? 0 : (i % 2 ? 1 : -1);
+        ctx.lineTo(x1 + dx * p / length + nx * side * 10, y1 + dy * p / length + ny * side * 10);
+      }
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawOscAxes(ctx, x, y, w, h, label, color) {
+      ctx.save();
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, y + h / 2);
+      ctx.lineTo(x + w, y + h / 2);
+      ctx.stroke();
+      ctx.fillStyle = color || "#334155";
+      ctx.font = "bold 14px sans-serif";
+      ctx.fillText(label, x + 4, y + 16);
+      ctx.restore();
+    }
+
+    function plotOscFunction(ctx, x, y, w, h, start, end, fn, scale, color, dashed) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.4;
+      if (dashed) ctx.setLineDash([7, 6]);
+      ctx.beginPath();
+      for (let i = 0; i <= 260; i++) {
+        const p = i / 260;
+        const tx = start + (end - start) * p;
+        const value = fn(tx);
+        const px = x + w * p;
+        const py = y + h / 2 - value * scale;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+function initSpringOscillatorSim(root) {
+      const canvas = oscillationRole(root, "canvas");
+      const readout = oscillationRole(root, "readout");
+      const massEl = oscillationRole(root, "mass");
+      const springEl = oscillationRole(root, "spring");
+      const ampEl = oscillationRole(root, "amp");
+      const speedEl = oscillationRole(root, "speed");
+      const pauseBtn = oscillationRole(root, "pause");
+      const resetBtn = oscillationRole(root, "reset");
+      const vectorsEl = oscillationRole(root, "show-vectors");
+      const energyEl = oscillationRole(root, "show-energy");
+      if (!canvas || !readout || !massEl || !springEl || !ampEl || !speedEl || !pauseBtn || !resetBtn) return;
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+      let paused = false;
+      let lastTs = 0;
+      let rafId = 0;
+
+      function sync() {
+        oscillationRole(root, "mass-value").textContent = Number(massEl.value).toFixed(2);
+        oscillationRole(root, "spring-value").textContent = Number(springEl.value).toFixed(0);
+        oscillationRole(root, "amp-value").textContent = Number(ampEl.value).toFixed(2);
+        oscillationRole(root, "speed-value").textContent = Number(speedEl.value).toFixed(2);
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.04, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if (!paused) time += dt * Number(speedEl.value);
+        const m = Number(massEl.value);
+        const D = Number(springEl.value);
+        const A = Number(ampEl.value);
+        const omega = Math.sqrt(D / m);
+        const T = 2 * Math.PI / omega;
+        const s = A * Math.cos(omega * time);
+        const v = -omega * A * Math.sin(omega * time);
+        const a = -omega * omega * s;
+        const eTotal = 0.5 * D * A * A;
+        const ePot = 0.5 * D * s * s;
+        const eKin = Math.max(0, eTotal - ePot);
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("Federpendel", 44, 34);
+        const supportY = 60;
+        const equilibriumY = 245;
+        const y = equilibriumY + s * 230;
+        ctx.fillStyle = "#475569";
+        ctx.fillRect(105, supportY - 14, 170, 16);
+        drawOscSpring(ctx, 190, supportY, 190, y - 32, 11, "#475569");
+        ctx.strokeStyle = "#64748b";
+        ctx.setLineDash([7, 6]);
+        ctx.beginPath();
+        ctx.moveTo(55, equilibriumY);
+        ctx.lineTo(325, equilibriumY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#64748b";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("Gleichgewichtslage", 55, equilibriumY - 9);
+        const bobSize = 34 + 12 * (m - 0.1) / 1.9;
+        ctx.fillStyle = "#0f766e";
+        ctx.fillRect(190 - bobSize, y - bobSize / 2, bobSize * 2, bobSize);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("m", 184, y + 5);
+
+        if (!vectorsEl || vectorsEl.checked) {
+          const vScale = 58 / Math.max(omega * A, 0.001);
+          const aScale = 58 / Math.max(omega * omega * A, 0.001);
+          drawOscArrow(ctx, 285, y, 285, y + v * vScale, "#2563eb", "v");
+          drawOscArrow(ctx, 95, y, 95, y + a * aScale, "#dc2626", "a");
+        }
+
+        const gx = 385;
+        const gw = 550;
+        const gh = 105;
+        const windowStart = time - 2 * T;
+        const windowEnd = time;
+        const lanes = [70, 205, 340];
+        const funcs = [
+          {label:"s(t)", color:"#0f766e", scale:105, fn:(q) => A * Math.cos(omega * q)},
+          {label:"v(t)", color:"#2563eb", scale:3.3, fn:(q) => -omega * A * Math.sin(omega * q)},
+          {label:"a(t)", color:"#dc2626", scale:0.105, fn:(q) => -omega * omega * A * Math.cos(omega * q)}
+        ];
+        funcs.forEach((item, i) => {
+          drawOscAxes(ctx, gx, lanes[i], gw, gh, item.label, item.color);
+          plotOscFunction(ctx, gx, lanes[i], gw, gh, windowStart, windowEnd, item.fn, item.scale, item.color, false);
+          ctx.fillStyle = item.color;
+          ctx.beginPath();
+          ctx.arc(gx + gw, lanes[i] + gh / 2 - item.fn(time) * item.scale, 5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        if (!energyEl || energyEl.checked) {
+          const bx = 65;
+          const by = 455;
+          const bw = 255;
+          ctx.fillStyle = "#334155";
+          ctx.font = "bold 15px sans-serif";
+          ctx.fillText("Energie", bx, by - 14);
+          ctx.fillStyle = "#e2e8f0";
+          ctx.fillRect(bx, by, bw, 22);
+          ctx.fillRect(bx, by + 48, bw, 22);
+          ctx.fillStyle = "#f59e0b";
+          ctx.fillRect(bx, by, bw * ePot / Math.max(eTotal, 1e-9), 22);
+          ctx.fillStyle = "#2563eb";
+          ctx.fillRect(bx, by + 48, bw * eKin / Math.max(eTotal, 1e-9), 22);
+          ctx.fillStyle = "#334155";
+          ctx.font = "13px sans-serif";
+          ctx.fillText("Elongationsenergie", bx, by + 39);
+          ctx.fillText("Bewegungsenergie", bx, by + 87);
+        }
+
+        readout.textContent =
+          "T = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz, ω = " + omega.toFixed(3) + " rad/s\n" +
+          "s = " + s.toFixed(3) + " m, v = " + v.toFixed(3) + " m/s, a = " + a.toFixed(3) + " m/s²\n" +
+          "E_ges = " + eTotal.toFixed(3) + " J = E_Elong + E_kin";
+        rafId = requestAnimationFrame(draw);
+      }
+
+      [massEl, springEl, ampEl, speedEl].forEach(el => el.addEventListener("input", sync));
+      pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
+      resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
+      sync();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+function initUTubeOscillatorSim(root) {
+      const canvas = oscillationRole(root, "canvas");
+      const readout = oscillationRole(root, "readout");
+      const lengthEl = oscillationRole(root, "length");
+      const densityEl = oscillationRole(root, "density");
+      const areaEl = oscillationRole(root, "area");
+      const ampEl = oscillationRole(root, "amp");
+      const gravityEl = oscillationRole(root, "gravity");
+      const pauseBtn = oscillationRole(root, "pause");
+      const resetBtn = oscillationRole(root, "reset");
+      if (!canvas || !readout || !lengthEl || !densityEl || !areaEl || !ampEl || !gravityEl || !pauseBtn || !resetBtn) return;
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+      let paused = false;
+      let lastTs = 0;
+      let rafId = 0;
+
+      function sync() {
+        oscillationRole(root, "length-value").textContent = Number(lengthEl.value).toFixed(2);
+        oscillationRole(root, "density-value").textContent = Number(densityEl.value).toFixed(0);
+        oscillationRole(root, "area-value").textContent = Number(areaEl.value).toFixed(1);
+        oscillationRole(root, "amp-value").textContent = Number(ampEl.value).toFixed(2);
+        oscillationRole(root, "gravity-value").textContent = Number(gravityEl.value).toFixed(2);
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.04, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if (!paused) time += dt * 0.75;
+        const l = Number(lengthEl.value);
+        const rho = Number(densityEl.value);
+        const areaCm = Number(areaEl.value);
+        const area = areaCm * 1e-4;
+        const A = Number(ampEl.value);
+        const g = Number(gravityEl.value);
+        const omega = Math.sqrt(2 * g / l);
+        const T = 2 * Math.PI / omega;
+        const s = A * Math.cos(omega * time);
+        const mass = rho * area * l;
+        const direction = s >= 0 ? "links höher, rechts tiefer" : "links tiefer, rechts höher";
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("U-Rohr-Schwingung", 48, 38);
+
+        const leftX = 225;
+        const rightX = 475;
+        const baseY = 420;
+        const eqY = 180;
+        const tubeWidth = 32 + areaCm * 3.2;
+        const yShift = s * 600;
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = tubeWidth;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(leftX, 92);
+        ctx.lineTo(leftX, baseY - 115);
+        ctx.quadraticCurveTo(leftX, baseY, (leftX + rightX) / 2, baseY);
+        ctx.quadraticCurveTo(rightX, baseY, rightX, baseY - 115);
+        ctx.lineTo(rightX, 92);
+        ctx.stroke();
+        ctx.strokeStyle = "#f8fafc";
+        ctx.lineWidth = tubeWidth - 10;
+        ctx.stroke();
+
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = tubeWidth - 13;
+        ctx.beginPath();
+        ctx.moveTo(leftX, eqY - yShift);
+        ctx.lineTo(leftX, baseY - 115);
+        ctx.quadraticCurveTo(leftX, baseY, (leftX + rightX) / 2, baseY);
+        ctx.quadraticCurveTo(rightX, baseY, rightX, baseY - 115);
+        ctx.lineTo(rightX, eqY + yShift);
+        ctx.stroke();
+        ctx.lineCap = "butt";
+        ctx.setLineDash([7, 6]);
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(leftX - 70, eqY);
+        ctx.lineTo(rightX + 70, eqY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#64748b";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("Ruhelage", rightX + 18, eqY - 10);
+        drawOscArrow(ctx, leftX - 55, eqY + yShift, leftX - 55, eqY - yShift, "#dc2626", "2s");
+
+        const gx = 590;
+        const gy = 100;
+        const gw = 335;
+        const gh = 245;
+        drawOscAxes(ctx, gx, gy, gw, gh, "Auslenkung s(t)", "#0f766e");
+        plotOscFunction(ctx, gx, gy, gw, gh, time - 2 * T, time, q => A * Math.cos(omega * q), 600, "#0f766e", false);
+        ctx.fillStyle = "#0f766e";
+        ctx.beginPath();
+        ctx.arc(gx + gw, gy + gh / 2 - s * 600, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("m = ρ · A · l = " + mass.toFixed(3) + " kg", gx, 390);
+        ctx.fillText("D* = 2ρgA = " + (2 * rho * g * area).toFixed(3) + " N/m", gx, 418);
+        ctx.fillText("ρ und A kürzen sich in m/D*.", gx, 446);
+
+        readout.textContent =
+          "T = 2π√(l/(2g)) = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz\n" +
+          "s = " + s.toFixed(3) + " m, Höhenunterschied = " + (2 * Math.abs(s)).toFixed(3) + " m\n" +
+          direction + "; Dichte und Querschnitt ändern T im Idealmodell nicht.";
+        rafId = requestAnimationFrame(draw);
+      }
+
+      [lengthEl, densityEl, areaEl, ampEl, gravityEl].forEach(el => el.addEventListener("input", sync));
+      pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
+      resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
+      sync();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+function initTwoSpringCartSim(root) {
+      const canvas = oscillationRole(root, "canvas");
+      const readout = oscillationRole(root, "readout");
+      const massEl = oscillationRole(root, "mass");
+      const d1El = oscillationRole(root, "d1");
+      const d2El = oscillationRole(root, "d2");
+      const ampEl = oscillationRole(root, "amp");
+      const angleEl = oscillationRole(root, "angle");
+      const pauseBtn = oscillationRole(root, "pause");
+      const resetBtn = oscillationRole(root, "reset");
+      if (!canvas || !readout || !massEl || !d1El || !d2El || !ampEl || !angleEl || !pauseBtn || !resetBtn) return;
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+      let paused = false;
+      let lastTs = 0;
+      let rafId = 0;
+
+      function sync() {
+        oscillationRole(root, "mass-value").textContent = Number(massEl.value).toFixed(2);
+        oscillationRole(root, "d1-value").textContent = Number(d1El.value).toFixed(0);
+        oscillationRole(root, "d2-value").textContent = Number(d2El.value).toFixed(0);
+        oscillationRole(root, "amp-value").textContent = Number(ampEl.value).toFixed(2);
+        oscillationRole(root, "angle-value").textContent = Number(angleEl.value).toFixed(0);
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.04, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if (!paused) time += dt * 0.75;
+        const m = Number(massEl.value);
+        const D1 = Number(d1El.value);
+        const D2 = Number(d2El.value);
+        const D = D1 + D2;
+        const A = Number(ampEl.value);
+        const angle = Number(angleEl.value) * Math.PI / 180;
+        const omega = Math.sqrt(D / m);
+        const T = 2 * Math.PI / omega;
+        const equilibriumShift = m * 9.81 * Math.sin(angle) / D;
+        const s = A * Math.cos(omega * time);
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("Horizontaler Federschwinger", 45, 38);
+
+        const centerX = 340;
+        const centerY = 255;
+        const railLength = 560;
+        const scale = 260;
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(-angle);
+        ctx.strokeStyle = "#475569";
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(-railLength / 2, 35);
+        ctx.lineTo(railLength / 2, 35);
+        ctx.stroke();
+        ctx.fillStyle = "#64748b";
+        ctx.fillRect(-railLength / 2 - 12, -55, 18, 110);
+        ctx.fillRect(railLength / 2 - 6, -55, 18, 110);
+        const eqPx = Math.max(-0.18, Math.min(0.18, equilibriumShift)) * scale;
+        const cartX = eqPx + s * 350;
+        drawOscSpring(ctx, -railLength / 2 + 8, 0, cartX - 48, 0, 12, "#e11d48");
+        drawOscSpring(ctx, cartX + 48, 0, railLength / 2 - 8, 0, 12, "#2563eb");
+        ctx.setLineDash([6, 5]);
+        ctx.strokeStyle = "#0f766e";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(eqPx, -75);
+        ctx.lineTo(eqPx, 45);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#0f766e";
+        ctx.font = "13px sans-serif";
+        ctx.fillText("Ruhelage", eqPx - 28, -82);
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(cartX - 48, -36, 96, 58);
+        ctx.fillStyle = "#f8fafc";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("m", cartX - 6, -3);
+        ctx.fillStyle = "#0f172a";
+        [-28, 28].forEach(dx => { ctx.beginPath(); ctx.arc(cartX + dx, 28, 12, 0, Math.PI * 2); ctx.fill(); });
+        ctx.restore();
+
+        const gx = 650;
+        const gy = 105;
+        const gw = 285;
+        const gh = 250;
+        drawOscAxes(ctx, gx, gy, gw, gh, "s(t) relativ zur Ruhelage", "#0f766e");
+        plotOscFunction(ctx, gx, gy, gw, gh, time - 2 * T, time, q => A * Math.cos(omega * q), 300, "#0f766e", false);
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("D₁", 68, 125);
+        ctx.fillStyle = "#2563eb";
+        ctx.fillText("D₂", 555, 125);
+        ctx.fillStyle = "#334155";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("D* = D₁ + D₂ = " + D.toFixed(0) + " N/m", 650, 405);
+        ctx.fillText("Verschiebung der Ruhelage: " + equilibriumShift.toFixed(3) + " m", 650, 435);
+
+        readout.textContent =
+          "T = 2π√(m/(D₁+D₂)) = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz\n" +
+          "s = " + s.toFixed(3) + " m relativ zur verschobenen Gleichgewichtslage\n" +
+          "Die Neigung verändert die Gleichgewichtslage, nicht die Richtgröße D₁+D₂.";
+        rafId = requestAnimationFrame(draw);
+      }
+
+      [massEl, d1El, d2El, ampEl, angleEl].forEach(el => el.addEventListener("input", sync));
+      pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
+      resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
+      sync();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+function initPendulumComparisonSim(root) {
+      const canvas = oscillationRole(root, "canvas");
+      const readout = oscillationRole(root, "readout");
+      const lengthEl = oscillationRole(root, "length");
+      const massEl = oscillationRole(root, "mass");
+      const angleEl = oscillationRole(root, "angle");
+      const gravityEl = oscillationRole(root, "gravity");
+      const speedEl = oscillationRole(root, "speed");
+      const pauseBtn = oscillationRole(root, "pause");
+      const resetBtn = oscillationRole(root, "reset");
+      if (!canvas || !readout || !lengthEl || !massEl || !angleEl || !gravityEl || !speedEl || !pauseBtn || !resetBtn) return;
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+      let theta = 0;
+      let thetaDot = 0;
+      let paused = false;
+      let lastTs = 0;
+      let rafId = 0;
+      let history = [];
+
+      function values() {
+        const l = Number(lengthEl.value);
+        const g = Number(gravityEl.value);
+        const theta0 = Number(angleEl.value) * Math.PI / 180;
+        const omega0 = Math.sqrt(g / l);
+        return {l, g, theta0, omega0, T0:2 * Math.PI / omega0};
+      }
+
+      function resetState() {
+        const v = values();
+        time = 0;
+        theta = v.theta0;
+        thetaDot = 0;
+        history = [];
+        lastTs = 0;
+      }
+
+      function sync() {
+        oscillationRole(root, "length-value").textContent = Number(lengthEl.value).toFixed(2);
+        oscillationRole(root, "mass-value").textContent = Number(massEl.value).toFixed(2);
+        oscillationRole(root, "angle-value").textContent = Number(angleEl.value).toFixed(0);
+        oscillationRole(root, "gravity-value").textContent = Number(gravityEl.value).toFixed(2);
+        oscillationRole(root, "speed-value").textContent = Number(speedEl.value).toFixed(2);
+      }
+
+      function drawPendulum(pivotX, pivotY, lengthPx, angle, color, title, radius) {
+        const bx = pivotX + lengthPx * Math.sin(angle);
+        const by = pivotY + lengthPx * Math.cos(angle);
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([6, 5]);
+        ctx.beginPath();
+        ctx.moveTo(pivotX, pivotY);
+        ctx.lineTo(pivotX, pivotY + lengthPx + 28);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(pivotX, pivotY);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+        ctx.fillStyle = "#475569";
+        ctx.fillRect(pivotX - 45, pivotY - 12, 90, 14);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(bx, by, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = color;
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText(title, pivotX - 75, pivotY - 24);
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        let dt = Math.min(0.035, (ts - lastTs) / 1000) * Number(speedEl.value);
+        lastTs = ts;
+        const v = values();
+        if (!paused) {
+          const steps = Math.max(1, Math.ceil(dt / 0.004));
+          const h = dt / steps;
+          for (let i = 0; i < steps; i++) {
+            thetaDot += -(v.g / v.l) * Math.sin(theta) * h;
+            theta += thetaDot * h;
+            time += h;
+          }
+          history.push({t:time, exact:theta, harmonic:v.theta0 * Math.cos(v.omega0 * time)});
+          const span = Math.max(3 * v.T0, 5);
+          while (history.length && history[0].t < time - span) history.shift();
+        }
+        const thetaH = v.theta0 * Math.cos(v.omega0 * time);
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("Fadenpendel: Modellvergleich", 44, 34);
+        const lengthPx = 170 + 38 * (v.l - 0.2) / 2.8;
+        const bobRadius = 17 + 10 * (Number(massEl.value) - 0.1) / 4.9;
+        drawPendulum(205, 75, lengthPx, theta, "#dc2626", "exakt: sin(α)", bobRadius);
+        drawPendulum(500, 75, lengthPx, thetaH, "#2563eb", "Näherung: α", bobRadius);
+
+        const gx = 55;
+        const gy = 360;
+        const gw = 870;
+        const gh = 190;
+        drawOscAxes(ctx, gx, gy, gw, gh, "Winkel α(t)", "#334155");
+        const span = Math.max(3 * v.T0, 5);
+        const start = time - span;
+        const angleScale = 75 / Math.max(v.theta0, 0.02);
+        if (history.length > 1) {
+          [{key:"exact", color:"#dc2626"}, {key:"harmonic", color:"#2563eb"}].forEach(line => {
+            ctx.strokeStyle = line.color;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            let begun = false;
+            history.forEach(item => {
+              const px = gx + gw * (item.t - start) / span;
+              const py = gy + gh / 2 - item[line.key] * angleScale;
+              if (!begun) { ctx.moveTo(px, py); begun = true; }
+              else ctx.lineTo(px, py);
+            });
+            ctx.stroke();
+          });
+        }
+        ctx.fillStyle = "#dc2626";
+        ctx.fillRect(690, 55, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("exakt", 720, 61);
+        ctx.fillStyle = "#2563eb";
+        ctx.fillRect(790, 55, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.fillText("Kleinwinkel", 820, 61);
+
+        const correction = 1 + v.theta0 * v.theta0 / 16 + 11 * Math.pow(v.theta0, 4) / 3072;
+        const approxExactT = v.T0 * correction;
+        readout.textContent =
+          "Kleinwinkelperiode T₀ = 2π√(l/g) = " + v.T0.toFixed(3) + " s\n" +
+          "Periodennäherung für die exakte Bewegung = " + approxExactT.toFixed(3) + " s\n" +
+          "Momentane Winkeldifferenz = " + (Math.abs(theta - thetaH) * 180 / Math.PI).toFixed(2) + "°; die Masse beeinflusst beide Bewegungen nicht.";
+        rafId = requestAnimationFrame(draw);
+      }
+
+      [lengthEl, massEl, angleEl, gravityEl].forEach(el => el.addEventListener("input", () => { sync(); resetState(); }));
+      speedEl.addEventListener("input", sync);
+      pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
+      resetBtn.addEventListener("click", resetState);
+      sync();
+      resetState();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
+function initOscillationSuperpositionSim(root) {
+      const canvas = oscillationRole(root, "canvas");
+      const readout = oscillationRole(root, "readout");
+      const f1El = oscillationRole(root, "f1");
+      const f2El = oscillationRole(root, "f2");
+      const a1El = oscillationRole(root, "a1");
+      const a2El = oscillationRole(root, "a2");
+      const phaseEl = oscillationRole(root, "phase");
+      const speedEl = oscillationRole(root, "speed");
+      const pauseBtn = oscillationRole(root, "pause");
+      const resetBtn = oscillationRole(root, "reset");
+      if (!canvas || !readout || !f1El || !f2El || !a1El || !a2El || !phaseEl || !speedEl || !pauseBtn || !resetBtn) return;
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+      let paused = false;
+      let lastTs = 0;
+      let rafId = 0;
+
+      function sync() {
+        oscillationRole(root, "f1-value").textContent = Number(f1El.value).toFixed(2);
+        oscillationRole(root, "f2-value").textContent = Number(f2El.value).toFixed(2);
+        oscillationRole(root, "a1-value").textContent = Number(a1El.value).toFixed(2);
+        oscillationRole(root, "a2-value").textContent = Number(a2El.value).toFixed(2);
+        oscillationRole(root, "phase-value").textContent = Number(phaseEl.value).toFixed(0);
+        oscillationRole(root, "speed-value").textContent = Number(speedEl.value).toFixed(2);
+      }
+
+      function drawPhasor(cx, cy, angle, length, color, label) {
+        const x = cx + length * Math.cos(angle);
+        const y = cy - length * Math.sin(angle);
+        drawOscArrow(ctx, cx, cy, x, y, color, label);
+        return {x, y};
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min(0.04, (ts - lastTs) / 1000);
+        lastTs = ts;
+        if (!paused) time += dt * Number(speedEl.value);
+        const f1 = Number(f1El.value);
+        const f2 = Number(f2El.value);
+        const A1 = Number(a1El.value);
+        const A2 = Number(a2El.value);
+        const phi0 = Number(phaseEl.value) * Math.PI / 180;
+        const w1 = 2 * Math.PI * f1;
+        const w2 = 2 * Math.PI * f2;
+        const s1 = A1 * Math.sin(w1 * time);
+        const s2 = A2 * Math.sin(w2 * time + phi0);
+        const sum = s1 + s2;
+        const delta = (w2 - w1) * time + phi0;
+        const currentAmp = Math.sqrt(A1 * A1 + A2 * A2 + 2 * A1 * A2 * Math.cos(delta));
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 22px sans-serif";
+        ctx.fillText("Überlagerung zweier Schwingungen", 44, 34);
+
+        const gx = 50;
+        const gw = 650;
+        const gh = 125;
+        const lanes = [65, 220, 390];
+        const window = 4;
+        const start = time - window;
+        const end = time;
+        const maxSingle = Math.max(A1, A2, 0.1);
+        const maxSum = Math.max(A1 + A2, 0.2);
+        drawOscAxes(ctx, gx, lanes[0], gw, gh, "Einzelschwingungen", "#334155");
+        plotOscFunction(ctx, gx, lanes[0], gw, gh, start, end, q => A1 * Math.sin(w1 * q), 48 / maxSingle, "#2563eb", false);
+        plotOscFunction(ctx, gx, lanes[0], gw, gh, start, end, q => A2 * Math.sin(w2 * q + phi0), 48 / maxSingle, "#e11d48", false);
+        drawOscAxes(ctx, gx, lanes[1], gw, gh, "Summe s₁+s₂", "#0f766e");
+        plotOscFunction(ctx, gx, lanes[1], gw, gh, start, end, q => A1 * Math.sin(w1 * q) + A2 * Math.sin(w2 * q + phi0), 48 / maxSum, "#0f766e", false);
+        plotOscFunction(ctx, gx, lanes[1], gw, gh, start, end, q => Math.sqrt(A1*A1 + A2*A2 + 2*A1*A2*Math.cos((w2-w1)*q + phi0)), 48 / maxSum, "#f59e0b", true);
+        plotOscFunction(ctx, gx, lanes[1], gw, gh, start, end, q => -Math.sqrt(A1*A1 + A2*A2 + 2*A1*A2*Math.cos((w2-w1)*q + phi0)), 48 / maxSum, "#f59e0b", true);
+
+        const cx = 835;
+        const cy = 190;
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 120, 0, Math.PI * 2);
+        ctx.stroke();
+        const p1 = drawPhasor(cx, cy, w1 * time, 58 * A1, "#2563eb", "1");
+        const p2 = drawPhasor(p1.x, p1.y, w2 * time + phi0, 58 * A2, "#e11d48", "2");
+        drawOscArrow(ctx, cx, cy, p2.x, p2.y, "#0f766e", "Σ");
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText("Zeigeraddition", 775, 55);
+
+        const meterX = 760;
+        const meterY = 340;
+        const meterW = 175;
+        ctx.fillStyle = "#e2e8f0";
+        ctx.fillRect(meterX, meterY, meterW, 24);
+        ctx.fillStyle = "#0f766e";
+        ctx.fillRect(meterX, meterY, meterW * currentAmp / Math.max(A1 + A2, 0.1), 24);
+        ctx.fillStyle = "#334155";
+        ctx.font = "14px sans-serif";
+        ctx.fillText("momentane Summenamplitude", meterX, meterY - 10);
+        ctx.fillText(currentAmp.toFixed(2), meterX + meterW + 8, meterY + 17);
+        ctx.fillStyle = "#2563eb";
+        ctx.fillRect(770, 405, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.fillText("s₁", 800, 411);
+        ctx.fillStyle = "#e11d48";
+        ctx.fillRect(850, 405, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.fillText("s₂", 880, 411);
+        ctx.fillStyle = "#f59e0b";
+        ctx.fillRect(770, 440, 22, 4);
+        ctx.fillStyle = "#334155";
+        ctx.fillText("Einhüllende", 800, 446);
+
+        const beat = Math.abs(f2 - f1);
+        const state = beat < 0.001
+          ? "Gleiche Frequenzen: Die Phasendifferenz bleibt konstant."
+          : "Schwebung: Die Phasendifferenz ändert sich fortlaufend.";
+        readout.textContent =
+          "s₁ = " + s1.toFixed(3) + ", s₂ = " + s2.toFixed(3) + ", Summe = " + sum.toFixed(3) + "\n" +
+          "f_S = |f₂-f₁| = " + beat.toFixed(2) + " Hz, momentane Summenamplitude = " + currentAmp.toFixed(3) + "\n" + state;
+        rafId = requestAnimationFrame(draw);
+      }
+
+      [f1El, f2El, a1El, a2El, phaseEl, speedEl].forEach(el => el.addEventListener("input", sync));
+      pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
+      resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
+      sync();
+      rafId = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+    }
+
 function initLcCircuitSim(root) {
       var getById = createScopedIdGetter(root);
       const canvas = getById("lcCircuitCanvas");
@@ -4295,6 +5054,11 @@ function initLcCircuitSim(root) {
       rafId = requestAnimationFrame(draw);
       canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
     }
+  register('spring-oscillator', initSpringOscillatorSim);
+  register('u-tube-oscillator', initUTubeOscillatorSim);
+  register('two-spring-cart', initTwoSpringCartSim);
+  register('pendulum-comparison', initPendulumComparisonSim);
+  register('oscillation-superposition', initOscillationSuperpositionSim);
   register('transversal', initTransversalSim);
   register('longitudinal', initLongitudinalSim);
   register('huygens-diffraction', initHuygensDiffractionSim);
