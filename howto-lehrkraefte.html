@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HowTo für Lehrkräfte: Interaktive Lernseiten bauen</title>
+  <style>
+    :root{
+      --bg:#f6f7f9;
+      --paper:#ffffff;
+      --ink:#18202a;
+      --muted:#5c6673;
+      --line:#dfe3e8;
+      --accent:#176b5d;
+      --accent-2:#0e4f45;
+      --warn:#8a5a00;
+      --warn-bg:#fff7df;
+      --code:#111827;
+      --code-bg:#f0f3f6;
+      --shadow:0 12px 28px rgba(24,32,42,.08);
+      --radius:8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.6;
+    }
+
+    a{color:var(--accent-2); text-decoration-thickness:1px; text-underline-offset:3px}
+    code,kbd{
+      background:var(--code-bg);
+      border:1px solid var(--line);
+      border-radius:5px;
+      color:var(--code);
+      font-family:"Cascadia Mono","Consolas",monospace;
+      font-size:.92em;
+      padding:.12rem .32rem;
+    }
+    pre{
+      margin:0;
+      overflow:auto;
+      border-radius:var(--radius);
+      background:#111827;
+      color:#f8fafc;
+      padding:1rem;
+      font-size:.9rem;
+      line-height:1.48;
+    }
+    pre code{
+      border:0;
+      background:transparent;
+      color:inherit;
+      padding:0;
+      font-size:inherit;
+    }
+
+    .page{
+      display:grid;
+      grid-template-columns:280px minmax(0,1fr);
+      min-height:100vh;
+    }
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      overflow:auto;
+      border-right:1px solid var(--line);
+      background:#ffffff;
+      padding:1.25rem;
+    }
+    .brand{
+      display:block;
+      margin-bottom:1.5rem;
+      padding-bottom:1rem;
+      border-bottom:1px solid var(--line);
+      color:var(--ink);
+      text-decoration:none;
+    }
+    .brand strong{
+      display:block;
+      font-size:1rem;
+      line-height:1.2;
+    }
+    .brand span{
+      color:var(--muted);
+      display:block;
+      font-size:.86rem;
+      margin-top:.25rem;
+    }
+    .nav-title{
+      color:var(--muted);
+      font-size:.75rem;
+      font-weight:700;
+      letter-spacing:.06em;
+      margin:.5rem 0;
+      text-transform:uppercase;
+    }
+    .nav{
+      display:grid;
+      gap:.18rem;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+    .nav a{
+      border-radius:6px;
+      color:#344054;
+      display:block;
+      font-size:.94rem;
+      padding:.45rem .55rem;
+      text-decoration:none;
+    }
+    .nav a:hover,
+    .nav a:focus-visible{
+      background:#edf5f3;
+      color:var(--accent-2);
+      outline:0;
+    }
+
+    main{
+      width:min(100%, 1080px);
+      margin:0 auto;
+      padding:3rem 2rem 5rem;
+    }
+    .hero{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:2rem;
+      margin-bottom:1.5rem;
+    }
+    .eyebrow{
+      color:var(--accent-2);
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      margin:0 0 .5rem;
+      text-transform:uppercase;
+    }
+    h1{
+      font-size:clamp(2rem, 4vw, 3.35rem);
+      line-height:1.05;
+      margin:.2rem 0 .75rem;
+      letter-spacing:0;
+    }
+    h2{
+      border-bottom:1px solid var(--line);
+      font-size:1.65rem;
+      line-height:1.25;
+      margin:2.8rem 0 1rem;
+      padding-bottom:.55rem;
+    }
+    h3{
+      font-size:1.12rem;
+      margin:1.5rem 0 .4rem;
+    }
+    p{margin:.65rem 0}
+    ul,ol{padding-left:1.35rem}
+    li{margin:.25rem 0}
+
+    .lead{
+      color:#344054;
+      font-size:1.12rem;
+      max-width:78ch;
+    }
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.6rem;
+      margin-top:1.35rem;
+    }
+    .button{
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:6px;
+      display:inline-flex;
+      font-weight:700;
+      gap:.45rem;
+      min-height:42px;
+      padding:.55rem .82rem;
+      text-decoration:none;
+    }
+    .button.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#ffffff;
+    }
+    .button.secondary{
+      background:#ffffff;
+      color:var(--accent-2);
+    }
+
+    .section{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      margin:1rem 0;
+      padding:1.5rem;
+    }
+    .grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .grid-3{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    .box{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:1rem;
+      background:#fbfcfd;
+    }
+    .box strong{
+      display:block;
+      margin-bottom:.35rem;
+    }
+    .note{
+      border-left:4px solid var(--accent);
+      background:#eef8f5;
+      padding:.85rem 1rem;
+      border-radius:0 6px 6px 0;
+    }
+    .warning{
+      border-left:4px solid var(--warn);
+      background:var(--warn-bg);
+      color:#493507;
+      padding:.85rem 1rem;
+      border-radius:0 6px 6px 0;
+    }
+    .steps{
+      counter-reset:step;
+      display:grid;
+      gap:.8rem;
+      margin:1rem 0;
+      padding:0;
+      list-style:none;
+    }
+    .steps li{
+      counter-increment:step;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:#fbfcfd;
+      padding:1rem 1rem 1rem 3.25rem;
+      position:relative;
+    }
+    .steps li::before{
+      align-items:center;
+      background:var(--accent);
+      border-radius:50%;
+      color:#fff;
+      content:counter(step);
+      display:flex;
+      font-weight:800;
+      height:1.8rem;
+      justify-content:center;
+      left:1rem;
+      position:absolute;
+      top:1rem;
+      width:1.8rem;
+    }
+    .snippet{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      margin:1rem 0;
+      background:#111827;
+    }
+    .snippet-head{
+      align-items:center;
+      background:#f8fafc;
+      border-bottom:1px solid var(--line);
+      color:#344054;
+      display:flex;
+      gap:.75rem;
+      justify-content:space-between;
+      padding:.65rem .8rem;
+    }
+    .snippet-title{
+      font-size:.9rem;
+      font-weight:800;
+    }
+    .copy{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:6px;
+      color:#344054;
+      cursor:pointer;
+      font-weight:700;
+      min-height:32px;
+      padding:.25rem .55rem;
+    }
+    .copy:hover{background:#eef8f5; color:var(--accent-2)}
+    .table-wrap{overflow:auto}
+    table{
+      border-collapse:collapse;
+      min-width:680px;
+      width:100%;
+    }
+    th,td{
+      border-bottom:1px solid var(--line);
+      padding:.75rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#f8fafc;
+      color:#344054;
+      font-size:.88rem;
+    }
+    .checklist{
+      columns:2;
+      column-gap:2rem;
+    }
+    .checklist li{break-inside:avoid}
+    footer{
+      color:var(--muted);
+      font-size:.9rem;
+      margin-top:2rem;
+    }
+
+    @media (max-width:900px){
+      html,
+      body{
+        overflow-x:hidden;
+      }
+      .page{display:block}
+      .sidebar{
+        position:relative;
+        height:auto;
+        border-right:0;
+        border-bottom:1px solid var(--line);
+      }
+      main{
+        max-width:100%;
+        overflow-x:hidden;
+        padding:1.25rem 1rem 3rem;
+        width:100%;
+      }
+      .grid,.grid-3{grid-template-columns:1fr}
+      .checklist{columns:1}
+      .hero,
+      .section{
+        max-width:100%;
+        overflow-x:hidden;
+      }
+    }
+
+    @media (max-width:520px){
+      .hero,
+      .section{
+        padding:1.25rem;
+      }
+      .hero{
+        width:calc(100vw - 2rem);
+      }
+      .hero > p,
+      .hero > h1,
+      .hero > .toolbar{
+        max-width:19rem;
+      }
+      h1{
+        font-size:1.55rem;
+        line-height:1.12;
+        overflow-wrap:break-word;
+      }
+      h1 span{
+        display:block;
+      }
+      .lead{
+        font-size:1rem;
+      }
+      .toolbar,
+      .button{
+        width:100%;
+      }
+      .button{
+        justify-content:center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar" aria-label="Seitennavigation">
+      <a class="brand" href="index.html">
+        <strong>School Webpages</strong>
+        <span>HowTo für Lehrkräfte</span>
+      </a>
+      <div class="nav-title">Inhalt</div>
+      <ol class="nav">
+        <li><a href="#idee">Grundidee</a></li>
+        <li><a href="#einrichtung">Programme einrichten</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#dateien">Dateien und Ordner</a></li>
+        <li><a href="#agent">Mit dem KI-Agenten arbeiten</a></li>
+        <li><a href="#interaktionen">Interaktionsblöcke</a></li>
+        <li><a href="#abgabe">Abgabe und SCORM</a></li>
+        <li><a href="#veroeffentlichen">Veröffentlichen</a></li>
+        <li><a href="#qualitaet">Qualitätscheck</a></li>
+        <li><a href="#vorlagen">Vorlagen</a></li>
+      </ol>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Lehrer-HowTo</p>
+        <h1><span>Interaktive Lernseiten</span> <span>mit diesem Repo bauen</span></h1>
+        <p class="lead">
+          Diese Seite erklärt, wie du aus einem Thema, einem Arbeitsblatt, einer PDF oder einer Unterrichtsidee eine lauffähige HTML-Lernseite erstellst. Sie ist bewusst als Arbeitsanleitung für Lehrkräfte gestaltet und nicht als Schüler:innen-Material.
+        </p>
+        <div class="toolbar">
+          <a class="button primary" href="#einrichtung">Zur Einrichtung</a>
+          <a class="button secondary" href="README.md">README öffnen</a>
+          <a class="button secondary" href="assets/muster-book.html">Musterseite ansehen</a>
+        </div>
+      </header>
+
+      <section class="section" id="idee">
+        <h2>Grundidee</h2>
+        <p>
+          Das Repo trennt Inhalt und Technik. Deine einzelne Unterrichtsseite bleibt eine normale, gut lesbare HTML-Datei. Die Navigation, das Layout, die Quiz-Logik, Drag-and-Drop-Aufgaben und die Ergebnissicherung kommen aus dem gemeinsamen Ordner <code>assets/</code>.
+        </p>
+        <div class="grid-3">
+          <div class="box">
+            <strong>1. Inhalt</strong>
+            <p>Du formulierst Lernroute, Erklärungen, Aufgaben und Sicherungen passend zu deiner Lerngruppe.</p>
+          </div>
+          <div class="box">
+            <strong>2. Bausteine</strong>
+            <p>Der KI-Agent setzt daraus HTML-Seiten mit vorhandenen Interaktionsblöcken zusammen.</p>
+          </div>
+          <div class="box">
+            <strong>3. Veröffentlichung</strong>
+            <p>Die Seite läuft lokal, auf GitHub Pages oder als SCORM-Paket in Moodle.</p>
+          </div>
+        </div>
+        <p class="note">
+          Merksatz: Du musst nicht programmieren lernen. Du musst aber präzise beschreiben, was die Lernenden verstehen, üben und abgeben sollen.
+        </p>
+      </section>
+
+      <section class="section" id="einrichtung">
+        <h2>Programme einrichten</h2>
+        <p>
+          Für die Arbeit mit diesem Repo brauchst du nur wenige Programme. Die folgende Einrichtung ist für Lehrkräfte gedacht, die Lernseiten selbst erstellen, mit KI überarbeiten und anschließend veröffentlichen möchten.
+        </p>
+
+        <h3>Welche Programme und Pakete du brauchst</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Programm oder Konto</th>
+                <th>Wofür?</th>
+                <th>Pflicht?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>GitHub-Konto</strong></td>
+                <td>Speichert deine Kopie des Projekts online und veröffentlicht Seiten über GitHub Pages.</td>
+                <td>Ja, wenn du online veröffentlichen willst.</td>
+              </tr>
+              <tr>
+                <td><strong>Git</strong></td>
+                <td>Synchronisiert Dateien zwischen deinem Computer und GitHub.</td>
+                <td>Ja, wenn du lokal arbeitest.</td>
+              </tr>
+              <tr>
+                <td><strong>Visual Studio Code</strong></td>
+                <td>Editor für HTML-Dateien, Bilder, README und Agentenarbeit.</td>
+                <td>Empfohlen.</td>
+              </tr>
+              <tr>
+                <td><strong>Live Server</strong> in VS Code</td>
+                <td>Startet eine lokale Vorschau im Browser, damit du Seiten bequem testen kannst.</td>
+                <td>Empfohlen.</td>
+              </tr>
+              <tr>
+                <td><strong>KI-Coding-Assistent</strong> in VS Code</td>
+                <td>Erstellt, verbessert und prüft die HTML-Lernseiten direkt im Projektordner.</td>
+                <td>Empfohlen.</td>
+              </tr>
+              <tr>
+                <td><strong>Browser</strong></td>
+                <td>Prüft die fertige Seite aus Sicht der Lernenden.</td>
+                <td>Ja.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>GitHub-Konto erstellen</h3>
+        <ol class="steps">
+          <li>
+            <strong>GitHub öffnen.</strong>
+            Gehe auf <a href="https://github.com" target="_blank" rel="noopener">github.com</a> und klicke auf <strong>Sign up</strong>.
+          </li>
+          <li>
+            <strong>Konto anlegen.</strong>
+            Nutze am besten deine dienstliche Mailadresse oder eine Adresse, die du langfristig für Unterrichtsmaterialien verwenden darfst.
+          </li>
+          <li>
+            <strong>E-Mail bestätigen.</strong>
+            GitHub schickt dir einen Bestätigungslink. Ohne Bestätigung kannst du viele Funktionen nicht nutzen.
+          </li>
+          <li>
+            <strong>Repo übernehmen.</strong>
+            Öffne das Schul-Webpages-Repo und klicke auf <strong>Fork</strong>. Dadurch entsteht deine eigene bearbeitbare Kopie.
+          </li>
+          <li>
+            <strong>GitHub Pages aktivieren.</strong>
+            Gehe in deinem Fork auf <strong>Settings</strong> → <strong>Pages</strong>, wähle den Branch <code>main</code> und speichere. Nach einigen Minuten erhältst du eine öffentliche URL.
+          </li>
+        </ol>
+
+        <h3>Git installieren</h3>
+        <ol class="steps">
+          <li>
+            <strong>Installer herunterladen.</strong>
+            Öffne <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com/downloads</a> und lade Git für dein Betriebssystem herunter.
+          </li>
+          <li>
+            <strong>Installation starten.</strong>
+            Unter Windows kannst du die vorgeschlagenen Standardoptionen in der Regel übernehmen. Wichtig ist, dass Git später in VS Code verfügbar ist.
+          </li>
+          <li>
+            <strong>Installation prüfen.</strong>
+            Öffne in VS Code später ein Terminal und tippe:
+          </li>
+        </ol>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Git prüfen</span>
+            <button class="copy" type="button" data-copy="git-version">Kopieren</button>
+          </div>
+          <pre><code id="git-version">git --version</code></pre>
+        </div>
+
+        <h3>Visual Studio Code installieren</h3>
+        <ol class="steps">
+          <li>
+            <strong>VS Code herunterladen.</strong>
+            Öffne <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> und lade Visual Studio Code herunter.
+          </li>
+          <li>
+            <strong>Installieren und starten.</strong>
+            Melde dich in VS Code mit GitHub an, wenn du danach gefragt wirst. Das vereinfacht später das Klonen und Hochladen.
+          </li>
+          <li>
+            <strong>Projekt klonen.</strong>
+            Drücke <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>, suche <strong>Git: Clone</strong>, füge die URL deines Forks ein und wähle einen Speicherort auf deinem Computer.
+          </li>
+          <li>
+            <strong>Ordner öffnen.</strong>
+            Öffne den geklonten Projektordner in VS Code. Ab jetzt arbeitet der KI-Agent direkt in diesem Ordner.
+          </li>
+        </ol>
+
+        <h3>Pakete und Erweiterungen in VS Code installieren</h3>
+        <p>
+          Erweiterungen installierst du links über das Symbol <strong>Extensions</strong> oder mit <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>. Suche den Namen, klicke auf <strong>Install</strong> und lade VS Code bei Bedarf neu.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Erweiterung</th>
+                <th>Empfehlung</th>
+                <th>Warum?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Live Server</strong></td>
+                <td>Installieren.</td>
+                <td>Öffnet HTML-Dateien lokal im Browser und aktualisiert die Vorschau beim Speichern.</td>
+              </tr>
+              <tr>
+                <td><strong>KI-Coding-Assistent</strong></td>
+                <td>Eine Lösung auswählen, die deine Schule erlaubt.</td>
+                <td>Zum Beispiel Codex, Claude oder ein anderer Assistent, der Dateien im Projekt lesen und bearbeiten kann.</td>
+              </tr>
+              <tr>
+                <td><strong>GitHub Pull Requests and Issues</strong></td>
+                <td>Optional.</td>
+                <td>Hilfreich, wenn mehrere Lehrkräfte gemeinsam an Material arbeiten und Änderungen besprechen.</td>
+              </tr>
+              <tr>
+                <td><strong>German Language Pack</strong></td>
+                <td>Optional.</td>
+                <td>Stellt die VS-Code-Oberfläche auf Deutsch um, falls gewünscht.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>KI-Assistent verbinden</h3>
+        <ol class="steps">
+          <li>
+            <strong>Erweiterung installieren.</strong>
+            Installiere in VS Code den KI-Assistenten, den deine Schule nutzen darf.
+          </li>
+          <li>
+            <strong>Anmelden.</strong>
+            Die Erweiterung fordert dich meist auf, dich mit deinem Konto anzumelden oder einen API-Schlüssel zu hinterlegen.
+          </li>
+          <li>
+            <strong>Projektzugriff erlauben.</strong>
+            Erlaube dem Assistenten den Zugriff auf den geöffneten Projektordner, damit er HTML-Dateien, Assets und README lesen kann.
+          </li>
+          <li>
+            <strong>Ersten Testauftrag geben.</strong>
+            Bitte den Assistenten: <em>„Lies die README.md und erkläre mir kurz, wie dieses Repo aufgebaut ist.“</em>
+          </li>
+        </ol>
+        <p class="warning">
+          Datenschutz: Gib keine echten Schüler:innendaten, Notenlisten oder vertraulichen Elterninformationen an einen KI-Assistenten weiter. Nutze neutrale Beispieldaten oder anonymisierte Angaben.
+        </p>
+      </section>
+
+      <section class="section" id="workflow">
+        <h2>Workflow</h2>
+        <ol class="steps">
+          <li>
+            <strong>Thema und Ziel klären.</strong>
+            Schreibe zuerst auf, für welche Klasse, welches Fach, welche Dauer und welches Ergebnis die Seite gedacht ist.
+          </li>
+          <li>
+            <strong>Material bereitstellen.</strong>
+            Gib dem Agenten dein Arbeitsblatt, eine PDF, Stichpunkte, Bilder oder Links. Wenn du nichts hast, beauftrage ihn mit Recherche und Quellenliste.
+          </li>
+          <li>
+            <strong>Lernroute verlangen.</strong>
+            Eine gute Seite hat Einstieg, Erarbeitung, Sicherung, Anwendung, Transfer und Abschluss.
+          </li>
+          <li>
+            <strong>Interaktionen gezielt einsetzen.</strong>
+            Nutze nicht überall ein Quiz. Sinnvoll sind kurze Checks nach Erklärungen und offenere Aufgaben bei Transferstellen.
+          </li>
+          <li>
+            <strong>HTML bauen lassen.</strong>
+            Der Agent erstellt oder bearbeitet eine Datei im passenden Fachordner und bindet <code>assets/allgemeines_format.css</code> sowie <code>assets/allgemeines_format.js</code> ein.
+          </li>
+          <li>
+            <strong>Testen und korrigieren.</strong>
+            Öffne die Seite im Browser, prüfe Texte, Lösungen, Navigation, Abgabe und Darstellung auf Handybreite.
+          </li>
+          <li>
+            <strong>Veröffentlichen oder exportieren.</strong>
+            Stelle die Seite über GitHub Pages bereit oder baue bei Bedarf ein SCORM-ZIP.
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="dateien">
+        <h2>Dateien und Ordner</h2>
+        <p>Die wichtigsten Orte im Projekt sind schnell erklärt:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ort</th>
+                <th>Wofür?</th>
+                <th>Typische Änderung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>assets/</code></td>
+                <td>Gemeinsames Layout, Interaktionen, Icons und Hilfslogik.</td>
+                <td>Nur ändern, wenn alle Seiten davon profitieren.</td>
+              </tr>
+              <tr>
+                <td><code>medien/</code>, <code>nwt/</code>, <code>felder/</code>, <code>wellen/</code>, <code>quanten/</code></td>
+                <td>Fach- und Themenordner für Unterrichtsseiten.</td>
+                <td>Neue HTML-Seiten und dazugehörige Bilder ablegen.</td>
+              </tr>
+              <tr>
+                <td><code>index.html</code></td>
+                <td>Übersicht über vorhandene Lernseiten.</td>
+                <td>Neue fertige Seiten verlinken.</td>
+              </tr>
+              <tr>
+                <td><code>scripts/build-scorm.ps1</code></td>
+                <td>Erstellt ein SCORM-Paket aus einer einzelnen HTML-Datei.</td>
+                <td>Beim Export ausführen, nicht manuell bearbeiten.</td>
+              </tr>
+              <tr>
+                <td><code>README.md</code></td>
+                <td>Kurze Projektbeschreibung und Einstieg.</td>
+                <td>Grundlegende Hinweise für Mitwirkende ergänzen.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="warning">
+          Wichtig: Lege Bilder möglichst im Themenordner ab, also zum Beispiel <code>wellen/pdf-bilder/</code>. Dann bleiben Seiten auch beim Export oder Umzug nachvollziehbar.
+        </p>
+      </section>
+
+      <section class="section" id="agent">
+        <h2>Mit dem KI-Agenten arbeiten</h2>
+        <p>
+          Gute Prompts beschreiben nicht nur das Thema, sondern auch Zielgruppe, Niveau, Material, gewünschte Interaktionen und Prüfauftrag. Je genauer du das Unterrichtsziel formulierst, desto weniger musst du später nachkorrigieren.
+        </p>
+
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Prompt: Neue Lernseite aus Material</span>
+            <button class="copy" type="button" data-copy="prompt-neu">Kopieren</button>
+          </div>
+          <pre><code id="prompt-neu">Erstelle eine interaktive HTML-Lernseite für [Fach, Klasse/Kursstufe] zum Thema [Thema].
+Nutze mein Material als Hauptquelle: [Material/Dateiname/Link].
+Die Seite soll eine klare Lernroute haben: Einstieg, Erarbeitung, Sicherung, Anwendung, Transfer, Zusammenfassung und Quellen.
+Baue mindestens diese Interaktionen ein: mcq, verify, cloze, categorize, p2, reveal, essay und order.
+Sprich die Schüler:innen mit "du" an.
+Nutze das vorhandene Book-Layout mit assets/allgemeines_format.css und assets/allgemeines_format.js.
+Lege die Datei unter [Ordner/dateiname.html] ab und verlinke sie anschließend in index.html.
+Prüfe am Ende HTML, JSON-Konfigurationen, Umlaute, Navigation, mobile Darstellung und fachliche Korrektheit.</code></pre>
+        </div>
+
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Prompt: Vorhandene Seite verbessern</span>
+            <button class="copy" type="button" data-copy="prompt-verbessern">Kopieren</button>
+          </div>
+          <pre><code id="prompt-verbessern">Überarbeite [Pfad/zur/seite.html].
+Ziel: [konkretes Ziel, z. B. fachlich schärfer, kürzer, mehr Transfer, bessere Aufgaben].
+Behalte die bestehende Struktur und die vorhandenen Assets bei.
+Füge nur Änderungen ein, die den Unterrichtswert verbessern.
+Prüfe danach alle Interaktionen, JSON-Blöcke, Links und die Darstellung im Browser.</code></pre>
+        </div>
+
+        <div class="grid">
+          <div class="box">
+            <strong>Gute Aufträge</strong>
+            <ul>
+              <li>„Erkläre in kleinen Schritten.“</li>
+              <li>„Baue typische Fehlvorstellungen ein.“</li>
+              <li>„Lass Schüler:innen begründen, nicht nur anklicken.“</li>
+              <li>„Nenne Quellen am Ende.“</li>
+            </ul>
+          </div>
+          <div class="box">
+            <strong>Aufträge, die du vermeiden solltest</strong>
+            <ul>
+              <li>„Mach mal eine Seite zu Magnetismus.“</li>
+              <li>„Mach es schöner.“</li>
+              <li>„Füge viele Aufgaben ein.“</li>
+              <li>„Übernimm einfach den ganzen Text.“</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="interaktionen">
+        <h2>Interaktionsblöcke</h2>
+        <p>
+          Die Schüler:innen-Seiten nutzen feste Bausteine. Du musst die Bausteine nicht selbst programmieren, aber du solltest wissen, wofür sie didaktisch sinnvoll sind.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Block</th>
+                <th>Didaktischer Einsatz</th>
+                <th>Typische Prompt-Formulierung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>mcq</code></td>
+                <td>Schnelle Diagnose mit plausiblen Fehlvorstellungen.</td>
+                <td>„Erstelle eine MCQ-Frage mit drei plausiblen Distraktoren und kurzer Erklärung.“</td>
+              </tr>
+              <tr>
+                <td><code>verify</code></td>
+                <td>Wahr/Falsch-Aussagen prüfen und begründen.</td>
+                <td>„Baue eine Aussage ein, die eine typische Fehlannahme sichtbar macht.“</td>
+              </tr>
+              <tr>
+                <td><code>cloze</code></td>
+                <td>Begriffe sichern, wenn Definitionen schon erarbeitet wurden.</td>
+                <td>„Erstelle einen Lückentext mit Wortbank zu den Fachbegriffen.“</td>
+              </tr>
+              <tr>
+                <td><code>categorize</code></td>
+                <td>Begriffe, Beispiele oder Aussagen nach Kategorien ordnen.</td>
+                <td>„Lass Beispiele in zwei Kategorien einsortieren und erkläre die Grenzfälle.“</td>
+              </tr>
+              <tr>
+                <td><code>p2</code></td>
+                <td>Paare bilden: Begriff und Definition, Darstellung und Bedeutung, Formel und Einheit.</td>
+                <td>„Erstelle eine Zuordnungsübung mit vier Paaren.“</td>
+              </tr>
+              <tr>
+                <td><code>order</code></td>
+                <td>Abläufe, Versuchsprotokolle, Lösungswege oder Argumentationen sortieren.</td>
+                <td>„Lass die Schritte eines Versuchs in die richtige Reihenfolge bringen.“</td>
+              </tr>
+              <tr>
+                <td><code>reveal</code></td>
+                <td>Selbstkontrolle, Auflösung, Denkimpuls oder gestufte Hilfe.</td>
+                <td>„Baue eine einklappbare Erklärung als Hilfe nach der Aufgabe ein.“</td>
+              </tr>
+              <tr>
+                <td><code>essay</code></td>
+                <td>Begründung, Reflexion, Transfer und Abgabe freier Antworten.</td>
+                <td>„Lass die Lernenden in 5 bis 8 Sätzen begründen und zwei Fachwörter verwenden.“</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Minimaler Aufbau einer Schüler:innen-Seite</span>
+            <button class="copy" type="button" data-copy="template-book">Kopieren</button>
+          </div>
+          <pre><code id="template-book">&lt;!doctype html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Titel der Lernseite&lt;/title&gt;
+  &lt;link rel="stylesheet" href="../assets/allgemeines_format.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div data-wb-book&gt;
+    &lt;script type="application/json" class="wb-book-config"&gt;
+    {
+      "bookTitle":"Fach",
+      "sectionTitle":"Thema",
+      "startPage":1,
+      "submitLabel":"Ergebnisse anzeigen",
+      "onSubmit":"alert",
+      "autoNav":true
+    }
+    &lt;/script&gt;
+
+    &lt;section data-wb-page="1" data-wb-page-title="Start"&gt;
+      &lt;h1&gt;Leitfrage&lt;/h1&gt;
+      &lt;p&gt;Kurzer Einstieg in das Thema.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;script src="../assets/wb-webhook-loader.js"&gt;&lt;/script&gt;
+  &lt;script src="../assets/allgemeines_format.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    SBBook.autoMount();
+    SBBlocks.autoMount();
+    SBLibrary.autoMountAll();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="abgabe">
+        <h2>Abgabe und SCORM</h2>
+        <p>Es gibt drei praktische Wege, Ergebnisse einzusammeln.</p>
+        <div class="grid-3">
+          <div class="box">
+            <strong>Download</strong>
+            <p>Einfachste Variante. Lernende laden ihre Ergebnisse herunter und geben sie per Moodle, Mail oder Cloud-Abgabe ab.</p>
+          </div>
+          <div class="box">
+            <strong>Webhook</strong>
+            <p>Für automatisierte Abgaben an Teams, Slack oder eigene Dienste. Dafür brauchst du eine passende Webhook-URL.</p>
+          </div>
+          <div class="box">
+            <strong>SCORM</strong>
+            <p>Geeignet für Moodle und LMS-Systeme, wenn die Seite als Paket importiert werden soll.</p>
+          </div>
+        </div>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">SCORM-Paket erstellen</span>
+            <button class="copy" type="button" data-copy="scorm-cmd">Kopieren</button>
+          </div>
+          <pre><code id="scorm-cmd">./scripts/build-scorm.ps1 -InputHtml pfad\zur\seite.html</code></pre>
+        </div>
+        <p class="note">
+          Prüfe nach dem Export das ZIP in einer Testumgebung. Besonders wichtig sind Bilder, relative Pfade, Videos und eingebundene Simulationen.
+        </p>
+      </section>
+
+      <section class="section" id="veroeffentlichen">
+        <h2>Veröffentlichen</h2>
+        <p>Für GitHub Pages reicht meistens dieser Ablauf:</p>
+        <ol>
+          <li>Datei im passenden Ordner erstellen, zum Beispiel <code>wellen/interferenz.html</code>.</li>
+          <li>Die Seite in <code>index.html</code> verlinken.</li>
+          <li>Änderungen lokal testen.</li>
+          <li>Änderungen in Git speichern und zu GitHub hochladen.</li>
+          <li>Die veröffentlichte URL öffnen und noch einmal prüfen.</li>
+        </ol>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Typische Git-Befehle</span>
+            <button class="copy" type="button" data-copy="git-cmds">Kopieren</button>
+          </div>
+          <pre><code id="git-cmds">git status
+git add pfad/zur/seite.html index.html
+git commit -m "Neue Lernseite zu [Thema]"
+git push</code></pre>
+        </div>
+        <p class="warning">
+          Wenn mehrere Personen gleichzeitig am Repo arbeiten, vor dem Bearbeiten immer die aktuelle Version holen und bei Konflikten nicht blind überschreiben.
+        </p>
+      </section>
+
+      <section class="section" id="qualitaet">
+        <h2>Qualitätscheck</h2>
+        <p>Diese Prüfliste eignet sich als letzter Auftrag an den Agenten und als eigene Kontrolle im Browser.</p>
+        <ul class="checklist">
+          <li>Die Leitfrage ist auf der Startseite klar.</li>
+          <li>Die Seite hat eine erkennbare Lernroute.</li>
+          <li>Begriffe werden eingeführt, geübt und angewandt.</li>
+          <li>Jede Interaktion hat eine eindeutige Lösung oder einen klaren Erwartungshorizont.</li>
+          <li>MCQ-Antworten enthalten plausible, aber fachlich falsche Distraktoren.</li>
+          <li>Offene Aufgaben verlangen Begründungen, Transfer oder Vergleich.</li>
+          <li>Alle JSON-Blöcke sind gültig.</li>
+          <li>Alle Bilder laden und haben sinnvolle Alternativtexte.</li>
+          <li>Umlaute werden korrekt angezeigt.</li>
+          <li>Die Seite funktioniert auf Desktop und Handybreite.</li>
+          <li>Die Abgabe oder Ergebnisansicht ist getestet.</li>
+          <li>Quellen und Weiterforschen stehen am Ende.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="vorlagen">
+        <h2>Vorlagen</h2>
+        <p>Diese kurzen Bausteine kannst du direkt in Agenten-Aufträge übernehmen.</p>
+
+        <h3>Didaktischer Auftrag</h3>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Didaktik-Baustein</span>
+            <button class="copy" type="button" data-copy="didaktik">Kopieren</button>
+          </div>
+          <pre><code id="didaktik">Baue die Seite so, dass Lernende selbstständig arbeiten können.
+Jedes Kapitel soll einen kurzen Einstieg, eine Erklärung, eine Sicherung, eine Anwendung und eine Reflexionsfrage enthalten.
+Nutze regelmäßig "Jetzt hast du das gelernt:" als Sicherung.
+Die Aufgaben sollen nicht nur Fakten abfragen, sondern Begründen, Vergleichen, Fehlerfinden und Transfer verlangen.</code></pre>
+        </div>
+
+        <h3>Technischer Auftrag</h3>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Technik-Baustein</span>
+            <button class="copy" type="button" data-copy="technik">Kopieren</button>
+          </div>
+          <pre><code id="technik">Nutze die vorhandenen Dateien assets/allgemeines_format.css und assets/allgemeines_format.js.
+Verwende das Book-Layout mit data-wb-book und autoNav.
+Baue Interaktionen ausschließlich mit den vorhandenen data-wb-type-Blöcken.
+Lege nach Absätzen und vor Interaktionen einen &lt;div class="wb-section-break"&gt;&lt;/div&gt; ein.
+Prüfe am Ende im Browser, ob alle Interaktionen ohne JavaScript-Fehler mounten.</code></pre>
+        </div>
+
+        <h3>Review-Auftrag</h3>
+        <div class="snippet">
+          <div class="snippet-head">
+            <span class="snippet-title">Review-Baustein</span>
+            <button class="copy" type="button" data-copy="review">Kopieren</button>
+          </div>
+          <pre><code id="review">Prüfe diese Lernseite kritisch:
+1. fachliche Korrektheit,
+2. roter Faden,
+3. Aufgabenqualität,
+4. gültiges HTML und gültiges JSON,
+5. funktionierende Navigation,
+6. mobile Darstellung,
+7. Quellen und Urheberrecht.
+Korrigiere gefundene Probleme direkt.</code></pre>
+        </div>
+      </section>
+
+      <footer>
+        <p>Diese HowTo-Seite ergänzt die <a href="README.md">README.md</a> und die technische Musterseite <a href="assets/muster-book.html">assets/muster-book.html</a>.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const target = document.getElementById(button.dataset.copy);
+        if (!target) return;
+        try {
+          await navigator.clipboard.writeText(target.innerText);
+          const original = button.textContent;
+          button.textContent = "Kopiert";
+          window.setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        } catch (error) {
+          button.textContent = "Markieren";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
