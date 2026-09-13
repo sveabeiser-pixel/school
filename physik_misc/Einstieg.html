@@ -1,0 +1,1358 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Physik Oberstufe: Einstieg und physikalische Größen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --ep-ink: #172033;
+      --ep-muted: #526174;
+      --ep-teal: #087f7a;
+      --ep-blue: #2563a6;
+      --ep-red: #c63f4f;
+      --ep-amber: #b86b08;
+      --ep-line: #cbd8df;
+      --ep-soft: #f3f8f9;
+      --ep-paper: #ffffff;
+      --ep-good: #157347;
+      --ep-bad: #b42318;
+    }
+
+    .wb-book section[data-wb-page] {
+      padding-top: 22px;
+      min-width: 0;
+    }
+    .wb-book .wb-content,
+    .wb-book .wb-paper {
+      min-width: 0;
+    }
+    .wb-book .wb-paper {
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .ep-intro {
+      padding: 8px 0 20px;
+      border-bottom: 4px solid var(--ep-teal);
+    }
+    .ep-kicker {
+      color: var(--ep-teal);
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .ep-intro h1 {
+      max-width: 850px;
+      margin: 8px 0 12px;
+      font-size: 2.45rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .ep-lead {
+      max-width: 820px;
+      color: var(--ep-muted);
+      font-size: 1.12rem;
+      line-height: 1.65;
+    }
+    .ep-lab {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin: 22px 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--ep-paper);
+    }
+    .ep-lab-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--ep-line);
+      background: #f7fafb;
+    }
+    .ep-segments,
+    .ep-icon-actions,
+    .ep-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .ep-segment,
+    .ep-icon-btn,
+    .ep-action-btn {
+      min-height: 40px;
+      border: 1px solid #9fb1bc;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ep-ink);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    .ep-segment { padding: 8px 13px; }
+    .ep-segment[aria-pressed="true"] {
+      border-color: var(--ep-teal);
+      background: #dff4f2;
+      color: #075b57;
+    }
+    .ep-icon-btn {
+      width: 42px;
+      padding: 7px;
+      font-size: 1.05rem;
+    }
+    .ep-action-btn { padding: 8px 13px; }
+    .ep-action-btn.primary {
+      border-color: var(--ep-teal);
+      background: var(--ep-teal);
+      color: #fff;
+    }
+    .ep-lab-canvas-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: auto;
+      background: #f7fafb;
+    }
+    #epLabCanvas {
+      display: block;
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+      aspect-ratio: 980 / 420;
+      background: #f7fafb;
+    }
+    .ep-lab-readout {
+      min-height: 58px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--ep-line);
+      color: var(--ep-ink);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre-line;
+    }
+    .ep-question-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin: 20px 0;
+      border: 1px solid var(--ep-line);
+      background: var(--ep-line);
+    }
+    .ep-question-strip > div {
+      padding: 16px;
+      background: #fff;
+    }
+    .ep-question-strip strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ep-blue);
+    }
+    .ep-route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .ep-route-step {
+      min-height: 130px;
+      padding: 14px;
+      border-top: 4px solid var(--ep-blue);
+      background: var(--ep-soft);
+    }
+    .ep-route-step span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ep-blue);
+      font-weight: 800;
+    }
+    .ep-concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .ep-concept {
+      padding: 16px;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-concept h3 { margin-top: 0; }
+    .ep-equation {
+      margin: 16px 0;
+      padding: 16px;
+      border-left: 5px solid var(--ep-amber);
+      background: #fff8eb;
+      color: #5f3a06;
+      font-size: 1.08rem;
+    }
+    .ep-table-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .ep-save-state {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid #9ac9c5;
+      border-radius: 6px;
+      background: #e9f7f6;
+      color: #075b57;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    .ep-table-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin: 16px 0;
+      overflow-x: auto;
+      border: 1px solid #96a9b4;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-quantity-table {
+      width: 100%;
+      min-width: 1060px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .ep-quantity-table th,
+    .ep-quantity-table td {
+      padding: 10px;
+      border-right: 1px solid #b9c7ce;
+      border-bottom: 1px solid #b9c7ce;
+      text-align: left;
+      vertical-align: top;
+    }
+    .ep-quantity-table th:last-child,
+    .ep-quantity-table td:last-child { border-right: 0; }
+    .ep-quantity-table tbody tr:last-child td { border-bottom: 0; }
+    .ep-quantity-table th {
+      background: #e9f0f3;
+      color: #1c2a35;
+      font-size: .92rem;
+    }
+    .ep-quantity-table th:nth-child(1) { width: 14%; }
+    .ep-quantity-table th:nth-child(2) { width: 27%; }
+    .ep-quantity-table th:nth-child(3) { width: 10%; }
+    .ep-quantity-table th:nth-child(4) { width: 10%; }
+    .ep-quantity-table th:nth-child(5) { width: 16%; }
+    .ep-quantity-table th:nth-child(6) { width: 23%; }
+    .ep-entry {
+      width: 100%;
+      min-height: 40px;
+      box-sizing: border-box;
+      border: 1px solid #93a6b2;
+      border-radius: 4px;
+      background: #fffef8;
+      color: var(--ep-ink);
+      font: inherit;
+      padding: 8px;
+    }
+    textarea.ep-entry {
+      min-height: 84px;
+      resize: vertical;
+    }
+    .ep-entry:focus {
+      outline: 3px solid rgba(37, 99, 166, .18);
+      border-color: var(--ep-blue);
+    }
+    .ep-entry.is-correct {
+      border-color: var(--ep-good);
+      background: #effaf4;
+    }
+    .ep-entry.is-wrong {
+      border-color: var(--ep-bad);
+      background: #fff2f0;
+    }
+    .ep-help {
+      margin-top: 9px;
+      border-top: 1px dashed #b8c5cc;
+      padding-top: 7px;
+    }
+    .ep-help summary {
+      color: var(--ep-blue);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .ep-help p { margin: 7px 0 0; font-size: .91rem; }
+    .ep-check-result {
+      min-height: 25px;
+      margin: 10px 0 0;
+      color: var(--ep-muted);
+      font-weight: 700;
+    }
+    .ep-mission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .ep-mission {
+      padding: 16px;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-mission h3 { margin-top: 0; color: var(--ep-teal); }
+    .ep-final-list li + li { margin-top: 8px; }
+    .ep-export-status { color: var(--ep-muted); font-weight: 700; }
+    .ep-source-list li + li { margin-top: 10px; }
+
+    .wb-book [data-wb-page] .wb-reveal-item-pending,
+    .wb-book [data-wb-page] .wb-reveal-item-done {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .wb-book[data-theme="dark"] .ep-intro,
+    .wb-book[data-theme="dark-blue"] .ep-intro,
+    .wb-book[data-theme="dark"] .ep-concept,
+    .wb-book[data-theme="dark-blue"] .ep-concept,
+    .wb-book[data-theme="dark"] .ep-mission,
+    .wb-book[data-theme="dark-blue"] .ep-mission,
+    .wb-book[data-theme="dark"] .ep-question-strip > div,
+    .wb-book[data-theme="dark-blue"] .ep-question-strip > div,
+    .wb-book[data-theme="dark"] .ep-table-wrap,
+    .wb-book[data-theme="dark-blue"] .ep-table-wrap { color: #172033; }
+
+    @media (max-width: 920px) {
+      .ep-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ep-mission-grid { grid-template-columns: 1fr; }
+      #epLabCanvas { min-width: 720px; }
+    }
+    @media (max-width: 700px) {
+      .ep-intro h1 { font-size: 2rem; }
+      .ep-question-strip,
+      .ep-concept-grid,
+      .ep-route { grid-template-columns: 1fr; }
+      .ep-lab-toolbar,
+      .ep-table-intro { align-items: stretch; flex-direction: column; }
+      .ep-lab-canvas-wrap { overflow: hidden; }
+      #epLabCanvas {
+        width: 100%;
+        min-width: 0;
+      }
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .wb-book .wb-brand { font-size: 17px; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 52px; font-size: 15px; }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand,
+      .wb-book .wb-theme-wrap,
+      .wb-book .wb-present-btn,
+      .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"Physik Oberstufe",
+      "sectionTitle":"Einstieg und physikalische Größen",
+      "startPage":1,
+      "submitLabel":"Ergebnisse & Abschluss",
+      "onSubmit":"alert",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Dein Einstieg",
+      "themeDefault":"default",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"physik-einstieg-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Physik beginnt mit Fragen">
+      <div class="ep-intro">
+        <div class="ep-kicker">Start in die Kursstufe</div>
+        <h1>Physik beginnt nicht mit einer Formel, sondern mit einer guten Frage.</h1>
+        <p class="ep-lead">In der Oberstufe beschreibst du Naturvorgänge genauer als bisher: Du beobachtest, entscheidest dich für messbare Größen, entwickelst ein Modell und prüfst, wo dieses Modell funktioniert. Formeln sind dabei verdichtete Aussagen über Zusammenhänge.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Drei Phänomene, eine gemeinsame Sprache</h2>
+      <p>Beobachte die drei Situationen. Notiere zunächst nur Größen, die sich messen lassen. Überlege danach, welche Größen aus Messwerten berechnet werden müssen.</p>
+
+      <div class="ep-lab" data-ep-lab>
+        <div class="ep-lab-toolbar">
+          <div class="ep-segments" role="group" aria-label="Phänomen auswählen">
+            <button class="ep-segment" type="button" data-lab-mode="motion" aria-pressed="true">Bewegung</button>
+            <button class="ep-segment" type="button" data-lab-mode="oscillation" aria-pressed="false">Schwingung</button>
+            <button class="ep-segment" type="button" data-lab-mode="current" aria-pressed="false">Stromkreis</button>
+          </div>
+          <div class="ep-icon-actions">
+            <button class="ep-icon-btn" type="button" data-lab-action="toggle" aria-label="Animation pausieren" title="Animation pausieren">Ⅱ</button>
+            <button class="ep-icon-btn" type="button" data-lab-action="reset" aria-label="Animation zurücksetzen" title="Animation zurücksetzen">↺</button>
+          </div>
+        </div>
+        <div class="ep-lab-canvas-wrap">
+          <canvas id="epLabCanvas" width="980" height="420" aria-label="Animiertes Messlabor mit Bewegung, Schwingung und elektrischem Stromkreis"></canvas>
+        </div>
+        <div class="ep-lab-readout" data-lab-readout aria-live="polite"></div>
+      </div>
+
+      <div class="ep-question-strip">
+        <div><strong>Beobachten</strong>Was verändert sich sichtbar mit der Zeit?</div>
+        <div><strong>Messen</strong>Welche Messgeräte und Einheiten brauchst du?</div>
+        <div><strong>Erklären</strong>Welche Beziehung vermutest du zwischen den Größen?</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-reveal-start",
+          "title":"Denkpause: Was ist neu?",
+          "question":"Was unterscheidet eine physikalische Erklärung von einer bloßen Beschreibung?",
+          "answer":"Eine Beschreibung hält fest, was beobachtet wird. Eine physikalische Erklärung verwendet Begriffe, Größen, Modelle und überprüfbare Beziehungen. Sie muss außerdem deutlich machen, unter welchen Voraussetzungen sie gilt."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-mcq-start",
+          "title":"Stopp & check: Rolle einer Formel",
+          "hint":"Wähle die fachlich vollständigste Aussage.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Was leistet eine physikalische Formel?",
+            "choices":[
+              {"id":"A","label":"Sie ersetzt Beobachtungen und Experimente."},
+              {"id":"B","label":"Sie beschreibt einen überprüfbaren Zusammenhang zwischen Größen unter bestimmten Voraussetzungen."},
+              {"id":"C","label":"Sie ist vor allem eine Anleitung zum Einsetzen von Zahlen."},
+              {"id":"D","label":"Sie gilt ohne Einschränkung für jede Situation."}
+            ],
+            "correct":["B"],
+            "explain":"Eine Formel ist Teil eines Modells. Größen, Einheiten, Annahmen und Gültigkeitsbereich gehören zur Aussage dazu."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Vom Phänomen zum Modell">
+      <h1>Vom Phänomen zum überprüfbaren Modell</h1>
+      <p>Gute Physik trennt Beobachtung und Deutung. Erst wenn du Größen operationalisierst, also ein Messverfahren festlegst, werden Aussagen vergleichbar und überprüfbar.</p>
+
+      <div class="ep-route" aria-label="Erkenntnisweg der Physik">
+        <div class="ep-route-step"><span>1 · Beobachten</span>Beschreibe das Phänomen, ohne die Erklärung vorwegzunehmen.</div>
+        <div class="ep-route-step"><span>2 · Fragen</span>Formuliere eine Frage, die durch Messungen entschieden werden kann.</div>
+        <div class="ep-route-step"><span>3 · Modellieren</span>Wähle relevante Größen und vereinfache begründet.</div>
+        <div class="ep-route-step"><span>4 · Vorhersagen</span>Leite eine überprüfbare Erwartung aus dem Modell ab.</div>
+        <div class="ep-route-step"><span>5 · Prüfen</span>Vergleiche Messdaten und Vorhersage, inklusive Unsicherheiten.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-order-method",
+          "title":"Ordne einen Untersuchungsweg",
+          "hint":"Beginne mit dem Phänomen und ende mit der Bewertung.",
+          "items":[
+            "Eine auffällige Beobachtung sachlich festhalten",
+            "Eine messbare Fragestellung formulieren",
+            "Größen, Messverfahren und Bedingungen festlegen",
+            "Eine begründete Vorhersage ableiten",
+            "Messdaten aufnehmen und auswerten",
+            "Modell und Unsicherheiten beurteilen"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Größe, Zahlenwert und Einheit</h2>
+      <div class="ep-equation">Physikalische Größe = Zahlenwert · Einheit, zum Beispiel $s=2{,}4\,\mathrm{m}$.</div>
+      <p>Das Formelzeichen $s$ bezeichnet die Größe Weg. Der Zahlenwert $2{,}4$ sagt, wie oft die gewählte Einheit enthalten ist. Ohne Einheit ist ein Messergebnis in der Regel unvollständig.</p>
+
+      <div class="ep-concept-grid">
+        <div class="ep-concept"><h3>Skalare Größe</h3><p>Ein Zahlenwert mit Einheit genügt, etwa Masse, Zeit, Temperatur oder Energie.</p></div>
+        <div class="ep-concept"><h3>Vektorielle Größe</h3><p>Zusätzlich zum Betrag brauchst du eine Richtung, etwa bei Geschwindigkeit, Beschleunigung, Kraft und Impuls.</p></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-cloze-quantity",
+          "title":"Sicherung: Die Sprache einer Messung",
+          "bank":["Größe","Zahlenwert","Einheit","Messgerät","Richtung"],
+          "segments":[
+            {"t":"text","v":"Ein Messwert besteht aus "},
+            {"t":"gap","a":"Zahlenwert"},
+            {"t":"text","v":" und "},
+            {"t":"gap","a":"Einheit"},
+            {"t":"text","v":". Für eine vektorielle "},
+            {"t":"gap","a":"Größe"},
+            {"t":"text","v":" muss zusätzlich die "},
+            {"t":"gap","a":"Richtung"},
+            {"t":"text","v":" angegeben werden."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-cat-scalars-vectors",
+          "title":"Sortiere Größen nach ihrem Charakter",
+          "hint":"Entscheide, ob Betrag und Einheit genügen oder ob eine Richtung nötig ist.",
+          "categories":[
+            {"id":"scalar","title":"Skalar"},
+            {"id":"vector","title":"Vektor"}
+          ],
+          "items":[
+            {"label":"Masse","category":"scalar"},
+            {"label":"Temperatur","category":"scalar"},
+            {"label":"Energie","category":"scalar"},
+            {"label":"Kraft","category":"vector"},
+            {"label":"Geschwindigkeit","category":"vector"},
+            {"label":"Impuls","category":"vector"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div id="ep-erkenntnisweg" data-p2 class="p2" data-p2-id="ep-erkenntnisweg" data-p2-title="Verbinde Aussage und Rolle" data-p2-hint="Ordne jedem Satz seine Funktion im Erkenntnisweg zu.">
+        <div class="p2-hint">Ziehe jede Aussage auf die passende Rolle. Überprüfe deine Zuordnung, sobald alle vier Paare verbunden sind.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Aussage</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Der Wagen legt in 2,0 s eine Strecke von 3,1 m zurück.</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Die Reibung wird in erster Näherung vernachlässigt.</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Bei doppelter Zeit erwarten wir die doppelte Strecke.</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Die Punkte liegen nicht exakt auf der Geraden.</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Rolle im Erkenntnisweg</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Messwert</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Modellannahme</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Vorhersage</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Bewertung der Messdaten</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Verbundene Paare</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-verify-units",
+          "title":"Wahr oder falsch?",
+          "hint":"Achte auf den Unterschied zwischen Größe und Einheit.",
+          "statement":"Meter ist das Formelzeichen für die Länge.",
+          "answer":false,
+          "explain":"Meter ist der Name der SI-Einheit, m ihr Einheitenzeichen. Ein mögliches Formelzeichen für eine Länge ist l, für einen Weg häufig s."
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du gelernt:</strong>
+        <p>Ein physikalisches Ergebnis verbindet Bedeutung, Formelzeichen, Zahlenwert, Einheit und Messverfahren. In der Oberstufe kommen Modellannahmen, Vektoren, Unsicherheiten und Gültigkeitsbereiche systematisch hinzu.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Größentabelle I">
+      <div class="ep-table-intro">
+        <div>
+          <h1>Physikalische Größen und Formeln aus der Mittelstufe I</h1>
+          <p>Übertrage dein Vorwissen in die freien Felder. Die Bedeutungen entsprechen weitgehend dem Arbeitsblatt. Formuliere im letzten Feld passende Berechnungsformeln oder trage einen Strich ein, wenn keine allgemeine Formel verlangt wird.</p>
+        </div>
+        <div class="ep-save-state" data-save-state>Wird lokal gespeichert</div>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Arbeitsweise</strong>
+        <p>Versuche jede Zeile zunächst ohne Hilfe. Wenn du feststeckst, öffne in der betreffenden Zeile die Hilfe und lies nur so weit, bis du selbst weiterarbeiten kannst.</p>
+      </div>
+
+      <div class="ep-table-wrap">
+        <table class="ep-quantity-table">
+          <thead><tr><th>Bezeichnung der Größe</th><th>Bedeutung der Größe</th><th>Formelzeichen</th><th>Einheit</th><th>Messgerät</th><th>Berechnung, Formeln</th></tr></thead>
+          <tbody data-quantity-group="mechanics-basic"></tbody>
+        </table>
+      </div>
+      <div class="ep-actions">
+        <button class="ep-action-btn primary" type="button" data-check-group="mechanics-basic">Zwischenstand prüfen</button>
+        <span class="ep-check-result" data-check-result="mechanics-basic" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Größentabelle II">
+      <div class="ep-table-intro">
+        <div>
+          <h1>Physikalische Größen und Formeln aus der Mittelstufe II</h1>
+          <p>In diesem Teil stehen Größen, die Zustände, Wechselwirkungen und Energieübertragungen beschreiben. Achte besonders darauf, Arbeit, Energie und Leistung nicht gleichzusetzen.</p>
+        </div>
+        <div class="ep-save-state" data-save-state>Wird lokal gespeichert</div>
+      </div>
+
+      <div class="ep-table-wrap">
+        <table class="ep-quantity-table">
+          <thead><tr><th>Bezeichnung der Größe</th><th>Bedeutung der Größe</th><th>Formelzeichen</th><th>Einheit</th><th>Messgerät</th><th>Berechnung, Formeln</th></tr></thead>
+          <tbody data-quantity-group="mechanics-energy"></tbody>
+        </table>
+      </div>
+      <div class="ep-actions">
+        <button class="ep-action-btn primary" type="button" data-check-group="mechanics-energy">Zwischenstand prüfen</button>
+        <span class="ep-check-result" data-check-result="mechanics-energy" aria-live="polite"></span>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-mcq-energy-power",
+          "title":"Arbeit, Energie oder Leistung?",
+          "hint":"Mehrere Größen können dieselbe Alltagssituation beschreiben.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Zwei Kräne heben dieselbe Last auf dieselbe Höhe. Kran A benötigt halb so viel Zeit. Welche Aussage stimmt?",
+            "choices":[
+              {"id":"A","label":"Kran A verrichtet doppelt so viel Arbeit."},
+              {"id":"B","label":"Beide verrichten gleich viel Arbeit; Kran A hat die doppelte Leistung."},
+              {"id":"C","label":"Beide haben dieselbe Leistung, weil die Höhe gleich ist."},
+              {"id":"D","label":"Kran A überträgt nur halb so viel Energie."}
+            ],
+            "correct":["B"],
+            "explain":"Bei gleicher Last und Höhe ist die Energieänderung und damit die Hubarbeit gleich. Leistung berücksichtigt zusätzlich die benötigte Zeit."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Größentabelle Elektrizität">
+      <div class="ep-table-intro">
+        <div>
+          <h1>Elektrische Größen</h1>
+          <p>Die letzten Zeilen des Arbeitsblatts führen von Ladung über Stromstärke und Spannung zum Widerstand. Nutze bei Reihen- und Parallelschaltungen eindeutige Indizes.</p>
+        </div>
+        <div class="ep-save-state" data-save-state>Wird lokal gespeichert</div>
+      </div>
+
+      <div class="ep-table-wrap">
+        <table class="ep-quantity-table">
+          <thead><tr><th>Bezeichnung der Größe</th><th>Bedeutung der Größe</th><th>Formelzeichen</th><th>Einheit</th><th>Messgerät</th><th>Berechnung, Formeln</th></tr></thead>
+          <tbody data-quantity-group="electricity"></tbody>
+        </table>
+      </div>
+      <div class="ep-actions">
+        <button class="ep-action-btn primary" type="button" data-check-group="electricity">Zwischenstand prüfen</button>
+        <span class="ep-check-result" data-check-result="electricity" aria-live="polite"></span>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-cloze-electricity",
+          "title":"Sicherung: Elektrische Grundgrößen",
+          "bank":["Ladung","Stromstärke","Spannung","Widerstand","Zeit"],
+          "segments":[
+            {"t":"text","v":"Die elektrische "},
+            {"t":"gap","a":"Stromstärke"},
+            {"t":"text","v":" beschreibt transportierte Ladung pro "},
+            {"t":"gap","a":"Zeit"},
+            {"t":"text","v":". Die elektrische "},
+            {"t":"gap","a":"Spannung"},
+            {"t":"text","v":" beschreibt Energie pro "},
+            {"t":"gap","a":"Ladung"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Einheiten als Prüfwerkzeug">
+      <h1>Einheiten sind ein eingebauter Fehlerdetektor</h1>
+      <p>Eine Gleichung kann nur stimmen, wenn beide Seiten dieselbe Dimension besitzen. Diese Prüfung ersetzt keine Herleitung, findet aber viele typische Fehler beim Umstellen und Einsetzen.</p>
+
+      <div class="ep-equation">Beispiel: $F=m\cdot a$ führt auf $\mathrm{kg\cdot m/s^2=N}$. Die Einheit der rechten Seite passt zur Kraft.</div>
+
+      <h2>Fehlerlabor: 72 km/h sind nicht 72 m/s</h2>
+      <p>Ein Auto fährt fünf Sekunden lang konstant mit $72\,\mathrm{km/h}$. Die Rechnung $s=72\cdot5=360\,\mathrm{m}$ ist falsch, obwohl die Formel $s=v\cdot t$ richtig gewählt wurde.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-reveal-unit-error",
+          "title":"Finde und korrigiere den Fehler",
+          "question":"Warum ist das Ergebnis 360 m falsch, und welche Strecke ist richtig?",
+          "answer":"Die Einheiten passen nicht zusammen: 72 km/h müssen vor dem Multiplizieren mit Sekunden in m/s umgerechnet werden. Es gilt 72 km/h = 20 m/s. Daher ist s = 20 m/s · 5 s = 100 m."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-mcq-dimension",
+          "title":"Dimensionscheck",
+          "hint":"Forme die Einheiten gedanklich um.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Welche Einheit ergibt sich aus Energie geteilt durch Zeit?",
+              "choices":[{"id":"A","label":"Newton"},{"id":"B","label":"Watt"},{"id":"C","label":"Coulomb"},{"id":"D","label":"Pascal"}],
+              "correct":["B"],
+              "explain":"Joule pro Sekunde ist Watt und gehört zur Leistung."
+            },
+            {
+              "text":"Welche Einheit besitzt der Quotient Masse durch Volumen?",
+              "choices":[{"id":"A","label":"kg/m³"},{"id":"B","label":"N/m"},{"id":"C","label":"m/s²"},{"id":"D","label":"J/kg"}],
+              "correct":["A"],
+              "explain":"Der Quotient m/V ist die Dichte ρ mit der SI-Einheit kg/m³."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du gelernt:</strong>
+        <p>Prüfe vor dem Einsetzen die Einheiten, nach dem Umstellen die Dimension und nach der Rechnung die Größenordnung. Ein Taschenrechner kann korrekt rechnen und trotzdem ein physikalisch unsinniges Ergebnis liefern.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Deine erste Untersuchung">
+      <h1>Deine erste kleine Oberstufen-Untersuchung</h1>
+      <p>Wähle eine Mission. Entscheidend ist nicht eine perfekte Zahl, sondern ein nachvollziehbarer Weg von der Frage über die Messung zur Bewertung.</p>
+
+      <div class="ep-mission-grid">
+        <div class="ep-mission">
+          <h3>Treppenleistung</h3>
+          <p>Bestimme Masse $m$, Höhenunterschied $h$ und benötigte Zeit $t$. Berechne mit $P=mgh/t$ deine mittlere mechanische Leistung.</p>
+          <p><strong>Weiterdenken:</strong> Warum ist die tatsächliche Stoffwechselleistung größer?</p>
+        </div>
+        <div class="ep-mission">
+          <h3>Pendel als Gravimeter</h3>
+          <p>Miss Länge $l$ und Periodendauer $T$ eines Fadenpendels bei kleinem Auslenkwinkel. Bestimme $g=4\pi^2l/T^2$ aus mehreren Perioden.</p>
+          <p><strong>Weiterdenken:</strong> Welche Messgröße verursacht vermutlich die größte Unsicherheit?</p>
+        </div>
+        <div class="ep-mission">
+          <h3>Bewegung aus einem Video</h3>
+          <p>Filme eine geradlinige Bewegung mit ruhender Kamera. Bestimme Positionen zu mehreren Zeiten und untersuche das $s$-$t$-Diagramm.</p>
+          <p><strong>Weiterdenken:</strong> Woran erkennst du gleichförmige oder beschleunigte Bewegung?</p>
+        </div>
+      </div>
+
+      <div class="wb-soft-callout">
+        <strong>Sicherheit und Fairness</strong>
+        <p>Treppen werden nur gehend benutzt. Filme keine Personen ohne Zustimmung. Wiederhole Messungen und verändere nicht nachträglich einzelne Werte, nur weil sie nicht zur Erwartung passen.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-essay-investigation",
+          "title":"Plane deine Untersuchung",
+          "hint":"Antworte präzise. Verwende mindestens drei Größen mit Formelzeichen und Einheit.",
+          "storagePrefix":"physik_einstieg_",
+          "exportName":"erste-physik-untersuchung.txt",
+          "fields":[
+            {"label":"Gewählte Mission und Forschungsfrage","key":"question","kind":"textarea","placeholder":"Ich untersuche ..., weil ..."},
+            {"label":"Messgrößen, Messgeräte und Vorgehen","key":"method","kind":"textarea","placeholder":"Ich messe die Größe ... mit ... in der Einheit ..."},
+            {"label":"Vorhersage mit Begründung","key":"prediction","kind":"textarea","placeholder":"Ich erwarte ..., weil ..."},
+            {"label":"Mögliche Unsicherheit und Verbesserung","key":"evaluation","kind":"textarea","placeholder":"Das Ergebnis könnte beeinflusst werden durch ..."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Zusammenfassung und Abgabe">
+      <h1>Dein Werkzeugkasten für die Kursstufe</h1>
+      <p>Die Tabelle ist kein Vokabeltest. Sie ist ein Arbeitswerkzeug: Mit ihr übersetzt du ein Phänomen in messbare Größen und überprüfbare Beziehungen.</p>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du gelernt, dass …</strong>
+        <ul class="ep-final-list">
+          <li>eine physikalische Größe durch Bedeutung, Formelzeichen, Zahlenwert und Einheit eindeutig beschrieben wird,</li>
+          <li>Messgeräte Größen nicht immer direkt bestimmen und manche Werte berechnet werden,</li>
+          <li>Formeln überprüfbare Modellbeziehungen mit Voraussetzungen sind,</li>
+          <li>Einheiten- und Größenordnungsprüfungen viele Fehler sichtbar machen,</li>
+          <li>Messabweichungen Informationen liefern und nicht einfach gelöscht werden dürfen.</li>
+        </ul>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-mcq-final",
+          "title":"Abschlusscheck",
+          "hint":"Wähle alle Aussagen, die zu sauberem physikalischem Arbeiten gehören.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Was gehört zu einem belastbaren Ergebnis?",
+            "choices":[
+              {"id":"A","label":"Größe und Formelzeichen eindeutig benennen"},
+              {"id":"B","label":"Einheit angeben und prüfen"},
+              {"id":"C","label":"Modellannahmen verschweigen"},
+              {"id":"D","label":"Messverfahren und Unsicherheiten berücksichtigen"},
+              {"id":"E","label":"Plausibilität der Größenordnung prüfen"}
+            ],
+            "correct":["A","B","D","E"],
+            "explain":"Ein Ergebnis ist mehr als eine Zahl. Es braucht Bedeutung, Einheit, nachvollziehbare Methode, Voraussetzungen und eine Plausibilitätsprüfung."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Tabelle sichern</h2>
+      <p>Deine Tabelleneingaben bleiben auf diesem Gerät im Browser gespeichert. Exportiere sie zusätzlich als Textdatei, wenn du an einem anderen Gerät weiterarbeiten möchtest.</p>
+      <div class="ep-actions">
+        <button class="ep-action-btn primary" type="button" data-export-table>Tabelle exportieren</button>
+        <button class="ep-action-btn" type="button" data-clear-table>Eingaben löschen</button>
+        <span class="ep-export-status" data-export-status aria-live="polite"></span>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Hilfen und Weiterforschen</h2>
+      <ul class="ep-source-list">
+        <li>Grundlage der Größentabelle: bereitgestelltes Arbeitsblatt <em>Physikalische Größen.pdf</em>.</li>
+        <li><a href="Einheiten_Formeln.html">Interne Formelsammlung: Einheiten, Formeln und Konstanten</a></li>
+        <li><a href="https://www.ptb.de/cms/presseaktuelles/si-materialien-fuer-schulen.html" target="_blank" rel="noopener">Physikalisch-Technische Bundesanstalt: SI-Materialien für Schulen</a></li>
+        <li><a href="https://www.leifiphysik.de/mechanik/arbeit-energie-und-leistung" target="_blank" rel="noopener">LEIFIphysik: Arbeit, Energie und Leistung</a></li>
+        <li><a href="https://www.leifiphysik.de/mechanik/lineare-bewegung-gleichungen/grundwissen/geschwindigkeit-und-beschleunigung-vektoriell" target="_blank" rel="noopener">LEIFIphysik: Geschwindigkeit und Beschleunigung als Vektoren</a></li>
+        <li><a href="https://www.leifiphysik.de/elektrizitaetslehre/elektrische-grundgroessen" target="_blank" rel="noopener">LEIFIphysik: Elektrische Grundgrößen</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    const LINKS = {
+      si: { label: "PTB: Größen und SI-Einheiten", url: "https://www.ptb.de/cms/presseaktuelles/si-materialien-fuer-schulen.html" },
+      motion: { label: "LEIFIphysik: Bewegung und Beschleunigung", url: "https://www.leifiphysik.de/mechanik/beschleunigte-bewegung/grundwissen/beschleunigte-bewegung" },
+      vectors: { label: "LEIFIphysik: Geschwindigkeit und Beschleunigung vektoriell", url: "https://www.leifiphysik.de/mechanik/lineare-bewegung-gleichungen/grundwissen/geschwindigkeit-und-beschleunigung-vektoriell" },
+      force: { label: "LEIFIphysik: Wirkungen von Kräften", url: "https://www.leifiphysik.de/mechanik/kraft-und-kraftarten/grundwissen/wirkungen-von-kraeften" },
+      momentum: { label: "LEIFIphysik: Impuls und Impulserhaltung", url: "https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/impuls-und-impulserhaltungssatz" },
+      energy: { label: "LEIFIphysik: Arbeit, Energie und Leistung", url: "https://www.leifiphysik.de/mechanik/arbeit-energie-und-leistung" },
+      electricity: { label: "LEIFIphysik: Elektrische Grundgrößen", url: "https://www.leifiphysik.de/elektrizitaetslehre/elektrische-grundgroessen" },
+      current: { label: "LEIFIphysik: Von der Ladung zum Strom", url: "https://www.leifiphysik.de/elektrizitaetslehre/elektrische-grundgroessen/grundwissen/von-der-elektrischen-ladung-zum-elektrischen-strom" },
+      voltage: { label: "LEIFIphysik: Spannung und Volt", url: "https://www.leifiphysik.de/elektrizitaetslehre/elektrische-grundgroessen/grundwissen/elektrische-spannung-und-die-einheit-volt-1" },
+      resistance: { label: "LEIFIphysik: Kennlinien und Widerstand", url: "https://www.leifiphysik.de/elektrizitaetslehre/ohmsches-gesetz-kennlinien/grundwissen/kennlinien-von-widerstaenden" }
+    };
+
+    const QUANTITIES = [
+      { group:"mechanics-basic", key:"length", meaning:"Länge einer Strecke; Abstand zwischen zwei Orten", help:"si", answer:{name:["länge","weg","strecke"], symbol:["s","l","x"], unit:["m","meter"], instrument:["lineal","maßband","meterstab","messschieber"]} },
+      { group:"mechanics-basic", key:"radius", meaning:"Der überall gleiche Abstand einer Kreislinie zu ihrem Mittelpunkt", help:"si", answer:{name:["radius"], symbol:["r"], unit:["m","meter"], instrument:["lineal","maßband","messschieber"]} },
+      { group:"mechanics-basic", key:"area", meaning:"Größe einer begrenzten Fläche", help:"si", answer:{name:["fläche","flächeninhalt"], symbol:["a"], unit:["m²","m2","quadratmeter"], instrument:["lineal","maßband","planimeter","messschieber"]} },
+      { group:"mechanics-basic", key:"volume", meaning:"Rauminhalt eines Körpers", help:"si", answer:{name:["volumen","rauminhalt"], symbol:["v"], unit:["m³","m3","kubikmeter"], instrument:["messzylinder","messbecher","lineal","maßband"]} },
+      { group:"mechanics-basic", key:"time", meaning:"Zeitdauer, die zwischen zwei Ereignissen vergeht", help:"si", answer:{name:["zeit","zeitdauer"], symbol:["t","delta t","Δt"], unit:["s","sekunde","sekunden"], instrument:["uhr","stoppuhr","lichtschranke"]} },
+      { group:"mechanics-basic", key:"speed", meaning:"Schnelligkeit und Richtung, mit der sich ein Körper längs einer Strecke bewegt", help:"motion", answer:{name:["geschwindigkeit"], symbol:["v","υ"], unit:["m/s","ms-1","meterprosekunde"], instrument:["tachometer","tacho","lichtschranke","radar","geschwindigkeitsmesser"]} },
+      { group:"mechanics-basic", key:"acceleration", meaning:"Gibt an, wie schnell und in welche Richtung sich die Geschwindigkeit eines Körpers ändert", help:"vectors", answer:{name:["beschleunigung"], symbol:["a"], unit:["m/s²","m/s2","ms-2","meterprosekundequadrat"], instrument:["beschleunigungssensor","accelerometer","lichtschranke"]} },
+      { group:"mechanics-basic", key:"temperature", meaning:"Maß für den thermischen Zustand; im Teilchenmodell mit der ungeordneten Bewegung der Teilchen verknüpft", help:"si", answer:{name:["temperatur"], symbol:["t","theta","ϑ"], unit:["k","kelvin","°c","celsius"], instrument:["thermometer","temperatursensor"]} },
+      { group:"mechanics-basic", key:"mass", meaning:"Gibt an, wie träge ein Körper ist und wie stark er gravitativ wechselwirkt", help:"si", answer:{name:["masse"], symbol:["m"], unit:["kg","kilogramm"], instrument:["waage","balkenwaage"]} },
+      { group:"mechanics-basic", key:"density", meaning:"Gibt an, wie viel Masse in einem bestimmten Volumen enthalten ist", help:"si", answer:{name:["dichte","massendichte"], symbol:["ρ","rho"], unit:["kg/m³","kg/m3","kgm-3"], instrument:["aräometer","dichtemesser","waageundmesszylinder","waage"]} },
+
+      { group:"mechanics-energy", key:"force", meaning:"Beschreibt eine Wechselwirkung, die Geschwindigkeit, Bewegungsrichtung oder Form eines Körpers verändern kann", help:"force", answer:{name:["kraft"], symbol:["f"], unit:["n","newton"], instrument:["kraftmesser","federkraftmesser","dynamometer"]} },
+      { group:"mechanics-energy", key:"momentum", meaning:"Die Bewegungsgröße eines Körpers; umgangssprachlich seine „Wucht“. Der Gesamtimpuls ist in abgeschlossenen Systemen erhalten", help:"momentum", answer:{name:["impuls"], symbol:["p"], unit:["kg*m/s","kgm/s","n*s","ns"], instrument:["-","nichtdirekt","lichtschrankeundwaage"]} },
+      { group:"mechanics-energy", key:"work", meaning:"Energie, die durch eine Kraft längs eines Weges auf ein System übertragen oder ihm entzogen wird", help:"energy", answer:{name:["arbeit","mechanischearbeit"], symbol:["w"], unit:["j","joule","nm","newtonmeter"], instrument:["-","nichtdirekt","kraftmesserundmaßband"]} },
+      { group:"mechanics-energy", key:"energy", meaning:"Größe, mit der die Fähigkeit eines Systems beschrieben wird, Veränderungen zu bewirken; Gesamtenergie bleibt erhalten", help:"energy", answer:{name:["energie"], symbol:["e"], unit:["j","joule"], instrument:["-","nichtdirekt","energiemessgerät","kalorimeter"]} },
+      { group:"mechanics-energy", key:"power", meaning:"Arbeit beziehungsweise umgewandelte Energie pro Zeit", help:"energy", answer:{name:["leistung"], symbol:["p"], unit:["w","watt","j/s"], instrument:["leistungsmesser","wattmeter","energiemessgerät"]} },
+
+      { group:"electricity", key:"charge", meaning:"Eigenschaft von Körpern und Teilchen, die elektrische Anziehung oder Abstoßung ermöglicht", help:"electricity", answer:{name:["ladung","elektrischeladung"], symbol:["q"], unit:["c","coulomb","as","amperesekunde"], instrument:["elektrometer","coulombmeter","ladungssensor"]} },
+      { group:"electricity", key:"current", meaning:"Ladungsmenge, die pro Zeit durch einen Leiterquerschnitt fließt", help:"current", answer:{name:["stromstärke","elektrischestromstärke"], symbol:["i"], unit:["a","ampere"], instrument:["amperemeter","strommesser","multimeter"]} },
+      { group:"electricity", key:"voltage", meaning:"Potenzialdifferenz zwischen zwei Orten; übertragene Energie beziehungsweise Arbeit pro Ladung", help:"voltage", answer:{name:["spannung","elektrischespannung"], symbol:["u"], unit:["v","volt","j/c"], instrument:["voltmeter","spannungsmesser","multimeter"]} },
+      { group:"electricity", key:"resistance", meaning:"Beschreibt, welche Spannung nötig ist, um eine bestimmte Stromstärke durch ein Bauteil hervorzurufen", help:"resistance", answer:{name:["widerstand","elektrischerwiderstand"], symbol:["r"], unit:["ω","ohm"], instrument:["ohmmeter","widerstandsmesser","multimeter"]} }
+    ];
+
+    const FORMULA_PROMPTS = {
+      length:"– oder Zusammenhang einer gewählten Situation",
+      radius:"Umfang und Fläche eines Kreises",
+      area:"Rechteck, Parallelogramm, Kreis …",
+      volume:"Zum Beispiel Volumen eines Quaders",
+      time:"–",
+      speed:"Mittlere Geschwindigkeit",
+      acceleration:"Mittlere Beschleunigung",
+      temperature:"–",
+      mass:"–",
+      density:"Zusammenhang von Masse und Volumen",
+      force:"Beschleunigungs-, Gewichts-, Feder- und Zentripetalkraft",
+      momentum:"Zusammenhang von Masse und Geschwindigkeit",
+      work:"Beschleunigungs-, Hub-, Reibungs- und Spannarbeit",
+      energy:"Bewegungs-, Lage- und Spannenergie",
+      power:"Arbeit oder Energieänderung pro Zeit",
+      charge:"Zusammenhang mit Stromstärke und Zeit",
+      current:"Ladung pro Zeit",
+      voltage:"Arbeit pro Ladung; Reihen- und Parallelschaltung",
+      resistance:"Ohmscher Zusammenhang; Reihen- und Parallelschaltung"
+    };
+
+    const STORAGE_KEY = "physik-einstieg-groessentabelle-v1";
+
+    function make(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    function addEntry(cell, row, field, multiline) {
+      const control = document.createElement(multiline ? "textarea" : "input");
+      if (!multiline) control.type = "text";
+      control.className = "ep-entry";
+      control.dataset.entry = row.key + "." + field;
+      control.dataset.group = row.group;
+      control.setAttribute("aria-label", field + " für " + row.meaning);
+      if (multiline) {
+        control.rows = 3;
+        control.placeholder = FORMULA_PROMPTS[row.key] || "Passende Formel(n)";
+      } else {
+        control.autocomplete = "off";
+        control.spellcheck = false;
+      }
+      cell.appendChild(control);
+    }
+
+    function renderTables() {
+      document.querySelectorAll("[data-quantity-group]").forEach(function (body) {
+        const group = body.dataset.quantityGroup;
+        QUANTITIES.filter(function (row) { return row.group === group; }).forEach(function (row) {
+          const tr = document.createElement("tr");
+          tr.dataset.quantity = row.key;
+
+          const nameCell = document.createElement("td");
+          addEntry(nameCell, row, "name", false);
+          tr.appendChild(nameCell);
+
+          const meaningCell = make("td", "", row.meaning);
+          const details = make("details", "ep-help");
+          details.appendChild(make("summary", "", "Hilfe öffnen"));
+          const help = LINKS[row.help];
+          const helpText = make("p", "");
+          helpText.append("Lies die Erklärung und kehre dann zur Tabelle zurück: ");
+          const link = make("a", "", help.label);
+          link.href = help.url;
+          link.target = "_blank";
+          link.rel = "noopener";
+          helpText.appendChild(link);
+          details.appendChild(helpText);
+          meaningCell.appendChild(details);
+          tr.appendChild(meaningCell);
+
+          ["symbol", "unit", "instrument"].forEach(function (field) {
+            const td = document.createElement("td");
+            addEntry(td, row, field, false);
+            tr.appendChild(td);
+          });
+
+          const formulaCell = document.createElement("td");
+          addEntry(formulaCell, row, "formula", true);
+          tr.appendChild(formulaCell);
+          body.appendChild(tr);
+        });
+      });
+    }
+
+    function readSaved() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+      catch (error) { return {}; }
+    }
+
+    function saveEntries() {
+      const data = {};
+      document.querySelectorAll("[data-entry]").forEach(function (field) {
+        data[field.dataset.entry] = field.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      document.querySelectorAll("[data-save-state]").forEach(function (badge) {
+        badge.textContent = "Gespeichert";
+      });
+    }
+
+    function restoreEntries() {
+      const data = readSaved();
+      document.querySelectorAll("[data-entry]").forEach(function (field) {
+        if (Object.prototype.hasOwnProperty.call(data, field.dataset.entry)) field.value = data[field.dataset.entry];
+        field.addEventListener("input", function () {
+          field.classList.remove("is-correct", "is-wrong");
+          saveEntries();
+        });
+      });
+    }
+
+    function normalized(value) {
+      return String(value || "")
+        .trim()
+        .toLocaleLowerCase("de")
+        .replace(/[·⋅×]/g, "*")
+        .replace(/[(){}\[\],.;:_\s]/g, "")
+        .replace(/²/g, "2")
+        .replace(/³/g, "3")
+        .replace(/−/g, "-");
+    }
+
+    function accepted(value, alternatives, contains) {
+      const actual = normalized(value);
+      if (!actual) return false;
+      return alternatives.some(function (alternative) {
+        const expected = normalized(alternative);
+        return contains ? actual.includes(expected) : actual === expected;
+      });
+    }
+
+    function checkGroup(group) {
+      let correct = 0;
+      let total = 0;
+      QUANTITIES.filter(function (row) { return row.group === group; }).forEach(function (row) {
+        ["name", "symbol", "unit", "instrument"].forEach(function (fieldName) {
+          const field = document.querySelector('[data-entry="' + row.key + "." + fieldName + '"]');
+          if (!field) return;
+          total += 1;
+          const ok = accepted(field.value, row.answer[fieldName], fieldName === "instrument" || fieldName === "name");
+          field.classList.toggle("is-correct", ok);
+          field.classList.toggle("is-wrong", !ok);
+          if (ok) correct += 1;
+        });
+      });
+      const result = document.querySelector('[data-check-result="' + group + '"]');
+      if (result) {
+        result.textContent = correct + " von " + total + " Kernfeldern passen. Gelb bleibt das Formelfeld: Prüfe es mit den verlinkten Hilfen.";
+      }
+    }
+
+    function setupTableActions() {
+      document.querySelectorAll("[data-check-group]").forEach(function (button) {
+        button.addEventListener("click", function () { checkGroup(button.dataset.checkGroup); });
+      });
+
+      const exportButton = document.querySelector("[data-export-table]");
+      if (exportButton) exportButton.addEventListener("click", function () {
+        const lines = ["Physikalische Größen und Formeln", ""];
+        QUANTITIES.forEach(function (row) {
+          lines.push(row.meaning);
+          ["name", "symbol", "unit", "instrument", "formula"].forEach(function (fieldName) {
+            const field = document.querySelector('[data-entry="' + row.key + "." + fieldName + '"]');
+            const label = {name:"Größe", symbol:"Formelzeichen", unit:"Einheit", instrument:"Messgerät", formula:"Formeln"}[fieldName];
+            lines.push(label + ": " + (field ? field.value : ""));
+          });
+          lines.push("");
+        });
+        const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "physikalische-groessen-tabelle.txt";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        const status = document.querySelector("[data-export-status]");
+        if (status) status.textContent = "Export erstellt.";
+      });
+
+      const clearButton = document.querySelector("[data-clear-table]");
+      if (clearButton) clearButton.addEventListener("click", function () {
+        if (!window.confirm("Wirklich alle Eingaben der Größentabelle löschen?")) return;
+        document.querySelectorAll("[data-entry]").forEach(function (field) {
+          field.value = "";
+          field.classList.remove("is-correct", "is-wrong");
+        });
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll("[data-save-state]").forEach(function (badge) { badge.textContent = "Tabelle ist leer"; });
+        const status = document.querySelector("[data-export-status]");
+        if (status) status.textContent = "Eingaben wurden gelöscht.";
+      });
+    }
+
+    function initLab() {
+      const root = document.querySelector("[data-ep-lab]");
+      const canvas = document.getElementById("epLabCanvas");
+      if (!root || !canvas) return;
+      const ctx = canvas.getContext("2d");
+      const readout = root.querySelector("[data-lab-readout]");
+      const toggle = root.querySelector('[data-lab-action="toggle"]');
+      let mode = "motion";
+      let time = 0;
+      let last = 0;
+      let paused = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let raf = 0;
+
+      function arrow(x1, y1, x2, y2, color, label) {
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+        ctx.closePath(); ctx.fill();
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText(label, x2 + 8, y2 - 8);
+        ctx.restore();
+      }
+
+      function title(text, subtitle) {
+        ctx.fillStyle = "#172033";
+        ctx.font = "bold 25px sans-serif";
+        ctx.fillText(text, 40, 43);
+        ctx.fillStyle = "#526174";
+        ctx.font = "16px sans-serif";
+        ctx.fillText(subtitle, 40, 70);
+      }
+
+      function drawScale(x1, x2, y, unit) {
+        ctx.strokeStyle = "#6b7d89";
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke();
+        for (let i = 0; i <= 10; i++) {
+          const x = x1 + (x2 - x1) * i / 10;
+          ctx.beginPath(); ctx.moveTo(x, y - (i % 5 === 0 ? 12 : 7)); ctx.lineTo(x, y + 5); ctx.stroke();
+        }
+        ctx.fillStyle = "#526174";
+        ctx.font = "14px sans-serif";
+        ctx.fillText(unit, x2 + 12, y + 5);
+      }
+
+      function drawMotion() {
+        title("Bewegung vermessen", "Ort und Zeit werden gemessen; Geschwindigkeit und Beschleunigung werden daraus bestimmt.");
+        const cycle = time % 4;
+        const s = Math.min(8, 0.5 * 1.0 * cycle * cycle);
+        const v = Math.min(4, cycle);
+        const x = 105 + s / 8 * 720;
+        drawScale(105, 825, 330, "8 m");
+        ctx.fillStyle = "#2563a6";
+        ctx.beginPath(); ctx.arc(x, 250, 28, 0, Math.PI * 2); ctx.fill();
+        arrow(x, 205, x + 55 + v * 12, 205, "#087f7a", "v");
+        arrow(x, 145, x + 62, 145, "#c63f4f", "a");
+        ctx.fillStyle = "#fff8eb";
+        ctx.strokeStyle = "#b86b08";
+        ctx.lineWidth = 2;
+        ctx.fillRect(735, 105, 185, 92);
+        ctx.strokeRect(735, 105, 185, 92);
+        ctx.fillStyle = "#5f3a06";
+        ctx.font = "bold 17px ui-monospace, monospace";
+        ctx.fillText("t = " + cycle.toFixed(2) + " s", 758, 140);
+        ctx.fillText("s = " + s.toFixed(2) + " m", 758, 173);
+        readout.textContent = "Direkt messbar: Ort s und Zeit t\nBerechnet: v = Δs/Δt; a = Δv/Δt";
+      }
+
+      function drawOscillation() {
+        title("Schwingung untersuchen", "Eine periodische Bewegung wird durch Auslenkung, Amplitude und Periodendauer beschrieben.");
+        const omega = 2 * Math.PI / 2.4;
+        const s = 0.16 * Math.cos(omega * time);
+        const y = 215 + s * 500;
+        ctx.fillStyle = "#566774";
+        ctx.fillRect(120, 92, 170, 14);
+        ctx.strokeStyle = "#526174";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for (let i = 0; i <= 24; i++) {
+          const p = i / 24;
+          const xx = 205 + (i % 2 ? 13 : -13);
+          const yy = 108 + (y - 135) * p;
+          if (i === 0) ctx.moveTo(205, yy); else ctx.lineTo(xx, yy);
+        }
+        ctx.lineTo(205, y - 28); ctx.stroke();
+        ctx.setLineDash([6, 5]);
+        ctx.strokeStyle = "#94a3ad";
+        ctx.beginPath(); ctx.moveTo(75, 215); ctx.lineTo(340, 215); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#087f7a";
+        ctx.fillRect(155, y - 28, 100, 56);
+
+        const gx = 420, gy = 115, gw = 500, gh = 220;
+        ctx.strokeStyle = "#9dafb9";
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(gx, gy + gh / 2); ctx.lineTo(gx + gw, gy + gh / 2); ctx.stroke();
+        ctx.strokeStyle = "#2563a6";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for (let i = 0; i <= 240; i++) {
+          const p = i / 240;
+          const tx = time - 4.8 + p * 4.8;
+          const py = gy + gh / 2 - 78 * Math.cos(omega * tx);
+          const px = gx + p * gw;
+          if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+        ctx.fillStyle = "#526174";
+        ctx.font = "15px sans-serif";
+        ctx.fillText("s(t)", gx + 8, gy + 22);
+        readout.textContent = "Messbar: Auslenkung s(t), Amplitude ŝ = 0,16 m, Periodendauer T = 2,40 s\nBerechnet: f = 1/T = 0,42 Hz";
+      }
+
+      function drawCurrent() {
+        title("Elektrischen Strom beschreiben", "Bewegte Ladung wird über Stromstärke, Spannung und Widerstand erfasst.");
+        const left = 120, right = 855, top = 125, bottom = 315;
+        ctx.strokeStyle = "#566774";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(left, top); ctx.lineTo(right, top); ctx.lineTo(right, bottom); ctx.lineTo(left, bottom); ctx.lineTo(left, top);
+        ctx.stroke();
+        ctx.fillStyle = "#c63f4f";
+        ctx.fillRect(left - 18, 180, 36, 80);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 18px sans-serif";
+        ctx.fillText("+", left - 6, 205); ctx.fillText("−", left - 6, 245);
+        ctx.fillStyle = "#b86b08";
+        ctx.fillRect(742, 100, 74, 50);
+        ctx.fillStyle = "#172033";
+        ctx.font = "bold 14px sans-serif";
+        ctx.fillText("R", 774, 131);
+
+        const perimeter = 2 * ((right - left) + (bottom - top));
+        for (let i = 0; i < 18; i++) {
+          let d = (i / 18 * perimeter + time * 92) % perimeter;
+          let x, y;
+          if (d < right - left) { x = left + d; y = top; }
+          else if ((d -= right - left) < bottom - top) { x = right; y = top + d; }
+          else if ((d -= bottom - top) < right - left) { x = right - d; y = bottom; }
+          else { d -= right - left; x = left; y = bottom - d; }
+          ctx.fillStyle = "#2563a6";
+          ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
+        }
+        arrow(315, 92, 430, 92, "#087f7a", "I");
+        ctx.fillStyle = "#172033";
+        ctx.font = "bold 17px ui-monospace, monospace";
+        ctx.fillText("U = 6,0 V", 410, 220);
+        ctx.fillText("I = 0,30 A", 410, 252);
+        ctx.fillText("R = 20 Ω", 410, 284);
+        readout.textContent = "Messbar: Spannung U und Stromstärke I\nBerechnet: R = U/I = 20 Ω; transportierte Ladung Q = I·Δt";
+      }
+
+      function draw(ts) {
+        if (!canvas.isConnected) return;
+        if (!last) last = ts;
+        const dt = Math.min(0.04, (ts - last) / 1000);
+        last = ts;
+        if (!paused) time += dt;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#f7fafb";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (mode === "motion") drawMotion();
+        else if (mode === "oscillation") drawOscillation();
+        else drawCurrent();
+        raf = requestAnimationFrame(draw);
+      }
+
+      function syncToggle() {
+        toggle.textContent = paused ? "▶" : "Ⅱ";
+        toggle.setAttribute("aria-label", paused ? "Animation starten" : "Animation pausieren");
+        toggle.title = paused ? "Animation starten" : "Animation pausieren";
+      }
+
+      root.querySelectorAll("[data-lab-mode]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          mode = button.dataset.labMode;
+          time = 0;
+          root.querySelectorAll("[data-lab-mode]").forEach(function (item) {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+        });
+      });
+      toggle.addEventListener("click", function () { paused = !paused; syncToggle(); });
+      root.querySelector('[data-lab-action="reset"]').addEventListener("click", function () { time = 0; last = 0; });
+      syncToggle();
+      raf = requestAnimationFrame(draw);
+      canvas.addEventListener("wb-destroy", function () { cancelAnimationFrame(raf); });
+    }
+
+    renderTables();
+    restoreEntries();
+    setupTableActions();
+    initLab();
+  })();
+
+  SBBook.autoMount();
+  SBBlocks.autoMount();
+  SBLibrary.autoMountAll();
+  if (/^#page-\d+$/.test(window.location.hash)) {
+    const resetInitialScroll = function () {
+      window.scrollTo(0, 0);
+      const content = document.querySelector(".wb-content");
+      if (content) content.scrollTop = 0;
+    };
+    requestAnimationFrame(function () {
+      requestAnimationFrame(resetInitialScroll);
+    });
+    [80, 250, 600].forEach(function (delay) {
+      window.setTimeout(function () {
+        if (/^#page-\d+$/.test(window.location.hash)) resetInitialScroll();
+      }, delay);
+    });
+  }
+  </script>
+</body>
+</html>
