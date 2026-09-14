@@ -418,15 +418,38 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div data-p2>
-      <div data-side="L" data-pair="1">\(U_C(t)\)</div>
-      <div data-side="R" data-pair="1">Spannung am Kondensator</div>
-      <div data-side="L" data-pair="2">\(Q(t)\)</div>
-      <div data-side="R" data-pair="2">Ladung auf den Kondensatorplatten</div>
-      <div data-side="L" data-pair="3">\(I(t)\)</div>
-      <div data-side="R" data-pair="3">Änderungsrate der Ladung</div>
-      <div data-side="L" data-pair="4">\(T_{1/2}\)</div>
-      <div data-side="R" data-pair="4">Zeit bis zur Halbierung</div>
+    <div data-p2 class="p2" data-p2-id="ef3-entladung-symbole" data-p2-title="Größen beim Entladen" data-p2-hint="Ordne Formelzeichen und Bedeutung zu.">
+      <div class="p2-hint">Ziehe jede zeitabhängige Größe auf ihre Bedeutung.</div>
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Formelzeichen</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">\(U_C(t)\)</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">\(Q(t)\)</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">\(I(t)\)</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">\(T_{1/2}\)</div>
+          </div>
+        </div>
+        <div>
+          <div class="p2-col-title">Bedeutung</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Spannung am Kondensator</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Ladung auf den Kondensatorplatten</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Änderungsrate der Ladung</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">Zeit bis zur Halbierung</div>
+          </div>
+        </div>
+      </div>
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="p2-col-title">Verbundene Paare</div>
+        <div class="p2-solved" data-solved></div>
+      </div>
     </div>
   </section>
 

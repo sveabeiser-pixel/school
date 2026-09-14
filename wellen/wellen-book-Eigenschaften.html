@@ -256,13 +256,42 @@
 
       <h2>Mechanische und elektromagnetische Schwingung vergleichen</h2>
       <p>Federpendel und LC-Kreis speichern Energie in unterschiedlichen Formen, folgen aber derselben mathematischen Grundstruktur. Die Zuordnung hilft beim Verständnis, ersetzt jedoch nicht die physikalische Bedeutung der Größen.</p>
-      <div data-p2>
-        <div data-side="L" data-pair="1">Auslenkung $s$</div><div data-side="R" data-pair="1">Ladung $Q$</div>
-        <div data-side="L" data-pair="2">Geschwindigkeit $v=\dot s$</div><div data-side="R" data-pair="2">Stromstärke $I=\dot Q$</div>
-        <div data-side="L" data-pair="3">Masse $m$</div><div data-side="R" data-pair="3">Induktivität $L$</div>
-        <div data-side="L" data-pair="4">Federkonstante $D$</div><div data-side="R" data-pair="4">Kehrwert der Kapazität $1/C$</div>
-        <div data-side="L" data-pair="5">Bewegungsenergie</div><div data-side="R" data-pair="5">magnetische Feldenergie</div>
-        <div data-side="L" data-pair="6">Elongationsenergie</div><div data-side="R" data-pair="6">elektrische Feldenergie</div>
+      <div data-p2 class="p2" data-p2-id="eigenschaften-lc-analogie" data-p2-title="Mechanische und elektromagnetische Schwingung" data-p2-hint="Ordne einander entsprechende Größen und Energieformen zu.">
+        <div class="p2-hint">Ziehe jede mechanische Größe auf ihr Gegenstück im LC-Schwingkreis.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Mechanische Schwingung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Auslenkung $s$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Geschwindigkeit $v=\dot s$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Masse $m$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Federkonstante $D$</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="5">Bewegungsenergie</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="6">Elongationsenergie</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Elektromagnetische Schwingung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Ladung $Q$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Stromstärke $I=\dot Q$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Induktivität $L$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Kehrwert der Kapazität $1/C$</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="5">magnetische Feldenergie</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="6">elektrische Feldenergie</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Verbundene Paare</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>

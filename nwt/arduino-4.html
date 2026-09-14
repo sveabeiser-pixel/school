@@ -887,14 +887,37 @@ void loop() {
       <div class="wb-section-break"></div>
 
       <div data-p2 class="p2" data-p2-id="arduino4_flow_symbols" data-p2-title="Verbinde Symbol und Bedeutung" data-p2-hint="Diese vier Bausteine reichen für die meisten Arduino-Abläufe am Anfang.">
-        <div data-side="L" data-pair="1">Start/Ende</div>
-        <div data-side="R" data-pair="1">Beginn oder Abschluss eines Ablaufs</div>
-        <div data-side="L" data-pair="2">Rechteck</div>
-        <div data-side="R" data-pair="2">konkreter Prozessschritt, zum Beispiel LED einschalten</div>
-        <div data-side="L" data-pair="3">Raute</div>
-        <div data-side="R" data-pair="3">Entscheidung mit Ja-/Nein-Weg</div>
-        <div data-side="L" data-pair="4">Pfeil</div>
-        <div data-side="R" data-pair="4">zeigt die Reihenfolge und Leserichtung</div>
+        <div class="p2-hint">Ziehe jedes Flussdiagramm-Symbol auf seine Bedeutung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Symbol</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Start/Ende</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Rechteck</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Raute</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Pfeil</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Bedeutung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Beginn oder Abschluss eines Ablaufs</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">konkreter Prozessschritt, zum Beispiel LED einschalten</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Entscheidung mit Ja-/Nein-Weg</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">zeigt die Reihenfolge und Leserichtung</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Verbundene Paare</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>

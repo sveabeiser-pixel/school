@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Algorithmisch denken – Einstieg vor dem Arduino</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    :root {
+      --ae-ink: #172033;
+      --ae-muted: #536274;
+      --ae-teal: #087f7a;
+      --ae-blue: #2468a9;
+      --ae-yellow: #f4b942;
+      --ae-red: #c2414f;
+      --ae-green: #27855c;
+      --ae-line: #cbd7df;
+      --ae-soft: #f3f7f8;
+      --ae-paper: #ffffff;
+    }
+
+    .wb-book section[data-wb-page] { min-width: 0; padding-top: 24px; }
+    .wb-book .wb-content { min-width: 0; }
+    .wb-book .wb-paper { width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .ae-kicker {
+      color: var(--ae-teal);
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .ae-lead { max-width: 850px; color: var(--ae-muted); font-size: 1.12rem; }
+    .ae-hero {
+      border-bottom: 4px solid var(--ae-teal);
+      padding: 6px 0 20px;
+    }
+    .ae-hero h1 { max-width: 900px; margin: 8px 0 12px; font-size: 2.35rem; line-height: 1.12; letter-spacing: 0; }
+    .ae-question-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--ae-line);
+      border-bottom: 1px solid var(--ae-line);
+      margin: 18px 0;
+    }
+    .ae-question-band > div { padding: 15px; }
+    .ae-question-band > div + div { border-left: 1px solid var(--ae-line); }
+    .ae-question-band strong { display: block; color: var(--ae-blue); margin-bottom: 4px; }
+
+    .ae-lab {
+      border: 1px solid var(--ae-line);
+      border-radius: 8px;
+      background: var(--ae-paper);
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .ae-lab-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ae-line);
+      background: #f6f9fa;
+    }
+    .ae-lab-title { font-weight: 900; color: var(--ae-ink); }
+    .ae-lab-actions, .ae-table-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .ae-btn {
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid #9eb1bc;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ae-ink);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .ae-btn.primary { border-color: var(--ae-teal); background: var(--ae-teal); color: #fff; }
+    .ae-btn:disabled { opacity: .55; cursor: not-allowed; }
+    .ae-lab-body {
+      display: grid;
+      grid-template-columns: minmax(330px, .9fr) minmax(380px, 1.1fr);
+      min-width: 0;
+    }
+    .ae-stage { padding: 18px; background: #eef5f5; border-right: 1px solid var(--ae-line); }
+    .ae-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      width: min(100%, 620px);
+      aspect-ratio: 6 / 4;
+      margin: 0 auto;
+    }
+    .ae-cell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      border: 1px solid #b9cbd2;
+      background: #fff;
+    }
+    .ae-cell.is-path { background: #e3f2ee; }
+    .ae-cell.is-wall { background: repeating-linear-gradient(45deg, #788892, #788892 7px, #667680 7px, #667680 14px); }
+    .ae-cell.is-target::after {
+      content: "ZIEL";
+      font-size: clamp(.55rem, 1.4vw, .82rem);
+      font-weight: 900;
+      color: #7c4a00;
+      border: 2px solid var(--ae-yellow);
+      background: #fff5d6;
+      padding: 3px 5px;
+    }
+    .ae-bot {
+      position: absolute;
+      inset: 17%;
+      z-index: 2;
+      border: 3px solid #113b66;
+      border-radius: 7px;
+      background: #2b78bd;
+      box-shadow: 0 5px 0 rgba(17,59,102,.18);
+      transition: transform .32s ease;
+    }
+    .ae-bot::before {
+      content: "";
+      position: absolute;
+      left: 22%; right: 22%; top: 24%;
+      height: 19%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fff 0 34%, transparent 34% 66%, #fff 66% 100%);
+    }
+    .ae-bot::after {
+      content: "";
+      position: absolute;
+      left: 29%; right: 29%; bottom: 23%;
+      height: 3px;
+      background: #fff;
+    }
+    .ae-lab-code { min-width: 0; padding: 18px; }
+    .ae-pseudo {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid var(--ae-line);
+      background: #fbfcfd;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    .ae-pseudo li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      padding: 8px 10px;
+      line-height: 1.45;
+      border-bottom: 1px solid #e3e9ed;
+    }
+    .ae-pseudo li:last-child { border-bottom: 0; }
+    .ae-pseudo li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .ae-pseudo li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 #d89200; }
+    .ae-keyword { color: #075f5b; font-weight: 900; }
+    .ae-live-state {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .ae-live-state > div { border: 1px solid var(--ae-line); padding: 9px; background: #fff; }
+    .ae-live-state span { display: block; color: var(--ae-muted); font-size: .78rem; }
+    .ae-live-state strong { display: block; margin-top: 3px; font-size: 1.05rem; }
+
+    .ae-concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .ae-concept { border-top: 4px solid var(--ae-blue); background: var(--ae-soft); padding: 15px; }
+    .ae-concept:nth-child(2) { border-color: var(--ae-yellow); }
+    .ae-concept:nth-child(3) { border-color: var(--ae-red); }
+    .ae-concept h3 { margin: 0 0 8px; font-size: 1.05rem; }
+
+    .ae-pseudocode {
+      overflow-x: auto;
+      margin: 14px 0;
+      border-left: 5px solid var(--ae-teal);
+      background: #f4f7f8;
+      color: #172033;
+      padding: 15px 18px;
+      font: 700 .98rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+    }
+    .ae-note { border-left: 4px solid var(--ae-yellow); background: #fff8e8; padding: 12px 14px; }
+    .ae-error { border-left: 4px solid var(--ae-red); background: #fff1f1; padding: 12px 14px; }
+    .ae-success { border-left: 4px solid var(--ae-green); background: #edf8f2; padding: 12px 14px; }
+
+    .ae-flow-key { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .ae-flow-key > div { min-width: 0; text-align: center; }
+    .ae-flow-symbol {
+      display: grid;
+      place-items: center;
+      width: min(100%, 180px);
+      min-height: 70px;
+      margin: 0 auto 8px;
+      border: 2px solid #245d86;
+      background: #fff;
+      color: var(--ae-ink);
+      font-weight: 900;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .ae-flow-symbol.start { border-radius: 999px; background: #e8f4f3; }
+    .ae-flow-symbol.process { border-radius: 2px; }
+    .ae-flow-symbol.decision { width: 112px; min-height: 112px; transform: rotate(45deg); background: #fff5d6; }
+    .ae-flow-symbol.decision span { max-width: 82px; transform: rotate(-45deg); font-size: .83rem; }
+    .ae-flow-symbol.io { transform: skew(-12deg); background: #edf3fb; }
+    .ae-flow-symbol.io span { transform: skew(12deg); }
+    .ae-flow-demo {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      margin: 18px auto;
+      padding: 18px;
+      max-width: 620px;
+      border: 1px solid var(--ae-line);
+      background: #f8fafb;
+    }
+    .ae-flow-demo .ae-flow-symbol { width: 230px; }
+    .ae-flow-demo .ae-flow-symbol.decision { width: 125px; }
+    .ae-arrow { color: var(--ae-blue); font-size: 1.6rem; line-height: 1; font-weight: 900; }
+    .ae-branch-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; width: 100%; align-items: start; }
+    .ae-branch { display: grid; justify-items: center; gap: 5px; }
+    .ae-branch-label { font-weight: 900; color: var(--ae-teal); }
+
+    .ae-table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      margin: 14px 0;
+      border: 1px solid var(--ae-line);
+      border-radius: 7px;
+      background: #fff;
+    }
+    .ae-trace-table { width: 100%; min-width: 760px; border-collapse: collapse; table-layout: fixed; }
+    .ae-trace-table th, .ae-trace-table td { border-right: 1px solid var(--ae-line); border-bottom: 1px solid var(--ae-line); padding: 9px; vertical-align: top; }
+    .ae-trace-table th:last-child, .ae-trace-table td:last-child { border-right: 0; }
+    .ae-trace-table tbody tr:last-child td { border-bottom: 0; }
+    .ae-trace-table th { background: #e8f0f4; text-align: left; color: #20313f; }
+    .ae-trace-table td.is-given { background: #f7f9fa; font-weight: 700; }
+    .ae-trace-table input, .ae-trace-table textarea {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #9db0bc;
+      border-radius: 4px;
+      padding: 7px 8px;
+      box-sizing: border-box;
+      font: inherit;
+      color: var(--ae-ink);
+      background: #fff;
+    }
+    .ae-trace-table textarea { min-height: 66px; resize: vertical; }
+    .ae-trace-table input.is-correct, .ae-trace-table textarea.is-correct { border-color: var(--ae-green); background: #ecf8f1; }
+    .ae-trace-table input.is-wrong, .ae-trace-table textarea.is-wrong { border-color: var(--ae-red); background: #fff0f1; }
+    .ae-table-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 12px; border-top: 1px solid var(--ae-line); background: #f8fafb; }
+    .ae-table-status { color: var(--ae-muted); font-weight: 800; }
+
+    .ae-route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 18px 0; }
+    .ae-route > div { border-top: 4px solid var(--ae-teal); background: #f3f7f8; padding: 12px; }
+    .ae-route strong { display: block; color: var(--ae-blue); margin-bottom: 4px; }
+    .ae-checklist { list-style: none; padding: 0; margin: 14px 0; }
+    .ae-checklist li { position: relative; padding: 9px 10px 9px 38px; border-bottom: 1px solid var(--ae-line); }
+    .ae-checklist li::before { content: "✓"; position: absolute; left: 10px; color: var(--ae-green); font-weight: 900; }
+    .ae-source-list li + li { margin-top: 8px; }
+
+    .wb-book[data-theme="dark"] .ae-lab,
+    .wb-book[data-theme="dark-blue"] .ae-lab,
+    .wb-book[data-theme="dark"] .ae-table-wrap,
+    .wb-book[data-theme="dark-blue"] .ae-table-wrap { color: #172033; }
+
+    @media (max-width: 940px) {
+      .ae-lab-body { grid-template-columns: 1fr; }
+      .ae-stage { border-right: 0; border-bottom: 1px solid var(--ae-line); }
+      .ae-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ae-flow-key { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 700px) {
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .ae-hero h1 { font-size: 2rem; }
+      .ae-question-band, .ae-concepts, .ae-route, .ae-flow-key { grid-template-columns: 1fr; }
+      .ae-question-band > div + div { border-left: 0; border-top: 1px solid var(--ae-line); }
+      .ae-lab-toolbar, .ae-table-footer { align-items: stretch; flex-direction: column; }
+      .ae-lab-body { display: block; }
+      .ae-stage, .ae-lab-code { padding: 12px; }
+      .ae-live-state { grid-template-columns: 1fr; }
+      .ae-branch-row { grid-template-columns: 1fr; }
+      .ae-branch-row > .ae-arrow { transform: rotate(90deg); justify-self: center; }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand,
+      .wb-book .wb-theme-wrap,
+      .wb-book .wb-present-btn,
+      .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 50px; font-size: 15px; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ae-bot { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script class="wb-book-config" type="application/json">
+    {
+      "bookTitle":"Algorithmisch denken",
+      "sectionTitle":"Einstieg vor dem Arduino",
+      "startPage":1,
+      "submitLabel":"Ergebnisse & Abschluss",
+      "onSubmit":"alert",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Deine Lernroute",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"algorithmisch-denken-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Du steuerst den Ablauf">
+      <div class="ae-hero">
+        <div class="ae-kicker">Einstieg in die Denkweise des Programmierens</div>
+        <h1>Ein Computer errät nichts. Er führt aus, was du eindeutig beschreibst.</h1>
+        <p class="ae-lead">Bevor du eine Programmiersprache kennenlernst, trainierst du hier das eigentliche Programmieren: ein Problem zerlegen, Zustände festhalten, Entscheidungen formulieren, Wiederholungen planen und einen Ablauf Schritt für Schritt prüfen.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Algorithmus-Labor: Begleite den Transportroboter</h2>
+      <p>Der Transportroboter soll vier Felder nach rechts fahren und am Ziel eine Kiste ablegen. Beobachte nicht nur seine Bewegung. Achte darauf, welche Anweisung gerade gilt und welcher Wert sich verändert.</p>
+
+      <div class="ae-lab" data-algorithm-lab>
+        <div class="ae-lab-toolbar">
+          <div class="ae-lab-title">Ablauf ausführen</div>
+          <div class="ae-lab-actions">
+            <button class="ae-btn primary" type="button" data-lab-action="toggle">Start</button>
+            <button class="ae-btn" type="button" data-lab-action="step">Einzelschritt</button>
+            <button class="ae-btn" type="button" data-lab-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="ae-lab-body">
+          <div class="ae-stage">
+            <div class="ae-grid" data-lab-grid aria-label="Spielfeld des Transportroboters"></div>
+          </div>
+          <div class="ae-lab-code">
+            <ol class="ae-pseudo" aria-label="Pseudocode des Ablaufs">
+              <li data-line="1" data-lab-line="0"><span><span class="ae-keyword">START</span></span></li>
+              <li data-line="2" data-lab-line="1"><span>SETZE Schrittzahl auf 0</span></li>
+              <li data-line="3" data-lab-line="2"><span><span class="ae-keyword">WIEDERHOLE 4-MAL</span></span></li>
+              <li data-line="4" data-lab-line="3"><span>&nbsp;&nbsp;FAHRE ein Feld nach rechts</span></li>
+              <li data-line="5" data-lab-line="4"><span>&nbsp;&nbsp;ERHÖHE Schrittzahl um 1</span></li>
+              <li data-line="6" data-lab-line="5"><span><span class="ae-keyword">ENDE WIEDERHOLUNG</span></span></li>
+              <li data-line="7" data-lab-line="6"><span><span class="ae-keyword">WENN</span> Ziel erreicht, <span class="ae-keyword">DANN</span> lege Kiste ab</span></li>
+              <li data-line="8" data-lab-line="7"><span><span class="ae-keyword">ENDE</span></span></li>
+            </ol>
+            <div class="ae-live-state">
+              <div><span>nächster Schritt</span><strong data-lab-step>0</strong></div>
+              <div><span>Schrittzahl</span><strong data-lab-counter>0</strong></div>
+              <div><span>Kiste</span><strong data-lab-cargo>unterwegs</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ae-question-band">
+        <div><strong>Vorhersagen</strong>Was muss nach jedem Schleifendurchlauf anders sein?</div>
+        <div><strong>Beobachten</strong>Welche Zeile wird mehrfach ausgeführt?</div>
+        <div><strong>Prüfen</strong>Woran erkennt der Roboter, dass er handeln soll?</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-reveal-computer",
+          "title":"Denkpause: Warum braucht der Roboter die Schrittzahl?",
+          "question":"Er bewegt sich doch sichtbar. Warum wird zusätzlich ein Wert mitgeführt?",
+          "answer":"Die Schrittzahl beschreibt den inneren Zustand des Ablaufs. Mit ihr kann der Algorithmus feststellen, wie viele Wiederholungen bereits ausgeführt wurden. Sichtbare Bewegung und gespeicherter Zustand müssen zusammenpassen. Genau das prüfst du später mit Ablaufverfolgungstabellen."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-mcq-start",
+          "title":"Erster Check",
+          "hint":"Wähle die präziseste Aussage.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Was ist beim Planen eines Algorithmus am wichtigsten?",
+            "choices":[
+              {"id":"A","label":"Die Anweisungen klingen möglichst technisch."},
+              {"id":"B","label":"Jeder Schritt ist eindeutig und in seiner Wirkung prüfbar."},
+              {"id":"C","label":"Der Ablauf enthält möglichst viele Schritte."},
+              {"id":"D","label":"Der Computer kann fehlende Schritte sinnvoll ergänzen."}
+            ],
+            "correct":["B"],
+            "explain":"Ein Algorithmus muss so eindeutig sein, dass jeder zulässige Fall nachvollziehbar bearbeitet werden kann. Technische Wörter allein machen einen Ablauf nicht präzise."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Vom Problem zum Algorithmus">
+      <h1>Vom Problem zum eindeutigen Ablauf</h1>
+      <p>Ein Algorithmus ist eine endliche und eindeutige Folge ausführbarer Schritte, die ein Problem oder eine Klasse ähnlicher Probleme löst. Er ist die Lösungsidee. Ein Programm wäre erst eine konkrete Umsetzung in einer Programmiersprache.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-concepts">
+        <div class="ae-concept"><h3>1. Eingabe</h3><p>Welche Informationen stehen am Anfang zur Verfügung?</p></div>
+        <div class="ae-concept"><h3>2. Verarbeitung</h3><p>Welche Schritte verändern oder vergleichen die Informationen?</p></div>
+        <div class="ae-concept"><h3>3. Ausgabe</h3><p>Welches Ergebnis oder welche Handlung soll am Ende entstehen?</p></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Präzisionstest: Einen unbekannten Weg erklären</h2>
+      <p>Die Anweisung „Gehe zur Tür“ funktioniert nur, wenn die ausführende Person den Raum kennt. Ein allgemeinerer Ablauf nennt beobachtbare Bedingungen: „Gehe geradeaus, bis du die Tür erreichst.“ Noch genauer wird er, wenn Hindernisse berücksichtigt werden.</p>
+      <div class="ae-pseudocode"><span class="ae-keyword">START</span>
+SOLANGE die Tür nicht erreicht ist
+  WENN der Weg frei ist
+    DANN gehe einen Schritt vor
+    SONST weiche dem Hindernis aus
+ENDE SOLANGE
+<span class="ae-keyword">ENDE</span></div>
+
+      <div class="ae-note"><strong>Merke:</strong> Gute Anweisungen nennen eine ausführbare Handlung. Gute Bedingungen lassen sich zum Prüfzeitpunkt eindeutig mit „ja“ oder „nein“ beantworten.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-order-problem",
+          "title":"Vom Problem zum überprüften Ablauf",
+          "hint":"Bringe die Arbeitsschritte in eine sinnvolle Reihenfolge.",
+          "items":[
+            "Ziel und zulässige Eingaben klären",
+            "Problem in kleine ausführbare Schritte zerlegen",
+            "Entscheidungen und Wiederholungen kennzeichnen",
+            "Ablauf mit konkreten Startwerten Schritt für Schritt testen",
+            "Fehlerstelle verändern und erneut prüfen"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-cloze-algorithmus",
+          "title":"Sicherung: Algorithmus oder Programm?",
+          "bank":["Algorithmus","Programm","Eingabe","Ausgabe","eindeutig"],
+          "segments":[
+            {"t":"text","v":"Die sprachunabhängige Lösungsidee heißt "},
+            {"t":"gap","a":"Algorithmus"},
+            {"t":"text","v":". Ihre konkrete Umsetzung in einer Programmiersprache heißt "},
+            {"t":"gap","a":"Programm"},
+            {"t":"text","v":". Ein brauchbarer Ablauf muss ausführbar und "},
+            {"t":"gap","a":"eindeutig"},
+            {"t":"text","v":" sein. Er verarbeitet eine "},
+            {"t":"gap","a":"Eingabe"},
+            {"t":"text","v":" zu einer "},
+            {"t":"gap","a":"Ausgabe"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Pseudocode und Flussdiagramme">
+      <h1>Zwei Darstellungen für dieselbe Idee</h1>
+      <p>Pseudocode beschreibt einen Ablauf mit bewusst einfachen, eingerückten Sätzen. Er gehört zu keiner bestimmten Programmiersprache. Ein Flussdiagramm zeigt denselben Ablauf räumlich: Pfeile machen Reihenfolge, Entscheidungen und Rücksprünge sichtbar.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Die vier wichtigsten Flussdiagramm-Symbole</h2>
+      <div class="ae-flow-key">
+        <div><div class="ae-flow-symbol start">START / ENDE</div><strong>Begrenzung</strong><p>Anfang oder Ende des Ablaufs.</p></div>
+        <div><div class="ae-flow-symbol process">Wert verändern</div><strong>Verarbeitung</strong><p>Eine Handlung oder Berechnung.</p></div>
+        <div><div class="ae-flow-symbol decision"><span>Bedingung erfüllt?</span></div><strong>Entscheidung</strong><p>Eine eindeutig prüfbare Ja-Nein-Frage.</p></div>
+        <div><div class="ae-flow-symbol io"><span>Messwert einlesen</span></div><strong>Ein-/Ausgabe</strong><p>Information aufnehmen oder ausgeben.</p></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Beispiel: Lüften oder weiter messen?</h2>
+      <div class="ae-flow-demo" aria-label="Flussdiagramm mit einer Temperaturbedingung">
+        <div class="ae-flow-symbol start">START</div>
+        <div class="ae-arrow">↓</div>
+        <div class="ae-flow-symbol io"><span>Temperatur messen</span></div>
+        <div class="ae-arrow">↓</div>
+        <div class="ae-flow-symbol decision"><span>über 28 °C?</span></div>
+        <div class="ae-branch-row">
+          <div class="ae-branch"><div class="ae-branch-label">JA</div><div class="ae-arrow">↓</div><div class="ae-flow-symbol process">Fenster öffnen</div></div>
+          <div class="ae-arrow">↔</div>
+          <div class="ae-branch"><div class="ae-branch-label">NEIN</div><div class="ae-arrow">↓</div><div class="ae-flow-symbol process">Fenster geschlossen lassen</div></div>
+        </div>
+      </div>
+      <p>In der Raute wird nichts verändert. Dort wird nur geprüft. Erst der gewählte Zweig enthält die passende Handlung.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="ae-flow-pairs" data-p2-title="Flussdiagramm-Symbole zuordnen" data-p2-hint="Verbinde Form und Funktion.">
+        <div class="p2-hint">Ziehe jedes Symbol auf seine Aufgabe im Ablauf.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Symbol</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">Oval</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">Rechteck</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">Raute</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Pfeil</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Funktion</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Start oder Ende</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">Handlung oder Verarbeitung</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Ja-Nein-Entscheidung</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">Reihenfolge und Flussrichtung</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Zustände und Werte verfolgen">
+      <h1>Ein Ablauf verändert Zustände</h1>
+      <p>Eine Variable ist ein benannter Speicherplatz für einen veränderlichen Wert. Der Name sagt, was gespeichert wird; der aktuelle Wert beschreibt den Zustand genau zu diesem Zeitpunkt. Beim schrittweisen Prüfen notierst du nach jeder Anweisung den neuen Zustand.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-pseudocode"><span class="ae-keyword">START</span>
+SETZE Punktzahl auf 2
+ERHÖHE Punktzahl um 3
+VERDOPPLE Punktzahl
+VERRINGERE Punktzahl um 4
+GIB Punktzahl aus
+<span class="ae-keyword">ENDE</span></div>
+
+      <div class="ae-note"><strong>Arbeitsregel:</strong> Lies genau eine Anweisung. Verändere nur die betroffenen Werte. Trage den Zustand ein. Gehe erst dann zur nächsten Zeile.</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Ablaufverfolgungstabelle: Punktzahl</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="zustand-punktzahl">
+        <table class="ae-trace-table">
+          <thead><tr><th>Schritt</th><th>Anweisung</th><th>Wert vorher</th><th>Wert nachher</th><th>Was hat sich verändert?</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">1</td><td class="is-given">SETZE Punktzahl auf 2</td><td class="is-given">nicht festgelegt</td><td><input data-trace data-answer="2" aria-label="Punktzahl nach Schritt 1"></td><td><input data-trace data-answer="Punktzahl wurde festgelegt|Startwert wurde festgelegt" aria-label="Änderung Schritt 1"></td></tr>
+            <tr><td class="is-given">2</td><td class="is-given">ERHÖHE um 3</td><td><input data-trace data-answer="2" aria-label="Punktzahl vor Schritt 2"></td><td><input data-trace data-answer="5" aria-label="Punktzahl nach Schritt 2"></td><td><input data-trace data-answer="3 addiert|um 3 erhöht|plus 3" aria-label="Änderung Schritt 2"></td></tr>
+            <tr><td class="is-given">3</td><td class="is-given">VERDOPPLE</td><td><input data-trace data-answer="5" aria-label="Punktzahl vor Schritt 3"></td><td><input data-trace data-answer="10" aria-label="Punktzahl nach Schritt 3"></td><td><input data-trace data-answer="mit 2 multipliziert|verdoppelt|mal 2" aria-label="Änderung Schritt 3"></td></tr>
+            <tr><td class="is-given">4</td><td class="is-given">VERRINGERE um 4</td><td><input data-trace data-answer="10" aria-label="Punktzahl vor Schritt 4"></td><td><input data-trace data-answer="6" aria-label="Punktzahl nach Schritt 4"></td><td><input data-trace data-answer="4 subtrahiert|um 4 verringert|minus 4" aria-label="Änderung Schritt 4"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-cat-eva",
+          "title":"Eingabe, Verarbeitung oder Ausgabe?",
+          "hint":"Ordne nach der Rolle im Ablauf.",
+          "categories":[
+            {"id":"input","title":"Eingabe"},
+            {"id":"process","title":"Verarbeitung"},
+            {"id":"output","title":"Ausgabe"}
+          ],
+          "items":[
+            {"label":"Temperatur messen","category":"input"},
+            {"label":"Tasterzustand erfassen","category":"input"},
+            {"label":"Punktzahl um 3 erhöhen","category":"process"},
+            {"label":"Messwerte vergleichen","category":"process"},
+            {"label":"Warnlicht einschalten","category":"output"},
+            {"label":"Ergebnis anzeigen","category":"output"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div class="ae-success"><strong>Jetzt hast du gelernt:</strong> Beim Tracing frierst du einen Ablauf nach jedem Schritt gedanklich ein und notierst alle relevanten Werte. So findest du nicht nur das Ergebnis, sondern auch die erste fehlerhafte Zustandsänderung.</div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Abfragen und Bedingungen">
+      <h1>Eine Abfrage liefert wahr oder falsch</h1>
+      <p>Eine Bedingung ist eine Aussage, die beim Prüfen eindeutig wahr oder falsch ist. „Ist es warm?“ ist ungenau. „Ist die Temperatur größer als 20 °C?“ ist prüfbar. Der aktuelle Messwert entscheidet über das Ergebnis der Abfrage.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-pseudocode">LIES Temperatur
+PRÜFE: Temperatur ist größer als 20 °C</div>
+
+      <h2>Ablaufverfolgungstabelle: einzelne Abfrage</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="abfrage-temperatur">
+        <table class="ae-trace-table">
+          <thead><tr><th>Versuch</th><th>Temperatur</th><th>Ist Temperatur &gt; 20 °C?</th><th>Begründung</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">1</td><td class="is-given">18 °C</td><td><input data-trace data-answer="nein|falsch" aria-label="Bedingung bei 18 Grad"></td><td><input data-trace data-answer="18 ist kleiner als 20|18<20|18 ist nicht größer als 20" aria-label="Begründung bei 18 Grad"></td></tr>
+            <tr><td class="is-given">2</td><td class="is-given">20 °C</td><td><input data-trace data-answer="nein|falsch" aria-label="Bedingung bei 20 Grad"></td><td><input data-trace data-answer="20 ist gleich 20|20=20|20 ist nicht größer als 20" aria-label="Begründung bei 20 Grad"></td></tr>
+            <tr><td class="is-given">3</td><td class="is-given">21 °C</td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung bei 21 Grad"></td><td><input data-trace data-answer="21 ist größer als 20|21>20" aria-label="Begründung bei 21 Grad"></td></tr>
+            <tr><td class="is-given">4</td><td class="is-given">35 °C</td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung bei 35 Grad"></td><td><input data-trace data-answer="35 ist größer als 20|35>20" aria-label="Begründung bei 35 Grad"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-error"><strong>Typischer Randfall:</strong> Bei „größer als 20“ gehört 20 selbst nicht dazu. Wenn der Grenzwert eingeschlossen sein soll, muss die Bedingung „mindestens 20“ beziehungsweise „größer oder gleich 20“ lauten.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-verify-condition",
+          "title":"Wahr oder falsch?",
+          "hint":"Achte auf den Unterschied zwischen Abfrage und Handlung.",
+          "statement":"Eine Bedingung verändert beim Prüfen automatisch den gemessenen Wert.",
+          "answer":false,
+          "explain":"Eine Bedingung bewertet nur den aktuellen Zustand als wahr oder falsch. Eine Veränderung entsteht erst durch eine anschließend ausgeführte Anweisung."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Verzweigungen">
+      <h1>Verzweigungen wählen einen Weg</h1>
+      <p>Eine Verzweigung verbindet eine Bedingung mit unterschiedlichen Folgen. Bei einer vollständigen Verzweigung gibt es einen Dann-Zweig und einen Sonst-Zweig. Pro Prüfung wird genau einer dieser beiden Zweige ausgeführt.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-pseudocode">LIES Füllstand
+<span class="ae-keyword">WENN</span> Füllstand gleich 100 Prozent
+  <span class="ae-keyword">DANN</span> stoppe das Förderband
+  <span class="ae-keyword">SONST</span> lasse das Förderband weiterlaufen
+<span class="ae-keyword">ENDE WENN</span></div>
+
+      <h2>Ablaufverfolgungstabelle: vollständige Verzweigung</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="verzweigung-fuellstand">
+        <table class="ae-trace-table">
+          <thead><tr><th>Füllstand</th><th>Bedingung „gleich 100 %“</th><th>gewählter Zweig</th><th>Aktion</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">0 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung bei 0 Prozent"></td><td><input data-trace data-answer="sonst|sonst-zweig" aria-label="Zweig bei 0 Prozent"></td><td><input data-trace data-answer="Förderband läuft weiter|weiterlaufen" aria-label="Aktion bei 0 Prozent"></td></tr>
+            <tr><td class="is-given">75 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung bei 75 Prozent"></td><td><input data-trace data-answer="sonst|sonst-zweig" aria-label="Zweig bei 75 Prozent"></td><td><input data-trace data-answer="Förderband läuft weiter|weiterlaufen" aria-label="Aktion bei 75 Prozent"></td></tr>
+            <tr><td class="is-given">100 %</td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung bei 100 Prozent"></td><td><input data-trace data-answer="dann|dann-zweig" aria-label="Zweig bei 100 Prozent"></td><td><input data-trace data-answer="Förderband stoppt|stoppen|stoppe das Förderband" aria-label="Aktion bei 100 Prozent"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Fehler finden: zwei unabhängige Abfragen</h2>
+      <p>Wenn zwei Bedingungen getrennt geprüft werden, können auch beide Handlungen stattfinden. Das ist etwas anderes als eine Verzweigung, bei der genau ein Weg ausgewählt wird.</p>
+      <div class="ae-pseudocode">WENN Temperatur größer als 30 °C, DANN öffne Fenster
+WENN Luftfeuchte größer als 70 %, DANN starte Lüfter</div>
+
+      <div class="ae-table-wrap" data-trace-table data-table-id="zwei-abfragen">
+        <table class="ae-trace-table">
+          <thead><tr><th>Temperatur</th><th>Luftfeuchte</th><th>Fenster</th><th>Lüfter</th><th>Wie viele Handlungen?</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">25 °C</td><td class="is-given">60 %</td><td><input data-trace data-answer="zu|geschlossen|bleibt zu" aria-label="Fenster Fall 1"></td><td><input data-trace data-answer="aus|bleibt aus" aria-label="Lüfter Fall 1"></td><td><input data-trace data-answer="0|keine" aria-label="Handlungen Fall 1"></td></tr>
+            <tr><td class="is-given">32 °C</td><td class="is-given">60 %</td><td><input data-trace data-answer="offen|öffnet|wird geöffnet" aria-label="Fenster Fall 2"></td><td><input data-trace data-answer="aus|bleibt aus" aria-label="Lüfter Fall 2"></td><td><input data-trace data-answer="1|eine" aria-label="Handlungen Fall 2"></td></tr>
+            <tr><td class="is-given">32 °C</td><td class="is-given">80 %</td><td><input data-trace data-answer="offen|öffnet|wird geöffnet" aria-label="Fenster Fall 3"></td><td><input data-trace data-answer="an|startet|wird gestartet" aria-label="Lüfter Fall 3"></td><td><input data-trace data-answer="2|zwei" aria-label="Handlungen Fall 3"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-mcq-branch",
+          "title":"Verzweigungen sicher unterscheiden",
+          "hint":"Überlege, wie viele Zweige pro Prüfung ausgeführt werden.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Was gilt für eine vollständige WENN-DANN-SONST-Verzweigung?",
+            "choices":[
+              {"id":"A","label":"Immer werden beide Zweige ausgeführt."},
+              {"id":"B","label":"Genau einer der beiden Zweige wird ausgeführt."},
+              {"id":"C","label":"Der Sonst-Zweig wird nur nach einem Fehler ausgeführt."},
+              {"id":"D","label":"Die Bedingung muss einen Zahlenwert liefern."}
+            ],
+            "correct":["B"],
+            "explain":"Das Ergebnis der Bedingung wählt genau einen Weg: bei wahr den Dann-Zweig, bei falsch den Sonst-Zweig."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Zählschleifen">
+      <h1>Eine Zählschleife wiederholt genau festgelegt</h1>
+      <p>Wenn vor Beginn bekannt ist, wie oft ein Schritt wiederholt werden soll, eignet sich eine Zählschleife. Eine Zählvariable hält fest, welcher Durchlauf gerade bearbeitet wird. Entscheidend ist, ob Startwert, Wiederholungszahl und Änderung zusammenpassen.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-pseudocode">SETZE Punktzahl auf 10
+SETZE Runde auf 0
+<span class="ae-keyword">WIEDERHOLE 4-MAL</span>
+  ERHÖHE Punktzahl um 2
+  ERHÖHE Runde um 1
+<span class="ae-keyword">ENDE WIEDERHOLUNG</span>
+GIB Punktzahl aus</div>
+
+      <h2>Ablaufverfolgungstabelle: vier Runden</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="zaehlschleife-runden">
+        <table class="ae-trace-table">
+          <thead><tr><th>Durchlauf</th><th>Runde vorher</th><th>Punktzahl vorher</th><th>Punktzahl nach +2</th><th>Runde nach +1</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">Start</td><td class="is-given">–</td><td class="is-given">–</td><td><input data-trace data-answer="10" aria-label="Startpunktzahl"></td><td><input data-trace data-answer="0" aria-label="Startrunde"></td></tr>
+            <tr><td class="is-given">1</td><td><input data-trace data-answer="0" aria-label="Runde vor Durchlauf 1"></td><td><input data-trace data-answer="10" aria-label="Punkte vor Durchlauf 1"></td><td><input data-trace data-answer="12" aria-label="Punkte nach Durchlauf 1"></td><td><input data-trace data-answer="1" aria-label="Runde nach Durchlauf 1"></td></tr>
+            <tr><td class="is-given">2</td><td><input data-trace data-answer="1" aria-label="Runde vor Durchlauf 2"></td><td><input data-trace data-answer="12" aria-label="Punkte vor Durchlauf 2"></td><td><input data-trace data-answer="14" aria-label="Punkte nach Durchlauf 2"></td><td><input data-trace data-answer="2" aria-label="Runde nach Durchlauf 2"></td></tr>
+            <tr><td class="is-given">3</td><td><input data-trace data-answer="2" aria-label="Runde vor Durchlauf 3"></td><td><input data-trace data-answer="14" aria-label="Punkte vor Durchlauf 3"></td><td><input data-trace data-answer="16" aria-label="Punkte nach Durchlauf 3"></td><td><input data-trace data-answer="3" aria-label="Runde nach Durchlauf 3"></td></tr>
+            <tr><td class="is-given">4</td><td><input data-trace data-answer="3" aria-label="Runde vor Durchlauf 4"></td><td><input data-trace data-answer="16" aria-label="Punkte vor Durchlauf 4"></td><td><input data-trace data-answer="18" aria-label="Punkte nach Durchlauf 4"></td><td><input data-trace data-answer="4" aria-label="Runde nach Durchlauf 4"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-error"><strong>Off-by-one-Fehler:</strong> Wird die Zählvariable an der falschen Stelle erhöht oder beginnt sie beim falschen Wert, läuft eine Schleife häufig einmal zu viel oder einmal zu wenig. Die Tabelle macht diesen Fehler sichtbar.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-order-count-loop",
+          "title":"Bausteine einer Zählschleife",
+          "hint":"Ordne den Ablauf eines Durchlaufs.",
+          "items":[
+            "Startwerte festlegen",
+            "prüfen, ob noch ein Durchlauf vorgesehen ist",
+            "Anweisungen im Schleifenrumpf ausführen",
+            "Zählvariable aktualisieren",
+            "zum nächsten Prüfschritt zurückkehren oder Schleife verlassen"
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Bedingte Schleifen">
+      <h1>Eine bedingte Schleife wiederholt bis zur Grenze</h1>
+      <p>Ist die Anzahl der Wiederholungen vorher unbekannt, wird vor jedem Durchlauf eine Bedingung geprüft. Solange sie wahr ist, läuft der Schleifenrumpf. Sobald sie falsch ist, wird hinter der Schleife fortgesetzt.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-pseudocode">SETZE Wassermenge auf 2 Liter
+<span class="ae-keyword">SOLANGE</span> Wassermenge kleiner als 8 Liter
+  ERHÖHE Wassermenge um 2 Liter
+<span class="ae-keyword">ENDE SOLANGE</span>
+GIB „Behälter bereit“ aus</div>
+
+      <h2>Ablaufverfolgungstabelle: Solange-Schleife</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="solange-wasser">
+        <table class="ae-trace-table">
+          <thead><tr><th>Prüfung</th><th>Wassermenge vor Prüfung</th><th>kleiner als 8 L?</th><th>Wird der Rumpf ausgeführt?</th><th>Wassermenge danach</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">1</td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Wasser vor Prüfung 1"></td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung Prüfung 1"></td><td><input data-trace data-answer="ja" aria-label="Rumpf Prüfung 1"></td><td><input data-trace data-answer="4|4 l|4 liter" aria-label="Wasser nach Prüfung 1"></td></tr>
+            <tr><td class="is-given">2</td><td><input data-trace data-answer="4|4 l|4 liter" aria-label="Wasser vor Prüfung 2"></td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung Prüfung 2"></td><td><input data-trace data-answer="ja" aria-label="Rumpf Prüfung 2"></td><td><input data-trace data-answer="6|6 l|6 liter" aria-label="Wasser nach Prüfung 2"></td></tr>
+            <tr><td class="is-given">3</td><td><input data-trace data-answer="6|6 l|6 liter" aria-label="Wasser vor Prüfung 3"></td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung Prüfung 3"></td><td><input data-trace data-answer="ja" aria-label="Rumpf Prüfung 3"></td><td><input data-trace data-answer="8|8 l|8 liter" aria-label="Wasser nach Prüfung 3"></td></tr>
+            <tr><td class="is-given">4</td><td><input data-trace data-answer="8|8 l|8 liter" aria-label="Wasser vor Prüfung 4"></td><td><input data-trace data-answer="nein|falsch" aria-label="Bedingung Prüfung 4"></td><td><input data-trace data-answer="nein" aria-label="Rumpf Prüfung 4"></td><td><input data-trace data-answer="8|8 l|8 liter|unverändert" aria-label="Wasser nach Prüfung 4"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Wann entsteht eine Endlosschleife?</h2>
+      <p>Die Abbruchbedingung muss irgendwann falsch werden können. Im folgenden fehlerhaften Ablauf bleibt die Wassermenge immer bei 2 Litern. Deshalb bleibt auch „kleiner als 8 Liter“ immer wahr.</p>
+      <div class="ae-pseudocode">SETZE Wassermenge auf 2 Liter
+<span class="ae-keyword">SOLANGE</span> Wassermenge kleiner als 8 Liter
+  GIB „füllen“ aus
+<span class="ae-keyword">ENDE SOLANGE</span></div>
+
+      <div class="ae-table-wrap" data-trace-table data-table-id="endlos-fehler">
+        <table class="ae-trace-table">
+          <thead><tr><th>Durchlauf</th><th>Wassermenge vorher</th><th>Bedingung</th><th>Wassermenge nachher</th><th>Kann die Schleife enden?</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">1</td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife Wert 1"></td><td><input data-trace data-answer="wahr|ja" aria-label="Endlosschleife Bedingung 1"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife danach 1"></td><td><input data-trace data-answer="nein" aria-label="Endlosschleife Ende 1"></td></tr>
+            <tr><td class="is-given">2</td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife Wert 2"></td><td><input data-trace data-answer="wahr|ja" aria-label="Endlosschleife Bedingung 2"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife danach 2"></td><td><input data-trace data-answer="nein" aria-label="Endlosschleife Ende 2"></td></tr>
+            <tr><td class="is-given">3 und weitere</td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife Wert weitere"></td><td><input data-trace data-answer="wahr|ja" aria-label="Endlosschleife Bedingung weitere"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Endlosschleife danach weitere"></td><td><input data-trace data-answer="nein" aria-label="Endlosschleife Ende weitere"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-cloze-while",
+          "title":"Sicherung: Bedingte Schleife",
+          "bank":["vor","wahr","falsch","verändern","Endlosschleife"],
+          "segments":[
+            {"t":"text","v":"Bei einer Solange-Schleife wird die Bedingung "},
+            {"t":"gap","a":"vor"},
+            {"t":"text","v":" jedem Durchlauf geprüft. Der Rumpf läuft bei "},
+            {"t":"gap","a":"wahr"},
+            {"t":"text","v":" und wird bei "},
+            {"t":"gap","a":"falsch"},
+            {"t":"text","v":" verlassen. Mindestens eine Anweisung muss den Zustand so "},
+            {"t":"gap","a":"verändern"},
+            {"t":"text","v":", dass die Bedingung später falsch werden kann; sonst droht eine "},
+            {"t":"gap","a":"Endlosschleife"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Kombinieren und debuggen">
+      <h1>Ein echter Ablauf kombiniert Bausteine</h1>
+      <p>Sequenzen, Verzweigungen und Schleifen treten selten allein auf. Beim Debuggen suchst du nicht wahllos. Du vergleichst für jeden Schritt den erwarteten Zustand mit dem tatsächlichen Zustand und untersuchst die erste Abweichung.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Transfer: Bewässerungsentscheidung für drei Beete</h2>
+      <div class="ae-pseudocode">SETZE Gesamtwasser auf 0 Liter
+FÜR JEDES der drei Beete
+  LIES Bodenfeuchte
+  WENN Bodenfeuchte kleiner als 35 Prozent
+    DANN gib 2 Liter Wasser und ERHÖHE Gesamtwasser um 2 Liter
+    SONST gib kein Wasser
+  ENDE WENN
+ENDE WIEDERHOLUNG
+GIB Gesamtwasser aus</div>
+
+      <h2>Ablaufverfolgungstabelle: Schleife mit Verzweigung</h2>
+      <div class="ae-table-wrap" data-trace-table data-table-id="kombination-beete">
+        <table class="ae-trace-table">
+          <thead><tr><th>Beet</th><th>Bodenfeuchte</th><th>Bedingung &lt; 35 %</th><th>Wasser für das Beet</th><th>Gesamtwasser danach</th></tr></thead>
+          <tbody>
+            <tr><td class="is-given">Start</td><td class="is-given">–</td><td class="is-given">–</td><td class="is-given">–</td><td><input data-trace data-answer="0|0 l|0 liter" aria-label="Gesamtwasser Start"></td></tr>
+            <tr><td class="is-given">1</td><td class="is-given">28 %</td><td><input data-trace data-answer="wahr|ja" aria-label="Beet 1 Bedingung"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Beet 1 Wasser"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Gesamtwasser nach Beet 1"></td></tr>
+            <tr><td class="is-given">2</td><td class="is-given">42 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Beet 2 Bedingung"></td><td><input data-trace data-answer="0|0 l|0 liter|kein Wasser" aria-label="Beet 2 Wasser"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Gesamtwasser nach Beet 2"></td></tr>
+            <tr><td class="is-given">3</td><td class="is-given">35 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Beet 3 Bedingung"></td><td><input data-trace data-answer="0|0 l|0 liter|kein Wasser" aria-label="Beet 3 Wasser"></td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Gesamtwasser nach Beet 3"></td></tr>
+          </tbody>
+        </table>
+        <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-note"><strong>Grenzfall 35 %:</strong> Die Bedingung lautet „kleiner als 35 %“, nicht „höchstens 35 %“. Deshalb wird Beet 3 nicht bewässert. Eine einzige Formulierung entscheidet über das Verhalten am Grenzwert.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-essay-own-algorithm",
+          "title":"Entwirf einen sprachunabhängigen Algorithmus",
+          "hint":"Antworte in klaren Einzelschritten. Verwende mindestens eine Bedingung und eine Wiederholung.",
+          "fields":[
+            {"label":"Situation und Ziel","key":"situation","kind":"textarea","placeholder":"Zum Beispiel: Eine Lüftung soll einen Raum überwachen …"},
+            {"label":"Eingaben, Zustände und Ausgaben","key":"states","kind":"textarea","placeholder":"Welche Werte werden gelesen, gespeichert, verändert oder ausgegeben?"},
+            {"label":"Pseudocode","key":"pseudocode","kind":"textarea","placeholder":"START … WENN … DANN … SONST … SOLANGE oder WIEDERHOLE … ENDE"},
+            {"label":"Zwei Testfälle mit erwarteten Ergebnissen","key":"tests","kind":"textarea","placeholder":"Testfall 1: … Erwartung: …\nTestfall 2: … Erwartung: …"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="10" data-wb-page-title="Werkzeugkasten und Abschluss">
+      <h1>Dein Werkzeugkasten für die ersten Programme</h1>
+      <p>Du hast noch keine Programmiersprache verwendet. Trotzdem hast du bereits die zentralen Denkwerkzeuge eingesetzt, aus denen später Programme entstehen.</p>
+
+      <div class="ae-route">
+        <div><strong>Sequenz</strong>Schritte werden in festgelegter Reihenfolge ausgeführt.</div>
+        <div><strong>Zustand</strong>Gespeicherte Werte beschreiben den aktuellen Stand.</div>
+        <div><strong>Bedingung</strong>Eine prüfbare Aussage liefert wahr oder falsch.</div>
+        <div><strong>Verzweigung</strong>Das Ergebnis einer Bedingung wählt einen Weg.</div>
+        <div><strong>Schleife</strong>Ein Ablaufteil wird gezielt wiederholt.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Debugging-Routine</h2>
+      <ul class="ae-checklist">
+        <li>Lege konkrete Startwerte fest.</li>
+        <li>Führe genau eine Anweisung aus.</li>
+        <li>Notiere alle veränderten Werte.</li>
+        <li>Prüfe Bedingungen ausdrücklich als wahr oder falsch.</li>
+        <li>Markiere bei einer Abweichung die erste fehlerhafte Zeile.</li>
+        <li>Ändere nur eine Ursache und teste erneut.</li>
+      </ul>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ae-mcq-final",
+          "title":"Abschlusscheck",
+          "hint":"Mehrere Aussagen können richtig sein.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Vorgehensweisen helfen beim algorithmischen Denken?",
+            "choices":[
+              {"id":"A","label":"Startwerte und Zustandsänderungen notieren"},
+              {"id":"B","label":"Randfälle an den Grenzwerten prüfen"},
+              {"id":"C","label":"Bei einem Fehler mehrere Stellen gleichzeitig ändern"},
+              {"id":"D","label":"Schleifen mit einer Ablaufverfolgungstabelle untersuchen"},
+              {"id":"E","label":"Ungenaue Bedingungen durch eindeutige Fragen ersetzen"}
+            ],
+            "correct":["A","B","D","E"],
+            "explain":"Systematisches Tracing, Randfälle und eindeutige Bedingungen machen Abläufe nachvollziehbar. Mehrere gleichzeitige Änderungen erschweren dagegen die Fehlersuche."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ae-success"><strong>Jetzt hast du das gelernt:</strong> Programmieren beginnt mit einem Modell des Problems. Pseudocode und Flussdiagramme machen die Lösung sichtbar. Ablaufverfolgungstabellen zeigen, ob Bedingungen, Verzweigungen und Schleifen tatsächlich das tun, was du erwartest.</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Deine Tabellen sichern</h2>
+      <p>Die Einträge in allen Ablaufverfolgungstabellen werden automatisch in diesem Browser gespeichert. Du kannst sie zusätzlich als Textdatei exportieren.</p>
+      <div class="ae-table-actions">
+        <button class="ae-btn primary" type="button" data-export-traces>Tabellen exportieren</button>
+        <button class="ae-btn" type="button" data-clear-traces>Alle Tabelleneinträge löschen</button>
+        <span class="ae-table-status" data-export-status></span>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen und Weiterforschen</h2>
+      <ul class="ae-source-list">
+        <li><a href="https://inf-schule.de/algorithmen/grundlagen/algorithmusbegriff/bausteine" target="_blank" rel="noopener">inf-schule: Bausteine von Algorithmen</a></li>
+        <li><a href="https://inf-schule.de/informatiksysteme/robotik/lejoseinstieg/planundstruktur" target="_blank" rel="noopener">inf-schule: Planen und Strukturieren mit Flussdiagrammen</a></li>
+        <li><a href="https://inf-schule.de/imperative-programmierung/spacebug/schleifen/lernstrecke/strukturierung" target="_blank" rel="noopener">inf-schule: Struktur von Schleifen und Flussdiagrammen</a></li>
+        <li><a href="https://www.csunplugged.org/en/at-a-distance/algorithms/" target="_blank" rel="noopener">CS Unplugged: Algorithms – vom Lösungsweg zum Programm</a></li>
+        <li>Interne Weiterarbeit: <a href="arduino-1.html">Arduino-Lernbaustein 1</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_einstieg__" });
+  </script>
+  <script>
+  (function () {
+    "use strict";
+
+    const STORAGE_KEY = "nwt-arduino-einstieg-traces-v1";
+
+    function normalize(value) {
+      return String(value || "")
+        .trim()
+        .toLocaleLowerCase("de-DE")
+        .replace(/\s+/g, " ")
+        .replace(/[.,;:!?]$/g, "");
+    }
+
+    function savedValues() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+      catch (_) { return {}; }
+    }
+
+    function saveAllTraces() {
+      const values = {};
+      document.querySelectorAll("[data-trace]").forEach(function (field, index) {
+        values[field.dataset.traceKey || (field.dataset.traceKey = "trace-" + index)] = field.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    }
+
+    function initTraceTables() {
+      const stored = savedValues();
+      document.querySelectorAll("[data-trace]").forEach(function (field, index) {
+        const key = field.dataset.traceKey || (field.dataset.traceKey = "trace-" + index);
+        if (Object.prototype.hasOwnProperty.call(stored, key)) field.value = stored[key];
+        field.addEventListener("input", function () {
+          field.classList.remove("is-correct", "is-wrong");
+          saveAllTraces();
+        });
+      });
+
+      document.querySelectorAll("[data-trace-table]").forEach(function (table) {
+        const status = table.querySelector("[data-trace-status]");
+        table.querySelector("[data-trace-check]").addEventListener("click", function () {
+          const fields = Array.from(table.querySelectorAll("[data-trace]"));
+          let correct = 0;
+          fields.forEach(function (field) {
+            const accepted = String(field.dataset.answer || "").split("|").map(normalize);
+            const value = normalize(field.value);
+            const ok = accepted.some(function (answer) {
+              return value === answer || (answer.length >= 2 && value.includes(answer));
+            });
+            field.classList.toggle("is-correct", ok);
+            field.classList.toggle("is-wrong", !ok);
+            if (ok) correct += 1;
+          });
+          status.textContent = correct + " von " + fields.length + " Feldern passen.";
+          saveAllTraces();
+        });
+        table.querySelector("[data-trace-reset]").addEventListener("click", function () {
+          table.querySelectorAll("[data-trace]").forEach(function (field) {
+            field.value = "";
+            field.classList.remove("is-correct", "is-wrong");
+          });
+          status.textContent = "Tabelle geleert";
+          saveAllTraces();
+        });
+      });
+    }
+
+    function initAlgorithmLab() {
+      const root = document.querySelector("[data-algorithm-lab]");
+      if (!root) return;
+      const grid = root.querySelector("[data-lab-grid]");
+      const lineEls = Array.from(root.querySelectorAll("[data-lab-line]"));
+      const stepEl = root.querySelector("[data-lab-step]");
+      const counterEl = root.querySelector("[data-lab-counter]");
+      const cargoEl = root.querySelector("[data-lab-cargo]");
+      const toggle = root.querySelector('[data-lab-action="toggle"]');
+      const path = [12, 13, 14, 15, 16];
+      const walls = new Set([2, 3, 8, 9, 20, 21]);
+      let bot = null;
+      let state = 0;
+      let timer = 0;
+      let running = false;
+
+      for (let i = 0; i < 24; i += 1) {
+        const cell = document.createElement("div");
+        cell.className = "ae-cell";
+        if (path.includes(i)) cell.classList.add("is-path");
+        if (walls.has(i)) cell.classList.add("is-wall");
+        if (i === path[path.length - 1]) cell.classList.add("is-target");
+        cell.dataset.cell = String(i);
+        grid.appendChild(cell);
+      }
+
+      bot = document.createElement("div");
+      bot.className = "ae-bot";
+
+      const sequence = [
+        {line:0, pos:12, counter:0, cargo:"unterwegs", label:"START"},
+        {line:1, pos:12, counter:0, cargo:"unterwegs", label:"Startwert setzen"},
+        {line:2, pos:12, counter:0, cargo:"unterwegs", label:"Wiederholung beginnen"},
+        {line:3, pos:13, counter:0, cargo:"unterwegs", label:"fahren"},
+        {line:4, pos:13, counter:1, cargo:"unterwegs", label:"zählen"},
+        {line:3, pos:14, counter:1, cargo:"unterwegs", label:"fahren"},
+        {line:4, pos:14, counter:2, cargo:"unterwegs", label:"zählen"},
+        {line:3, pos:15, counter:2, cargo:"unterwegs", label:"fahren"},
+        {line:4, pos:15, counter:3, cargo:"unterwegs", label:"zählen"},
+        {line:3, pos:16, counter:3, cargo:"unterwegs", label:"fahren"},
+        {line:4, pos:16, counter:4, cargo:"unterwegs", label:"zählen"},
+        {line:5, pos:16, counter:4, cargo:"unterwegs", label:"Wiederholung beenden"},
+        {line:6, pos:16, counter:4, cargo:"abgelegt", label:"Bedingung wahr"},
+        {line:7, pos:16, counter:4, cargo:"abgelegt", label:"ENDE"}
+      ];
+
+      function render() {
+        const current = sequence[state];
+        lineEls.forEach(function (line) { line.classList.toggle("is-active", Number(line.dataset.labLine) === current.line); });
+        grid.querySelector('[data-cell="' + current.pos + '"]').appendChild(bot);
+        stepEl.textContent = current.label;
+        counterEl.textContent = String(current.counter);
+        cargoEl.textContent = current.cargo;
+      }
+
+      function stop() {
+        running = false;
+        window.clearInterval(timer);
+        timer = 0;
+        toggle.textContent = state >= sequence.length - 1 ? "Erneut starten" : "Start";
+      }
+
+      function advance() {
+        if (state >= sequence.length - 1) { stop(); return; }
+        state += 1;
+        render();
+        if (state >= sequence.length - 1) stop();
+      }
+
+      toggle.addEventListener("click", function () {
+        if (running) { stop(); return; }
+        if (state >= sequence.length - 1) state = 0;
+        running = true;
+        toggle.textContent = "Pause";
+        render();
+        timer = window.setInterval(advance, 720);
+      });
+      root.querySelector('[data-lab-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-lab-action="reset"]').addEventListener("click", function () { stop(); state = 0; render(); });
+      render();
+    }
+
+    function exportTraces() {
+      const lines = ["Ablaufverfolgungstabellen – Algorithmisch denken", ""];
+      document.querySelectorAll("[data-trace-table]").forEach(function (table) {
+        lines.push("## " + table.dataset.tableId);
+        table.querySelectorAll("tbody tr").forEach(function (row, rowIndex) {
+          const values = Array.from(row.querySelectorAll("td")).map(function (cell) {
+            const field = cell.querySelector("[data-trace]");
+            return field ? field.value.trim() || "–" : cell.textContent.trim();
+          });
+          lines.push((rowIndex + 1) + ". " + values.join(" | "));
+        });
+        lines.push("");
+      });
+      const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "algorithmisch-denken-tabellen.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+      const status = document.querySelector("[data-export-status]");
+      if (status) status.textContent = "Tabellen wurden exportiert.";
+    }
+
+    function initExport() {
+      const exportButton = document.querySelector("[data-export-traces]");
+      const clearButton = document.querySelector("[data-clear-traces]");
+      if (exportButton) exportButton.addEventListener("click", exportTraces);
+      if (clearButton) clearButton.addEventListener("click", function () {
+        if (!window.confirm("Sollen wirklich alle Einträge in den Ablaufverfolgungstabellen gelöscht werden?")) return;
+        document.querySelectorAll("[data-trace]").forEach(function (field) {
+          field.value = "";
+          field.classList.remove("is-correct", "is-wrong");
+        });
+        document.querySelectorAll("[data-trace-status]").forEach(function (status) { status.textContent = "Tabelle geleert"; });
+        localStorage.removeItem(STORAGE_KEY);
+        const status = document.querySelector("[data-export-status]");
+        if (status) status.textContent = "Alle Tabelleneinträge wurden gelöscht.";
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      initTraceTables();
+      initAlgorithmLab();
+      initExport();
+    });
+  }());
+  </script>
+</body>
+</html>
