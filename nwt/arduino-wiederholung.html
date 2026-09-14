@@ -226,19 +226,19 @@
         <script class="wb-config" type="application/json">
         {
           "id":"aw-mcq-diagnose",
-          "title":"Einstiegsdiagnose",
-          "hint":"Mehrere Antworten können richtig sein. Begründe jede Wahl gedanklich.",
+          "title":"Einstiegsdiagnose: Wirkungskette erkennen",
+          "hint":"Wähle die vollständige und fachlich richtige Wirkungskette aus.",
           "shuffleChoices":true,
           "questions":[{
-            "text":"Welche Schritte gehören zu einem sinnvoll getesteten Arduino-System?",
+            "text":"Wie verarbeitet ein Arduino-System einen Messwert, damit daraus eine passende technische Handlung entsteht?",
             "choices":[
-              {"id":"A","label":"Eingang erfassen"},
-              {"id":"B","label":"Wert verarbeiten oder vergleichen"},
-              {"id":"C","label":"Ausgang ansteuern"},
-              {"id":"D","label":"Bei Fehlern sofort alle Bauteile austauschen"}
+              {"id":"A","label":"Sensor erfasst einen Wert → Arduino speichert und prüft ihn → Ausgang steuert den Aktor."},
+              {"id":"B","label":"Aktor handelt zuerst → Sensor erzeugt danach einen passenden Messwert → Arduino wird zuletzt informiert."},
+              {"id":"C","label":"Arduino schaltet den Aktor immer ein → der Sensorwert wird nur zur Anzeige gelesen."},
+              {"id":"D","label":"Sensor und Aktor werden direkt verbunden → der Arduino wird für die Entscheidung nicht benötigt."}
             ],
-            "correct":["A","B","C"],
-            "explain":"Ein technisches System verarbeitet Eingaben zu Ausgaben. Beim Debuggen prüfst du diese Kette schrittweise; ein wahlloser Austausch liefert keine belastbare Diagnose."
+            "correct":["A"],
+            "explain":"Der Sensor liefert die Eingabe. Der Arduino speichert beziehungsweise verarbeitet den Messwert und prüft die Bedingung. Erst danach erzeugt er ein Ausgangssignal für den Aktor."
           }]
         }
         </script>
@@ -270,19 +270,19 @@
       <div class="wb-section-break"></div>
 
       <div data-p2 class="p2" data-p2-id="aw-hardware-pairs" data-p2-title="Bauteil und Aufgabe verbinden" data-p2-hint="Ordne jede Hardwarekomponente ihrer wichtigsten Funktion zu.">
-        <div class="p2-board">
-          <div class="p2-col">
+        <div class="p2-banks">
+          <div>
             <div class="p2-col-title">Komponente</div>
-            <div class="p2-bank" data-bank="L">
+            <div class="p2-bank" data-left-bank>
               <div class="p2-piece p2-left" data-side="L" data-pair="1">LED-Vorwiderstand</div>
               <div class="p2-piece p2-left" data-side="L" data-pair="2">GND</div>
               <div class="p2-piece p2-left" data-side="L" data-pair="3">USB-Verbindung</div>
               <div class="p2-piece p2-left" data-side="L" data-pair="4">Motortreiber</div>
             </div>
           </div>
-          <div class="p2-col">
+          <div>
             <div class="p2-col-title">Aufgabe</div>
-            <div class="p2-bank" data-bank="R">
+            <div class="p2-bank" data-right-bank>
               <div class="p2-piece p2-right" data-side="R" data-pair="3">Programm übertragen und serielle Kommunikation ermöglichen</div>
               <div class="p2-piece p2-right" data-side="R" data-pair="1">Strom durch die Leuchtdiode begrenzen</div>
               <div class="p2-piece p2-right" data-side="R" data-pair="4">großen Laststrom mit einem kleinen Steuersignal schalten</div>
@@ -290,8 +290,16 @@
             </div>
           </div>
         </div>
-        <div class="p2-actions"><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
-        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="p2-col-title">Verbundene Paare</div>
+          <div class="p2-solved" data-solved></div>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -337,19 +345,28 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <h2>Ablaufspur: Was passiert wann?</h2>
-      <div class="aw-table-wrap" data-trace-table data-table-id="blink-ablauf">
-        <table class="aw-trace">
-          <thead><tr><th>Phase</th><th>Anweisung</th><th>LED danach</th><th>vergangene Zeit</th><th>Wird erneut ausgeführt?</th></tr></thead>
-          <tbody>
-            <tr><td class="given">Start</td><td class="given"><code>pinMode(LED, OUTPUT)</code></td><td><input data-trace data-answer="unverändert|aus" aria-label="LED nach pinMode"></td><td><input data-trace data-answer="0|0 ms" aria-label="Zeit nach pinMode"></td><td><input data-trace data-answer="nein|nur nach reset" aria-label="Wiederholung setup"></td></tr>
-            <tr><td class="given">loop 1</td><td class="given"><code>digitalWrite(LED, HIGH)</code></td><td><input data-trace data-answer="an|high" aria-label="LED nach HIGH"></td><td><input data-trace data-answer="0|0 ms" aria-label="Zeit nach HIGH"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung HIGH"></td></tr>
-            <tr><td class="given">loop 1</td><td class="given"><code>delay(500)</code></td><td><input data-trace data-answer="an|high" aria-label="LED nach erster Pause"></td><td><input data-trace data-answer="500|500 ms" aria-label="Zeit nach erster Pause"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung erster Pause"></td></tr>
-            <tr><td class="given">loop 1</td><td class="given"><code>digitalWrite(LED, LOW)</code></td><td><input data-trace data-answer="aus|low" aria-label="LED nach LOW"></td><td><input data-trace data-answer="500|500 ms" aria-label="Zeit nach LOW"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung LOW"></td></tr>
-            <tr><td class="given">loop 1</td><td class="given"><code>delay(500)</code></td><td><input data-trace data-answer="aus|low" aria-label="LED nach zweiter Pause"></td><td><input data-trace data-answer="1000|1000 ms|1 s" aria-label="Zeit nach zweiter Pause"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung zweiter Pause"></td></tr>
-          </tbody>
-        </table>
-        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-trace-blink",
+          "title":"Ablaufspur: Was passiert wann?",
+          "hint":"Arbeite Zeile für Zeile. Verändere gedanklich nur den Zustand, den die aktuelle Anweisung tatsächlich beeinflusst.",
+          "columns":[
+            {"label":"Phase","width":"13%"},
+            {"label":"Anweisung","width":"25%"},
+            {"label":"LED danach","width":"19%"},
+            {"label":"vergangene Zeit","width":"20%"},
+            {"label":"Wird erneut ausgeführt?","width":"23%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"Start"},{"given":"pinMode(LED, OUTPUT)","code":true},{"answers":["unverändert","aus"],"ariaLabel":"LED nach pinMode"},{"answers":["0","0 ms"],"ariaLabel":"Zeit nach pinMode"},{"answers":["nein","nur nach Reset"],"ariaLabel":"Wiederholung von setup"}]},
+            {"cells":[{"given":"loop 1"},{"given":"digitalWrite(LED, HIGH)","code":true},{"answers":["an","HIGH"],"ariaLabel":"LED nach HIGH"},{"answers":["0","0 ms"],"ariaLabel":"Zeit nach HIGH"},{"answers":["ja"],"ariaLabel":"Wiederholung von HIGH"}]},
+            {"cells":[{"given":"loop 1"},{"given":"delay(500)","code":true},{"answers":["an","HIGH"],"ariaLabel":"LED nach erster Pause"},{"answers":["500","500 ms"],"ariaLabel":"Zeit nach erster Pause"},{"answers":["ja"],"ariaLabel":"Wiederholung der ersten Pause"}]},
+            {"cells":[{"given":"loop 1"},{"given":"digitalWrite(LED, LOW)","code":true},{"answers":["aus","LOW"],"ariaLabel":"LED nach LOW"},{"answers":["500","500 ms"],"ariaLabel":"Zeit nach LOW"},{"answers":["ja"],"ariaLabel":"Wiederholung von LOW"}]},
+            {"cells":[{"given":"loop 1"},{"given":"delay(500)","code":true},{"answers":["aus","LOW"],"ariaLabel":"LED nach zweiter Pause"},{"answers":["1000","1000 ms","1 s"],"ariaLabel":"Zeit nach zweiter Pause"},{"answers":["ja"],"ariaLabel":"Wiederholung der zweiten Pause"}]}
+          ]
+        }
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -367,6 +384,32 @@ void loop() {
             "Programm kompilieren und übertragen",
             "Ein- und Ausgaben gezielt testen",
             "Beobachtung mit der Erwartung vergleichen"
+          ],
+          "acceptedOrders":[
+            [
+              "Board und Port kontrollieren",
+              "Schaltung und gewünschtes Verhalten planen",
+              "Quelltext schreiben",
+              "Programm kompilieren und übertragen",
+              "Ein- und Ausgaben gezielt testen",
+              "Beobachtung mit der Erwartung vergleichen"
+            ],
+            [
+              "Schaltung und gewünschtes Verhalten planen",
+              "Board und Port kontrollieren",
+              "Quelltext schreiben",
+              "Programm kompilieren und übertragen",
+              "Ein- und Ausgaben gezielt testen",
+              "Beobachtung mit der Erwartung vergleichen"
+            ],
+            [
+              "Schaltung und gewünschtes Verhalten planen",
+              "Quelltext schreiben",
+              "Board und Port kontrollieren",
+              "Programm kompilieren und übertragen",
+              "Ein- und Ausgaben gezielt testen",
+              "Beobachtung mit der Erwartung vergleichen"
+            ]
           ]
         }
         </script>
@@ -720,12 +763,14 @@ noTone(8);</div>
           "questions":[
             {
               "text":"Was muss bei einem Motor mit externer Versorgung beachtet werden?",
+              "multiple":true,
               "choices":[{"id":"A","label":"Arduino und Treiber benötigen eine gemeinsame Masse."},{"id":"B","label":"Der Motorstrom sollte direkt durch den Ausgangspin fließen."},{"id":"C","label":"Die Versorgung muss zum Motor und Treiber passen."},{"id":"D","label":"Induktive Spannungsspitzen müssen berücksichtigt werden."}],
               "correct":["A","C","D"],
               "explain":"Der Ausgangspin liefert das Steuersignal. Treiber, passende Versorgung, gemeinsame Masse und Schutz vor Spannungsspitzen sorgen für einen belastbaren Aufbau."
             },
             {
               "text":"Was gehört typischerweise zur Initialisierung eines LCD?",
+              "multiple":true,
               "choices":[{"id":"A","label":"Bibliothek und Anschlussart festlegen"},{"id":"B","label":"Displaygröße beziehungsweise Adresse passend konfigurieren"},{"id":"C","label":"jeden Motorpin auf INPUT setzen"}],
               "correct":["A","B"],
               "explain":"Die konkrete Initialisierung hängt davon ab, ob das Display parallel oder beispielsweise über I²C angeschlossen ist."
@@ -841,6 +886,7 @@ noTone(8);</div>
             },
             {
               "text":"Welche Aussagen zu PWM sind richtig?",
+              "multiple":true,
               "choices":[{"id":"A","label":"analogWrite() nutzt beim Uno typischerweise Werte von 0 bis 255."},{"id":"B","label":"PWM schaltet sehr schnell ein und aus."},{"id":"C","label":"Jeder digitale Pin unterstützt automatisch PWM."},{"id":"D","label":"PWM kann LED-Helligkeit oder Motordrehzahl beeinflussen."}],
               "correct":["A","B","D"],
               "explain":"PWM steht nur an geeigneten Pins zur Verfügung. Das Tastverhältnis beeinflusst die mittlere Wirkung am Verbraucher."
@@ -1051,6 +1097,18 @@ noTone(8);</div>
 
     function exportTraces() {
       const lines = ["Ablaufspuren – Arduino-Wiederholung", ""];
+      document.querySelectorAll('[data-wb-type="trace"][data-wb-mounted]').forEach(function (mount) {
+        const config = mount.__wbConfig || {};
+        lines.push("## " + (config.title || config.id || "Ablaufspur"));
+        mount.querySelectorAll(".wb-trace-table tbody tr").forEach(function (row, rowIndex) {
+          const values = Array.from(row.querySelectorAll("td")).map(function (cell) {
+            const field = cell.querySelector("[data-wb-trace-field]");
+            return field ? field.value.trim() || "–" : cell.textContent.trim();
+          });
+          lines.push((rowIndex + 1) + ". " + values.join(" | "));
+        });
+        lines.push("");
+      });
       document.querySelectorAll("[data-trace-table]").forEach(function (table) {
         lines.push("## " + table.dataset.tableId);
         table.querySelectorAll("tbody tr").forEach(function (row, rowIndex) {
@@ -1080,6 +1138,9 @@ noTone(8);</div>
       if (exportButton) exportButton.addEventListener("click", exportTraces);
       if (clearButton) clearButton.addEventListener("click", function () {
         if (!window.confirm("Sollen wirklich alle Einträge in den Ablaufspuren gelöscht werden?")) return;
+        document.querySelectorAll('[data-wb-type="trace"][data-wb-mounted]').forEach(function (mount) {
+          if (mount.__wbInstance && typeof mount.__wbInstance.reset === "function") mount.__wbInstance.reset();
+        });
         document.querySelectorAll("[data-trace]").forEach(function (field) {
           field.value = "";
           field.classList.remove("is-correct", "is-wrong");

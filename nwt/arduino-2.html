@@ -67,6 +67,7 @@
     .source-list{margin:0; padding-left:20px}
     .source-list li + li{margin-top:6px}
   </style>
+  <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
 
 <body>
@@ -75,15 +76,27 @@
       {
         "bookTitle": "Arduino – Lernbaustein (Seiten 6–11)",
         "sectionTitle": "Arduino – Lernbaustein (Seiten 6–11)",
-        "submitLabel": "Summary & submit",
-        "onSubmit": "alert",
+        "submitLabel": "Ergebnisse & Abschluss",
+        "onSubmit": "exportResults",
         "webhookEmail": "",
         "autoNav": true
       }
     </script>
 
     <section data-wb-page="1" data-wb-page-title="3. Ein Programm zum Programmieren">
-      <h1>3. Ein Programm zum Programmieren</h1>
+      <div class="course-hero">
+        <div class="course-kicker">Modul 2 von 5 · Vom Plan zum laufenden Sketch</div>
+        <h1>3. Ein Programm zum Programmieren</h1>
+        <p class="course-lead">Du übersetzt einen geplanten Ablauf in Arduino-Code, überträgst ihn kontrolliert und liest anschließend Zeile für Zeile, wie daraus ein beobachtbares Verhalten entsteht.</p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <a href="arduino-1.html"><b>1 · Hardware</b>Board, Pins und LED</a>
+        <span class="is-current"><b>2 · Programme</b>Upload, Blink und Funktionen</span>
+        <a href="arduino-3.html"><b>3 · Logik</b>Variablen, Schleifen, PWM</a>
+        <a href="arduino-4.html"><b>4 · Eingaben</b>Taster, Planung und Display</a>
+        <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
+      </nav>
 
       <div class="wb-soft-callout">
         <strong>Entwicklungsumgebung (IDE)</strong>
@@ -176,9 +189,16 @@
         </script>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite06.png" alt="PDF Seite 6">
-        <div class="pdfcaption">Original – Seite 6</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite06.png" alt="Arduino-IDE mit den Bereichen setup und loop">
+          <div class="pdfcaption">Materialbild: Aufbau eines Arduino-Sketches</div>
+        </div>
+        <div class="image-guide">
+          <h3>Zwei Bereiche, zwei Aufgaben</h3>
+          <p>Markiere im Bild <code>setup()</code> und <code>loop()</code>. Ordne jede Codezeile einem der beiden Zeitpunkte zu: einmal beim Start oder fortlaufend während des Betriebs.</p>
+          <p><b>Prüffrage:</b> Wo gehört eine Pin-Konfiguration hin, wo das wiederholte Schalten?</p>
+        </div>
       </div>
 
       <div data-wb-type="essay">
@@ -219,9 +239,16 @@
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite07.png" alt="PDF Seite 7">
-        <div class="pdfcaption">Original – Seite 7</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite07.png" alt="Schritte zum Übertragen eines Arduino-Programms">
+          <div class="pdfcaption">Materialbild: Board, Port, Prüfung und Upload</div>
+        </div>
+        <div class="image-guide">
+          <h3>Trenne Vorbereitung und Übertragung</h3>
+          <p>Finde im Bild vier Kontrollpunkte: USB-Verbindung, Board, Port und Kompilierung. Erst wenn sie stimmen, ist der Upload aussagekräftig.</p>
+          <p><b>Diagnose:</b> Ein Sketch ist fehlerfrei, lässt sich aber nicht hochladen. Welche zwei Einstellungen prüfst du zuerst?</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -326,9 +353,16 @@
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite08.png" alt="PDF Seite 8">
-        <div class="pdfcaption">Original – Seite 8</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite08.png" alt="Blink-Sketch mit Erklärungen zu den Befehlen">
+          <div class="pdfcaption">Materialbild: Vom Befehl zum Blinkrhythmus</div>
+        </div>
+        <div class="image-guide">
+          <h3>Übersetze Code in Zeit</h3>
+          <p>Unterstreiche die beiden Zustandswechsel und kreise die Wartezeiten ein. Zeichne danach für zwei Sekunden eine Zeitlinie mit den Zuständen <code>HIGH</code> und <code>LOW</code>.</p>
+          <p><b>Variation:</b> Sage voraus, wie <code>delay(200)</code> und <code>delay(800)</code> den Rhythmus verändern.</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -353,19 +387,30 @@ void loop() {
   delay(1000);
 }</code></pre></div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Schritt</th><th>Ausgeführte Zeile</th><th>Was du an der LED siehst</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Start</td><td><code>pinMode(13, OUTPUT);</code></td><td>Pin 13 wird als Ausgang vorbereitet.</td></tr>
-          <tr><td>1</td><td><code>digitalWrite(13, HIGH);</code></td><td>Die LED geht an.</td></tr>
-          <tr><td>2</td><td><code>delay(1000);</code></td><td>Die LED bleibt 1 Sekunde an.</td></tr>
-          <tr><td>3</td><td><code>digitalWrite(13, LOW);</code></td><td>Die LED geht aus.</td></tr>
-          <tr><td>4</td><td><code>delay(1000);</code></td><td>Die LED bleibt 1 Sekunde aus.</td></tr>
-          <tr><td>Dann</td><td><code>loop()</code> beginnt wieder von vorne.</td><td>Der Blink-Ablauf wiederholt sich.</td></tr>
-        </tbody>
-      </table>
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino2_blink_trace",
+          "title":"Ablaufspur: Blink wirklich ausführen",
+          "hint":"Gehe Zeile für Zeile vor. Notiere den Pinzustand nach der Zeile und die sichtbare Wirkung. Groß- und Kleinschreibung spielt bei der Kontrolle keine Rolle.",
+          "columns":[
+            {"label":"Ausgeführte Zeile","width":"38%"},
+            {"label":"Pin 13 danach","width":"24%"},
+            {"label":"Sichtbare Wirkung","width":"38%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"pinMode(13, OUTPUT);","code":true},{"answers":["vorbereitet","Ausgang","OUTPUT"]},{"answers":["noch keine Änderung","LED unverändert","nichts"]}]},
+            {"cells":[{"given":"digitalWrite(13, HIGH);","code":true},{"answers":["HIGH"]},{"answers":["LED an","an","leuchtet"]}]},
+            {"cells":[{"given":"delay(1000);","code":true},{"answers":["HIGH"]},{"answers":["LED bleibt 1 Sekunde an","1 Sekunde an","bleibt an"]}]},
+            {"cells":[{"given":"digitalWrite(13, LOW);","code":true},{"answers":["LOW"]},{"answers":["LED aus","aus"]}]},
+            {"cells":[{"given":"delay(1000);","code":true},{"answers":["LOW"]},{"answers":["LED bleibt 1 Sekunde aus","1 Sekunde aus","bleibt aus"]}]},
+            {"cells":[{"given":"loop() beginnt erneut","code":true},{"answers":["HIGH","wieder HIGH"]},{"answers":["Ablauf wiederholt sich","LED geht wieder an","Wiederholung"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
@@ -535,9 +580,16 @@ void loop() {
 
       <h2>Jetzt darfst du weiter üben</h2>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite09.png" alt="PDF Seite 9">
-        <div class="pdfcaption">Original – Seite 9</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite09.png" alt="Übungsaufgaben zum Blink-Programm und zur Fehlersuche">
+          <div class="pdfcaption">Materialbild: Blink-Variationen und Fehlerdiagnose</div>
+        </div>
+        <div class="image-guide">
+          <h3>Ändere immer nur einen Parameter</h3>
+          <p>Notiere vor jedem Test deine Vorhersage. Verändere dann Pin, Zustand oder Zeitwert einzeln und vergleiche Soll- und Istverhalten.</p>
+          <p>So kannst du aus einer Beobachtung tatsächlich auf die Ursache schließen.</p>
+        </div>
       </div>
 
       <div class="wb-soft-callout">
@@ -638,9 +690,16 @@ void loop() {
         </script>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite10.png" alt="PDF Seite 10">
-        <div class="pdfcaption">Original – Seite 10</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite10.png" alt="Arduino-Schaltung und Programm zum Erzeugen von Tönen">
+          <div class="pdfcaption">Materialbild: Frequenz wird als Ton hörbar</div>
+        </div>
+        <div class="image-guide">
+          <h3>Vom Zahlenwert zum Höreindruck</h3>
+          <p>Ordne den Argumenten von <code>tone()</code> Pin, Frequenz und Dauer zu. Sage voraus, welcher Zahlenwert die Tonhöhe verändert und welcher nur die Tondauer.</p>
+          <p><b>Experiment:</b> Verdopple nur die Frequenz und beschreibe den Unterschied.</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -786,9 +845,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite11.png" alt="PDF Seite 11">
-        <div class="pdfcaption">Original – Seite 11</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite11.png" alt="Arduino-Unterprogramme mit Funktionsaufruf und Funktionsdefinition">
+          <div class="pdfcaption">Materialbild: Wiederverwendbare Funktionen</div>
+        </div>
+        <div class="image-guide">
+          <h3>Finde Aufruf und Definition</h3>
+          <p>Markiere im Bild, wo eine Funktion definiert und wo sie aufgerufen wird. Erkläre anschließend, weshalb ein sprechender Funktionsname den Ablauf verständlicher macht.</p>
+          <p><b>Transfer:</b> Welche Befehle würdest du in eine Funktion <code>signalTon()</code> auslagern?</p>
+        </div>
       </div>
 
       <div class="wb-soft-callout">

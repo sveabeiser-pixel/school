@@ -68,6 +68,7 @@
     .source-list{margin:0; padding-left:20px}
     .source-list li + li{margin-top:6px}
   </style>
+  <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
 
 <body>
@@ -76,15 +77,27 @@
       {
         "bookTitle": "Arduino – Lernbaustein (Seiten 12–17)",
         "sectionTitle": "Arduino – Lernbaustein (Seiten 12–17)",
-        "submitLabel": "Summary & submit",
-        "onSubmit": "alert",
+        "submitLabel": "Ergebnisse & Abschluss",
+        "onSubmit": "exportResults",
         "webhookEmail": "",
         "autoNav": true
       }
     </script>
 
     <section data-wb-page="1" data-wb-page-title="Variablen">
-      <h1>6. Variablen – Speicherplätze für Werte</h1>
+      <div class="course-hero">
+        <div class="course-kicker">Modul 3 von 5 · Zustände, Wiederholungen und Entscheidungen</div>
+        <h1>6. Variablen – Speicherplätze für Werte</h1>
+        <p class="course-lead">Ab jetzt beobachtest du nicht nur, was der Arduino ausgibt. Du verfolgst auch seine inneren Zustände: Welche Werte liegen im Speicher, welche Prüfung ist wahr und welcher Befehl läuft als Nächstes?</p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <a href="arduino-1.html"><b>1 · Hardware</b>Board, Pins und LED</a>
+        <a href="arduino-2.html"><b>2 · Programme</b>Upload, Blink und Funktionen</a>
+        <span class="is-current"><b>3 · Logik</b>Variablen, Schleifen, PWM</span>
+        <a href="arduino-4.html"><b>4 · Eingaben</b>Taster, Planung und Display</a>
+        <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
+      </nav>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine Variable?</strong>
@@ -148,16 +161,25 @@
         </div>
       </div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Zeile</th><th>Was passiert?</th><th>Wert von <code>a</code></th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>int a;</code></td><td>Speicherplatz wird angelegt.</td><td>noch kein sinnvoller Wert</td></tr>
-          <tr><td><code>a = 10;</code></td><td>Der Wert 10 wird gespeichert.</td><td>10</td></tr>
-          <tr><td><code>a = a + 5;</code></td><td>Rechts wird zuerst <code>10 + 5</code> berechnet, dann wird 15 gespeichert.</td><td>15</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino3_variable_trace",
+          "title":"Ablaufspur: Eine Variable verändert sich",
+          "hint":"Werte erst die rechte Seite einer Zuweisung aus. Trage dann ein, was im Speicherplatz a steht.",
+          "columns":[
+            {"label":"Codezeile","width":"30%"},
+            {"label":"Operation","width":"45%"},
+            {"label":"a danach","width":"25%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"int a;","code":true},{"answers":["Speicherplatz wird angelegt","Variable wird angelegt","Deklaration"]},{"answers":["kein sinnvoller Wert","unbestimmt","nicht initialisiert"]}]},
+            {"cells":[{"given":"a = 10;","code":true},{"answers":["10 wird gespeichert","Wert 10 wird gespeichert","Zuweisung"]},{"answers":["10"]}]},
+            {"cells":[{"given":"a = a + 5;","code":true},{"answers":["10 + 5 berechnen und 15 speichern","a plus 5","5 addieren"]},{"answers":["15"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div class="wb-section-break"></div>
 
@@ -211,9 +233,16 @@
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
-        <div class="pdfcaption">Original – Seite 12</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite12.png" alt="Variablen in einem Arduino-Programm">
+          <div class="pdfcaption">Materialbild: Variablen anlegen, zuweisen und verändern</div>
+        </div>
+        <div class="image-guide">
+          <h3>Beobachte den Speicher</h3>
+          <p>Notiere neben jeder Zuweisung den Wert, der danach in der Variable steht. Lies dabei immer zuerst die rechte Seite.</p>
+          <p><b>Denkfehler:</b> <code>a = a + 1</code> ist keine mathematische Gleichung, sondern eine Aktualisierung des gespeicherten Werts.</p>
+        </div>
       </div>
 
       <div data-wb-type="mcq">
@@ -498,9 +527,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite13.png" alt="PDF Seite 13">
-        <div class="pdfcaption">Original – Seite 13</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite13.png" alt="Serieller Monitor und serielle Ausgabe im Arduino-Sketch">
+          <div class="pdfcaption">Materialbild: Innere Zustände im seriellen Monitor sichtbar machen</div>
+        </div>
+        <div class="image-guide">
+          <h3>Nutze Ausgaben als Messinstrument</h3>
+          <p>Finde Initialisierung und Ausgabe. Prüfe, ob die Baudrate im Sketch und im seriellen Monitor übereinstimmt.</p>
+          <p><b>Debugging-Auftrag:</b> Ergänze gedanklich drei Ausgaben, mit denen du Start, Messwert und gewählten Zweig unterscheiden kannst.</p>
+        </div>
       </div>
 
       <div class="wb-soft-callout">
@@ -791,9 +827,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite14.png" alt="PDF Seite 14">
-        <div class="pdfcaption">Original – Seite 14</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite14.png" alt="Aufbau und Ablauf einer for-Schleife">
+          <div class="pdfcaption">Materialbild: Startwert, Bedingung und Veränderung einer for-Schleife</div>
+        </div>
+        <div class="image-guide">
+          <h3>Lies die Schleife in vier Schritten</h3>
+          <ol><li>Startwert einmal setzen.</li><li>Bedingung prüfen.</li><li>Block ausführen.</li><li>Zählvariable verändern und erneut prüfen.</li></ol>
+          <p>Trage danach die einzelnen Durchgänge in die Ablaufspur ein.</p>
+        </div>
       </div>
 
       <div class="wb-soft-callout">
@@ -821,19 +864,29 @@ void loop() {
         </div>
       </div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Prüfung</th><th>Wert von <code>i</code></th><th>Wird der Block ausgeführt?</th><th>Danach</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>0 &lt; 5</code></td><td>0</td><td>ja, LED blinkt einmal</td><td><code>i</code> wird 1</td></tr>
-          <tr><td><code>1 &lt; 5</code></td><td>1</td><td>ja, LED blinkt ein zweites Mal</td><td><code>i</code> wird 2</td></tr>
-          <tr><td><code>2 &lt; 5</code></td><td>2</td><td>ja, LED blinkt ein drittes Mal</td><td><code>i</code> wird 3</td></tr>
-          <tr><td><code>3 &lt; 5</code></td><td>3</td><td>ja, LED blinkt ein viertes Mal</td><td><code>i</code> wird 4</td></tr>
-          <tr><td><code>4 &lt; 5</code></td><td>4</td><td>ja, LED blinkt ein fünftes Mal</td><td><code>i</code> wird 5</td></tr>
-          <tr><td><code>5 &lt; 5</code></td><td>5</td><td>nein, Schleife ist fertig</td><td>Programm läuft nach der Schleife weiter</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino3_for_trace",
+          "title":"Ablaufspur: for-Schleife mit fünf Prüfungen",
+          "hint":"Entscheide zuerst wahr oder falsch. Nur bei wahr läuft der Block; danach wird i erhöht.",
+          "columns":[
+            {"label":"Prüfung","width":"23%"},
+            {"label":"Ergebnis","width":"20%"},
+            {"label":"Block läuft?","width":"32%"},
+            {"label":"i danach","width":"25%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"0 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, erstes Blinken"]},{"answers":["1"]}]},
+            {"cells":[{"given":"1 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, zweites Blinken"]},{"answers":["2"]}]},
+            {"cells":[{"given":"2 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, drittes Blinken"]},{"answers":["3"]}]},
+            {"cells":[{"given":"3 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, viertes Blinken"]},{"answers":["4"]}]},
+            {"cells":[{"given":"4 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, fünftes Blinken"]},{"answers":["5"]}]},
+            {"cells":[{"given":"5 < 5","code":true},{"answers":["falsch"]},{"answers":["nein","Schleife endet"]},{"answers":["5","unverändert"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
@@ -980,17 +1033,26 @@ void loop() {
         </div>
       </div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Äußerer Durchgang <code>i</code></th><th>Innere Werte <code>j</code></th><th>Wie oft läuft der innere Code?</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>0</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
-          <tr><td>1</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
-          <tr><td>2</td><td>0, 1, 2, 3, 4</td><td>5-mal</td></tr>
-          <tr><td>Gesamt</td><td>3 äußere Runden mal 5 innere Runden</td><td>15-mal</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino3_nested_trace",
+          "title":"Ablaufspur: verschachtelte Schleifen",
+          "hint":"Für jeden Wert von i startet j wieder bei 0 und durchläuft alle fünf Werte. Trage die j-Folge und die Anzahl ein.",
+          "columns":[
+            {"label":"i","width":"20%"},
+            {"label":"j-Werte in dieser Runde","width":"50%"},
+            {"label":"Ausführungen","width":"30%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"0","code":true},{"answers":["0, 1, 2, 3, 4","0 1 2 3 4"]},{"answers":["5","5-mal"]}]},
+            {"cells":[{"given":"1","code":true},{"answers":["0, 1, 2, 3, 4","0 1 2 3 4"]},{"answers":["5","5-mal"]}]},
+            {"cells":[{"given":"2","code":true},{"answers":["0, 1, 2, 3, 4","0 1 2 3 4"]},{"answers":["5","5-mal"]}]},
+            {"cells":[{"given":"gesamt","code":false},{"answers":["3 mal 5","3 * 5","3 × 5"]},{"answers":["15","15-mal"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="verify">
         <script type="application/json" class="wb-config">
@@ -1190,9 +1252,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite15.png" alt="PDF Seite 15">
-        <div class="pdfcaption">Original – Seite 15</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite15.png" alt="PWM-Signal und Helligkeitssteuerung einer LED">
+          <div class="pdfcaption">Materialbild: PWM verändert den zeitlichen HIGH-Anteil</div>
+        </div>
+        <div class="image-guide">
+          <h3>Denke in Zeitanteilen</h3>
+          <p>Die LED erhält nicht einfach eine kleinere konstante Spannung. Sie wird sehr schnell ein- und ausgeschaltet. Der PWM-Wert bestimmt den Anteil der Einschaltzeit.</p>
+          <p><b>Vergleich:</b> Skizziere qualitativ die Signale für 64, 128 und 230.</p>
+        </div>
       </div>
 
       <div data-wb-type="essay">
@@ -1288,9 +1357,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite12.png" alt="PDF Seite 12">
-        <div class="pdfcaption">Original – Seite 12</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite16.png" alt="RGB-LED mit drei Farbkanälen und Arduino-Anschluss">
+          <div class="pdfcaption">Materialbild: Rot, Grün und Blau getrennt ansteuern</div>
+        </div>
+        <div class="image-guide">
+          <h3>Eine Farbe ist ein Wertepaar aus drei Kanälen</h3>
+          <p>Ordne jedem Anschluss einen Farbkanal zu und lies die drei PWM-Werte als Farbrezept.</p>
+          <p><b>Vorhersage:</b> Welche Mischfarbe erwartest du bei viel Rot und Grün, aber keinem Blau?</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1472,9 +1548,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite17.png" alt="PDF Seite 17">
-        <div class="pdfcaption">Original – Seite 17</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite17.png" alt="if-else-Verzweigung in einem Arduino-Programm">
+          <div class="pdfcaption">Materialbild: Eine Bedingung entscheidet zwischen zwei Zweigen</div>
+        </div>
+        <div class="image-guide">
+          <h3>Prüfung vor Wirkung</h3>
+          <p>Formuliere die Bedingung zuerst als Ja-Nein-Frage. Verfolge dann ausschließlich den gewählten Zweig und bestimme den neuen Ausgangszustand.</p>
+          <p><b>Grenzfall:</b> Prüfe ausdrücklich den Wert 100 bei der Bedingung <code>hell &gt; 100</code>.</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1506,16 +1589,26 @@ void loop() {
         </div>
       </div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Wert von <code>hell</code></th><th>Prüfung</th><th>Ausgeführter Zweig</th><th>LED</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>80</td><td><code>80 &gt; 100</code> ist falsch</td><td><code>else</code></td><td>aus</td></tr>
-          <tr><td>150</td><td><code>150 &gt; 100</code> ist wahr</td><td><code>if</code></td><td>an</td></tr>
-          <tr><td>100</td><td><code>100 &gt; 100</code> ist falsch</td><td><code>else</code></td><td>aus</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino3_if_trace",
+          "title":"Ablaufspur: Welcher Zweig wird gewählt?",
+          "hint":"Beachte die Grenze genau: 100 ist nicht größer als 100.",
+          "columns":[
+            {"label":"hell","width":"18%"},
+            {"label":"hell > 100","width":"28%"},
+            {"label":"Zweig","width":"25%"},
+            {"label":"LED","width":"29%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"80","code":true},{"answers":["falsch"]},{"answers":["else"]},{"answers":["aus"]}]},
+            {"cells":[{"given":"150","code":true},{"answers":["wahr"]},{"answers":["if"]},{"answers":["an"]}]},
+            {"cells":[{"given":"100","code":true},{"answers":["falsch"]},{"answers":["else"]},{"answers":["aus"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="categorize">
         <script type="application/json" class="wb-config">

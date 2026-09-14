@@ -76,6 +76,7 @@
     .source-list{margin:0; padding-left:20px}
     .source-list li + li{margin-top:6px}
   </style>
+  <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
 
 <body>
@@ -84,20 +85,31 @@
       {
         "bookTitle": "Arduino – Lernbaustein (Seiten 1–5)",
         "sectionTitle": "Arduino – Lernbaustein (Seiten 1–5)",
-        "submitLabel": "Summary & submit",
-        "onSubmit": "alert",
+        "submitLabel": "Ergebnisse & Abschluss",
+        "onSubmit": "exportResults",
         "webhookEmail": "",
         "autoNav": true
       }
     </script>
 
     <section data-wb-page="1" data-wb-page-title="Einführung in den Mikrocontroller Arduino">
-      <h1>Einführung in den Mikrocontroller Arduino</h1>
-      <p>
+      <div class="course-hero">
+        <div class="course-kicker">Modul 1 von 5 · Hardware verstehen</div>
+        <h1>Einführung in den Mikrocontroller Arduino</h1>
+        <p class="course-lead">
         Dieser Lernbaustein führt dich schrittweise an den Arduino heran: erst verstehst du die Platine,
         dann baust du eine sichere LED-Schaltung und erst danach wird programmiert. So erkennst du später
         leichter, ob ein Fehler an der Hardware, am Upload oder am Code liegt.
-      </p>
+        </p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <span class="is-current"><b>1 · Hardware</b>Board, Pins und LED</span>
+        <a href="arduino-2.html"><b>2 · Programme</b>Upload, Blink und Funktionen</a>
+        <a href="arduino-3.html"><b>3 · Logik</b>Variablen, Schleifen, PWM</a>
+        <a href="arduino-4.html"><b>4 · Eingaben</b>Taster, Planung und Display</a>
+        <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
+      </nav>
 
       <div class="wb-section-break"></div>
 
@@ -193,9 +205,16 @@
     <section data-wb-page="3" data-wb-page-title="1. Was ist ein Mikrocontroller?">
       <h2>1. Was ist ein Mikrocontroller?</h2>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite02.png" alt="PDF Seite 2">
-        <div class="pdfcaption">Original – Seite 3</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite02.png" alt="Übersicht zu Mikrocontrollern und ihren Anwendungen">
+          <div class="pdfcaption">Materialbild: Mikrocontroller im technischen System</div>
+        </div>
+        <div class="image-guide">
+          <h3>Lies das Bild als System</h3>
+          <p>Suche nicht nur nach Bauteilnamen. Verfolge, wie eine Information durch das dargestellte Gerät wandert.</p>
+          <ol><li>Markiere eine mögliche Eingabe.</li><li>Finde die Verarbeitung.</li><li>Benenne die sichtbare oder hörbare Ausgabe.</li></ol>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -217,9 +236,16 @@
 
       <div class="wb-section-break"></div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite03.png" alt="PDF Seite 3">
-        <div class="pdfcaption">Original – Seite 3</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite03.png" alt="Arduino-Platine mit beschrifteten Anschlüssen">
+          <div class="pdfcaption">Materialbild: Anschlüsse der Arduino-Platine</div>
+        </div>
+        <div class="image-guide">
+          <h3>Orientiere dich auf dem Board</h3>
+          <p>Zeige nacheinander auf USB, GND, 5 V, digitale Pins und Reset. Erkläre jeweils in einem Satz, wozu der Anschluss dient.</p>
+          <p><b>Fehlerfrage:</b> Welcher dieser Anschlüsse überträgt das Programm, und welcher schließt den Stromkreis?</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -281,9 +307,16 @@
 
     <section data-wb-page="4" data-wb-page-title="2. Es leuchtet!">
       <h2>2. Es leuchtet!</h2>
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite04.png" alt="PDF Seite 4">
-        <div class="pdfcaption">Original – Seite 4</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite04.png" alt="LED-Schaltung am Arduino und Breadboard">
+          <div class="pdfcaption">Materialbild: LED, Widerstand und geschlossener Stromweg</div>
+        </div>
+        <div class="image-guide">
+          <h3>Verfolge den Stromweg</h3>
+          <p>Beginne am Ausgangspin und fahre den Weg mit dem Finger bis GND nach. Nenne dabei LED und Widerstand in der richtigen Reihenfolge.</p>
+          <p><b>Vorhersage:</b> Was geschieht, wenn du die LED umdrehst? Was geschieht ohne Vorwiderstand?</p>
+        </div>
       </div>
 
       <div class="wb-soft-callout">
@@ -368,6 +401,28 @@
 
       <div class="wb-section-break"></div>
 
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino1_hardware_trace",
+          "title":"Ablaufspur: Drei Hardwarefehler vorhersagen",
+          "hint":"Stelle dir jeden Aufbau einzeln vor. Trage Beobachtung und Ursache ein, bevor du etwas umsteckst.",
+          "columns":[
+            {"label":"Veränderung","width":"38%"},
+            {"label":"Beobachtung","width":"27%"},
+            {"label":"Begründung","width":"35%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"LED wird umgedreht"},{"answers":["LED bleibt aus","aus"]},{"answers":["LED sperrt","falsche Polung","Strom kann nicht fließen"]}]},
+            {"cells":[{"given":"Verbindung zu GND fehlt"},{"answers":["LED bleibt aus","aus"]},{"answers":["Stromkreis ist offen","kein geschlossener Stromkreis"]}]},
+            {"cells":[{"given":"Widerstand fehlt, LED richtig gepolt"},{"answers":["LED kann beschädigt werden","zu hell oder defekt","kann kaputtgehen"]},{"answers":["Strom ist zu groß","keine Strombegrenzung"]}]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
@@ -398,9 +453,15 @@
     <section data-wb-page="5" data-wb-page-title="Aufgaben">
       <h2>Aufgaben 2.1–2.3</h2>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite05.png" alt="PDF Seite 5">
-        <div class="pdfcaption">Original – Seite 5</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite05.png" alt="Aufgaben zu Arduino, Breadboard und LED-Schaltung">
+          <div class="pdfcaption">Materialbild: Aufbau- und Analyseaufgaben</div>
+        </div>
+        <div class="image-guide">
+          <h3>Arbeite wie bei einer Fehlersuche</h3>
+          <ol><li>Beschreibe zuerst den Sollzustand.</li><li>Prüfe Polung und Stromweg.</li><li>Ändere nur eine Verbindung.</li><li>Notiere Beobachtung und Schlussfolgerung getrennt.</li></ol>
+        </div>
       </div>
 
       <div class="wb-soft-callout">

@@ -234,6 +234,7 @@
       .pudding-step{width:min(100%, 270px)}
     }
   </style>
+  <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
 
 <body>
@@ -242,14 +243,26 @@
       {
         "bookTitle": "Arduino - Lernbaustein (Seiten 18-22)",
         "sectionTitle": "Arduino - Lernbaustein (Seiten 18-22)",
-        "submitLabel": "Summary & submit",
-        "onSubmit": "alert",
+        "submitLabel": "Ergebnisse & Abschluss",
+        "onSubmit": "exportResults",
         "webhookEmail": "",
         "autoNav": true
       }
     </script>
     <section data-wb-page="1" data-wb-page-title="11. Eingabe mit Tastern">
-      <h1>11. Eingaben mit Tastern - Der Arduino reagiert</h1>
+      <div class="course-hero">
+        <div class="course-kicker">Modul 4 von 5 · Eingaben auswerten und Systeme planen</div>
+        <h1>11. Eingaben mit Tastern - Der Arduino reagiert</h1>
+        <p class="course-lead">Ein technisches System wird interessant, sobald es seine Umgebung wahrnimmt. Du liest Tasterzustände ein, triffst Entscheidungen und planst komplexere Abläufe erst als Modell und dann als Code.</p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <a href="arduino-1.html"><b>1 · Hardware</b>Board, Pins und LED</a>
+        <a href="arduino-2.html"><b>2 · Programme</b>Upload, Blink und Funktionen</a>
+        <a href="arduino-3.html"><b>3 · Logik</b>Variablen, Schleifen, PWM</a>
+        <span class="is-current"><b>4 · Eingaben</b>Taster, Planung und Display</span>
+        <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
+      </nav>
 
        <div class="grid2">
       <div class="wb-soft-callout">
@@ -332,15 +345,25 @@
 
       <div class="wb-section-break"></div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Tasterzustand</th><th>Elektrische Verbindung</th><th><code>digitalRead(BTN)</code></th><th>Im Code bedeutet das</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>nicht gedrückt</td><td>Pin wird intern auf HIGH gezogen</td><td><code>HIGH</code></td><td>Bedingung <code>digitalRead(BTN) == LOW</code> ist falsch</td></tr>
-          <tr><td>gedrückt</td><td>Pin ist mit GND verbunden</td><td><code>LOW</code></td><td>Bedingung <code>digitalRead(BTN) == LOW</code> ist wahr</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino4_pullup_trace",
+          "title":"Ablaufspur: INPUT_PULLUP richtig herum denken",
+          "hint":"Leite den gelesenen Wert zuerst aus der elektrischen Verbindung ab. Bewerte danach die Bedingung.",
+          "columns":[
+            {"label":"Taster","width":"22%"},
+            {"label":"Verbindung","width":"30%"},
+            {"label":"digitalRead(BTN)","width":"23%"},
+            {"label":"== LOW","width":"25%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"nicht gedrückt"},{"answers":["intern mit HIGH verbunden","auf HIGH gezogen","Pull-up"]},{"answers":["HIGH"]},{"answers":["falsch"]}]},
+            {"cells":[{"given":"gedrückt"},{"answers":["mit GND verbunden","GND"]},{"answers":["LOW"]},{"answers":["wahr"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="verify">
         <script type="application/json" class="wb-config">
@@ -499,13 +522,20 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite18.png" alt="PDF Seite 18">
-        <div class="pdfcaption">Original - Seite 18</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite18.png" alt="Taster am Arduino mit Eingangsabfrage">
+          <div class="pdfcaption">Materialbild: Tasterzustand einlesen und auswerten</div>
+        </div>
+        <div class="image-guide">
+          <h3>Verbinde Elektrik und Bedingung</h3>
+          <p>Zeige im Aufbau, wodurch der Eingang bei gedrücktem und nicht gedrücktem Taster mit einem eindeutigen Potenzial verbunden ist.</p>
+          <p><b>Danach:</b> Übersetze beide Zustände in <code>HIGH</code>/<code>LOW</code> und erst dann in wahr/falsch.</p>
+        </div>
       </div>
     </section>
-    <section data-wb-page="2" data-wb-page-title="12 Wiederholung mit WHILE">
-      <h2>13. Wiederholungen mit while - Solange bis ...</h2>
+    <section data-wb-page="2" data-wb-page-title="12. Wiederholung mit while">
+      <h2>12. Wiederholungen mit while - Solange bis ...</h2>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine while-Schleife?</strong>
@@ -595,18 +625,28 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <table class="trace-table">
-        <thead>
-          <tr><th>Prüfung</th><th>Wert von <code>x</code> vor dem Block</th><th>Ausgabe</th><th>Wert nach <code>x = x + 5</code></th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>0 &lt; 20</code> wahr</td><td>0</td><td>0</td><td>5</td></tr>
-          <tr><td><code>5 &lt; 20</code> wahr</td><td>5</td><td>5</td><td>10</td></tr>
-          <tr><td><code>10 &lt; 20</code> wahr</td><td>10</td><td>10</td><td>15</td></tr>
-          <tr><td><code>15 &lt; 20</code> wahr</td><td>15</td><td>15</td><td>20</td></tr>
-          <tr><td><code>20 &lt; 20</code> falsch</td><td>20</td><td>keine Ausgabe mehr</td><td>Schleife endet</td></tr>
-        </tbody>
-      </table>
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino4_while_trace",
+          "title":"Ablaufspur: while prüft vor jedem Durchgang",
+          "hint":"Notiere erst den Wert vor dem Block. Bei einer falschen Prüfung werden Ausgabe und Änderung nicht mehr ausgeführt.",
+          "columns":[
+            {"label":"Prüfung","width":"27%"},
+            {"label":"x vorher","width":"20%"},
+            {"label":"Ausgabe","width":"25%"},
+            {"label":"x nachher","width":"28%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"0 < 20","code":true},{"answers":["0"]},{"answers":["0"]},{"answers":["5"]}]},
+            {"cells":[{"given":"5 < 20","code":true},{"answers":["5"]},{"answers":["5"]},{"answers":["10"]}]},
+            {"cells":[{"given":"10 < 20","code":true},{"answers":["10"]},{"answers":["10"]},{"answers":["15"]}]},
+            {"cells":[{"given":"15 < 20","code":true},{"answers":["15"]},{"answers":["15"]},{"answers":["20"]}]},
+            {"cells":[{"given":"20 < 20","code":true},{"answers":["20"]},{"answers":["keine","keine Ausgabe"]},{"answers":["20","Schleife endet"]}]}
+          ]
+        }
+        </script>
+      </div>
 
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
@@ -767,9 +807,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite19.png" alt="PDF Seite 19">
-        <div class="pdfcaption">Original - Seite 19</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite19.png" alt="while-Schleife mit Bedingung und wiederholtem Block">
+          <div class="pdfcaption">Materialbild: Wiederholen, solange eine Bedingung wahr ist</div>
+        </div>
+        <div class="image-guide">
+          <h3>Suche die Ausstiegsbedingung</h3>
+          <p>Markiere die Variable, von der die Bedingung abhängt, und die Codezeile, die diese Variable verändert.</p>
+          <p><b>Sicherheitscheck:</b> Fehlt diese Veränderung, kann eine Endlosschleife entstehen.</p>
+        </div>
       </div>
     </section>
     <section data-wb-page="3" data-wb-page-title="13. Programme planen - Denken vor dem Programmieren">
@@ -1001,9 +1048,16 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite20.png" alt="PDF Seite 20">
-        <div class="pdfcaption">Original - Seite 20</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite20.png" alt="Programmplanung mit Eingaben, Verarbeitung und Ausgaben">
+          <div class="pdfcaption">Materialbild: Vom Problem zum überprüfbaren Ablauf</div>
+        </div>
+        <div class="image-guide">
+          <h3>Plane erst Zustände, dann Befehle</h3>
+          <p>Schreibe zu jeder Phase auf: Welche Eingabe liegt vor? Welche Bedingung wird geprüft? Welche Ausgabe soll sich ändern?</p>
+          <p>Ein guter Plan nennt außerdem Startzustand und Wiederholung.</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1459,9 +1513,15 @@ void loop() {
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite21.png" alt="PDF Seite 21">
-        <div class="pdfcaption">Original - Seite 21</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite21.png" alt="LCD-Display am Arduino mit Beispielprogramm">
+          <div class="pdfcaption">Materialbild: Display anschließen, initialisieren und beschreiben</div>
+        </div>
+        <div class="image-guide">
+          <h3>Drei Ebenen getrennt prüfen</h3>
+          <ol><li>Stimmen Versorgung und gemeinsame Masse?</li><li>Stimmen Datenpins und Bibliothekskonfiguration?</li><li>Werden Cursorposition und Text im richtigen Ablauf gesetzt?</li></ol>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1680,9 +1740,16 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         </div>
       </div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite22.png" alt="PDF Seite 22">
-        <div class="pdfcaption">Original - Seite 22</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite22.png" alt="Motorsteuerung am Arduino mit Schutz- und Treiberbauteilen">
+          <div class="pdfcaption">Materialbild: Steuersignal und Motorstrom trennen</div>
+        </div>
+        <div class="image-guide">
+          <h3>Der Pin steuert, er versorgt nicht den Motor</h3>
+          <p>Unterscheide im Bild den kleinen Steuerstrom vom größeren Motorstrom. Finde außerdem gemeinsame Masse und Schutzbeschaltung.</p>
+          <p><b>Übergang:</b> Die genaue Auswahl und Programmierung der Motortypen folgt im Motorenmodul.</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>

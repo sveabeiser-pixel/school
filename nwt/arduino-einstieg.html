@@ -224,6 +224,42 @@
     .ae-branch { display: grid; justify-items: center; gap: 5px; }
     .ae-branch-label { font-weight: 900; color: var(--ae-teal); }
 
+    [data-p2-id="ae-flow-pairs"] .p2-solved {
+      width: 100%;
+      gap: 8px;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-joined {
+      display: grid;
+      grid-template-columns: minmax(130px, .8fr) 2px minmax(220px, 1.2fr);
+      width: 100%;
+      max-width: 100%;
+      align-items: stretch;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-piece {
+      display: flex;
+      align-items: center;
+      width: auto;
+      min-width: 0;
+      max-width: none;
+      padding: 12px 14px;
+      overflow-wrap: anywhere;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-left {
+      justify-content: center;
+      text-align: center;
+      background: #e8f4f3;
+      color: #174f55;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-right {
+      justify-content: flex-start;
+      background: #f7f9fc;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-seam {
+      width: 2px;
+      min-height: 100%;
+      background: #9fb1bd;
+    }
+
     .ae-table-wrap {
       max-width: 100%;
       overflow-x: auto;
@@ -286,6 +322,13 @@
       .ae-live-state { grid-template-columns: 1fr; }
       .ae-branch-row { grid-template-columns: 1fr; }
       .ae-branch-row > .ae-arrow { transform: rotate(90deg); justify-self: center; }
+      [data-p2-id="ae-flow-pairs"] .p2-solved .p2-joined {
+        grid-template-columns: minmax(95px, .7fr) 2px minmax(150px, 1.3fr);
+      }
+      [data-p2-id="ae-flow-pairs"] .p2-solved .p2-piece {
+        padding: 10px;
+        font-size: .9rem;
+      }
     }
     @media (max-width: 430px) {
       .wb-book .wb-brand,
@@ -735,13 +778,13 @@ GIB Punktzahl aus</div>
       <h2>Ablaufverfolgungstabelle: vier Runden</h2>
       <div class="ae-table-wrap" data-trace-table data-table-id="zaehlschleife-runden">
         <table class="ae-trace-table">
-          <thead><tr><th>Durchlauf</th><th>Runde vorher</th><th>Punktzahl vorher</th><th>Punktzahl nach +2</th><th>Runde nach +1</th></tr></thead>
+          <thead><tr><th>Durchlauf</th><th>Punktzahl vorher</th><th>Runde vorher</th><th>Punktzahl nachher</th><th>Runde nachher</th></tr></thead>
           <tbody>
             <tr><td class="is-given">Start</td><td class="is-given">–</td><td class="is-given">–</td><td><input data-trace data-answer="10" aria-label="Startpunktzahl"></td><td><input data-trace data-answer="0" aria-label="Startrunde"></td></tr>
-            <tr><td class="is-given">1</td><td><input data-trace data-answer="0" aria-label="Runde vor Durchlauf 1"></td><td><input data-trace data-answer="10" aria-label="Punkte vor Durchlauf 1"></td><td><input data-trace data-answer="12" aria-label="Punkte nach Durchlauf 1"></td><td><input data-trace data-answer="1" aria-label="Runde nach Durchlauf 1"></td></tr>
-            <tr><td class="is-given">2</td><td><input data-trace data-answer="1" aria-label="Runde vor Durchlauf 2"></td><td><input data-trace data-answer="12" aria-label="Punkte vor Durchlauf 2"></td><td><input data-trace data-answer="14" aria-label="Punkte nach Durchlauf 2"></td><td><input data-trace data-answer="2" aria-label="Runde nach Durchlauf 2"></td></tr>
-            <tr><td class="is-given">3</td><td><input data-trace data-answer="2" aria-label="Runde vor Durchlauf 3"></td><td><input data-trace data-answer="14" aria-label="Punkte vor Durchlauf 3"></td><td><input data-trace data-answer="16" aria-label="Punkte nach Durchlauf 3"></td><td><input data-trace data-answer="3" aria-label="Runde nach Durchlauf 3"></td></tr>
-            <tr><td class="is-given">4</td><td><input data-trace data-answer="3" aria-label="Runde vor Durchlauf 4"></td><td><input data-trace data-answer="16" aria-label="Punkte vor Durchlauf 4"></td><td><input data-trace data-answer="18" aria-label="Punkte nach Durchlauf 4"></td><td><input data-trace data-answer="4" aria-label="Runde nach Durchlauf 4"></td></tr>
+            <tr><td class="is-given">1</td><td><input data-trace data-answer="10" aria-label="Punktzahl vor Durchlauf 1"></td><td><input data-trace data-answer="0" aria-label="Runde vor Durchlauf 1"></td><td><input data-trace data-answer="12" aria-label="Punktzahl nach Durchlauf 1"></td><td><input data-trace data-answer="1" aria-label="Runde nach Durchlauf 1"></td></tr>
+            <tr><td class="is-given">2</td><td><input data-trace data-answer="12" aria-label="Punktzahl vor Durchlauf 2"></td><td><input data-trace data-answer="1" aria-label="Runde vor Durchlauf 2"></td><td><input data-trace data-answer="14" aria-label="Punktzahl nach Durchlauf 2"></td><td><input data-trace data-answer="2" aria-label="Runde nach Durchlauf 2"></td></tr>
+            <tr><td class="is-given">3</td><td><input data-trace data-answer="14" aria-label="Punktzahl vor Durchlauf 3"></td><td><input data-trace data-answer="2" aria-label="Runde vor Durchlauf 3"></td><td><input data-trace data-answer="16" aria-label="Punktzahl nach Durchlauf 3"></td><td><input data-trace data-answer="3" aria-label="Runde nach Durchlauf 3"></td></tr>
+            <tr><td class="is-given">4</td><td><input data-trace data-answer="16" aria-label="Punktzahl vor Durchlauf 4"></td><td><input data-trace data-answer="3" aria-label="Runde vor Durchlauf 4"></td><td><input data-trace data-answer="18" aria-label="Punktzahl nach Durchlauf 4"></td><td><input data-trace data-answer="4" aria-label="Runde nach Durchlauf 4"></td></tr>
           </tbody>
         </table>
         <div class="ae-table-footer"><div class="ae-table-actions"><button class="ae-btn primary" type="button" data-trace-check>Prüfen</button><button class="ae-btn" type="button" data-trace-reset>Leeren</button></div><div class="ae-table-status" data-trace-status>Noch nicht geprüft</div></div>
@@ -933,6 +976,7 @@ GIB Gesamtwasser aus</div>
           "shuffleChoices":true,
           "questions":[{
             "text":"Welche Vorgehensweisen helfen beim algorithmischen Denken?",
+            "multiple":true,
             "choices":[
               {"id":"A","label":"Startwerte und Zustandsänderungen notieren"},
               {"id":"B","label":"Randfälle an den Grenzwerten prüfen"},

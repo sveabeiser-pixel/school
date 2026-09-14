@@ -68,6 +68,7 @@
       .grid3x { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
 <body>
   <div data-wb-book>
@@ -91,7 +92,19 @@
     </script>
 
     <section data-wb-page="1" data-wb-page-title="15. Motoren steuern">
-      <h1>Motoren steuern</h1>
+      <div class="course-hero">
+        <div class="course-kicker">Modul 5 von 5 · Vom Steuersignal zur Bewegung</div>
+        <h1>Motoren steuern</h1>
+        <p class="course-lead">Jetzt wird aus einer Programmentscheidung eine reale Bewegung. Du vergleichst Motortypen, verfolgst Steuersignale und begründest für jede Anwendung, welche Elektronik und welcher Programmablauf passen.</p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <a href="arduino-1.html"><b>1 · Hardware</b>Board, Pins und LED</a>
+        <a href="arduino-2.html"><b>2 · Programme</b>Upload, Blink und Funktionen</a>
+        <a href="arduino-3.html"><b>3 · Logik</b>Variablen, Schleifen, PWM</a>
+        <a href="arduino-4.html"><b>4 · Eingaben</b>Taster, Planung und Display</a>
+        <span class="is-current"><b>5 · Bewegung</b>Motoren gezielt steuern</span>
+      </nav>
 
       <div class="wb-soft-callout">
         <strong>Was ist ein Motor?</strong>
@@ -261,7 +274,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
       </div>
     </section>
 
-    <section data-wb-page="3" data-wb-page-title="L298N richtig anschließen">
+    <section data-wb-page="2" data-wb-page-title="L298N richtig anschließen">
       <h1>L298N: Der wirklich richtige Anschluss ohne Überhitzung</h1>
       <p class="wb-muted">Wenn du einen DC-Motor sauber und belastbar steuern willst, reicht ein einzelner Ausgang nicht mehr. Dafür nutzt du ein DC-Motorsteuerungsmodul auf Basis des <code>L298N</code>-Chips.</p>
 
@@ -283,9 +296,16 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
 
       <div class="wb-section-break"></div>
 
-      <div class="pdfpage">
-        <img src="pdf-bilder/seite22.png" alt="L298N-Motortreiber mit beschrifteten Anschlüssen">
-        <div class="pdfcaption">Original - Seite 22</div>
+      <div class="media-grid">
+        <div class="pdfpage">
+          <img src="pdf-bilder/seite22.png" alt="L298N-Motortreiber mit beschrifteten Anschlüssen">
+          <div class="pdfcaption">Materialbild: Leistungsversorgung, Logik und Motorausgänge</div>
+        </div>
+        <div class="image-guide">
+          <h3>Teile die Schaltung in drei Bereiche</h3>
+          <ol><li>Markiere die Motorversorgung.</li><li>Markiere die Steuereingänge vom Arduino.</li><li>Finde Motoranschlüsse und gemeinsame Masse.</li></ol>
+          <p><b>Prüffrage:</b> Warum reicht eine Verbindung der Input-Pins allein nicht aus?</p>
+        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -354,9 +374,33 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"l298n_signal_trace",
+          "title":"Ablaufspur: Zwei Eingänge bestimmen die Motorwirkung",
+          "hint":"Gehe die vier Eingangskombinationen durch. Die konkrete Drehrichtung hängt von der Motorverkabelung ab; entscheidend sind Stopp, Richtung 1 und Gegenrichtung.",
+          "columns":[
+            {"label":"IN1","width":"20%"},
+            {"label":"IN2","width":"20%"},
+            {"label":"Spannung am Motor","width":"30%"},
+            {"label":"Wirkung","width":"30%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"LOW","code":true},{"given":"LOW","code":true},{"answers":["0 V","keine"]},{"answers":["Stopp","Motor steht"]}]},
+            {"cells":[{"given":"HIGH","code":true},{"given":"LOW","code":true},{"answers":["positiv","eine Polarität"]},{"answers":["Richtung 1","dreht"]}]},
+            {"cells":[{"given":"LOW","code":true},{"given":"HIGH","code":true},{"answers":["negativ","umgekehrte Polarität"]},{"answers":["Gegenrichtung","Richtung 2"]}]},
+            {"cells":[{"given":"HIGH","code":true},{"given":"HIGH","code":true},{"answers":["0 V","keine Differenz"]},{"answers":["Stopp","Motor steht"]}]}
+          ]
+        }
+        </script>
+      </div>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Schrittmotor">
+    <section data-wb-page="3" data-wb-page-title="Schrittmotor">
       <h1>Schrittmotor: In 3 Schritten zum ersten Aufbau</h1>
       <p class="wb-muted">Jetzt arbeitest du den Schrittmotor Schritt für Schritt durch. Du verbindest zuerst die Bauteile, richtest danach die IDE ein und verstehst am Ende den ersten Sketch.</p>
 
@@ -576,7 +620,7 @@ void loop() {
       </div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="Servomotoren">
+    <section data-wb-page="4" data-wb-page-title="Servomotoren">
       <h1>Servomotoren: Winkel gezielt anfahren</h1>
       <p class="wb-muted">Servos sind besonders praktisch, wenn du eine bestimmte Position ansteuern willst, zum Beispiel 30°, 90° oder 180°.</p>
 
@@ -693,7 +737,7 @@ void loop() {
       </div>
     </section>
 
-    <section data-wb-page="2" data-wb-page-title="DC-Motoren">
+    <section data-wb-page="5" data-wb-page-title="DC-Motoren">
       <h1>DC-Motoren: schnell, einfach, aber weniger präzise</h1>
       <p class="wb-muted">Ein Gleichstrommotor dreht sich kontinuierlich. Er ist ideal für Räder, Lüfter oder Förderbänder, wenn nicht jeder Winkel exakt getroffen werden muss.</p>
 

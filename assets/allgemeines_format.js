@@ -96,13 +96,26 @@ function el(tag, attrs = {}, children = []) {
       "essay": "essay.png",
       "p2": "p2.png",
       "order": "order.png",
-      "categorize": "categorize.png"
+      "categorize": "categorize.png",
+      "trace": "trace.svg"
     };
     const key = String(type || "").toLowerCase();
     const imgName = typeMap[key];
     if(!imgName) return null;
+    const typeLabel = ({
+      mcq:"Multiple Choice",
+      verify:"Wahr oder falsch",
+      reveal:"Frage und Antwort",
+      "reveal-img":"Bild anzeigen",
+      cloze:"Lückentext",
+      essay:"Freitext",
+      p2:"Zuordnung",
+      order:"Reihenfolge",
+      categorize:"Kategorisieren",
+      trace:"Ablaufspur"
+    })[key] || key.toUpperCase();
     return el_("div", {class:"wb-img wb-task-icon", "data-wb-task-icon": key}, [
-      el_("img", {src: assetBasePath() + imgName, alt: `Aufgabentyp: ${key.toUpperCase()}`})
+      el_("img", {src: assetBasePath() + imgName, alt: `Aufgabentyp: ${typeLabel}`})
     ]);
   }
 
@@ -151,7 +164,7 @@ function el(tag, attrs = {}, children = []) {
   }
 
   function wrapBlock(type, cfg, bodyEl){
-    const title = cfg.title || ({mcq:"Multiple Choice", verify:"Wahr oder Falsch", cloze:"Lückentext (Drag the Words)", order:"Reihenfolge", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
+    const title = cfg.title || ({mcq:"Multiple Choice", verify:"Wahr oder Falsch", cloze:"Lückentext (Drag the Words)", order:"Reihenfolge", categorize:"Kategorisieren", trace:"Ablaufspur", essay:"Essay / Freitext", reveal:"Frage & Antwort", "reveal-img":"Bild anzeigen"}[type] || "Baustein");
     const hint = cfg.hint || "";
     const head = el("div", {class:"wb-head"}, [
       el("div", {}, [
@@ -562,6 +575,166 @@ function el(tag, attrs = {}, children = []) {
     loadSaved();
     updateCheckState();
     return { node: wrapBlock("cloze", cfg, el("div", {}, [bank, text, hint, controls])), check, reset };
+  }
+
+  function createTrace(cfg){
+    if(!Array.isArray(cfg.columns) || cfg.columns.length === 0) throw new Error("Ablaufspur: cfg.columns muss ein Array sein");
+    if(!Array.isArray(cfg.rows) || cfg.rows.length === 0) throw new Error("Ablaufspur: cfg.rows muss ein Array sein");
+
+    const columns = cfg.columns.map((column, index) => {
+      if(column && typeof column === "object"){
+        return {
+          label: String(column.label || column.title || `Spalte ${index + 1}`),
+          width: column.width ? String(column.width) : ""
+        };
+      }
+      return {label: String(column), width: ""};
+    });
+    const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
+    const storageKey = (cfg.storagePrefix || "wb_") + "trace_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "trace");
+    const fields = [];
+    const table = el("table", {class:"wb-trace-table"});
+    const colgroup = el("colgroup");
+    columns.forEach(column => {
+      colgroup.appendChild(el("col", column.width ? {style:`width:${column.width}`} : {}));
+    });
+    table.appendChild(colgroup);
+    table.appendChild(el("thead", {}, [
+      el("tr", {}, columns.map(column => el("th", {scope:"col"}, [column.label])))
+    ]));
+    const tbody = el("tbody");
+
+    function answerList(cell){
+      const raw = cell && typeof cell === "object" ? (cell.answers != null ? cell.answers : cell.answer) : null;
+      if(Array.isArray(raw)) return raw.map(value => String(value));
+      if(raw == null) return [];
+      return String(raw).split("|").map(value => value.trim()).filter(Boolean);
+    }
+
+    function normalize(value){
+      return String(value == null ? "" : value)
+        .trim()
+        .toLocaleLowerCase("de-DE")
+        .replace(/\s+/g, " ")
+        .replace(/\s*([=<>+\-*/])\s*/g, "$1")
+        .replace(/,/g, ".");
+    }
+
+    cfg.rows.forEach((row, rowIndex) => {
+      const cells = Array.isArray(row) ? row : (row && Array.isArray(row.cells) ? row.cells : []);
+      if(cells.length !== columns.length){
+        throw new Error(`Ablaufspur: Zeile ${rowIndex + 1} muss ${columns.length} Zellen enthalten`);
+      }
+      const tr = el("tr");
+      cells.forEach((rawCell, columnIndex) => {
+        const cell = rawCell && typeof rawCell === "object" ? rawCell : {given: rawCell};
+        const hasGiven = Object.prototype.hasOwnProperty.call(cell, "given") || Object.prototype.hasOwnProperty.call(cell, "value");
+        const td = el("td", hasGiven ? {class:"wb-trace-given"} : {});
+        if(hasGiven){
+          const value = String(cell.given != null ? cell.given : (cell.value != null ? cell.value : ""));
+          td.appendChild(cell.code ? el("code", {}, [value]) : document.createTextNode(value));
+        }else{
+          const answers = answerList(cell);
+          const tag = cell.kind === "textarea" ? "textarea" : "input";
+          const attrs = {
+            class:"wb-trace-input",
+            "data-wb-trace-field":"1",
+            "data-wb-trace-answers":JSON.stringify(answers),
+            "data-wb-trace-match":cell.match === "contains" ? "contains" : "exact",
+            "data-wb-trace-row":String(rowIndex),
+            "data-wb-trace-column":String(columnIndex),
+            "aria-label":cell.ariaLabel || `${columns[columnIndex].label}, Zeile ${rowIndex + 1}`,
+            placeholder:cell.placeholder || ""
+          };
+          if(tag === "input") attrs.type = "text";
+          const input = el(tag, attrs);
+          td.appendChild(input);
+          fields.push(input);
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    const status = el("div", {class:"wb-trace-status", "aria-live":"polite"}, ["Noch nicht geprüft"]);
+    const btnCheck = el("button", {class:"wb-btn primary", type:"button"}, [cfg.checkLabel || "Überprüfen"]);
+    const btnReset = el("button", {class:"wb-btn", type:"button"}, [cfg.resetLabel || "Zurücksetzen"]);
+
+    function gradedFields(){
+      return fields.filter(field => {
+        try{return JSON.parse(field.getAttribute("data-wb-trace-answers") || "[]").length > 0;}catch(_){return false;}
+      });
+    }
+
+    function save(){
+      try{
+        localStorage.setItem(storageKey, JSON.stringify(fields.map(field => field.value)));
+      }catch(_e){}
+    }
+
+    function loadSaved(){
+      try{
+        const values = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        if(Array.isArray(values)) fields.forEach((field, index) => { field.value = values[index] == null ? "" : String(values[index]); });
+      }catch(_e){}
+    }
+
+    function evaluateField(field, mark){
+      let answers = [];
+      try{ answers = JSON.parse(field.getAttribute("data-wb-trace-answers") || "[]"); }catch(_e){}
+      const got = normalize(field.value);
+      const mode = field.getAttribute("data-wb-trace-match") || "exact";
+      const ok = got !== "" && answers.some(answer => {
+        const expected = normalize(answer);
+        return mode === "contains" ? got.includes(expected) : got === expected;
+      });
+      if(mark){
+        field.classList.remove("is-correct", "is-wrong");
+        field.classList.add(ok ? "is-correct" : "is-wrong");
+      }
+      return {got:field.value.trim(), expected:answers.join(" | "), ok};
+    }
+
+    function check(){
+      const graded = gradedFields();
+      const items = graded.map(field => evaluateField(field, true));
+      const correctCount = items.filter(item => item.ok).length;
+      status.textContent = `Richtig: ${correctCount} von ${items.length}`;
+      return {correct:correctCount, total:items.length, correctCount, items};
+    }
+
+    function updateCheckState(){
+      if(cfg.requireComplete === false) return;
+      btnCheck.disabled = gradedFields().some(field => !field.value.trim());
+    }
+
+    function reset(){
+      fields.forEach(field => {
+        field.value = "";
+        field.classList.remove("is-correct", "is-wrong");
+      });
+      status.textContent = "Ablaufspur zurückgesetzt";
+      try{ localStorage.removeItem(storageKey); }catch(_e){}
+      updateCheckState();
+    }
+
+    fields.forEach(field => field.addEventListener("input", () => {
+      field.classList.remove("is-correct", "is-wrong");
+      status.textContent = "Eingabe geändert – erneut prüfen";
+      save();
+      updateCheckState();
+    }));
+    btnCheck.addEventListener("click", check);
+    btnReset.addEventListener("click", reset);
+    loadSaved();
+    updateCheckState();
+
+    const body = el("div", {class:"wb-trace"}, [
+      el("div", {class:"wb-trace-scroll", tabindex:"0", role:"region", "aria-label":cfg.tableLabel || cfg.title || "Ablaufspur"}, [table]),
+      el("div", {class:"wb-row wb-trace-controls"}, [btnCheck, btnReset, status])
+    ]);
+    return {node:wrapBlock("trace", cfg, body), check, reset};
   }
 
   function createOrder(cfg){
@@ -1175,6 +1348,7 @@ ${fi.input.value || ""}
   else if(type === "cloze") inst = createCloze(cfg);
   else if(type === "order") inst = createOrder(cfg);
   else if(type === "categorize") inst = createCategorize(cfg);
+  else if(type === "trace") inst = createTrace(cfg);
   else if(type === "essay") inst = createEssay(cfg);
   else if(type === "reveal") inst = createReveal(cfg);
   else if(type === "reveal-img" || type === "revealimg") inst = createRevealImage(cfg);
@@ -1185,6 +1359,7 @@ ${fi.input.value || ""}
 
   mountEl.innerHTML = "";
   mountEl.appendChild(inst.node);
+  mountEl.__wbInstance = inst;
   return inst;
 }
 
@@ -1339,6 +1514,35 @@ ${fi.input.value || ""}
       };
     });
     return { correctCount: okCount, total: chips.length, items };
+  }
+
+  function collectTrace(mountEl){
+    const fields = qsa("[data-wb-trace-field]", mountEl).filter(field => {
+      try{return JSON.parse(field.getAttribute("data-wb-trace-answers") || "[]").length > 0;}catch(_){return false;}
+    });
+    let correctCount = 0;
+    const items = fields.map(field => {
+      let answers = [];
+      try{answers = JSON.parse(field.getAttribute("data-wb-trace-answers") || "[]");}catch(_e){}
+      const normalize = value => String(value == null ? "" : value).trim().toLocaleLowerCase("de-DE").replace(/\s+/g, " ").replace(/\s*([=<>+\-*/])\s*/g, "$1").replace(/,/g, ".");
+      const got = String(field.value || "").trim();
+      const normalizedGot = normalize(got);
+      const mode = field.getAttribute("data-wb-trace-match") || "exact";
+      const ok = normalizedGot !== "" && answers.some(answer => mode === "contains" ? normalizedGot.includes(normalize(answer)) : normalizedGot === normalize(answer));
+      field.classList.remove("is-correct", "is-wrong");
+      field.classList.add(ok ? "is-correct" : "is-wrong");
+      if(ok) correctCount += 1;
+      return {
+        row:Number(field.getAttribute("data-wb-trace-row") || "0") + 1,
+        column:Number(field.getAttribute("data-wb-trace-column") || "0") + 1,
+        got,
+        expected:answers.join(" | "),
+        ok
+      };
+    });
+    const status = qs(".wb-trace-status", mountEl);
+    if(status) status.textContent = `Richtig: ${correctCount} von ${items.length}`;
+    return {correctCount, total:items.length, items};
   }
 
   function collectEssay(mountEl){
@@ -1625,6 +1829,25 @@ ${fi.input.value || ""}
         textLines.push("");
       });
 
+      getBlockMounts(pageRoot, "trace").forEach((m, idx) => {
+        const res = collectTrace(m);
+        const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Ablaufspur " + (idx+1));
+        const columns = (m.__wbConfig && Array.isArray(m.__wbConfig.columns)) ? m.__wbConfig.columns : [];
+        results.push({type:"trace", title, res, page:pageNum});
+        totalCorrect += res.correctCount;
+        totalPossible += res.total;
+        pageCorrect += res.correctCount;
+        pagePossible += res.total;
+        textLines.push("## Seite " + pageNum + ": " + title);
+        textLines.push("Punkte: " + res.correctCount + "/" + res.total);
+        res.items.forEach(item => {
+          const column = columns[item.column - 1];
+          const columnLabel = column && typeof column === "object" ? (column.label || column.title) : column;
+          textLines.push("Zeile " + item.row + ", " + (columnLabel || ("Spalte " + item.column)) + ": " + (item.got || "-") + " | Erwartet: " + (item.expected || "-") + " | " + (item.ok ? "richtig" : "falsch"));
+        });
+        textLines.push("");
+      });
+
       getBlockMounts(pageRoot, "essay").forEach((m, idx) => {
         const fields = collectEssay(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Text " + (idx+1));
@@ -1682,6 +1905,7 @@ ${fi.input.value || ""}
         cloze: "Lueckentext",
         order: "Reihenfolge",
         categorize: "Kategorisieren",
+        trace: "Ablaufspur",
         puzzle: "Zuordnung",
         essay: "Essay",
         text: "Text"
@@ -1695,6 +1919,9 @@ ${fi.input.value || ""}
           return r.res.items.every(it => String(it.got || "").trim() !== "");
         }
         if(r.type === "categorize"){
+          return r.res.items.every(it => String(it.got || "").trim() !== "");
+        }
+        if(r.type === "trace"){
           return r.res.items.every(it => String(it.got || "").trim() !== "");
         }
         if(r.type === "essay"){
@@ -1757,7 +1984,7 @@ ${fi.input.value || ""}
       }
 
       const tableRows = results.map(r => {
-        const scoreText = (r.type === "mcq" || r.type === "verify" || r.type === "cloze" || r.type === "order" || r.type === "puzzle")
+        const scoreText = (r.type === "mcq" || r.type === "verify" || r.type === "cloze" || r.type === "order" || r.type === "puzzle" || r.type === "trace")
           ? `${r.res.correctCount} / ${r.res.total}`
           : "-";
         const meta = typeLabel[r.type] || "Interaktion";
@@ -3228,7 +3455,7 @@ function autoMountPuzzle2(){
 
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
-  global.SBBlocks = { createMCQ, createVerify, createCloze, createOrder, createCategorize, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
+  global.SBBlocks = { createMCQ, createVerify, createCloze, createOrder, createCategorize, createTrace, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {

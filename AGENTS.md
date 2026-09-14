@@ -30,6 +30,7 @@ Diese Dateien enthalten/erwarten u. a. eine Book-/Sidebar-Navigation und Interak
 - `cloze` (Lückentext mit Wortbank)
 - `categorize` (Begriffe in Kategorien einsortieren)
 - `p2` (Zuordnung/Paare zusammenführen)
+- `trace` (Ablaufspur: Werte und Zustände Schritt für Schritt verfolgen)
 - `reveal` (Frage → Antwort einklappbar)
 - `essay` (Freitext, speichert lokal)
 - `order` (Reihenfolge sortieren)
@@ -217,6 +218,38 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
   <div data-side="R" data-pair="1">Definition A</div>
 </div>
 
+#### Ablaufspur (`trace`)
+
+Nutze die Ablaufspur regelmäßig, wenn Schüler:innen einen Algorithmus, eine Schleife, eine Messreihe oder einen physikalischen Prozess Schritt für Schritt nachvollziehen sollen. Vorgegebene Zellen enthalten `given`; Eingabezellen enthalten eine oder mehrere zulässige `answers`. Mit `code: true` wird eine vorgegebene Zelle als Code formatiert. Der Block speichert Eingaben lokal, prüft sie und übernimmt sie in die Ergebnisseite.
+
+```html
+<div data-wb-type="trace">
+  <script class="wb-config" type="application/json">
+  {
+    "id":"trace_1",
+    "title":"Ablaufspur: Werte verfolgen",
+    "hint":"Bearbeite eine Zeile nach der anderen.",
+    "columns":[
+      {"label":"Schritt","width":"15%"},
+      {"label":"Anweisung","width":"35%"},
+      {"label":"Wert danach","width":"25%"},
+      {"label":"Bedingung","width":"25%"}
+    ],
+    "rows":[
+      {"cells":[
+        {"given":"1"},
+        {"given":"SETZE x auf 2","code":true},
+        {"answers":["2"],"ariaLabel":"Wert nach Schritt 1"},
+        {"answers":["wahr","ja"],"ariaLabel":"Bedingung nach Schritt 1"}
+      ]}
+    ]
+  }
+  </script>
+</div>
+```
+
+Für längere Begründungen kann eine Eingabezelle zusätzlich `"kind":"textarea"` verwenden. `"match":"contains"` ist nur sinnvoll, wenn eine festgelegte Kernaussage in einer längeren Antwort vorkommen muss; standardmäßig werden Eingaben vollständig mit den zulässigen Antworten verglichen.
+
 
 #### Essay
 
@@ -379,7 +412,7 @@ Du bist fertig, wenn:
 
 - `index.html` mit Einbindungen von `allgemeines_format.css` und `allgemeines_format.js` korrekt läuft,  
 - 6–10 logisch aufgebaute Seiten vorhanden sind,  
-- jeder Interaktionstyp mindestens einmal vorkommt (`mcq`, `verify`, `cloze`, `categorize`, `p2`, `reveal`, `essay`, `order`),
+- jeder Interaktionstyp mindestens einmal vorkommt (`mcq`, `verify`, `cloze`, `categorize`, `p2`, `trace`, `reveal`, `essay`, `order`),
 - eine „Jetzt hast du das gelernt…“-Zusammenfassung enthalten ist,  
 - ein Abschnitt „Weiterforschen & Quellen“ existiert,  
 - die Selbstkontrolle (Kapitel 6) durchgeführt und eingearbeitet wurde.  
