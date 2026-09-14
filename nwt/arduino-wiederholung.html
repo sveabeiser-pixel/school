@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arduino-Wiederholung – vom Signal zum funktionierenden System</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <style>
+    :root {
+      --aw-ink: #172033;
+      --aw-muted: #536274;
+      --aw-teal: #087f7a;
+      --aw-blue: #2468a9;
+      --aw-yellow: #f2b633;
+      --aw-red: #bf3d4d;
+      --aw-green: #25845a;
+      --aw-line: #c8d5dd;
+      --aw-soft: #f3f7f8;
+      --aw-paper: #fff;
+    }
+
+    .wb-book section[data-wb-page], .wb-book .wb-content { min-width: 0; }
+    .wb-book section[data-wb-page] { padding-top: 24px; }
+    .wb-book .wb-paper { width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .aw-kicker { color: var(--aw-teal); font-size: .84rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0; }
+    .aw-hero { padding: 4px 0 19px; border-bottom: 4px solid var(--aw-teal); }
+    .aw-hero h1 { max-width: 920px; margin: 8px 0 12px; font-size: 2.35rem; line-height: 1.12; letter-spacing: 0; }
+    .aw-lead { max-width: 880px; color: var(--aw-muted); font-size: 1.1rem; }
+    .aw-goals, .aw-cards, .aw-motor-grid, .aw-check-grid { display: grid; gap: 12px; }
+    .aw-goals { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 18px 0; }
+    .aw-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .aw-motor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .aw-check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .aw-goal, .aw-card, .aw-motor, .aw-check-item { min-width: 0; padding: 14px; background: var(--aw-soft); border-top: 4px solid var(--aw-blue); }
+    .aw-goal:nth-child(2), .aw-card:nth-child(2), .aw-motor:nth-child(2) { border-color: var(--aw-yellow); }
+    .aw-goal:nth-child(3), .aw-card:nth-child(3), .aw-motor:nth-child(3) { border-color: var(--aw-red); }
+    .aw-goal:nth-child(4) { border-color: var(--aw-green); }
+    .aw-goal strong, .aw-card h3, .aw-motor h3 { display: block; margin: 0 0 6px; color: var(--aw-ink); }
+
+    .aw-system-lab { margin: 20px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--aw-line); background: #f6f9fa; }
+    .aw-toolbar strong { font-size: 1.02rem; }
+    .aw-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .aw-btn { min-height: 40px; padding: 8px 13px; border: 1px solid #9cafba; border-radius: 6px; background: #fff; color: var(--aw-ink); font: inherit; font-weight: 800; cursor: pointer; }
+    .aw-btn.primary { border-color: var(--aw-teal); background: var(--aw-teal); color: #fff; }
+    .aw-system { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding: 34px 22px 25px; background: #edf5f5; }
+    .aw-system::before { content: ""; position: absolute; left: 10%; right: 10%; top: 48%; height: 4px; background: #9ab2bd; }
+    .aw-node { position: relative; z-index: 1; display: grid; place-items: center; min-height: 115px; padding: 12px; border: 3px solid #8da5b0; background: #fff; text-align: center; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+    .aw-node strong { display: block; color: var(--aw-blue); }
+    .aw-node span { display: block; margin-top: 5px; font-size: .88rem; color: var(--aw-muted); }
+    .aw-node.is-active { transform: translateY(-6px); border-color: var(--aw-yellow); box-shadow: 0 8px 0 rgba(204, 139, 0, .18); }
+    .aw-node.is-done { border-color: var(--aw-green); }
+    .aw-pulse { position: absolute; z-index: 2; top: calc(48% - 7px); left: 10%; width: 18px; height: 18px; border-radius: 50%; background: var(--aw-red); box-shadow: 0 0 0 7px rgba(191, 61, 77, .15); transition: left .42s ease; pointer-events: none; }
+    .aw-lab-state { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 1px; background: var(--aw-line); border-top: 1px solid var(--aw-line); }
+    .aw-lab-state > div { padding: 10px 12px; background: #fff; }
+    .aw-lab-state span { display: block; font-size: .76rem; color: var(--aw-muted); }
+    .aw-lab-state strong { display: block; margin-top: 3px; }
+
+    .aw-image { margin: 16px 0; }
+    .aw-image img { display: block; width: 100%; max-height: 560px; object-fit: contain; border: 1px solid var(--aw-line); background: #fff; }
+    .aw-image.narrow img { max-width: 760px; margin-inline: auto; }
+    .aw-image.tall img { max-height: none; }
+    .aw-image figcaption { margin-top: 7px; color: var(--aw-muted); font-size: .9rem; }
+    .aw-code { max-width: 100%; overflow-x: auto; margin: 14px 0; padding: 15px 18px; border-left: 5px solid var(--aw-teal); background: #f4f7f8; color: #172033; font: 700 .94rem/1.58 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre; }
+    .aw-code .mark { display: inline-block; background: #fff0b5; }
+    .aw-formula { margin: 14px 0; padding: 13px 15px; border-left: 5px solid var(--aw-blue); background: #eef4fb; font-weight: 800; }
+    .aw-note, .aw-danger, .aw-success { margin: 14px 0; padding: 12px 14px; border-left: 4px solid var(--aw-yellow); background: #fff8e7; }
+    .aw-danger { border-color: var(--aw-red); background: #fff0f1; }
+    .aw-success { border-color: var(--aw-green); background: #edf8f2; }
+    .aw-route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 16px 0; }
+    .aw-route > div { padding: 12px; border-top: 4px solid var(--aw-teal); background: var(--aw-soft); }
+    .aw-route strong { display: block; color: var(--aw-blue); }
+
+    .aw-table-wrap { max-width: 100%; overflow-x: auto; margin: 14px 0; border: 1px solid var(--aw-line); border-radius: 7px; background: #fff; color: var(--aw-ink); }
+    .aw-trace { width: 100%; min-width: 740px; border-collapse: collapse; table-layout: fixed; }
+    .aw-trace th, .aw-trace td { padding: 9px; border-right: 1px solid var(--aw-line); border-bottom: 1px solid var(--aw-line); vertical-align: top; }
+    .aw-trace th:last-child, .aw-trace td:last-child { border-right: 0; }
+    .aw-trace tbody tr:last-child td { border-bottom: 0; }
+    .aw-trace th { background: #e6eff3; text-align: left; }
+    .aw-trace .given { background: #f7f9fa; font-weight: 700; }
+    .aw-trace input, .aw-trace textarea { width: 100%; min-height: 40px; box-sizing: border-box; padding: 7px 8px; border: 1px solid #9cafba; border-radius: 4px; background: #fff; color: var(--aw-ink); font: inherit; }
+    .aw-trace textarea { min-height: 65px; resize: vertical; }
+    .aw-trace input.is-correct, .aw-trace textarea.is-correct { border-color: var(--aw-green); background: #eaf7f0; }
+    .aw-trace input.is-wrong, .aw-trace textarea.is-wrong { border-color: var(--aw-red); background: #fff0f1; }
+    .aw-table-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 12px; border-top: 1px solid var(--aw-line); background: #f8fafb; }
+    .aw-table-status { color: var(--aw-muted); font-weight: 800; }
+
+    .aw-pin-board { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 10px; align-items: stretch; margin: 16px 0; }
+    .aw-pin-board > div { display: grid; place-items: center; padding: 14px; border: 2px solid var(--aw-line); background: #fff; text-align: center; }
+    .aw-pin-board .board { background: #087f7a; color: #fff; border-color: #075f5b; }
+    .aw-pin-board strong { display: block; }
+    .aw-pin-board small { display: block; margin-top: 5px; }
+
+    .aw-flow { display: grid; justify-items: center; gap: 7px; max-width: 650px; margin: 16px auto; padding: 17px; border: 1px solid var(--aw-line); background: #f8fafb; }
+    .aw-flow-step { width: min(100%, 310px); box-sizing: border-box; padding: 11px; border: 2px solid var(--aw-blue); background: #fff; text-align: center; font-weight: 800; }
+    .aw-flow-step.round { border-radius: 999px; background: #e8f4f3; }
+    .aw-flow-step.decision { width: 150px; min-height: 150px; display: grid; place-items: center; transform: rotate(45deg); background: #fff3c9; }
+    .aw-flow-step.decision span { max-width: 105px; transform: rotate(-45deg); }
+    .aw-arrow { color: var(--aw-blue); font-size: 1.45rem; font-weight: 900; line-height: 1; }
+    .aw-flow-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; }
+    .aw-flow-branch { display: grid; justify-items: center; gap: 6px; }
+    .aw-flow-branch strong { color: var(--aw-teal); }
+
+    .aw-bug-lab { margin: 17px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-bug-code { padding: 15px; background: #1e2935; color: #edf6f8; font: 700 .94rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .aw-bug-line { display: grid; grid-template-columns: 35px 1fr; width: 100%; padding: 7px 9px; border: 0; border-left: 4px solid transparent; background: transparent; color: inherit; text-align: left; font: inherit; cursor: pointer; }
+    .aw-bug-line::before { content: attr(data-number); color: #8da2b2; }
+    .aw-bug-line:hover, .aw-bug-line:focus-visible { background: #2c3c49; }
+    .aw-bug-line.is-right { border-color: #54cf91; background: #183f34; }
+    .aw-bug-line.is-wrong { border-color: #ff7181; background: #47232a; }
+    .aw-bug-feedback { min-height: 48px; padding: 12px 14px; border-top: 1px solid var(--aw-line); background: #f8fafb; }
+
+    .aw-source-list li + li { margin-top: 7px; }
+    .wb-book[data-theme="dark"] .aw-system-lab,
+    .wb-book[data-theme="dark-blue"] .aw-system-lab,
+    .wb-book[data-theme="dark"] .aw-table-wrap,
+    .wb-book[data-theme="dark-blue"] .aw-table-wrap,
+    .wb-book[data-theme="dark"] .aw-bug-lab,
+    .wb-book[data-theme="dark-blue"] .aw-bug-lab { color: #172033; }
+
+    @media (max-width: 950px) {
+      .aw-goals, .aw-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aw-system { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aw-system::before, .aw-pulse { display: none; }
+    }
+    @media (max-width: 720px) {
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .aw-hero h1 { font-size: 2rem; }
+      .aw-goals, .aw-cards, .aw-motor-grid, .aw-check-grid, .aw-route, .aw-pin-board { grid-template-columns: 1fr; }
+      .aw-toolbar, .aw-table-footer { align-items: stretch; flex-direction: column; }
+      .aw-system { grid-template-columns: 1fr; padding: 18px; }
+      .aw-lab-state { grid-template-columns: 1fr 1fr; }
+      .aw-flow-branches { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand, .wb-book .wb-theme-wrap, .wb-book .wb-present-btn, .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 50px; font-size: 15px; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+      .aw-lab-state { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .aw-node, .aw-pulse { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script class="wb-book-config" type="application/json">
+    {
+      "bookTitle":"Arduino-Wiederholung",
+      "sectionTitle":"Vom Signal zum funktionierenden System",
+      "startPage":1,
+      "submitLabel":"Ergebnisse & Abschluss",
+      "onSubmit":"alert",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Deine Wiederholungsroute",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"arduino-wiederholung-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Systemcheck">
+      <div class="aw-hero">
+        <div class="aw-kicker">Arduino-Wiederholung</div>
+        <h1>Kannst du aus einem Messwert eine zuverlässige Handlung machen?</h1>
+        <p class="aw-lead">Ein Arduino-Projekt funktioniert nur, wenn Hardware, Programm und Teststrategie zusammenspielen. Du wiederholst deshalb nicht einzelne Befehle auswendig, sondern verfolgst vollständige Wirkungsketten: messen, speichern, entscheiden, handeln und prüfen.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="aw-goals">
+        <div class="aw-goal"><strong>Hardware</strong>Pins, Stromkreis und Bauteilschutz sicher beurteilen.</div>
+        <div class="aw-goal"><strong>Programmfluss</strong><code>setup()</code>, <code>loop()</code>, Bedingungen und Schleifen lesen.</div>
+        <div class="aw-goal"><strong>Schnittstellen</strong>Sensoren, serielle Ausgabe, Displays und Aktoren verbinden.</div>
+        <div class="aw-goal"><strong>Debugging</strong>Fehler eingrenzen, sichtbar machen und gezielt beheben.</div>
+      </div>
+
+      <h2>Systemlabor: Folge einem Signal</h2>
+      <p>Ein Feuchtesensor meldet <strong>28&nbsp;%</strong>. Unter 35&nbsp;% soll eine Pumpe starten. Starte den Ablauf und beobachte, wie aus einer physikalischen Größe eine technische Reaktion wird.</p>
+
+      <div class="aw-system-lab" data-system-lab>
+        <div class="aw-toolbar">
+          <strong>Signalweg einer Bewässerung</strong>
+          <div class="aw-actions">
+            <button class="aw-btn primary" type="button" data-system-action="toggle">Start</button>
+            <button class="aw-btn" type="button" data-system-action="step">Einzelschritt</button>
+            <button class="aw-btn" type="button" data-system-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="aw-system" data-system-stage>
+          <div class="aw-pulse" data-system-pulse></div>
+          <div class="aw-node" data-system-node="0"><strong>Sensor</strong><span>Bodenfeuchte erfassen</span></div>
+          <div class="aw-node" data-system-node="1"><strong>Arduino</strong><span>Messwert einlesen und speichern</span></div>
+          <div class="aw-node" data-system-node="2"><strong>Entscheidung</strong><span>28&nbsp;% &lt; 35&nbsp;% prüfen</span></div>
+          <div class="aw-node" data-system-node="3"><strong>Aktor</strong><span>Pumpe über Treiber einschalten</span></div>
+        </div>
+        <div class="aw-lab-state">
+          <div><span>aktueller Schritt</span><strong data-system-label>bereit</strong></div>
+          <div><span>Messwert</span><strong data-system-value>–</strong></div>
+          <div><span>Bedingung</span><strong data-system-condition>–</strong></div>
+          <div><span>Pumpe</span><strong data-system-output>aus</strong></div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-reveal-chain",
+          "title":"Denkpause: Warum gehört ein Motortreiber in die Wirkungskette?",
+          "question":"Warum sollte die Pumpe nicht direkt an einem digitalen Arduino-Pin angeschlossen werden?",
+          "answer":"Ein Ausgangspin liefert nur einen kleinen Steuerstrom. Ein Motor benötigt meist deutlich mehr Strom und erzeugt beim Schalten störende Spannungsspitzen. Ein geeigneter Treiber übernimmt den Laststrom; Arduino und Treiber brauchen dabei eine gemeinsame Masse."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-mcq-diagnose",
+          "title":"Einstiegsdiagnose",
+          "hint":"Mehrere Antworten können richtig sein. Begründe jede Wahl gedanklich.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Schritte gehören zu einem sinnvoll getesteten Arduino-System?",
+            "choices":[
+              {"id":"A","label":"Eingang erfassen"},
+              {"id":"B","label":"Wert verarbeiten oder vergleichen"},
+              {"id":"C","label":"Ausgang ansteuern"},
+              {"id":"D","label":"Bei Fehlern sofort alle Bauteile austauschen"}
+            ],
+            "correct":["A","B","C"],
+            "explain":"Ein technisches System verarbeitet Eingaben zu Ausgaben. Beim Debuggen prüfst du diese Kette schrittweise; ein wahlloser Austausch liefert keine belastbare Diagnose."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Board und Schaltung">
+      <h1>Hardware sicher lesen</h1>
+      <p>Das Arduino-Board verbindet den Mikrocontroller mit nutzbaren Anschlüssen. Digitale Pins verarbeiten die Zustände <code>HIGH</code> und <code>LOW</code>, analoge Eingänge erfassen abgestufte Messwerte. Versorgungsanschlüsse liefern elektrische Potenziale; <code>GND</code> ist der gemeinsame Bezugspunkt.</p>
+
+      <figure class="aw-image">
+        <img src="pdf-bilder/seite03.png" alt="Arduino Uno mit beschriftetem Mikrocontroller, digitalen Pins, Versorgungsanschlüssen, USB-Buchse und Reset-Taster" />
+        <figcaption>Orientierung am Arduino Uno: Board, Mikrocontroller, Pins, Versorgung, USB und Reset.</figcaption>
+      </figure>
+
+      <div class="wb-section-break"></div>
+
+      <div class="aw-pin-board" aria-label="Übersicht der Arduino-Anschlussgruppen">
+        <div><strong>Digitale Pins</strong><small>HIGH/LOW lesen oder ausgeben; PWM nur an markierten Pins</small></div>
+        <div class="board"><strong>Mikrocontroller</strong><small>führt das gespeicherte Programm fortlaufend aus</small></div>
+        <div><strong>Analoge Eingänge</strong><small>abgestufte Sensorsignale erfassen</small></div>
+        <div><strong>5 V / 3,3 V</strong><small>passende Bauteile versorgen</small></div>
+        <div><strong>USB</strong><small>Programm übertragen und serielle Daten austauschen</small></div>
+        <div><strong>GND</strong><small>gemeinsames Bezugspotenzial herstellen</small></div>
+      </div>
+
+      <div class="aw-danger"><strong>Sicherheitscheck:</strong> Verbinde niemals Versorgung und GND direkt. Eine LED braucht einen Vorwiderstand. Motoren werden wegen ihres Strombedarfs und ihrer Induktionsspannung über eine geeignete Treiberstufe betrieben.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="aw-hardware-pairs" data-p2-title="Bauteil und Aufgabe verbinden" data-p2-hint="Ordne jede Hardwarekomponente ihrer wichtigsten Funktion zu.">
+        <div class="p2-board">
+          <div class="p2-col">
+            <div class="p2-col-title">Komponente</div>
+            <div class="p2-bank" data-bank="L">
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">LED-Vorwiderstand</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">GND</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">USB-Verbindung</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Motortreiber</div>
+            </div>
+          </div>
+          <div class="p2-col">
+            <div class="p2-col-title">Aufgabe</div>
+            <div class="p2-bank" data-bank="R">
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">Programm übertragen und serielle Kommunikation ermöglichen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">Strom durch die Leuchtdiode begrenzen</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">großen Laststrom mit einem kleinen Steuersignal schalten</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">gemeinsames Bezugspotenzial bilden</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-actions"><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-verify-led",
+          "title":"Wahr oder falsch?",
+          "hint":"Denke an Stromweg und Schutz des Bauteils.",
+          "statement":"Es ist gleichgültig, in welcher Richtung eine LED eingebaut wird, solange ein Widerstand vorhanden ist.",
+          "answer":false,
+          "explain":"Eine LED leitet nur in Durchlassrichtung. Der Vorwiderstand schützt sie vor zu großem Strom, ersetzt aber nicht die richtige Polung."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Programm und Upload">
+      <h1>Vom Quelltext zur wiederholten Ausführung</h1>
+      <p>Beim Start oder Reset führt der Arduino zuerst <code>setup()</code> genau einmal aus. Danach wird <code>loop()</code> immer wieder von oben nach unten durchlaufen. Vor dem Übertragen prüft der Compiler die Schreibweise und übersetzt den Quelltext; anschließend wird das Programm über den gewählten Port auf das richtige Board geladen.</p>
+
+      <div class="aw-route">
+        <div><strong>1. Planen</strong>Eingaben, Verarbeitung und Ausgaben festlegen.</div>
+        <div><strong>2. Schreiben</strong>Bezeichner, Klammern und Semikola korrekt setzen.</div>
+        <div><strong>3. Kompilieren</strong>Syntax prüfen und übersetzen.</div>
+        <div><strong>4. Übertragen</strong>Board und Port auswählen, dann hochladen.</div>
+        <div><strong>5. Testen</strong>Wirkung beobachten und Soll-Ist vergleichen.</div>
+      </div>
+
+      <div class="aw-code">const int LED = 13;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED, HIGH);
+  delay(500);
+  digitalWrite(LED, LOW);
+  delay(500);
+}</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Ablaufspur: Was passiert wann?</h2>
+      <div class="aw-table-wrap" data-trace-table data-table-id="blink-ablauf">
+        <table class="aw-trace">
+          <thead><tr><th>Phase</th><th>Anweisung</th><th>LED danach</th><th>vergangene Zeit</th><th>Wird erneut ausgeführt?</th></tr></thead>
+          <tbody>
+            <tr><td class="given">Start</td><td class="given"><code>pinMode(LED, OUTPUT)</code></td><td><input data-trace data-answer="unverändert|aus" aria-label="LED nach pinMode"></td><td><input data-trace data-answer="0|0 ms" aria-label="Zeit nach pinMode"></td><td><input data-trace data-answer="nein|nur nach reset" aria-label="Wiederholung setup"></td></tr>
+            <tr><td class="given">loop 1</td><td class="given"><code>digitalWrite(LED, HIGH)</code></td><td><input data-trace data-answer="an|high" aria-label="LED nach HIGH"></td><td><input data-trace data-answer="0|0 ms" aria-label="Zeit nach HIGH"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung HIGH"></td></tr>
+            <tr><td class="given">loop 1</td><td class="given"><code>delay(500)</code></td><td><input data-trace data-answer="an|high" aria-label="LED nach erster Pause"></td><td><input data-trace data-answer="500|500 ms" aria-label="Zeit nach erster Pause"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung erster Pause"></td></tr>
+            <tr><td class="given">loop 1</td><td class="given"><code>digitalWrite(LED, LOW)</code></td><td><input data-trace data-answer="aus|low" aria-label="LED nach LOW"></td><td><input data-trace data-answer="500|500 ms" aria-label="Zeit nach LOW"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung LOW"></td></tr>
+            <tr><td class="given">loop 1</td><td class="given"><code>delay(500)</code></td><td><input data-trace data-answer="aus|low" aria-label="LED nach zweiter Pause"></td><td><input data-trace data-answer="1000|1000 ms|1 s" aria-label="Zeit nach zweiter Pause"></td><td><input data-trace data-answer="ja" aria-label="Wiederholung zweiter Pause"></td></tr>
+          </tbody>
+        </table>
+        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-order-upload",
+          "title":"Upload in sinnvoller Reihenfolge",
+          "hint":"Ordne vom Entwurf bis zur Prüfung am echten Aufbau.",
+          "items":[
+            "Schaltung und gewünschtes Verhalten planen",
+            "Quelltext schreiben",
+            "Board und Port kontrollieren",
+            "Programm kompilieren und übertragen",
+            "Ein- und Ausgaben gezielt testen",
+            "Beobachtung mit der Erwartung vergleichen"
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Werte, Funktionen, Serial">
+      <h1>Werte speichern und Verhalten sichtbar machen</h1>
+      <p>Variablen halten Zustände fest, etwa einen Messwert, eine Punktzahl oder eine Motorgeschwindigkeit. Ein Datentyp legt fest, welche Art von Wert gespeichert werden kann. Funktionen bündeln wiederkehrende Anweisungen unter einem Namen. Die serielle Ausgabe macht innere Zustände sichtbar und ist deshalb ein zentrales Diagnosewerkzeug.</p>
+
+      <div class="aw-cards">
+        <div class="aw-card"><h3>Variable</h3><code>int wert = 3;</code><p>Ein benannter Speicherplatz mit aktuellem Wert.</p></div>
+        <div class="aw-card"><h3>Funktion</h3><code>signal(440);</code><p>Ein verständlicher Name ruft einen wiederverwendbaren Ablauf auf.</p></div>
+        <div class="aw-card"><h3>Serieller Monitor</h3><code>Serial.println(wert);</code><p>Der aktuelle Zustand wird zur Beobachtung ausgegeben.</p></div>
+      </div>
+
+      <div class="aw-code">int punkte = 2;
+
+void verdoppleUndZeige() {
+  punkte = punkte * 2;
+  Serial.println(punkte);
+}
+
+void setup() {
+  Serial.begin(9600);
+  verdoppleUndZeige();
+  punkte = punkte + 3;
+  verdoppleUndZeige();
+}</div>
+
+      <h2>Ablaufspur: Variable und Funktionsaufruf</h2>
+      <div class="aw-table-wrap" data-trace-table data-table-id="funktion-variable">
+        <table class="aw-trace">
+          <thead><tr><th>Schritt</th><th>Anweisung</th><th><code>punkte</code> vorher</th><th><code>punkte</code> nachher</th><th>serielle Ausgabe</th></tr></thead>
+          <tbody>
+            <tr><td class="given">1</td><td class="given">erster Funktionsaufruf</td><td><input data-trace data-answer="2" aria-label="Punkte vor erstem Aufruf"></td><td><input data-trace data-answer="4" aria-label="Punkte nach erstem Aufruf"></td><td><input data-trace data-answer="4" aria-label="Ausgabe erster Aufruf"></td></tr>
+            <tr><td class="given">2</td><td class="given"><code>punkte = punkte + 3</code></td><td><input data-trace data-answer="4" aria-label="Punkte vor Addition"></td><td><input data-trace data-answer="7" aria-label="Punkte nach Addition"></td><td><input data-trace data-answer="keine|–|-" aria-label="Ausgabe Addition"></td></tr>
+            <tr><td class="given">3</td><td class="given">zweiter Funktionsaufruf</td><td><input data-trace data-answer="7" aria-label="Punkte vor zweitem Aufruf"></td><td><input data-trace data-answer="14" aria-label="Punkte nach zweitem Aufruf"></td><td><input data-trace data-answer="14" aria-label="Ausgabe zweiter Aufruf"></td></tr>
+          </tbody>
+        </table>
+        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-cat-code-roles",
+          "title":"Welche Rolle spielt die Zeile?",
+          "hint":"Ordne nach der Wirkung im Programm.",
+          "categories":[
+            {"id":"declare","title":"Vorbereiten / Deklarieren"},
+            {"id":"change","title":"Wert verändern"},
+            {"id":"observe","title":"Beobachten / Ausgeben"},
+            {"id":"call","title":"Funktion aufrufen"}
+          ],
+          "items":[
+            {"label":"int temperatur = 0;","category":"declare"},
+            {"label":"temperatur = temperatur + 2;","category":"change"},
+            {"label":"Serial.println(temperatur);","category":"observe"},
+            {"label":"warnsignal();","category":"call"},
+            {"label":"Serial.begin(9600);","category":"declare"},
+            {"label":"helligkeit = 127;","category":"change"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="aw-success"><strong>Jetzt hast du gelernt:</strong> Gute Variablennamen und kleine Funktionen strukturieren das Programm. Mit <code>Serial.print()</code> oder <code>Serial.println()</code> überprüfst du, ob die Werte tatsächlich so entstehen, wie du es geplant hast.</div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Schleifen und PWM">
+      <h1>Wiederholen, zählen und Helligkeit steuern</h1>
+      <p>Eine <code>for</code>-Schleife passt, wenn die Anzahl der Durchläufe feststeht. Initialisierung, Bedingung und Änderung der Zählvariablen legen gemeinsam fest, welche Werte auftreten. Bei <code>analogWrite()</code> steuert ein PWM-Wert typischerweise das Verhältnis von Ein- und Ausschaltzeit; beim Arduino Uno reichen die Werte von 0 bis 255.</p>
+
+      <div class="aw-code">for (int hell = 0; hell &lt;= 255; hell = hell + 85) {
+  analogWrite(3, hell);
+  delay(400);
+}</div>
+
+      <h2>Ablaufspur: Schleife und PWM-Werte</h2>
+      <div class="aw-table-wrap" data-trace-table data-table-id="for-pwm">
+        <table class="aw-trace">
+          <thead><tr><th>Prüfung</th><th><code>hell</code> vor Prüfung</th><th><code>hell &lt;= 255</code></th><th><code>analogWrite</code> ausgeführt?</th><th>nächster Wert</th></tr></thead>
+          <tbody>
+            <tr><td class="given">1</td><td><input data-trace data-answer="0" aria-label="hell Prüfung 1"></td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung Prüfung 1"></td><td><input data-trace data-answer="ja|0" aria-label="PWM Prüfung 1"></td><td><input data-trace data-answer="85" aria-label="Nächster Wert 1"></td></tr>
+            <tr><td class="given">2</td><td><input data-trace data-answer="85" aria-label="hell Prüfung 2"></td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung Prüfung 2"></td><td><input data-trace data-answer="ja|85" aria-label="PWM Prüfung 2"></td><td><input data-trace data-answer="170" aria-label="Nächster Wert 2"></td></tr>
+            <tr><td class="given">3</td><td><input data-trace data-answer="170" aria-label="hell Prüfung 3"></td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung Prüfung 3"></td><td><input data-trace data-answer="ja|170" aria-label="PWM Prüfung 3"></td><td><input data-trace data-answer="255" aria-label="Nächster Wert 3"></td></tr>
+            <tr><td class="given">4</td><td><input data-trace data-answer="255" aria-label="hell Prüfung 4"></td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung Prüfung 4"></td><td><input data-trace data-answer="ja|255" aria-label="PWM Prüfung 4"></td><td><input data-trace data-answer="340" aria-label="Nächster Wert 4"></td></tr>
+            <tr><td class="given">5</td><td><input data-trace data-answer="340" aria-label="hell Prüfung 5"></td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung Prüfung 5"></td><td><input data-trace data-answer="nein" aria-label="PWM Prüfung 5"></td><td><input data-trace data-answer="–|-|kein" aria-label="Nächster Wert 5"></td></tr>
+          </tbody>
+        </table>
+        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="aw-note"><strong>Stopp & check:</strong> Die Schleife hat vier Durchläufe, obwohl die Zählvariable mit 0 beginnt. Der Wert 255 gehört wegen <code>&lt;=</code> noch dazu. Erst 340 macht die Bedingung falsch.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-cloze-loops-pwm",
+          "title":"Sicherung: Schleifen und PWM",
+          "hint":"Setze jeden Begriff genau einmal ein und lies den vollständigen Satz anschließend noch einmal.",
+          "bank":["Initialisierung","Bedingung","Änderung","PWM","0","255"],
+          "segments":[
+            {"t":"text","v":"Eine for-Schleife besteht im Kopf aus "},
+            {"t":"gap","a":"Initialisierung"},
+            {"t":"text","v":", "},
+            {"t":"gap","a":"Bedingung"},
+            {"t":"text","v":" und "},
+            {"t":"gap","a":"Änderung"},
+            {"t":"text","v":". analogWrite() nutzt am Arduino Uno "},
+            {"t":"gap","a":"PWM"},
+            {"t":"text","v":" mit Werten von "},
+            {"t":"gap","a":"0"},
+            {"t":"text","v":" bis "},
+            {"t":"gap","a":"255"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-mcq-pwm-rgb",
+          "title":"Transfer: RGB-LED",
+          "hint":"Eine RGB-LED besitzt drei steuerbare Farbkanäle.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Wie entsteht bei einer RGB-LED eine neue Mischfarbe?",
+            "choices":[
+              {"id":"A","label":"Durch unterschiedliche PWM-Werte für Rot, Grün und Blau"},
+              {"id":"B","label":"Durch eine for-Schleife ohne Ausgänge"},
+              {"id":"C","label":"Nur durch Vertauschen von 5 V und GND"},
+              {"id":"D","label":"Durch eine höhere Baudrate"}
+            ],
+            "correct":["A"],
+            "explain":"Die wahrgenommene Farbe entsteht aus den Helligkeitsanteilen der drei Farbkanäle. Die Baudrate betrifft dagegen die serielle Kommunikation."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Eingaben und Entscheidungen">
+      <h1>Taster lesen und Bedingungen präzise formulieren</h1>
+      <p>Ein digitaler Eingang braucht einen eindeutigen Grundzustand. Mit <code>INPUT_PULLUP</code> nutzt der Arduino einen internen Widerstand: Nicht gedrückt ergibt meist <code>HIGH</code>, gedrückt verbindet den Eingang mit GND und ergibt <code>LOW</code>. Diese umgekehrte Logik muss die Bedingung korrekt berücksichtigen.</p>
+
+      <div class="aw-code">const int TASTER = 2;
+const int LED = 13;
+
+void setup() {
+  pinMode(TASTER, INPUT_PULLUP);
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  int zustand = digitalRead(TASTER);
+  if (zustand == LOW) {
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(LED, LOW);
+  }
+}</div>
+
+      <div class="aw-flow" aria-label="Flussdiagramm zur Tasterabfrage">
+        <div class="aw-flow-step round">loop beginnt</div><div class="aw-arrow">↓</div>
+        <div class="aw-flow-step">Tasterzustand lesen</div><div class="aw-arrow">↓</div>
+        <div class="aw-flow-step decision"><span>Zustand gleich LOW?</span></div>
+        <div class="aw-flow-branches">
+          <div class="aw-flow-branch"><strong>ja</strong><div class="aw-flow-step">LED einschalten</div></div>
+          <div class="aw-flow-branch"><strong>nein</strong><div class="aw-flow-step">LED ausschalten</div></div>
+        </div>
+      </div>
+
+      <h2>Ablaufspur: INPUT_PULLUP</h2>
+      <div class="aw-table-wrap" data-trace-table data-table-id="pullup-if">
+        <table class="aw-trace">
+          <thead><tr><th>Taster</th><th>eingelesener Zustand</th><th><code>zustand == LOW</code></th><th>gewählter Zweig</th><th>LED</th></tr></thead>
+          <tbody>
+            <tr><td class="given">nicht gedrückt</td><td><input data-trace data-answer="high" aria-label="Zustand nicht gedrückt"></td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung nicht gedrückt"></td><td><input data-trace data-answer="else|sonst" aria-label="Zweig nicht gedrückt"></td><td><input data-trace data-answer="aus|low" aria-label="LED nicht gedrückt"></td></tr>
+            <tr><td class="given">gedrückt</td><td><input data-trace data-answer="low" aria-label="Zustand gedrückt"></td><td><input data-trace data-answer="wahr|ja" aria-label="Bedingung gedrückt"></td><td><input data-trace data-answer="if|dann" aria-label="Zweig gedrückt"></td><td><input data-trace data-answer="an|high" aria-label="LED gedrückt"></td></tr>
+          </tbody>
+        </table>
+        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-mcq-while",
+          "title":"if oder while?",
+          "hint":"Achte darauf, ob nur entschieden oder wiederholt werden soll.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Ein Warnlicht soll genau einmal entsprechend dem aktuellen Messwert ein- oder ausgeschaltet werden. Was passt?",
+              "choices":[{"id":"A","label":"if / else"},{"id":"B","label":"while ohne Zustandsänderung"},{"id":"C","label":"nur delay()"}],
+              "correct":["A"],
+              "explain":"if / else wählt anhand des aktuellen Zustands einen Zweig. Eine Schleife ist dafür nicht notwendig."
+            },
+            {
+              "text":"Der Arduino soll weiter warten, solange der Taster nicht gedrückt ist. Was passt grundsätzlich?",
+              "choices":[{"id":"A","label":"while mit erneuter Tasterabfrage"},{"id":"B","label":"eine Variablendeklaration"},{"id":"C","label":"Serial.begin()"}],
+              "correct":["A"],
+              "explain":"Eine while-Schleife wiederholt ihren Rumpf, solange die Bedingung wahr bleibt. Der relevante Zustand muss darin erneut geprüft werden können."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="aw-danger"><strong>Typische Endlosschleife:</strong> Wenn eine <code>while</code>-Bedingung wahr ist und sich keiner ihrer beteiligten Werte im Schleifenrumpf ändern kann, wird sie nie verlassen.</div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Arrays und Interrupts">
+      <h1>Viele Werte ordnen, kurze Ereignisse bemerken</h1>
+      <p>Ein Array speichert mehrere Werte desselben Typs in einer geordneten Liste. Der erste Platz hat den Index 0. Eine Schleife kann die Einträge nacheinander bearbeiten. Ein Interrupt unterbricht den normalen Ablauf bei einem Ereignis kurz; die Interrupt-Service-Routine, kurz ISR, sollte deshalb nur das Nötigste tun.</p>
+
+      <div class="aw-code">int melodie[] = {262, 330, 392, 523};
+
+for (int i = 0; i &lt; 4; i++) {
+  tone(8, melodie[i]);
+  delay(200);
+}
+noTone(8);</div>
+
+      <h2>Ablaufspur: Arrayindex und Ton</h2>
+      <div class="aw-table-wrap" data-trace-table data-table-id="array-melodie">
+        <table class="aw-trace">
+          <thead><tr><th>Durchlauf</th><th>Index <code>i</code></th><th>Bedingung <code>i &lt; 4</code></th><th><code>melodie[i]</code></th><th>gültiger Index?</th></tr></thead>
+          <tbody>
+            <tr><td class="given">1</td><td><input data-trace data-answer="0" aria-label="Index Durchlauf 1"></td><td><input data-trace data-answer="wahr|ja" aria-label="Arraybedingung 1"></td><td><input data-trace data-answer="262" aria-label="Ton Durchlauf 1"></td><td><input data-trace data-answer="ja" aria-label="Index gültig 1"></td></tr>
+            <tr><td class="given">2</td><td><input data-trace data-answer="1" aria-label="Index Durchlauf 2"></td><td><input data-trace data-answer="wahr|ja" aria-label="Arraybedingung 2"></td><td><input data-trace data-answer="330" aria-label="Ton Durchlauf 2"></td><td><input data-trace data-answer="ja" aria-label="Index gültig 2"></td></tr>
+            <tr><td class="given">3</td><td><input data-trace data-answer="2" aria-label="Index Durchlauf 3"></td><td><input data-trace data-answer="wahr|ja" aria-label="Arraybedingung 3"></td><td><input data-trace data-answer="392" aria-label="Ton Durchlauf 3"></td><td><input data-trace data-answer="ja" aria-label="Index gültig 3"></td></tr>
+            <tr><td class="given">4</td><td><input data-trace data-answer="3" aria-label="Index Durchlauf 4"></td><td><input data-trace data-answer="wahr|ja" aria-label="Arraybedingung 4"></td><td><input data-trace data-answer="523" aria-label="Ton Durchlauf 4"></td><td><input data-trace data-answer="ja" aria-label="Index gültig 4"></td></tr>
+            <tr><td class="given">nächste Prüfung</td><td><input data-trace data-answer="4" aria-label="Index nach letztem Durchlauf"></td><td><input data-trace data-answer="falsch|nein" aria-label="Arraybedingung Ende"></td><td><input data-trace data-answer="kein zugriff|keiner|–|-" aria-label="Ton nach Schleife"></td><td><input data-trace data-answer="nein" aria-label="Index gültig Ende"></td></tr>
+          </tbody>
+        </table>
+        <div class="aw-table-footer"><div class="aw-actions"><button class="aw-btn primary" type="button" data-trace-check>Prüfen</button><button class="aw-btn" type="button" data-trace-reset>Leeren</button></div><div class="aw-table-status" data-trace-status>Noch nicht geprüft</div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="aw-cards">
+        <div class="aw-card"><h3>Polling</h3><p><code>loop()</code> fragt einen Eingang wiederholt ab. Übersichtlich, aber kurze Ereignisse können während langer Blockaden verpasst werden.</p></div>
+        <div class="aw-card"><h3>Interrupt</h3><p>Ein festgelegtes Signal löst sofort eine ISR aus. Sie setzt meist nur eine Merker-Variable.</p></div>
+        <div class="aw-card"><h3><code>volatile</code></h3><p>Kennzeichnet einen Wert, der sich außerhalb des normalen Programmflusses durch eine ISR ändern kann.</p></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-cat-array-interrupt",
+          "title":"Array, Polling oder Interrupt?",
+          "hint":"Ordne jede Situation dem passendsten Werkzeug zu.",
+          "categories":[
+            {"id":"array","title":"Array"},
+            {"id":"polling","title":"Polling"},
+            {"id":"interrupt","title":"Interrupt"}
+          ],
+          "items":[
+            {"label":"acht Tonfrequenzen geordnet speichern","category":"array"},
+            {"label":"Taster in jeder loop-Runde abfragen","category":"polling"},
+            {"label":"einen sehr kurzen Impuls zuverlässig bemerken","category":"interrupt"},
+            {"label":"Messwerte über Indizes nacheinander ausgeben","category":"array"},
+            {"label":"ein Ereignis außerhalb des normalen Ablaufs markieren","category":"interrupt"},
+            {"label":"einen langsam veränderlichen Sensor regelmäßig prüfen","category":"polling"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-verify-isr",
+          "title":"Wahr oder falsch?",
+          "hint":"Denke daran, dass der normale Programmablauf während einer ISR wartet.",
+          "statement":"Eine ISR ist der richtige Ort für lange Wartezeiten, Displayausgaben und umfangreiche Berechnungen.",
+          "answer":false,
+          "explain":"Eine ISR bleibt kurz. Sie merkt sich das Ereignis, häufig mit einer volatile-Variablen. Die eigentliche Verarbeitung übernimmt anschließend der normale Programmablauf."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Displays und Motoren">
+      <h1>Die passende Ausgabe für die Aufgabe wählen</h1>
+      <p>Eine LED zeigt einen einfachen Zustand, ein Lautsprecher erzeugt Töne, ein LCD stellt Text oder Messwerte dar. Bei Bewegung entscheidet die Aufgabe über den Motortyp. Ein DC-Motor dreht kontinuierlich, ein Servo fährt Winkelpositionen an, ein Schrittmotor bewegt sich in reproduzierbaren Einzelschritten.</p>
+
+      <div class="aw-motor-grid">
+        <div class="aw-motor"><h3>DC-Motor</h3><p>Geeignet für kontinuierliche Drehung und Drehzahlsteuerung. Richtung und Leistung werden über eine Treiberstufe, etwa eine H-Brücke, gesteuert.</p></div>
+        <div class="aw-motor"><h3>Servomotor</h3><p>Geeignet für definierte Winkel, Klappen und Hebel. Die Bibliothek erzeugt das benötigte Steuersignal.</p></div>
+        <div class="aw-motor"><h3>Schrittmotor</h3><p>Geeignet für schrittweise, reproduzierbare Drehbewegungen. Eine Treiberplatine versorgt die Wicklungen in der richtigen Folge.</p></div>
+      </div>
+
+      <figure class="aw-image narrow">
+        <img src="pdf-bilder/stepper1.png" alt="Arduino Uno mit Treiberplatine und angeschlossenem Schrittmotor" />
+        <figcaption>Ein Schrittmotor wird nicht direkt vom Arduino versorgt: Die Treiberplatine setzt die Steuersignale in Wicklungsströme um.</figcaption>
+      </figure>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-cat-output-choice",
+          "title":"Wähle die passende Ausgabe",
+          "hint":"Ordne nach dem wichtigsten technischen Ziel.",
+          "categories":[
+            {"id":"lcd","title":"LCD"},
+            {"id":"dc","title":"DC-Motor"},
+            {"id":"servo","title":"Servo"},
+            {"id":"stepper","title":"Schrittmotor"}
+          ],
+          "items":[
+            {"label":"Temperatur als Zahl anzeigen","category":"lcd"},
+            {"label":"Lüfter dauerhaft drehen lassen","category":"dc"},
+            {"label":"Klappe auf 70 Grad stellen","category":"servo"},
+            {"label":"Drehteller exakt 200 Schritte bewegen","category":"stepper"},
+            {"label":"Menütext in zwei Zeilen darstellen","category":"lcd"},
+            {"label":"Fahrzeugrad mit veränderbarer Drehzahl antreiben","category":"dc"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-mcq-motors",
+          "title":"Motor- und Displaycheck",
+          "hint":"Mehrere Antworten können richtig sein.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Was muss bei einem Motor mit externer Versorgung beachtet werden?",
+              "choices":[{"id":"A","label":"Arduino und Treiber benötigen eine gemeinsame Masse."},{"id":"B","label":"Der Motorstrom sollte direkt durch den Ausgangspin fließen."},{"id":"C","label":"Die Versorgung muss zum Motor und Treiber passen."},{"id":"D","label":"Induktive Spannungsspitzen müssen berücksichtigt werden."}],
+              "correct":["A","C","D"],
+              "explain":"Der Ausgangspin liefert das Steuersignal. Treiber, passende Versorgung, gemeinsame Masse und Schutz vor Spannungsspitzen sorgen für einen belastbaren Aufbau."
+            },
+            {
+              "text":"Was gehört typischerweise zur Initialisierung eines LCD?",
+              "choices":[{"id":"A","label":"Bibliothek und Anschlussart festlegen"},{"id":"B","label":"Displaygröße beziehungsweise Adresse passend konfigurieren"},{"id":"C","label":"jeden Motorpin auf INPUT setzen"}],
+              "correct":["A","B"],
+              "explain":"Die konkrete Initialisierung hängt davon ab, ob das Display parallel oder beispielsweise über I²C angeschlossen ist."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="aw-success"><strong>Jetzt hast du gelernt:</strong> Die technische Aufgabe bestimmt den Aktor. Bibliotheken vereinfachen die Ansteuerung, lösen aber weder falsche Verdrahtung noch eine ungeeignete Stromversorgung.</div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Fehlerlabor">
+      <h1>Debugging beginnt bei der ersten Abweichung</h1>
+      <p>Trenne Syntaxfehler, Übertragungsprobleme, Logikfehler und Hardwarefehler. Prüfe zuerst, ob das Programm kompiliert und übertragen wird. Danach testest du die kleinste mögliche Wirkungskette und machst Zustände mit der seriellen Ausgabe sichtbar.</p>
+
+      <figure class="aw-image narrow tall">
+        <img src="pdf-bilder/troubleshooting.png" alt="Flussdiagramm zur systematischen Fehlersuche bei Arduino-Projekten" />
+        <figcaption>Eine Fehlersuche wird zuverlässig, wenn du die Fehlerklasse zuerst eingrenzt.</figcaption>
+      </figure>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Fehlerlabor: Klicke auf die erste problematische Zeile</h2>
+      <p>Die LED soll leuchten, wenn der Sensorwert größer als 500 ist. Das Programm kompiliert, aber die LED ist unabhängig vom Messwert immer an.</p>
+
+      <div class="aw-bug-lab" data-bug-lab>
+        <div class="aw-bug-code">
+          <button class="aw-bug-line" type="button" data-bug-line="1" data-number="1">int sensorWert = analogRead(A0);</button>
+          <button class="aw-bug-line" type="button" data-bug-line="2" data-number="2">if (sensorWert &gt; 500);</button>
+          <button class="aw-bug-line" type="button" data-bug-line="3" data-number="3">{ digitalWrite(13, HIGH); }</button>
+          <button class="aw-bug-line" type="button" data-bug-line="4" data-number="4">else { digitalWrite(13, LOW); }</button>
+        </div>
+        <div class="aw-bug-feedback" data-bug-feedback>Wähle die erste Zeile, an der das beobachtete Verhalten falsch abbiegt.</div>
+      </div>
+
+      <div class="aw-danger"><strong>Fehlermuster:</strong> Das Semikolon direkt hinter der <code>if</code>-Bedingung beendet die bedingte Anweisung. Korrigiere zu <code>if (sensorWert &gt; 500) { ... }</code>. Unterscheide außerdem Zuweisung <code>=</code> und Vergleich <code>==</code>.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-reveal-debug-plan",
+          "title":"Ein belastbarer Debugging-Plan",
+          "question":"Wie untersuchst du eine Bewässerung, deren Pumpe nie startet?",
+          "answer":"1. Versorgung, GND und sichtbare Schäden prüfen. 2. Ein minimales Testprogramm für den Treiberausgang verwenden. 3. Sensorwert im seriellen Monitor ausgeben. 4. Den tatsächlichen Wert mit dem Grenzwert vergleichen. 5. Den gewählten Zweig markieren. 6. Erst danach das Gesamtsystem erneut testen. So weißt du nach jedem Schritt mehr als zuvor."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-essay-project",
+          "title":"Transfer: Plane ein vollständiges Arduino-System",
+          "hint":"Wähle ein eigenes System. Antworte konkret und verwende mindestens sechs Fachbegriffe.",
+          "fields":[
+            {"label":"Problem und gewünschtes Verhalten","key":"problem","kind":"textarea","placeholder":"Was soll das System erkennen und bewirken?"},
+            {"label":"Eingänge, Zustände und Ausgänge","key":"io","kind":"textarea","placeholder":"Sensor/Taster, Variablen, LED/Display/Motor ..."},
+            {"label":"Programmstruktur","key":"structure","kind":"textarea","placeholder":"Was steht in setup()? Was wiederholt loop()? Wo brauchst du if, for oder while?"},
+            {"label":"Sicherer Hardwareaufbau","key":"hardware","kind":"textarea","placeholder":"Versorgung, GND, Widerstände, Treiber ..."},
+            {"label":"Drei Testfälle und erwartete Ergebnisse","key":"tests","kind":"textarea","placeholder":"Test 1 ... Erwartung ...\nTest 2 ... Erwartung ...\nTest 3 ... Erwartung ..."},
+            {"label":"Debugging, falls der erste Test fehlschlägt","key":"debug","kind":"textarea","placeholder":"Welche Teilstrecke prüfst du zuerst und welche Beobachtung erwartest du?"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="10" data-wb-page-title="Abschlusscheck">
+      <h1>Das Arduino-System als Ganzes beherrschen</h1>
+      <p>Der entscheidende Schritt ist nicht das Erinnern einzelner Befehle. Du musst begründen können, wie ein Signal durch Hardware und Programm läuft, welche Zustände sich ändern und wie du eine Abweichung sichtbar machst.</p>
+
+      <div class="aw-check-grid">
+        <div class="aw-check-item"><strong>Hardware:</strong> Stromweg, Polung, Widerstand, Versorgung und gemeinsame Masse prüfen.</div>
+        <div class="aw-check-item"><strong>Struktur:</strong> Einmalige Initialisierung von der wiederholten Verarbeitung trennen.</div>
+        <div class="aw-check-item"><strong>Daten:</strong> Variablen, Datentypen, Arrays und Indizes schrittweise verfolgen.</div>
+        <div class="aw-check-item"><strong>Logik:</strong> Randwerte, Bedingungen, Zweige und Schleifenende testen.</div>
+        <div class="aw-check-item"><strong>Ausgaben:</strong> Digital, PWM, Ton, Display und Motor passend zur Aufgabe wählen.</div>
+        <div class="aw-check-item"><strong>Diagnose:</strong> Die erste Abweichung mit kleinen Tests und serieller Ausgabe finden.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-mcq-final",
+          "title":"Gemischter Abschlusscheck",
+          "hint":"Arbeite ohne Raten. Verfolge bei Codefragen die Werte Zeile für Zeile.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Welche Aussage zu setup() und loop() ist richtig?",
+              "choices":[{"id":"A","label":"setup() läuft nach Start oder Reset einmal; loop() wiederholt sich."},{"id":"B","label":"Beide laufen genau einmal."},{"id":"C","label":"loop() läuft vor setup()."}],
+              "correct":["A"],
+              "explain":"setup() initialisiert das System. Danach beginnt die fortlaufende loop()-Wiederholung."
+            },
+            {
+              "text":"Bei INPUT_PULLUP ist ein Taster zwischen Pin und GND angeschlossen. Was wird beim Drücken meist gelesen?",
+              "choices":[{"id":"A","label":"LOW"},{"id":"B","label":"HIGH"},{"id":"C","label":"255"}],
+              "correct":["A"],
+              "explain":"Der gedrückte Taster verbindet den Eingang mit GND; deshalb ergibt die Abfrage LOW."
+            },
+            {
+              "text":"Ein Array enthält fünf Werte. Welche Indizes sind gültig?",
+              "choices":[{"id":"A","label":"0 bis 4"},{"id":"B","label":"1 bis 5"},{"id":"C","label":"0 bis 5"}],
+              "correct":["A"],
+              "explain":"Der erste Index ist 0. Fünf Elemente belegen daher die Plätze 0, 1, 2, 3 und 4."
+            },
+            {
+              "text":"Welche Aussagen zu PWM sind richtig?",
+              "choices":[{"id":"A","label":"analogWrite() nutzt beim Uno typischerweise Werte von 0 bis 255."},{"id":"B","label":"PWM schaltet sehr schnell ein und aus."},{"id":"C","label":"Jeder digitale Pin unterstützt automatisch PWM."},{"id":"D","label":"PWM kann LED-Helligkeit oder Motordrehzahl beeinflussen."}],
+              "correct":["A","B","D"],
+              "explain":"PWM steht nur an geeigneten Pins zur Verfügung. Das Tastverhältnis beeinflusst die mittlere Wirkung am Verbraucher."
+            },
+            {
+              "text":"Was ist eine sinnvolle Aufgabe für eine kurze ISR?",
+              "choices":[{"id":"A","label":"Eine volatile-Merker-Variable setzen"},{"id":"B","label":"Mehrere Sekunden warten"},{"id":"C","label":"Eine lange Displayanimation ausführen"}],
+              "correct":["A"],
+              "explain":"Die ISR unterbricht den normalen Ablauf nur kurz und merkt das Ereignis."
+            },
+            {
+              "text":"Welcher Motor passt am besten zu einer Klappe, die gezielt auf 0°, 45° und 90° fahren soll?",
+              "choices":[{"id":"A","label":"Standard-Servo"},{"id":"B","label":"DC-Motor ohne Rückmeldung"},{"id":"C","label":"Lautsprecher"}],
+              "correct":["A"],
+              "explain":"Ein Servo ist für definierte Winkelpositionen ausgelegt."
+            },
+            {
+              "text":"Das Programm kompiliert, wird übertragen, aber ein Sensorwert scheint falsch. Was ist der nächste sinnvolle Schritt?",
+              "choices":[{"id":"A","label":"Messwert seriell ausgeben und mit einer bekannten Situation vergleichen"},{"id":"B","label":"Alle Kabel und Bauteile gleichzeitig ersetzen"},{"id":"C","label":"Eine längere delay()-Zeit einbauen, ohne zu messen"}],
+              "correct":["A"],
+              "explain":"Die serielle Ausgabe macht den internen Zustand sichtbar und liefert eine gezielte nächste Erkenntnis."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Ablaufspuren sichern</h2>
+      <p>Deine Einträge in den Tabellen werden automatisch in diesem Browser gespeichert. Du kannst sie zusätzlich als Textdatei exportieren oder für einen neuen Durchlauf leeren.</p>
+      <div class="aw-actions">
+        <button class="aw-btn primary" type="button" data-export-traces>Tabellen exportieren</button>
+        <button class="aw-btn" type="button" data-clear-traces>Alle Tabellen leeren</button>
+        <span class="aw-table-status" data-export-status></span>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen und gezielte Wiederholung</h2>
+      <ul class="aw-source-list">
+        <li><a href="https://docs.arduino.cc/language-reference/" target="_blank" rel="noopener">Arduino Language Reference</a>: Funktionen, Strukturen, Variablen und Operatoren.</li>
+        <li><a href="https://docs.arduino.cc/built-in-examples/" target="_blank" rel="noopener">Arduino Built-in Examples</a>: geprüfte Grundbeispiele für Ein- und Ausgaben.</li>
+        <li><a href="https://docs.arduino.cc/learn/" target="_blank" rel="noopener">Arduino Learn</a>: Hintergrund zu Elektronik, PWM, Motoren und Kommunikation.</li>
+        <li>Vertiefung im Kurs: <a href="arduino-1.html">Teil 1</a>, <a href="arduino-2.html">Teil 2</a>, <a href="arduino-3.html">Teil 3</a>, <a href="arduino-4.html">Teil 4</a>, <a href="arduino-5.html">Arrays und Interrupts</a> sowie <a href="arduino-motoren.html">Motoren</a>.</li>
+        <li>Prüfungsvorbereitung: <a href="arduino-klausur.html">Arduino-Klausurtraining</a>.</li>
+      </ul>
+
+      <div class="aw-success"><strong>Jetzt hast du das gelernt:</strong> Du kannst ein Arduino-Projekt als vollständiges System erklären, Code schrittweise verfolgen, geeignete Ein- und Ausgaben auswählen und Fehler mit einer begründeten Prüfreihenfolge eingrenzen.</div>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_wiederholung__" });
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    const STORAGE_KEY = "nwt-arduino-wiederholung-traces-v1";
+
+    function normalize(value) {
+      return String(value || "")
+        .trim()
+        .toLocaleLowerCase("de-DE")
+        .replace(/\s+/g, " ")
+        .replace(/,/g, ".");
+    }
+
+    function savedValues() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+      catch (error) { return {}; }
+    }
+
+    function saveTraces() {
+      const values = {};
+      document.querySelectorAll("[data-trace]").forEach(function (field, index) {
+        const key = field.dataset.traceKey || (field.dataset.traceKey = "trace-" + index);
+        values[key] = field.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    }
+
+    function initTraceTables() {
+      const stored = savedValues();
+      document.querySelectorAll("[data-trace]").forEach(function (field, index) {
+        const key = field.dataset.traceKey || (field.dataset.traceKey = "trace-" + index);
+        if (Object.prototype.hasOwnProperty.call(stored, key)) field.value = stored[key];
+        field.addEventListener("input", function () {
+          field.classList.remove("is-correct", "is-wrong");
+          saveTraces();
+        });
+      });
+
+      document.querySelectorAll("[data-trace-table]").forEach(function (table) {
+        const status = table.querySelector("[data-trace-status]");
+        table.querySelector("[data-trace-check]").addEventListener("click", function () {
+          const fields = Array.from(table.querySelectorAll("[data-trace]"));
+          let correct = 0;
+          fields.forEach(function (field) {
+            const value = normalize(field.value);
+            const accepted = String(field.dataset.answer || "").split("|").map(normalize);
+            const ok = accepted.some(function (answer) {
+              return value === answer || (answer.length >= 2 && value.includes(answer));
+            });
+            field.classList.toggle("is-correct", ok);
+            field.classList.toggle("is-wrong", !ok);
+            if (ok) correct += 1;
+          });
+          status.textContent = correct + " von " + fields.length + " Feldern passen.";
+          saveTraces();
+        });
+        table.querySelector("[data-trace-reset]").addEventListener("click", function () {
+          table.querySelectorAll("[data-trace]").forEach(function (field) {
+            field.value = "";
+            field.classList.remove("is-correct", "is-wrong");
+          });
+          status.textContent = "Tabelle geleert";
+          saveTraces();
+        });
+      });
+    }
+
+    function initSystemLab() {
+      const root = document.querySelector("[data-system-lab]");
+      if (!root) return;
+      const nodes = Array.from(root.querySelectorAll("[data-system-node]"));
+      const pulse = root.querySelector("[data-system-pulse]");
+      const toggle = root.querySelector('[data-system-action="toggle"]');
+      const label = root.querySelector("[data-system-label]");
+      const value = root.querySelector("[data-system-value]");
+      const condition = root.querySelector("[data-system-condition]");
+      const output = root.querySelector("[data-system-output]");
+      const steps = [
+        {label:"Sensor erfasst Bodenfeuchte", value:"28 %", condition:"–", output:"aus"},
+        {label:"Arduino speichert Messwert", value:"28 %", condition:"–", output:"aus"},
+        {label:"Grenzwert wird geprüft", value:"28 %", condition:"wahr", output:"aus"},
+        {label:"Treiber schaltet die Pumpe", value:"28 %", condition:"wahr", output:"an"}
+      ];
+      let index = -1;
+      let timer = 0;
+      let running = false;
+
+      function render() {
+        nodes.forEach(function (node, nodeIndex) {
+          node.classList.toggle("is-active", nodeIndex === index);
+          node.classList.toggle("is-done", nodeIndex < index);
+        });
+        if (index < 0) {
+          label.textContent = "bereit";
+          value.textContent = "–";
+          condition.textContent = "–";
+          output.textContent = "aus";
+          pulse.style.left = "10%";
+          return;
+        }
+        const current = steps[index];
+        label.textContent = current.label;
+        value.textContent = current.value;
+        condition.textContent = current.condition;
+        output.textContent = current.output;
+        pulse.style.left = (10 + index * 26.5) + "%";
+      }
+
+      function stop() {
+        running = false;
+        window.clearInterval(timer);
+        timer = 0;
+        toggle.textContent = index >= steps.length - 1 ? "Erneut starten" : "Start";
+      }
+
+      function advance() {
+        if (index >= steps.length - 1) { stop(); return; }
+        index += 1;
+        render();
+        if (index >= steps.length - 1) stop();
+      }
+
+      toggle.addEventListener("click", function () {
+        if (running) { stop(); return; }
+        if (index >= steps.length - 1) index = -1;
+        running = true;
+        toggle.textContent = "Pause";
+        advance();
+        timer = window.setInterval(advance, 1050);
+      });
+      root.querySelector('[data-system-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-system-action="reset"]').addEventListener("click", function () { stop(); index = -1; render(); });
+      render();
+    }
+
+    function initBugLab() {
+      const root = document.querySelector("[data-bug-lab]");
+      if (!root) return;
+      const feedback = root.querySelector("[data-bug-feedback]");
+      root.querySelectorAll("[data-bug-line]").forEach(function (line) {
+        line.addEventListener("click", function () {
+          root.querySelectorAll("[data-bug-line]").forEach(function (item) { item.classList.remove("is-right", "is-wrong"); });
+          const correct = line.dataset.bugLine === "2";
+          line.classList.add(correct ? "is-right" : "is-wrong");
+          feedback.textContent = correct
+            ? "Treffer: Das Semikolon beendet die if-Anweisung zu früh. Entferne es und teste die beiden Grenzfälle 500 und 501."
+            : "Diese Zeile kann Teil eines korrekten Programms sein. Suche die erste Stelle, die die Bedingung von ihrem Anweisungsblock trennt.";
+        });
+      });
+    }
+
+    function exportTraces() {
+      const lines = ["Ablaufspuren – Arduino-Wiederholung", ""];
+      document.querySelectorAll("[data-trace-table]").forEach(function (table) {
+        lines.push("## " + table.dataset.tableId);
+        table.querySelectorAll("tbody tr").forEach(function (row, rowIndex) {
+          const values = Array.from(row.querySelectorAll("td")).map(function (cell) {
+            const field = cell.querySelector("[data-trace]");
+            return field ? field.value.trim() || "–" : cell.textContent.trim();
+          });
+          lines.push((rowIndex + 1) + ". " + values.join(" | "));
+        });
+        lines.push("");
+      });
+      const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "arduino-wiederholung-tabellen.txt";
+      document.body.appendChild(link);
+      link.click();
+      URL.revokeObjectURL(link.href);
+      link.remove();
+      const status = document.querySelector("[data-export-status]");
+      if (status) status.textContent = "Tabellen wurden exportiert.";
+    }
+
+    function initExport() {
+      const exportButton = document.querySelector("[data-export-traces]");
+      const clearButton = document.querySelector("[data-clear-traces]");
+      if (exportButton) exportButton.addEventListener("click", exportTraces);
+      if (clearButton) clearButton.addEventListener("click", function () {
+        if (!window.confirm("Sollen wirklich alle Einträge in den Ablaufspuren gelöscht werden?")) return;
+        document.querySelectorAll("[data-trace]").forEach(function (field) {
+          field.value = "";
+          field.classList.remove("is-correct", "is-wrong");
+        });
+        document.querySelectorAll("[data-trace-status]").forEach(function (status) { status.textContent = "Tabelle geleert"; });
+        localStorage.removeItem(STORAGE_KEY);
+        const status = document.querySelector("[data-export-status]");
+        if (status) status.textContent = "Alle Tabelleneinträge wurden gelöscht.";
+      });
+    }
+
+    initTraceTables();
+    initSystemLab();
+    initBugLab();
+    initExport();
+  }());
+  </script>
+</body>
+</html>
