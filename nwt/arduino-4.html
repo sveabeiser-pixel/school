@@ -241,12 +241,18 @@
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
       {
-        "bookTitle": "Arduino - Lernbaustein (Seiten 18-22)",
-        "sectionTitle": "Arduino - Lernbaustein (Seiten 18-22)",
+        "bookTitle": "NWT Arduino · Modul 4",
+        "sectionTitle": "Eingaben, Planung und Anzeige",
         "submitLabel": "Ergebnisse & Abschluss",
         "onSubmit": "exportResults",
         "webhookEmail": "",
-        "autoNav": true
+        "autoNav": true,
+        "autoNavHeadings": ["h1","h2","h3"],
+        "autoNavIncludeBlocks": false,
+        "resultsPageTitle": "Auswertung",
+        "studentNameLabel": "Name",
+        "studentNamePlaceholder": "Vorname Nachname",
+        "exportName": "arduino-4-ergebnisse.txt"
       }
     </script>
     <section data-wb-page="1" data-wb-page-title="11. Eingabe mit Tastern">
@@ -263,6 +269,12 @@
         <span class="is-current"><b>4 · Eingaben</b>Taster, Planung und Display</span>
         <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
       </nav>
+
+      <div class="prediction-band" aria-label="Arbeitsweise in diesem Modul">
+        <div><strong>Eingabe</strong>Den elektrischen Zustand eindeutig bestimmen.</div>
+        <div><strong>Entscheidung</strong>Die Bedingung als wahr oder falsch auswerten.</div>
+        <div><strong>Ausgabe</strong>Nur den gewählten Programmzweig verfolgen.</div>
+      </div>
 
        <div class="grid2">
       <div class="wb-soft-callout">
@@ -1865,6 +1877,12 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
         <li><a href="https://app.diagrams.net/?src=about" target="_blank" rel="noopener">diagrams.net für Flussdiagramme</a></li>
       </ul>
+
+      <div class="wb-section-break"></div>
+      <div class="next-module">
+        <span><b>Nächster Schritt:</b> Deine Ausgänge steuern nicht nur Licht, sondern reale Bewegung.</span>
+        <a href="arduino-motoren.html">Weiter zu Motoren</a>
+      </div>
     </section>
   </div>
 

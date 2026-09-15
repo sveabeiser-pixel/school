@@ -75,12 +75,18 @@
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
       {
-        "bookTitle": "Arduino – Lernbaustein (Seiten 12–17)",
-        "sectionTitle": "Arduino – Lernbaustein (Seiten 12–17)",
+        "bookTitle": "NWT Arduino · Modul 3",
+        "sectionTitle": "Variablen, Schleifen und Entscheidungen",
         "submitLabel": "Ergebnisse & Abschluss",
         "onSubmit": "exportResults",
         "webhookEmail": "",
-        "autoNav": true
+        "autoNav": true,
+        "autoNavHeadings": ["h1","h2","h3"],
+        "autoNavIncludeBlocks": false,
+        "resultsPageTitle": "Auswertung",
+        "studentNameLabel": "Name",
+        "studentNamePlaceholder": "Vorname Nachname",
+        "exportName": "arduino-3-ergebnisse.txt"
       }
     </script>
 
@@ -98,6 +104,12 @@
         <a href="arduino-4.html"><b>4 · Eingaben</b>Taster, Planung und Display</a>
         <a href="arduino-motoren.html"><b>5 · Bewegung</b>Motoren gezielt steuern</a>
       </nav>
+
+      <div class="prediction-band" aria-label="Arbeitsweise in diesem Modul">
+        <div><strong>Trace</strong>Werte und Prüfungen zeilenweise verfolgen.</div>
+        <div><strong>Testen</strong>Grenzfälle und kleine Änderungen ausführen.</div>
+        <div><strong>Verallgemeinern</strong>Das Muster auf neue Aufgaben übertragen.</div>
+      </div>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine Variable?</strong>
@@ -1846,7 +1858,7 @@ void loop() {
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Summary & submit</b>. Deine Daten werden an deine Lehrerin übertragen und eine TXT-Datei auf deinen Computer heruntergeladen. Diese Datei kannst du auch in OneNote einfügen.</p>
+        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Ergebnisse & Abschluss</b>. Deine Antworten werden an deine Lehrerin übertragen und zusätzlich als TXT-Datei exportiert.</p>
       </div>
       <div class="wb-section-break"></div>
 
@@ -1857,6 +1869,12 @@ void loop() {
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/else/" target="_blank" rel="noopener">Arduino Reference: if / else</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
       </ul>
+
+      <div class="wb-section-break"></div>
+      <div class="next-module">
+        <span><b>Nächster Schritt:</b> Eingaben verändern den Programmablauf in Echtzeit.</span>
+        <a href="arduino-4.html">Weiter zu Taster und Planung</a>
+      </div>
 
     </section>
   </div>
