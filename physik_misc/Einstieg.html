@@ -318,6 +318,99 @@
     .ep-export-status { color: var(--ep-muted); font-weight: 700; }
     .ep-source-list li + li { margin-top: 10px; }
 
+    .ep-motion-formulas {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin: 18px 0;
+      border: 1px solid var(--ep-line);
+      background: var(--ep-line);
+    }
+    .ep-motion-formulas > div {
+      min-width: 0;
+      padding: 14px 15px;
+      background: #fff;
+    }
+    .ep-motion-formulas strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ep-blue);
+    }
+    .ep-motion-formulas code {
+      display: block;
+      margin-top: 5px;
+      color: var(--ep-ink);
+      font-size: .98rem;
+      white-space: normal;
+    }
+    .ep-diagram-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1.1fr) minmax(250px, .9fr);
+      gap: 18px;
+      align-items: start;
+      margin: 16px 0;
+    }
+    .ep-diagram-card {
+      min-width: 0;
+      margin: 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 7px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ep-diagram-card svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+    .ep-diagram-card figcaption {
+      padding: 9px 12px;
+      border-top: 1px solid var(--ep-line);
+      color: var(--ep-muted);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+    .ep-diagram-task {
+      padding: 14px 16px;
+      border-left: 4px solid var(--ep-amber);
+      background: #fff8eb;
+    }
+    .ep-diagram-task strong { color: #684006; }
+    .ep-diagram-task ol { margin-bottom: 0; padding-left: 22px; }
+    .ep-diagram-task li + li { margin-top: 8px; }
+    .ep-mini-diagrams {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .ep-mini-diagram {
+      min-width: 0;
+      margin: 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ep-mini-diagram svg { display: block; width: 100%; height: auto; }
+    .ep-mini-diagram figcaption {
+      padding: 8px 10px;
+      border-top: 1px solid var(--ep-line);
+      font-weight: 700;
+      color: var(--ep-ink);
+    }
+    .ep-chart-grid { fill: none; stroke: #d9e2e7; stroke-width: 1; }
+    .ep-chart-axis { fill: none; stroke: #263746; stroke-width: 2; }
+    .ep-chart-guide { fill: none; stroke: #7d8d98; stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .ep-chart-line { fill: none; stroke: var(--ep-blue); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+    .ep-chart-line.accel { stroke: var(--ep-red); }
+    .ep-chart-line.velocity { stroke: var(--ep-teal); }
+    .ep-chart-area { fill: rgba(8, 127, 122, .16); stroke: none; }
+    .ep-chart-point { fill: var(--ep-amber); stroke: #fff; stroke-width: 3; }
+    .ep-chart-text { fill: #263746; font: 15px system-ui, sans-serif; }
+    .ep-chart-label { fill: #172033; font: 700 16px system-ui, sans-serif; }
+
     .wb-book [data-wb-page] .wb-reveal-item-pending,
     .wb-book [data-wb-page] .wb-reveal-item-done {
       opacity: 1;
@@ -339,13 +432,16 @@
     @media (max-width: 920px) {
       .ep-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .ep-mission-grid { grid-template-columns: 1fr; }
+      .ep-motion-formulas { grid-template-columns: 1fr; }
       #epLabCanvas { min-width: 720px; }
     }
     @media (max-width: 700px) {
       .ep-intro h1 { font-size: 2rem; }
       .ep-question-strip,
       .ep-concept-grid,
-      .ep-route { grid-template-columns: 1fr; }
+      .ep-route,
+      .ep-diagram-layout,
+      .ep-mini-diagrams { grid-template-columns: 1fr; }
       .ep-lab-toolbar,
       .ep-table-intro { align-items: stretch; flex-direction: column; }
       .ep-lab-canvas-wrap { overflow: hidden; }
@@ -827,7 +923,312 @@
       </div>
     </section>
 
-    <section data-wb-page="8" data-wb-page-title="Zusammenfassung und Abgabe">
+    <section data-wb-page="8" data-wb-page-title="Bewegungen in Diagrammen">
+      <div class="ep-intro">
+        <span class="ep-kicker">Kinematik in Bildern</span>
+        <h1>Bewegungen aus Diagrammen lesen</h1>
+        <p>Ein Bewegungsdiagramm erzählt eine Geschichte, ohne das Fahrzeug selbst zu zeigen. Du liest Werte ab, vergleichst Steigungen und nutzt Flächen, um zwischen gleichförmiger und gleichmäßig beschleunigter Bewegung zu unterscheiden.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Drei Werkzeuge für alle Aufgaben</h2>
+      <div class="ep-motion-formulas">
+        <div>
+          <strong>Gleichförmige Bewegung</strong>
+          <p>Die Geschwindigkeit bleibt konstant. Im <em>s-t</em>-Diagramm entsteht eine Gerade.</p>
+          <div class="ep-equation">\(s(t)=s_0+v\cdot t\), &nbsp; \(a=0\)</div>
+        </div>
+        <div>
+          <strong>Gleichmäßig beschleunigte Bewegung</strong>
+          <p>Die Beschleunigung bleibt konstant. Deshalb ändert sich die Geschwindigkeit linear.</p>
+          <div class="ep-equation">\(v(t)=v_0+a\cdot t\)<br>\(s(t)=s_0+v_0t+\frac12at^2\)</div>
+        </div>
+        <div>
+          <strong>Diagrammsprache</strong>
+          <p>Steigung im <em>s-t</em>-Diagramm: Geschwindigkeit. Steigung im <em>v-t</em>-Diagramm: Beschleunigung. Fläche unter <em>v(t)</em>: Ortsänderung.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Station 1: Eine Gerade im Weg-Zeit-Diagramm</h2>
+      <div class="ep-diagram-layout">
+        <figure class="ep-diagram-card">
+          <svg viewBox="0 0 520 320" role="img" aria-labelledby="ep-st-title ep-st-desc">
+            <title id="ep-st-title">Weg-Zeit-Diagramm einer gleichförmigen Bewegung</title>
+            <desc id="ep-st-desc">Eine Gerade steigt vom Ursprung bis zum Punkt fünf Sekunden und zehn Meter.</desc>
+            <g class="ep-chart-grid">
+              <path d="M70 40V260 M150 40V260 M230 40V260 M310 40V260 M390 40V260 M470 40V260"/>
+              <path d="M70 40H470 M70 84H470 M70 128H470 M70 172H470 M70 216H470 M70 260H470"/>
+            </g>
+            <path class="ep-chart-axis" d="M70 32V260H482"/>
+            <path class="ep-chart-line" d="M70 260L470 40"/>
+            <path class="ep-chart-guide" d="M310 260V128H70"/>
+            <circle class="ep-chart-point" cx="310" cy="128" r="6"/>
+            <g class="ep-chart-text">
+              <text x="58" y="278">0</text><text x="146" y="278">1</text><text x="226" y="278">2</text><text x="306" y="278">3</text><text x="386" y="278">4</text><text x="466" y="278">5</text>
+              <text x="49" y="220">2</text><text x="49" y="176">4</text><text x="49" y="132">6</text><text x="49" y="88">8</text><text x="42" y="44">10</text>
+              <text class="ep-chart-label" x="438" y="303">t in s</text><text class="ep-chart-label" x="18" y="26">s in m</text>
+            </g>
+          </svg>
+          <figcaption>Die Gerade zeigt: In gleichen Zeiten kommen gleich große Wege hinzu.</figcaption>
+        </figure>
+        <div class="ep-diagram-task">
+          <span class="ep-kicker">Ablesen</span>
+          <h3>Was verrät die Gerade?</h3>
+          <ol>
+            <li>Lies den Ort bei $t=1{,}0\,\mathrm{s}$, $3{,}0\,\mathrm{s}$ und $5{,}0\,\mathrm{s}$ ab.</li>
+            <li>Berechne die Steigung mit zwei weit auseinanderliegenden Punkten.</li>
+            <li>Formuliere die Bewegungsgleichung $s(t)$.</li>
+          </ol>
+          <p><strong>Tipp:</strong> Eine steilere Gerade bedeutet einen größeren Geschwindigkeitsbetrag.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-st-trace",
+          "title":"Ablaufspur: Werte aus der Geraden lesen",
+          "hint":"Trage nur die Zahlenwerte in Metern ein. Nutze ein Dezimalkomma oder einen Dezimalpunkt.",
+          "columns":["Zeit t in s","Ort s in m"],
+          "rows":[
+            {"cells":[{"given":"1,0"},{"answers":["2","2,0","2.0"]}]},
+            {"cells":[{"given":"3,0"},{"answers":["6","6,0","6.0"]}]},
+            {"cells":[{"given":"5,0"},{"answers":["10","10,0","10.0"]}]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-st-mcq",
+          "title":"Steigungscheck",
+          "hint":"Nutze v = Δs/Δt.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Geschwindigkeit und welche Bewegungsgleichung gehören zur blauen Geraden?",
+            "choices":[
+              {"id":"A","label":"v = 0,5 m/s und s(t) = 0,5 m/s · t"},
+              {"id":"B","label":"v = 2,0 m/s und s(t) = 2,0 m/s · t"},
+              {"id":"C","label":"v = 5,0 m/s und s(t) = 5,0 m/s · t"},
+              {"id":"D","label":"v = 2,0 m/s² und s(t) = 1,0 m/s² · t²"}
+            ],
+            "correct":["B"],
+            "explain":"Die Steigung beträgt Δs/Δt = 10 m/5 s = 2,0 m/s. Weil die Gerade durch den Ursprung verläuft, gilt s₀ = 0 und damit s(t) = 2,0 m/s · t."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du gelernt:</strong>
+        <p>Im Weg-Zeit-Diagramm gibt die Steigung die Geschwindigkeit an. Eine Gerade mit unveränderter Steigung beschreibt eine gleichförmige Bewegung.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Station 2: Beschleunigung und zurückgelegter Weg</h2>
+      <div class="ep-diagram-layout">
+        <figure class="ep-diagram-card">
+          <svg viewBox="0 0 520 320" role="img" aria-labelledby="ep-vt-title ep-vt-desc">
+            <title id="ep-vt-title">Geschwindigkeit-Zeit-Diagramm einer gleichmäßig beschleunigten Bewegung</title>
+            <desc id="ep-vt-desc">Die Geschwindigkeit steigt in vier Sekunden gleichmäßig von null auf acht Meter pro Sekunde.</desc>
+            <g class="ep-chart-grid">
+              <path d="M70 40V260 M170 40V260 M270 40V260 M370 40V260 M470 40V260"/>
+              <path d="M70 40H470 M70 95H470 M70 150H470 M70 205H470 M70 260H470"/>
+            </g>
+            <path class="ep-chart-area" d="M70 260L470 40V260Z"/>
+            <path class="ep-chart-axis" d="M70 32V260H482"/>
+            <path class="ep-chart-line accel" d="M70 260L470 40"/>
+            <g class="ep-chart-text">
+              <text x="58" y="278">0</text><text x="166" y="278">1</text><text x="266" y="278">2</text><text x="366" y="278">3</text><text x="466" y="278">4</text>
+              <text x="49" y="209">2</text><text x="49" y="154">4</text><text x="49" y="99">6</text><text x="49" y="44">8</text>
+              <text class="ep-chart-label" x="438" y="303">t in s</text><text class="ep-chart-label" x="8" y="26">v in m/s</text>
+              <text x="250" y="226">Fläche = Weg</text>
+            </g>
+          </svg>
+          <figcaption>Die Steigung liefert $a$; die farbige Dreiecksfläche liefert den in vier Sekunden zurückgelegten Weg.</figcaption>
+        </figure>
+        <div class="ep-diagram-task">
+          <span class="ep-kicker">Steigung und Fläche</span>
+          <h3>Zwei Informationen in einem Diagramm</h3>
+          <ol>
+            <li>Bestimme die Beschleunigung aus der Steigung.</li>
+            <li>Lies $v(2\,\mathrm{s})$ ab.</li>
+            <li>Berechne die Dreiecksfläche unter der Geraden. Achte auf die Einheit.</li>
+          </ol>
+          <p><strong>Einheitencheck:</strong> $(\mathrm{m/s})\cdot\mathrm{s}=\mathrm{m}$. Deshalb kann die Fläche einen Weg darstellen.</p>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-vt-mcq",
+          "title":"Diagrammcheck: Beschleunigte Bewegung",
+          "hint":"Wähle alle richtigen Aussagen aus.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Aussagen passen zum v-t-Diagramm?",
+            "multiple":true,
+            "choices":[
+              {"id":"A","label":"Die Beschleunigung beträgt 2,0 m/s²."},
+              {"id":"B","label":"Nach 2,0 s beträgt die Geschwindigkeit 4,0 m/s."},
+              {"id":"C","label":"In 4,0 s werden 16 m zurückgelegt."},
+              {"id":"D","label":"Die Geschwindigkeit ist während der gesamten Bewegung konstant."},
+              {"id":"E","label":"Die Fläche unter dem Graphen besitzt die Einheit m/s²."}
+            ],
+            "correct":["A","B","C"],
+            "explain":"Es gilt a = 8 m/s ÷ 4 s = 2 m/s². Bei t = 2 s liest du v = 4 m/s ab. Die Dreiecksfläche ist Δs = 1/2 · 4 s · 8 m/s = 16 m."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Station 3: Vier Diagramme, zwei Bewegungen</h2>
+      <p>Je zwei Diagramme beschreiben dieselbe Bewegungsart. Achte nicht nur auf die Form, sondern auch darauf, welche Größe auf der senkrechten Achse steht.</p>
+      <div class="ep-mini-diagrams">
+        <figure class="ep-mini-diagram">
+          <svg viewBox="0 0 280 180" role="img" aria-label="Diagramm A: steigende Gerade im Weg-Zeit-Diagramm">
+            <path class="ep-chart-axis" d="M48 24V142H258"/><path class="ep-chart-line" d="M48 142L242 42"/>
+            <text class="ep-chart-label" x="14" y="25">s</text><text class="ep-chart-label" x="247" y="165">t</text><text class="ep-chart-label" x="65" y="43">A</text>
+          </svg>
+          <figcaption>A: (s)-(t)</figcaption>
+        </figure>
+        <figure class="ep-mini-diagram">
+          <svg viewBox="0 0 280 180" role="img" aria-label="Diagramm B: nach oben gekrümmte Kurve im Weg-Zeit-Diagramm">
+            <path class="ep-chart-axis" d="M48 24V142H258"/><path class="ep-chart-line accel" d="M48 142C118 140 186 108 242 38"/>
+            <text class="ep-chart-label" x="14" y="25">s</text><text class="ep-chart-label" x="247" y="165">t</text><text class="ep-chart-label" x="65" y="43">B</text>
+          </svg>
+          <figcaption>B: (s)-(t)</figcaption>
+        </figure>
+        <figure class="ep-mini-diagram">
+          <svg viewBox="0 0 280 180" role="img" aria-label="Diagramm C: waagerechte Gerade im Geschwindigkeit-Zeit-Diagramm">
+            <path class="ep-chart-axis" d="M48 24V142H258"/><path class="ep-chart-line velocity" d="M48 78H242"/>
+            <text class="ep-chart-label" x="14" y="25">v</text><text class="ep-chart-label" x="247" y="165">t</text><text class="ep-chart-label" x="65" y="43">C</text>
+          </svg>
+          <figcaption>C: (v)-(t)</figcaption>
+        </figure>
+        <figure class="ep-mini-diagram">
+          <svg viewBox="0 0 280 180" role="img" aria-label="Diagramm D: steigende Gerade im Geschwindigkeit-Zeit-Diagramm">
+            <path class="ep-chart-axis" d="M48 24V142H258"/><path class="ep-chart-line accel" d="M48 142L242 42"/>
+            <text class="ep-chart-label" x="14" y="25">v</text><text class="ep-chart-label" x="247" y="165">t</text><text class="ep-chart-label" x="65" y="43">D</text>
+          </svg>
+          <figcaption>D: (v)-(t)</figcaption>
+        </figure>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-classify-mcq",
+          "title":"Ordne die Diagramme zu",
+          "hint":"Bei beiden Fragen sind mehrere Antworten richtig.",
+          "shuffleChoices":false,
+          "questions":[
+            {
+              "text":"Welche Diagramme beschreiben eine gleichförmige Bewegung mit positiver Geschwindigkeit?",
+              "multiple":true,
+              "choices":[{"id":"A","label":"Diagramm A"},{"id":"B","label":"Diagramm B"},{"id":"C","label":"Diagramm C"},{"id":"D","label":"Diagramm D"}],
+              "correct":["A","C"],
+              "explain":"Bei A wächst der Weg linear; die Steigung und damit v sind konstant. C zeigt die konstante positive Geschwindigkeit direkt."
+            },
+            {
+              "text":"Welche Diagramme beschreiben eine gleichmäßig beschleunigte Bewegung aus der Ruhe?",
+              "multiple":true,
+              "choices":[{"id":"A","label":"Diagramm A"},{"id":"B","label":"Diagramm B"},{"id":"C","label":"Diagramm C"},{"id":"D","label":"Diagramm D"}],
+              "correct":["B","D"],
+              "explain":"Bei B wächst die Steigung des s-t-Graphen mit der Zeit. D zeigt die dazugehörige linear zunehmende Geschwindigkeit."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Station 4: Vom Text zum Diagramm</h2>
+      <div class="ep-diagram-layout">
+        <figure class="ep-diagram-card">
+          <svg viewBox="0 0 520 320" role="img" aria-labelledby="ep-transfer-title ep-transfer-desc">
+            <title id="ep-transfer-title">Leeres Geschwindigkeit-Zeit-Koordinatensystem</title>
+            <desc id="ep-transfer-desc">Ein Koordinatensystem von null bis vier Sekunden und null bis zehn Meter pro Sekunde zum gedanklichen Einzeichnen.</desc>
+            <g class="ep-chart-grid">
+              <path d="M70 40V260 M170 40V260 M270 40V260 M370 40V260 M470 40V260"/>
+              <path d="M70 40H470 M70 84H470 M70 128H470 M70 172H470 M70 216H470 M70 260H470"/>
+            </g>
+            <path class="ep-chart-axis" d="M70 32V260H482"/>
+            <g class="ep-chart-text">
+              <text x="58" y="278">0</text><text x="166" y="278">1</text><text x="266" y="278">2</text><text x="366" y="278">3</text><text x="466" y="278">4</text>
+              <text x="49" y="220">2</text><text x="49" y="176">4</text><text x="49" y="132">6</text><text x="49" y="88">8</text><text x="42" y="44">10</text>
+              <text class="ep-chart-label" x="438" y="303">t in s</text><text class="ep-chart-label" x="8" y="26">v in m/s</text>
+            </g>
+          </svg>
+          <figcaption>Nutze das Raster für eine Skizze auf Papier oder zeichne den Verlauf gedanklich ein.</figcaption>
+        </figure>
+        <div class="ep-diagram-task">
+          <span class="ep-kicker">Transfer</span>
+          <h3>Ein Auto beschleunigt</h3>
+          <p>Ein Auto fährt zu Beginn mit $v_0=2{,}0\,\mathrm{m/s}$. Es beschleunigt vier Sekunden lang gleichmäßig mit $a=1{,}5\,\mathrm{m/s^2}$.</p>
+          <ol>
+            <li>Markiere Start- und Endpunkt im <em>v-t</em>-Diagramm und verbinde sie.</li>
+            <li>Berechne $v(4\,\mathrm{s})$.</li>
+            <li>Bestimme den Weg als Fläche unter dem Graphen.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-transfer-reveal",
+          "title":"Kontrolle: Auto mit Anfangsgeschwindigkeit",
+          "question":"Welche Endgeschwindigkeit und welchen Weg erhältst du?",
+          "answer":"Der Graph beginnt bei 2,0 m/s und endet bei v(4 s) = 2,0 m/s + 1,5 m/s² · 4 s = 8,0 m/s. Die Fläche unter dem Graphen ist ein Trapez: Δs = (2,0 m/s + 8,0 m/s) / 2 · 4 s = 20 m. Gleichwertig ist s = v₀t + 1/2 · a · t² = 20 m."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"ep-motion-transfer-essay",
+          "title":"Erkläre mit Diagrammsprache",
+          "hint":"Schreibe 4–6 Sätze. Verwende die Wörter Steigung, Fläche, Geschwindigkeit und Beschleunigung.",
+          "storagePrefix":"physik_einstieg_",
+          "exportName":"bewegungsdiagramme.txt",
+          "fields":[
+            {"label":"Deine Erklärung","key":"explanation","kind":"textarea","placeholder":"Eine Gerade im s-t-Diagramm bedeutet ..., weil ... Im v-t-Diagramm ..."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du gelernt, dass …</strong>
+        <p>die Achsen festlegen, was ein Graph bedeutet: Im <em>s-t</em>-Diagramm ist die Steigung eine Geschwindigkeit. Im <em>v-t</em>-Diagramm ist die Steigung eine Beschleunigung und die Fläche eine Ortsänderung. Gleichförmige und gleichmäßig beschleunigte Bewegungen kannst du deshalb ohne bloßes Formelraten erkennen.</p>
+      </div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Zusammenfassung und Abgabe">
       <h1>Dein Werkzeugkasten für die Kursstufe</h1>
       <p>Die Tabelle ist kein Vokabeltest. Sie ist ein Arbeitswerkzeug: Mit ihr übersetzt du ein Phänomen in messbare Größen und überprüfbare Beziehungen.</p>
 
@@ -837,6 +1238,7 @@
           <li>eine physikalische Größe durch Bedeutung, Formelzeichen, Zahlenwert und Einheit eindeutig beschrieben wird,</li>
           <li>Messgeräte Größen nicht immer direkt bestimmen und manche Werte berechnet werden,</li>
           <li>Formeln überprüfbare Modellbeziehungen mit Voraussetzungen sind,</li>
+          <li>Steigungen und Flächen in Bewegungsdiagrammen eine physikalische Bedeutung besitzen,</li>
           <li>Einheiten- und Größenordnungsprüfungen viele Fehler sichtbar machen,</li>
           <li>Messabweichungen Informationen liefern und nicht einfach gelöscht werden dürfen.</li>
         </ul>

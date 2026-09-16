@@ -35,6 +35,7 @@ body.wb-global-fs{
   --wb-radius2: 10px;
   --wb-topH: 62px;
   --wb-sideW: 310px;
+  --wb-viewH: 100vh;
   --wb-block-bg:#ffffff;
   --wb-block-border: var(--wb-line);
   --wb-head-bg:#f8fafc;
@@ -62,12 +63,18 @@ body.wb-global-fs{
   --wb-hamburger-icon: #ffffff;
 
   position: relative;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: var(--wb-viewH);
+  height: var(--wb-viewH);
   overflow: hidden;
   background: var(--wb-bg);
   color: var(--wb-text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+@supports (height: 100dvh){
+  .wb-book{ --wb-viewH: 100dvh; }
+}
+@supports (-webkit-touch-callout: none) and (height: 100svh){
+  .wb-book:not(.wb-pseudo-fullscreen){ --wb-viewH: 100svh; }
 }
 .wb-book:fullscreen,
 .wb-book:-webkit-full-screen,
@@ -78,6 +85,7 @@ body.wb-global-fs{
   -webkit-overflow-scrolling: touch;
 }
 .wb-book.wb-pseudo-fullscreen{
+  --wb-viewH: 100dvh;
   position: fixed !important;
   inset: 0 !important;
   left: 0;
@@ -807,7 +815,7 @@ body.wb-global-fs{
 .wb-book .wb-layout{
   display:flex;
   padding-top: var(--wb-topH);
-  height: calc(100vh - var(--wb-topH));
+  height: calc(var(--wb-viewH) - var(--wb-topH));
 }
 .wb-book .wb-backdrop{
   display:none;
@@ -950,12 +958,15 @@ body.wb-global-fs{
 .wb-book .wb-content{
   flex:1;
   margin-left: var(--wb-sideW);
-  padding: 0px 22px 60px 22px;
-  height: calc(100vh - var(--wb-topH));
+  box-sizing: border-box;
+  min-height: 0;
+  padding: 0 22px calc(100px + env(safe-area-inset-bottom, 0px)) 22px;
+  height: calc(var(--wb-viewH) - var(--wb-topH));
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  scroll-padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
 }
 .wb-book .wb-paper{
   max-width: 1080px;
@@ -1014,18 +1025,18 @@ body.wb-global-fs{
 }
 .wb-book.wb-present-mode .wb-layout{
   padding-top: var(--wb-topH);
-  height: calc(100vh - var(--wb-topH));
+  height: calc(var(--wb-viewH) - var(--wb-topH));
 }
 .wb-book.wb-present-mode .wb-content{
   margin-left: 0;
   padding: 10px 16px 16px 16px;
-  height: calc(100vh - var(--wb-topH));
+  height: calc(var(--wb-viewH) - var(--wb-topH));
 }
 .wb-book.wb-present-mode .wb-paper{
   max-width: none;
   margin: 0;
   border-radius: 10px;
-  height: calc(100vh - var(--wb-topH) - 26px);
+  height: calc(var(--wb-viewH) - var(--wb-topH) - 26px);
   padding: 26px 34px;
   overflow: hidden;
 }
@@ -1684,6 +1695,10 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   border-color: var(--wb-blue, #1e66c8);
   box-shadow: 0 0 0 3px rgba(30,102,200,.12);
 }
+.wb-categorize-bank.is-over{
+  border-color: var(--wb-blue, #1e66c8);
+  box-shadow: 0 0 0 3px rgba(30,102,200,.12);
+}
 .wb-categorize-zone-head{
   padding: 12px 14px;
   font-weight: 900;
@@ -1724,6 +1739,24 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   line-height: 1.35;
   text-align: center;
   user-select:none;
+  -webkit-user-select:none;
+  touch-action:none;
+}
+.wb-categorize-chip.is-selected{
+  border-color: var(--wb-blue, #1e66c8);
+  box-shadow: 0 0 0 3px rgba(30,102,200,.18);
+}
+.wb-categorize-chip.is-touch-dragging{
+  opacity: .35;
+}
+.wb-categorize-drag-ghost{
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  margin: 0;
+  opacity: .96;
+  transform: rotate(-1deg) scale(1.02);
+  box-shadow: 0 12px 30px rgba(15,23,42,.24);
 }
 .wb-categorize-chip.correct{
   border-color: rgba(22,163,74,.7);
@@ -2072,10 +2105,19 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
 }
 
 
-/* Puzzle2: Touch/Pointer fix (wichtig für iPad/Safari) */
+/* Puzzle2: Die Fläche darf auf Touchgeräten vertikal gescrollt werden. */
 .wb-book .p2,
 .wb-book .p2 *{
-  touch-action: none;
+  touch-action: pan-y;
+}
+.wb-book .p2 .p2-touch-hint{
+  margin: 8px 0 10px;
+  padding: 9px 11px;
+  border-left: 4px solid var(--wb-blue, #1e66c8);
+  background: var(--wb-gap-bg, #f9fafb);
+  color: var(--wb-muted, #6b7280);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 /* Puzzle2: Banks als echte Spalten (überschreibt alte wrap-Regeln) */
@@ -2093,13 +2135,14 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   width:100%;
 }
 
-/* Touch/Pointer */
-.wb-book .p2, .wb-book .p2 *{ touch-action: none; }
-
 .wb-book .p2 .p2-piece{
   -webkit-user-select: none;
   user-select: none;
-  touch-action: none;
+  touch-action: pan-y;
+}
+.wb-book .p2 .p2-piece.p2-selected{
+  border-color: var(--wb-blue, #1e66c8);
+  box-shadow: 0 0 0 3px rgba(30,102,200,.18), var(--p2-shadow);
 }
 
 .wb-book .p2 .p2-joined.p2-ok{

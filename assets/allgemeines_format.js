@@ -1015,6 +1015,9 @@ function el(tag, attrs = {}, children = []) {
     const bank = el("div", {class:"wb-categorize-bank", "data-categorize-bank":"1"}, []);
     const status = el("div", {class:"wb-categorize-status", "aria-live":"polite"}, ["Noch nicht überprüft."]);
     let dragChip = null;
+    let selectedChip = null;
+    let pointerDrag = null;
+    let ignoreClickUntil = 0;
     const zoneBodies = new Map();
 
     function allChips(){
@@ -1024,6 +1027,76 @@ function el(tag, attrs = {}, children = []) {
     function clearCheckState(){
       allChips().forEach(chip => chip.classList.remove("correct", "wrong"));
       status.textContent = "Noch nicht überprüft.";
+    }
+
+    function selectChip(chip){
+      if(selectedChip && selectedChip !== chip) selectedChip.classList.remove("is-selected");
+      selectedChip = selectedChip === chip ? null : chip;
+      allChips().forEach(node => {
+        const active = node === selectedChip;
+        node.classList.toggle("is-selected", active);
+        node.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function moveSelectedChip(container){
+      if(!selectedChip || !container) return;
+      container.appendChild(selectedChip);
+      selectChip(selectedChip);
+      clearCheckState();
+      saveState();
+    }
+
+    function pointerTarget(clientX, clientY){
+      const pointNode = document.elementFromPoint(clientX, clientY);
+      if(!pointNode) return null;
+      const zone = pointNode.closest && pointNode.closest(".wb-categorize-zone");
+      if(zone && host.contains(zone)){
+        return {container: qs(".wb-categorize-zone-body", zone), highlight: zone};
+      }
+      const targetBank = pointNode.closest && pointNode.closest(".wb-categorize-bank");
+      if(targetBank === bank) return {container: bank, highlight: bank};
+      return null;
+    }
+
+    function updatePointerDrag(e){
+      if(!pointerDrag || e.pointerId !== pointerDrag.pointerId) return;
+      e.preventDefault();
+      if(!pointerDrag.moved){
+        const distance = Math.hypot(e.clientX - pointerDrag.startX, e.clientY - pointerDrag.startY);
+        if(distance < 8) return;
+      }
+      pointerDrag.moved = true;
+      pointerDrag.ghost.style.left = `${e.clientX - pointerDrag.offsetX}px`;
+      pointerDrag.ghost.style.top = `${e.clientY - pointerDrag.offsetY}px`;
+      qsa(".wb-categorize-zone", grid).forEach(z => z.classList.remove("is-over"));
+      bank.classList.remove("is-over");
+      const target = pointerTarget(e.clientX, e.clientY);
+      if(target) target.highlight.classList.add("is-over");
+    }
+
+    function endPointerDrag(e, cancelled){
+      if(!pointerDrag || e.pointerId !== pointerDrag.pointerId) return;
+      e.preventDefault();
+      const active = pointerDrag;
+      const target = cancelled ? null : pointerTarget(e.clientX, e.clientY);
+      if(target && target.container) target.container.appendChild(active.chip);
+      active.chip.classList.remove("is-touch-dragging");
+      if(active.ghost.parentNode) active.ghost.parentNode.removeChild(active.ghost);
+      qsa(".wb-categorize-zone", grid).forEach(z => z.classList.remove("is-over"));
+      bank.classList.remove("is-over");
+      pointerDrag = null;
+      dragChip = null;
+      ignoreClickUntil = Date.now() + 400;
+      if(!cancelled && !active.moved){
+        selectChip(active.chip);
+        return;
+      }
+      if(target){
+        selectChip(null);
+        clearCheckState();
+        saveState();
+      }
     }
 
     function saveState(){
@@ -1043,6 +1116,10 @@ function el(tag, attrs = {}, children = []) {
       const chip = el("div", {
         class:"wb-categorize-chip",
         draggable:"true",
+        role:"button",
+        tabindex:"0",
+        "aria-pressed":"false",
+        "aria-label": `${item.label} auswählen`,
         "data-id": item.id,
         "data-answer": item.category
       }, [item.label]);
@@ -1052,8 +1129,49 @@ function el(tag, attrs = {}, children = []) {
       });
       chip.addEventListener("dragend", () => {
         dragChip = null;
+        ignoreClickUntil = Date.now() + 250;
         qsa(".wb-categorize-zone", grid).forEach(z => z.classList.remove("is-over"));
       });
+      chip.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if(Date.now() < ignoreClickUntil) return;
+        selectChip(chip);
+      });
+      chip.addEventListener("keydown", (e) => {
+        if(e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        selectChip(chip);
+      });
+      chip.addEventListener("pointerdown", (e) => {
+        if(e.pointerType === "mouse" || (e.button != null && e.button !== 0)) return;
+        e.preventDefault();
+        const rect = chip.getBoundingClientRect();
+        const ghost = chip.cloneNode(true);
+        ghost.classList.add("wb-categorize-drag-ghost");
+        ghost.classList.remove("is-selected", "correct", "wrong");
+        ghost.removeAttribute("draggable");
+        ghost.style.width = `${rect.width}px`;
+        ghost.style.left = `${rect.left}px`;
+        ghost.style.top = `${rect.top}px`;
+        document.body.appendChild(ghost);
+        chip.classList.add("is-touch-dragging");
+        dragChip = chip;
+        clearCheckState();
+        pointerDrag = {
+          pointerId: e.pointerId,
+          chip,
+          ghost,
+          startX: e.clientX,
+          startY: e.clientY,
+          offsetX: e.clientX - rect.left,
+          offsetY: e.clientY - rect.top,
+          moved: false
+        };
+        try{ chip.setPointerCapture(e.pointerId); }catch(_e){}
+      });
+      chip.addEventListener("pointermove", updatePointerDrag);
+      chip.addEventListener("pointerup", (e) => endPointerDrag(e, false));
+      chip.addEventListener("pointercancel", (e) => endPointerDrag(e, true));
       return chip;
     }
 
@@ -1076,6 +1194,10 @@ function el(tag, attrs = {}, children = []) {
         clearCheckState();
         saveState();
       });
+      zone.addEventListener("click", (e) => {
+        if(e.target.closest && e.target.closest(".wb-categorize-chip")) return;
+        moveSelectedChip(body);
+      });
       grid.appendChild(zone);
     });
 
@@ -1085,6 +1207,10 @@ function el(tag, attrs = {}, children = []) {
       if(dragChip) bank.appendChild(dragChip);
       clearCheckState();
       saveState();
+    });
+    bank.addEventListener("click", (e) => {
+      if(e.target.closest && e.target.closest(".wb-categorize-chip")) return;
+      moveSelectedChip(bank);
     });
 
     function loadState(){
@@ -1105,6 +1231,7 @@ function el(tag, attrs = {}, children = []) {
     }
 
     function reset(){
+      selectChip(null);
       items.forEach(item => {
         const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
         if(chip) bank.appendChild(chip);
@@ -1147,6 +1274,7 @@ function el(tag, attrs = {}, children = []) {
       status
     ]);
 
+    host.appendChild(el("div", {class:"wb-drop-hint"}, ["Ziehe die Begriffe in eine Kategorie. Auf einem Touchgerät kannst du alternativ erst einen Begriff und dann die Zielkategorie antippen."]));
     host.appendChild(grid);
     host.appendChild(bank);
     host.appendChild(controls);
@@ -3186,6 +3314,9 @@ function initPuzzle2(root, idx=0){
 
     function lockPiece(p){
       p.classList.add("p2-locked");
+      p.classList.remove("p2-selected");
+      p.setAttribute("aria-disabled", "true");
+      p.setAttribute("aria-pressed", "false");
       p.style.pointerEvents = "none";
     }
 
@@ -3236,6 +3367,53 @@ function initPuzzle2(root, idx=0){
       setScore(false); // noch nicht bewerten
       updateCheckState();
       if(!isLoading) saveState();
+    }
+
+    // Touch- und Tastaturbedienung: erst ein Teil, dann das Gegenstück wählen.
+    let selectedPiece = null;
+    function selectPiece(piece){
+      if(selectedPiece && selectedPiece !== piece){
+        selectedPiece.classList.remove("p2-selected");
+        selectedPiece.setAttribute("aria-pressed", "false");
+      }
+      selectedPiece = selectedPiece === piece ? null : piece;
+      allPieces().forEach(node => {
+        const active = node === selectedPiece;
+        node.classList.toggle("p2-selected", active);
+        node.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function choosePiece(piece){
+      if(!piece || piece.classList.contains("p2-locked")) return;
+      if(!selectedPiece || selectedPiece === piece){
+        selectPiece(piece);
+        return;
+      }
+      if(canJoin(selectedPiece, piece)){
+        const first = selectedPiece;
+        selectPiece(null);
+        join(first, piece);
+        return;
+      }
+      selectPiece(piece);
+    }
+
+    allPieces().forEach(piece => {
+      piece.setAttribute("role", "button");
+      piece.setAttribute("tabindex", "0");
+      piece.setAttribute("aria-pressed", "false");
+      piece.addEventListener("click", () => choosePiece(piece));
+      piece.addEventListener("keydown", (e) => {
+        if(e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        choosePiece(piece);
+      });
+    });
+
+    const banksWrap = qs(".p2-banks", root);
+    if(banksWrap && !qs(".p2-touch-hint", root)){
+      root.insertBefore(el("div", {class:"p2-touch-hint"}, ["Auf dem iPad: Tippe zuerst einen Begriff und danach das passende Gegenstück an. Zum Scrollen wischst du wie gewohnt nach oben oder unten."]), banksWrap);
     }
 
     // ---- Drag core ----
@@ -3326,6 +3504,7 @@ function initPuzzle2(root, idx=0){
       root.addEventListener("pointerdown", (e) => {
         const piece = e.target.closest(".p2-piece");
         if(!piece) return;
+        if(e.pointerType === "touch") return;
         e.preventDefault();
         startDrag(piece, e.clientX, e.clientY);
       }, {passive:false});
@@ -3349,32 +3528,52 @@ function initPuzzle2(root, idx=0){
       }, {passive:false});
     } else {
       // ---- Touch fallback (?ltere iPads) ----
+      let touchCandidate = null;
       root.addEventListener("touchstart", (e) => {
         const piece = e.target.closest(".p2-piece");
         if(!piece) return;
         const t = e.touches[0];
         if(!t) return;
-        e.preventDefault();
-        startDrag(piece, t.clientX, t.clientY);
+        touchCandidate = {piece, x:t.clientX, y:t.clientY};
       }, {passive:false});
 
       window.addEventListener("touchmove", (e) => {
-        if(!drag) return;
         const t = e.touches[0];
         if(!t) return;
+        if(touchCandidate){
+          const dx = t.clientX - touchCandidate.x;
+          const dy = t.clientY - touchCandidate.y;
+          if(Math.abs(dy) >= Math.abs(dx) && Math.abs(dy) > 8){
+            touchCandidate = null;
+            return;
+          }
+          if(Math.abs(dx) > 8){
+            startDrag(touchCandidate.piece, touchCandidate.x, touchCandidate.y);
+            touchCandidate = null;
+          }
+        }
+        if(!drag) return;
         e.preventDefault();
         moveDrag(t.clientX, t.clientY);
       }, {passive:false});
 
       window.addEventListener("touchend", (e) => {
-        if(!drag) return;
         const t = e.changedTouches[0];
         if(!t) return;
+        if(touchCandidate){
+          const piece = touchCandidate.piece;
+          touchCandidate = null;
+          e.preventDefault();
+          choosePiece(piece);
+          return;
+        }
+        if(!drag) return;
         e.preventDefault();
         endDrag(t.clientX, t.clientY);
       }, {passive:false});
 
       window.addEventListener("touchcancel", () => {
+        touchCandidate = null;
         if(!drag) return;
         restoreDrag();
         drag = null;
@@ -3402,9 +3601,12 @@ function initPuzzle2(root, idx=0){
     }
 
     function reset(){
+      selectPiece(null);
       qsa(".p2-joined", solved).forEach(w => {
         qsa(".p2-piece", w).forEach(p => {
           p.classList.remove("p2-locked");
+          p.removeAttribute("aria-disabled");
+          p.setAttribute("aria-pressed", "false");
           p.style.pointerEvents = "";
           const side = (p.getAttribute("data-side")||"").trim().toUpperCase();
           if(side === "L") leftBank.appendChild(p);
