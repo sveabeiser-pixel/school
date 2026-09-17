@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Smart Chicken Coop – Projektübersicht</title>
   <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="projekt.css">
 </head>
 <body>
   <div data-wb-book>
@@ -24,10 +25,21 @@
     </script>
 
     <section data-wb-page="1" data-wb-page-title="Start">
-      <h1>Smart Chicken Coop</h1>
-      <p class="wb-muted">Ein NWT-Projekt zu Sensorik, Netzwerken, Kamera und verantwortungsvoller Technik.</p>
+      <div class="coop-hero">
+        <span class="coop-kicker">NWT · Messen, vernetzen, erklären</span>
+        <h1>Smart Chicken Coop</h1>
+        <p class="wb-muted">Ein NWT-Projekt zu Sensorik, Netzwerken, Kamera und verantwortungsvoller Technik.</p>
+      </div>
       <h2>Unsere Leitfrage</h2>
       <p>Wie bauen wir ein technisches System, das einen Hühnerstall beobachtet, Messwerte verständlich darstellt und nach einem Neustart möglichst selbstständig wieder funktioniert?</p>
+
+      <div class="coop-flow" aria-label="Datenweg vom Hühnerstall zur Schulhomepage">
+        <div class="coop-flow__item"><strong>Hühnerstall</strong><small>reale Vorgänge</small></div>
+        <div class="coop-flow__item"><strong>Sensor + Kamera</strong><small>Signale und Bilder</small></div>
+        <div class="coop-flow__item"><strong>ESP32 + Pi</strong><small>verarbeiten</small></div>
+        <div class="coop-flow__item"><strong>Netzwerk</strong><small>übertragen</small></div>
+        <div class="coop-flow__item"><strong>Homepage</strong><small>anzeigen</small></div>
+      </div>
 
       <div class="grid2">
         <div class="wb-soft-callout">
@@ -200,7 +212,82 @@
         <p>Das Projekt verbindet Physik, Informatik und Technik über eine nachvollziehbare Mess- und Datenkette. Du arbeitest in einer Gruppe, musst das Gesamtsystem aber individuell erklären können.</p>
       </div>
     </section>
+
+    <section data-wb-page="5" data-wb-page-title="Doppelstundenplan">
+      <h1>Vom Teilproblem zum Gesamtsystem</h1>
+      <p>Die Reihe ist für zehn Doppelstunden geplant. Jede Einheit beginnt mit einer gemeinsamen Leitfrage, führt dann in parallele Gruppenarbeit und endet mit einem überprüfbaren Meilenstein.</p>
+
+      <table class="coop-comparison">
+        <thead><tr><th>DS</th><th>Gemeinsamer Input</th><th>Gruppe A · Sensorik</th><th>Gruppe B · Pi/Kamera</th><th>Nachweis</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>System, Sicherheit, Datenschutz</td><td colspan="2">Datenweg modellieren; Arduino Uno, ESP32 und Raspberry Pi vergleichen</td><td>Systemdiagramm und Risikoliste</td></tr>
+          <tr><td>2</td><td>Mikrocontroller, <code>setup()</code>, <code>loop()</code></td><td>ESP32 einrichten und seriell ausgeben</td><td>Raspberry Pi OS im Imager vorbereiten</td><td>Serieller Log / geprüfte microSD</td></tr>
+          <tr><td>3</td><td>Digitale Sensorprotokolle und Linux-Boot</td><td>KY-015 anschließen und auslesen</td><td>Pi starten, Netzwerk und SSH prüfen</td><td>Plausible Messwerte / SSH-Protokoll</td></tr>
+          <tr><td>4</td><td>Spannungsteiler, ADC und Prozesse</td><td>KY-018 untersuchen und Kennlinie aufnehmen</td><td>Kamera sicher anschließen und erkennen</td><td>Messreihe / Kameraliste</td></tr>
+          <tr><td>5</td><td>Messfehler, Einheiten, Datenqualität</td><td>Beide Sensoren zusammenführen</td><td>Foto und lokales Video erzeugen</td><td>Datensatz / Bild- und Videodatei</td></tr>
+          <tr><td>6</td><td>IP, Client, Server und HTTP</td><td>ESP32 ins WLAN bringen und Webseite anbieten</td><td>NoIR und Infrarot experimentell vergleichen</td><td>HTTP-Antwort / Versuchsprotokoll</td></tr>
+          <tr><td>7</td><td>JSON, Bildrate, Auflösung und Bitrate</td><td>Messwerte strukturiert bereitstellen</td><td>Videodatenrate messen und berechnen</td><td>Datenschnittstelle / Rechenweg</td></tr>
+          <tr><td>8</td><td>Sichere Streamingarchitektur</td><td>Sensoranzeige für die Homepage vorbereiten</td><td>Ausgehenden Stream zum freigegebenen Dienst testen</td><td>Gemeinsamer Integrationstest</td></tr>
+          <tr><td>9</td><td>Dienste, Autostart und Fehlerzustände</td><td>WLAN-Wiederanlauf prüfen</td><td><code>systemd</code>-Dienst und Neustart testen</td><td>Start- und Fehlerprotokoll</td></tr>
+          <tr><td>10</td><td>Abnahme, Datenschutz und Montage</td><td colspan="2">Gesamtsystem testen, dokumentieren und stalltaugliche Montage begründen</td><td>Abnahme und individuelle Erklärung</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Fester Ablauf einer Doppelstunde</h2>
+      <ol class="coop-step-list">
+        <li><strong>Lernziel und Problem:</strong> Was soll am Ende sichtbar funktionieren oder erklärbar sein?</li>
+        <li><strong>Kurzer Input:</strong> Fachmodell, Sicherheitsregel und ein Diagnosewerkzeug.</li>
+        <li><strong>Arbeitsauftrag:</strong> Ihr entwickelt und testet eine Lösung; eine Anleitung dient als Geländer, nicht als Abschreibvorlage.</li>
+        <li><strong>Nachweis:</strong> Messwert, Datei, Screenshot, serieller Log oder beantwortete HTTP-Anfrage.</li>
+        <li><strong>Fehlersuche:</strong> Ihr notiert den letzten funktionierenden Meilenstein und prüft nur den nächsten Übergang.</li>
+        <li><strong>Übergabe und Exit-Ticket:</strong> Die andere Gruppe erhält Schnittstelle, Datenformat, Grenzen und offenen Fehler.</li>
+      </ol>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+      {
+        "id":"coop_lesson_mcq",
+        "title":"Was ist ein belastbarer Meilenstein?",
+        "hint":"Wähle den Nachweis, den eine andere Gruppe nachvollziehen kann.",
+        "shuffleChoices":true,
+        "questions":[{
+          "text":"Welche Aussage dokumentiert den Meilenstein ‚Kamera funktioniert lokal‘ am besten?",
+          "choices":[
+            {"id":"a","label":"Wir glauben, dass die Kamera angeschlossen ist."},
+            {"id":"b","label":"rpicam-hello --list-cameras erkennt das Modul; ein Foto wurde mit Zeitstempel gespeichert und geöffnet."},
+            {"id":"c","label":"Die Homepage zeigt gerade kein Bild."}
+          ],
+          "correct":["b"],
+          "explain":"Ein guter Nachweis nennt Test, beobachtetes Ergebnis und erzeugtes Produkt. So lässt sich später genau hinter diesem Meilenstein weitersuchen."
+        }]
+      }
+      </script></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Material und Differenzierung">
+      <h1>Material, Hilfen und Erweiterungen</h1>
+      <h2>Grundausstattung</h2>
+      <div class="coop-card-grid">
+        <div class="coop-card"><span class="coop-card__icon">📡</span><strong>Sensorik</strong><p>ESP32-DevKitC-VIE, Joy-it SensorKit X40 mit KY-015 und KY-018, Breadboard, Jumperkabel und USB-Datenkabel.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">📷</span><strong>Kamera</strong><p>Raspberry Pi 4 B mit 2 GB, Aluminiumgehäuse, 5,1-V-/3-A-Netzteil, 64-GB-microSD und Camera Module 3 Wide NoIR.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">🧰</span><strong>Arbeitsplatz</strong><p>Computer mit Arduino IDE und Raspberry Pi Imager, freigegebenes Netzwerk, serieller Monitor, Terminal und Messprotokoll.</p></div>
+      </div>
+
+      <h2>Differenzierung ohne getrennte Ziele</h2>
+      <table class="coop-comparison">
+        <thead><tr><th>Wenn du Unterstützung brauchst</th><th>Wenn du schneller fertig bist</th></tr></thead>
+        <tbody>
+          <tr><td>Nutze die Pin-Tabelle und prüfe jede Leitung einzeln.</td><td>Ersetze feste Grenzwerte durch experimentell begründete Schwellen.</td></tr>
+          <tr><td>Teste zuerst ein minimales Programm mit genau einem Sensor.</td><td>Ergänze Zeitstempel, Statuscode und Fehlerfeld im JSON-Datenformat.</td></tr>
+          <tr><td>Vergleiche deine Ausgabe mit einem erwarteten Beispiel.</td><td>Miss Datenrate, Startzeit oder Energiebedarf und werte die Messung aus.</td></tr>
+          <tr><td>Arbeite mit der Diagnosefrage: „Was hat zuletzt sicher funktioniert?“</td><td>Entwirf einen automatischen Wiederanlauf und provoziere kontrolliert einen Fehler.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Die Reihe besteht aus überprüfbaren Teilproblemen. Jede Doppelstunde liefert einen technischen Nachweis, eine Erklärung und eine Übergabe. Am Ende werden nicht bloß Bauteile zusammengesteckt, sondern ein dokumentiertes, sicheres und ausfallsicheres Gesamtsystem begründet.</p></div>
+    </section>
   </div>
+  <script src="projekt-navigation.js"></script>
   <script src="../../assets/wb-webhook-loader.js"></script>
   <script src="../../assets/allgemeines_format.js"></script>
   <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>

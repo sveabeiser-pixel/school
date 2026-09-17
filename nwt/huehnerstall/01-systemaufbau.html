@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Smart Chicken Coop – Systemaufbau</title>
   <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="projekt.css">
 </head>
 <body>
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">{"bookTitle":"Smart Chicken Coop","sectionTitle":"1. Systemaufbau, Sicherheit und Datenschutz","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Kapitel 1","themeDefault":"default"}</script>
 
     <section data-wb-page="1" data-wb-page-title="Einstieg">
-      <h1>1. Vom Hühnerstall zum technischen System</h1>
-      <p class="wb-muted">Einstieg: Ein Messwert auf einer Webseite entsteht nicht an einem einzigen Gerät.</p>
+      <div class="coop-hero">
+        <span class="coop-kicker">Kapitel 1 · Das Gesamtsystem verstehen</span>
+        <h1>1. Vom Hühnerstall zum technischen System</h1>
+        <p class="wb-muted">Einstieg: Ein Messwert auf einer Webseite entsteht nicht an einem einzigen Gerät.</p>
+      </div>
       <h2>Die Situation</h2>
       <p>Die Schule möchte beobachten, ob sich Temperatur, Luftfeuchtigkeit und Helligkeit im Stall verändern. Gleichzeitig soll eine Kamera Bilder liefern. Das System muss also messen, rechnen, übertragen und anzeigen.</p>
       <div class="wb-soft-callout">
@@ -24,6 +28,19 @@
       <div class="grid2">
         <div class="wb-soft-callout"><strong>ESP32</strong><p>Ein Mikrocontroller für wiederholte, energiearme Aufgaben: Sensorwerte lesen, Signale verarbeiten und kleine Netzwerkdienste anbieten.</p></div>
         <div class="wb-soft-callout"><strong>Raspberry Pi</strong><p>Ein Linux-Computer mit Betriebssystem: Kamera steuern, Dateien verwalten, Video verarbeiten und Dienste automatisch starten.</p></div>
+      </div>
+      <p><strong>Wo gehört der Arduino hin?</strong> „Arduino“ bezeichnet eine Plattform aus Boards, Entwicklungsumgebung und Bibliotheken. Ein Arduino Uno ist wie der ESP32 ein Mikrocontroller-Board. Der ESP32 kann sogar mit der Arduino IDE programmiert werden. Der grundlegende Gegensatz lautet daher nicht Arduino gegen ESP32, sondern <em>Mikrocontroller gegen Linux-Computer</em>.</p>
+      <div class="coop-card-grid">
+        <div class="coop-card"><span class="coop-card__icon">🔁</span><strong>Arduino Uno</strong><p>Ein kleines Programm, direkte Ein-/Ausgänge, wenig Speicher, beim Uno 5-V-Logik und kein eingebautes WLAN.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">📡</span><strong>ESP32</strong><p>Ein kleines eingebettetes Programm, 3,3-V-GPIO, ADC, WLAN und Bluetooth – ideal als Sensorknoten.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">🐧</span><strong>Raspberry Pi</strong><p>Linux, Prozesse, Dateien, Benutzer, Kamera- und Netzwerkdienste – ideal für Video und Integration.</p></div>
+      </div>
+      <div class="coop-flow" aria-label="Datenweg des Gesamtsystems">
+        <div class="coop-flow__item"><strong>Stall</strong><small>Licht, Temperatur, Bild</small></div>
+        <div class="coop-flow__item"><strong>Sensoren</strong><small>Signale erzeugen</small></div>
+        <div class="coop-flow__item"><strong>ESP32 + Pi</strong><small>verarbeiten</small></div>
+        <div class="coop-flow__item"><strong>Netzwerk</strong><small>übertragen</small></div>
+        <div class="coop-flow__item"><strong>Homepage</strong><small>verständlich anzeigen</small></div>
       </div>
       <div class="wb-section-break"></div>
       <div data-wb-type="mcq"><script type="application/json" class="wb-config">{"id":"system_architecture_mcq","title":"Check: Welches Gerät passt?","hint":"Begründe deine Wahl mit der typischen Aufgabe des Geräts.","questions":[{"text":"Warum ist der ESP32 für die zyklische Sensorabfrage geeignet?","choices":[{"id":"a","label":"Er führt ein vollständiges Desktop-Betriebssystem mit vielen Programmen aus."},{"id":"b","label":"Er ist für direkte Ein-/Ausgaben und wiederholte Steuerungsaufgaben ausgelegt."},{"id":"c","label":"Er ersetzt automatisch einen Streamingdienst im Internet."}],"correct":["b"],"explain":"Der ESP32 ist ein Mikrocontroller. Seine Stärke liegt in direkter Hardwareanbindung, geringer Leistungsaufnahme und wiederholten Abläufen."}]}</script></div>
@@ -61,10 +78,12 @@
           <div class="p2-piece p2-left" data-side="L" data-pair="1">ESP32</div>
           <div class="p2-piece p2-left" data-side="L" data-pair="2">Raspberry Pi</div>
           <div class="p2-piece p2-left" data-side="L" data-pair="3">Webseite</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="4">Arduino Uno</div>
         </div></div><div><div class="p2-col-title">Aufgabe</div><div class="p2-bank" data-right-bank>
           <div class="p2-piece p2-right" data-side="R" data-pair="1">Sensorwerte lesen und kleinen Dienst anbieten</div>
           <div class="p2-piece p2-right" data-side="R" data-pair="2">Kamera, Linux-Prozesse und Videodateien verwalten</div>
           <div class="p2-piece p2-right" data-side="R" data-pair="3">Informationen für Menschen darstellen</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="4">Einfaches Mikrocontroller-Board ohne eingebautes WLAN</div>
         </div></div></div>
         <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
         <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
@@ -82,6 +101,6 @@
       <ul><li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/" target="_blank" rel="noopener">Espressif: Arduino-ESP32-Dokumentation</a></li><li><a href="https://www.raspberrypi.com/documentation/computers/camera_software.html" target="_blank" rel="noopener">Raspberry Pi: Camera software</a></li><li><a href="https://www.bfdi.bund.de/DE/Buerger/Inhalte/Allgemein/Datenschutz/Videoueberwachung.html" target="_blank" rel="noopener">BfDI: Videoüberwachung und Datenschutz</a></li></ul>
     </section>
   </div>
-  <script src="../../assets/wb-webhook-loader.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+  <script src="projekt-navigation.js"></script><script src="../../assets/wb-webhook-loader.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
 </body>
 </html>

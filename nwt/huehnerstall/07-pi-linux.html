@@ -1,1 +1,221 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Smart Chicken Coop – Raspberry Pi</title><link rel="stylesheet" href="../../assets/allgemeines_format.css"></head><body><div data-wb-book><script type="application/json" class="wb-book-config">{"bookTitle":"Smart Chicken Coop","sectionTitle":"7. Raspberry Pi, Linux und SSH","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Kapitel 7","themeDefault":"default"}</script><section data-wb-page="1" data-wb-page-title="Linux"><h1>7. Raspberry Pi, Linux und SSH</h1><p class="wb-muted">Der Raspberry Pi ist kein großer ESP32: Er startet ein Betriebssystem und verwaltet Prozesse und Dateien.</p><h2>Warum ein Betriebssystem?</h2><p>Linux verwaltet Benutzer, Dateien, Netzwerk, Prozesse und Gerätetreiber. Dadurch kann der Pi Kamera-Software, Skripte und Dienste parallel ausführen. Diese Flexibilität kostet mehr Energie und bringt zusätzliche Fehlerquellen.</p><h2>SSH</h2><p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Zugangsdaten gehören nicht in öffentliche Dateien oder Screenshots.</p><div class="wb-section-break"></div><div data-wb-type="mcq"><script type="application/json" class="wb-config">{"id":"pi_linux_mcq","title":"Gerätevergleich","hint":"Wähle die beste Erklärung.","questions":[{"text":"Warum eignet sich der Raspberry Pi besonders für Kamera und Dienste?","choices":[{"id":"a","label":"Er hat grundsätzlich keinen Prozessor."},{"id":"b","label":"Er kann ein Betriebssystem und mehrere Programme verwalten."},{"id":"c","label":"Er misst jede Spannung ohne Sensor."}],"correct":["b"],"explain":"Der Pi ist ein Einplatinencomputer mit Betriebssystem und kann deshalb komplexere Anwendungen und Prozesse ausführen."}]}</script></div><div class="wb-section-break"></div></section><section data-wb-page="2" data-wb-page-title="Diagnose"><h1>Terminal und Fehlersuche</h1><p>Dokumentiert Befehle und Ausgaben so, dass eine andere Person den Test nachvollziehen kann. Ein erfolgreicher SSH-Login beweist noch nicht, dass Kamera oder Stream funktionieren.</p><div class="wb-soft-callout"><strong>Diagnosekette</strong><ol style="margin:0;padding-left:22px"><li>SSH-Verbindung</li><li>Kameraerkennung</li><li>Lokale Vorschau</li><li>Foto oder Video speichern</li><li>Netzwerk- und Streamingweg</li></ol></div><div class="wb-section-break"></div><div data-wb-type="essay"><script type="application/json" class="wb-config">{"id":"pi_linux_transfer","title":"Klausurtraining: Rechnerklassen","hint":"Vergleiche ESP32 und Raspberry Pi in 5–8 Sätzen. Nenne mindestens drei Unterschiede.","storagePrefix":"smart_coop_pi_","fields":[{"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Der ESP32 ... Der Raspberry Pi ..."}]}</script></div><div class="wb-section-break"></div><div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Der ESP32 ist der nahe, schnelle Messknoten. Der Raspberry Pi ist die flexible Linux-Plattform für Kamera und Dienste.</p></div></section></div><script src="../../assets/wb-webhook-loader.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop – Raspberry Pi, Linux und SSH</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="projekt.css">
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {"bookTitle":"Smart Chicken Coop","sectionTitle":"7. Raspberry Pi, Linux und SSH","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Kapitel 7","themeDefault":"default"}
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Ein Computer auf einer Platine">
+      <div class="coop-hero">
+        <span class="coop-kicker">Raspberry Pi 4 B · 2 GB</span>
+        <h1>7. Wie funktioniert der Raspberry Pi?</h1>
+        <p>Der Raspberry Pi ist kein großer ESP32. Er ist ein vollständiger Einplatinencomputer: Beim Einschalten lädt er ein Betriebssystem, das Hardware, Dateien, Benutzer, Netzwerk und gleichzeitig laufende Programme verwaltet.</p>
+      </div>
+      <h2>Die Bauteile und ihre Aufgaben</h2>
+      <div class="coop-card-grid">
+        <div class="coop-card"><span class="coop-card__icon">🧠</span><strong>SoC / Prozessor</strong><p>Der BCM2711 enthält vier 64-Bit-ARM-Rechenkerne und Grafikfunktionen. Er führt Maschinenbefehle aus und verarbeitet Kamera- und Netzwerkdaten.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">⚡</span><strong>2 GB Arbeitsspeicher</strong><p>Im RAM liegen aktuell laufende Programme und Daten. Er ist schnell, aber flüchtig: Ohne Strom geht sein Inhalt verloren.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">💾</span><strong>64-GB-microSD</strong><p>Sie ersetzt im Projekt die Systemplatte. Auf ihr liegen Raspberry Pi OS, Programme, Einstellungen, Protokolle, Bilder und Videos.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">📷</span><strong>CSI-Kameraanschluss</strong><p>Das Flachbandkabel überträgt Steuerdaten und schnelle Bilddaten von der Camera Module 3 zum Pi.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">🌐</span><strong>Netzwerk und Anschlüsse</strong><p>WLAN, Ethernet, USB und HDMI verbinden den Pi mit Netz, Speichern, Tastatur, Monitor und weiteren Geräten.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">🔌</span><strong>GPIO-Leiste</strong><p>Die 40-polige Leiste bietet digitale 3,3-V-Signale und Schnittstellen. Die GPIOs sind nicht 5-V-tolerant; einen eingebauten Analog-Digital-Wandler besitzt der Pi nicht.</p></div>
+      </div>
+      <div class="wb-callout"><strong>Versorgung im Projekt:</strong><p>Das 5,1-V-/3-A-USB-C-Netzteil versorgt den Pi. Eine zu schwache oder instabile Versorgung kann zu Drosselung, Abstürzen und beschädigten Dateisystemen führen. Trenne den Pi deshalb nicht einfach während eines Schreibvorgangs vom Strom.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+      {"id":"pi_hardware_mcq","title":"Check: Speicher und Strom","hint":"Unterscheide Arbeitsspeicher und dauerhaften Speicher.","shuffleChoices":true,"questions":[{"text":"Wo liegen Betriebssystem und Konfigurationsdateien, wenn der Pi ausgeschaltet ist?","choices":[{"id":"a","label":"Nur im flüchtigen RAM"},{"id":"b","label":"Auf der microSD-Karte"},{"id":"c","label":"In den GPIO-Pins"}],"correct":["b"],"explain":"Die microSD ist der nichtflüchtige Massenspeicher. Der RAM verliert seinen Inhalt ohne Versorgungsspannung."}]}
+      </script></div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Arduino, ESP32 und Pi">
+      <h1>Drei Begriffe, zwei Rechnerklassen</h1>
+      <p><strong>Arduino</strong> ist zunächst eine Entwicklungsplattform aus Boards, Software und Bibliotheken. Wenn im Unterricht „der Arduino“ gesagt wird, ist meist ein Arduino Uno mit ATmega328P-Mikrocontroller gemeint. Auch den ESP32 programmierst du in diesem Projekt mit der Arduino IDE und vielen Arduino-Befehlen. Arduino und ESP32 sind deshalb keine Gegensätze.</p>
+      <div class="wb-soft-callout"><strong>Die entscheidende Trennung:</strong><p>Arduino Uno und ESP32 sind Mikrocontroller-Boards. Der Raspberry Pi 4 ist ein Einplatinencomputer mit Linux-Betriebssystem.</p></div>
+      <h2>Direkter Vergleich</h2>
+      <table class="coop-comparison">
+        <thead><tr><th>Merkmal</th><th>Arduino Uno</th><th>ESP32-DevKitC</th><th>Raspberry Pi 4 B</th></tr></thead>
+        <tbody>
+          <tr><td>Rechnerart</td><td>8-Bit-Mikrocontroller-Board</td><td>32-Bit-Mikrocontroller-Board mit Funk</td><td>64-Bit-Einplatinencomputer</td></tr>
+          <tr><td>Programmstart</td><td>Ein geflashtes Programm startet nach Reset.</td><td>Bootloader lädt die Firmware aus Flash; Arduino-<code>setup()</code> und <code>loop()</code> laufen als Teil des Systems.</td><td>Bootloader lädt Linux von der microSD; danach starten mehrere Dienste und Programme.</td></tr>
+          <tr><td>Betriebssystem</td><td>Kein Desktop-Betriebssystem</td><td>Kein Linux; im Arduino-Core arbeitet intern ein Echtzeitbetriebssystem mit Tasks.</td><td>Raspberry Pi OS / Linux mit Benutzern, Dateien, Prozessen und Rechten</td></tr>
+          <tr><td>Speicher</td><td>32 kB Flash, 2 kB SRAM beim Uno R3</td><td>Deutlich mehr RAM; Programm und Daten liegen typischerweise in externem Flash auf dem Modul.</td><td>2 GB RAM plus 64-GB-microSD im Projekt</td></tr>
+          <tr><td>Signalpegel</td><td>Beim Uno R3 meist 5 V</td><td>3,3 V; GPIOs nicht für 5-V-Signale</td><td>3,3 V; GPIOs nicht für 5-V-Signale</td></tr>
+          <tr><td>Analogeingang</td><td>Ja</td><td>Ja, mit beachtbaren ADC-Grenzen</td><td>Nein; externer ADC nötig</td></tr>
+          <tr><td>Netzwerk</td><td>Nicht ohne Zusatzhardware</td><td>WLAN und Bluetooth integriert</td><td>WLAN, Bluetooth und Ethernet integriert</td></tr>
+          <tr><td>Stärke</td><td>Einfache, gut nachvollziehbare Steuerungen</td><td>Sensorik, GPIO, IoT und geringer Energiebedarf</td><td>Kamera, Dateien, Video, Webdienste und komplexe Software</td></tr>
+          <tr><td>Grenze</td><td>Wenig Speicher und Rechenleistung</td><td>Kein vollwertiger Linux-Rechner; begrenzter RAM</td><td>Höherer Energiebedarf; Linux ist standardmäßig nicht echtzeitfähig</td></tr>
+        </tbody>
+      </table>
+      <p class="wb-mini-note">„Nicht echtzeitfähig“ bedeutet hier: Linux teilt Rechenzeit zwischen Prozessen auf. Eine Reaktion kann dadurch schwanken. Für zeitkritisches direktes Einlesen ist ein Mikrocontroller oft die bessere Wahl.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+      {"id":"pi_linux_mcq","title":"Gerätevergleich","hint":"Wähle die beste Erklärung.","questions":[{"text":"Warum eignet sich der Raspberry Pi besonders für Kamera und Dienste?","choices":[{"id":"a","label":"Er hat grundsätzlich keinen Prozessor."},{"id":"b","label":"Er kann ein Betriebssystem und mehrere Programme verwalten."},{"id":"c","label":"Er misst jede Spannung ohne Sensor."}],"correct":["b"],"explain":"Der Pi ist ein Einplatinencomputer mit Betriebssystem und kann deshalb komplexere Anwendungen und Prozesse ausführen."}]}
+      </script></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize"><script type="application/json" class="wb-config">
+      {"id":"pi_rechnerklassen_cat","title":"Welcher Rechner übernimmt die Aufgabe?","hint":"Ordne nach der technisch sinnvollsten Hauptrolle im Hühnerstallprojekt.","categories":[{"id":"micro","title":"Mikrocontroller / ESP32"},{"id":"computer","title":"Linux-Computer / Raspberry Pi"}],"items":[{"label":"Alle zwei Sekunden den DHT11 auslesen","category":"micro"},{"label":"H.264-Videodaten verarbeiten","category":"computer"},{"label":"Nach jedem Reset dasselbe kleine Messprogramm starten","category":"micro"},{"label":"Mehrere Netzwerk- und Kameradienste verwalten","category":"computer"},{"label":"Dateien, Benutzer und Zugriffsrechte verwalten","category":"computer"},{"label":"Einen ADC-Rohwert direkt erfassen","category":"micro"}]}
+      </script></div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Vom Strom zum Linux-System">
+      <h1>Was passiert beim Einschalten?</h1>
+      <p>Der Pi kann nicht sofort ein Python-Programm oder einen Kameradienst ausführen. Zuerst entsteht aus stromloser Hardware Schritt für Schritt ein laufendes Linux-System.</p>
+      <div class="coop-flow">
+        <div class="coop-flow__item"><strong>1. Strom</strong><small>Spannungen stabilisieren</small></div>
+        <div class="coop-flow__item"><strong>2. Bootloader</strong><small>Startmedium finden</small></div>
+        <div class="coop-flow__item"><strong>3. Linux-Kernel</strong><small>CPU, RAM, Treiber</small></div>
+        <div class="coop-flow__item"><strong>4. systemd</strong><small>Dienste starten</small></div>
+        <div class="coop-flow__item"><strong>5. Anwendung</strong><small>Kamera und Stream</small></div>
+      </div>
+      <ol class="coop-step-list">
+        <li><strong>Versorgung:</strong> Die Spannungsregler erzeugen die benötigten Betriebsspannungen. Der Prozessor verlässt den Reset-Zustand.</li>
+        <li><strong>Boot-ROM und EEPROM-Bootloader:</strong> Beim Pi 4 beginnt unveränderlicher Startcode im Chip. Danach übernimmt der Bootloader im SPI-EEPROM und sucht entsprechend seiner Konfiguration ein startfähiges Medium.</li>
+        <li><strong>Bootpartition:</strong> Der Pi liest Firmware, Konfiguration, Device-Tree-Dateien und den Linux-Kernel von der microSD. Der Device Tree beschreibt, welche Hardware vorhanden ist.</li>
+        <li><strong>Kernel:</strong> Linux richtet Speicherverwaltung, Gerätetreiber und Prozesse ein und bindet das eigentliche Root-Dateisystem ein.</li>
+        <li><strong>systemd:</strong> Der erste Benutzerraum-Prozess startet abhängige Dienste, zum Beispiel Netzwerk, SSH und später unseren Kameradienst.</li>
+        <li><strong>Anmeldung und Anwendungen:</strong> Erst jetzt kannst du dich per SSH anmelden, Befehle ausführen und Kamera- oder Streamingprogramme als eigene Prozesse starten.</li>
+      </ol>
+      <div class="wb-callout"><strong>Folgerung für die Fehlersuche:</strong><p>Wenn SSH nicht funktioniert, muss der Fehler nicht bei SSH liegen. Vielleicht bootet die Karte nicht, die Stromversorgung ist instabil, das Netzwerk fehlt oder der SSH-Dienst wurde nicht aktiviert.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="trace"><script type="application/json" class="wb-config">
+      {"id":"pi_boot_trace","title":"Ablaufspur: Der Pi startet","hint":"Trage ein, was nach der jeweiligen Stufe als Nächstes verfügbar ist.","columns":[{"label":"Stufe","width":"16%"},{"label":"Aktiver Teil","width":"30%"},{"label":"Ergebnis danach","width":"54%"}],"rows":[{"cells":[{"given":"1"},{"given":"Spannungsversorgung"},{"answers":["stabile betriebsspannungen","betriebsspannungen stabil","stabile spannungen"],"ariaLabel":"Ergebnis nach der Spannungsversorgung"}]},{"cells":[{"given":"2"},{"given":"Bootloader"},{"answers":["startmedium gefunden","microSD gefunden","startmedium wird gefunden"],"ariaLabel":"Ergebnis nach dem Bootloader"}]},{"cells":[{"given":"3"},{"given":"Linux-Kernel"},{"answers":["treiber und speicherverwaltung aktiv","speicherverwaltung und treiber aktiv","treiber aktiv"],"ariaLabel":"Ergebnis nach dem Kernel"}]},{"cells":[{"given":"4"},{"given":"systemd"},{"answers":["dienste gestartet","netzwerk und ssh gestartet","systemdienste gestartet"],"ariaLabel":"Ergebnis nach systemd"}]},{"cells":[{"given":"5"},{"given":"Anwendung"},{"answers":["kamera und stream laufen","kameradienst läuft","streamingdienst läuft"],"ariaLabel":"Ergebnis der Anwendung"}]}]}
+      </script></div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Linux denkt in Prozessen">
+      <h1>Dateien, Prozesse, Benutzer und Rechte</h1>
+      <p>Linux verwaltet Benutzer, Dateien, Netzwerk, Prozesse und Gerätetreiber. Dadurch kann der Pi Kamera-Software, Skripte und Dienste parallel ausführen. Diese Flexibilität kostet mehr Energie und bringt zusätzliche Fehlerquellen.</p>
+      <h2>Vier Grundbegriffe</h2>
+      <div class="grid2">
+        <div class="wb-soft-callout"><strong>Datei</strong><p>Ein gespeicherter Inhalt mit Pfad, zum Beispiel <code>/home/coop/huhn.jpg</code> oder eine Konfigurationsdatei.</p></div>
+        <div class="wb-soft-callout"><strong>Programm</strong><p>Ausführbarer Code auf der microSD, zum Beispiel <code>rpicam-vid</code> oder <code>python3</code>.</p></div>
+        <div class="wb-soft-callout"><strong>Prozess</strong><p>Eine laufende Instanz eines Programms mit eigener Prozessnummer, Speicher und Zustand.</p></div>
+        <div class="wb-soft-callout"><strong>Dienst</strong><p>Ein meist im Hintergrund laufender Prozess, den <code>systemd</code> starten, überwachen und nach Fehlern neu starten kann.</p></div>
+      </div>
+      <p>Mehrere Prozesse teilen sich Prozessorzeit und RAM. Der Kernel entscheidet, welcher Prozess wann rechnen darf. Treiber vermitteln zwischen Software und Hardware, etwa Kamera, Netzwerkkarte oder Dateisystem.</p>
+      <div class="wb-soft-callout"><strong>Benutzer und <code>sudo</code></strong><p>Du arbeitest normalerweise mit begrenzten Rechten. <code>sudo</code> führt genau einen Befehl mit Administratorrechten aus. Nutze es nur, wenn es erforderlich ist und du den Befehl verstehst.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="cloze"><script type="application/json" class="wb-config">
+      {"id":"pi_linux_cloze","title":"Sicherung: Linux-Grundbegriffe","bank":["Kernel","Prozess","Datei","systemd","Treiber"],"segments":[{"t":"text","v":"Eine dauerhaft gespeicherte Information ist eine "},{"t":"gap","a":"Datei"},{"t":"text","v":". Ein gerade ausgeführtes Programm heißt "},{"t":"gap","a":"Prozess"},{"t":"text","v":". Der "},{"t":"gap","a":"Kernel"},{"t":"text","v":" verwaltet unter anderem Speicher und Rechenzeit. Hardware wird über einen "},{"t":"gap","a":"Treiber"},{"t":"text","v":" angesprochen; Systemdienste startet häufig "},{"t":"gap","a":"systemd"},{"t":"text","v":"."}]}
+      </script></div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Raspberry Pi OS vorbereiten">
+      <h1>Die microSD mit Raspberry Pi OS vorbereiten</h1>
+      <p>Für einen Pi ohne Bildschirm und Tastatur ist eine <em>Headless-Installation</em> sinnvoll. Du bereitest Netzwerk, Benutzer und Fernzugriff schon im Raspberry Pi Imager vor.</p>
+      <h2>Vor dem Schreiben festlegen</h2>
+      <table class="coop-comparison">
+        <thead><tr><th>Einstellung</th><th>Empfehlung im Projekt</th><th>Warum?</th></tr></thead>
+        <tbody>
+          <tr><td>Gerät</td><td>Raspberry Pi 4</td><td>Der Imager wählt ein kompatibles System.</td></tr>
+          <tr><td>Betriebssystem</td><td>Raspberry Pi OS Lite (64-bit), wenn kein Desktop benötigt wird</td><td>Weniger Hintergrundsoftware und geringerer Speicherbedarf; Kamera und Netzwerk funktionieren trotzdem.</td></tr>
+          <tr><td>Hostname</td><td><code>huehnercam</code></td><td>Der Rechner ist im lokalen Netz leichter wiederzuerkennen.</td></tr>
+          <tr><td>Benutzer</td><td>Projektkonto mit starkem, nicht veröffentlichtem Passwort</td><td>Es gibt keinen sicheren Grund, gemeinsame Zugangsdaten in Arbeitsblätter zu schreiben.</td></tr>
+          <tr><td>Netzwerk</td><td>Schulisch freigegebenes WLAN oder Ethernet; WLAN-Land Deutschland</td><td>Frequenzregeln und Zugang müssen zur Schule passen. Manche Schul-WLANs brauchen zusätzliche Anmeldung.</td></tr>
+          <tr><td>Fernzugriff</td><td>SSH aktivieren; wenn möglich Schlüsselanmeldung</td><td>Damit steuerst du den Pi verschlüsselt ohne Monitor. Schlüssel sind robuster als geteilte Passwörter.</td></tr>
+        </tbody>
+      </table>
+      <ol class="coop-step-list">
+        <li>Installiere und öffne den offiziellen <strong>Raspberry Pi Imager</strong>.</li>
+        <li>Wähle Raspberry Pi 4, das passende 64-Bit-System und die richtige microSD-Karte.</li>
+        <li>Öffne die OS-Anpassungen und trage Hostname, Benutzer, Zeitzone, Tastaturlayout, freigegebenes Netzwerk und SSH ein.</li>
+        <li>Prüfe das ausgewählte Laufwerk sorgfältig. Beim Schreiben werden vorhandene Daten auf dieser Karte überschrieben.</li>
+        <li>Lass den Imager schreiben und verifizieren. Wirf die Karte danach sicher aus.</li>
+        <li>Setze die microSD bei ausgeschaltetem Pi ein. Schließe Netzwerk und später die Kamera nur nach der jeweiligen Anleitung an.</li>
+        <li>Verbinde zuletzt das 5,1-V-/3-A-Netzteil. Der erste Start kann einige Minuten dauern.</li>
+      </ol>
+      <div class="wb-callout"><strong>Schulnetz beachten:</strong><p>Teste vor der Unterrichtseinheit, ob Geräte untereinander kommunizieren dürfen. Client-Isolation oder ein Anmeldeportal kann SSH und lokale Webseiten blockieren, obwohl der Pi „im WLAN“ erscheint.</p></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order"><script type="application/json" class="wb-config">
+      {"id":"pi_imager_order","title":"Bringe die Inbetriebnahme in eine sichere Reihenfolge","hint":"Vom leeren Datenträger bis zum ersten Netzwerkzugriff.","items":["Raspberry Pi OS und Einstellungen im Imager auswählen","microSD schreiben und verifizieren","microSD sicher auswerfen und in den ausgeschalteten Pi einsetzen","Netzwerk anschließen und zuletzt die Stromversorgung verbinden","Bootvorgang abwarten und Erreichbarkeit prüfen","Per SSH anmelden"],"shuffle":true}
+      </script></div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="SSH und erste Diagnose">
+      <h1>Den Pi über das Netzwerk steuern</h1>
+      <h2>SSH</h2>
+      <p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Zugangsdaten gehören nicht in öffentliche Dateien oder Screenshots.</p>
+      <p>Auf einem Computer im gleichen Netz probierst du zuerst den Hostnamen. Ersetze <code>coop</code> durch euren im Imager angelegten Benutzernamen:</p>
+      <div class="coop-terminal">ssh coop@huehnercam.local</div>
+      <p>Falls die Namensauflösung nicht funktioniert, nutzt du die bekannte IP-Adresse:</p>
+      <div class="coop-terminal">ssh coop@192.168.1.42</div>
+      <p>Die tatsächliche Adresse ist in eurem Netz anders. Beim ersten Kontakt prüfst du den angezeigten Host-Schlüssel und bestätigst ihn nur, wenn Zielname oder IP stimmen.</p>
+      <h2>Die wichtigsten Diagnosebefehle</h2>
+      <table class="coop-comparison">
+        <thead><tr><th>Befehl</th><th>Was zeigt oder bewirkt er?</th><th>Welche Frage beantwortet er?</th></tr></thead>
+        <tbody>
+          <tr><td><code>hostname</code></td><td>Rechnername</td><td>Bin ich auf dem richtigen Pi?</td></tr>
+          <tr><td><code>hostname -I</code></td><td>Lokale IP-Adressen</td><td>Unter welchen Adressen ist der Pi erreichbar?</td></tr>
+          <tr><td><code>ip -br address</code></td><td>Netzwerkschnittstellen und Zustand</td><td>Ist WLAN oder Ethernet aktiv?</td></tr>
+          <tr><td><code>cat /etc/os-release</code></td><td>Installiertes Betriebssystem</td><td>Welche Raspberry-Pi-OS-Version läuft?</td></tr>
+          <tr><td><code>uname -m</code></td><td>Prozessorarchitektur des laufenden Systems</td><td>Läuft ein 64-Bit-System, typischerweise <code>aarch64</code>?</td></tr>
+          <tr><td><code>free -h</code></td><td>Belegter und verfügbarer RAM</td><td>Ist genügend Arbeitsspeicher frei?</td></tr>
+          <tr><td><code>df -h</code></td><td>Belegung der Dateisysteme</td><td>Ist die microSD voll?</td></tr>
+          <tr><td><code>systemctl --failed</code></td><td>Fehlgeschlagene Systemdienste</td><td>Ist ein Dienst beim Start gescheitert?</td></tr>
+        </tbody>
+      </table>
+      <div class="wb-soft-callout"><strong>Aktualisieren – nur nach Absprache:</strong><div class="coop-terminal">sudo apt update
+sudo apt full-upgrade</div><p><code>apt update</code> aktualisiert die Paketlisten; <code>full-upgrade</code> installiert Aktualisierungen. Das verändert das System und braucht Internetzugang, Zeit und freien Speicher.</p></div>
+      <p>Zum kontrollierten Ausschalten verwendest du <code>sudo shutdown -h now</code> und wartest, bevor du die Stromversorgung trennst.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal"><script type="application/json" class="wb-config">
+      {"id":"pi_ssh_reveal","title":"Fehler erklären: SSH-Zeitüberschreitung","hint":"Nenne zuerst mindestens drei mögliche Ursachen.","question":"Warum beweist eine Zeitüberschreitung nicht, dass der Raspberry Pi defekt ist?","answer":"Die Ursache kann vor dem SSH-Programm liegen: falsche IP-Adresse, fehlende Namensauflösung, getrenntes WLAN, Client-Isolation im Schulnetz, deaktivierter SSH-Dienst, noch laufender Bootvorgang oder instabile Stromversorgung. Prüfe deshalb Strom, Boot, Netzwerk und Adresse in dieser Reihenfolge."}
+      </script></div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Kamera und Dienste">
+      <h1>Warum der Pi die Kamera übernimmt</h1>
+      <p>Die Camera Module 3 liefert einen kontinuierlichen Strom vieler Bildpunkte. Der Pi besitzt die passende CSI-Schnittstelle, Kameratreiber, viel Arbeitsspeicher und Programme zum Verarbeiten, Komprimieren und Speichern der Bilder.</p>
+      <div class="coop-flow">
+        <div class="coop-flow__item"><strong>CMOS-Sensor</strong><small>Photonen → Ladung</small></div>
+        <div class="coop-flow__item"><strong>CSI-2</strong><small>Bilddaten übertragen</small></div>
+        <div class="coop-flow__item"><strong>Treiber</strong><small>Hardware steuern</small></div>
+        <div class="coop-flow__item"><strong>rpicam</strong><small>Bild/Video erzeugen</small></div>
+        <div class="coop-flow__item"><strong>Dienst</strong><small>Stream überwachen</small></div>
+      </div>
+      <p>Ein Kameraprogramm ist ein Prozess. Ein späterer Streamingprozess ist ein zweiter Prozess. Netzwerk, SSH und Protokollierung laufen zusätzlich. Linux koordiniert diese Aufgaben und kann einen Dienst mit <code>systemd</code> nach einem Neustart automatisch starten.</p>
+      <div class="wb-soft-callout"><strong>Lokaler Funktionstest vor dem Stream:</strong><ol><li><code>rpicam-hello --list-cameras</code> erkennt die Kamera.</li><li><code>rpicam-hello</code> erzeugt eine lokale Vorschau, wenn eine Anzeige verfügbar ist.</li><li><code>rpicam-still -o huhn.jpg</code> speichert ein Foto.</li><li><code>rpicam-vid -t 10000 -o huhn.h264</code> speichert zehn Sekunden H.264-Video.</li><li>Erst danach prüfst du Netzwerk, Streamingdienst und Homepage.</li></ol></div>
+      <p>Die genaue Montage, NoIR-Physik und Kameraprüfung bearbeitest du in <a href="08-kamera-noir.html">Kapitel 8</a>. Video, Bitrate und Verteilung folgen in <a href="09-streaming-homepage.html">Kapitel 9</a>.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify"><script type="application/json" class="wb-config">
+      {"id":"pi_ssh_verify","title":"Stopp & check: Was beweist SSH?","hint":"Prüfe genau, welcher Meilenstein erreicht wurde.","statement":"Wenn der SSH-Login funktioniert, funktionieren automatisch auch Kamera und Livestream.","answer":false,"explain":"SSH beweist nur, dass Pi, Netzwerk und SSH-Dienst bis zur Anmeldung funktionieren. Kamera, lokale Aufnahme, Codierung, Streamingdienst und Homepage müssen einzeln getestet werden."}
+      </script></div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Diagnose und Sicherung">
+      <h1>Terminal und Fehlersuche</h1>
+      <p>Dokumentiert Befehle und Ausgaben so, dass eine andere Person den Test nachvollziehen kann. Ein erfolgreicher SSH-Login beweist noch nicht, dass Kamera oder Stream funktionieren.</p>
+      <div class="wb-soft-callout"><strong>Diagnosekette</strong><ol style="margin:0;padding-left:22px"><li>Stromversorgung und Boot</li><li>Netzwerk und SSH-Verbindung</li><li>Kameraerkennung</li><li>Lokale Vorschau</li><li>Foto oder Video speichern</li><li>Netzwerk- und Streamingweg</li><li>Einbettung auf der Homepage</li></ol></div>
+      <h2>Der letzte funktionierende Meilenstein</h2>
+      <p>Wenn ein lokales Foto gelingt, sind Stromversorgung, Betriebssystem, Kameraanschluss, Treiber und Fotoaufnahme grundsätzlich funktionsfähig. Du suchst dann hinter diesem Punkt weiter: Videocodierung, Netzwerk, externer Dienst oder Homepage.</p>
+      <p><strong>Klausur-Grundauftrag:</strong> Vergleiche ESP32 und Raspberry Pi in 5–8 Sätzen. Nenne mindestens drei Unterschiede. Für die erweiterte Aufgabe beziehst du zusätzlich den Arduino Uno ein.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay"><script type="application/json" class="wb-config">
+      {"id":"pi_linux_transfer","title":"Klausurtraining: Rechnerklassen","hint":"Vergleiche Arduino Uno, ESP32 und Raspberry Pi in 6–10 Sätzen. Nenne Betriebssystem, Speicher, Ein-/Ausgänge und typische Projektaufgabe.","storagePrefix":"smart_coop_pi_","fields":[{"label":"Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Der Arduino Uno und der ESP32 sind ... Der Raspberry Pi ..."}]}
+      </script></div>
+      <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Der ESP32 ist der nahe, schnelle Messknoten. Ein Arduino Uno ist ebenfalls ein Mikrocontroller-Board, besitzt aber deutlich weniger Speicher und keine eingebaute Funkverbindung. Der Raspberry Pi ist die flexible Linux-Plattform für Kamera, Dateien, Video und Dienste. Er startet über mehrere Bootstufen und verwaltet anschließend viele Prozesse gleichzeitig.</p></div>
+      <h2>Quellen &amp; Weiterforschen</h2>
+      <ul>
+        <li><a href="https://www.raspberrypi.com/documentation/computers/getting-started.html" target="_blank" rel="noopener">Raspberry Pi: Betriebssystem installieren und Headless-Setup</a></li>
+        <li><a href="https://www.raspberrypi.com/documentation/computers/raspberry-pi.html" target="_blank" rel="noopener">Raspberry Pi: Computer-Hardware und Bootvorgang</a></li>
+        <li><a href="https://www.raspberrypi.com/documentation/computers/remote-access.html" target="_blank" rel="noopener">Raspberry Pi: SSH und Fernzugriff</a></li>
+        <li><a href="https://www.raspberrypi.com/documentation/computers/camera_software.html" target="_blank" rel="noopener">Raspberry Pi: rpicam-Kamerasoftware</a></li>
+        <li><a href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/startup.html" target="_blank" rel="noopener">Espressif: Startablauf des ESP32</a></li>
+        <li><a href="https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf" target="_blank" rel="noopener">Arduino Uno R3: offizielles Datenblatt</a></li>
+      </ul>
+    </section>
+  </div>
+  <script src="projekt-navigation.js"></script>
+  <script src="../../assets/wb-webhook-loader.js"></script>
+  <script src="../../assets/allgemeines_format.js"></script>
+  <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>
