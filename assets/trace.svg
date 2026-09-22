@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Ablaufspur</title>
+  <desc id="desc">Ein Weg verbindet mehrere aufeinanderfolgende Stationen.</desc>
+  <rect width="64" height="64" rx="10" fill="#e8f3f5"/>
+  <path d="M15 48h28.5a8.5 8.5 0 0 0 0-17H21a8.5 8.5 0 0 1 0-17h25" fill="none" stroke="#176b74" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="14" cy="48" r="7" fill="#f2a900" stroke="#6a4700" stroke-width="2"/>
+  <circle cx="49" cy="14" r="7" fill="#d95763" stroke="#7e1d28" stroke-width="2"/>
+  <path d="m45.5 14 2.2 2.2 4.8-5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
