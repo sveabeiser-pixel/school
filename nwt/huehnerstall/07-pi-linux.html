@@ -110,44 +110,97 @@
 
     <section data-wb-page="5" data-wb-page-title="Raspberry Pi OS vorbereiten">
       <h1>Die microSD mit Raspberry Pi OS vorbereiten</h1>
-      <p>Für einen Pi ohne Bildschirm und Tastatur ist eine <em>Headless-Installation</em> sinnvoll. Du bereitest Netzwerk, Benutzer und Fernzugriff schon im Raspberry Pi Imager vor.</p>
-      <h2>Vor dem Schreiben festlegen</h2>
+      <p>Für einen Pi ohne Bildschirm und Tastatur ist eine <em>Headless-Installation</em> sinnvoll. Du bereitest Netzwerk, Benutzer und Fernzugriff schon im Raspberry Pi Imager vor. Arbeite die Schritte in der angegebenen Reihenfolge ab und hake jeden Schritt erst ab, wenn du die Einstellung kontrolliert hast.</p>
+
+      <div class="wb-callout"><strong>Feste Projektdaten</strong><p><span class="coop-badge">Hostname</span> <code>huehnercam</code> &nbsp; <span class="coop-badge">Benutzername</span> <code>bbzstegen</code> &nbsp; <span class="coop-badge">Passwort</span> <code>BBZStegen2.0</code></p><p>Das Passwort steht auf einer öffentlich erreichbaren Unterrichtsseite und ist deshalb kein dauerhaft geheimes Passwort. Nutzt es nur für die schulische Erstinstallation in einem kontrollierten Netz. Vor einem dauerhaften oder von außen erreichbaren Betrieb ändert die verantwortliche Lehrkraft es mit <code>passwd</code>.</p></div>
+
+      <h2>1. Vorbereiten: SSH-Schlüssel erzeugen</h2>
+      <p>Bei der Schlüsselauthentifizierung entsteht ein Paar aus zwei zusammengehörigen Dateien:</p>
+      <div class="grid2">
+        <div class="wb-soft-callout"><strong>Privater Schlüssel</strong><p>Bleibt ausschließlich auf dem Computer, von dem aus du den Pi steuerst. Er heißt beispielsweise <code>id_ed25519</code>. Du kopierst, versendest und veröffentlichst ihn niemals.</p></div>
+        <div class="wb-soft-callout"><strong>Öffentlicher Schlüssel</strong><p>Darf auf den Pi und in den Imager kopiert werden. Er heißt beispielsweise <code>id_ed25519.pub</code> und beginnt meist mit <code>ssh-ed25519</code>.</p></div>
+      </div>
+
+      <p>Öffne auf dem Computer, mit dem du später per SSH zugreifen willst, PowerShell oder ein Terminal:</p>
+      <div class="coop-terminal">ssh-keygen -t ed25519 -C "bbzstegen@huehnercam"</div>
+      <ol class="coop-step-list">
+        <li>Bestätige den vorgeschlagenen Speicherort mit <kbd>Enter</kbd>. Unter Windows liegt der Schlüssel normalerweise in <code>C:\Users\DEIN-NAME\.ssh\</code>.</li>
+        <li>Vergib nach Möglichkeit eine Passphrase für den privaten Schlüssel. Diese Passphrase bleibt auf eurem Arbeitsrechner und ist nicht das Raspberry-Pi-Passwort.</li>
+        <li>Zeige anschließend nur den <strong>öffentlichen</strong> Schlüssel an und kopiere die komplette einzelne Zeile:</li>
+      </ol>
+      <div class="coop-terminal"># Windows PowerShell
+Get-Content "$env:USERPROFILE\.ssh\id_ed25519.pub"
+
+# Linux oder macOS
+cat ~/.ssh/id_ed25519.pub</div>
+      <div class="wb-callout"><strong>Stopp &amp; check:</strong><p>Kopiere nur den Inhalt der Datei mit der Endung <code>.pub</code>. Wenn im Dateinamen <code>.pub</code> fehlt, handelt es sich um den privaten Schlüssel.</p></div>
+
+      <h2>2. Gerät, Betriebssystem und Speicher auswählen</h2>
+      <ol class="coop-step-list">
+        <li>Lade den offiziellen <a href="https://www.raspberrypi.com/software/" target="_blank" rel="noopener">Raspberry Pi Imager</a> herunter, installiere ihn und öffne ihn.</li>
+        <li>Stecke die 64-GB-microSD-Karte über einen Kartenleser in den Computer.</li>
+        <li>Wähle im Reiter <strong>Gerät</strong> den Eintrag <strong>Raspberry Pi 4</strong>.</li>
+        <li>Wähle unter <strong>Betriebssystem</strong> → <strong>Raspberry Pi OS (other)</strong> → <strong>Raspberry Pi OS Lite (64-bit)</strong>.</li>
+        <li>Wähle unter <strong>Speicher</strong> ausschließlich die 64-GB-microSD-Karte. Kontrolliere die Größe; beim Schreiben werden alle vorhandenen Daten auf diesem Datenträger gelöscht.</li>
+        <li>Klicke auf <strong>Weiter</strong>. Der Imager öffnet für Raspberry Pi OS die Betriebssystem-Anpassungen.</li>
+      </ol>
+
+      <h2>3. Betriebssystem-Anpassungen exakt eintragen</h2>
       <table class="coop-comparison">
-        <thead><tr><th>Einstellung</th><th>Empfehlung im Projekt</th><th>Warum?</th></tr></thead>
+        <thead><tr><th>Reiter</th><th>Eintragung im Projekt</th><th>Kontrolle</th></tr></thead>
         <tbody>
-          <tr><td>Gerät</td><td>Raspberry Pi 4</td><td>Der Imager wählt ein kompatibles System.</td></tr>
-          <tr><td>Betriebssystem</td><td>Raspberry Pi OS Lite (64-bit), wenn kein Desktop benötigt wird</td><td>Weniger Hintergrundsoftware und geringerer Speicherbedarf; Kamera und Netzwerk funktionieren trotzdem.</td></tr>
-          <tr><td>Hostname</td><td><code>huehnercam</code></td><td>Der Rechner ist im lokalen Netz leichter wiederzuerkennen.</td></tr>
-          <tr><td>Benutzer</td><td>Projektkonto mit starkem, nicht veröffentlichtem Passwort</td><td>Es gibt keinen sicheren Grund, gemeinsame Zugangsdaten in Arbeitsblätter zu schreiben.</td></tr>
-          <tr><td>Netzwerk</td><td>Schulisch freigegebenes WLAN oder Ethernet; WLAN-Land Deutschland</td><td>Frequenzregeln und Zugang müssen zur Schule passen. Manche Schul-WLANs brauchen zusätzliche Anmeldung.</td></tr>
-          <tr><td>Fernzugriff</td><td>SSH aktivieren; wenn möglich Schlüsselanmeldung</td><td>Damit steuerst du den Pi verschlüsselt ohne Monitor. Schlüssel sind robuster als geteilte Passwörter.</td></tr>
+          <tr><td><strong>Hostname</strong></td><td><code>huehnercam</code></td><td>Der Pi ist später unter <code>huehnercam.local</code> ansprechbar, wenn mDNS im Netz funktioniert.</td></tr>
+          <tr><td><strong>Lokalisierung</strong></td><td>Zeitzone <code>Europe/Berlin</code>, Tastatur <code>de</code></td><td>Uhrzeit und Tastaturbelegung stimmen. Die Auswahl setzt auch die WLAN-Region passend zu Deutschland.</td></tr>
+          <tr><td><strong>Benutzer</strong></td><td>Benutzername <code>bbzstegen</code><br>Passwort <code>BBZStegen2.0</code></td><td>Beides exakt mit Groß- und Kleinschreibung eintragen. Der Benutzername ist vollständig kleingeschrieben.</td></tr>
+          <tr><td><strong>WLAN</strong></td><td>Nur das von der Schule freigegebene WLAN mit dessen SSID und WLAN-Passwort eintragen; alternativ Ethernet verwenden.</td><td>Das Projektpasswort <code>BBZStegen2.0</code> ist <em>nicht</em> das WLAN-Passwort.</td></tr>
+          <tr><td><strong>Remote Access</strong></td><td>☑ <strong>SSH aktivieren</strong><br>● <strong>Authentifizierung mit öffentlichem Schlüssel verwenden</strong><br>Den Inhalt von <code>id_ed25519.pub</code> vollständig einfügen.</td><td>Im Feld steht genau eine Zeile, die mit <code>ssh-ed25519</code> beginnt. Niemals den privaten Schlüssel einfügen.</td></tr>
+          <tr><td><strong>Raspberry Pi Connect</strong></td><td>☐ <strong>Raspberry Pi Connect aktivieren</strong> bleibt ausgeschaltet.</td><td>Connect wird für den ersten lokalen Aufbau nicht benötigt und erst später nach einer bewussten Entscheidung eingerichtet.</td></tr>
         </tbody>
       </table>
+
+      <div class="wb-soft-callout"><strong>Kontrollliste vor dem Schreiben</strong><ul><li>☑ Hostname lautet <code>huehnercam</code>.</li><li>☑ Benutzername lautet <code>bbzstegen</code>.</li><li>☑ Passwort wurde zweimal als <code>BBZStegen2.0</code> eingegeben.</li><li>☑ SSH ist aktiviert.</li><li>☑ Authentifizierung mit öffentlichem Schlüssel ist ausgewählt.</li><li>☑ Der öffentliche Schlüssel mit Endung <code>.pub</code> ist eingetragen.</li><li>☐ Raspberry Pi Connect ist nicht aktiviert.</li><li>☑ Als Zieldatenträger ist wirklich die 64-GB-microSD ausgewählt.</li></ul></div>
+
+      <h2>4. Schreiben, einsetzen und erstmals starten</h2>
       <ol class="coop-step-list">
-        <li>Installiere und öffne den offiziellen <strong>Raspberry Pi Imager</strong>.</li>
-        <li>Wähle Raspberry Pi 4, das passende 64-Bit-System und die richtige microSD-Karte.</li>
-        <li>Öffne die OS-Anpassungen und trage Hostname, Benutzer, Zeitzone, Tastaturlayout, freigegebenes Netzwerk und SSH ein.</li>
-        <li>Prüfe das ausgewählte Laufwerk sorgfältig. Beim Schreiben werden vorhandene Daten auf dieser Karte überschrieben.</li>
-        <li>Lass den Imager schreiben und verifizieren. Wirf die Karte danach sicher aus.</li>
-        <li>Setze die microSD bei ausgeschaltetem Pi ein. Schließe Netzwerk und später die Kamera nur nach der jeweiligen Anleitung an.</li>
-        <li>Verbinde zuletzt das 5,1-V-/3-A-Netzteil. Der erste Start kann einige Minuten dauern.</li>
+        <li>Bestätige die Anpassungen und starte <strong>Schreiben</strong>. Bestätige die Warnung erst nach der letzten Kontrolle des Datenträgers.</li>
+        <li>Warte, bis Schreiben <em>und</em> Verifizieren abgeschlossen sind. Entferne die Karte nicht während dieses Vorgangs.</li>
+        <li>Beende den Imager und wirf die microSD sicher aus.</li>
+        <li>Setze die microSD bei ausgeschaltetem Raspberry Pi ein. Schließe bei Bedarf ein Ethernetkabel an.</li>
+        <li>Verbinde zuletzt das 5,1-V-/3-A-Netzteil. Der erste Start kann mehrere Minuten dauern.</li>
+        <li>Öffne auf demselben Computer, auf dem der private Schlüssel liegt, PowerShell oder ein Terminal und teste:</li>
       </ol>
+      <div class="coop-terminal">ssh bbzstegen@huehnercam.local</div>
+      <p>OpenSSH findet den privaten Schlüssel am Standardspeicherort automatisch. Wenn die Namensauflösung nicht funktioniert, verwendest du die IP-Adresse. Beim ersten Kontakt vergleichst du Zielname oder IP und bestätigst den angezeigten Host-Schlüssel mit <code>yes</code>. Für die SSH-Anmeldung wird der private Schlüssel verwendet; das Passwort <code>BBZStegen2.0</code> brauchst du weiterhin beispielsweise für <code>sudo</code>.</p>
+
       <div class="wb-callout"><strong>Schulnetz beachten:</strong><p>Teste vor der Unterrichtseinheit, ob Geräte untereinander kommunizieren dürfen. Client-Isolation oder ein Anmeldeportal kann SSH und lokale Webseiten blockieren, obwohl der Pi „im WLAN“ erscheint.</p></div>
+
+      <h2>5. Raspberry Pi Connect erst später einrichten</h2>
+      <p>SSH genügt zunächst für den Zugriff im lokalen Schulnetz. Raspberry Pi Connect ermöglicht später einen browserbasierten Fernzugriff über ein Raspberry-Pi-ID-Konto und benötigt eine bewusste Entscheidung zu Konto, Zuständigkeit und Zugriff. Auf Raspberry Pi OS Lite steht dabei nur die Remote-Shell zur Verfügung, keine Bildschirmfreigabe.</p>
+      <p>Wenn die verantwortliche Lehrkraft Connect später freigibt, meldest du dich zuerst per SSH an und führst als normaler Benutzer <code>bbzstegen</code> aus:</p>
+      <div class="coop-terminal">rpi-connect status
+rpi-connect on
+rpi-connect signin</div>
+      <p><code>rpi-connect signin</code> zeigt eine einmalige Internetadresse. Öffne sie im Browser, melde dich mit dem vorgesehenen Raspberry-Pi-ID-Konto an und verknüpfe den Pi. Anschließend kontrollierst du mit <code>rpi-connect status</code> den Zustand. Verwende dafür kein privates Schülerkonto, sondern nur ein von der Schule festgelegtes Konto.</p>
+
       <div class="wb-section-break"></div>
       <div data-wb-type="order"><script type="application/json" class="wb-config">
-      {"id":"pi_imager_order","title":"Bringe die Inbetriebnahme in eine sichere Reihenfolge","hint":"Vom leeren Datenträger bis zum ersten Netzwerkzugriff.","items":["Raspberry Pi OS und Einstellungen im Imager auswählen","microSD schreiben und verifizieren","microSD sicher auswerfen und in den ausgeschalteten Pi einsetzen","Netzwerk anschließen und zuletzt die Stromversorgung verbinden","Bootvorgang abwarten und Erreichbarkeit prüfen","Per SSH anmelden"],"shuffle":true}
+      {"id":"pi_imager_order","title":"Bringe die Inbetriebnahme in eine sichere Reihenfolge","hint":"Vom SSH-Schlüsselpaar bis zum ersten Netzwerkzugriff.","items":["SSH-Schlüsselpaar auf dem Arbeitscomputer erzeugen","Raspberry Pi 4, Raspberry Pi OS Lite (64-bit) und microSD auswählen","Hostname, Benutzer, Netzwerk und öffentlichen SSH-Schlüssel eintragen","Raspberry Pi Connect deaktiviert lassen","microSD schreiben und verifizieren","microSD sicher auswerfen und in den ausgeschalteten Pi einsetzen","Netzwerk anschließen und zuletzt die Stromversorgung verbinden","Per SSH als bbzstegen anmelden"],"shuffle":true}
+      </script></div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="verify"><script type="application/json" class="wb-config">
+      {"id":"pi_ssh_key_verify","title":"Stopp & check: Welcher Schlüssel kommt in den Imager?","hint":"Prüfe die Aussage, bevor du eine Schlüsseldatei öffnest.","statement":"In den Raspberry Pi Imager wird der private Schlüssel id_ed25519 eingefügt.","answer":false,"explain":"In den Imager gehört ausschließlich der öffentliche Schlüssel id_ed25519.pub. Der private Schlüssel id_ed25519 bleibt geschützt auf dem Arbeitscomputer."}
       </script></div>
     </section>
 
     <section data-wb-page="6" data-wb-page-title="SSH und erste Diagnose">
       <h1>Den Pi über das Netzwerk steuern</h1>
       <h2>SSH</h2>
-      <p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Zugangsdaten gehören nicht in öffentliche Dateien oder Screenshots.</p>
-      <p>Auf einem Computer im gleichen Netz probierst du zuerst den Hostnamen. Ersetze <code>coop</code> durch euren im Imager angelegten Benutzernamen:</p>
-      <div class="coop-terminal">ssh coop@huehnercam.local</div>
+      <p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Der private SSH-Schlüssel gehört niemals in öffentliche Dateien, Screenshots oder Chats.</p>
+      <p>Auf dem Computer mit dem privaten Schlüssel probierst du im gleichen Netz zuerst den Hostnamen:</p>
+      <div class="coop-terminal">ssh bbzstegen@huehnercam.local</div>
       <p>Falls die Namensauflösung nicht funktioniert, nutzt du die bekannte IP-Adresse:</p>
-      <div class="coop-terminal">ssh coop@192.168.1.42</div>
-      <p>Die tatsächliche Adresse ist in eurem Netz anders. Beim ersten Kontakt prüfst du den angezeigten Host-Schlüssel und bestätigst ihn nur, wenn Zielname oder IP stimmen.</p>
+      <div class="coop-terminal">ssh bbzstegen@192.168.1.42</div>
+      <p>Die tatsächliche Adresse ist in eurem Netz anders. Beim ersten Kontakt prüfst du den angezeigten Host-Schlüssel und bestätigst ihn nur, wenn Zielname oder IP stimmen. Liegt der private Schlüssel nicht am Standardspeicherort, gibst du ihn mit <code>ssh -i PFAD-ZUM-PRIVATEN-SCHLÜSSEL bbzstegen@huehnercam.local</code> ausdrücklich an.</p>
       <h2>Die wichtigsten Diagnosebefehle</h2>
       <table class="coop-comparison">
         <thead><tr><th>Befehl</th><th>Was zeigt oder bewirkt er?</th><th>Welche Frage beantwortet er?</th></tr></thead>
@@ -207,6 +260,7 @@ sudo apt full-upgrade</div><p><code>apt update</code> aktualisiert die Paketlist
         <li><a href="https://www.raspberrypi.com/documentation/computers/getting-started.html" target="_blank" rel="noopener">Raspberry Pi: Betriebssystem installieren und Headless-Setup</a></li>
         <li><a href="https://www.raspberrypi.com/documentation/computers/raspberry-pi.html" target="_blank" rel="noopener">Raspberry Pi: Computer-Hardware und Bootvorgang</a></li>
         <li><a href="https://www.raspberrypi.com/documentation/computers/remote-access.html" target="_blank" rel="noopener">Raspberry Pi: SSH und Fernzugriff</a></li>
+        <li><a href="https://www.raspberrypi.com/documentation/services/connect.html" target="_blank" rel="noopener">Raspberry Pi: Connect später aktivieren und verwalten</a></li>
         <li><a href="https://www.raspberrypi.com/documentation/computers/camera_software.html" target="_blank" rel="noopener">Raspberry Pi: rpicam-Kamerasoftware</a></li>
         <li><a href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/startup.html" target="_blank" rel="noopener">Espressif: Startablauf des ESP32</a></li>
         <li><a href="https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf" target="_blank" rel="noopener">Arduino Uno R3: offizielles Datenblatt</a></li>
@@ -214,7 +268,7 @@ sudo apt full-upgrade</div><p><code>apt update</code> aktualisiert die Paketlist
     </section>
   </div>
   <script src="projekt-navigation.js"></script>
-  <script src="../../assets/wb-webhook-loader.js"></script>
+
   <script src="../../assets/allgemeines_format.js"></script>
   <script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
 </body>
