@@ -390,6 +390,48 @@
         </script>
       </div>
 
+      <div class="wb-section-break"></div>
+
+      <h2>Ablaufspur</h2>
+      <p>Fülle zuerst alle freien Zellen aus. Danach kannst du die gesamte Ablaufspur überprüfen und falsche Einträge direkt verbessern.</p>
+
+      <!-- Ablaufspur: Werte und Bedingungen Schritt für Schritt verfolgen -->
+      <div data-wb-type="trace">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"trace_beispiel",
+          "title":"Ablaufspur: Werte verfolgen",
+          "hint":"Trage den Wert nach der Anweisung und das Ergebnis der Bedingung ein.",
+          "columns":[
+            {"label":"Schritt","width":"14%"},
+            {"label":"Anweisung","width":"36%"},
+            {"label":"Wert danach","width":"25%"},
+            {"label":"Bedingung x < 4","width":"25%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"given":"SETZE x auf 1","code":true},
+              {"answers":["1"],"ariaLabel":"Wert nach Schritt 1"},
+              {"answers":["wahr","ja","true"],"ariaLabel":"Bedingung nach Schritt 1"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"given":"x = x + 1","code":true},
+              {"answers":["2"],"ariaLabel":"Wert nach Schritt 2"},
+              {"answers":["wahr","ja","true"],"ariaLabel":"Bedingung nach Schritt 2"}
+            ]},
+            {"cells":[
+              {"given":"3"},
+              {"given":"x = x + 2","code":true},
+              {"answers":["4"],"ariaLabel":"Wert nach Schritt 3"},
+              {"answers":["falsch","nein","false"],"ariaLabel":"Bedingung nach Schritt 3"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
 
 
       <div data-p2 class="p2" data-p2-title="Zuordnung: Wellentyp und Eigenschaft" data-p2-hint="Ordne sauber zu.">
