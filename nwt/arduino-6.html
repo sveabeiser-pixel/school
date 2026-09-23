@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arduino 6: Analoge Eingänge und Sensoren</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="arduino-kurs.css" />
+  <style>
+    :root {
+      --a6-ink: #172033;
+      --a6-muted: #536274;
+      --a6-teal: #087f7a;
+      --a6-blue: #2468a9;
+      --a6-yellow: #d89200;
+      --a6-red: #b83a4b;
+      --a6-green: #237a55;
+      --a6-line: #cbd7df;
+      --a6-soft: #f3f7f8;
+    }
+
+    .wb-book section[data-wb-page] { min-width: 0; padding-top: 24px; }
+    .a6-hero { padding: 4px 0 18px; border-bottom: 4px solid var(--a6-teal); }
+    .a6-kicker { color: var(--a6-teal); font-size: .84rem; font-weight: 900; text-transform: uppercase; }
+    .a6-hero h1 { max-width: 900px; margin: 8px 0 12px; font-size: 2.25rem; line-height: 1.14; letter-spacing: 0; }
+    .a6-lead { max-width: 880px; color: var(--a6-muted); font-size: 1.08rem; line-height: 1.65; }
+    .a6-grid2, .a6-grid3 { display: grid; gap: 16px; align-items: start; margin: 16px 0; }
+    .a6-grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .a6-grid3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .a6-panel { min-width: 0; padding: 15px 16px; border-top: 4px solid var(--a6-blue); background: var(--a6-soft); }
+    .a6-panel:nth-child(2) { border-color: var(--a6-yellow); }
+    .a6-panel:nth-child(3) { border-color: var(--a6-green); }
+    .a6-panel h3 { margin: 0 0 7px; font-size: 1.05rem; }
+    .a6-note, .a6-warn, .a6-success { margin: 14px 0; padding: 12px 14px; border-left: 5px solid var(--a6-blue); background: #edf5fb; }
+    .a6-warn { border-color: var(--a6-red); background: #fff1f1; }
+    .a6-success { border-color: var(--a6-green); background: #edf8f2; }
+    .a6-code { overflow-x: auto; margin: 14px 0; padding: 15px 18px; border-left: 5px solid var(--a6-teal); background: #f4f7f8; color: var(--a6-ink); font: 750 .96rem/1.58 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre; }
+    .a6-code .kw { color: #075f5b; font-weight: 900; }
+    .a6-mini { display: inline-block; padding: 2px 6px; border: 1px solid var(--a6-line); border-radius: 4px; background: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 800; }
+    .a6-figure { margin: 16px 0; border: 1px solid var(--a6-line); border-radius: 8px; overflow: hidden; background: #fff; }
+    .a6-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; }
+    .a6-figure.compact img { max-height: 330px; }
+    .a6-figure figcaption { padding: 9px 12px; color: var(--a6-muted); font-size: .91rem; }
+    .a6-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 18px 0; }
+    .a6-flow > div { position: relative; min-width: 0; padding: 13px 12px; border: 1px solid var(--a6-line); background: #fff; text-align: center; }
+    .a6-flow > div + div { border-left: 0; }
+    .a6-flow strong { display: block; margin-bottom: 5px; color: var(--a6-blue); }
+    .a6-flow code { overflow-wrap: anywhere; }
+    .a6-var-line { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--a6-line); }
+    .a6-var-line code { font-weight: 850; color: #075f5b; }
+
+    .a6-sim { margin: 18px 0; border: 1px solid var(--a6-line); border-radius: 8px; overflow: hidden; background: #fff; }
+    .a6-sim-toolbar { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--a6-line); background: #f6f9fa; }
+    .a6-sim-title { font-weight: 900; }
+    .a6-sim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .a6-btn { min-height: 40px; padding: 8px 13px; border: 1px solid #9cadb8; border-radius: 5px; background: #fff; color: var(--a6-ink); font: inherit; font-weight: 850; cursor: pointer; }
+    .a6-btn.primary { border-color: var(--a6-teal); background: var(--a6-teal); color: #fff; }
+    .a6-sim-body { display: grid; grid-template-columns: minmax(280px, .78fr) minmax(430px, 1.22fr); min-width: 0; }
+    .a6-sim-stage { min-width: 0; padding: 18px; border-right: 1px solid var(--a6-line); background: #eef5f5; }
+    .a6-meter { display: grid; place-items: center; width: 150px; aspect-ratio: 1; margin: 8px auto 14px; border: 7px solid #5b6f7c; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 7px #dce7eb; }
+    .a6-meter strong { font-size: 1.7rem; color: var(--a6-blue); }
+    .a6-meter span { display: block; color: var(--a6-muted); font-size: .75rem; text-align: center; }
+    .a6-slider-label { display: block; margin-top: 8px; font-weight: 850; }
+    .a6-slider { width: 100%; accent-color: var(--a6-teal); }
+    .a6-led { width: 54px; aspect-ratio: 1; margin: 15px auto 7px; border: 4px solid #687a85; border-radius: 50%; background: #9aa8af; }
+    .a6-led.is-on { border-color: #b77a00; background: #ffd12f; box-shadow: 0 0 24px rgba(216,146,0,.55); }
+    .a6-output { min-height: 48px; margin-top: 10px; font-weight: 850; text-align: center; }
+    .a6-sim-code { min-width: 0; padding: 16px; }
+    .a6-lines { margin: 0; padding: 0; list-style: none; overflow-x: auto; border: 1px solid #dbe4e9; font: 750 .88rem/1.36 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .a6-lines li { display: grid; grid-template-columns: 30px minmax(390px, 1fr); gap: 9px; min-height: 29px; padding: 5px 9px; border-bottom: 1px solid #e3e9ed; white-space: pre; }
+    .a6-lines li:last-child { border-bottom: 0; }
+    .a6-lines li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .a6-lines li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 var(--a6-yellow); }
+    .a6-live { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .a6-live > div { min-width: 0; padding: 8px; border: 1px solid var(--a6-line); background: #fff; }
+    .a6-live span { display: block; color: var(--a6-muted); font-size: .72rem; overflow-wrap: anywhere; }
+    .a6-live strong { display: block; margin-top: 3px; overflow-wrap: anywhere; }
+    .a6-source-list li + li { margin-top: 8px; }
+    [data-p2-id="a6-sensor-pairs"] .p2-piece { overflow-wrap: anywhere; }
+    [data-p2-id="a6-sensor-pairs"] .p2-solved .p2-joined { display: grid; grid-template-columns: minmax(170px, .8fr) 2px minmax(240px, 1.2fr); width: 100%; max-width: 100%; }
+    [data-p2-id="a6-sensor-pairs"] .p2-solved .p2-piece { width: auto; max-width: none; }
+
+    @media (max-width: 900px) {
+      .a6-grid2, .a6-grid3, .a6-sim-body { grid-template-columns: 1fr; }
+      .a6-sim-stage { border-right: 0; border-bottom: 1px solid var(--a6-line); }
+      .a6-flow { grid-template-columns: 1fr; }
+      .a6-flow > div + div { border-left: 1px solid var(--a6-line); border-top: 0; }
+    }
+    @media (max-width: 560px) {
+      .a6-hero h1 { font-size: 1.9rem; }
+      .a6-sim-toolbar { align-items: stretch; flex-direction: column; }
+      .a6-live { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .a6-var-line { grid-template-columns: 1fr; gap: 3px; }
+      [data-p2-id="a6-sensor-pairs"] .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+    {
+      "bookTitle":"NWT Arduino · Modul 6",
+      "sectionTitle":"Analoge Eingänge und Sensoren",
+      "startPage":1,
+      "submitLabel":"Ergebnisse & Abschluss",
+      "onSubmit":"exportResults",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2","h3"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Arduino · Messen",
+      "resultsPageTitle":"Auswertung",
+      "studentNameLabel":"Name",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"arduino-6-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Vom Taster zum Messwert">
+      <div class="a6-hero">
+        <div class="a6-kicker">Modul 6 · Analoge Eingänge und Sensoren</div>
+        <h1>Ein Taster kennt zwei Zustände. Ein Sensor liefert viele Messwerte.</h1>
+        <p class="a6-lead">Mit <span class="a6-mini">digitalRead()</span> hast du bisher zwischen 0 und 1 unterschieden. Jetzt liest du mit <span class="a6-mini">analogRead()</span> Spannungen am analogen Eingang ein und speicherst das Ergebnis als Zahl von 0 bis 1023.</p>
+      </div>
+
+      <nav class="course-route" aria-label="Arduino-Lernroute">
+        <a href="arduino-1.html"><b>1 · Hardware</b>Board, Pins und LED</a>
+        <a href="arduino-2.html"><b>2 · Programm</b>Aufbau und Ausgabe</a>
+        <a href="arduino-3.html"><b>3 · Logik</b>Variablen und Schleifen</a>
+        <a href="arduino-4.html"><b>4 · Eingaben</b>Taster und Anzeige</a>
+        <a href="arduino-5.html"><b>5 · Vertiefung</b>Arrays und Fehlersuche</a>
+        <span class="is-current"><b>6 · Messen</b>Analoge Werte und Sensoren</span>
+      </nav>
+
+      <div class="wb-section-break"></div>
+
+      <div class="a6-grid2">
+        <figure class="a6-figure">
+          <img src="pdf-bilder/analog-vs-digital.png" alt="Vergleich: Analoger Eingang liefert Werte von 0 bis 1023, digitaler Eingang nur 0 oder 1" />
+          <figcaption>Das Arduino Uno ordnet dem Spannungsbereich von ungefähr 0 V bis 5 V insgesamt 1024 mögliche Zahlenwerte zu.</figcaption>
+        </figure>
+        <div>
+          <h2>Digital oder analog?</h2>
+          <div class="a6-panel"><h3>Digitaler Eingang</h3><p>Er unterscheidet zwei Bereiche und liefert <span class="a6-mini">LOW / 0</span> oder <span class="a6-mini">HIGH / 1</span>.</p></div>
+          <div class="a6-panel"><h3>Analoger Eingang</h3><p>Er wandelt eine Spannung in eine Zahl um: ungefähr 0 V ergibt 0, 2,5 V ergibt etwa 511 und 5 V ergibt 1023.</p></div>
+          <div class="a6-note"><strong>Merke:</strong> „Analog“ bedeutet hier nicht, dass im Arduino eine Kommazahl ankommt. Der Analog-Digital-Wandler erzeugt einen ganzzahligen Messwert.</div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-reveal-1024",
+          "title":"Denkpause: Warum endet die Skala bei 1023?",
+          "question":"Es gibt 1024 mögliche Zustände. Warum ist der größte Zahlenwert trotzdem 1023?",
+          "answer":"Die Zählung beginnt bei 0. Damit sind die 1024 Werte 0, 1, 2, ... bis 1023. Der Wandler des Arduino Uno arbeitet dafür mit 10 Bit, denn 2 hoch 10 ergibt 1024 Möglichkeiten."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-mcq-start",
+          "title":"Erster Check: Eingang richtig einordnen",
+          "hint":"Wähle die fachlich genaue Antwort.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Aussage zu analogRead(A0) ist richtig?",
+            "choices":[
+              {"id":"A","label":"Der Befehl liefert nur 0 oder 1."},
+              {"id":"B","label":"Der Befehl liefert beim Arduino Uno einen ganzzahligen Wert von 0 bis 1023."},
+              {"id":"C","label":"Der Befehl liefert immer direkt eine Spannung in Volt."},
+              {"id":"D","label":"Der Befehl schaltet den Pin A0 ein."}
+            ],
+            "correct":["B"],
+            "explain":"analogRead(A0) liefert zunächst den ADC-Rohwert. Eine Spannung in Volt musst du anschließend aus diesem Wert berechnen."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="Warum eine Variable?">
+      <h1>Ein Messwert muss gespeichert werden, bevor du ihn weiterverwendest</h1>
+      <p>Der Ausdruck <span class="a6-mini">analogRead(sensor)</span> führt genau in diesem Moment eine Messung aus und liefert eine Zahl zurück. Ohne Zuweisung wäre diese Zahl nach dem Ende der Anweisung nicht unter einem eigenen Namen verfügbar. Deshalb landet sie in der Variable <span class="a6-mini">messwert</span>.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="a6-code"><span class="kw">int</span> sensor = A0;
+<span class="kw">int</span> messwert;
+
+messwert = analogRead(sensor);
+Serial.println(messwert);</div>
+
+      <div class="a6-flow" aria-label="Weg des Messwerts">
+        <div><strong>1. Spannung</strong>Am Pin A0 liegt eine Spannung an.</div>
+        <div><strong>2. Wandlung</strong><code>analogRead(sensor)</code> erzeugt eine Zahl.</div>
+        <div><strong>3. Speicherung</strong><code>messwert = ...</code> merkt sich diese Zahl.</div>
+        <div><strong>4. Verwendung</strong>Ausgeben, vergleichen oder umrechnen.</div>
+      </div>
+
+      <div class="a6-var-line"><code>sensor</code><div>speichert, <strong>wo</strong> gemessen wird: am Pin A0. Ändert sich später der Anschluss, musst du nur diese eine Stelle anpassen.</div></div>
+      <div class="a6-var-line"><code>messwert</code><div>speichert, <strong>was</strong> bei der letzten Messung herauskam. Alle folgenden Anweisungen arbeiten dadurch mit demselben Wert.</div></div>
+
+      <div class="a6-warn"><strong>Warum nicht mehrfach analogRead(sensor) aufrufen?</strong> Ein Sensor kann sich zwischen zwei Aufrufen verändern. Wenn Ausgabe, Spannungsberechnung und Entscheidung zusammengehören sollen, liest du einmal und verwendest anschließend mehrfach dieselbe gespeicherte Variable.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-cloze-variable",
+          "title":"Sicherung: Vom Eingang zur Variable",
+          "bank":["A0","analogRead","messwert","speichert","Serial.println","vergleichen"],
+          "segments":[
+            {"t":"text","v":"Die Variable sensor verweist auf den Pin "},
+            {"t":"gap","a":"A0"},
+            {"t":"text","v":". Der Aufruf "},
+            {"t":"gap","a":"analogRead"},
+            {"t":"text","v":" führt eine Messung durch. Die Zuweisung an "},
+            {"t":"gap","a":"messwert"},
+            {"t":"text","v":" "},
+            {"t":"gap","a":"speichert"},
+            {"t":"text","v":" das Ergebnis. Danach kannst du es mit "},
+            {"t":"gap","a":"Serial.println"},
+            {"t":"text","v":" ausgeben oder mit einem Grenzwert "},
+            {"t":"gap","a":"vergleichen"},
+            {"t":"text","v":"."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="a6-success"><strong>Jetzt hast du gelernt:</strong> Eine Variable ist ein benannter Speicherplatz. Sie sorgt dafür, dass mehrere spätere Anweisungen denselben gemessenen Zustand verwenden.</div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Code-Simulation">
+      <h1>Simulation: Beobachte, wann der Messwert wirklich gespeichert wird</h1>
+      <p>Verändere zuerst die Spannung am Regler. Gehe dann schrittweise durch den Code. Erst wenn die gelbe Markierung auf <span class="a6-mini">analogRead(sensor)</span> steht, wird die aktuelle Spannung gewandelt und in <span class="a6-mini">messwert</span> gespeichert.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="a6-sim" data-analog-sim>
+        <div class="a6-sim-toolbar">
+          <div class="a6-sim-title">A0 messen, speichern, ausgeben und entscheiden</div>
+          <div class="a6-sim-actions">
+            <button class="a6-btn primary" type="button" data-sim-action="toggle">Start</button>
+            <button class="a6-btn" type="button" data-sim-action="step">Einzelschritt</button>
+            <button class="a6-btn" type="button" data-sim-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="a6-sim-body">
+          <div class="a6-sim-stage">
+            <div class="a6-meter"><div><strong data-sim-voltage>2,50 V</strong><span>Spannung an A0</span></div></div>
+            <label class="a6-slider-label" for="a6-voltage">Eingangsspannung verändern</label>
+            <input class="a6-slider" id="a6-voltage" data-sim-slider type="range" min="0" max="5" step="0.05" value="2.5" />
+            <div class="a6-led" data-sim-led aria-label="LED ist aus"></div>
+            <div class="a6-output" data-sim-output>Bereit: Der Pin ist benannt, aber noch nicht gemessen.</div>
+          </div>
+          <div class="a6-sim-code">
+            <ol class="a6-lines" aria-label="Schrittweise ausgeführter Arduino-Code">
+              <li data-sim-line="0" data-line="1">int sensor = A0;</li>
+              <li data-sim-line="1" data-line="2">int messwert;</li>
+              <li data-sim-line="2" data-line="3">void setup(){ Serial.begin(9600);</li>
+              <li data-sim-line="3" data-line="4">  pinMode(13, OUTPUT); }</li>
+              <li data-sim-line="4" data-line="5">void loop(){ messwert = analogRead(sensor);</li>
+              <li data-sim-line="5" data-line="6">  Serial.println(messwert);</li>
+              <li data-sim-line="6" data-line="7">  if(messwert &gt; 500){</li>
+              <li data-sim-line="7" data-line="8">    digitalWrite(13, HIGH);</li>
+              <li data-sim-line="8" data-line="9">  }else{</li>
+              <li data-sim-line="9" data-line="10">    digitalWrite(13, LOW); }</li>
+              <li data-sim-line="10" data-line="11">  delay(500); }</li>
+            </ol>
+            <div class="a6-live">
+              <div><span>sensor</span><strong data-sim-value="sensor">A0</strong></div>
+              <div><span>messwert</span><strong data-sim-value="messwert">nicht festgelegt</strong></div>
+              <div><span>Bedingung</span><strong data-sim-value="condition">noch nicht geprüft</strong></div>
+              <div><span>serieller Monitor</span><strong data-sim-value="serial">noch keine Ausgabe</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="a6-note"><strong>Probiere es aus:</strong> Ändere den Regler direkt nach der Messzeile. Die Anzeige „Spannung an A0“ ändert sich sofort, aber <span class="a6-mini">messwert</span> bleibt gleich, bis <span class="a6-mini">analogRead()</span> im nächsten Schleifendurchlauf erneut ausgeführt wird.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-verify-variable",
+          "title":"Stopp & check: Gespeicherter Zustand",
+          "hint":"Denke an den Zeitpunkt der Messung.",
+          "statement":"Wenn sich die Spannung nach analogRead(sensor) ändert, ändert sich die Variable messwert automatisch mit.",
+          "answer":false,
+          "explain":"Die Variable enthält eine Kopie des Ergebnisses vom letzten analogRead-Aufruf. Erst ein neuer Aufruf überschreibt sie mit einem neuen Messwert."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="Rohwert und Spannung">
+      <h1>Vom ADC-Rohwert zur Spannung</h1>
+      <p>Der Messwert 511 bedeutet nicht 511 Volt. Er beschreibt die Position innerhalb der Skala von 0 bis 1023. Für eine näherungsweise Spannung rechnest du den Anteil des Messwerts auf den Bereich bis 5 V um.</p>
+
+      <div class="a6-code"><span class="kw">int</span> messwert = analogRead(A0);
+<span class="kw">float</span> spannung = messwert * (5.0 / 1023.0);
+Serial.println(spannung);</div>
+
+      <div class="a6-grid2">
+        <div class="a6-panel"><h3>Warum float?</h3><p>Eine Spannung kann Nachkommastellen haben, zum Beispiel 2,50 V. Der Typ <span class="a6-mini">float</span> kann solche Werte speichern.</p></div>
+        <div class="a6-panel"><h3>Warum 5.0 und 1023.0?</h3><p>Die Dezimalpunkte erzwingen eine Rechnung mit Kommazahlen. Reine Ganzzahldivision würde Zwischenwerte abschneiden.</p></div>
+      </div>
+
+      <div class="a6-warn"><strong>Messgrenze:</strong> Beim üblichen Arduino Uno darf die Spannung am Analogeingang nicht negativ und nicht größer als die verwendete Referenzspannung sein. Eine Überspannung kann den Mikrocontroller beschädigen.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-trace-conversion",
+          "title":"Ablaufspur: Spannung, Rohwert und Variable",
+          "hint":"Nutze die Vergleichswerte aus der Abbildung. Kleine Rundungsabweichungen sind berücksichtigt.",
+          "columns":[
+            {"label":"Spannung an A0","width":"22%"},
+            {"label":"analogRead(A0)","width":"22%"},
+            {"label":"messwert danach","width":"24%"},
+            {"label":"Ausgabe ungefähr","width":"32%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"0 V"},{"answers":["0"]},{"answers":["0"]},{"answers":["0 V","0,0 V","0.0 V"]}]},
+            {"cells":[{"given":"1,25 V"},{"answers":["255","256"]},{"answers":["255","256"]},{"answers":["1,25 V","1.25 V"]}]},
+            {"cells":[{"given":"2,50 V"},{"answers":["511","512"]},{"answers":["511","512"]},{"answers":["2,5 V","2.5 V","2,50 V"]}]},
+            {"cells":[{"given":"5 V"},{"answers":["1023"]},{"answers":["1023"]},{"answers":["5 V","5,0 V","5.0 V"]}]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-verify-integer",
+          "title":"Wahr oder falsch?",
+          "hint":"Achte auf Datentyp und Rechenreihenfolge.",
+          "statement":"Für eine Spannung mit Nachkommastellen genügt immer int spannung = messwert / 1023 * 5;.",
+          "answer":false,
+          "explain":"int speichert keine Nachkommastellen. Außerdem kann eine Ganzzahldivision den Anteil vorzeitig auf 0 kürzen. Verwende float und Dezimalzahlen, zum Beispiel messwert * (5.0 / 1023.0)."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Sensor und Spannungsteiler">
+      <h1>Der Arduino misst Spannung, nicht direkt Licht oder Temperatur</h1>
+      <p>Viele Sensoren verändern ihren elektrischen Widerstand. Damit daraus eine messbare Spannung wird, baust du einen Spannungsteiler. Beim LDR verändert Licht den Widerstand; dadurch verändert sich die Spannung am Verbindungspunkt und damit der Wert an A0.</p>
+
+      <div class="a6-grid3">
+        <figure class="a6-figure compact"><img src="pdf-bilder/led.png" alt="Lichtabhängiger Widerstand, LDR" /><figcaption>Ein LDR verändert seinen Widerstand abhängig von der Beleuchtung.</figcaption></figure>
+        <figure class="a6-figure compact"><img src="pdf-bilder/spannungsteiler.png" alt="Spannungsteiler aus festem Widerstand und lichtabhängigem Widerstand" /><figcaption>Der Spannungsteiler macht die Widerstandsänderung als Spannung messbar.</figcaption></figure>
+        <div class="a6-panel"><h3>Signalweg</h3><p>Licht verändert den LDR. Der veränderte Widerstand verschiebt die Teilspannung. A0 misst diese Spannung. <span class="a6-mini">analogRead(A0)</span> wandelt sie in eine Zahl.</p></div>
+      </div>
+
+      <div class="a6-note"><strong>Richtung prüfen:</strong> Ob der ADC-Wert bei mehr Licht steigt oder fällt, hängt davon ab, an welcher Stelle LDR und Festwiderstand im Spannungsteiler sitzen. Teste deshalb zuerst helle und dunkle Extremwerte.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="a6-sensor-pairs" data-p2-title="Zuordnung: Bauteil, Code und Wirkung" data-p2-hint="Verbinde jeden Begriff mit seiner genauen Funktion.">
+        <div class="p2-hint">Ziehe einen Begriff auf die passende Beschreibung.</div>
+        <div class="p2-banks">
+          <div><div class="p2-col-title">Begriff</div><div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">LDR</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Spannungsteiler</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">A0</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">analogRead(A0)</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="5">messwert</div>
+          </div></div>
+          <div><div class="p2-col-title">Funktion</div><div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">verändert seinen Widerstand bei anderer Beleuchtung</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">wandelt eine Widerstandsänderung in eine veränderte Teilspannung um</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">ist der Anschluss für die zu messende Spannung</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">startet die Wandlung und liefert einen ADC-Wert</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="5">speichert das Ergebnis für Ausgabe, Rechnung und Entscheidung</div>
+          </div></div>
+        </div>
+        <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-cat-signals",
+          "title":"Sortiere: analog oder digital?",
+          "hint":"Ordne nach der Information, die der Arduino erhält.",
+          "categories":[{"id":"analog","title":"Analoger Eingang"},{"id":"digital","title":"Digitaler Eingang"}],
+          "items":[
+            {"label":"liefert beim Uno Werte von 0 bis 1023","category":"analog"},
+            {"label":"wird mit analogRead() gelesen","category":"analog"},
+            {"label":"kann Zwischenwerte einer Spannung unterscheiden","category":"analog"},
+            {"label":"liefert LOW oder HIGH","category":"digital"},
+            {"label":"wird mit digitalRead() gelesen","category":"digital"},
+            {"label":"eignet sich direkt für einen Tasterzustand","category":"digital"}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Dämmerungsschalter">
+      <h1>Aus dem gespeicherten Messwert wird eine Entscheidung</h1>
+      <p>Für einen Dämmerungsschalter liest du zuerst den Sensor, speicherst den Wert und vergleichst anschließend genau diese Variable mit einem Grenzwert. Beim gezeigten Spannungsteiler bedeutet ein größerer ADC-Wert: Es ist dunkler.</p>
+
+      <div class="a6-code"><span class="kw">int</span> ldr = A0;
+<span class="kw">int</span> helligkeit;
+
+<span class="kw">void</span> loop(){
+  helligkeit = analogRead(ldr);
+  Serial.println(helligkeit);
+  <span class="kw">if</span>(helligkeit &gt; 500){
+    digitalWrite(13, HIGH);
+  }<span class="kw">else</span>{
+    digitalWrite(13, LOW);
+  }
+}</div>
+
+      <div class="a6-grid2">
+        <div class="a6-panel"><h3>Messung</h3><p><span class="a6-mini">helligkeit = analogRead(ldr);</span> überschreibt die Variable einmal pro Durchlauf mit dem aktuellen Rohwert.</p></div>
+        <div class="a6-panel"><h3>Entscheidung</h3><p><span class="a6-mini">if(helligkeit &gt; 500)</span> prüft den gespeicherten Wert. Der Sensor wird in dieser Zeile nicht erneut gelesen.</p></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-trace-dusk",
+          "title":"Ablaufspur: Messwert und LED verfolgen",
+          "hint":"Die Messfolge lautet 320, 610, 500 und 720. Achte genau auf den Grenzwert.",
+          "columns":[
+            {"label":"Durchlauf","width":"14%"},
+            {"label":"analogRead liefert","width":"21%"},
+            {"label":"helligkeit danach","width":"22%"},
+            {"label":"helligkeit > 500","width":"23%"},
+            {"label":"LED danach","width":"20%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"1"},{"given":"320"},{"answers":["320"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]},
+            {"cells":[{"given":"2"},{"given":"610"},{"answers":["610"]},{"answers":["wahr","ja"]},{"answers":["AN","an","HIGH"]}]},
+            {"cells":[{"given":"3"},{"given":"500"},{"answers":["500"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]},
+            {"cells":[{"given":"4"},{"given":"720"},{"answers":["720"]},{"answers":["wahr","ja"]},{"answers":["AN","an","HIGH"]}]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="a6-success"><strong>Jetzt hast du gelernt:</strong> Die Variable trennt den Messzeitpunkt von der Verarbeitung. Ausgabe und if/else verwenden beide denselben gespeicherten Wert.</div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Potentiometer steuert Zeit">
+      <h1>Ein Potentiometer ist ein einstellbarer Spannungsteiler</h1>
+      <p>Beim Potentiometer teilt der Schleifer den Gesamtwiderstand in zwei Teilwiderstände. Drehst du am Knopf, verändert sich die Spannung am mittleren Anschluss. Diese Spannung kannst du an A0 messen und zum Beispiel direkt als Wartezeit verwenden.</p>
+
+      <div class="a6-grid2">
+        <figure class="a6-figure compact"><img src="pdf-bilder/poti.png" alt="Potentiometer mit zwei Teilwiderständen und Drehknopf" /><figcaption>Die beiden äußeren Anschlüsse liegen an 5 V und GND; der mittlere Anschluss liefert die veränderliche Teilspannung.</figcaption></figure>
+        <div>
+          <div class="a6-code"><span class="kw">void</span> loop(){
+  digitalWrite(13, HIGH);
+  delay(analogRead(A0));
+  digitalWrite(13, LOW);
+  delay(analogRead(A0));
+}</div>
+          <div class="a6-warn"><strong>Schaltungshinweis:</strong> Der mittlere Anschluss darf als Spannungsteiler-Ausgang nicht direkt mit 5 V oder GND kurzgeschlossen werden.</div>
+        </div>
+      </div>
+
+      <p>Der ADC-Wert wird hier zur Zeit in Millisekunden. Ein kleiner Wert erzeugt schnelles Blinken, ein großer Wert langsames Blinken. Für nachvollziehbares Verhalten ist es oft besser, auch hier einmal zu messen und denselben Wert für beide Pausen zu speichern.</p>
+      <div class="a6-code"><span class="kw">int</span> pause = analogRead(A0);
+digitalWrite(13, HIGH);
+delay(pause);
+digitalWrite(13, LOW);
+delay(pause);</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-order-strobe",
+          "title":"Bring einen Blinkdurchlauf in die richtige Reihenfolge",
+          "hint":"Der gespeicherte Messwert soll für beide Pausen gelten.",
+          "items":[
+            "Potentiometer an A0 einmal auslesen und in pause speichern",
+            "LED einschalten",
+            "für pause Millisekunden warten",
+            "LED ausschalten",
+            "noch einmal für pause Millisekunden warten",
+            "zum Beginn von loop() zurückkehren"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-reveal-two-reads",
+          "title":"Fehler finden: Zwei Messungen in einem Blinkdurchlauf",
+          "question":"Was kann passieren, wenn für die AN-Pause und die AUS-Pause jeweils analogRead(A0) neu aufgerufen wird?",
+          "answer":"Wird das Potentiometer zwischen beiden Aufrufen bewegt oder schwankt der Messwert, können AN- und AUS-Zeit unterschiedlich lang werden. Eine Variable hält für den gesamten Blinkdurchlauf einen gemeinsamen Wert fest."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Transfer: Batterietester">
+      <h1>Transfer: Aus einer Messung werden drei Spannungsbereiche</h1>
+      <p>Ein Batterietester soll eine Spannung messen und mit drei LEDs bewerten: Grün ab 1,4 V, Gelb von 1,2 V bis unter 1,4 V und Rot unter 1,2 V. Dafür speicherst du zuerst Rohwert und berechnete Spannung.</p>
+
+      <div class="a6-code"><span class="kw">int</span> messwert = analogRead(A0);
+<span class="kw">float</span> spannung = messwert * (5.0 / 1023.0);
+
+<span class="kw">if</span>(spannung &gt;= 1.4){
+  // grüne LED
+}<span class="kw">else if</span>(spannung &gt;= 1.2){
+  // gelbe LED
+}<span class="kw">else</span>{
+  // rote LED
+}</div>
+
+      <div class="a6-note"><strong>Warum else if?</strong> Die Bereiche schließen sich gegenseitig aus. Sobald ein passender Zweig gefunden wurde, werden die folgenden Zweige übersprungen. Bei drei einzelnen if-Abfragen müsstest du Überschneidungen besonders sorgfältig vermeiden.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-essay-battery",
+          "title":"Erkläre und prüfe den Batterietester",
+          "hint":"Antworte in 5-8 Sätzen. Begründe die Variablen und prüfe die Grenzwerte 1,19 V, 1,20 V und 1,40 V.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Erklärung","key":"explanation","kind":"textarea","placeholder":"Erkläre den Weg von analogRead über messwert und spannung bis zur LED."},
+            {"label":"Grenzwerte","key":"limits","kind":"textarea","placeholder":"Welche LED leuchtet bei 1,19 V, 1,20 V und 1,40 V? Begründe mit den Vergleichszeichen."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="a6-warn"><strong>Sicherheit:</strong> Miss nur Spannungen, die sicher innerhalb des zulässigen Eingangsbereichs liegen. Zwei 1,5-V-Zellen in Reihe ergeben ungefähr 3 V und sind damit für diese Übung geeignet; unbekannte oder höhere Spannungsquellen gehören nicht direkt an A0.</div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Sicherung und Quellen">
+      <h1>Werkzeugkasten: Analoge Sensorwerte sicher verarbeiten</h1>
+      <div class="a6-grid3">
+        <div class="a6-panel"><h3>1. Messen</h3><p>Mit <span class="a6-mini">analogRead(Pin)</span> erzeugst du einen ADC-Rohwert.</p></div>
+        <div class="a6-panel"><h3>2. Speichern</h3><p>Eine Variable hält den Wert für alle folgenden Verarbeitungsschritte fest.</p></div>
+        <div class="a6-panel"><h3>3. Verwenden</h3><p>Du kannst den Wert ausgeben, umrechnen, vergleichen oder als Zeit einsetzen.</p></div>
+      </div>
+
+      <div class="a6-success"><strong>Jetzt hast du das gelernt:</strong> Du kannst digitale und analoge Eingänge unterscheiden, einen Messwert speichern, in eine Spannung umrechnen und Sensorwerte für Entscheidungen oder Steuerungen nutzen.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"a6-mcq-final",
+          "title":"Abschlusscheck",
+          "hint":"Mehrere Antworten können richtig sein.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Aussagen beschreiben einen zuverlässigen Sensorablauf?",
+            "choices":[
+              {"id":"A","label":"Der Messwert wird einmal gelesen und in einer Variable gespeichert."},
+              {"id":"B","label":"Ausgabe und Entscheidung können anschließend dieselbe Variable verwenden."},
+              {"id":"C","label":"analogRead() liefert direkt Volt mit Nachkommastellen."},
+              {"id":"D","label":"Für eine Spannungsberechnung mit Nachkommastellen eignet sich float."},
+              {"id":"E","label":"Die Richtung eines Sensorwerts sollte mit Extremwerten praktisch geprüft werden."}
+            ],
+            "correct":["A","B","D","E"],
+            "explain":"analogRead() liefert einen Rohwert. Speichern, geeigneter Datentyp und ein Test der realen Schaltung machen die Verarbeitung nachvollziehbar."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen und Weiterforschen</h2>
+      <ul class="a6-source-list">
+        <li>Primärmaterial: <cite>LernBaustein Arduino2 (V20-01-22), Lehrerfassung</cite>, Seiten 6-7: „Analoger Eingang“ und „Sensoren auslesen“.</li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogRead/" target="_blank" rel="noopener noreferrer">Arduino Language Reference: analogRead()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/communication/serial/println/" target="_blank" rel="noopener noreferrer">Arduino Language Reference: Serial.println()</a></li>
+        <li><a href="https://docs.arduino.cc/learn/electronics/potentiometer-basics/" target="_blank" rel="noopener noreferrer">Arduino Learn: Potentiometer basics</a></li>
+        <li>Weiterdenken: Wie müsstest du Schaltung oder Vergleichszeichen ändern, wenn der Messwert bei zunehmender Helligkeit in die andere Richtung läuft?</li>
+      </ul>
+
+      <a class="next-module" href="arduino-motoren.html"><span><b>Nächster Themenbereich</b>Motoren gezielt ansteuern</span><span aria-hidden="true">→</span></a>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_6__" });
+
+    (function () {
+      "use strict";
+      const root = document.querySelector("[data-analog-sim]");
+      if (!root) return;
+
+      const lines = Array.from(root.querySelectorAll("[data-sim-line]"));
+      const slider = root.querySelector("[data-sim-slider]");
+      const voltageEl = root.querySelector("[data-sim-voltage]");
+      const led = root.querySelector("[data-sim-led]");
+      const output = root.querySelector("[data-sim-output]");
+      const toggle = root.querySelector('[data-sim-action="toggle"]');
+      const valueEls = {
+        sensor: root.querySelector('[data-sim-value="sensor"]'),
+        messwert: root.querySelector('[data-sim-value="messwert"]'),
+        condition: root.querySelector('[data-sim-value="condition"]'),
+        serial: root.querySelector('[data-sim-value="serial"]')
+      };
+      const sequence = [0, 1, 2, 3, 4, 5, 6, 7, 10];
+      let position = 0;
+      let measured = null;
+      let serialValue = null;
+      let condition = "noch nicht geprüft";
+      let ledOn = false;
+      let running = false;
+      let timer = 0;
+
+      function voltage() { return Number(slider.value); }
+      function adcValue() { return Math.round(voltage() / 5 * 1023); }
+      function formatVoltage(value) { return value.toFixed(2).replace(".", ",") + " V"; }
+
+      function currentLine() {
+        const base = sequence[position];
+        if (base === 7 && measured !== null && measured <= 500) return 9;
+        return base;
+      }
+
+      function describe(line) {
+        if (line === 0) return "A0 erhält den Namen sensor.";
+        if (line === 1) return "Der Speicherplatz messwert wird angelegt, hat aber noch keinen Messwert.";
+        if (line === 2) return "Die serielle Verbindung wird mit 9600 Baud gestartet.";
+        if (line === 3) return "Pin 13 wird als Ausgang für die LED eingerichtet.";
+        if (line === 4) return "Jetzt wird A0 gemessen: " + measured + " wird in messwert gespeichert.";
+        if (line === 5) return "Serieller Monitor: " + serialValue;
+        if (line === 6) return measured + " > 500 ist " + condition + ".";
+        if (line === 7) return "Die LED wird eingeschaltet.";
+        if (line === 9) return "Die LED wird ausgeschaltet.";
+        return "Das Programm wartet 500 ms und beginnt dann den nächsten loop-Durchlauf.";
+      }
+
+      function execute(line) {
+        if (line === 4) {
+          measured = adcValue();
+          serialValue = null;
+          condition = "noch nicht geprüft";
+        } else if (line === 5) {
+          serialValue = measured;
+        } else if (line === 6) {
+          condition = measured > 500 ? "wahr" : "falsch";
+        } else if (line === 7) {
+          ledOn = true;
+        } else if (line === 9) {
+          ledOn = false;
+        }
+      }
+
+      function render() {
+        const line = currentLine();
+        lines.forEach(function (item) {
+          item.classList.toggle("is-active", Number(item.dataset.simLine) === line);
+        });
+        voltageEl.textContent = formatVoltage(voltage());
+        valueEls.sensor.textContent = "A0";
+        valueEls.messwert.textContent = measured === null ? "nicht festgelegt" : String(measured);
+        valueEls.condition.textContent = condition;
+        valueEls.serial.textContent = serialValue === null ? "noch keine Ausgabe" : String(serialValue);
+        led.classList.toggle("is-on", ledOn);
+        led.setAttribute("aria-label", ledOn ? "LED ist an" : "LED ist aus");
+        output.textContent = describe(line);
+      }
+
+      function stop() {
+        running = false;
+        window.clearInterval(timer);
+        timer = 0;
+        toggle.textContent = "Start";
+      }
+
+      function advance() {
+        if (position >= sequence.length - 1) position = 4;
+        else position += 1;
+        const line = currentLine();
+        execute(line);
+        render();
+      }
+
+      toggle.addEventListener("click", function () {
+        if (running) { stop(); return; }
+        running = true;
+        toggle.textContent = "Pause";
+        timer = window.setInterval(advance, 850);
+      });
+      root.querySelector('[data-sim-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-sim-action="reset"]').addEventListener("click", function () {
+        stop();
+        position = 0;
+        measured = null;
+        serialValue = null;
+        condition = "noch nicht geprüft";
+        ledOn = false;
+        render();
+      });
+      slider.addEventListener("input", function () {
+        voltageEl.textContent = formatVoltage(voltage());
+        if (currentLine() !== 4) output.textContent = "A0 hat sich geändert. messwert bleibt bis zum nächsten analogRead() unverändert.";
+      });
+      render();
+    }());
+  </script>
+</body>
+</html>

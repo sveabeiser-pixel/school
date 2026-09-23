@@ -56,6 +56,40 @@
     .aw-lab-state span { display: block; font-size: .76rem; color: var(--aw-muted); }
     .aw-lab-state strong { display: block; margin-top: 3px; }
 
+    .aw-var-sim { margin: 18px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-var-sim-body { display: grid; grid-template-columns: minmax(270px, .72fr) minmax(430px, 1.28fr); min-width: 0; }
+    .aw-var-stage { display: grid; align-content: center; gap: 14px; min-width: 0; padding: 20px; border-right: 1px solid var(--aw-line); background: #edf5f5; }
+    .aw-switch-control { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; border: 1px solid var(--aw-line); background: #fff; font-weight: 850; }
+    .aw-switch-control input { width: 24px; height: 24px; accent-color: var(--aw-teal); }
+    .aw-pin-signal { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 13px; border-left: 5px solid var(--aw-blue); background: #fff; }
+    .aw-pin-signal strong { font-size: 1.35rem; color: var(--aw-blue); }
+    .aw-var-led { width: 64px; aspect-ratio: 1; margin: 2px auto; border: 5px solid #697c87; border-radius: 50%; background: #9aa8af; }
+    .aw-var-led.is-on { border-color: #b77a00; background: #ffd12f; box-shadow: 0 0 24px rgba(216,146,0,.52); }
+    .aw-var-output { min-height: 46px; font-weight: 850; text-align: center; }
+    [data-variable-sim] .aw-var-stage { grid-template-rows: 54px 68px 74px 92px; align-content: center; }
+    [data-variable-sim] .aw-switch-control, [data-variable-sim] .aw-pin-signal { box-sizing: border-box; min-width: 0; height: 100%; }
+    [data-variable-sim] .aw-var-led { box-sizing: border-box; align-self: center; width: 64px; height: 64px; margin: 0 auto; }
+    [data-variable-sim] .aw-var-output { display: grid; place-items: center; box-sizing: border-box; width: 100%; height: 92px; min-height: 92px; overflow-wrap: anywhere; }
+    .aw-var-code { min-width: 0; padding: 16px; }
+    .aw-var-lines { margin: 0; padding: 0; list-style: none; overflow-x: auto; border: 1px solid #dbe4e9; font: 750 .88rem/1.36 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .aw-var-lines li { display: grid; grid-template-columns: 30px minmax(410px, 1fr); gap: 9px; min-height: 29px; padding: 5px 9px; border-bottom: 1px solid #e3e9ed; white-space: pre; }
+    .aw-var-lines li:last-child { border-bottom: 0; }
+    .aw-var-lines li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .aw-var-lines li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 var(--aw-yellow); }
+    .aw-var-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .aw-var-values > div { min-width: 0; padding: 8px; border: 1px solid var(--aw-line); background: #fff; }
+    .aw-var-values span { display: block; color: var(--aw-muted); font-size: .72rem; overflow-wrap: anywhere; }
+    .aw-var-values strong { display: block; margin-top: 3px; overflow-wrap: anywhere; }
+    .aw-pwm-lamp { display: grid; place-items: center; width: 132px; aspect-ratio: 1; margin: 4px auto 10px; border: 6px solid #667985; border-radius: 50%; background: #454d52; transition: background-color .2s, box-shadow .2s; }
+    .aw-pwm-lamp strong { color: #172033; font-size: 1.1rem; }
+    .aw-sim-caption { min-height: 48px; color: var(--aw-ink); font-weight: 850; text-align: center; }
+    .aw-array-strip { display: grid; grid-template-columns: repeat(4, minmax(48px, 1fr)); gap: 7px; }
+    .aw-array-cell { display: grid; place-items: center; min-height: 68px; padding: 7px; border: 3px solid #8da5b0; background: #fff; text-align: center; }
+    .aw-array-cell span { display: block; color: var(--aw-muted); font-size: .72rem; }
+    .aw-array-cell strong { display: block; margin-top: 2px; }
+    .aw-array-cell.is-current { border-color: var(--aw-yellow); background: #fff1bd; box-shadow: 0 0 0 4px rgba(242,182,51,.18); }
+    .aw-array-cell.is-done { border-color: var(--aw-green); background: #edf8f2; }
+
     .aw-image { margin: 16px 0; }
     .aw-image img { display: block; width: 100%; max-height: 560px; object-fit: contain; border: 1px solid var(--aw-line); background: #fff; }
     .aw-image.narrow img { max-width: 760px; margin-inline: auto; }
@@ -130,7 +164,10 @@
       .aw-goals, .aw-cards, .aw-motor-grid, .aw-check-grid, .aw-route, .aw-pin-board { grid-template-columns: 1fr; }
       .aw-toolbar, .aw-table-footer { align-items: stretch; flex-direction: column; }
       .aw-system { grid-template-columns: 1fr; padding: 18px; }
+      .aw-var-sim-body { grid-template-columns: 1fr; }
+      .aw-var-stage { border-right: 0; border-bottom: 1px solid var(--aw-line); }
       .aw-lab-state { grid-template-columns: 1fr 1fr; }
+      .aw-var-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .aw-flow-branches { grid-template-columns: 1fr; }
     }
     @media (max-width: 430px) {
@@ -482,7 +519,135 @@ void setup() {
       <div class="aw-success"><strong>Jetzt hast du gelernt:</strong> Gute Variablennamen und kleine Funktionen strukturieren das Programm. Mit <code>Serial.print()</code> oder <code>Serial.println()</code> überprüfst du, ob die Werte tatsächlich so entstehen, wie du es geplant hast.</div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="Schleifen und PWM">
+    <section data-wb-page="5" data-wb-page-title="Variablen und Schalterzustand">
+      <h1>Variablen merken sich den aktuellen Zustand</h1>
+      <p>Eine Variable ist ein benannter Speicherplatz im Arbeitsspeicher des Arduino. Sie besitzt einen <strong>Namen</strong>, einen <strong>Datentyp</strong> und zu jedem Zeitpunkt einen <strong>aktuellen Wert</strong>. Der Wert kann während des Programmlaufs überschrieben werden; genau deshalb heißt sie Variable.</p>
+
+      <div class="aw-goals">
+        <div class="aw-goal"><strong><code>int</code></strong>Ganze Zahlen, zum Beispiel <code>0</code>, <code>1</code>, <code>512</code> oder <code>-3</code>.</div>
+        <div class="aw-goal"><strong><code>bool</code></strong>Genau zwei logische Werte: <code>true</code> oder <code>false</code>.</div>
+        <div class="aw-goal"><strong><code>float</code></strong>Zahlen mit Nachkommastellen, zum Beispiel <code>2.75</code>.</div>
+        <div class="aw-goal"><strong><code>char</code></strong>Ein einzelnes Zeichen, zum Beispiel <code>'A'</code>.</div>
+      </div>
+
+      <div class="aw-note"><strong>Für den Schalter:</strong> <code>digitalRead()</code> liefert <code>HIGH</code> oder <code>LOW</code>. Diese Konstanten entsprechen den Zahlenwerten 1 und 0 und können deshalb in einer <code>int</code>-Variable gespeichert werden.</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Vom Schalter zur Variable</h2>
+      <p>Die Zeile <code>schalterZustand = digitalRead(TASTER);</code> erledigt drei Dinge: Der Arduino liest den elektrischen Zustand am Pin, <code>digitalRead()</code> liefert <code>HIGH</code> oder <code>LOW</code>, und die Zuweisung speichert dieses Ergebnis unter dem Namen <code>schalterZustand</code>. Erst danach prüft <code>if/else</code> den gespeicherten Wert.</p>
+
+      <div class="aw-code">const int TASTER = 2;
+const int LED = 13;
+int schalterZustand;
+
+void setup() {
+  pinMode(TASTER, INPUT_PULLUP);
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  schalterZustand = digitalRead(TASTER);
+  if (schalterZustand == LOW) {
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(LED, LOW);
+  }
+}</div>
+
+      <div class="aw-danger"><strong>Achtung, umgekehrte Logik:</strong> Bei <code>INPUT_PULLUP</code> ist der offene beziehungsweise nicht gedrückte Schalter <code>HIGH / 1</code>. Beim Drücken wird der Eingang mit GND verbunden und liefert <code>LOW / 0</code>.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="aw-var-sim" data-variable-sim>
+        <div class="aw-toolbar">
+          <strong>Simulation: Schalter lesen, Wert speichern, LED schalten</strong>
+          <div class="aw-actions">
+            <button class="aw-btn primary" type="button" data-variable-action="toggle">Start</button>
+            <button class="aw-btn" type="button" data-variable-action="step">Einzelschritt</button>
+            <button class="aw-btn" type="button" data-variable-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="aw-var-sim-body">
+          <div class="aw-var-stage">
+            <label class="aw-switch-control"><span>Taster gedrückt</span><input type="checkbox" data-variable-switch /></label>
+            <div class="aw-pin-signal"><span>Elektrisches Signal an Pin 2</span><strong data-variable-pin>HIGH / 1</strong></div>
+            <div class="aw-var-led" data-variable-led aria-label="LED ist aus"></div>
+            <div class="aw-var-output" data-variable-output>Bereit: Die Variable wurde noch nicht mit digitalRead() beschrieben.</div>
+          </div>
+          <div class="aw-var-code">
+            <ol class="aw-var-lines" aria-label="Schrittweise ausgeführter Taster-Code">
+              <li data-variable-line="0" data-line="1">const int TASTER = 2;</li>
+              <li data-variable-line="1" data-line="2">const int LED = 13;</li>
+              <li data-variable-line="2" data-line="3">int schalterZustand;</li>
+              <li data-variable-line="3" data-line="4">void setup() {</li>
+              <li data-variable-line="4" data-line="5">  pinMode(TASTER, INPUT_PULLUP);</li>
+              <li data-variable-line="5" data-line="6">  pinMode(LED, OUTPUT);</li>
+              <li data-variable-line="6" data-line="7">}</li>
+              <li data-variable-line="7" data-line="8">void loop() {</li>
+              <li data-variable-line="8" data-line="9">  schalterZustand = digitalRead(TASTER);</li>
+              <li data-variable-line="9" data-line="10">  if (schalterZustand == LOW) {</li>
+              <li data-variable-line="10" data-line="11">    digitalWrite(LED, HIGH);</li>
+              <li data-variable-line="11" data-line="12">  } else {</li>
+              <li data-variable-line="12" data-line="13">    digitalWrite(LED, LOW);</li>
+              <li data-variable-line="13" data-line="14">  }</li>
+              <li data-variable-line="14" data-line="15">}</li>
+            </ol>
+            <div class="aw-var-values">
+              <div><span>Schalterstellung</span><strong data-variable-value="position">nicht gedrückt</strong></div>
+              <div><span>Pin-Eingang</span><strong data-variable-value="input">HIGH / 1</strong></div>
+              <div><span>Variable</span><strong data-variable-value="stored">nicht festgelegt</strong></div>
+              <div><span>Bedingung</span><strong data-variable-value="condition">noch nicht geprüft</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aw-note"><strong>Beobachte die Speicherung:</strong> Verändere den Taster nach einer gelb markierten <code>digitalRead()</code>-Zeile. Das elektrische Eingangssignal ändert sich sofort, aber <code>schalterZustand</code> behält seinen alten Wert bis zum nächsten Schleifendurchlauf.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-trace-switch-variable",
+          "title":"Ablaufspur: Schalterstellung, Variable und if/else",
+          "hint":"INPUT_PULLUP kehrt die erwartete Zuordnung um. Trage pro loop-Durchlauf alle Zustände ein.",
+          "columns":[
+            {"label":"Durchlauf","width":"12%"},
+            {"label":"Taster","width":"19%"},
+            {"label":"digitalRead()","width":"18%"},
+            {"label":"schalterZustand","width":"20%"},
+            {"label":"Bedingung == LOW","width":"18%"},
+            {"label":"LED","width":"13%"}
+          ],
+          "rows":[
+            {"cells":[{"given":"1"},{"given":"nicht gedrückt"},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]},
+            {"cells":[{"given":"2"},{"given":"gedrückt"},{"answers":["LOW","0","LOW / 0"]},{"answers":["LOW","0","LOW / 0"]},{"answers":["wahr","ja"]},{"answers":["AN","an","HIGH"]}]},
+            {"cells":[{"given":"3"},{"given":"gedrückt"},{"answers":["LOW","0","LOW / 0"]},{"answers":["LOW","0","LOW / 0"]},{"answers":["wahr","ja"]},{"answers":["AN","an","HIGH"]}]},
+            {"cells":[{"given":"4"},{"given":"nicht gedrückt"},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"aw-reveal-variable-purpose",
+          "title":"Denkpause: Warum nicht direkt in if erneut lesen?",
+          "question":"Warum ist schalterZustand = digitalRead(TASTER); vor der Bedingung hilfreich?",
+          "answer":"Der gelesene Eingang erhält einen verständlichen Namen und bleibt für diesen Schleifendurchlauf erhalten. Du kannst denselben Zustand in der Bedingung, im seriellen Monitor und an weiteren Stellen verwenden, ohne den Pin jedes Mal neu zu lesen. Das macht den Ablauf nachvollziehbar und leichter zu prüfen."
+        }
+        </script>
+      </div>
+
+      <div class="aw-success"><strong>Jetzt hast du gelernt:</strong> Die Schalterstellung erzeugt ein Eingangssignal. <code>digitalRead()</code> liest es, die Variable speichert es, und <code>if/else</code> wählt passend dazu genau eine Aktion aus.</div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Schleifen und PWM">
       <h1>Wiederholen, zählen und Helligkeit steuern</h1>
       <p>Eine <code>for</code>-Schleife passt, wenn die Anzahl der Durchläufe feststeht. Initialisierung, Bedingung und Änderung der Zählvariablen legen gemeinsam fest, welche Werte auftreten. Bei <code>analogWrite()</code> steuert ein PWM-Wert typischerweise das Verhältnis von Ein- und Ausschaltzeit; beim Arduino Uno reichen die Werte von 0 bis 255.</p>
 
@@ -490,6 +655,42 @@ void setup() {
   analogWrite(3, hell);
   delay(400);
 }</div>
+
+      <div class="aw-var-sim" data-pwm-sim>
+        <div class="aw-toolbar">
+          <strong>Code-Simulation: for-Schleife und PWM</strong>
+          <div class="aw-actions">
+            <button class="aw-btn primary" type="button" data-pwm-action="toggle">Start</button>
+            <button class="aw-btn" type="button" data-pwm-action="step">Einzelschritt</button>
+            <button class="aw-btn" type="button" data-pwm-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="aw-var-sim-body">
+          <div class="aw-var-stage">
+            <div class="aw-pwm-lamp" data-pwm-lamp><strong data-pwm-percent>0 %</strong></div>
+            <div class="aw-sim-caption" data-pwm-output>Bereit: Die Zählvariable ist noch nicht initialisiert.</div>
+          </div>
+          <div class="aw-var-code">
+            <ol class="aw-var-lines" aria-label="Schrittweise ausgeführte PWM-Schleife">
+              <li data-pwm-line="0" data-line="1">for (int hell = 0;</li>
+              <li data-pwm-line="1" data-line="2">     hell &lt;= 255;</li>
+              <li data-pwm-line="2" data-line="3">     hell = hell + 85) {</li>
+              <li data-pwm-line="3" data-line="4">  analogWrite(3, hell);</li>
+              <li data-pwm-line="4" data-line="5">  delay(400);</li>
+              <li data-pwm-line="5" data-line="6">}</li>
+              <li data-pwm-line="6" data-line="7">// weiter hinter der Schleife</li>
+            </ol>
+            <div class="aw-var-values">
+              <div><span>hell</span><strong data-pwm-value="hell">nicht festgelegt</strong></div>
+              <div><span>hell &lt;= 255</span><strong data-pwm-value="condition">noch nicht geprüft</strong></div>
+              <div><span>PWM an Pin 3</span><strong data-pwm-value="pwm">0</strong></div>
+              <div><span>Durchlauf</span><strong data-pwm-value="round">0</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
 
       <h2>Ablaufspur: Schleife und PWM-Werte</h2>
       <div class="aw-table-wrap" data-trace-table data-table-id="for-pwm">
@@ -561,7 +762,7 @@ void setup() {
       </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Eingaben und Entscheidungen">
+    <section data-wb-page="7" data-wb-page-title="Eingaben und Entscheidungen">
       <h1>Taster lesen und Bedingungen präzise formulieren</h1>
       <p>Ein digitaler Eingang braucht einen eindeutigen Grundzustand. Mit <code>INPUT_PULLUP</code> nutzt der Arduino einen internen Widerstand: Nicht gedrückt ergibt meist <code>HIGH</code>, gedrückt verbindet den Eingang mit GND und ergibt <code>LOW</code>. Diese umgekehrte Logik muss die Bedingung korrekt berücksichtigen.</p>
 
@@ -634,7 +835,7 @@ void loop() {
       <div class="aw-danger"><strong>Typische Endlosschleife:</strong> Wenn eine <code>while</code>-Bedingung wahr ist und sich keiner ihrer beteiligten Werte im Schleifenrumpf ändern kann, wird sie nie verlassen.</div>
     </section>
 
-    <section data-wb-page="7" data-wb-page-title="Arrays und Interrupts">
+    <section data-wb-page="8" data-wb-page-title="Arrays und Interrupts">
       <h1>Viele Werte ordnen, kurze Ereignisse bemerken</h1>
       <p>Ein Array speichert mehrere Werte desselben Typs in einer geordneten Liste. Der erste Platz hat den Index 0. Eine Schleife kann die Einträge nacheinander bearbeiten. Ein Interrupt unterbricht den normalen Ablauf bei einem Ereignis kurz; die Interrupt-Service-Routine, kurz ISR, sollte deshalb nur das Nötigste tun.</p>
 
@@ -645,6 +846,48 @@ for (int i = 0; i &lt; 4; i++) {
   delay(200);
 }
 noTone(8);</div>
+
+      <div class="aw-var-sim" data-array-sim>
+        <div class="aw-toolbar">
+          <strong>Code-Simulation: Array mit Index durchlaufen</strong>
+          <div class="aw-actions">
+            <button class="aw-btn primary" type="button" data-array-action="toggle">Start</button>
+            <button class="aw-btn" type="button" data-array-action="step">Einzelschritt</button>
+            <button class="aw-btn" type="button" data-array-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="aw-var-sim-body">
+          <div class="aw-var-stage">
+            <div class="aw-array-strip" aria-label="Array melodie mit vier Einträgen">
+              <div class="aw-array-cell" data-array-cell="0"><div><span>Index 0</span><strong>262 Hz</strong></div></div>
+              <div class="aw-array-cell" data-array-cell="1"><div><span>Index 1</span><strong>330 Hz</strong></div></div>
+              <div class="aw-array-cell" data-array-cell="2"><div><span>Index 2</span><strong>392 Hz</strong></div></div>
+              <div class="aw-array-cell" data-array-cell="3"><div><span>Index 3</span><strong>523 Hz</strong></div></div>
+            </div>
+            <div class="aw-sim-caption" data-array-output>Bereit: Das Array wird angelegt.</div>
+          </div>
+          <div class="aw-var-code">
+            <ol class="aw-var-lines" aria-label="Schrittweise ausgeführte Array-Schleife">
+              <li data-array-line="0" data-line="1">int melodie[] = {262, 330, 392, 523};</li>
+              <li data-array-line="1" data-line="2">for (int i = 0;</li>
+              <li data-array-line="2" data-line="3">     i &lt; 4;</li>
+              <li data-array-line="3" data-line="4">     i++) {</li>
+              <li data-array-line="4" data-line="5">  tone(8, melodie[i]);</li>
+              <li data-array-line="5" data-line="6">  delay(200);</li>
+              <li data-array-line="6" data-line="7">}</li>
+              <li data-array-line="7" data-line="8">noTone(8);</li>
+            </ol>
+            <div class="aw-var-values">
+              <div><span>Index i</span><strong data-array-value="index">nicht festgelegt</strong></div>
+              <div><span>i &lt; 4</span><strong data-array-value="condition">noch nicht geprüft</strong></div>
+              <div><span>melodie[i]</span><strong data-array-value="tone">noch kein Zugriff</strong></div>
+              <div><span>Ausgabe Pin 8</span><strong data-array-value="speaker">stumm</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
 
       <h2>Ablaufspur: Arrayindex und Ton</h2>
       <div class="aw-table-wrap" data-trace-table data-table-id="array-melodie">
@@ -710,7 +953,7 @@ noTone(8);</div>
       </div>
     </section>
 
-    <section data-wb-page="8" data-wb-page-title="Displays und Motoren">
+    <section data-wb-page="9" data-wb-page-title="Displays und Motoren">
       <h1>Die passende Ausgabe für die Aufgabe wählen</h1>
       <p>Eine LED zeigt einen einfachen Zustand, ein Lautsprecher erzeugt Töne, ein LCD stellt Text oder Messwerte dar. Bei Bewegung entscheidet die Aufgabe über den Motortyp. Ein DC-Motor dreht kontinuierlich, ein Servo fährt Winkelpositionen an, ein Schrittmotor bewegt sich in reproduzierbaren Einzelschritten.</p>
 
@@ -783,7 +1026,7 @@ noTone(8);</div>
       <div class="aw-success"><strong>Jetzt hast du gelernt:</strong> Die technische Aufgabe bestimmt den Aktor. Bibliotheken vereinfachen die Ansteuerung, lösen aber weder falsche Verdrahtung noch eine ungeeignete Stromversorgung.</div>
     </section>
 
-    <section data-wb-page="9" data-wb-page-title="Fehlerlabor">
+    <section data-wb-page="10" data-wb-page-title="Fehlerlabor">
       <h1>Debugging beginnt bei der ersten Abweichung</h1>
       <p>Trenne Syntaxfehler, Übertragungsprobleme, Logikfehler und Hardwarefehler. Prüfe zuerst, ob das Programm kompiliert und übertragen wird. Danach testest du die kleinste mögliche Wirkungskette und machst Zustände mit der seriellen Ausgabe sichtbar.</p>
 
@@ -843,7 +1086,7 @@ noTone(8);</div>
       </div>
     </section>
 
-    <section data-wb-page="10" data-wb-page-title="Abschlusscheck">
+    <section data-wb-page="11" data-wb-page-title="Abschlusscheck">
       <h1>Das Arduino-System als Ganzes beherrschen</h1>
       <p>Der entscheidende Schritt ist nicht das Erinnern einzelner Befehle. Du musst begründen können, wie ein Signal durch Hardware und Programm läuft, welche Zustände sich ändern und wie du eine Abweichung sichtbar machst.</p>
 
@@ -1079,6 +1322,226 @@ noTone(8);</div>
       render();
     }
 
+    function initVariableSimulation() {
+      const root = document.querySelector("[data-variable-sim]");
+      if (!root) return;
+      const lineEls = Array.from(root.querySelectorAll("[data-variable-line]"));
+      const switchInput = root.querySelector("[data-variable-switch]");
+      const pinEl = root.querySelector("[data-variable-pin]");
+      const led = root.querySelector("[data-variable-led]");
+      const output = root.querySelector("[data-variable-output]");
+      const toggle = root.querySelector('[data-variable-action="toggle"]');
+      const values = {
+        position: root.querySelector('[data-variable-value="position"]'),
+        input: root.querySelector('[data-variable-value="input"]'),
+        stored: root.querySelector('[data-variable-value="stored"]'),
+        condition: root.querySelector('[data-variable-value="condition"]')
+      };
+      let currentLine = 0;
+      let stored = null;
+      let condition = "noch nicht geprüft";
+      let ledOn = false;
+      let running = false;
+      let timer = 0;
+
+      function pinValue() { return switchInput.checked ? "LOW / 0" : "HIGH / 1"; }
+      function execute(line) {
+        if (line === 8) {
+          stored = pinValue();
+          condition = "noch nicht geprüft";
+        } else if (line === 9) {
+          condition = stored === "LOW / 0" ? "wahr" : "falsch";
+        } else if (line === 10) {
+          ledOn = true;
+        } else if (line === 12) {
+          ledOn = false;
+        }
+      }
+
+      function description(line) {
+        if (line === 0) return "Die Konstante TASTER merkt sich die Pinnummer 2.";
+        if (line === 1) return "Die Konstante LED merkt sich die Pinnummer 13.";
+        if (line === 2) return "Die Variable schalterZustand wird angelegt, hat aber noch keinen gelesenen Eingangswert.";
+        if (line === 3) return "setup() beginnt. Dieser Bereich läuft nach dem Start genau einmal.";
+        if (line === 4) return "Pin 2 wird als Eingang mit internem Pull-up-Widerstand eingerichtet.";
+        if (line === 5) return "Pin 13 wird als Ausgang eingerichtet.";
+        if (line === 6) return "setup() ist beendet und wird erst nach einem Neustart erneut ausgeführt.";
+        if (line === 7) return "loop() beginnt. Dieser Bereich wird danach immer wieder ausgeführt.";
+        if (line === 8) return pinValue() + " wird jetzt in schalterZustand gespeichert.";
+        if (line === 9) return "schalterZustand == LOW ist " + condition + ".";
+        if (line === 10) return "Der if-Block schaltet die LED ein.";
+        if (line === 11) return "Die Bedingung war falsch. Deshalb wird der else-Block ausgeführt.";
+        if (line === 12) return "Der else-Block schaltet die LED aus.";
+        if (line === 13) return "Der ausgewählte if/else-Zweig ist beendet.";
+        return "loop() ist am Ende und beginnt sofort wieder von vorne.";
+      }
+
+      function render() {
+        const liveInput = pinValue();
+        lineEls.forEach(function (item) {
+          item.classList.toggle("is-active", Number(item.dataset.variableLine) === currentLine);
+        });
+        pinEl.textContent = liveInput;
+        values.position.textContent = switchInput.checked ? "gedrückt" : "nicht gedrückt";
+        values.input.textContent = liveInput;
+        values.stored.textContent = stored === null ? "nicht festgelegt" : stored;
+        values.condition.textContent = condition;
+        led.classList.toggle("is-on", ledOn);
+        led.setAttribute("aria-label", ledOn ? "LED ist an" : "LED ist aus");
+        output.textContent = description(currentLine);
+      }
+
+      function stop() {
+        running = false;
+        window.clearInterval(timer);
+        timer = 0;
+        toggle.textContent = "Start";
+      }
+
+      function advance() {
+        if (currentLine === 9) {
+          currentLine = stored === "LOW / 0" ? 10 : 11;
+        } else if (currentLine === 10) {
+          currentLine = 13;
+        } else if (currentLine === 14) {
+          currentLine = 7;
+        } else {
+          currentLine += 1;
+        }
+        execute(currentLine);
+        render();
+      }
+
+      toggle.addEventListener("click", function () {
+        if (running) { stop(); return; }
+        running = true;
+        toggle.textContent = "Pause";
+        timer = window.setInterval(advance, 850);
+      });
+      root.querySelector('[data-variable-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-variable-action="reset"]').addEventListener("click", function () {
+        stop();
+        currentLine = 0;
+        stored = null;
+        condition = "noch nicht geprüft";
+        ledOn = false;
+        switchInput.checked = false;
+        render();
+      });
+      switchInput.addEventListener("change", function () {
+        const liveInput = pinValue();
+        pinEl.textContent = liveInput;
+        values.position.textContent = switchInput.checked ? "gedrückt" : "nicht gedrückt";
+        values.input.textContent = liveInput;
+        output.textContent = "Der Pin liefert jetzt " + liveInput + ". Die Variable ändert sich erst bei der nächsten digitalRead()-Zeile.";
+      });
+      render();
+    }
+
+    function initPwmSimulation() {
+      const root = document.querySelector("[data-pwm-sim]");
+      if (!root) return;
+      const lines = Array.from(root.querySelectorAll("[data-pwm-line]"));
+      const lamp = root.querySelector("[data-pwm-lamp]");
+      const percent = root.querySelector("[data-pwm-percent]");
+      const output = root.querySelector("[data-pwm-output]");
+      const toggle = root.querySelector('[data-pwm-action="toggle"]');
+      const values = {
+        hell: root.querySelector('[data-pwm-value="hell"]'),
+        condition: root.querySelector('[data-pwm-value="condition"]'),
+        pwm: root.querySelector('[data-pwm-value="pwm"]'),
+        round: root.querySelector('[data-pwm-value="round"]')
+      };
+      const frames = [{line:0, hell:0, condition:"noch nicht geprüft", pwm:0, round:0, text:"Initialisierung: hell wird auf 0 gesetzt."}];
+      [0, 85, 170, 255].forEach(function (hell, index) {
+        frames.push({line:1, hell:hell, condition:"wahr", pwm:index ? [0,85,170,255][index - 1] : 0, round:index + 1, text:hell + " <= 255 ist wahr. Durchlauf " + (index + 1) + " beginnt."});
+        frames.push({line:3, hell:hell, condition:"wahr", pwm:hell, round:index + 1, text:"analogWrite setzt den PWM-Wert auf " + hell + "."});
+        frames.push({line:4, hell:hell, condition:"wahr", pwm:hell, round:index + 1, text:"Die Helligkeit bleibt für 400 ms sichtbar."});
+        frames.push({line:5, hell:hell, condition:"wahr", pwm:hell, round:index + 1, text:"Das Ende des Schleifenrumpfs ist erreicht."});
+        frames.push({line:2, hell:hell + 85, condition:"Änderung", pwm:hell, round:index + 1, text:"hell wird um 85 erhöht und ist jetzt " + (hell + 85) + "."});
+      });
+      frames.push({line:1, hell:340, condition:"falsch", pwm:255, round:4, text:"340 <= 255 ist falsch. Die Schleife wird verlassen."});
+      frames.push({line:6, hell:340, condition:"falsch", pwm:255, round:4, text:"Das Programm läuft hinter der for-Schleife weiter."});
+      let index = 0;
+      let timer = 0;
+      let running = false;
+
+      function render() {
+        const current = frames[index];
+        const level = current.pwm / 255;
+        lines.forEach(function (line) { line.classList.toggle("is-active", Number(line.dataset.pwmLine) === current.line); });
+        values.hell.textContent = String(current.hell);
+        values.condition.textContent = current.condition;
+        values.pwm.textContent = String(current.pwm);
+        values.round.textContent = String(current.round);
+        percent.textContent = Math.round(level * 100) + " %";
+        lamp.style.backgroundColor = "rgb(" + Math.round(70 + 185 * level) + "," + Math.round(78 + 150 * level) + "," + Math.round(82 - 38 * level) + ")";
+        lamp.style.boxShadow = level ? "0 0 " + Math.round(8 + 28 * level) + "px rgba(242,182,51," + (0.2 + 0.45 * level) + ")" : "none";
+        output.textContent = current.text;
+      }
+
+      function stop() { running = false; window.clearInterval(timer); timer = 0; toggle.textContent = index >= frames.length - 1 ? "Erneut starten" : "Start"; }
+      function advance() { if (index >= frames.length - 1) { stop(); return; } index += 1; render(); if (index >= frames.length - 1) stop(); }
+      toggle.addEventListener("click", function () { if (running) { stop(); return; } if (index >= frames.length - 1) index = 0; running = true; toggle.textContent = "Pause"; render(); timer = window.setInterval(advance, 760); });
+      root.querySelector('[data-pwm-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-pwm-action="reset"]').addEventListener("click", function () { stop(); index = 0; render(); });
+      render();
+    }
+
+    function initArraySimulation() {
+      const root = document.querySelector("[data-array-sim]");
+      if (!root) return;
+      const tones = [262, 330, 392, 523];
+      const lines = Array.from(root.querySelectorAll("[data-array-line]"));
+      const cells = Array.from(root.querySelectorAll("[data-array-cell]"));
+      const output = root.querySelector("[data-array-output]");
+      const toggle = root.querySelector('[data-array-action="toggle"]');
+      const values = {
+        index: root.querySelector('[data-array-value="index"]'),
+        condition: root.querySelector('[data-array-value="condition"]'),
+        tone: root.querySelector('[data-array-value="tone"]'),
+        speaker: root.querySelector('[data-array-value="speaker"]')
+      };
+      const frames = [
+        {line:0, index:"-", condition:"noch nicht geprüft", tone:"noch kein Zugriff", speaker:"stumm", active:-1, done:-1, text:"Das Array mit vier Frequenzen wird angelegt."},
+        {line:1, index:0, condition:"noch nicht geprüft", tone:"noch kein Zugriff", speaker:"stumm", active:0, done:-1, text:"Die Zählvariable i wird auf 0 gesetzt."}
+      ];
+      tones.forEach(function (tone, index) {
+        frames.push({line:2, index:index, condition:"wahr", tone:"noch kein Zugriff", speaker:index ? tones[index - 1] + " Hz" : "stumm", active:index, done:index - 1, text:index + " < 4 ist wahr."});
+        frames.push({line:4, index:index, condition:"wahr", tone:tone + " Hz", speaker:tone + " Hz", active:index, done:index - 1, text:"melodie[" + index + "] liefert " + tone + ". Der Ton wird ausgegeben."});
+        frames.push({line:5, index:index, condition:"wahr", tone:tone + " Hz", speaker:tone + " Hz", active:index, done:index - 1, text:"Der Ton läuft 200 ms lang."});
+        frames.push({line:6, index:index, condition:"wahr", tone:tone + " Hz", speaker:tone + " Hz", active:index, done:index, text:"Das Ende des Schleifenrumpfs ist erreicht."});
+        frames.push({line:3, index:index + 1, condition:"Änderung", tone:"noch kein neuer Zugriff", speaker:tone + " Hz", active:index + 1 < 4 ? index + 1 : -1, done:index, text:"i wird um 1 erhöht und ist jetzt " + (index + 1) + "."});
+      });
+      frames.push({line:2, index:4, condition:"falsch", tone:"kein Zugriff", speaker:"523 Hz", active:-1, done:3, text:"4 < 4 ist falsch. melodie[4] wird nicht aufgerufen."});
+      frames.push({line:7, index:4, condition:"falsch", tone:"kein Zugriff", speaker:"stumm", active:-1, done:3, text:"noTone(8) beendet die Tonausgabe."});
+      let index = 0;
+      let timer = 0;
+      let running = false;
+
+      function render() {
+        const current = frames[index];
+        lines.forEach(function (line) { line.classList.toggle("is-active", Number(line.dataset.arrayLine) === current.line); });
+        cells.forEach(function (cell) {
+          const cellIndex = Number(cell.dataset.arrayCell);
+          cell.classList.toggle("is-current", cellIndex === current.active);
+          cell.classList.toggle("is-done", cellIndex <= current.done);
+        });
+        values.index.textContent = String(current.index);
+        values.condition.textContent = current.condition;
+        values.tone.textContent = current.tone;
+        values.speaker.textContent = current.speaker;
+        output.textContent = current.text;
+      }
+
+      function stop() { running = false; window.clearInterval(timer); timer = 0; toggle.textContent = index >= frames.length - 1 ? "Erneut starten" : "Start"; }
+      function advance() { if (index >= frames.length - 1) { stop(); return; } index += 1; render(); if (index >= frames.length - 1) stop(); }
+      toggle.addEventListener("click", function () { if (running) { stop(); return; } if (index >= frames.length - 1) index = 0; running = true; toggle.textContent = "Pause"; render(); timer = window.setInterval(advance, 760); });
+      root.querySelector('[data-array-action="step"]').addEventListener("click", function () { stop(); advance(); });
+      root.querySelector('[data-array-action="reset"]').addEventListener("click", function () { stop(); index = 0; render(); });
+      render();
+    }
+
     function initBugLab() {
       const root = document.querySelector("[data-bug-lab]");
       if (!root) return;
@@ -1154,6 +1617,9 @@ noTone(8);</div>
 
     initTraceTables();
     initSystemLab();
+    initVariableSimulation();
+    initPwmSimulation();
+    initArraySimulation();
     initBugLab();
     initExport();
   }());
