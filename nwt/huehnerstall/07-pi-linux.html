@@ -192,16 +192,86 @@ rpi-connect signin</div>
       </script></div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="SSH und erste Diagnose">
-      <h1>Den Pi über das Netzwerk steuern</h1>
-      <h2>SSH</h2>
-      <p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Der private SSH-Schlüssel gehört niemals in öffentliche Dateien, Screenshots oder Chats.</p>
-      <p>Auf dem Computer mit dem privaten Schlüssel probierst du im gleichen Netz zuerst den Hostnamen:</p>
+    <section data-wb-page="6" data-wb-page-title="Erste Schritte über SSH">
+      <h1>Die ersten Schritte auf dem Raspberry Pi</h1>
+      <div class="wb-callout"><strong>Du steuerst jetzt den Pi:</strong><p>Nach der erfolgreichen SSH-Anmeldung arbeitest du direkt auf dem Raspberry Pi. Alles, was du in diesem Terminal eingibst, wird auf dem Pi ausgeführt – nicht auf dem Computer vor dir. Lies deshalb jeden Befehl, bevor du ihn mit <kbd>Enter</kbd> startest.</p></div>
+
+      <h2>1. Verbindung überprüfen</h2>
+      <p>Prüfe zuerst, ob du als richtiger Benutzer mit dem richtigen Raspberry Pi verbunden bist und in welchem Ordner du arbeitest. Führe die vier Befehle einzeln aus:</p>
+      <div class="coop-terminal">whoami
+hostname
+pwd
+ls</div>
+      <table class="coop-comparison">
+        <thead><tr><th>Befehl</th><th>Erwartung</th><th>Bedeutung</th></tr></thead>
+        <tbody>
+          <tr><td><code>whoami</code></td><td><code>bbzstegen</code></td><td>Zeigt den aktuell angemeldeten Benutzer.</td></tr>
+          <tr><td><code>hostname</code></td><td><code>huehnercam</code></td><td>Zeigt den Namen des Raspberry Pi.</td></tr>
+          <tr><td><code>pwd</code></td><td>meist <code>/home/bbzstegen</code></td><td>Zeigt den aktuellen Arbeitsordner als vollständigen Pfad.</td></tr>
+          <tr><td><code>ls</code></td><td>Dateiliste oder zunächst keine Ausgabe</td><td>Zeigt den Inhalt des aktuellen Ordners. Ein leerer Ordner erzeugt keine Dateiliste.</td></tr>
+        </tbody>
+      </table>
+      <div class="wb-soft-callout"><strong>Abbrechen statt riskieren:</strong><p>Zeigt <code>whoami</code> einen anderen Benutzer oder <code>hostname</code> einen anderen Rechnernamen, führst du keine Installationsbefehle aus. Beende die Sitzung mit <code>exit</code> und prüfe das SSH-Ziel.</p></div>
+
+      <h2>2. Raspberry Pi OS aktualisieren</h2>
+      <p>Der erste Befehl lädt aktuelle Paketlisten. Der zweite installiert die verfügbaren Aktualisierungen und darf dabei auch Paketabhängigkeiten anpassen:</p>
+      <div class="coop-terminal">sudo apt update
+sudo apt full-upgrade -y</div>
+      <p><code>sudo</code> führt den Befehl mit Verwaltungsrechten aus. Falls ein Passwort verlangt wird, gibst du <code>BBZStegen2.0</code> ein. Beim Tippen erscheinen aus Sicherheitsgründen keine Zeichen oder Sternchen. Das ist normal. Die Aktualisierung benötigt Internetzugang, eine stabile Stromversorgung, freien Speicher und möglicherweise mehrere Minuten.</p>
+      <p>Starte den Pi nach Abschluss der Aktualisierung neu:</p>
+      <div class="coop-terminal">sudo reboot</div>
+      <p>Die SSH-Verbindung wird beim Neustart absichtlich beendet. Warte ungefähr zwei Minuten und verbinde dich danach erneut:</p>
       <div class="coop-terminal">ssh bbzstegen@huehnercam.local</div>
-      <p>Falls die Namensauflösung nicht funktioniert, nutzt du die bekannte IP-Adresse:</p>
-      <div class="coop-terminal">ssh bbzstegen@192.168.1.42</div>
-      <p>Die tatsächliche Adresse ist in eurem Netz anders. Beim ersten Kontakt prüfst du den angezeigten Host-Schlüssel und bestätigst ihn nur, wenn Zielname oder IP stimmen. Liegt der private Schlüssel nicht am Standardspeicherort, gibst du ihn mit <code>ssh -i PFAD-ZUM-PRIVATEN-SCHLÜSSEL bbzstegen@huehnercam.local</code> ausdrücklich an.</p>
-      <h2>Die wichtigsten Diagnosebefehle</h2>
+      <p>Falls <code>huehnercam.local</code> im Schulnetz nicht aufgelöst wird, verwendest du stattdessen die bekannte IP-Adresse, zum Beispiel <code>ssh bbzstegen@192.168.1.42</code>. Die tatsächliche Adresse kann in eurem Netz anders lauten.</p>
+
+      <h2>3. Dein erstes Python-Programm erstellen</h2>
+      <p>Nach der erneuten Anmeldung legst du mit dem Texteditor <code>nano</code> eine neue Datei an:</p>
+      <div class="coop-terminal">nano test.py</div>
+      <p>Gib diese Python-Zeile exakt ein:</p>
+      <pre><code class="language-python">print("Hallo vom Hühnerstall!")</code></pre>
+      <div class="wb-soft-callout"><strong>In nano speichern und schließen</strong><ol><li>Drücke <kbd>Strg</kbd> + <kbd>O</kbd> für <em>Write Out</em>.</li><li>Bestätige den vorgeschlagenen Dateinamen <code>test.py</code> mit <kbd>Enter</kbd>.</li><li>Drücke <kbd>Strg</kbd> + <kbd>X</kbd>, um nano zu schließen.</li></ol></div>
+      <p>Starte das Programm mit dem Python-3-Interpreter:</p>
+      <div class="coop-terminal">python3 test.py</div>
+      <p>Als Ausgabe sollte <code>Hallo vom Hühnerstall!</code> erscheinen. Damit hast du gezeigt, dass du eine Datei anlegen, speichern und als Python-Programm ausführen kannst.</p>
+
+      <h2>4. Projektordner anlegen</h2>
+      <p>Lege für alle späteren Programme einen gemeinsamen Ordner an und wechsle hinein:</p>
+      <div class="coop-terminal">mkdir huehnerstall
+cd huehnerstall
+pwd</div>
+      <p><code>mkdir</code> erstellt den Ordner. <code>cd</code> wechselt hinein. Das anschließende <code>pwd</code> sollte den Pfad <code>/home/bbzstegen/huehnerstall</code> anzeigen. Hier könnt ihr später getrennte Programme für Kamera, Temperatur und Luftfeuchtigkeit, Hühnererkennung sowie Webseite oder Livestream speichern.</p>
+
+      <h2>5. Nützliche Terminalbefehle</h2>
+      <table class="coop-comparison">
+        <thead><tr><th>Befehl</th><th>Wirkung</th><th>Beispiel oder Hinweis</th></tr></thead>
+        <tbody>
+          <tr><td><code>ls</code></td><td>Dateien und Ordner anzeigen</td><td><code>ls -la</code> zeigt zusätzlich versteckte Einträge und Details.</td></tr>
+          <tr><td><code>cd ordnername</code></td><td>In einen Unterordner wechseln</td><td><code>cd huehnerstall</code></td></tr>
+          <tr><td><code>cd ..</code></td><td>Eine Ordnerebene nach oben wechseln</td><td>Aus <code>/home/bbzstegen/huehnerstall</code> wird <code>/home/bbzstegen</code>.</td></tr>
+          <tr><td><code>nano dateiname.py</code></td><td>Eine Textdatei erstellen oder bearbeiten</td><td><code>nano kamera.py</code></td></tr>
+          <tr><td><code>python3 dateiname.py</code></td><td>Ein Python-3-Programm starten</td><td><code>python3 kamera.py</code></td></tr>
+          <tr><td><code>exit</code></td><td>Die SSH-Sitzung ordentlich beenden</td><td>Der Pi läuft danach weiter.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>6. Für den Kameraeinbau sicher herunterfahren</h2>
+      <p>Der nächste sinnvolle Schritt ist das Anschließen und Testen der Kamera. Das Kamerakabel darfst du nicht bei eingeschaltetem Raspberry Pi ein- oder ausstecken. Fahre Linux vollständig herunter:</p>
+      <div class="coop-terminal">sudo shutdown -h now</div>
+      <p>Die SSH-Verbindung endet. Warte, bis der Pi heruntergefahren ist und die Aktivitäts-LED nicht mehr blinkt. Trenne erst danach das Netzteil, schließe das Kamerakabel wie in Kapitel 8 beschrieben an und verbinde anschließend die Stromversorgung wieder. Nach dem Booten und der erneuten SSH-Anmeldung prüfst du die Erkennung mit:</p>
+      <div class="coop-terminal">rpicam-hello --list-cameras</div>
+      <p>Eine aufgelistete Kamera beweist, dass Betriebssystem, Kameratreiber und elektrische Verbindung grundsätzlich zusammenarbeiten. Sie beweist noch nicht, dass Foto, Video oder Livestream bereits funktionieren.</p>
+
+      <div class="wb-callout"><strong>microSD-Karte niemals im laufenden Betrieb entnehmen:</strong><p>Wenn du die microSD-Karte wechseln oder herausnehmen möchtest, fährst du den Raspberry Pi immer zuerst kontrolliert mit <code>sudo shutdown -h now</code> herunter. Warte, bis die grüne Aktivitäts-LED nicht mehr arbeitet, trenne dann die Stromversorgung und entnimm erst danach die Karte. Ziehst du die Karte im laufenden Betrieb heraus, können gerade laufende Schreibvorgänge unterbrochen und das Dateisystem oder darauf gespeicherte Dateien beschädigt werden.</p></div>
+
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order"><script type="application/json" class="wb-config">
+      {"id":"pi_first_steps_order","title":"Vom ersten Login bis zum Kameratest","hint":"Bringe die Arbeitsschritte in eine technisch sichere Reihenfolge.","items":["Benutzer, Hostname und Arbeitsordner kontrollieren","Paketlisten mit sudo apt update aktualisieren","Pakete mit sudo apt full-upgrade -y installieren","Raspberry Pi mit sudo reboot neu starten","Erneut als bbzstegen per SSH anmelden","test.py in nano erstellen und mit python3 ausführen","Projektordner huehnerstall anlegen","Pi mit sudo shutdown -h now herunterfahren","Netzteil trennen und Kamerakabel anschließen","Neu starten und rpicam-hello --list-cameras ausführen"],"shuffle":true}
+      </script></div>
+      <div class="wb-section-break"></div>
+
+      <h2>SSH und Diagnose als Nachschlagewerk</h2>
+      <p>Mit SSH öffnest du eine verschlüsselte Terminalverbindung. Der Pi kann dabei ohne Monitor und Tastatur bedient werden. Der private SSH-Schlüssel gehört niemals in öffentliche Dateien, Screenshots oder Chats. Liegt er nicht am Standardspeicherort, gibst du ihn mit <code>ssh -i PFAD-ZUM-PRIVATEN-SCHLÜSSEL bbzstegen@huehnercam.local</code> ausdrücklich an.</p>
+      <h3>Die wichtigsten Diagnosebefehle</h3>
       <table class="coop-comparison">
         <thead><tr><th>Befehl</th><th>Was zeigt oder bewirkt er?</th><th>Welche Frage beantwortet er?</th></tr></thead>
         <tbody>
@@ -215,8 +285,7 @@ rpi-connect signin</div>
           <tr><td><code>systemctl --failed</code></td><td>Fehlgeschlagene Systemdienste</td><td>Ist ein Dienst beim Start gescheitert?</td></tr>
         </tbody>
       </table>
-      <div class="wb-soft-callout"><strong>Aktualisieren – nur nach Absprache:</strong><div class="coop-terminal">sudo apt update
-sudo apt full-upgrade</div><p><code>apt update</code> aktualisiert die Paketlisten; <code>full-upgrade</code> installiert Aktualisierungen. Das verändert das System und braucht Internetzugang, Zeit und freien Speicher.</p></div>
+      <div class="wb-soft-callout"><strong>Merke:</strong><p><code>apt update</code> aktualisiert nur die Paketlisten. Erst <code>apt full-upgrade</code> installiert die Aktualisierungen. Beide Schritte verändern unterschiedliche Teile des Systems und dürfen nicht miteinander verwechselt werden.</p></div>
       <p>Zum kontrollierten Ausschalten verwendest du <code>sudo shutdown -h now</code> und wartest, bevor du die Stromversorgung trennst.</p>
       <div class="wb-section-break"></div>
       <div data-wb-type="reveal"><script type="application/json" class="wb-config">

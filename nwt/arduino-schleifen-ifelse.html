@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arduino: if/else und while-Schleifen verfolgen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="arduino-kurs.css" />
+  <style>
+    :root {
+      --li-ink: #172033;
+      --li-muted: #536274;
+      --li-teal: #087f7a;
+      --li-blue: #2468a9;
+      --li-yellow: #d89200;
+      --li-red: #b83a4b;
+      --li-green: #237a55;
+      --li-line: #cbd7df;
+      --li-soft: #f3f7f8;
+      --li-paper: #ffffff;
+    }
+
+    .wb-book section[data-wb-page] { min-width: 0; padding-top: 24px; }
+    .wb-book .wb-content,
+    .wb-book .wb-paper { min-width: 0; }
+    .wb-book .wb-paper { width: 100%; box-sizing: border-box; overflow: hidden; }
+    .li-hero { padding: 4px 0 18px; border-bottom: 4px solid var(--li-teal); }
+    .li-kicker { color: var(--li-teal); font-size: .84rem; font-weight: 900; letter-spacing: 0; text-transform: uppercase; }
+    .li-hero h1 { max-width: 920px; margin: 8px 0 12px; font-size: 2.28rem; line-height: 1.14; letter-spacing: 0; }
+    .li-lead { max-width: 860px; color: var(--li-muted); font-size: 1.08rem; line-height: 1.65; }
+    .li-band { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 18px 0; border-top: 1px solid var(--li-line); border-bottom: 1px solid var(--li-line); }
+    .li-band > div { min-width: 0; padding: 14px; }
+    .li-band > div + div { border-left: 1px solid var(--li-line); }
+    .li-band strong { display: block; color: var(--li-blue); margin-bottom: 4px; }
+    .li-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .li-card { padding: 14px 15px; border-top: 4px solid var(--li-blue); background: var(--li-soft); }
+    .li-card:nth-child(2) { border-color: var(--li-yellow); }
+    .li-card:nth-child(3) { border-color: var(--li-red); }
+    .li-card strong { display: block; margin-bottom: 5px; color: var(--li-ink); }
+    .li-code {
+      overflow-x: auto;
+      margin: 14px 0;
+      padding: 15px 18px;
+      border-left: 5px solid var(--li-teal);
+      background: #f4f7f8;
+      color: var(--li-ink);
+      font: 750 .98rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+    }
+    .li-code .kw { color: #075f5b; font-weight: 900; }
+    .li-note { border-left: 4px solid var(--li-yellow); background: #fff8e8; padding: 12px 14px; margin: 14px 0; }
+    .li-success { border-left: 4px solid var(--li-green); background: #edf8f2; padding: 12px 14px; margin: 14px 0; }
+    .li-warn { border-left: 4px solid var(--li-red); background: #fff1f1; padding: 12px 14px; margin: 14px 0; }
+    .li-flow {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      max-width: 720px;
+      margin: 18px auto;
+      padding: 18px;
+      border: 1px solid var(--li-line);
+      background: #f8fafb;
+    }
+    .li-flow.wide { max-width: 860px; }
+    .li-symbol {
+      display: grid;
+      place-items: center;
+      min-height: 68px;
+      width: min(100%, 245px);
+      padding: 8px;
+      border: 2px solid #245d86;
+      background: #ffffff;
+      color: var(--li-ink);
+      font-weight: 900;
+      text-align: center;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+    }
+    .li-symbol.start { border-radius: 999px; background: #e8f4f3; }
+    .li-symbol.process { border-radius: 2px; }
+    .li-symbol.io { transform: skew(-12deg); background: #edf3fb; }
+    .li-symbol.io span { transform: skew(12deg); }
+    .li-symbol.decision { width: 124px; min-height: 124px; transform: rotate(45deg); background: #fff5d6; }
+    .li-symbol.decision span { max-width: 88px; transform: rotate(-45deg); font-size: .82rem; line-height: 1.25; }
+    .li-arrow { color: var(--li-blue); font-size: 1.55rem; line-height: 1; font-weight: 900; }
+    .li-branch-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; width: 100%; align-items: start; }
+    .li-branch { display: grid; justify-items: center; gap: 5px; min-width: 0; }
+    .li-branch-label { font-weight: 900; color: var(--li-teal); }
+    .li-loopback { align-self: stretch; display: grid; place-items: center; min-width: 42px; color: var(--li-blue); font-weight: 900; }
+    .li-mini { display: inline-block; padding: 2px 6px; border: 1px solid var(--li-line); border-radius: 4px; background: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 800; }
+    .li-checklist { list-style: none; padding: 0; margin: 14px 0; }
+    .li-checklist li { position: relative; padding: 9px 10px 9px 34px; border-bottom: 1px solid var(--li-line); }
+    .li-checklist li::before { content: "✓"; position: absolute; left: 10px; color: var(--li-green); font-weight: 900; }
+    [data-p2-id="li-flow-syntax"] .p2-solved .p2-joined {
+      display: grid;
+      grid-template-columns: minmax(170px, .9fr) 2px minmax(230px, 1.1fr);
+      width: 100%;
+      max-width: 100%;
+      align-items: stretch;
+    }
+    [data-p2-id="li-flow-syntax"] .p2-solved .p2-piece { width: auto; max-width: none; overflow-wrap: anywhere; }
+    [data-p2-id="li-flow-syntax"] .p2-solved .p2-seam { width: 2px; min-height: 100%; background: #9fb1bd; }
+    .li-source-list li + li { margin-top: 8px; }
+
+    @media (max-width: 860px) {
+      .li-cards,
+      .li-band { grid-template-columns: 1fr; }
+      .li-band > div + div { border-left: 0; border-top: 1px solid var(--li-line); }
+      .li-branch-row { grid-template-columns: 1fr; }
+      .li-branch-row > .li-arrow,
+      .li-loopback { transform: rotate(90deg); justify-self: center; min-height: 38px; }
+    }
+    @media (max-width: 560px) {
+      .li-hero h1 { font-size: 1.92rem; }
+      .li-symbol { width: min(100%, 220px); }
+      [data-p2-id="li-flow-syntax"] .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script class="wb-book-config" type="application/json">
+    {
+      "bookTitle":"Arduino programmieren",
+      "sectionTitle":"if/else und while verfolgen",
+      "startPage":1,
+      "submitLabel":"Ergebnisse & Abschluss",
+      "onSubmit":"alert",
+      "autoNav":true,
+      "autoNavHeadings":["h1","h2"],
+      "autoNavIncludeBlocks":false,
+      "autoNavGroupTitle":"Deine Lernroute",
+      "studentNamePlaceholder":"Vorname Nachname",
+      "exportName":"arduino-schleifen-ifelse-ergebnisse.txt"
+    }
+    </script>
+
+    <section data-wb-page="1" data-wb-page-title="Leitfrage">
+      <div class="li-hero">
+        <div class="li-kicker">Vom Ablaufplan zum ersten Programmcode</div>
+        <h1>Wo steckt dein Programm gerade: in der Bedingung, im Zweig oder in der Schleife?</h1>
+        <p class="li-lead">In dieser Lernstrecke verfolgst du Programme Schritt für Schritt. Du liest Flussdiagramme, Pseudocode und immer häufiger echte Programmier-Schreibweisen wie <span class="li-mini">if(bedingung){action}else{aktion}</span> und <span class="li-mini">while(bedingung){action}</span>.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-band">
+        <div><strong>Bedingung prüfen</strong>Du entscheidest, ob eine Aussage gerade wahr oder falsch ist.</div>
+        <div><strong>Zweig auswählen</strong>Du begründest, ob der <span class="li-mini">if</span>-Block oder der <span class="li-mini">else</span>-Block läuft.</div>
+        <div><strong>Schleife verfolgen</strong>Du notierst Durchlauf, Zustand und Rücksprung zur nächsten Prüfung.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Was ist neu gegenüber dem Einstieg?</h2>
+      <p>Im Einstieg hast du Algorithmen eher sprachlich beschrieben. Jetzt rückt die Syntax näher an C/C++ und damit an Arduino heran. Geschweifte Klammern markieren, welche Anweisungen zusammengehören. Die Bedingung in runden Klammern entscheidet, ob dieser Block ausgeführt wird.</p>
+
+      <div class="li-code"><span class="kw">if</span>(tasteGedrueckt == true){
+  ledAn();
+}<span class="kw">else</span>{
+  ledAus();
+}</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-reveal-goal",
+          "title":"Denkpause: Was kannst du danach?",
+          "question":"Warum reicht es nicht, nur das Endergebnis eines Programms zu nennen?",
+          "answer":"Beim Programmieren musst du erklären können, wie das Ergebnis entsteht. Besonders bei if/else und while ist wichtig, an welcher Bedingung das Programm gerade steht, welcher Block ausgeführt wird und ob danach ein Rücksprung zur Schleifenbedingung passiert."
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-mcq-start",
+          "title":"Erster Check: Block und Bedingung",
+          "hint":"Wähle die genaueste Aussage.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Was entscheidet bei if(bedingung){...}else{...}, welcher Block ausgeführt wird?",
+            "choices":[
+              {"id":"A","label":"Die Reihenfolge der Blöcke im Heft"},
+              {"id":"B","label":"Ob die Bedingung beim Prüfen wahr oder falsch ist"},
+              {"id":"C","label":"Ob im Block mehr Anweisungen stehen"},
+              {"id":"D","label":"Ob die Aktion einen deutschen oder englischen Namen hat"}
+            ],
+            "correct":["B"],
+            "explain":"Die Bedingung wird geprüft. Ist sie wahr, läuft der if-Block. Ist sie falsch, läuft der else-Block."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="2" data-wb-page-title="if/else lesen">
+      <h1>if/else: eine Bedingung, zwei mögliche Wege</h1>
+      <p>Eine Verzweigung ist ein Auswahlpunkt. Das Programm führt nicht beide Wege aus, sondern genau den Weg, der zur Bedingung passt. Im Flussdiagramm steht die Bedingung in der Raute; im Code steht sie in den runden Klammern hinter <span class="li-mini">if</span>.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-flow" aria-label="Flussdiagramm für if else bei einem Lichtsensor">
+        <div class="li-symbol start">START</div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol io"><span>Helligkeit messen</span></div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol decision"><span>helligkeit &lt; 400?</span></div>
+        <div class="li-branch-row">
+          <div class="li-branch">
+            <div class="li-branch-label">JA / wahr</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">LED einschalten</div>
+          </div>
+          <div class="li-arrow">↔</div>
+          <div class="li-branch">
+            <div class="li-branch-label">NEIN / falsch</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">LED ausschalten</div>
+          </div>
+        </div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol start">ENDE DER ENTSCHEIDUNG</div>
+      </div>
+
+      <div class="li-code">helligkeit = 350;
+<span class="kw">if</span>(helligkeit &lt; 400){
+  led = AN;
+}<span class="kw">else</span>{
+  led = AUS;
+}</div>
+
+      <div class="li-note"><strong>Merke:</strong> Die Raute verändert keinen Wert. Sie prüft nur. Die Veränderung passiert erst im ausgewählten Block.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-ifelse-light",
+          "title":"Ablaufspur: Welcher Zweig läuft?",
+          "hint":"Trage ein, ob die Bedingung wahr oder falsch ist und welcher Block ausgeführt wird.",
+          "columns":[
+            {"label":"Fall","width":"12%"},
+            {"label":"helligkeit","width":"18%"},
+            {"label":"Bedingung helligkeit < 400","width":"24%"},
+            {"label":"Ausgeführter Block","width":"24%"},
+            {"label":"led danach","width":"22%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"A"},
+              {"given":"350"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung bei 350"},
+              {"answers":["if","if-block","if block"],"ariaLabel":"Block bei 350"},
+              {"answers":["AN","an"],"ariaLabel":"LED bei 350"}
+            ]},
+            {"cells":[
+              {"given":"B"},
+              {"given":"400"},
+              {"answers":["falsch","nein"],"ariaLabel":"Bedingung bei 400"},
+              {"answers":["else","else-block","else block"],"ariaLabel":"Block bei 400"},
+              {"answers":["AUS","aus"],"ariaLabel":"LED bei 400"}
+            ]},
+            {"cells":[
+              {"given":"C"},
+              {"given":"650"},
+              {"answers":["falsch","nein"],"ariaLabel":"Bedingung bei 650"},
+              {"answers":["else","else-block","else block"],"ariaLabel":"Block bei 650"},
+              {"answers":["AUS","aus"],"ariaLabel":"LED bei 650"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-success"><strong>Jetzt hast du gelernt:</strong> Eine Bedingung ist kein ungefährer Eindruck, sondern eine prüfbare Aussage. Bei <span class="li-mini">helligkeit &lt; 400</span> ist der Grenzwert 400 selbst schon falsch.</div>
+    </section>
+
+    <section data-wb-page="3" data-wb-page-title="Bedingungen formulieren">
+      <h1>Bedingungen müssen eindeutig prüfbar sein</h1>
+      <p>Arduino-Programme arbeiten mit Messwerten, Tasterzuständen und gespeicherten Variablen. Damit eine Verzweigung zuverlässig läuft, muss die Bedingung eindeutig wahr oder falsch werden können.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-cards">
+        <div class="li-card"><strong>Vergleich</strong><span class="li-mini">temperatur &gt; 28</span><br>prüft eine Grenze.</div>
+        <div class="li-card"><strong>Gleichheit</strong><span class="li-mini">taste == HIGH</span><br>prüft einen Zustand.</div>
+        <div class="li-card"><strong>Ungenau</strong><span class="li-mini">es ist warm</span><br>ist für Code nicht messbar genug.</div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="categorize">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-cat-conditions",
+          "title":"Sortiere: Bedingung oder Aktion?",
+          "hint":"Eine Bedingung kann wahr/falsch sein. Eine Aktion verändert etwas.",
+          "categories":[
+            {"id":"condition","title":"Bedingung"},
+            {"id":"action","title":"Aktion"},
+            {"id":"unclear","title":"Zu ungenau"}
+          ],
+          "items":[
+            {"label":"temperatur > 28","category":"condition"},
+            {"label":"led = AN","category":"action"},
+            {"label":"motorStopp()","category":"action"},
+            {"label":"taste == HIGH","category":"condition"},
+            {"label":"es ist dunkel","category":"unclear"},
+            {"label":"abstand < 12","category":"condition"},
+            {"label":"warte 500 ms","category":"action"},
+            {"label":"irgendwann zu heiß","category":"unclear"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="cloze">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-cloze-ifelse",
+          "title":"Sicherung: if/else einsetzen",
+          "hint":"Ziehe die Begriffe an die passende Stelle.",
+          "bank":["if","Bedingung","wahr","else","falsch","Block"],
+          "segments":[
+            {"t":"text","v":"Bei "},
+            {"t":"gap","a":"if"},
+            {"t":"text","v":" steht in runden Klammern eine "},
+            {"t":"gap","a":"Bedingung"},
+            {"t":"text","v":". Ist sie "},
+            {"t":"gap","a":"wahr"},
+            {"t":"text","v":", läuft der erste "},
+            {"t":"gap","a":"Block"},
+            {"t":"text","v":". Ist sie "},
+            {"t":"gap","a":"falsch"},
+            {"t":"text","v":", läuft der "},
+            {"t":"gap","a":"else"},
+            {"t":"text","v":"-Block."}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="verify">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-verify-border",
+          "title":"Wahr oder falsch?",
+          "hint":"Achte genau auf das Vergleichszeichen.",
+          "statement":"Bei der Bedingung temperatur > 28 ist der Messwert 28 schon wahr.",
+          "answer": false,
+          "explain":"Falsch. Größer als 28 bedeutet erst ab einem Wert über 28. Der Wert 28 selbst wäre nur bei temperatur >= 28 eingeschlossen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="4" data-wb-page-title="while verstehen">
+      <h1>while: prüfen, ausführen, zurückspringen</h1>
+      <p>Eine <span class="li-mini">while</span>-Schleife wiederholt einen Block, solange die Bedingung wahr ist. Vor jedem Durchlauf wird neu geprüft. Wird die Bedingung falsch, wird der Block übersprungen und das Programm läuft hinter der Schleife weiter.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-flow wide" aria-label="Flussdiagramm einer while-Schleife">
+        <div class="li-symbol start">START</div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol process">zaehler = 0</div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol decision"><span>zaehler &lt; 3?</span></div>
+        <div class="li-branch-row">
+          <div class="li-branch">
+            <div class="li-branch-label">JA / wahr</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">LED blinkt<br>zaehler++</div>
+            <div class="li-loopback">↺ zurück zur Bedingung</div>
+          </div>
+          <div class="li-arrow">↔</div>
+          <div class="li-branch">
+            <div class="li-branch-label">NEIN / falsch</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">Weiter hinter der Schleife</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="li-code">zaehler = 0;
+<span class="kw">while</span>(zaehler &lt; 3){
+  blinkeLED();
+  zaehler = zaehler + 1;
+}
+status = FERTIG;</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-while-counter",
+          "title":"Ablaufspur: In welchem Schleifendurchlauf bist du?",
+          "hint":"Trage pro Prüfung ein, ob die Schleife betreten wird und welcher Wert danach gilt.",
+          "columns":[
+            {"label":"Prüfung","width":"13%"},
+            {"label":"zaehler vor Prüfung","width":"20%"},
+            {"label":"zaehler < 3?","width":"18%"},
+            {"label":"Wo steckt das Programm?","width":"27%"},
+            {"label":"zaehler danach","width":"22%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"answers":["0"],"ariaLabel":"Zähler vor Prüfung 1"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 1"},
+              {"answers":["while-block","while block","schleifenrumpf","durchlauf 1"],"ariaLabel":"Ort Prüfung 1"},
+              {"answers":["1"],"ariaLabel":"Zähler nach Durchlauf 1"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"answers":["1"],"ariaLabel":"Zähler vor Prüfung 2"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 2"},
+              {"answers":["while-block","while block","schleifenrumpf","durchlauf 2"],"ariaLabel":"Ort Prüfung 2"},
+              {"answers":["2"],"ariaLabel":"Zähler nach Durchlauf 2"}
+            ]},
+            {"cells":[
+              {"given":"3"},
+              {"answers":["2"],"ariaLabel":"Zähler vor Prüfung 3"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 3"},
+              {"answers":["while-block","while block","schleifenrumpf","durchlauf 3"],"ariaLabel":"Ort Prüfung 3"},
+              {"answers":["3"],"ariaLabel":"Zähler nach Durchlauf 3"}
+            ]},
+            {"cells":[
+              {"given":"4"},
+              {"answers":["3"],"ariaLabel":"Zähler vor Prüfung 4"},
+              {"answers":["falsch","nein"],"ariaLabel":"Bedingung Prüfung 4"},
+              {"answers":["hinter der schleife","nach der schleife","status = FERTIG","weiter hinter der schleife"],"ariaLabel":"Ort Prüfung 4"},
+              {"answers":["3","unverändert"],"ariaLabel":"Zähler nach Prüfung 4"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-success"><strong>Jetzt hast du gelernt:</strong> Eine <span class="li-mini">while</span>-Schleife prüft vor jedem Durchlauf. Auch die letzte Prüfung ist wichtig: Dort wird die Bedingung falsch und der Rumpf läuft nicht mehr.</div>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Schleifenfehler">
+      <h1>Eine Schleife braucht eine Veränderung</h1>
+      <p>Eine <span class="li-mini">while</span>-Schleife endet nur, wenn sich ein Zustand so verändert, dass die Bedingung irgendwann falsch wird. Fehlt diese Veränderung, bleibt das Programm in der Schleife stecken.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-code">abstand = 20;
+<span class="kw">while</span>(abstand &gt; 10){
+  piep();
+  // Fehler: abstand wird hier nicht neu gemessen
+}
+motorStopp();</div>
+
+      <div class="li-warn"><strong>Debugging-Frage:</strong> Welche Anweisung müsste im Schleifenrumpf stehen, damit die Bedingung später falsch werden kann?</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-endless",
+          "title":"Ablaufspur: Warum endet die Schleife nicht?",
+          "hint":"Verfolge den Wert. Bleibt er gleich, bleibt auch die Bedingung gleich.",
+          "columns":[
+            {"label":"Prüfung","width":"12%"},
+            {"label":"abstand vorher","width":"18%"},
+            {"label":"abstand > 10?","width":"18%"},
+            {"label":"Aktion im Rumpf","width":"26%"},
+            {"label":"abstand nachher","width":"26%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"answers":["20"],"ariaLabel":"Abstand Prüfung 1"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 1"},
+              {"answers":["piep","piep()"],"ariaLabel":"Aktion Prüfung 1"},
+              {"answers":["20","unverändert"],"ariaLabel":"Abstand nach Prüfung 1"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"answers":["20"],"ariaLabel":"Abstand Prüfung 2"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 2"},
+              {"answers":["piep","piep()"],"ariaLabel":"Aktion Prüfung 2"},
+              {"answers":["20","unverändert"],"ariaLabel":"Abstand nach Prüfung 2"}
+            ]},
+            {"cells":[
+              {"given":"3 und weitere"},
+              {"answers":["20"],"ariaLabel":"Abstand weitere Prüfung"},
+              {"answers":["wahr","ja"],"ariaLabel":"Bedingung weitere Prüfung"},
+              {"answers":["piep","piep()"],"ariaLabel":"Aktion weitere Prüfung"},
+              {"answers":["20","unverändert"],"ariaLabel":"Abstand nach weiterer Prüfung"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-order-debug-loop",
+          "title":"Debugging-Reihenfolge bei while",
+          "hint":"Bringe die Prüfschritte in eine sinnvolle Reihenfolge.",
+          "items":[
+            "Startwert der beteiligten Variable notieren",
+            "Bedingung vor dem ersten Durchlauf auswerten",
+            "Schleifenrumpf Schritt für Schritt ausführen",
+            "prüfen, ob eine Anweisung die Bedingung verändern kann",
+            "zur Bedingung zurückspringen und erneut auswerten",
+            "bei falscher Bedingung hinter der Schleife fortsetzen"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="reveal">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-reveal-fix-loop",
+          "title":"Auflösung: Schleife reparieren",
+          "question":"Welche Änderung macht die Abstandsschleife sinnvoll?",
+          "answer":"Im Schleifenrumpf muss der Abstand neu gemessen oder anders verändert werden, zum Beispiel abstand = liesUltraschallsensor();. Dann kann aus abstand > 10 später abstand <= 10 werden, und die Schleife wird verlassen."
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="6" data-wb-page-title="Kombinieren">
+      <h1>while und if/else arbeiten oft zusammen</h1>
+      <p>In Arduino-Projekten wird häufig wiederholt gemessen. Innerhalb jedes Durchlaufs entscheidet eine Verzweigung, welche Aktion ausgeführt wird. Genau dann musst du zwei Fragen trennen: Bleibe ich noch in der Schleife? Und welcher Zweig läuft in diesem Durchlauf?</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-code">zeit = 0;
+<span class="kw">while</span>(zeit &lt; 4){
+  helligkeit = messung[zeit];
+  <span class="kw">if</span>(helligkeit &lt; 400){
+    led = AN;
+  }<span class="kw">else</span>{
+    led = AUS;
+  }
+  zeit = zeit + 1;
+}
+summer = AUS;</div>
+
+      <p>Für die vier Messungen gelten diese Werte: <span class="li-mini">messung[0] = 320</span>, <span class="li-mini">messung[1] = 500</span>, <span class="li-mini">messung[2] = 390</span>, <span class="li-mini">messung[3] = 410</span>.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-while-ifelse-combo",
+          "title":"Ablaufspur: Schleife mit if/else",
+          "hint":"Trage pro Durchlauf ein: Schleifenbedingung, Messwert, if/else-Entscheidung und neuen Zeitwert.",
+          "columns":[
+            {"label":"Prüfung","width":"12%"},
+            {"label":"zeit vor Prüfung","width":"17%"},
+            {"label":"zeit < 4?","width":"15%"},
+            {"label":"helligkeit","width":"16%"},
+            {"label":"if helligkeit < 400","width":"20%"},
+            {"label":"Block / led","width":"20%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"answers":["0"],"ariaLabel":"Zeit vor Prüfung 1"},
+              {"answers":["wahr","ja"],"ariaLabel":"while Prüfung 1"},
+              {"answers":["320"],"ariaLabel":"Helligkeit Prüfung 1"},
+              {"answers":["wahr","ja"],"ariaLabel":"if Prüfung 1"},
+              {"answers":["if / AN","if an","if-block an","led an"],"ariaLabel":"Block LED Prüfung 1"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"answers":["1"],"ariaLabel":"Zeit vor Prüfung 2"},
+              {"answers":["wahr","ja"],"ariaLabel":"while Prüfung 2"},
+              {"answers":["500"],"ariaLabel":"Helligkeit Prüfung 2"},
+              {"answers":["falsch","nein"],"ariaLabel":"if Prüfung 2"},
+              {"answers":["else / AUS","else aus","else-block aus","led aus"],"ariaLabel":"Block LED Prüfung 2"}
+            ]},
+            {"cells":[
+              {"given":"3"},
+              {"answers":["2"],"ariaLabel":"Zeit vor Prüfung 3"},
+              {"answers":["wahr","ja"],"ariaLabel":"while Prüfung 3"},
+              {"answers":["390"],"ariaLabel":"Helligkeit Prüfung 3"},
+              {"answers":["wahr","ja"],"ariaLabel":"if Prüfung 3"},
+              {"answers":["if / AN","if an","if-block an","led an"],"ariaLabel":"Block LED Prüfung 3"}
+            ]},
+            {"cells":[
+              {"given":"4"},
+              {"answers":["3"],"ariaLabel":"Zeit vor Prüfung 4"},
+              {"answers":["wahr","ja"],"ariaLabel":"while Prüfung 4"},
+              {"answers":["410"],"ariaLabel":"Helligkeit Prüfung 4"},
+              {"answers":["falsch","nein"],"ariaLabel":"if Prüfung 4"},
+              {"answers":["else / AUS","else aus","else-block aus","led aus"],"ariaLabel":"Block LED Prüfung 4"}
+            ]},
+            {"cells":[
+              {"given":"5"},
+              {"answers":["4"],"ariaLabel":"Zeit vor Prüfung 5"},
+              {"answers":["falsch","nein"],"ariaLabel":"while Prüfung 5"},
+              {"given":"-"},
+              {"given":"-"},
+              {"answers":["hinter der schleife","summer = AUS","nach der schleife"],"ariaLabel":"Ort nach Schleife"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-success"><strong>Jetzt hast du gelernt:</strong> Bei verschachtelten Strukturen prüfst du von außen nach innen: erst die <span class="li-mini">while</span>-Bedingung, dann im Rumpf die <span class="li-mini">if</span>-Bedingung.</div>
+    </section>
+
+    <section data-wb-page="7" data-wb-page-title="Zuordnen">
+      <h1>Syntax, Flussdiagramm und Bedeutung zusammenbringen</h1>
+      <p>Beim Programmieren übersetzt du ständig zwischen Darstellungen: Code zeigt die genaue Schreibweise, Pseudocode zeigt die Idee, das Flussdiagramm zeigt den Weg. Alle drei beschreiben denselben Ablauf.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="li-flow-syntax" data-p2-title="Zuordnung: Codebaustein und Bedeutung" data-p2-hint="Verbinde jede Schreibweise mit der passenden Wirkung.">
+        <div class="p2-hint">Ziehe einen Codebaustein auf seine Bedeutung.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Code / Symbol</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">if(taste == HIGH){...}</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">else{...}</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">while(zaehler &lt; 3){...}</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">Raute im Flussdiagramm</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="5">zaehler = zaehler + 1;</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Bedeutung</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">führt den Block nur bei wahrer Bedingung aus</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">läuft, wenn die if-Bedingung falsch war</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">wiederholt den Block, solange die Bedingung wahr ist</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">prüft eine Ja-Nein-Frage</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="5">verändert den Zustand für die nächste Prüfung</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-mcq-comparison",
+          "title":"Check: if oder while?",
+          "hint":"Achte auf den Unterschied zwischen Auswahl und Wiederholung.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Aussage beschreibt while(bedingung){action} am besten?",
+            "choices":[
+              {"id":"A","label":"Die Aktion läuft genau einmal, wenn die Bedingung wahr ist."},
+              {"id":"B","label":"Die Aktion läuft wiederholt, solange die Bedingung wahr bleibt."},
+              {"id":"C","label":"Die Aktion läuft nur, wenn die Bedingung falsch ist."},
+              {"id":"D","label":"Die Bedingung wird erst nach der Aktion geprüft."}
+            ],
+            "correct":["B"],
+            "explain":"Bei while wird vor jedem Durchlauf geprüft. Ist die Bedingung wahr, läuft der Rumpf; danach springt das Programm zur Bedingung zurück."
+          }]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="8" data-wb-page-title="Transfer">
+      <h1>Transfer: Einen Arduino-Ablauf selbst erklären</h1>
+      <p>Jetzt formulierst du selbst. Wichtig ist nicht, dass dein Code perfekt wie in der Arduino-IDE aussieht. Wichtig ist, dass du Bedingungen, Blöcke und Rücksprünge sauber erklärst.</p>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-code"><span class="kw">while</span>(temperatur &lt; 30){
+  temperatur = liesSensor();
+  <span class="kw">if</span>(temperatur &gt;= 26){
+    luefter = AN;
+  }<span class="kw">else</span>{
+    luefter = AUS;
+  }
+}
+alarm = AN;</div>
+
+      <div class="li-note"><strong>Impuls:</strong> Die Schleife endet erst, wenn die gemessene Temperatur nicht mehr kleiner als 30 ist. Der Lüfter kann aber schon vorher je nach Messwert an oder aus gehen.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-essay-transfer",
+          "title":"Erkläre den Ablauf",
+          "hint":"Antworte in 5-8 Sätzen. Nutze die Wörter Bedingung, if-Block, else-Block, while-Schleife und Durchlauf.",
+          "fields":[
+            {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+            {"label":"Deine Erklärung","key":"explanation","kind":"textarea","placeholder":"Beschreibe, was bei jedem Durchlauf geprüft wird und wann welcher Block läuft."},
+            {"label":"Ein Grenzfall","key":"border","kind":"textarea","placeholder":"Was passiert bei temperatur = 26? Was passiert bei temperatur = 30?"}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-transfer-temp",
+          "title":"Mini-Check: Temperaturfolge verfolgen",
+          "hint":"Messwerte nacheinander: 24, 27, 29, 30.",
+          "columns":[
+            {"label":"Durchlauf / Prüfung","width":"17%"},
+            {"label":"temperatur nach liesSensor()","width":"22%"},
+            {"label":"if temperatur >= 26","width":"20%"},
+            {"label":"luefter danach","width":"18%"},
+            {"label":"while für nächsten Durchlauf?","width":"23%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"given":"24"},
+              {"answers":["falsch","nein"],"ariaLabel":"If bei 24"},
+              {"answers":["AUS","aus"],"ariaLabel":"Lüfter bei 24"},
+              {"answers":["ja","wahr"],"ariaLabel":"While nach 24"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"given":"27"},
+              {"answers":["wahr","ja"],"ariaLabel":"If bei 27"},
+              {"answers":["AN","an"],"ariaLabel":"Lüfter bei 27"},
+              {"answers":["ja","wahr"],"ariaLabel":"While nach 27"}
+            ]},
+            {"cells":[
+              {"given":"3"},
+              {"given":"29"},
+              {"answers":["wahr","ja"],"ariaLabel":"If bei 29"},
+              {"answers":["AN","an"],"ariaLabel":"Lüfter bei 29"},
+              {"answers":["ja","wahr"],"ariaLabel":"While nach 29"}
+            ]},
+            {"cells":[
+              {"given":"4"},
+              {"given":"30"},
+              {"answers":["wahr","ja"],"ariaLabel":"If bei 30"},
+              {"answers":["AN","an"],"ariaLabel":"Lüfter bei 30"},
+              {"answers":["nein","falsch"],"ariaLabel":"While nach 30"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+    </section>
+
+    <section data-wb-page="9" data-wb-page-title="Abschluss">
+      <h1>Werkzeugkasten für Schleifen und Verzweigungen</h1>
+      <p>Du kannst jetzt einen Ablauf nicht nur lesen, sondern mit Zuständen belegen. Genau das brauchst du später beim echten Arduino-Code: Werte messen, Bedingungen prüfen, Blöcke unterscheiden und Schleifen sicher verlassen.</p>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Debugging-Routine</h2>
+      <ul class="li-checklist">
+        <li>Notiere die Startwerte vor der ersten Bedingung.</li>
+        <li>Prüfe jede Bedingung ausdrücklich als wahr oder falsch.</li>
+        <li>Markiere, ob du im if-Block, else-Block oder while-Block bist.</li>
+        <li>Ändere nach jeder Aktion nur die Werte, die wirklich betroffen sind.</li>
+        <li>Springe bei while nach dem Rumpf zur Bedingung zurück.</li>
+        <li>Prüfe Grenzwerte wie 400, 28, 30 oder 0 besonders genau.</li>
+      </ul>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-mcq-final",
+          "title":"Abschlusscheck",
+          "hint":"Mehrere Aussagen können richtig sein.",
+          "shuffleChoices":true,
+          "questions":[{
+            "text":"Welche Aussagen sind richtig?",
+            "multiple":true,
+            "choices":[
+              {"id":"A","label":"Bei if/else läuft genau einer der beiden Blöcke."},
+              {"id":"B","label":"Bei while wird die Bedingung vor jedem Durchlauf geprüft."},
+              {"id":"C","label":"Eine Schleife endet immer automatisch nach drei Durchläufen."},
+              {"id":"D","label":"Ein Grenzwert kann entscheiden, ob ein Block noch läuft oder nicht."},
+              {"id":"E","label":"Der Schleifenrumpf sollte einen Zustand verändern können, der für die Bedingung wichtig ist."}
+            ],
+            "correct":["A","B","D","E"],
+            "explain":"if/else wählt einen Zweig. while prüft vor jedem Durchlauf. Grenzwerte und Zustandsänderungen entscheiden, ob ein Programm korrekt weiterläuft oder stecken bleibt."
+          }]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-success"><strong>Jetzt hast du das gelernt:</strong> Du kannst Bedingungen auswerten, Zweige unterscheiden, Schleifendurchläufe zählen und erklären, warum ein Programm hinter der Schleife weiterläuft oder in ihr stecken bleibt.</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Quellen und Weiterforschen</h2>
+      <ul class="li-source-list">
+        <li><a href="https://inf-schule.de/algorithmen/grundlagen/algorithmusbegriff/bausteine" target="_blank" rel="noopener">inf-schule: Bausteine von Algorithmen</a></li>
+        <li><a href="https://inf-schule.de/imperative-programmierung/konzepteimperativerprogrammierung/kontrollstrukturen" target="_blank" rel="noopener">inf-schule: Kontrollstrukturen</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/if/" target="_blank" rel="noopener">Arduino Reference: if</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/while/" target="_blank" rel="noopener">Arduino Reference: while</a></li>
+        <li>Interne Weiterarbeit: <a href="arduino-einstieg.html">Algorithmisch denken - Einstieg vor dem Arduino</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="../assets/wb-webhook-loader.js"></script>
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>
+    SBLibrary.autoMountAll({ storagePrefix: "arduino_schleifen_ifelse__" });
+  </script>
+</body>
+</html>

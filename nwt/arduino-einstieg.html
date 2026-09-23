@@ -611,7 +611,7 @@ GIB Punktzahl aus
         <table class="ae-trace-table">
           <thead><tr><th>Schritt</th><th>Anweisung</th><th>Wert vorher</th><th>Wert nachher</th><th>Was hat sich verändert?</th></tr></thead>
           <tbody>
-            <tr><td class="is-given">1</td><td class="is-given">SETZE Punktzahl auf 2</td><td class="is-given">nicht festgelegt</td><td><input data-trace data-answer="2" aria-label="Punktzahl nach Schritt 1"></td><td><input data-trace data-answer="Punktzahl wurde festgelegt|Startwert wurde festgelegt" aria-label="Änderung Schritt 1"></td></tr>
+            <tr><td class="is-given">1</td><td class="is-given">SETZE Punktzahl auf 2</td><td class="is-given">nicht festgelegt</td><td><input data-trace data-answer="2" aria-label="Punktzahl nach Schritt 1"></td><td><input data-trace data-answer="Punktzahl festgelegt|Startwert festgelegt" aria-label="Änderung Schritt 1"></td></tr>
             <tr><td class="is-given">2</td><td class="is-given">ERHÖHE um 3</td><td><input data-trace data-answer="2" aria-label="Punktzahl vor Schritt 2"></td><td><input data-trace data-answer="5" aria-label="Punktzahl nach Schritt 2"></td><td><input data-trace data-answer="3 addiert|um 3 erhöht|plus 3" aria-label="Änderung Schritt 2"></td></tr>
             <tr><td class="is-given">3</td><td class="is-given">VERDOPPLE</td><td><input data-trace data-answer="5" aria-label="Punktzahl vor Schritt 3"></td><td><input data-trace data-answer="10" aria-label="Punktzahl nach Schritt 3"></td><td><input data-trace data-answer="mit 2 multipliziert|verdoppelt|mal 2" aria-label="Änderung Schritt 3"></td></tr>
             <tr><td class="is-given">4</td><td class="is-given">VERRINGERE um 4</td><td><input data-trace data-answer="10" aria-label="Punktzahl vor Schritt 4"></td><td><input data-trace data-answer="6" aria-label="Punktzahl nach Schritt 4"></td><td><input data-trace data-answer="4 subtrahiert|um 4 verringert|minus 4" aria-label="Änderung Schritt 4"></td></tr>
@@ -1063,8 +1063,40 @@ GIB Gesamtwasser aus</div>
 
       document.querySelectorAll("[data-trace-table]").forEach(function (table) {
         const status = table.querySelector("[data-trace-status]");
-        table.querySelector("[data-trace-check]").addEventListener("click", function () {
-          const fields = Array.from(table.querySelectorAll("[data-trace]"));
+        const fields = Array.from(table.querySelectorAll("[data-trace]"));
+        const checkButton = table.querySelector("[data-trace-check]");
+        let hasBeenChecked = false;
+
+        function isComplete() {
+          return fields.every(function (field) { return field.value.trim() !== ""; });
+        }
+
+        function updateCheckState() {
+          const complete = isComplete();
+          checkButton.disabled = !complete;
+          checkButton.setAttribute("aria-disabled", String(!complete));
+          if (!hasBeenChecked) {
+            status.textContent = complete
+              ? "Alle Felder sind ausgefüllt. Du kannst jetzt überprüfen."
+              : "Fülle zuerst alle Felder der Tabelle aus.";
+          }
+        }
+
+        fields.forEach(function (field) {
+          field.addEventListener("input", function () {
+            if (hasBeenChecked) {
+              hasBeenChecked = false;
+              status.textContent = "Eingabe geändert. Fülle alle Felder aus und überprüfe erneut.";
+            }
+            updateCheckState();
+          });
+        });
+
+        checkButton.addEventListener("click", function () {
+          if (!isComplete()) {
+            updateCheckState();
+            return;
+          }
           let correct = 0;
           fields.forEach(function (field) {
             const accepted = String(field.dataset.answer || "").split("|").map(normalize);
@@ -1076,6 +1108,7 @@ GIB Gesamtwasser aus</div>
             field.classList.toggle("is-wrong", !ok);
             if (ok) correct += 1;
           });
+          hasBeenChecked = true;
           status.textContent = correct + " von " + fields.length + " Feldern passen.";
           saveAllTraces();
         });
@@ -1084,9 +1117,12 @@ GIB Gesamtwasser aus</div>
             field.value = "";
             field.classList.remove("is-correct", "is-wrong");
           });
+          hasBeenChecked = false;
           status.textContent = "Tabelle geleert";
           saveAllTraces();
+          updateCheckState();
         });
+        updateCheckState();
       });
     }
 
