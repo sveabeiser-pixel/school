@@ -37,6 +37,14 @@
     .li-card:nth-child(2) { border-color: var(--li-yellow); }
     .li-card:nth-child(3) { border-color: var(--li-red); }
     .li-card strong { display: block; margin-bottom: 5px; color: var(--li-ink); }
+    .li-translation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 18px 0; }
+    .li-translation-part { min-width: 0; padding: 14px 16px; border-top: 4px solid var(--li-teal); background: var(--li-soft); }
+    .li-translation-part:nth-child(2) { border-color: var(--li-yellow); }
+    .li-translation-part h3 { margin: 0 0 8px; font-size: 1.08rem; }
+    .li-translation-part .li-code { margin-bottom: 0; background: #fff; }
+    .li-word-map { display: grid; grid-template-columns: minmax(115px, .7fr) minmax(0, 1.3fr); gap: 6px 12px; margin: 12px 0; }
+    .li-word-map dt { font-weight: 900; color: var(--li-teal); }
+    .li-word-map dd { margin: 0; color: var(--li-muted); }
     .li-code {
       overflow-x: auto;
       margin: 14px 0;
@@ -116,20 +124,22 @@
     .li-checklist { list-style: none; padding: 0; margin: 14px 0; }
     .li-checklist li { position: relative; padding: 9px 10px 9px 34px; border-bottom: 1px solid var(--li-line); }
     .li-checklist li::before { content: "✓"; position: absolute; left: 10px; color: var(--li-green); font-weight: 900; }
-    [data-p2-id="li-flow-syntax"] .p2-solved .p2-joined {
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-joined {
       display: grid;
       grid-template-columns: minmax(170px, .9fr) 2px minmax(230px, 1.1fr);
       width: 100%;
       max-width: 100%;
       align-items: stretch;
     }
-    [data-p2-id="li-flow-syntax"] .p2-solved .p2-piece { width: auto; max-width: none; overflow-wrap: anywhere; }
-    [data-p2-id="li-flow-syntax"] .p2-solved .p2-seam { width: 2px; min-height: 100%; background: #9fb1bd; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-piece { overflow-wrap: anywhere; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-piece { width: auto; max-width: none; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-seam { width: 2px; min-height: 100%; background: #9fb1bd; }
     .li-source-list li + li { margin-top: 8px; }
 
     @media (max-width: 860px) {
       .li-cards,
-      .li-band { grid-template-columns: 1fr; }
+      .li-band,
+      .li-translation { grid-template-columns: 1fr; }
       .li-sim-body { grid-template-columns: 1fr; }
       .li-sim-stage { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--li-line); }
       .li-band > div + div { border-left: 0; border-top: 1px solid var(--li-line); }
@@ -142,7 +152,7 @@
       .li-symbol { width: min(100%, 220px); }
       .li-sim-toolbar { align-items: stretch; flex-direction: column; }
       .li-sim-state { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      [data-p2-id="li-flow-syntax"] .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
+      :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
     }
   </style>
 </head>
@@ -168,7 +178,7 @@
       <div class="li-hero">
         <div class="li-kicker">Vom Ablaufplan zum ersten Programmcode</div>
         <h1>Wo steckt dein Programm gerade: in der Bedingung, im Zweig oder in der Schleife?</h1>
-        <p class="li-lead">In dieser Lernstrecke verfolgst du Programme Schritt für Schritt. Du liest Flussdiagramme, Pseudocode und immer häufiger echte Programmier-Schreibweisen wie <span class="li-mini">if(bedingung){action}else{aktion}</span> und <span class="li-mini">while(bedingung){action}</span>.</p>
+        <p class="li-lead">In dieser Lernstrecke verfolgst du Programme Schritt für Schritt. Du liest Flussdiagramme, Pseudocode und immer häufiger echte Programmier-Schreibweisen wie <span class="li-mini">if(Bedingung){Aktion}else{Aktion}</span> und <span class="li-mini">while(Bedingung){Aktion}</span>.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -181,14 +191,84 @@
 
       <div class="wb-section-break"></div>
 
-      <h2>Was ist neu gegenüber dem Einstieg?</h2>
-      <p>Im Einstieg hast du Algorithmen eher sprachlich beschrieben. Jetzt rückt die Syntax näher an C/C++ und damit an Arduino heran. Geschweifte Klammern markieren, welche Anweisungen zusammengehören. Die Bedingung in runden Klammern entscheidet, ob dieser Block ausgeführt wird.</p>
+      <h2>Bekannte Abläufe bekommen neue Namen</h2>
+      <p>Im Einstieg hast du Verzweigungen als <strong>WENN-DANN-SONST</strong> und Schleifen als <strong>WIEDERHOLE</strong> oder <strong>SOLANGE</strong> geschrieben. Die Idee bleibt jetzt genau gleich. Neu sind nur die englischen Schlüsselwörter, Klammern und geschweiften Blöcke der Programmiersprache.</p>
 
-      <div class="li-code"><span class="kw">if</span>(tasteGedrueckt == true){
+      <div class="li-translation">
+        <div class="li-translation-part">
+          <h3>Aus WENN-DANN-SONST wird if/else</h3>
+          <p><span class="li-mini">if</span> bedeutet <strong>WENN</strong>. Der erste Block enthält das frühere <strong>DANN</strong>. <span class="li-mini">else</span> bedeutet <strong>SONST</strong>.</p>
+          <div class="li-code">WENN Taste gedrückt ist
+  DANN schalte LED an
+SONST
+  schalte LED aus
+ENDE WENN</div>
+          <div class="li-code"><span class="kw">if</span>(tasteGedrueckt == true){
   ledAn();
 }<span class="kw">else</span>{
   ledAus();
 }</div>
+        </div>
+
+        <div class="li-translation-part">
+          <h3>Aus WIEDERHOLE, SOLANGE wird while</h3>
+          <p><span class="li-mini">while</span> bedeutet <strong>SOLANGE</strong>. Der Block wird wiederholt, solange die Bedingung in den runden Klammern wahr ist.</p>
+          <div class="li-code">SETZE zaehler auf 0
+WIEDERHOLE, SOLANGE zaehler &lt; 3
+  lasse LED blinken
+  ERHÖHE zaehler um 1
+ENDE WIEDERHOLUNG</div>
+          <div class="li-code">zaehler = 0;
+<span class="kw">while</span>(zaehler &lt; 3){
+  blinkeLED();
+  zaehler = zaehler + 1;
+}</div>
+        </div>
+      </div>
+
+      <dl class="li-word-map">
+        <dt>WENN</dt><dd><span class="li-mini">if(Bedingung){</span> prüft die Bedingung und öffnet den Dann-Block.</dd>
+        <dt>SONST</dt><dd><span class="li-mini">else{</span> öffnet den anderen Block, falls die Bedingung falsch war.</dd>
+        <dt>SOLANGE</dt><dd><span class="li-mini">while(Bedingung){</span> prüft vor jedem neuen Durchlauf.</dd>
+        <dt>ENDE</dt><dd>Die schließende Klammer <span class="li-mini">}</span> beendet den jeweiligen Block.</dd>
+      </dl>
+
+      <div class="li-note"><strong>Wichtig bei „WIEDERHOLE 4-MAL“:</strong> Eine feste Anzahl steht nicht direkt im Wort <span class="li-mini">while</span>. Dafür nutzt du eine Zählvariable, zum Beispiel <span class="li-mini">zaehler = 0</span>, prüfst <span class="li-mini">zaehler &lt; 4</span> und erhöhst den Zähler in jedem Durchlauf.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-p2 class="p2" data-p2-id="li-words-to-code" data-p2-title="Zuordnung: Von Ablaufwörtern zu Code" data-p2-hint="Verbinde jede bekannte Formulierung mit der passenden neuen Schreibweise.">
+        <div class="p2-hint">Ziehe ein deutsches Ablaufwort auf den passenden Codebaustein.</div>
+        <div class="p2-banks">
+          <div>
+            <div class="p2-col-title">Bekannte Formulierung</div>
+            <div class="p2-bank" data-left-bank>
+              <div class="p2-piece p2-left" data-side="L" data-pair="1">WENN Bedingung, DANN Aktion</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="2">SONST Aktion</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="3">WIEDERHOLE, SOLANGE Bedingung</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="4">WIEDERHOLE 3-MAL</div>
+              <div class="p2-piece p2-left" data-side="L" data-pair="5">ENDE WENN / ENDE WIEDERHOLUNG</div>
+            </div>
+          </div>
+          <div>
+            <div class="p2-col-title">Neue Schreibweise</div>
+            <div class="p2-bank" data-right-bank>
+              <div class="p2-piece p2-right" data-side="R" data-pair="1">if(Bedingung){Aktion}</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="2">else{Aktion}</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="3">while(Bedingung){Aktion}</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="4">zaehler = 0; while(zaehler &lt; 3){Aktion; zaehler++;}</div>
+              <div class="p2-piece p2-right" data-side="R" data-pair="5">}</div>
+            </div>
+          </div>
+        </div>
+        <div class="p2-row" style="margin-top:12px">
+          <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+          <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+          <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+          <div class="p2-score" data-score></div>
+        </div>
+        <div style="margin-top:12px"><div class="p2-col-title">Verbundene Paare</div><div class="p2-solved" data-solved></div></div>
+      </div>
 
       <div class="wb-section-break"></div>
 
@@ -212,17 +292,30 @@
           "title":"Erster Check: Block und Bedingung",
           "hint":"Wähle die genaueste Aussage.",
           "shuffleChoices":true,
-          "questions":[{
-            "text":"Was entscheidet bei if(bedingung){...}else{...}, welcher Block ausgeführt wird?",
-            "choices":[
-              {"id":"A","label":"Die Reihenfolge der Blöcke im Heft"},
-              {"id":"B","label":"Ob die Bedingung beim Prüfen wahr oder falsch ist"},
-              {"id":"C","label":"Ob im Block mehr Anweisungen stehen"},
-              {"id":"D","label":"Ob die Aktion einen deutschen oder englischen Namen hat"}
-            ],
-            "correct":["B"],
-            "explain":"Die Bedingung wird geprüft. Ist sie wahr, läuft der if-Block. Ist sie falsch, läuft der else-Block."
-          }]
+          "questions":[
+            {
+              "text":"Was entscheidet bei if(Bedingung){...}else{...}, welcher Block ausgeführt wird?",
+              "choices":[
+                {"id":"A","label":"Die Reihenfolge der Blöcke im Heft"},
+                {"id":"B","label":"Ob die Bedingung beim Prüfen wahr oder falsch ist"},
+                {"id":"C","label":"Ob im Block mehr Anweisungen stehen"},
+                {"id":"D","label":"Ob die Aktion einen deutschen oder englischen Namen hat"}
+              ],
+              "correct":["B"],
+              "explain":"Die Bedingung wird geprüft. Ist sie wahr, läuft der frühere Dann-Block. Ist sie falsch, läuft mit else der frühere Sonst-Block."
+            },
+            {
+              "text":"Welche bekannte Formulierung passt direkt zu while(Bedingung){Aktion}?",
+              "choices":[
+                {"id":"A","label":"WENN Bedingung, DANN Aktion"},
+                {"id":"B","label":"WIEDERHOLE die Aktion, SOLANGE die Bedingung wahr ist"},
+                {"id":"C","label":"GIB die Bedingung aus"},
+                {"id":"D","label":"Führe die Aktion genau einmal aus"}
+              ],
+              "correct":["B"],
+              "explain":"while ist eine bedingte Wiederholung: Vor jedem Durchlauf wird geprüft, ob die Bedingung noch wahr ist."
+            }
+          ]
         }
         </script>
       </div>
@@ -816,7 +909,7 @@ summer = AUS;</div>
           "hint":"Achte auf den Unterschied zwischen Auswahl und Wiederholung.",
           "shuffleChoices":true,
           "questions":[{
-            "text":"Welche Aussage beschreibt while(bedingung){action} am besten?",
+            "text":"Welche Aussage beschreibt while(Bedingung){Aktion} am besten?",
             "choices":[
               {"id":"A","label":"Die Aktion läuft genau einmal, wenn die Bedingung wahr ist."},
               {"id":"B","label":"Die Aktion läuft wiederholt, solange die Bedingung wahr bleibt."},
