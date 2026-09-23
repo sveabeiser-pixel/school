@@ -165,6 +165,12 @@
     .ae-live-state > div { border: 1px solid var(--ae-line); padding: 9px; background: #fff; }
     .ae-live-state span { display: block; color: var(--ae-muted); font-size: .78rem; }
     .ae-live-state strong { display: block; margin-top: 3px; font-size: 1.05rem; }
+    .ae-live-state.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .ae-round-track { display: grid; grid-template-columns: repeat(4, 48px); gap: 10px; justify-content: center; }
+    .ae-round-dot { display: grid; place-items: center; width: 48px; aspect-ratio: 1; border: 3px solid #607481; border-radius: 50%; background: #fff; color: var(--ae-ink); font-weight: 900; transition: background-color .2s, border-color .2s; }
+    .ae-round-dot.is-done { border-color: var(--ae-teal); background: #bfe7dc; }
+    .ae-round-dot.is-current { border-color: #d89200; background: #fff1bd; box-shadow: 0 0 0 4px rgba(216,146,0,.18); }
+    .ae-score-output { min-height: 50px; max-width: 330px; margin: 16px auto 0; color: var(--ae-ink); font-weight: 850; text-align: center; }
 
     .ae-concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .ae-concept { border-top: 4px solid var(--ae-blue); background: var(--ae-soft); padding: 15px; }
@@ -320,6 +326,9 @@
       .ae-lab-body { display: block; }
       .ae-stage, .ae-lab-code { padding: 12px; }
       .ae-live-state { grid-template-columns: 1fr; }
+      .ae-live-state.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ae-round-track { grid-template-columns: repeat(4, 40px); }
+      .ae-round-dot { width: 40px; }
       .ae-branch-row { grid-template-columns: 1fr; }
       .ae-branch-row > .ae-arrow { transform: rotate(90deg); justify-self: center; }
       [data-p2-id="ae-flow-pairs"] .p2-solved .p2-joined {
@@ -775,6 +784,47 @@ SETZE Runde auf 0
 <span class="ae-keyword">ENDE WIEDERHOLUNG</span>
 GIB Punktzahl aus</div>
 
+      <div class="ae-lab" data-count-loop-lab>
+        <div class="ae-lab-toolbar">
+          <div class="ae-lab-title">Simulation: Punktzahl über vier Runden verfolgen</div>
+          <div class="ae-lab-actions">
+            <button class="ae-btn primary" type="button" data-count-action="toggle">Start</button>
+            <button class="ae-btn" type="button" data-count-action="step">Einzelschritt</button>
+            <button class="ae-btn" type="button" data-count-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="ae-lab-body">
+          <div class="ae-stage">
+            <div class="ae-round-track" aria-label="Vier Runden">
+              <div class="ae-round-dot" data-count-round="1">1</div>
+              <div class="ae-round-dot" data-count-round="2">2</div>
+              <div class="ae-round-dot" data-count-round="3">3</div>
+              <div class="ae-round-dot" data-count-round="4">4</div>
+            </div>
+            <div class="ae-score-output" data-count-output>Bereit: Noch wurde keine Anweisung ausgeführt.</div>
+          </div>
+          <div class="ae-lab-code">
+            <ol class="ae-pseudo" aria-label="Pseudocode der Zählschleife">
+              <li data-line="1" data-count-line="0"><span>SETZE Punktzahl auf 10</span></li>
+              <li data-line="2" data-count-line="1"><span>SETZE Runde auf 0</span></li>
+              <li data-line="3" data-count-line="2"><span><span class="ae-keyword">WIEDERHOLE 4-MAL</span></span></li>
+              <li data-line="4" data-count-line="3"><span>&nbsp;&nbsp;ERHÖHE Punktzahl um 2</span></li>
+              <li data-line="5" data-count-line="4"><span>&nbsp;&nbsp;ERHÖHE Runde um 1</span></li>
+              <li data-line="6" data-count-line="5"><span><span class="ae-keyword">ENDE WIEDERHOLUNG</span></span></li>
+              <li data-line="7" data-count-line="6"><span>GIB Punktzahl aus</span></li>
+            </ol>
+            <div class="ae-live-state four">
+              <div><span>Punktzahl</span><strong data-count-value="score">-</strong></div>
+              <div><span>Runde</span><strong data-count-value="round">-</strong></div>
+              <div><span>aktueller Bereich</span><strong data-count-value="block">vor der Schleife</strong></div>
+              <div><span>Ausgabe</span><strong data-count-value="result">noch keine</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <h2>Ablaufverfolgungstabelle: vier Runden</h2>
       <div class="ae-table-wrap" data-trace-table data-table-id="zaehlschleife-runden">
         <table class="ae-trace-table">
@@ -1208,6 +1258,88 @@ GIB Gesamtwasser aus</div>
       render();
     }
 
+    function initCountLoopLab() {
+      const root = document.querySelector("[data-count-loop-lab]");
+      if (!root) return;
+      const lineEls = Array.from(root.querySelectorAll("[data-count-line]"));
+      const roundEls = Array.from(root.querySelectorAll("[data-count-round]"));
+      const output = root.querySelector("[data-count-output]");
+      const toggle = root.querySelector('[data-count-action="toggle"]');
+      const sequence = [
+        {line:0, score:10, round:"-", block:"Startwerte", result:"noch keine", current:0, text:"Punktzahl wird auf 10 gesetzt."},
+        {line:1, score:10, round:0, block:"Startwerte", result:"noch keine", current:0, text:"Runde wird auf 0 gesetzt."}
+      ];
+
+      for (let round = 1; round <= 4; round += 1) {
+        const scoreBefore = 10 + (round - 1) * 2;
+        sequence.push({line:2, score:scoreBefore, round:round - 1, block:"Prüfung", result:"noch keine", current:round, text:"Runde " + round + " von 4 beginnt."});
+        sequence.push({line:3, score:scoreBefore + 2, round:round - 1, block:"Schleifenrumpf", result:"noch keine", current:round, text:"Punktzahl steigt von " + scoreBefore + " auf " + (scoreBefore + 2) + "."});
+        sequence.push({line:4, score:scoreBefore + 2, round:round, block:"Schleifenrumpf", result:"noch keine", current:round, text:"Der Rundenzähler steigt auf " + round + "."});
+        sequence.push({line:5, score:scoreBefore + 2, round:round, block:round < 4 ? "Rücksprung" : "Schleife beendet", result:"noch keine", current:0, text:round < 4 ? "Zurück zum Beginn der Wiederholung." : "Alle vier Wiederholungen sind abgeschlossen."});
+      }
+      sequence.push({line:6, score:18, round:4, block:"hinter der Schleife", result:"18", current:0, text:"Ausgabe: Die Punktzahl ist 18."});
+
+      let state = 0;
+      let timer = 0;
+      let running = false;
+
+      function render() {
+        const current = sequence[state];
+        lineEls.forEach(function (line) {
+          line.classList.toggle("is-active", Number(line.dataset.countLine) === current.line);
+        });
+        roundEls.forEach(function (dot) {
+          const number = Number(dot.dataset.countRound);
+          dot.classList.toggle("is-done", current.round !== "-" && number <= Number(current.round));
+          dot.classList.toggle("is-current", number === current.current);
+        });
+        root.querySelector('[data-count-value="score"]').textContent = String(current.score);
+        root.querySelector('[data-count-value="round"]').textContent = String(current.round);
+        root.querySelector('[data-count-value="block"]').textContent = current.block;
+        root.querySelector('[data-count-value="result"]').textContent = current.result;
+        output.textContent = current.text;
+      }
+
+      function stop() {
+        running = false;
+        window.clearInterval(timer);
+        timer = 0;
+        toggle.textContent = state >= sequence.length - 1 ? "Erneut starten" : "Start";
+      }
+
+      function advance() {
+        if (state >= sequence.length - 1) {
+          stop();
+          return;
+        }
+        state += 1;
+        render();
+        if (state >= sequence.length - 1) stop();
+      }
+
+      toggle.addEventListener("click", function () {
+        if (running) {
+          stop();
+          return;
+        }
+        if (state >= sequence.length - 1) state = 0;
+        running = true;
+        toggle.textContent = "Pause";
+        render();
+        timer = window.setInterval(advance, 720);
+      });
+      root.querySelector('[data-count-action="step"]').addEventListener("click", function () {
+        stop();
+        advance();
+      });
+      root.querySelector('[data-count-action="reset"]').addEventListener("click", function () {
+        stop();
+        state = 0;
+        render();
+      });
+      render();
+    }
+
     function exportTraces() {
       const lines = ["Ablaufverfolgungstabellen – Algorithmisch denken", ""];
       document.querySelectorAll("[data-trace-table]").forEach(function (table) {
@@ -1253,6 +1385,7 @@ GIB Gesamtwasser aus</div>
     document.addEventListener("DOMContentLoaded", function () {
       initTraceTables();
       initAlgorithmLab();
+      initCountLoopLab();
       initExport();
     });
   }());

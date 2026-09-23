@@ -48,6 +48,31 @@
       white-space: pre;
     }
     .li-code .kw { color: #075f5b; font-weight: 900; }
+    .li-sim { margin: 18px 0; border: 1px solid var(--li-line); border-radius: 8px; overflow: hidden; background: var(--li-paper); }
+    .li-sim-toolbar { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--li-line); background: #f6f9fa; }
+    .li-sim-title { font-weight: 900; color: var(--li-ink); }
+    .li-sim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .li-sim-button { min-height: 40px; padding: 8px 13px; border: 1px solid #9cadb8; border-radius: 5px; background: #fff; color: var(--li-ink); font: inherit; font-weight: 850; cursor: pointer; }
+    .li-sim-button.primary { border-color: var(--li-teal); background: var(--li-teal); color: #fff; }
+    .li-sim-body { display: grid; grid-template-columns: minmax(250px, .72fr) minmax(390px, 1.28fr); min-width: 0; }
+    .li-sim-stage { display: grid; place-items: center; align-content: center; gap: 14px; min-height: 250px; padding: 20px; border-right: 1px solid var(--li-line); background: #eef5f5; text-align: center; }
+    .li-sim-device { display: grid; place-items: center; width: 118px; aspect-ratio: 1; border: 6px solid #607381; border-radius: 16px; background: #dce5e9; box-shadow: inset 0 0 0 5px #fff; transition: background-color .2s, box-shadow .2s; }
+    .li-sim-device::before { content: ""; width: 56px; aspect-ratio: 1; border: 4px solid #596b77; border-radius: 50%; background: #8b9aa3; }
+    .li-sim-device[data-state="on"] { background: #ffe694; box-shadow: inset 0 0 0 5px #fff, 0 0 24px rgba(216,146,0,.42); }
+    .li-sim-device[data-state="on"]::before { background: #ffd02f; }
+    .li-sim-device[data-state="blink"]::before { background: #fff2a8; }
+    .li-sim-device[data-state="done"] { border-color: var(--li-green); }
+    .li-sim-output { min-height: 46px; max-width: 290px; color: var(--li-ink); font-weight: 850; }
+    .li-sim-code { min-width: 0; padding: 16px; }
+    .li-sim-lines { margin: 0; padding: 0; list-style: none; overflow-x: auto; border: 1px solid #dbe4e9; font: 750 .92rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .li-sim-lines li { display: grid; grid-template-columns: 32px minmax(320px, 1fr); gap: 10px; min-height: 31px; padding: 5px 10px; border-bottom: 1px solid #e3e9ed; white-space: pre; }
+    .li-sim-lines li:last-child { border-bottom: 0; }
+    .li-sim-lines li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .li-sim-lines li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 var(--li-yellow); }
+    .li-sim-state { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .li-sim-state > div { min-width: 0; padding: 8px; border: 1px solid var(--li-line); background: #fff; }
+    .li-sim-state span { display: block; color: var(--li-muted); font-size: .75rem; overflow-wrap: anywhere; }
+    .li-sim-state strong { display: block; margin-top: 3px; color: var(--li-ink); overflow-wrap: anywhere; }
     .li-note { border-left: 4px solid var(--li-yellow); background: #fff8e8; padding: 12px 14px; margin: 14px 0; }
     .li-success { border-left: 4px solid var(--li-green); background: #edf8f2; padding: 12px 14px; margin: 14px 0; }
     .li-warn { border-left: 4px solid var(--li-red); background: #fff1f1; padding: 12px 14px; margin: 14px 0; }
@@ -105,6 +130,8 @@
     @media (max-width: 860px) {
       .li-cards,
       .li-band { grid-template-columns: 1fr; }
+      .li-sim-body { grid-template-columns: 1fr; }
+      .li-sim-stage { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--li-line); }
       .li-band > div + div { border-left: 0; border-top: 1px solid var(--li-line); }
       .li-branch-row { grid-template-columns: 1fr; }
       .li-branch-row > .li-arrow,
@@ -113,6 +140,8 @@
     @media (max-width: 560px) {
       .li-hero h1 { font-size: 1.92rem; }
       .li-symbol { width: min(100%, 220px); }
+      .li-sim-toolbar { align-items: stretch; flex-direction: column; }
+      .li-sim-state { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       [data-p2-id="li-flow-syntax"] .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
     }
   </style>
@@ -234,6 +263,39 @@
 }<span class="kw">else</span>{
   led = AUS;
 }</div>
+
+      <div class="li-sim" data-code-sim data-sim-kind="ifelse">
+        <div class="li-sim-toolbar">
+          <div class="li-sim-title">Simulation: Welcher Zweig wird ausgeführt?</div>
+          <div class="li-sim-actions">
+            <button class="li-sim-button primary" type="button" data-sim-action="toggle">Start</button>
+            <button class="li-sim-button" type="button" data-sim-action="step">Einzelschritt</button>
+            <button class="li-sim-button" type="button" data-sim-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="li-sim-body">
+          <div class="li-sim-stage">
+            <div class="li-sim-device" data-sim-device data-state="off" aria-label="LED ist aus"></div>
+            <div class="li-sim-output" data-sim-output>Bereit: Die LED ist noch aus.</div>
+          </div>
+          <div class="li-sim-code">
+            <ol class="li-sim-lines" aria-label="Ausgeführter if-else-Code">
+              <li data-sim-line="0" data-line="1">helligkeit = 350;</li>
+              <li data-sim-line="1" data-line="2">if(helligkeit &lt; 400){</li>
+              <li data-sim-line="2" data-line="3">  led = AN;</li>
+              <li data-sim-line="3" data-line="4">}else{</li>
+              <li data-sim-line="4" data-line="5">  led = AUS;</li>
+              <li data-sim-line="5" data-line="6">}</li>
+            </ol>
+            <div class="li-sim-state">
+              <div><span>helligkeit</span><strong data-sim-value="helligkeit">-</strong></div>
+              <div><span>helligkeit &lt; 400</span><strong data-sim-value="bedingung">noch nicht geprüft</strong></div>
+              <div><span>aktueller Block</span><strong data-sim-value="block">vor if</strong></div>
+              <div><span>led</span><strong data-sim-value="led">AUS</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="li-note"><strong>Merke:</strong> Die Raute verändert keinen Wert. Sie prüft nur. Die Veränderung passiert erst im ausgewählten Block.</div>
 
@@ -402,6 +464,39 @@
 }
 status = FERTIG;</div>
 
+      <div class="li-sim" data-code-sim data-sim-kind="while">
+        <div class="li-sim-toolbar">
+          <div class="li-sim-title">Simulation: Drei Schleifendurchläufe verfolgen</div>
+          <div class="li-sim-actions">
+            <button class="li-sim-button primary" type="button" data-sim-action="toggle">Start</button>
+            <button class="li-sim-button" type="button" data-sim-action="step">Einzelschritt</button>
+            <button class="li-sim-button" type="button" data-sim-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="li-sim-body">
+          <div class="li-sim-stage">
+            <div class="li-sim-device" data-sim-device data-state="off" aria-label="Simulierte Arduino-LED"></div>
+            <div class="li-sim-output" data-sim-output>Bereit: Der Zähler hat noch keinen Startwert.</div>
+          </div>
+          <div class="li-sim-code">
+            <ol class="li-sim-lines" aria-label="Ausgeführter while-Code">
+              <li data-sim-line="0" data-line="1">zaehler = 0;</li>
+              <li data-sim-line="1" data-line="2">while(zaehler &lt; 3){</li>
+              <li data-sim-line="2" data-line="3">  blinkeLED();</li>
+              <li data-sim-line="3" data-line="4">  zaehler = zaehler + 1;</li>
+              <li data-sim-line="4" data-line="5">}</li>
+              <li data-sim-line="5" data-line="6">status = FERTIG;</li>
+            </ol>
+            <div class="li-sim-state">
+              <div><span>zaehler</span><strong data-sim-value="zaehler">-</strong></div>
+              <div><span>zaehler &lt; 3</span><strong data-sim-value="bedingung">noch nicht geprüft</strong></div>
+              <div><span>Durchlauf</span><strong data-sim-value="durchlauf">0</strong></div>
+              <div><span>status</span><strong data-sim-value="status">-</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="wb-section-break"></div>
 
       <div data-wb-type="trace">
@@ -566,6 +661,44 @@ motorStopp();</div>
 summer = AUS;</div>
 
       <p>Für die vier Messungen gelten diese Werte: <span class="li-mini">messung[0] = 320</span>, <span class="li-mini">messung[1] = 500</span>, <span class="li-mini">messung[2] = 390</span>, <span class="li-mini">messung[3] = 410</span>.</p>
+
+      <div class="li-sim" data-code-sim data-sim-kind="combo">
+        <div class="li-sim-toolbar">
+          <div class="li-sim-title">Simulation: Messen, entscheiden, wiederholen</div>
+          <div class="li-sim-actions">
+            <button class="li-sim-button primary" type="button" data-sim-action="toggle">Start</button>
+            <button class="li-sim-button" type="button" data-sim-action="step">Einzelschritt</button>
+            <button class="li-sim-button" type="button" data-sim-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="li-sim-body">
+          <div class="li-sim-stage">
+            <div class="li-sim-device" data-sim-device data-state="off" aria-label="LED für die Helligkeitsmessung"></div>
+            <div class="li-sim-output" data-sim-output>Bereit: Noch wurde kein Messwert gelesen.</div>
+          </div>
+          <div class="li-sim-code">
+            <ol class="li-sim-lines" aria-label="Ausgeführter kombinierter Code">
+              <li data-sim-line="0" data-line="1">zeit = 0;</li>
+              <li data-sim-line="1" data-line="2">while(zeit &lt; 4){</li>
+              <li data-sim-line="2" data-line="3">  helligkeit = messung[zeit];</li>
+              <li data-sim-line="3" data-line="4">  if(helligkeit &lt; 400){</li>
+              <li data-sim-line="4" data-line="5">    led = AN;</li>
+              <li data-sim-line="5" data-line="6">  }else{</li>
+              <li data-sim-line="6" data-line="7">    led = AUS;</li>
+              <li data-sim-line="7" data-line="8">  }</li>
+              <li data-sim-line="8" data-line="9">  zeit = zeit + 1;</li>
+              <li data-sim-line="9" data-line="10">}</li>
+              <li data-sim-line="10" data-line="11">summer = AUS;</li>
+            </ol>
+            <div class="li-sim-state">
+              <div><span>zeit</span><strong data-sim-value="zeit">-</strong></div>
+              <div><span>helligkeit</span><strong data-sim-value="helligkeit">-</strong></div>
+              <div><span>geprüfte Bedingung</span><strong data-sim-value="bedingung">noch keine</strong></div>
+              <div><span>Block / Ausgabe</span><strong data-sim-value="block">vor while</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="wb-section-break"></div>
 
@@ -846,6 +979,122 @@ alarm = AN;</div>
   <script src="../assets/allgemeines_format.js"></script>
   <script>
     SBLibrary.autoMountAll({ storagePrefix: "arduino_schleifen_ifelse__" });
+
+    (function () {
+      "use strict";
+
+      function frame(line, values, output, device) {
+        return { line: line, values: values, output: output, device: device || "off" };
+      }
+
+      function buildFrames(kind) {
+        if (kind === "ifelse") {
+          return [
+            frame(0, {helligkeit:"350", bedingung:"noch nicht geprüft", block:"vor if", led:"AUS"}, "Der Messwert 350 wird gespeichert."),
+            frame(1, {helligkeit:"350", bedingung:"wahr", block:"Bedingung", led:"AUS"}, "350 < 400 ist wahr. Das Programm geht in den if-Block."),
+            frame(2, {helligkeit:"350", bedingung:"wahr", block:"if-Block", led:"AN"}, "Ausgabe: Die LED wird eingeschaltet.", "on"),
+            frame(5, {helligkeit:"350", bedingung:"wahr", block:"hinter if/else", led:"AN"}, "Der else-Block wurde übersprungen. Die Entscheidung ist beendet.", "on")
+          ];
+        }
+
+        if (kind === "while") {
+          const frames = [
+            frame(0, {zaehler:"0", bedingung:"noch nicht geprüft", durchlauf:"0", status:"läuft"}, "Startwert: zaehler ist jetzt 0.")
+          ];
+          for (let i = 0; i < 3; i += 1) {
+            frames.push(frame(1, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), status:"läuft"}, i + " < 3 ist wahr: Durchlauf " + (i + 1) + " beginnt."));
+            frames.push(frame(2, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), status:"läuft"}, "Ausgabe: Die LED blinkt in Durchlauf " + (i + 1) + ".", "blink"));
+            frames.push(frame(3, {zaehler:String(i + 1), bedingung:"wahr", durchlauf:String(i + 1), status:"läuft"}, "Der Zähler wird auf " + (i + 1) + " erhöht."));
+            frames.push(frame(4, {zaehler:String(i + 1), bedingung:"Rücksprung", durchlauf:String(i + 1), status:"läuft"}, "Das Programm springt zurück zur while-Bedingung."));
+          }
+          frames.push(frame(1, {zaehler:"3", bedingung:"falsch", durchlauf:"3", status:"verlässt Schleife"}, "3 < 3 ist falsch. Der Schleifenrumpf wird nicht mehr ausgeführt."));
+          frames.push(frame(5, {zaehler:"3", bedingung:"falsch", durchlauf:"3", status:"FERTIG"}, "Ausgabe: status wird auf FERTIG gesetzt.", "done"));
+          return frames;
+        }
+
+        const measurements = [320, 500, 390, 410];
+        const frames = [
+          frame(0, {zeit:"0", helligkeit:"-", bedingung:"noch keine", block:"vor while"}, "Startwert: zeit ist jetzt 0.")
+        ];
+        measurements.forEach(function (measurement, index) {
+          const isDark = measurement < 400;
+          frames.push(frame(1, {zeit:String(index), helligkeit:index ? String(measurements[index - 1]) : "-", bedingung:"zeit < 4: wahr", block:"while-Prüfung"}, index + " < 4 ist wahr: Der nächste Durchlauf beginnt."));
+          frames.push(frame(2, {zeit:String(index), helligkeit:String(measurement), bedingung:"noch nicht geprüft", block:"while-Block"}, "Messung " + (index + 1) + ": helligkeit = " + measurement + "."));
+          frames.push(frame(3, {zeit:String(index), helligkeit:String(measurement), bedingung:isDark ? "helligkeit < 400: wahr" : "helligkeit < 400: falsch", block:"if-Prüfung"}, measurement + " < 400 ist " + (isDark ? "wahr." : "falsch.")));
+          frames.push(frame(isDark ? 4 : 6, {zeit:String(index), helligkeit:String(measurement), bedingung:isDark ? "wahr" : "falsch", block:isDark ? "if-Block / LED AN" : "else-Block / LED AUS"}, isDark ? "Ausgabe: Die LED wird eingeschaltet." : "Ausgabe: Die LED wird ausgeschaltet.", isDark ? "on" : "off"));
+          frames.push(frame(7, {zeit:String(index), helligkeit:String(measurement), bedingung:isDark ? "wahr" : "falsch", block:"Entscheidung beendet"}, "Genau ein Zweig wurde ausgeführt.", isDark ? "on" : "off"));
+          frames.push(frame(8, {zeit:String(index + 1), helligkeit:String(measurement), bedingung:"Rücksprung folgt", block:"while-Block"}, "zeit wird auf " + (index + 1) + " erhöht.", isDark ? "on" : "off"));
+          frames.push(frame(9, {zeit:String(index + 1), helligkeit:String(measurement), bedingung:"Rücksprung", block:"zur while-Bedingung"}, "Das Programm springt zurück zur äußeren while-Bedingung.", isDark ? "on" : "off"));
+        });
+        frames.push(frame(1, {zeit:"4", helligkeit:"410", bedingung:"zeit < 4: falsch", block:"Schleife verlassen"}, "4 < 4 ist falsch. Es gibt keinen weiteren Durchlauf."));
+        frames.push(frame(10, {zeit:"4", helligkeit:"410", bedingung:"falsch", block:"summer = AUS"}, "Ausgabe: Der Summer wird ausgeschaltet.", "done"));
+        return frames;
+      }
+
+      document.querySelectorAll("[data-code-sim]").forEach(function (root) {
+        const frames = buildFrames(root.dataset.simKind);
+        const lines = Array.from(root.querySelectorAll("[data-sim-line]"));
+        const output = root.querySelector("[data-sim-output]");
+        const device = root.querySelector("[data-sim-device]");
+        const toggle = root.querySelector('[data-sim-action="toggle"]');
+        let position = 0;
+        let timer = 0;
+        let running = false;
+
+        function render() {
+          const current = frames[position];
+          lines.forEach(function (line) {
+            line.classList.toggle("is-active", Number(line.dataset.simLine) === current.line);
+          });
+          Object.keys(current.values).forEach(function (key) {
+            const value = root.querySelector('[data-sim-value="' + key + '"]');
+            if (value) value.textContent = current.values[key];
+          });
+          output.textContent = current.output;
+          device.dataset.state = current.device;
+          device.setAttribute("aria-label", "Simulierte Ausgabe: " + current.output);
+        }
+
+        function stop() {
+          running = false;
+          window.clearInterval(timer);
+          timer = 0;
+          toggle.textContent = position >= frames.length - 1 ? "Erneut starten" : "Start";
+        }
+
+        function advance() {
+          if (position >= frames.length - 1) {
+            stop();
+            return;
+          }
+          position += 1;
+          render();
+          if (position >= frames.length - 1) stop();
+        }
+
+        toggle.addEventListener("click", function () {
+          if (running) {
+            stop();
+            return;
+          }
+          if (position >= frames.length - 1) position = 0;
+          running = true;
+          toggle.textContent = "Pause";
+          render();
+          timer = window.setInterval(advance, 850);
+        });
+        root.querySelector('[data-sim-action="step"]').addEventListener("click", function () {
+          stop();
+          advance();
+        });
+        root.querySelector('[data-sim-action="reset"]').addEventListener("click", function () {
+          stop();
+          position = 0;
+          render();
+        });
+        render();
+      });
+    })();
   </script>
 </body>
 </html>
