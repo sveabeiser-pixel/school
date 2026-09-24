@@ -404,8 +404,8 @@ ENDE WIEDERHOLUNG</div>
             {"label":"Fall","width":"12%"},
             {"label":"helligkeit","width":"18%"},
             {"label":"Bedingung helligkeit < 400","width":"24%"},
-            {"label":"Ausgeführter Block","width":"24%"},
-            {"label":"led danach","width":"22%"}
+            {"label":"Ausgeführter Block (if/else)","width":"24%"},
+            {"label":"led danach (aus/an)","width":"22%"}
           ],
           "rows":[
             {"cells":[
@@ -602,7 +602,7 @@ status = FERTIG;</div>
             {"label":"Prüfung","width":"13%"},
             {"label":"zaehler vor Prüfung","width":"20%"},
             {"label":"zaehler < 3?","width":"18%"},
-            {"label":"Wo steckt das Programm?","width":"27%"},
+            {"label":"Wo steckt das Programm? (while-Schleife/außerhalb der Schleife)","width":"27%"},
             {"label":"zaehler danach","width":"22%"}
           ],
           "rows":[
@@ -610,28 +610,28 @@ status = FERTIG;</div>
               {"given":"1"},
               {"answers":["0"],"ariaLabel":"Zähler vor Prüfung 1"},
               {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 1"},
-              {"answers":["while-block","while block","schleifenrumpf","durchlauf 1"],"ariaLabel":"Ort Prüfung 1"},
+              {"answers":["while-schleife","while schleife","schleifenrumpf","durchlauf 1"],"ariaLabel":"Ort Prüfung 1"},
               {"answers":["1"],"ariaLabel":"Zähler nach Durchlauf 1"}
             ]},
             {"cells":[
               {"given":"2"},
               {"answers":["1"],"ariaLabel":"Zähler vor Prüfung 2"},
               {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 2"},
-              {"answers":["while-block","while block","schleifenrumpf","durchlauf 2"],"ariaLabel":"Ort Prüfung 2"},
+              {"answers":["while-schleife","while schleife","schleifenrumpf","durchlauf 2"],"ariaLabel":"Ort Prüfung 2"},
               {"answers":["2"],"ariaLabel":"Zähler nach Durchlauf 2"}
             ]},
             {"cells":[
               {"given":"3"},
               {"answers":["2"],"ariaLabel":"Zähler vor Prüfung 3"},
               {"answers":["wahr","ja"],"ariaLabel":"Bedingung Prüfung 3"},
-              {"answers":["while-block","while block","schleifenrumpf","durchlauf 3"],"ariaLabel":"Ort Prüfung 3"},
+              {"answers":["while-schleife","while schleife","schleifenrumpf","durchlauf 3"],"ariaLabel":"Ort Prüfung 3"},
               {"answers":["3"],"ariaLabel":"Zähler nach Durchlauf 3"}
             ]},
             {"cells":[
               {"given":"4"},
               {"answers":["3"],"ariaLabel":"Zähler vor Prüfung 4"},
               {"answers":["falsch","nein"],"ariaLabel":"Bedingung Prüfung 4"},
-              {"answers":["hinter der schleife","nach der schleife","status = FERTIG","weiter hinter der schleife"],"ariaLabel":"Ort Prüfung 4"},
+              {"answers":["außerhalb der Schleife","hinter der schleife","nach der schleife","status = FERTIG","weiter hinter der schleife"],"ariaLabel":"Ort Prüfung 4"},
               {"answers":["3","unverändert"],"ariaLabel":"Zähler nach Prüfung 4"}
             ]}
           ]

@@ -670,7 +670,7 @@ PRÜFE: Temperatur ist größer als 20 °C</div>
       <h2>Ablaufverfolgungstabelle: einzelne Abfrage</h2>
       <div class="ae-table-wrap" data-trace-table data-table-id="abfrage-temperatur">
         <table class="ae-trace-table">
-          <thead><tr><th>Versuch</th><th>Temperatur</th><th>Ist Temperatur &gt; 20 °C?</th><th>Begründung</th></tr></thead>
+          <thead><tr><th>Versuch</th><th>Temperatur</th><th>Ist Temperatur &gt; 20 °C? (ja/nein)</th><th>Begründung</th></tr></thead>
           <tbody>
             <tr><td class="is-given">1</td><td class="is-given">18 °C</td><td><input data-trace data-answer="nein|falsch" aria-label="Bedingung bei 18 Grad"></td><td><input data-trace data-answer="18 ist kleiner als 20|18<20|18 ist nicht größer als 20" aria-label="Begründung bei 18 Grad"></td></tr>
             <tr><td class="is-given">2</td><td class="is-given">20 °C</td><td><input data-trace data-answer="nein|falsch" aria-label="Bedingung bei 20 Grad"></td><td><input data-trace data-answer="20 ist gleich 20|20=20|20 ist nicht größer als 20" aria-label="Begründung bei 20 Grad"></td></tr>
@@ -879,7 +879,7 @@ GIB „Behälter bereit“ aus</div>
       <h2>Ablaufverfolgungstabelle: Solange-Schleife</h2>
       <div class="ae-table-wrap" data-trace-table data-table-id="solange-wasser">
         <table class="ae-trace-table">
-          <thead><tr><th>Prüfung</th><th>Wassermenge vor Prüfung</th><th>kleiner als 8 L?</th><th>Wird der Rumpf ausgeführt?</th><th>Wassermenge danach</th></tr></thead>
+          <thead><tr><th>Prüfung</th><th>Wassermenge vor Prüfung</th><th>kleiner als 8 L?</th><th>Wird die Aktion/Schleife ausgeführt?</th><th>Wassermenge danach</th></tr></thead>
           <tbody>
             <tr><td class="is-given">1</td><td><input data-trace data-answer="2|2 l|2 liter" aria-label="Wasser vor Prüfung 1"></td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung Prüfung 1"></td><td><input data-trace data-answer="ja" aria-label="Rumpf Prüfung 1"></td><td><input data-trace data-answer="4|4 l|4 liter" aria-label="Wasser nach Prüfung 1"></td></tr>
             <tr><td class="is-given">2</td><td><input data-trace data-answer="4|4 l|4 liter" aria-label="Wasser vor Prüfung 2"></td><td><input data-trace data-answer="ja|wahr" aria-label="Bedingung Prüfung 2"></td><td><input data-trace data-answer="ja" aria-label="Rumpf Prüfung 2"></td><td><input data-trace data-answer="6|6 l|6 liter" aria-label="Wasser nach Prüfung 2"></td></tr>
