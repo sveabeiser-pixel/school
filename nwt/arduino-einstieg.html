@@ -716,7 +716,7 @@ PRÜFE: Temperatur ist größer als 20 °C</div>
       <h2>Ablaufverfolgungstabelle: vollständige Verzweigung</h2>
       <div class="ae-table-wrap" data-trace-table data-table-id="verzweigung-fuellstand">
         <table class="ae-trace-table">
-          <thead><tr><th>Füllstand</th><th>Bedingung „gleich 100 %“</th><th>gewählter Zweig</th><th>Aktion</th></tr></thead>
+          <thead><tr><th>Füllstand</th><th>Bedingung „gleich 100 %“ (JA/NEIN)</th><th>gewählter Zweig (DANN/SONST)</th><th>Aktion (weiterlaufen/stoppen)</th></tr></thead>
           <tbody>
             <tr><td class="is-given">0 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung bei 0 Prozent"></td><td><input data-trace data-answer="sonst|sonst-zweig" aria-label="Zweig bei 0 Prozent"></td><td><input data-trace data-answer="Förderband läuft weiter|weiterlaufen" aria-label="Aktion bei 0 Prozent"></td></tr>
             <tr><td class="is-given">75 %</td><td><input data-trace data-answer="falsch|nein" aria-label="Bedingung bei 75 Prozent"></td><td><input data-trace data-answer="sonst|sonst-zweig" aria-label="Zweig bei 75 Prozent"></td><td><input data-trace data-answer="Förderband läuft weiter|weiterlaufen" aria-label="Aktion bei 75 Prozent"></td></tr>
@@ -735,7 +735,7 @@ WENN Luftfeuchte größer als 70 %, DANN starte Lüfter</div>
 
       <div class="ae-table-wrap" data-trace-table data-table-id="zwei-abfragen">
         <table class="ae-trace-table">
-          <thead><tr><th>Temperatur</th><th>Luftfeuchte</th><th>Fenster</th><th>Lüfter</th><th>Wie viele Handlungen?</th></tr></thead>
+          <thead><tr><th>Temperatur</th><th>Luftfeuchte</th><th>Fenster (zu/offen)</th><th>Lüfter (an/aus)</th><th>Wie viele Handlungen?</th></tr></thead>
           <tbody>
             <tr><td class="is-given">25 °C</td><td class="is-given">60 %</td><td><input data-trace data-answer="zu|geschlossen|bleibt zu" aria-label="Fenster Fall 1"></td><td><input data-trace data-answer="aus|bleibt aus" aria-label="Lüfter Fall 1"></td><td><input data-trace data-answer="0|keine" aria-label="Handlungen Fall 1"></td></tr>
             <tr><td class="is-given">32 °C</td><td class="is-given">60 %</td><td><input data-trace data-answer="offen|öffnet|wird geöffnet" aria-label="Fenster Fall 2"></td><td><input data-trace data-answer="aus|bleibt aus" aria-label="Lüfter Fall 2"></td><td><input data-trace data-answer="1|eine" aria-label="Handlungen Fall 2"></td></tr>
