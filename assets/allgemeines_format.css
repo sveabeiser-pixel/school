@@ -1433,6 +1433,22 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
   letter-spacing:-.01em;
   white-space:nowrap;
 }
+.wb-results-webhook-status{
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border: 1px solid var(--wb-line);
+  border-left: 5px solid var(--wb-blue);
+  background: var(--wb-paper);
+  font-weight: 700;
+}
+.wb-results-webhook-status.is-success{
+  border-left-color: var(--wb-ok);
+  background: #ecf8f1;
+}
+.wb-results-webhook-status.is-error{
+  border-left-color: var(--wb-bad);
+  background: #fff1f2;
+}
 .wb-results-essays{
   margin-top: 22px;
   background: var(--wb-paper);

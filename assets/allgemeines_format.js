@@ -1519,15 +1519,21 @@ ${fi.input.value || ""}
   }
 
  
-  function postWebhook(url, payload){
-    if(!url) return;
+  async function postWebhook(url, payload){
+    if(!url) throw new Error("Keine Webhook-URL konfiguriert.");
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {"Content-Type":"application/json;charset=utf-8"},
+      body: JSON.stringify(payload || {})
+    });
+    if(response.ok) return true;
+
+    let detail = "";
     try{
-      fetch(url, {
-        method: "POST",
-        headers: {"Content-Type":"application/json;charset=utf-8"},
-        body: JSON.stringify(payload || {})
-      });
-    }catch(_){}
+      const body = await response.json();
+      detail = body && body.error && body.error.message ? String(body.error.message) : "";
+    }catch(_e){}
+    throw new Error(detail || `HTTP ${response.status}`);
   }
 
   function getBlockMounts(root, type){
@@ -1848,6 +1854,7 @@ ${fi.input.value || ""}
     const textLines = [];
     let totalCorrect = 0;
     let totalPossible = 0;
+    let webhookStatus = null;
     const pageTotals = new Map();
 
     const studentName = getStudentName(root);
@@ -2173,10 +2180,19 @@ ${fi.input.value || ""}
           : el("div", {class:"wb-results-muted"}, ["Keine Essays gefunden."])
       ]);
 
+      if(cfg && cfg.webhookUrl){
+        webhookStatus = el("div", {
+          class:"wb-results-webhook-status is-pending",
+          role:"status",
+          "aria-live":"polite"
+        }, ["Ergebnisse werden online übermittelt ..."]);
+      }
+
       wrap.appendChild(topGrid);
       wrap.appendChild(summaryHead);
       wrap.appendChild(panel);
       wrap.appendChild(progressBar);
+      if(webhookStatus) wrap.appendChild(webhookStatus);
       wrap.appendChild(essaysSection);
       resultsPage.appendChild(wrap);
     }
@@ -2185,6 +2201,10 @@ ${fi.input.value || ""}
 
     const scormSent = sendScormResults({ totalCorrect, totalPossible }, cfg);
     try{ console.log("[SCORM] Submission result:", scormSent); }catch(_){}
+    if(scormSent && webhookStatus){
+      webhookStatus.remove();
+      webhookStatus = null;
+    }
     const fileName = (cfg && cfg.exportName) ? cfg.exportName : "ergebnisse.txt";
     if(!scormSent){
       downloadText(fileName, textLines.join("\n"));
@@ -2192,7 +2212,20 @@ ${fi.input.value || ""}
     if(!scormSent && cfg && cfg.webhookUrl){
       const url = String(cfg.webhookUrl).trim();
       const email = (cfg.webhookEmail != null) ? String(cfg.webhookEmail) : "";
-      if(url) postWebhook(url, { name: studentName, email, message: textLines.join("\n") });
+      if(url){
+        postWebhook(url, { name: studentName, email, message: textLines.join("\n") })
+          .then(() => {
+            if(!webhookStatus) return;
+            webhookStatus.className = "wb-results-webhook-status is-success";
+            webhookStatus.textContent = "Ergebnisse wurden online übermittelt.";
+          })
+          .catch(error => {
+            try{ console.error("[Webhook] Übermittlung fehlgeschlagen:", error); }catch(_e){}
+            if(!webhookStatus) return;
+            webhookStatus.className = "wb-results-webhook-status is-error";
+            webhookStatus.textContent = "Die Online-Übermittlung ist fehlgeschlagen. Die Ergebnisdatei wurde trotzdem gespeichert. Informiere deine Lehrkraft.";
+          });
+      }
     }
 
     if(resultsPage && typeof showPage === "function"){
