@@ -22,7 +22,6 @@
     .mf-route strong{display:block;margin-bottom:4px;color:#1f3f6f}
     .mf-stop{border-left:5px solid #b45309;background:#fff7ed;padding:12px;border-radius:8px;margin:14px 0}
     .mf-strategy{border:1px solid rgba(31,138,76,.2);background:rgba(31,138,76,.06);border-radius:8px;padding:12px;margin:14px 0}
-    .lf-mark{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:#733a18;background:#fff3cd;border:1px solid #f2c94c;border-radius:999px;padding:2px 8px;margin-right:4px}
     @media (max-width:760px){.mf-grid{grid-template-columns:1fr}.mf-figure{max-width:100%}}
   </style>
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
@@ -51,7 +50,7 @@
       <p>Du startest hier mit Spulenarten und arbeitest danach weiter zu Erdmagnetfeld, Teilchenbahnen, Massenspektrometer, Anwendungen und Simulationen. Wenn du die Grundlagen noch einmal brauchst, öffne <a href="magnetische-felder.html">Magnetische Felder 1</a>.</p>
     </div>
     <div class="wb-section-break"></div>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die Wirkung eines Eisenkerns und die Permeabilitätszahl \(\mu_r\) passen zur Spulenformel im Basisfach. Hysteresekurven, Sättigung und Restmagnetisierung sind eine Leistungsfach-Vertiefung.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Die Wirkung eines Eisenkerns und die Permeabilitätszahl \(\mu_r\) erweitern die Spulenformel. Hysteresekurven, Sättigung und Restmagnetisierung vertiefen das Materialmodell.</p></div>
     <p>Die Formel der schlanken Spule gilt nur gut, wenn die Spule lang gegenüber ihrem Durchmesser ist. Bei kurzen Spulen ist das Magnetfeld entlang der Mittelachse nicht konstant: Es ist in der Mitte am stärksten und fällt nach außen schnell ab.</p>
     <p>Außerdem spielt das Material im Inneren der Spule eine große Rolle. Luft, Papier, Kunststoff oder Kupfer verändern das Feld kaum. Eisen, Nickel und Cobalt können das Feld stark verstärken. Solche Stoffe heißen ferromagnetisch.</p>
     <p>Das ist didaktisch wichtig: Die Spulenformel ist kein Allzweckwerkzeug für jede Spule. Sie ist ein Modell für lange, schlanke Spulen. Bei kurzen Spulen, Helmholtzspulen oder Spulen mit Eisenkern musst du prüfen, ob zusätzliche Geometriefaktoren oder Materialfaktoren auftreten.</p>
@@ -70,7 +69,7 @@
         </div>
         <p>Für ferromagnetische Stoffe gilt \(\mu_r\gg1\). Deshalb verwendet man weiches Eisen in Elektromagneten, etwa auf dem Schrottplatz. Magnetisch harte Werkstoffe behalten eine starke Restmagnetisierung und werden für Permanentmagnete genutzt.</p>
         <p>Magnetisch weich bedeutet nicht mechanisch weich. Gemeint ist: Das Material lässt sich leicht magnetisieren und verliert die Magnetisierung nach Abschalten des Feldes wieder weitgehend. Magnetisch hart bedeutet: Die Ausrichtung bleibt stärker erhalten.</p>
-        <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Hysterese</strong><p>Die Hysteresekurve beschreibt, dass \(B_m\) nicht nur vom aktuellen Spulenfeld abhängt, sondern auch von der Vorgeschichte der Magnetisierung. Begriffe wie Neukurve, Sättigung \(B_S\) und Restmagnetisierung \(B_R\) sind Leistungsfach-Vertiefung.</p></div>
+        <div><strong>Hysterese</strong><p>Die Hysteresekurve beschreibt, dass \(B_m\) nicht nur vom aktuellen Spulenfeld abhängt, sondern auch von der Vorgeschichte der Magnetisierung. Begriffe wie Neukurve, Sättigung \(B_S\) und Restmagnetisierung \(B_R\) sind Vertiefung.</p></div>
       </div>
     </div>
     <div class="wb-section-break"></div>
@@ -78,20 +77,20 @@
     <h2>Aufgaben: kurze Spulen und Material</h2>
     <ol class="mf-task-list">
       <li>In einer kurzen luftgefüllten Zylinderspule mit 600 Windungen und \(l=3\,\mathrm{cm}\) wird auf der Symmetrieachse gemessen. Bei \(I=0{,}5\,\mathrm A\) gilt: \(x\) in cm: 0, 1, 2, 3, 4, 5; \(B\) in mT: 8,9, 7,4, 3,8, 1,5, 0,7, 0,4. a) Trage die Messwerte in ein Diagramm ein. b) Berechne die Flussdichte einer schlanken luftgefüllten Spule mit gleichen Kenndaten und vergleiche.</li>
-      <li><span class="lf-mark">LF-only</span> Ein Helmholtzspulenpaar hat Radius \(R=150\,\mathrm{mm}\), 125 Windungen und bei \(I=2{,}0\,\mathrm A\) die Flussdichte \(B=1{,}5\,\mathrm{mT}\). Es gilt \(B=c_H\mu_0\frac nR I\). a) Bestimme \(c_H\) auf drei Dezimalstellen. b) Berechne \(B\) für \(R=200\,\mathrm{mm}\), gleiche Windungszahl und \(I=2\,\mathrm A\). Bei welcher Stromstärke ist dann \(B=1{,}5\,\mathrm{mT}\)?</li>
+      <li>Ein Helmholtzspulenpaar hat Radius \(R=150\,\mathrm{mm}\), 125 Windungen und bei \(I=2{,}0\,\mathrm A\) die Flussdichte \(B=1{,}5\,\mathrm{mT}\). Es gilt \(B=c_H\mu_0\frac nR I\). a) Bestimme \(c_H\) auf drei Dezimalstellen. b) Berechne \(B\) für \(R=200\,\mathrm{mm}\), gleiche Windungszahl und \(I=2\,\mathrm A\). Bei welcher Stromstärke ist dann \(B=1{,}5\,\mathrm{mT}\)?</li>
       <li>Entscheide begründet, ob man für einen Schrottplatz-Elektromagneten eher magnetisch weiches oder magnetisch hartes Eisen verwenden sollte.</li>
-      <li><span class="lf-mark">LF-only</span> Erkläre, warum eine Hysteresekurve bei magnetisch harten Materialien breiter ist als bei magnetisch weichen Materialien.</li>
+      <li>Erkläre, warum eine Hysteresekurve bei magnetisch harten Materialien breiter ist als bei magnetisch weichen Materialien.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
         "id":"mf_essay_spulenarten",
         "title":"Lösungsfeld: Spulenarten",
-        "hint":"Die Aufgaben stehen oberhalb. Die Helmholtz-Aufgabe ist LF-only.",
+        "hint":"Die Aufgaben stehen oberhalb. Die Helmholtz-Aufgabe ist Vertiefung.",
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1","key":"spulenarten_1","kind":"textarea","placeholder":"Diagrammidee, Rechnung und Vergleich"},
-          {"label":"Aufgabe 2 LF-only","key":"spulenarten_2","kind":"textarea","placeholder":"Rechnung"},
+          {"label":"Aufgabe 2 Vertiefung","key":"spulenarten_2","kind":"textarea","placeholder":"Rechnung"},
           {"label":"Aufgaben 3-4","key":"spulenarten_3_4","kind":"textarea","placeholder":"Materialwahl und Hysterese"}
         ]
       }
@@ -101,7 +100,7 @@
 
   <section data-wb-page="2" data-wb-page-title="Erdmagnetfeld">
     <h1>Das Magnetfeld der Erde</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Das Erdmagnetfeld ist ein sinnvoller Anwendungskontext für beide Kursarten. Die qualitative Kompassdeutung ist Grundlagenwissen; die rechnerische Bestimmung mit Spule, Inklination und Komponenten ist eine Vertiefung.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Am Erdmagnetfeld deutest du zunächst die Ausrichtung eines Kompasses qualitativ. Danach bestimmst du das Feld rechnerisch mit Spule, Inklination und Komponenten.</p></div>
     <p>Eine Kompassnadel richtet sich in Nord-Süd-Richtung aus, weil die Erde ein Magnetfeld besitzt. Der magnetische Südpol liegt in der Nähe des geografischen Nordpols; deshalb zeigt der Nordpol der Kompassnadel nach Norden. Die Magnetpole stimmen aber nicht genau mit den geografischen Polen überein und wandern mit der Zeit.</p>
     <p>Die Abweichung von der geografischen Nordrichtung heißt Deklination. Der Winkel, unter dem Feldlinien gegen die Erdoberfläche geneigt sind, heißt Inklination. In Deutschland liegt die Inklination ungefähr zwischen \(63^\circ\) und \(70^\circ\).</p>
     <p>Eine gewöhnliche Kompassnadel kann nur in der Horizontalebene drehen. Sie reagiert deshalb auf die Horizontalkomponente \(B_h\). Eine Inklinationsnadel kann sich zusätzlich nach oben oder unten neigen und zeigt die Richtung des gesamten Feldvektors.</p>
@@ -153,7 +152,7 @@
     <h2>Aufgaben: Erdmagnetfeld</h2>
     <ol class="mf-task-list">
       <li>Mit einer Spule \((l=30\,\mathrm{cm},\ n=40)\) wird der Versuch an verschiedenen Orten ausgeführt. a) In Athen gilt \(B=46\,\mu\mathrm T\), \(\delta=53^\circ\). Bestimme die Stromstärke in der Ost-West-Spule, bei der die Kompassnadel um \(45^\circ\) abgelenkt wird. b) In Island gilt \(\delta=75^\circ\). Bei \(I_\mathrm{Sp}=0{,}08\,\mathrm A\) wird die Kompassnadel um \(45^\circ\) ausgelenkt. Berechne \(B_h\) und \(B\).</li>
-      <li><span class="lf-mark">LF-only</span> Eine Spule mit \(n=100\), \(l=0{,}5\,\mathrm m\) ist in Ost-West-Richtung ausgerichtet. Bei \(I_\mathrm{Sp}=130\,\mathrm{mA}\) wird eine Magnetnadel um \(\alpha=60^\circ\) aus der Nordrichtung gedreht. Zeige, dass \(\tan\alpha=\frac{B_\mathrm{Sp}}{B_h}\), und berechne \(B_h\).</li>
+      <li>Eine Spule mit \(n=100\), \(l=0{,}5\,\mathrm m\) ist in Ost-West-Richtung ausgerichtet. Bei \(I_\mathrm{Sp}=130\,\mathrm{mA}\) wird eine Magnetnadel um \(\alpha=60^\circ\) aus der Nordrichtung gedreht. Zeige, dass \(\tan\alpha=\frac{B_\mathrm{Sp}}{B_h}\), und berechne \(B_h\).</li>
       <li>Erkläre, warum eine gewöhnliche Kompassnadel nicht die vollständige Stärke des Erdmagnetfelds anzeigen kann.</li>
     </ol>
     <div data-wb-type="essay">
@@ -165,7 +164,7 @@
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1","key":"erde_1","kind":"textarea","placeholder":"Rechnung"},
-          {"label":"Aufgabe 2 LF-only","key":"erde_2","kind":"textarea","placeholder":"Herleitung und Rechnung"},
+          {"label":"Aufgabe 2 Vertiefung","key":"erde_2","kind":"textarea","placeholder":"Herleitung und Rechnung"},
           {"label":"Aufgabe 3","key":"erde_3","kind":"textarea","placeholder":"Erklärung"}
         ]
       }
@@ -175,7 +174,7 @@
 
   <section data-wb-page="3" data-wb-page-title="Fadenstrahlrohr">
     <h1>Elektronen im magnetischen Feld</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Geladene Teilchen im Magnetfeld</strong><p>Die Lorentzkraft auf einzelne Ladungen, Kreisbahnen im homogenen Magnetfeld, Radiusformel, spezifische Ladung und Elektronenmasse gehören nach dem Bildungsplan 2016 zum Leistungsfach.</p></div>
+    <div><strong>Geladene Teilchen im Magnetfeld</strong><p>Hier verknüpfst du die Lorentzkraft auf einzelne Ladungen mit Kreisbahnen im homogenen Magnetfeld, der Radiusformel, der spezifischen Ladung und der Elektronenmasse.</p></div>
     <p>Im Fadenstrahlrohr wird ein Elektronenstrahl in einem homogenen Magnetfeld sichtbar gemacht. Ohne Magnetfeld läuft der Strahl gerade. Schaltet man das Magnetfeld ein, wirkt die Lorentzkraft senkrecht zur Bewegungsrichtung. Sie verändert die Richtung der Geschwindigkeit fortlaufend und wirkt wie eine Zentripetalkraft. Die Elektronen laufen auf einer Kreisbahn.</p>
     <p>Der leuchtende Kreis ist kein Draht und keine Spur im Glas. In der Röhre befindet sich Gas mit geringem Druck. Elektronen stoßen mit Gasatomen zusammen und regen sie zum Leuchten an. So wird die Bahn des Elektronenstrahls sichtbar.</p>
     <div class="wb-section-break"></div>
@@ -186,7 +185,7 @@
         <figcaption>Elektronen im Magnetfeld: Die Lorentzkraft wirkt als Zentripetalkraft.</figcaption>
       </figure>
       <div>
-        <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Radius der Kreisbahn</strong><p>Für senkrechten Eintritt gilt \(F_L=F_Z\). Damit erhält man \(e v B=\frac{m_e v^2}{r}\).</p></div>
+        <div><strong>Radius der Kreisbahn</strong><p>Für senkrechten Eintritt gilt \(F_L=F_Z\). Damit erhält man \(e v B=\frac{m_e v^2}{r}\).</p></div>
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(r=\frac{m_e}{e}\frac vB\)</p>
@@ -219,17 +218,17 @@
 
     <h2>Aufgaben: Elektronen auf Kreisbahnen</h2>
     <ol class="mf-task-list">
-      <li><span class="lf-mark">LF-only</span> Elektronen, die durch \(150\,\mathrm V\) beschleunigt wurden, beschreiben in einem homogenen Magnetfeld mit \(B=0{,}85\,\mathrm{mT}\) einen Kreis. a) Berechne Radius und Umfang. b) Bestimme Geschwindigkeit und Umlaufdauer. c) Untersuche, wie sich Umlaufdauer und Radius ändern, wenn die Beschleunigungsspannung halbiert wird.</li>
-      <li><span class="lf-mark">LF-only</span> Bei \(U=223\,\mathrm V\) wurden gemessen: \(r\) in cm: 2, 3, 4, 5; \(B\) in mT: 2,55, 1,70, 1,23, 0,98. Bestimme unter Berücksichtigung aller Messwerte die spezifische Ladung \(e/m_e\).</li>
-      <li><span class="lf-mark">LF-only</span> Zweifach positiv geladene Heliumionen \(He^{++}\) mit \(m_\mathrm{He}=4u\) und \(v=4\cdot10^6\,\mathrm{m/s}\) treten durch eine Blende in ein homogenes Magnetfeld mit \(B=0{,}8\,\mathrm T\). Bestimme den Radius der Kreisbahn.</li>
-      <li><span class="lf-mark">LF-only</span> Begründe ohne Rechnung, warum ein Proton bei gleicher Geschwindigkeit und gleichem Magnetfeld einen viel größeren Bahnradius als ein Elektron besitzt.</li>
+      <li>Elektronen, die durch \(150\,\mathrm V\) beschleunigt wurden, beschreiben in einem homogenen Magnetfeld mit \(B=0{,}85\,\mathrm{mT}\) einen Kreis. a) Berechne Radius und Umfang. b) Bestimme Geschwindigkeit und Umlaufdauer. c) Untersuche, wie sich Umlaufdauer und Radius ändern, wenn die Beschleunigungsspannung halbiert wird.</li>
+      <li>Bei \(U=223\,\mathrm V\) wurden gemessen: \(r\) in cm: 2, 3, 4, 5; \(B\) in mT: 2,55, 1,70, 1,23, 0,98. Bestimme unter Berücksichtigung aller Messwerte die spezifische Ladung \(e/m_e\).</li>
+      <li>Zweifach positiv geladene Heliumionen \(He^{++}\) mit \(m_\mathrm{He}=4u\) und \(v=4\cdot10^6\,\mathrm{m/s}\) treten durch eine Blende in ein homogenes Magnetfeld mit \(B=0{,}8\,\mathrm T\). Bestimme den Radius der Kreisbahn.</li>
+      <li>Begründe ohne Rechnung, warum ein Proton bei gleicher Geschwindigkeit und gleichem Magnetfeld einen viel größeren Bahnradius als ein Elektron besitzt.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
         "id":"mf_essay_fadenstrahlrohr",
         "title":"Lösungsfeld: Fadenstrahlrohr",
-        "hint":"Nur Leistungsfach. Nutze Energieerhaltung, Lorentzkraft und Zentripetalkraft.",
+        "hint":"Nutze Energieerhaltung, Lorentzkraft und Zentripetalkraft.",
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1","key":"faden_1","kind":"textarea","placeholder":"Rechnung"},
@@ -244,7 +243,6 @@
 
   <section data-wb-page="4" data-wb-page-title="Massenspektrometer">
     <h1>Massenspektrometer und wienscher Geschwindigkeitsfilter</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong><p>Gekreuzte elektrische und magnetische Felder, wienscher Geschwindigkeitsfilter und Massenspektrometer sind Leistungsfachstoff. Im Basisfach kann die Idee als Anwendung der Lorentzkraft erwähnt werden.</p></div>
     <p>Ionen aus einer Ionenquelle besitzen zunächst unterschiedliche Geschwindigkeiten. Für eine genaue Massenbestimmung braucht man aber Teilchen gleicher Geschwindigkeit. Dazu nutzt man einen wienschen Geschwindigkeitsfilter: Ein elektrisches Feld und ein magnetisches Feld stehen senkrecht zueinander und auch senkrecht zur Teilchenbewegung.</p>
     <p>Die elektrische Kraft und die Lorentzkraft werden so ausgerichtet, dass sie entgegengesetzt wirken. Nur wenn beide Beträge gleich groß sind, bewegt sich das geladene Teilchen geradlinig weiter. Schnellere oder langsamere Teilchen werden abgelenkt und gelangen nicht durch die nächste Blende.</p>
     <p>Der Filter sortiert also nicht nach Masse, sondern zunächst nach Geschwindigkeit. Das ist der Trick: Erst wenn alle durchgelassenen Teilchen dieselbe Geschwindigkeit besitzen, kann der Bahnradius im nächsten Magnetfeld als Hinweis auf Masse und Ladung genutzt werden.</p>
@@ -296,16 +294,16 @@
 
     <h2>Aufgaben: Massenspektrometer</h2>
     <ol class="mf-task-list">
-      <li><span class="lf-mark">LF-only</span> Positive Ionen mit \(q=+e\) durchlaufen unabgelenkt ein Massenspektrometer mit \(E=46{,}6\,\mathrm{kV/m}\) und \(B=0{,}311\,\mathrm T\) in beiden Magnetfeldern. a) Berechne die Geschwindigkeit der Ionen. b) Auf der Fotoplatte kommen Ionen mit \(12\,\mathrm{cm}\) beziehungsweise \(20\,\mathrm{cm}\) Abstand von der Blende an. Berechne ihre Massen und die Anzahl der Nukleonen.</li>
-      <li><span class="lf-mark">LF-only</span> In einem Massenspektrometer haben die Felder des Geschwindigkeitsfilters \(E=10^5\,\mathrm{V/m}\) und \(B_1=0{,}5\,\mathrm T\). Das Magnetfeld für die Kreisbahnen hat \(B_2=0{,}3\,\mathrm T\). a) Bestimme die Geschwindigkeit der Ionen. b) Berechne die Radien der Kreisbahnen für Sauerstoffionen mit \(m_1=2{,}66\cdot10^{-26}\,\mathrm{kg}\), \(m_2=2{,}99\cdot10^{-26}\,\mathrm{kg}\) und Ladung \(+e\). Bestimme den Abstand, in dem die Ionen auf dem Detektor auftreffen.</li>
-      <li><span class="lf-mark">LF-only</span> Erkläre qualitativ, warum zwei Isotope desselben Elements im Massenspektrometer getrennte Trefferstellen erzeugen können.</li>
+      <li>Positive Ionen mit \(q=+e\) durchlaufen unabgelenkt ein Massenspektrometer mit \(E=46{,}6\,\mathrm{kV/m}\) und \(B=0{,}311\,\mathrm T\) in beiden Magnetfeldern. a) Berechne die Geschwindigkeit der Ionen. b) Auf der Fotoplatte kommen Ionen mit \(12\,\mathrm{cm}\) beziehungsweise \(20\,\mathrm{cm}\) Abstand von der Blende an. Berechne ihre Massen und die Anzahl der Nukleonen.</li>
+      <li>In einem Massenspektrometer haben die Felder des Geschwindigkeitsfilters \(E=10^5\,\mathrm{V/m}\) und \(B_1=0{,}5\,\mathrm T\). Das Magnetfeld für die Kreisbahnen hat \(B_2=0{,}3\,\mathrm T\). a) Bestimme die Geschwindigkeit der Ionen. b) Berechne die Radien der Kreisbahnen für Sauerstoffionen mit \(m_1=2{,}66\cdot10^{-26}\,\mathrm{kg}\), \(m_2=2{,}99\cdot10^{-26}\,\mathrm{kg}\) und Ladung \(+e\). Bestimme den Abstand, in dem die Ionen auf dem Detektor auftreffen.</li>
+      <li>Erkläre qualitativ, warum zwei Isotope desselben Elements im Massenspektrometer getrennte Trefferstellen erzeugen können.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
         "id":"mf_essay_massenspektrometer",
         "title":"Lösungsfeld: Massenspektrometer",
-        "hint":"Nur Leistungsfach. Nutze zuerst v=E/B und danach die Kreisbahnformel.",
+        "hint":"Nutze zuerst v=E/B und danach die Kreisbahnformel.",
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1","key":"massenspektrometer_1","kind":"textarea","placeholder":"Rechnung"},
@@ -319,7 +317,6 @@
 
   <section data-wb-page="5" data-wb-page-title="Zyklotron">
     <h1>Exkurs: Zyklotron und Abiturtraining zu E- und B-Feldern</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong><p>Zyklotron, kombinierte E- und B-Felder und die Abituraufgabe mit Halbkreisbahn plus Kondensatorablenkung sind Leistungsfach-Vertiefung.</p></div>
     <p>In Teilchenbeschleunigern sollen geladene Teilchen sehr hohe Energien erreichen. Statt eine extrem hohe Spannung einmal zu durchlaufen, lässt man sie viele Beschleunigungsstrecken nacheinander durchlaufen. Das Zyklotron ist ein klassisches Beispiel dafür.</p>
     <p>Im Zyklotron werden positive Ionen zwischen zwei D-förmigen Metallhohlräumen immer wieder durch ein elektrisches Feld beschleunigt. Innerhalb der Dosen ist der Raum elektrisch feldfrei; dort zwingt ein starkes Magnetfeld die Ionen auf Halbkreisbahnen. Nach jedem Durchgang ist die Geschwindigkeit größer, also auch der Radius der Bahn.</p>
     <p>Didaktisch ist das Zyklotron ein guter Test, ob du elektrische und magnetische Felder sauber trennst. Das elektrische Feld verrichtet Arbeit am Teilchen und erhöht seine kinetische Energie. Das Magnetfeld verrichtet im idealen Fall keine Arbeit, weil die Lorentzkraft immer senkrecht zur Bewegung steht; es krümmt nur die Bahn.</p>
@@ -368,17 +365,17 @@
 
     <h2>Vorbereitung auf das Abitur</h2>
     <ol class="mf-task-list">
-      <li><span class="lf-mark">LF-only</span> Elektronen treten mit unterschiedlichen Geschwindigkeiten aus einer Quelle aus, bewegen sich durch \(S_2\) in ein homogenes Magnetfeld \(B=1{,}8\,\mathrm{mT}\), durchlaufen eine Halbkreisbahn mit \(r=4{,}8\,\mathrm{cm}\) und treten durch \(S_1\) aus. Anschließend durchlaufen sie einen Kondensator mit \(U_y=153\,\mathrm V\), \(l=15\,\mathrm{cm}\), \(d=3{,}4\,\mathrm{cm}\) und verlassen ihn unter \(\alpha=27^\circ\). a) Zeige, dass nur Elektronen mit einer bestimmten Geschwindigkeit aus \(S_1\) austreten. b) Weise \(\tan\alpha=\frac{eU_y l}{m d v^2}\) nach. c) Ermittle \(e/m\).</li>
-      <li><span class="lf-mark">LF-only</span> Erkläre, warum im Zyklotron der Radius der Halbkreisbahn nach jedem Durchgang größer wird, obwohl das Magnetfeld nicht stärker wird.</li>
-      <li><span class="lf-mark">LF-only</span> Ein Proton und ein zweifach positiv geladenes Heliumion besitzen dieselbe Geschwindigkeit und bewegen sich im selben Magnetfeld. Vergleiche qualitativ die Zyklotronfrequenzen. Achte auf Ladung und Masse.</li>
-      <li><span class="lf-mark">LF-only</span> Begründe, warum ein Zyklotron für sehr hohe Teilchenenergien nicht mehr mit exakt konstanter Frequenz betrieben werden kann.</li>
+      <li>Elektronen treten mit unterschiedlichen Geschwindigkeiten aus einer Quelle aus, bewegen sich durch \(S_2\) in ein homogenes Magnetfeld \(B=1{,}8\,\mathrm{mT}\), durchlaufen eine Halbkreisbahn mit \(r=4{,}8\,\mathrm{cm}\) und treten durch \(S_1\) aus. Anschließend durchlaufen sie einen Kondensator mit \(U_y=153\,\mathrm V\), \(l=15\,\mathrm{cm}\), \(d=3{,}4\,\mathrm{cm}\) und verlassen ihn unter \(\alpha=27^\circ\). a) Zeige, dass nur Elektronen mit einer bestimmten Geschwindigkeit aus \(S_1\) austreten. b) Weise \(\tan\alpha=\frac{eU_y l}{m d v^2}\) nach. c) Ermittle \(e/m\).</li>
+      <li>Erkläre, warum im Zyklotron der Radius der Halbkreisbahn nach jedem Durchgang größer wird, obwohl das Magnetfeld nicht stärker wird.</li>
+      <li>Ein Proton und ein zweifach positiv geladenes Heliumion besitzen dieselbe Geschwindigkeit und bewegen sich im selben Magnetfeld. Vergleiche qualitativ die Zyklotronfrequenzen. Achte auf Ladung und Masse.</li>
+      <li>Begründe, warum ein Zyklotron für sehr hohe Teilchenenergien nicht mehr mit exakt konstanter Frequenz betrieben werden kann.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
         "id":"mf_essay_abitur_eb",
         "title":"Lösungsfeld: Abiturtraining E- und B-Felder",
-        "hint":"Nur Leistungsfach. Arbeite zuerst mit der Kreisbahn, danach mit der Kondensatorablenkung.",
+        "hint":"Arbeite zuerst mit der Kreisbahn, danach mit der Kondensatorablenkung.",
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1 a-c","key":"abitur_eb","kind":"textarea","placeholder":"Herleitung und Rechnung"},
@@ -391,7 +388,7 @@
 
   <section data-wb-page="6" data-wb-page-title="Natur und Technik">
     <h1>Magnetfelder in Natur, Forschung und Technik</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die Beispiele eignen sich für beide Kursarten als Anwendungen. Die genaue Bahn- und Feldanalyse bei Penning-Fallen und magnetischen Linsen ist Leistungsfach-Vertiefung.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Die Beispiele zeigen Anwendungen magnetischer Felder. Bei Penning-Fallen und magnetischen Linsen untersuchst du anschließend Bahn und Feld genauer.</p></div>
     <p>Magnetfelder spielen nicht nur im Physikraum eine Rolle. Sie strukturieren den Raum um die Erde, halten Teilchen in Forschungsapparaturen fest, fokussieren Elektronenstrahlen und speichern Informationen in technischen Geräten.</p>
     <p>Beim Lesen dieser Seite sollst du immer fragen: <strong>Welche Rolle spielt das Magnetfeld hier?</strong> Es kann bewegte Ladungen auf gekrümmte Bahnen zwingen, magnetisierbare Materialien ausrichten oder Elektronenstrahlen gezielt formen. Dieselbe Grundidee taucht in sehr unterschiedlichen Anwendungen wieder auf.</p>
     <div class="mf-route">
@@ -437,8 +434,8 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div class="lf-only-box">
-      <strong><span class="lf-only-badge">LF-only</span> Penning-Falle</strong>
+    <div>
+      <strong>Penning-Falle</strong>
       <p>In einer Penning-Falle können einzelne geladene Teilchen, zum Beispiel Elektronen, Ionen oder Antiprotonen, über längere Zeit in einem kleinen Raumgebiet gespeichert werden. Dazu kombiniert man ein homogenes, zeitlich konstantes Magnetfeld mit einem inhomogenen, ebenfalls statischen elektrischen Feld.</p>
       <p>Das Magnetfeld hält die geladenen Teilchen seitlich auf gekrümmten Bahnen, das elektrische Feld verhindert das Entweichen in vertikaler Richtung. Solche Fallen werden in Präzisionsexperimenten eingesetzt. Hans Dehmelt erhielt 1989 den Nobelpreis für Experimente mit Elektronen und Positronen in Penning-Fallen.</p>
     </div>
@@ -472,7 +469,7 @@
     <ol class="mf-task-list">
       <li>Erkläre in drei bis fünf Sätzen, warum Polarlichter besonders in Polnähe auftreten.</li>
       <li>Vergleiche Polarlicht und van-Allen-Gürtel: Welche Rolle spielen bewegte Ladungen, welche Rolle spielt das Erdmagnetfeld?</li>
-      <li><span class="lf-mark">LF-only</span> Erkläre, warum eine Penning-Falle sowohl ein elektrisches als auch ein magnetisches Feld benötigt.</li>
+      <li>Erkläre, warum eine Penning-Falle sowohl ein elektrisches als auch ein magnetisches Feld benötigt.</li>
       <li>Vergleiche eine magnetische Linse mit einer optischen Sammellinse. Nenne eine Gemeinsamkeit und einen entscheidenden Unterschied.</li>
       <li>Begründe, warum eine klassische Festplatte magnetisch beschreibbares Material benötigt.</li>
     </ol>
@@ -485,7 +482,7 @@
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgaben 1-2","key":"anwendungen_1_2","kind":"textarea","placeholder":"Naturphänomene erklären"},
-          {"label":"Aufgabe 3 LF-only","key":"anwendungen_3","kind":"textarea","placeholder":"Penning-Falle erklären"},
+          {"label":"Aufgabe 3 Vertiefung","key":"anwendungen_3","kind":"textarea","placeholder":"Penning-Falle erklären"},
           {"label":"Aufgaben 4-5","key":"anwendungen_4_5","kind":"textarea","placeholder":"Technikvergleiche"}
         ]
       }
@@ -519,7 +516,7 @@
 
   <section data-wb-page="7" data-wb-page-title="Gesamtaufgaben">
     <h1>Gesamtzusammenfassung und gemischte Aufgaben</h1>
-    <p>Diese Seite bündelt das Kapitel. Die Aufgaben 1 und 2 gehören zum gemeinsamen Kern. Die Aufgaben 3 bis 7 sind als Leistungsfach-Aufgaben markiert, weil sie Hall-Effekt, Lorentzkraft auf einzelne Ladungen, Kreisbahnen, Massenspektrometer oder Schraubenbahnen nutzen.</p>
+    <p>Diese Seite bündelt das Kapitel. Die Aufgaben 1 und 2 sichern die Grundlagen. Die Aufgaben 3 bis 7 vertiefen Hall-Effekt, Lorentzkraft auf einzelne Ladungen, Kreisbahnen, Massenspektrometer und Schraubenbahnen.</p>
     <p>Nutze die Zusammenfassung nicht nur zum Nachschlagen. Versuche zuerst, die Situation zu erkennen: Geht es um einen stromführenden Leiter, eine bewegte einzelne Ladung, eine Spule, ein Material im Magnetfeld oder eine technische Kombination mehrerer Felder?</p>
     <div class="wb-section-break"></div>
 
@@ -541,8 +538,8 @@
         <img src="bilder/zusammenfassung-dreifingerregel.png" alt="Zusammenfassung Drei-Finger-Regel und Lorentzkraft">
         <figcaption>Zusammenfassung: Lorentzkraft und Drei-Finger-Regel.</figcaption>
       </figure>
-      <div class="lf-only-box">
-        <strong><span class="lf-only-badge">LF-only</span> 2. Lorentzkraft auf einzelne Ladungen</strong>
+      <div>
+        <strong>2. Lorentzkraft auf einzelne Ladungen</strong>
         <p class="mf-formula">\(F_L=|q|v_sB\)</p>
         <p>Die Lorentzkraft steht senkrecht zur Geschwindigkeit und senkrecht zum Magnetfeld. Sie ändert die Bewegungsrichtung, aber im reinen Magnetfeld nicht den Betrag der Geschwindigkeit.</p>
       </div>
@@ -555,35 +552,35 @@
         <figcaption>Zusammenfassung: Geschwindigkeitsfilter und Massenspektrometer.</figcaption>
       </figure>
       <div>
-        <div class="wb-callout"><strong>3. Magnetfeld einer langen Spule</strong><p class="mf-formula">\(B=\mu_0\mu_r\frac nl I\)</p><p>Diese Spulenformel gehört zum gemeinsamen Kern von Basisfach und Leistungsfach.</p></div>
-        <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Hall-Effekt, Teilchenbahnen und Filter</strong><p class="mf-formula">\(U_H=Bvh\), \(\quad v=\frac EB\), \(\quad r=\frac m q\frac vB\)</p></div>
+        <div class="wb-callout"><strong>3. Magnetfeld einer langen Spule</strong><p class="mf-formula">\(B=\mu_0\mu_r\frac nl I\)</p><p>Diese Spulenformel verbindet Geometrie, Material und Stromstärke mit der magnetischen Flussdichte.</p></div>
+        <div><strong>Hall-Effekt, Teilchenbahnen und Filter</strong><p class="mf-formula">\(U_H=Bvh\), \(\quad v=\frac EB\), \(\quad r=\frac m q\frac vB\)</p></div>
       </div>
     </div>
     <div class="wb-section-break"></div>
 
     <h2>Elektrisches, magnetisches und Gravitationsfeld vergleichen</h2>
-    <div class="wb-soft-callout"><strong>Basisfach und Leistungsfach</strong><p>Dieser Vergleich ist in beiden Kursarten verbindlich. Entscheidend ist nicht nur eine Liste von Gemeinsamkeiten, sondern die Frage, auf welche Probekörper ein Feld wirkt und ob die Kraft Arbeit verrichten kann.</p></div>
+    <div class="wb-soft-callout"><strong>Grundlage</strong><p>Entscheidend ist nicht nur eine Liste von Gemeinsamkeiten, sondern die Frage, auf welche Probekörper ein Feld wirkt und ob die Kraft Arbeit verrichten kann.</p></div>
     <div style="overflow-x:auto">
       <table class="wb-table">
         <thead><tr><th>Aspekt</th><th>Elektrisches Feld</th><th>Magnetisches Feld</th><th>Gravitationsfeld</th></tr></thead>
         <tbody>
           <tr><td>Quelle</td><td>elektrische Ladungen</td><td>bewegte Ladungen, Ströme und magnetische Dipole</td><td>Massen</td></tr>
-          <tr><td>Probekörper</td><td>Probeladung $q$</td><td>stromdurchflossener Leiter; <span class="lf-mark">LF-only</span> bewegte einzelne Ladung $q$</td><td>Probemasse $m$</td></tr>
-          <tr><td>Kraft</td><td>$\vec F_\mathrm{el}=q\vec E$</td><td>$F=BIs$; <span class="lf-mark">LF-only</span> $\vec F_\mathrm L=q\,\vec v\times\vec B$</td><td>$\vec F_\mathrm G=m\vec g$</td></tr>
-          <tr><td>Richtung</td><td>parallel oder antiparallel zu $\vec E$, abhängig vom Vorzeichen</td><td>Leiterkraft nach Drei-Finger-Regel; <span class="lf-mark">LF-only</span> bei Einzelteilchen senkrecht zu $\vec v$ und $\vec B$</td><td>zur anziehenden Masse</td></tr>
+          <tr><td>Probekörper</td><td>Probeladung $q$</td><td>stromdurchflossener Leiter; bewegte einzelne Ladung $q$</td><td>Probemasse $m$</td></tr>
+          <tr><td>Kraft</td><td>$\vec F_\mathrm{el}=q\vec E$</td><td>$F=BIs$; $\vec F_\mathrm L=q\,\vec v\times\vec B$</td><td>$\vec F_\mathrm G=m\vec g$</td></tr>
+          <tr><td>Richtung</td><td>parallel oder antiparallel zu $\vec E$, abhängig vom Vorzeichen</td><td>Leiterkraft nach Drei-Finger-Regel; bei Einzelteilchen senkrecht zu $\vec v$ und $\vec B$</td><td>zur anziehenden Masse</td></tr>
           <tr><td>Feldlinien</td><td>beginnen an $+$, enden an $-$</td><td>immer geschlossen</td><td>zeigen zur Masse; nur anziehend</td></tr>
-          <tr><td>Arbeit</td><td>kann Energie sowie Betrag und Richtung der Geschwindigkeit ändern</td><td>am Leiter kann Energie übertragen werden; <span class="lf-mark">LF-only</span> am freien Teilchen verrichtet das reine statische B-Feld keine Arbeit</td><td>kann Energie sowie Betrag und Richtung der Geschwindigkeit ändern</td></tr>
+          <tr><td>Arbeit</td><td>kann Energie sowie Betrag und Richtung der Geschwindigkeit ändern</td><td>am Leiter kann Energie übertragen werden; am freien Teilchen verrichtet das reine statische B-Feld keine Arbeit</td><td>kann Energie sowie Betrag und Richtung der Geschwindigkeit ändern</td></tr>
         </tbody>
       </table>
     </div>
     <div class="wb-section-break"></div>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Check zu einzelnen Ladungen</strong><div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"mf_verify_feldvergleich","title":"Feldvergleich prüfen","hint":"Achte auf die Richtung der Kraft.","statement":"Ein homogenes Magnetfeld kann ein geladenes Teilchen aus der Ruhe beschleunigen und seine kinetische Energie erhöhen.","answer":false,"explain":"Ein ruhendes geladenes Teilchen erfährt keine Lorentzkraft. Bei einem bewegten Teilchen steht die Lorentzkraft senkrecht zur Geschwindigkeit und ändert im reinen statischen Magnetfeld nur deren Richtung, nicht den Betrag."}</script></div></div>
+    <div><strong>Check zu einzelnen Ladungen</strong><div data-wb-type="verify"><script class="wb-config" type="application/json">{"id":"mf_verify_feldvergleich","title":"Feldvergleich prüfen","hint":"Achte auf die Richtung der Kraft.","statement":"Ein homogenes Magnetfeld kann ein geladenes Teilchen aus der Ruhe beschleunigen und seine kinetische Energie erhöhen.","answer":false,"explain":"Ein ruhendes geladenes Teilchen erfährt keine Lorentzkraft. Bei einem bewegten Teilchen steht die Lorentzkraft senkrecht zur Geschwindigkeit und ändert im reinen statischen Magnetfeld nur deren Richtung, nicht den Betrag."}</script></div></div>
     <div class="wb-section-break"></div>
 
     <div class="mf-strategy">
       <strong>Welche Formel passt wann?</strong>
-      <p><strong>Gemeinsamer Kern:</strong> Leiter im Magnetfeld \(F=BIs\); lange Spule \(B=\mu_0\mu_r\frac nl I\).</p>
-      <p><span class="lf-mark">LF-only</span> <strong>Einzelnes Teilchen:</strong> \(F_L=|q|v_sB\). <strong>Kreisbahn:</strong> Lorentzkraft als Zentripetalkraft setzen. <strong>Geschwindigkeitsfilter:</strong> Kräftegleichgewicht \(F_\mathrm{el}=F_L\).</p>
+      <p><strong>Grundlagen:</strong> Leiter im Magnetfeld \(F=BIs\); lange Spule \(B=\mu_0\mu_r\frac nl I\).</p>
+      <p><strong>Einzelnes Teilchen:</strong> \(F_L=|q|v_sB\). <strong>Kreisbahn:</strong> Lorentzkraft als Zentripetalkraft setzen. <strong>Geschwindigkeitsfilter:</strong> Kräftegleichgewicht \(F_\mathrm{el}=F_L\).</p>
     </div>
     <div class="wb-section-break"></div>
 
@@ -591,11 +588,11 @@
     <ol class="mf-task-list">
       <li>Zur Bestimmung von \(B\) wird die Kraft auf einen stromdurchflossenen Leiter mit \(s=4\,\mathrm{cm}\) gemessen. Messwerte: \(I\) in A: 1,00, 2,00, 3,00, 4,00; \(F\) in mN: 2,4, 4,7, 7,1, 9,5. a) Beschreibe den Versuch mit Skizze und erkläre die wirksame Leiterlänge. b) Untersuche rechnerisch den Zusammenhang zwischen Kraft und Stromstärke. c) Bestimme unter Berücksichtigung aller Messdaten \(B\).</li>
       <li>Eine langgestreckte luftgefüllte Spule der Länge \(60\,\mathrm{cm}\) hat 1200 Windungen. Durch einen Strom wird innen \(B=2\,\mathrm{mT}\) erzeugt. a) Berechne die Stromstärke. b) Die Spule wird mit Eisenkern \((\mu_r=5)\) gefüllt. Ermittle die Stromstärke für \(B=5\,\mathrm{mT}\).</li>
-      <li><span class="lf-mark">LF-only</span> Hallsonden messen magnetische Flussdichten. a) Erläutere mit Skizze den Hall-Effekt und die Hallspannung. b) Leite über Kräfte auf Elektronen den Zusammenhang zwischen Hallspannung und \(B\) her. c) Messwerte: \(B\) in mT: 5, 10, 15, 20, 25; \(U_H\) in mV: 0,5, 1,2, 1,7, 2,5, 3,0. Bestimme mit allen Messwerten eine Gleichung \(U_H(B)\).</li>
-      <li><span class="lf-mark">LF-only</span> Geladene Teilchen werden in einem homogenen Magnetfeld auf eine Kreisbahn mit \(r=4\,\mathrm{cm}\) gebracht. Die Beschleunigungsspannung beträgt \(100\,\mathrm V\), die Flussdichte \(B=0{,}051\,\mathrm{mT}\). a) Berechne die spezifische Ladung \(q/m\). b) Untersuche, um welche Teilchen es sich handeln könnte.</li>
-      <li><span class="lf-mark">LF-only</span> Einfach positiv geladene Stickstoffionen treten durch \(L_1\) in einen Plattenkondensator \((U=500\,\mathrm V,\ d=1{,}5\,\mathrm{cm})\). Dem elektrischen Feld ist \(B_1=51\,\mathrm{mT}\) so überlagert, dass Ionen der Geschwindigkeit \(v\) geradlinig durchlaufen. Danach treten sie durch \(L_2\) in \(B_2=0{,}37\,\mathrm T\) und treffen nach einem Halbkreis mit \(r=0{,}50\,\mathrm m\) auf die Fotoplatte. a) Bestimme die Richtung von \(B_1\). b) Leite \(v=\frac{U}{dB_1}\) her und interpretiere die Formel. c) Berechne die Masse der Ionen. d) Begründe, ob sich die Bahn bei anderer Masse ändert.</li>
-      <li><span class="lf-mark">LF-only</span> Elektronen werden schräg in ein homogenes Magnetfeld geschossen und beschreiben eine Schraubenbahn. a) Erkläre qualitativ das Zustandekommen durch Zerlegung von \(\vec v\). b) Mit \(v_s=15\cdot10^6\,\mathrm{m/s}\), \(v_p=1{,}3\cdot10^6\,\mathrm{m/s}\) und \(B=6\,\mathrm{mT}\): Berechne Radius, Umlaufdauer und Ganghöhe. c) Berechne den Betrag der Geschwindigkeit und den Einfallswinkel.</li>
-      <li><span class="lf-mark">LF-only</span> Fehleranalyse: Eine Schülerin schreibt bei einer Aufgabe zur Kreisbahn \(F=BIs\), weil im Magnetfeld eine Kraft wirkt. Erkläre, warum diese Formel hier nicht passt, und nenne die passende Grundgleichung.</li>
+      <li>Hallsonden messen magnetische Flussdichten. a) Erläutere mit Skizze den Hall-Effekt und die Hallspannung. b) Leite über Kräfte auf Elektronen den Zusammenhang zwischen Hallspannung und \(B\) her. c) Messwerte: \(B\) in mT: 5, 10, 15, 20, 25; \(U_H\) in mV: 0,5, 1,2, 1,7, 2,5, 3,0. Bestimme mit allen Messwerten eine Gleichung \(U_H(B)\).</li>
+      <li>Geladene Teilchen werden in einem homogenen Magnetfeld auf eine Kreisbahn mit \(r=4\,\mathrm{cm}\) gebracht. Die Beschleunigungsspannung beträgt \(100\,\mathrm V\), die Flussdichte \(B=0{,}051\,\mathrm{mT}\). a) Berechne die spezifische Ladung \(q/m\). b) Untersuche, um welche Teilchen es sich handeln könnte.</li>
+      <li>Einfach positiv geladene Stickstoffionen treten durch \(L_1\) in einen Plattenkondensator \((U=500\,\mathrm V,\ d=1{,}5\,\mathrm{cm})\). Dem elektrischen Feld ist \(B_1=51\,\mathrm{mT}\) so überlagert, dass Ionen der Geschwindigkeit \(v\) geradlinig durchlaufen. Danach treten sie durch \(L_2\) in \(B_2=0{,}37\,\mathrm T\) und treffen nach einem Halbkreis mit \(r=0{,}50\,\mathrm m\) auf die Fotoplatte. a) Bestimme die Richtung von \(B_1\). b) Leite \(v=\frac{U}{dB_1}\) her und interpretiere die Formel. c) Berechne die Masse der Ionen. d) Begründe, ob sich die Bahn bei anderer Masse ändert.</li>
+      <li>Elektronen werden schräg in ein homogenes Magnetfeld geschossen und beschreiben eine Schraubenbahn. a) Erkläre qualitativ das Zustandekommen durch Zerlegung von \(\vec v\). b) Mit \(v_s=15\cdot10^6\,\mathrm{m/s}\), \(v_p=1{,}3\cdot10^6\,\mathrm{m/s}\) und \(B=6\,\mathrm{mT}\): Berechne Radius, Umlaufdauer und Ganghöhe. c) Berechne den Betrag der Geschwindigkeit und den Einfallswinkel.</li>
+      <li>Fehleranalyse: Eine Schülerin schreibt bei einer Aufgabe zur Kreisbahn \(F=BIs\), weil im Magnetfeld eine Kraft wirkt. Erkläre, warum diese Formel hier nicht passt, und nenne die passende Grundgleichung.</li>
     </ol>
     <div class="mf-grid">
       <figure class="mf-figure">
@@ -612,21 +609,20 @@
       {
         "id":"mf_essay_gesamtaufgaben",
         "title":"Lösungsfeld: Gesamtaufgaben",
-        "hint":"Die Aufgaben stehen oberhalb. Markiere LF-Aufgaben auch in deiner Lösung.",
+        "hint":"Die Aufgaben stehen oberhalb. Markiere Vertiefungsaufgaben auch in deiner Lösung.",
         "storagePrefix":"mf_",
         "fields":[
-          {"label":"Aufgaben 1-2: gemeinsamer Kern","key":"gesamt_1_2","kind":"textarea","placeholder":"Rechnung und Begründung"},
-          {"label":"Aufgaben 3-6: LF-only","key":"gesamt_3_6","kind":"textarea","placeholder":"Rechnung und Begründung"},
-          {"label":"Aufgabe 7: LF-only Fehleranalyse","key":"gesamt_7","kind":"textarea","placeholder":"Warum passt die Formel nicht?"}
+          {"label":"Aufgaben 1-2: Grundlagen","key":"gesamt_1_2","kind":"textarea","placeholder":"Rechnung und Begründung"},
+          {"label":"Aufgaben 3-6: Vertiefung","key":"gesamt_3_6","kind":"textarea","placeholder":"Rechnung und Begründung"},
+          {"label":"Aufgabe 7: Vertiefung Fehleranalyse","key":"gesamt_7","kind":"textarea","placeholder":"Warum passt die Formel nicht?"}
         ]
       }
       </script>
     </div>
   </section>
 
-  <section data-wb-page="8" data-wb-page-title="LF-Simulationen">
-    <h1>Leistungsfach-Simulationen: Kreisbahn und Schraubenbahn</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong><p>Diese Seite geht über die reine Kraftwirkung hinaus und betrachtet quantitative Bahnformen. Nutze sie für die zusätzlichen LF-Stunden.</p></div>
+  <section data-wb-page="8" data-wb-page-title="Simulationen">
+    <h1>Simulationen: Kreisbahn und Schraubenbahn</h1>
     <p>Bewegt sich ein geladenes Teilchen senkrecht zu einem homogenen Magnetfeld, steht die Lorentzkraft immer senkrecht zur momentanen Geschwindigkeit. Sie wirkt dann wie eine Zentripetalkraft und erzeugt eine Kreisbahn. Hat das Teilchen zusätzlich eine Geschwindigkeitskomponente parallel zum Magnetfeld, entsteht eine Schraubenbahn.</p>
     <p>Arbeite mit den Simulationen wie mit einem Experiment: Ändere immer nur einen Parameter, beobachte die Bahn und formuliere anschließend den passenden Je-desto-Zusammenhang. Wenn du mehrere Regler gleichzeitig veränderst, ist die Ursache der Änderung nicht mehr eindeutig.</p>
     <div class="mf-strategy">
@@ -718,11 +714,11 @@
 
     <h2>Aufgaben: Simulationen auswerten</h2>
     <ol class="mf-task-list">
-      <li><span class="lf-mark">LF-only</span> Kreisbahn: Erhöhe nur die Geschwindigkeit. Beschreibe die Änderung des Radius und begründe sie mit der Formel.</li>
-      <li><span class="lf-mark">LF-only</span> Kreisbahn: Erhöhe nur die magnetische Feldstärke. Beschreibe die Änderung des Radius und begründe sie physikalisch.</li>
-      <li><span class="lf-mark">LF-only</span> Kreisbahn: Wechsle das Vorzeichen der Ladung. Was ändert sich, was bleibt gleich?</li>
-      <li><span class="lf-mark">LF-only</span> Schraubenbahn: Erhöhe das elektrische Feld. Beschreibe, warum die Bahn entlang der Achse stärker gestreckt wird.</li>
-      <li><span class="lf-mark">LF-only</span> Schraubenbahn: Setze \(B\) sehr klein. Erkläre, warum die Bahn dann kaum noch gekrümmt ist.</li>
+      <li>Kreisbahn: Erhöhe nur die Geschwindigkeit. Beschreibe die Änderung des Radius und begründe sie mit der Formel.</li>
+      <li>Kreisbahn: Erhöhe nur die magnetische Feldstärke. Beschreibe die Änderung des Radius und begründe sie physikalisch.</li>
+      <li>Kreisbahn: Wechsle das Vorzeichen der Ladung. Was ändert sich, was bleibt gleich?</li>
+      <li>Schraubenbahn: Erhöhe das elektrische Feld. Beschreibe, warum die Bahn entlang der Achse stärker gestreckt wird.</li>
+      <li>Schraubenbahn: Setze \(B\) sehr klein. Erkläre, warum die Bahn dann kaum noch gekrümmt ist.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
@@ -752,8 +748,8 @@
         <li>Die magnetische Flussdichte \(B\) beschreibt die Stärke eines Magnetfelds.</li>
         <li>In einer schlanken Spule gilt \(B=\mu_0\mu_r\frac nl I\); Eisenkerne können das Feld stark verstärken.</li>
         <li>Das Erdmagnetfeld lässt sich über eine Kompassablenkung und ein bekanntes Spulenfeld bestimmen.</li>
-        <li><span class="lf-mark">LF-only</span> Auf bewegte einzelne Ladungen wirkt die Lorentzkraft, wenn sie eine Geschwindigkeitskomponente senkrecht zu \(B\) besitzen.</li>
-        <li><span class="lf-mark">LF-only</span> Hall-Effekt, Hallkonstante, Hysterese, spezifische Elektronenladung, Massenspektrometer, Zyklotron, quantitative Kreisbahn und Schraubenbahn sind Leistungsfach-Vertiefungen.</li>
+        <li>Auf bewegte einzelne Ladungen wirkt die Lorentzkraft, wenn sie eine Geschwindigkeitskomponente senkrecht zu \(B\) besitzen.</li>
+        <li>Hall-Effekt, Hallkonstante, Hysterese, spezifische Elektronenladung, Massenspektrometer, Zyklotron, quantitative Kreisbahn und Schraubenbahn sind Vertiefungen.</li>
       </ul>
     </div>
     <div class="wb-section-break"></div>
@@ -774,11 +770,11 @@
           {"label":"Magnetfeld einer langen Spule mit B = mu0 · mur · n/l · I bestimmen","category":"feld"},
           {"label":"Erdmagnetfeld mit Deklination und Inklination beschreiben","category":"feld"},
           {"label":"Kraft auf einen stromführenden Leiter mit F = B · I · s berechnen","category":"kraft"},
-          {"label":"LF-only: Lorentzkraft auf bewegte Ladungen erklären","category":"kraft"},
-          {"label":"LF-only: Kreisbahn im Magnetfeld mit Lorentzkraft als Zentripetalkraft deuten","category":"kraft"},
-          {"label":"LF-only: Schraubenbahn durch Zerlegung der Geschwindigkeit erklären","category":"kraft"},
-          {"label":"LF-only: Hallspannung zur Messung von B nutzen","category":"messung"},
-          {"label":"LF-only: Massenspektrometer zur Trennung von Ionen verwenden","category":"messung"},
+          {"label":"Lorentzkraft auf bewegte Ladungen erklären","category":"kraft"},
+          {"label":"Kreisbahn im Magnetfeld mit Lorentzkraft als Zentripetalkraft deuten","category":"kraft"},
+          {"label":"Schraubenbahn durch Zerlegung der Geschwindigkeit erklären","category":"kraft"},
+          {"label":"Hallspannung zur Messung von B nutzen","category":"messung"},
+          {"label":"Massenspektrometer zur Trennung von Ionen verwenden","category":"messung"},
           {"label":"Daten auf einer Festplatte magnetisch speichern","category":"messung"},
           {"label":"Polarlicht als Anwendung bewegter Ladungen im Erdmagnetfeld erklären","category":"messung"}
         ]
@@ -796,7 +792,7 @@
         "shuffleChoices":true,
         "questions":[
           {
-            "text":"LF-only: Welche Aussage zur Lorentzkraft auf ein einzelnes Teilchen ist richtig?",
+            "text":"Welche Aussage zur Lorentzkraft auf ein einzelnes Teilchen ist richtig?",
             "choices":[
               {"id":"A","label":"Sie wirkt immer in Bewegungsrichtung und macht Teilchen schneller."},
               {"id":"B","label":"Sie wirkt auf ruhende Ladungen genauso wie auf bewegte Ladungen."},
@@ -816,7 +812,7 @@
             "explain":"Die Formel beschreibt die Kraft auf einen Leiter mit Stromstärke I und wirksamer Leiterlänge s."
           },
           {
-            "text":"LF-only: Was macht ein wienscher Geschwindigkeitsfilter zuerst?",
+            "text":"Was macht ein wienscher Geschwindigkeitsfilter zuerst?",
             "choices":[
               {"id":"A","label":"Er sortiert Teilchen direkt nach Masse."},
               {"id":"B","label":"Er lässt nur Teilchen einer bestimmten Geschwindigkeit geradlinig durch."},
@@ -839,8 +835,8 @@
         "hint":"Schreibe zusammenhängend. Nutze mindestens drei Fachbegriffe korrekt.",
         "storagePrefix":"mf_",
         "fields":[
-          {"label":"Zusammenfassung Basisfach","key":"abschluss_basis","kind":"textarea","placeholder":"Erkläre Magnetfeld, Feldlinien, Flussdichte, Kraft auf einen stromdurchflossenen Leiter und schlanke Spule."},
-          {"label":"Leistungsfach-Ausblick","key":"abschluss_lf","kind":"textarea","placeholder":"Erkläre Lorentzkraft, Hall-Effekt, Hysterese, Fadenstrahlrohr, Massenspektrometer, Zyklotron, Kreisbahn oder Schraubenbahn."}
+          {"label":"Zusammenfassung","key":"abschluss_basis","kind":"textarea","placeholder":"Erkläre Magnetfeld, Feldlinien, Flussdichte, Kraft auf einen stromdurchflossenen Leiter und schlanke Spule."},
+          {"label":"Vertiefung","key":"abschluss_lf","kind":"textarea","placeholder":"Erkläre Lorentzkraft, Hall-Effekt, Hysterese, Fadenstrahlrohr, Massenspektrometer, Zyklotron, Kreisbahn oder Schraubenbahn."}
         ]
       }
       </script>
@@ -850,7 +846,7 @@
     <h2>Quellen & Weiterforschen</h2>
     <p class="wb-muted">Inhaltlich orientiert an Dorn/Bader: Physik Kursstufe, Kapitel zum magnetischen Feld. Die Kursart-Markierung wurde mit dem Bildungsplan Baden-Württemberg Physik V3.0 abgeglichen.</p>
     <ul>
-      <li><a href="https://www.bildungsplaene-bw.de/%2CLde/DE_BW_BILDUNGSPLAENE_GEN2X_BPBW_ALLG_GYM_PH%28V3.0%29">Bildungsplan BW Physik V3.0</a>: Basisfach und Leistungsfach Kursstufe.</li>
+      <li><a href="https://www.bildungsplaene-bw.de/%2CLde/DE_BW_BILDUNGSPLAENE_GEN2X_BPBW_ALLG_GYM_PH%28V3.0%29">Bildungsplan BW Physik V3.0</a>: Grundlage Kursstufe.</li>
       <li><a href="felder-simulationen.html#page-3">Simulation einzeln: Kreisbahn im Magnetfeld</a></li>
       <li><a href="felder-simulationen.html#page-4">Simulation einzeln: Schraubenbahn im E- und B-Feld</a></li>
     </ul>

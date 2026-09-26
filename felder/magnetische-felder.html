@@ -22,7 +22,6 @@
     .mf-route strong{display:block;margin-bottom:4px;color:#1f3f6f}
     .mf-stop{border-left:5px solid #b45309;background:#fff7ed;padding:12px;border-radius:8px;margin:14px 0}
     .mf-strategy{border:1px solid rgba(31,138,76,.2);background:rgba(31,138,76,.06);border-radius:8px;padding:12px;margin:14px 0}
-    .lf-mark{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:#733a18;background:#fff3cd;border:1px solid #f2c94c;border-radius:999px;padding:2px 8px;margin-right:4px}
     @media (max-width:760px){.mf-grid{grid-template-columns:1fr}.mf-figure{max-width:100%}}
   </style>
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
@@ -46,7 +45,7 @@
 
   <section data-wb-page="1" data-wb-page-title="Start">
     <h1>Magnetische Felder: Kräfte auf Ströme und bewegte Ladungen</h1>
-    <p class="wb-muted">In diesem Kapitel erarbeitest du Magnetfelder von Permanentmagneten und Strömen, die Lorentzkraft und die magnetische Flussdichte. Du siehst immer wieder, was Basisfachwissen ist und was in die zusätzliche Leistungsfach-Zeit gehört.</p>
+    <p class="wb-muted">In diesem Kapitel erarbeitest du Magnetfelder von Permanentmagneten und Strömen, die Lorentzkraft und die magnetische Flussdichte. Du baust die Grundlagen vom Feldlinienbild bis zur Kraftwirkung auf und nutzt sie anschließend in anspruchsvolleren Anwendungen.</p>
     <p>Die Leitfrage lautet: <strong>Wie kann ein Magnetfeld Kräfte ausüben, obwohl du es nicht direkt sehen kannst?</strong></p>
     <p>Du arbeitest hier nicht nur Definitionen ab. Du lernst, aus Feldlinien auf Kräfte zu schließen, Handregeln sicher anzuwenden, Messdaten in Formeln zu übersetzen und zu entscheiden, wann ein Modell idealisiert ist. Genau diese Übergänge sind in Aufgaben meist entscheidend.</p>
     <div class="wb-section-break"></div>
@@ -55,18 +54,18 @@
       <div><strong>1. Struktur sehen</strong><p>Du startest mit Magneten, Feldlinien und Spulen. Ziel: Du kannst beschreiben, wo das Feld stark ist und welche Richtung es hat.</p></div>
       <div><strong>2. Kräfte erklären</strong><p>Danach kommen Leiterkraft und Lorentzkraft. Ziel: Du kannst vorhersagen, wohin ein Leiter oder Teilchen abgelenkt wird.</p></div>
       <div><strong>3. Größen berechnen</strong><p>Mit \(B\), \(F=BIs\), \(F_L=qvB\) und der Spulenformel berechnest du Magnetfelder und Kräfte.</p></div>
-      <div><strong>4. Anwendungen verstehen</strong><p>Im Leistungsfach nutzt du dieselben Ideen für Hallsonde, Fadenstrahlrohr, Massenspektrometer, Zyklotron und Schraubenbahnen.</p></div>
+      <div><strong>4. Anwendungen verstehen</strong><p>Später nutzt du dieselben Ideen für Hallsonde, Fadenstrahlrohr, Massenspektrometer, Zyklotron und Schraubenbahnen.</p></div>
     </div>
     <div class="wb-section-break"></div>
 
     <div class="mf-two">
       <div class="mf-basis">
-        <strong>Basisfach und Leistungsfach</strong>
-        <p>Magnete, Magnetfelder, Feldlinien, stromdurchflossene Leiter, Spulenfelder, magnetische Flussdichte \(B\) und die Kraft \(F=B\cdot I\cdot s\) gehören zum gemeinsamen Kern.</p>
+        <strong>Grundlage</strong>
+        <p>Du beginnst mit Magneten, Magnetfeldern, Feldlinien, stromdurchflossenen Leitern, Spulenfeldern, der magnetischen Flussdichte \(B\) und der Kraft \(F=B\cdot I\cdot s\).</p>
       </div>
-      <div class="lf-only-box">
-        <strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong>
-        <p>Die Lorentzkraft auf einzelne Ladungen \(F_\mathrm L=q\cdot v\cdot B\), Hall-Effekt, quantitative Kreisbahnen, Schraubenbahnen und kombinierte elektrische und magnetische Felder sind Vertiefungen für das Leistungsfach.</p>
+      <div>
+        <strong>Vertiefung</strong>
+        <p>Die Lorentzkraft auf einzelne Ladungen \(F_\mathrm L=q\cdot v\cdot B\), Hall-Effekt, quantitative Kreisbahnen, Schraubenbahnen und kombinierte elektrische und magnetische Felder erweitern die Grundideen des Kapitels.</p>
       </div>
     </div>
     <div class="wb-section-break"></div>
@@ -85,7 +84,7 @@
 
   <section data-wb-page="2" data-wb-page-title="Magnete">
     <h1>Magnete und ihre Eigenschaften</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die Eigenschaften von Magneten, Feldlinienbilder und das Elementarmagnetmodell sind Grundlagen für beide Kursarten.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Du untersuchst die Eigenschaften von Magneten, deutest Feldlinienbilder und arbeitest mit dem Elementarmagnetmodell.</p></div>
     <p>Magnete erkennst du daran, dass sie magnetisierbare Stoffe wie Eisen, Nickel und Kobalt anziehen. Auf nicht magnetisierbare Stoffe üben Magnete keine nennenswerte magnetische Kraft aus. Die stärkste Wirkung findest du an den Polen.</p>
     <p>Hängt man einen Stabmagneten frei drehbar auf, richtet er sich in Nord-Süd-Richtung aus. Der Pol, der zur geografischen Nordrichtung zeigt, heißt Nordpol; der andere heißt Südpol. Kleine drehbar gelagerte Stabmagnete sind Kompassnadeln.</p>
     <p>Ungleichnamige Pole ziehen sich an, gleichnamige Pole stoßen sich ab. Anders als elektrische Ladungen treten magnetische Pole nicht einzeln auf: Ein Magnet ist immer ein Dipol.</p>
@@ -143,7 +142,7 @@
 
   <section data-wb-page="3" data-wb-page-title="Feldlinien">
     <h1>Magnetfeld, Feldlinien und Stromfelder</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Feldlinienbilder von Magneten, Leitern und Spulen sowie die Richtung mit der Faustregel gehören zum gemeinsamen Kern.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Du deutest Feldlinienbilder von Magneten, Leitern und Spulen und bestimmst ihre Richtung mit der Faustregel.</p></div>
     <p>Ein Magnet ist von einem Magnetfeld umgeben. In diesem Feld werden andere magnetische Dipole ausgerichtet und es wirken Kräfte. Sichtbar machen kannst du das Feld mit Kompassnadeln oder Eisenfeilspänen. Feldlinien sind ein Modell: Sie zeigen Richtung und Struktur des Feldes.</p>
     <p>Dort, wo Feldlinien geradlinig und parallel verlaufen, nennt man das Feld homogen. Ein solches Feld liegt näherungsweise zwischen den Polen eines Hufeisenmagneten und im Inneren einer langen Spule vor.</p>
     <p>Feldlinien sind keine echten Fäden im Raum. Sie sind eine Zeichensprache: Die Richtung zeigt, wie sich ein Nordpol ausrichten würde. Die Dichte der Linien zeigt qualitativ, wo das Feld stärker ist. Wenn du Feldlinienbilder vergleichst, achte deshalb immer auf zwei Dinge: Richtung und Dichte.</p>
@@ -231,7 +230,7 @@
 
   <section data-wb-page="4" data-wb-page-title="Leiterkraft">
     <h1>Stromdurchflossene Leiter im Magnetfeld</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die Kraft auf stromdurchflossene Leiter im Magnetfeld, ihre Richtungsbestimmung und die qualitative Abhängigkeit von Stromstärke und Orientierung gehören zum gemeinsamen Kern.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Du untersuchst die Kraft auf stromdurchflossene Leiter im Magnetfeld, ihre Richtung und die qualitative Abhängigkeit von Stromstärke und Orientierung.</p></div>
     <p>Ein stromführender unmagnetischer Leiter wird im Magnetfeld abgelenkt. Je größer die Stromstärke ist, desto stärker ist die Auslenkung. Dreht man den Leiter so, dass er nicht mehr senkrecht zu den Feldlinien steht, wird die Kraft kleiner. Ist der Leiter parallel zu den Feldlinien, wirkt keine magnetische Kraft.</p>
     <p>Die Leiterschaukel ist deshalb ein Schlüsselfall: Sie zeigt, dass Strom und Magnetfeld nicht nur nebeneinander existieren. Sobald sich Ladungsträger im Leiter bewegen und ein äußeres Magnetfeld vorhanden ist, kann eine messbare Kraft auf den Leiter entstehen.</p>
     <div class="wb-section-break"></div>
@@ -294,7 +293,7 @@
 
   <section data-wb-page="5" data-wb-page-title="Lorentzkraft">
     <h1>Die Lorentzkraft auf bewegte Ladungen</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Lorentzkraft auf einzelne Ladungen</strong><p>Die Richtung der Lorentzkraft, die Drei-Finger-Regel und der Zusammenhang \(F_\mathrm L=qvB\) für bewegte einzelne Ladungen gehören nach dem Bildungsplan 2016 zum Leistungsfach. Im Basisfach bleibt die Kraft auf den stromdurchflossenen Leiter mit \(F=BIs\) verbindlich.</p></div>
+    <div><strong>Lorentzkraft auf einzelne Ladungen</strong><p>Hier überträgst du die Kraftwirkung vom stromdurchflossenen Leiter auf einzelne bewegte Ladungen. Dazu nutzt du die Drei-Finger-Regel und den Zusammenhang \(F_\mathrm L=qvB\).</p></div>
     <p>Wenn Strom durch einen Leiter fließt, bewegen sich darin Elektronen. Freie bewegte Elektronen, zum Beispiel in einer braunschen Röhre, werden ebenfalls im Magnetfeld abgelenkt. Die Kraft heißt Lorentzkraft. Sie wirkt senkrecht zur Bewegungsrichtung und senkrecht zur Magnetfeldrichtung.</p>
     <p>Für negative Teilchen verwendest du die linke Hand, für positive Teilchen die rechte Hand. Der Daumen zeigt in Bewegungsrichtung der Ladung, der Zeigefinger in Richtung des Magnetfelds, der Mittelfinger zeigt die Richtung der Kraft.</p>
     <p>Die Lorentzkraft ist für viele Lernende ungewohnt, weil sie nicht in Bewegungsrichtung wirkt. Eine Kraft in Bewegungsrichtung würde ein Teilchen schneller oder langsamer machen. Die magnetische Lorentzkraft steht aber seitlich zur Bewegung. Sie biegt die Bahn, ohne im idealen homogenen Magnetfeld direkt die Geschwindigkeit zu vergrößern.</p>
@@ -388,7 +387,7 @@
 
   <section data-wb-page="6" data-wb-page-title="Flussdichte">
     <h1>Die magnetische Flussdichte \(B\)</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die Definition der magnetischen Flussdichte über die Kraft auf einen stromdurchflossenen Leiter und einfache Rechnungen gehören zum gemeinsamen Kern.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Du definierst die magnetische Flussdichte über die Kraft auf einen stromdurchflossenen Leiter und wendest die Beziehung in einfachen Rechnungen an.</p></div>
     <p>Um Magnetfelder zu vergleichen, braucht man eine Messgröße für die Feldstärke. Dafür eignet sich die Kraft auf einen Probestrom: Ein Drahtrahmen wird so in ein homogenes Magnetfeld gebracht, dass ein Leiterstück senkrecht zu den Feldlinien steht. Die Kraft auf dieses wirksame Leiterstück wird gemessen.</p>
     <p>Das Vorgehen ähnelt der Einführung der elektrischen Feldstärke: Dort testet man ein elektrisches Feld mit einer Probeladung. Hier testet man ein Magnetfeld mit einem Probestrom, weil einzelne Magnetpole nicht verfügbar sind und kleine Permanentmagnete selbst komplizierte Felder mitbringen würden.</p>
     <div class="wb-section-break"></div>
@@ -477,7 +476,7 @@
 
   <section data-wb-page="7" data-wb-page-title="Rechnen">
     <h1>Lorentzkraft berechnen</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Lorentzkraft berechnen</strong><p>Die Formel \(F_\mathrm L=e\cdot v_s\cdot B\), Rechnungen mit bewegten einzelnen Ladungen und die Herleitung aus der Leiterkraft gehören zum Leistungsfach.</p></div>
+    <div><strong>Lorentzkraft berechnen</strong><p>Die Formel \(F_\mathrm L=e\cdot v_s\cdot B\) lässt sich aus der Leiterkraft herleiten und auf bewegte einzelne Ladungen anwenden.</p></div>
     <p>Die Kraft auf einen Leiter lässt sich als Summe vieler Lorentzkräfte auf bewegte Elektronen deuten. Wenn in der Zeit \(\Delta t\) die Ladungsmenge \(\Delta Q=N\cdot e\) durch einen Leiterquerschnitt fließt, gilt \(I=\Delta Q/\Delta t\). Setzt man dies in \(F=BIs\) ein, erhält man für ein einzelnes Elektron bei senkrechter Bewegung die Lorentzkraft.</p>
     <p>Für Aufgaben reicht oft die fertige Formel. Wichtig ist aber die Deutung: Ein Magnetfeld „zieht“ nicht einfach an Ladung. Es wirkt auf bewegte Ladung, und zwar abhängig davon, wie stark die Bewegung quer zum Feld ist.</p>
     <div class="wb-section-break"></div>
@@ -530,7 +529,6 @@
 
   <section data-wb-page="8" data-wb-page-title="Hall-Effekt">
     <h1>Hallsonden und Hall-Effekt</h1>
-    <div class="lf-only-box"><strong><span class="lf-only-badge">LF-only</span> Leistungsfach</strong><p>Der Hall-Effekt, die Hallspannung und die Hallkonstante sind Leistungsfachstoff. Im Basisfach reicht die Idee: Magnetfelder können mit Sensoren gemessen werden.</p></div>
     <p>Eine Hallsonde ersetzt eine aufwendige Kraftmessung durch eine Spannungsmessung. In einem stromdurchflossenen Leiterplättchen bewegen sich Elektronen. Durch ein senkrechtes Magnetfeld werden sie seitlich abgelenkt. Dadurch entsteht eine Ladungstrennung und quer zum Strom eine messbare Hallspannung.</p>
     <p>Die Ladungstrennung wächst so lange, bis die elektrische Kraft der Lorentzkraft entgegenwirkt. Im Gleichgewicht fliegen die Elektronen wieder geradlinig weiter.</p>
     <p>Das ist ein typischer Rückkopplungsprozess: Zuerst trennt die Lorentzkraft Ladungen. Durch die getrennten Ladungen entsteht ein elektrisches Feld. Dieses elektrische Feld wirkt der weiteren Trennung entgegen. Sobald beide Kräfte gleich groß sind, bleibt eine konstante Hallspannung messbar.</p>
@@ -553,7 +551,7 @@
           <p>Bei fester Hallsonde ist die Hallspannung proportional zur magnetischen Flussdichte.</p>
         </div>
         <div class="wb-callout">
-          <strong>LF-Vertiefung:</strong>
+          <strong>Vertiefung:</strong>
           <p class="mf-formula">\(U_H=R_H\frac{I}{d}B\), \(\quad R_H=\frac1{n\cdot e}\)</p>
           <p>Die Hallkonstante hängt vom Material ab. Halbleiter liefern deutlich größere Hallspannungen als Metalle.</p>
         </div>
@@ -567,16 +565,16 @@
 
     <h2>Aufgaben: Hall-Effekt</h2>
     <ol class="mf-task-list">
-      <li><span class="lf-mark">LF-only</span> Eine Hallsonde wird in einem Magnetfeld mit \(B=0{,}1\,\mathrm T\) kalibriert. Man misst \(U_H=12\,\mathrm{mV}\). a) Leite eine Gleichung für \(U_H(B)\) ab. b) Berechne \(B\), wenn \(U_H=0{,}20\,\mathrm{mV}\) gemessen wird.</li>
-      <li><span class="lf-mark">LF-only</span> Eine Metallfolie mit \(h=1\,\mathrm{cm}\) und \(d=0{,}1\,\mathrm{mm}\) führt \(I=1{,}9\,\mathrm A\) und wird von \(B=0{,}3\,\mathrm T\) senkrecht durchsetzt. Man misst \(U_H=0{,}51\,\mu\mathrm V\). a) Berechne die Geschwindigkeit der Elektronen. b) Bestimme die Hallspannung bei \(B=0{,}01\,\mathrm T\). c) Nenne zwei Möglichkeiten, die Hallspannung zu vergrößern, und bewerte ihre technische Praktikabilität.</li>
-      <li><span class="lf-mark">LF-only</span> Beschreibe, wie du mit einer kalibrierten Hallsonde experimentell prüfen würdest, ob das Feld im Inneren einer langen Spule homogen ist.</li>
+      <li>Eine Hallsonde wird in einem Magnetfeld mit \(B=0{,}1\,\mathrm T\) kalibriert. Man misst \(U_H=12\,\mathrm{mV}\). a) Leite eine Gleichung für \(U_H(B)\) ab. b) Berechne \(B\), wenn \(U_H=0{,}20\,\mathrm{mV}\) gemessen wird.</li>
+      <li>Eine Metallfolie mit \(h=1\,\mathrm{cm}\) und \(d=0{,}1\,\mathrm{mm}\) führt \(I=1{,}9\,\mathrm A\) und wird von \(B=0{,}3\,\mathrm T\) senkrecht durchsetzt. Man misst \(U_H=0{,}51\,\mu\mathrm V\). a) Berechne die Geschwindigkeit der Elektronen. b) Bestimme die Hallspannung bei \(B=0{,}01\,\mathrm T\). c) Nenne zwei Möglichkeiten, die Hallspannung zu vergrößern, und bewerte ihre technische Praktikabilität.</li>
+      <li>Beschreibe, wie du mit einer kalibrierten Hallsonde experimentell prüfen würdest, ob das Feld im Inneren einer langen Spule homogen ist.</li>
     </ol>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
         "id":"mf_essay_hall",
         "title":"Lösungsfeld: Hall-Effekt",
-        "hint":"Nur Leistungsfach. Nutze Kräftegleichgewicht und Proportionalität.",
+        "hint":"Nutze Kräftegleichgewicht und Proportionalität.",
         "storagePrefix":"mf_",
         "fields":[
           {"label":"Aufgabe 1","key":"hall_1","kind":"textarea","placeholder":"Rechnung"},
@@ -590,7 +588,7 @@
 
   <section data-wb-page="9" data-wb-page-title="Spule und mu0">
     <h1>Die magnetische Feldkonstante und die schlanke Spule</h1>
-    <div class="mf-basis"><strong>Basisfach und Leistungsfach</strong><p>Die schlanke Spule und die Formel \(B=\mu_0\mu_r\frac nl I\) sind im Basisfach und Leistungsfach vorgesehen. Im Leistungsfach wird die Herleitung und Auswertung meist gründlicher behandelt.</p></div>
+    <div class="mf-basis"><strong>Grundlage</strong><p>Die schlanke Spule und die Formel \(B=\mu_0\mu_r\frac nl I\) gehören zur Grundlage. In der Vertiefung leitest du den Zusammenhang her und wertest Messreihen ausführlicher aus.</p></div>
     <p>Stromdurchflossene Spulen werden überall dort eingesetzt, wo man Magnetfelder gezielt erzeugen möchte. Für das Grundverständnis betrachtet man zuerst eine lange, luftgefüllte Spule. In ihrem Inneren verlaufen die Feldlinien parallel zur Spulenachse; die magnetische Flussdichte ist dort näherungsweise konstant. Das Feld ist also homogen.</p>
     <p>Mit einer Hallsonde findet man: Bei fester Spulenlänge ist \(B\) proportional zur Stromstärke \(I\). Bei fester Windungszahl und gleicher Stromstärke ist \(B\) antiproportional zur Spulenlänge \(l\). Außerdem hängt \(B\) von der Windungszahldichte \(n/l\) ab.</p>
     <p>Anschaulich bedeutet das: Jede Windung trägt zum Magnetfeld bei. Packst du mehr Windungen auf dieselbe Länge oder erhöhst du den Strom, wird das Feld stärker. Ziehst du dieselbe Windungszahl auf eine größere Länge auseinander, verteilt sich die Wirkung stärker und \(B\) wird kleiner.</p>

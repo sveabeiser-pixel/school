@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Arduino: if/else und while-Schleifen verfolgen</title>
+  <title>Arduino: if/else, while und for-Schleifen verfolgen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
   <link rel="stylesheet" href="arduino-kurs.css" />
   <style>
@@ -161,7 +161,7 @@
     <script class="wb-book-config" type="application/json">
     {
       "bookTitle":"Arduino programmieren",
-      "sectionTitle":"if/else und while verfolgen",
+      "sectionTitle":"if/else, while und for verfolgen",
       "startPage":1,
       "submitLabel":"Ergebnisse & Abschluss",
       "onSubmit":"alert",
@@ -178,7 +178,7 @@
       <div class="li-hero">
         <div class="li-kicker">Vom Ablaufplan zum ersten Programmcode</div>
         <h1>Wo steckt dein Programm gerade: in der Bedingung, im Zweig oder in der Schleife?</h1>
-        <p class="li-lead">In dieser Lernstrecke verfolgst du Programme Schritt für Schritt. Du liest Flussdiagramme, Pseudocode und immer häufiger echte Programmier-Schreibweisen wie <span class="li-mini">if(Bedingung){Aktion}else{Aktion}</span> und <span class="li-mini">while(Bedingung){Aktion}</span>.</p>
+        <p class="li-lead">In dieser Lernstrecke verfolgst du Programme Schritt für Schritt. Du liest Flussdiagramme, Pseudocode und immer häufiger echte Programmier-Schreibweisen wie <span class="li-mini">if(Bedingung){Aktion}else{Aktion}</span> und <span class="li-mini">while(Bedingung){Aktion}</span>. Am Schluss bündelst du eine feste Anzahl von Wiederholungen in <span class="li-mini">for(Start; Bedingung; Veränderung){Aktion}</span>.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -233,7 +233,7 @@ ENDE WIEDERHOLUNG</div>
         <dt>ENDE</dt><dd>Die schließende Klammer <span class="li-mini">}</span> beendet den jeweiligen Block.</dd>
       </dl>
 
-      <div class="li-note"><strong>Wichtig bei „WIEDERHOLE 4-MAL“:</strong> Eine feste Anzahl steht nicht direkt im Wort <span class="li-mini">while</span>. Dafür nutzt du eine Zählvariable, zum Beispiel <span class="li-mini">zaehler = 0</span>, prüfst <span class="li-mini">zaehler &lt; 4</span> und erhöhst den Zähler in jedem Durchlauf.</div>
+      <div class="li-note"><strong>Wichtig bei „WIEDERHOLE 4-MAL“:</strong> Eine feste Anzahl steht nicht direkt im Wort <span class="li-mini">while</span>. Dafür nutzt du eine Zählvariable, zum Beispiel <span class="li-mini">zaehler = 0</span>, prüfst <span class="li-mini">zaehler &lt; 4</span> und erhöhst den Zähler in jedem Durchlauf. Zunächst schreibst du diese Schritte mit <span class="li-mini">while</span> einzeln aus. Am Schluss lernst du, wie <span class="li-mini">for</span> genau diese Zählerteile kompakt zusammenfasst.</div>
 
       <div class="wb-section-break"></div>
 
@@ -1009,9 +1009,224 @@ alarm = AN;</div>
       </div>
     </section>
 
-    <section data-wb-page="9" data-wb-page-title="Abschluss">
+    <section data-wb-page="9" data-wb-page-title="for-Schleife">
+      <h1>Von while zu for: feste Wiederholungen kompakt schreiben</h1>
+      <p>Mit <span class="li-mini">while</span> hast du bereits eine feste Anzahl von Wiederholungen programmiert. Dafür brauchtest du einen Startwert, eine Bedingung und eine Veränderung des Zählers. Wenn schon vorher feststeht, wie oft eine Aktion ausgeführt werden soll, kannst du genau diese drei Teile übersichtlich in einer <span class="li-mini">for</span>-Schleife bündeln.</p>
+
+      <div class="li-note"><strong>Der wichtige Übergang:</strong> <span class="li-mini">for</span> ist keine völlig neue Ablaufidee. Es ist eine kompakte Schreibweise für eine Zählschleife, die du bereits mit <span class="li-mini">while</span> kennst.</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Aus WIEDERHOLE 3-MAL wird for</h2>
+      <div class="li-translation">
+        <div class="li-translation-part">
+          <h3>Ausführlich mit while</h3>
+          <div class="li-code"><span class="kw">int</span> zaehler = 0;
+<span class="kw">while</span>(zaehler &lt; 3){
+  blinkeLED();
+  zaehler++;
+}</div>
+          <p>Initialisierung, Bedingung und Veränderung stehen an drei verschiedenen Stellen.</p>
+        </div>
+        <div class="li-translation-part">
+          <h3>Kompakt mit for</h3>
+          <div class="li-code"><span class="kw">for</span>(<span class="kw">int</span> zaehler = 0; zaehler &lt; 3; zaehler++){
+  blinkeLED();
+}</div>
+          <p>Initialisierung, Bedingung und Veränderung stehen gemeinsam im Schleifenkopf.</p>
+        </div>
+      </div>
+
+      <div class="li-code">WIEDERHOLE 3-MAL
+  lasse LED blinken
+ENDE WIEDERHOLUNG</div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Die vier Schritte einer for-Schleife</h2>
+      <dl class="li-word-map">
+        <dt>1. Initialisierung</dt><dd><span class="li-mini">int zaehler = 0</span> wird genau einmal am Anfang ausgeführt. Die Zählvariable erhält ihren Startwert.</dd>
+        <dt>2. Bedingung</dt><dd><span class="li-mini">zaehler &lt; 3</span> wird vor jedem Durchlauf geprüft. Nur wenn die Bedingung wahr ist, folgt die Aktion.</dd>
+        <dt>3. Aktion</dt><dd><span class="li-mini">blinkeLED();</span> steht im Schleifenrumpf und wird bei jedem gültigen Durchlauf ausgeführt.</dd>
+        <dt>4. Veränderung</dt><dd><span class="li-mini">zaehler++</span> erhöht den Zähler nach der Aktion um 1. Danach springt das Programm zurück zur Bedingung.</dd>
+      </dl>
+
+      <div class="li-warn"><strong>Nicht von links nach rechts wiederholen:</strong> Die Initialisierung läuft nur einmal. Danach wiederholt das Programm immer die Reihenfolge <strong>Bedingung → Aktion → Veränderung → Bedingung</strong>.</div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-flow wide" aria-label="Flussdiagramm einer for-Schleife mit drei Durchläufen">
+        <div class="li-symbol start">START</div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol process">zaehler = 0<br><small>Initialisierung einmal</small></div>
+        <div class="li-arrow">↓</div>
+        <div class="li-symbol decision"><span>zaehler &lt; 3?</span></div>
+        <div class="li-branch-row">
+          <div class="li-branch">
+            <div class="li-branch-label">JA / wahr</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">Aktion: LED blinkt<br>Veränderung: zaehler++</div>
+            <div class="li-loopback">↺ zurück zur Bedingung</div>
+          </div>
+          <div class="li-arrow">↔</div>
+          <div class="li-branch">
+            <div class="li-branch-label">NEIN / falsch</div>
+            <div class="li-arrow">↓</div>
+            <div class="li-symbol process">Weiter hinter der Schleife</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <h2>Simulation: Jede Codezeile verfolgen</h2>
+      <p>Starte den Durchlauf oder gehe mit <strong>Einzelschritt</strong> Zeile für Zeile vor. Die gelbe Markierung zeigt, wo das Programm gerade steckt. Beobachte besonders, dass der Wert 3 nicht mehr zu einer Aktion führt: Bei <span class="li-mini">3 &lt; 3</span> ist die Bedingung falsch.</p>
+
+      <div class="li-sim" data-code-sim data-sim-kind="for">
+        <div class="li-sim-toolbar">
+          <div class="li-sim-title">Simulation: WIEDERHOLE 3-MAL als for-Schleife</div>
+          <div class="li-sim-actions">
+            <button class="li-sim-button primary" type="button" data-sim-action="toggle">Start</button>
+            <button class="li-sim-button" type="button" data-sim-action="step">Einzelschritt</button>
+            <button class="li-sim-button" type="button" data-sim-action="reset">Zurücksetzen</button>
+          </div>
+        </div>
+        <div class="li-sim-body">
+          <div class="li-sim-stage">
+            <div class="li-sim-device" data-sim-device data-state="off" aria-label="Simulierte Arduino-LED"></div>
+            <div class="li-sim-output" data-sim-output>Bereit: Die for-Schleife wurde noch nicht gestartet.</div>
+          </div>
+          <div class="li-sim-code">
+            <ol class="li-sim-lines" aria-label="Ausgeführter for-Code">
+              <li data-sim-line="0" data-line="1">for(int zaehler = 0;</li>
+              <li data-sim-line="1" data-line="2">    zaehler &lt; 3;</li>
+              <li data-sim-line="2" data-line="3">    zaehler++){</li>
+              <li data-sim-line="3" data-line="4">  led = AN;</li>
+              <li data-sim-line="4" data-line="5">  warte(500);</li>
+              <li data-sim-line="5" data-line="6">  led = AUS;</li>
+              <li data-sim-line="6" data-line="7">}</li>
+              <li data-sim-line="7" data-line="8">status = FERTIG;</li>
+            </ol>
+            <div class="li-sim-state">
+              <div><span>zaehler</span><strong data-sim-value="zaehler">-</strong></div>
+              <div><span>Bedingung</span><strong data-sim-value="bedingung">noch nicht geprüft</strong></div>
+              <div><span>Durchlauf</span><strong data-sim-value="durchlauf">0</strong></div>
+              <div><span>Aktion</span><strong data-sim-value="aktion">-</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="trace">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-trace-for-counter",
+          "title":"Ablaufspur: Die for-Schleife vollständig verfolgen",
+          "hint":"Fülle zuerst alle Felder aus. Denke auch an die letzte Prüfung, bei der keine Aktion mehr ausgeführt wird.",
+          "columns":[
+            {"label":"Prüfung","width":"12%"},
+            {"label":"zaehler vor Bedingung","width":"21%"},
+            {"label":"zaehler < 3?","width":"17%"},
+            {"label":"Aktion / Ort","width":"28%"},
+            {"label":"zaehler nach Veränderung","width":"22%"}
+          ],
+          "rows":[
+            {"cells":[
+              {"given":"1"},
+              {"answers":["0"],"ariaLabel":"Zähler vor der ersten Bedingung"},
+              {"answers":["wahr","ja"],"ariaLabel":"Erste Bedingung"},
+              {"answers":["led blinkt","aktion: led blinkt","durchlauf 1"],"ariaLabel":"Aktion im ersten Durchlauf"},
+              {"answers":["1"],"ariaLabel":"Zähler nach der ersten Veränderung"}
+            ]},
+            {"cells":[
+              {"given":"2"},
+              {"answers":["1"],"ariaLabel":"Zähler vor der zweiten Bedingung"},
+              {"answers":["wahr","ja"],"ariaLabel":"Zweite Bedingung"},
+              {"answers":["led blinkt","aktion: led blinkt","durchlauf 2"],"ariaLabel":"Aktion im zweiten Durchlauf"},
+              {"answers":["2"],"ariaLabel":"Zähler nach der zweiten Veränderung"}
+            ]},
+            {"cells":[
+              {"given":"3"},
+              {"answers":["2"],"ariaLabel":"Zähler vor der dritten Bedingung"},
+              {"answers":["wahr","ja"],"ariaLabel":"Dritte Bedingung"},
+              {"answers":["led blinkt","aktion: led blinkt","durchlauf 3"],"ariaLabel":"Aktion im dritten Durchlauf"},
+              {"answers":["3"],"ariaLabel":"Zähler nach der dritten Veränderung"}
+            ]},
+            {"cells":[
+              {"given":"4"},
+              {"answers":["3"],"ariaLabel":"Zähler vor der letzten Bedingung"},
+              {"answers":["falsch","nein"],"ariaLabel":"Letzte Bedingung"},
+              {"answers":["hinter der schleife","nach der schleife","status = fertig","fertig","keine aktion"],"ariaLabel":"Ort nach der letzten Prüfung"},
+              {"answers":["3","unverändert"],"ariaLabel":"Zähler nach der letzten Prüfung"}
+            ]}
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="order">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-order-for-cycle",
+          "title":"Ordne einen Durchlauf der for-Schleife",
+          "hint":"Beginne mit dem Teil, der vor einem Durchlauf geprüft wird. Die Initialisierung ist zu diesem Zeitpunkt bereits abgeschlossen.",
+          "items":[
+            "Bedingung prüfen: zaehler < 3",
+            "Aktion im Schleifenrumpf ausführen",
+            "Veränderung ausführen: zaehler++",
+            "Zur Bedingung zurückkehren"
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="mcq">
+        <script class="wb-config" type="application/json">
+        {
+          "id":"li-mcq-for-while",
+          "title":"Check: while oder for?",
+          "hint":"Entscheide nach der Art der Wiederholung.",
+          "shuffleChoices":true,
+          "questions":[
+            {
+              "text":"Welche Schleife passt am besten, wenn eine LED genau fünfmal blinken soll?",
+              "choices":[
+                {"id":"A","label":"for, weil die Anzahl der Wiederholungen schon feststeht."},
+                {"id":"B","label":"while, weil while immer genau fünfmal läuft."},
+                {"id":"C","label":"if/else, weil damit mehrere Durchläufe automatisch entstehen."}
+              ],
+              "correct":["A"],
+              "explain":"Bei einer vorher bekannten Anzahl ist for besonders übersichtlich: Start, Bedingung und Veränderung stehen gemeinsam im Schleifenkopf. Mit while wäre derselbe Ablauf ebenfalls möglich, aber ausführlicher."
+            },
+            {
+              "text":"Welche Werte hat zaehler während der drei Aktionen bei for(int zaehler = 0; zaehler < 3; zaehler++)?",
+              "choices":[
+                {"id":"A","label":"0, 1 und 2"},
+                {"id":"B","label":"1, 2 und 3"},
+                {"id":"C","label":"0, 1, 2 und 3"}
+              ],
+              "correct":["A"],
+              "explain":"Die Aktion läuft bei 0, 1 und 2. Beim Wert 3 ist die Bedingung 3 < 3 falsch, deshalb gibt es keinen vierten Durchlauf."
+            }
+          ]
+        }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="li-success"><strong>Jetzt hast du das gelernt:</strong> Eine <span class="li-mini">for</span>-Schleife eignet sich besonders für eine bekannte Anzahl von Wiederholungen. Sie führt dieselbe Zählerlogik wie eine <span class="li-mini">while</span>-Schleife aus: einmal initialisieren, Bedingung prüfen, Aktion ausführen, Zähler verändern und erneut prüfen.</div>
+    </section>
+
+    <section data-wb-page="10" data-wb-page-title="Abschluss">
       <h1>Werkzeugkasten für Schleifen und Verzweigungen</h1>
-      <p>Du kannst jetzt einen Ablauf nicht nur lesen, sondern mit Zuständen belegen. Genau das brauchst du später beim echten Arduino-Code: Werte messen, Bedingungen prüfen, Blöcke unterscheiden und Schleifen sicher verlassen.</p>
+      <p>Du kannst jetzt einen Ablauf nicht nur lesen, sondern mit Zuständen belegen. Genau das brauchst du später beim echten Arduino-Code: Werte messen, Bedingungen prüfen, Blöcke unterscheiden und <span class="li-mini">while</span>- sowie <span class="li-mini">for</span>-Schleifen sicher verfolgen.</p>
 
       <div class="wb-section-break"></div>
 
@@ -1019,9 +1234,10 @@ alarm = AN;</div>
       <ul class="li-checklist">
         <li>Notiere die Startwerte vor der ersten Bedingung.</li>
         <li>Prüfe jede Bedingung ausdrücklich als wahr oder falsch.</li>
-        <li>Markiere, ob du im if-Block, else-Block oder while-Block bist.</li>
+        <li>Markiere, ob du im if-Block, else-Block, while-Block oder for-Block bist.</li>
         <li>Ändere nach jeder Aktion nur die Werte, die wirklich betroffen sind.</li>
         <li>Springe bei while nach dem Rumpf zur Bedingung zurück.</li>
+        <li>Führe bei for nach der Aktion zuerst die Veränderung aus und prüfe dann wieder die Bedingung.</li>
         <li>Prüfe Grenzwerte wie 400, 28, 30 oder 0 besonders genau.</li>
       </ul>
 
@@ -1042,10 +1258,11 @@ alarm = AN;</div>
               {"id":"B","label":"Bei while wird die Bedingung vor jedem Durchlauf geprüft."},
               {"id":"C","label":"Eine Schleife endet immer automatisch nach drei Durchläufen."},
               {"id":"D","label":"Ein Grenzwert kann entscheiden, ob ein Block noch läuft oder nicht."},
-              {"id":"E","label":"Der Schleifenrumpf sollte einen Zustand verändern können, der für die Bedingung wichtig ist."}
+              {"id":"E","label":"Der Schleifenrumpf sollte einen Zustand verändern können, der für die Bedingung wichtig ist."},
+              {"id":"F","label":"Bei for stehen Initialisierung, Bedingung und Veränderung im Schleifenkopf."}
             ],
-            "correct":["A","B","D","E"],
-            "explain":"if/else wählt einen Zweig. while prüft vor jedem Durchlauf. Grenzwerte und Zustandsänderungen entscheiden, ob ein Programm korrekt weiterläuft oder stecken bleibt."
+            "correct":["A","B","D","E","F"],
+            "explain":"if/else wählt einen Zweig. while und for prüfen vor jedem Durchlauf eine Bedingung. Bei for stehen Initialisierung, Bedingung und Veränderung kompakt im Schleifenkopf. Grenzwerte und Zustandsänderungen entscheiden, ob ein Programm korrekt weiterläuft oder stecken bleibt."
           }]
         }
         </script>
@@ -1053,7 +1270,7 @@ alarm = AN;</div>
 
       <div class="wb-section-break"></div>
 
-      <div class="li-success"><strong>Jetzt hast du das gelernt:</strong> Du kannst Bedingungen auswerten, Zweige unterscheiden, Schleifendurchläufe zählen und erklären, warum ein Programm hinter der Schleife weiterläuft oder in ihr stecken bleibt.</div>
+      <div class="li-success"><strong>Jetzt hast du das gelernt:</strong> Du kannst Bedingungen auswerten, Zweige unterscheiden, Schleifendurchläufe zählen und erklären, warum ein Programm hinter der Schleife weiterläuft oder in ihr stecken bleibt. Für eine bekannte Anzahl von Wiederholungen kannst du die Zählerlogik kompakt als <span class="li-mini">for</span>-Schleife schreiben.</div>
 
       <div class="wb-section-break"></div>
 
@@ -1063,6 +1280,7 @@ alarm = AN;</div>
         <li><a href="https://inf-schule.de/imperative-programmierung/konzepteimperativerprogrammierung/kontrollstrukturen" target="_blank" rel="noopener">inf-schule: Kontrollstrukturen</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/if/" target="_blank" rel="noopener">Arduino Reference: if</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/while/" target="_blank" rel="noopener">Arduino Reference: while</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/for/" target="_blank" rel="noopener">Arduino Reference: for</a></li>
         <li>Interne Weiterarbeit: <a href="arduino-einstieg.html">Algorithmisch denken - Einstieg vor dem Arduino</a></li>
       </ul>
     </section>
@@ -1102,6 +1320,23 @@ alarm = AN;</div>
           }
           frames.push(frame(1, {zaehler:"3", bedingung:"falsch", durchlauf:"3", status:"verlässt Schleife"}, "3 < 3 ist falsch. Der Schleifenrumpf wird nicht mehr ausgeführt."));
           frames.push(frame(5, {zaehler:"3", bedingung:"falsch", durchlauf:"3", status:"FERTIG"}, "Ausgabe: status wird auf FERTIG gesetzt.", "done"));
+          return frames;
+        }
+
+        if (kind === "for") {
+          const frames = [
+            frame(0, {zaehler:"0", bedingung:"noch nicht geprüft", durchlauf:"0", aktion:"Initialisierung"}, "Initialisierung: zaehler erhält einmalig den Startwert 0.")
+          ];
+          for (let i = 0; i < 3; i += 1) {
+            frames.push(frame(1, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), aktion:"Bedingung prüfen"}, i + " < 3 ist wahr: Durchlauf " + (i + 1) + " beginnt."));
+            frames.push(frame(3, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), aktion:"LED AN"}, "Aktion: Die LED wird eingeschaltet.", "on"));
+            frames.push(frame(4, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), aktion:"500 ms warten"}, "Die LED bleibt 500 Millisekunden an.", "on"));
+            frames.push(frame(5, {zaehler:String(i), bedingung:"wahr", durchlauf:String(i + 1), aktion:"LED AUS"}, "Aktion: Die LED wird ausgeschaltet.", "off"));
+            frames.push(frame(2, {zaehler:String(i + 1), bedingung:"wahr", durchlauf:String(i + 1), aktion:"zaehler++"}, "Veränderung: zaehler wird auf " + (i + 1) + " erhöht."));
+            frames.push(frame(6, {zaehler:String(i + 1), bedingung:"Rücksprung", durchlauf:String(i + 1), aktion:"zur Bedingung"}, "Das Programm springt zurück und prüft die Bedingung erneut."));
+          }
+          frames.push(frame(1, {zaehler:"3", bedingung:"falsch", durchlauf:"3", aktion:"Schleife verlassen"}, "3 < 3 ist falsch. Es wird keine weitere Aktion ausgeführt."));
+          frames.push(frame(7, {zaehler:"3", bedingung:"falsch", durchlauf:"3", aktion:"status = FERTIG"}, "Hinter der Schleife: status wird auf FERTIG gesetzt.", "done"));
           return frames;
         }
 
