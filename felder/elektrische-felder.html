@@ -102,9 +102,43 @@
     </div>
     <div class="wb-section-break"></div>
 
+    <h2>Wie hängt die Kraft von Ladung und Abstand ab?</h2>
+    <p>Vergleicht man viele Anordnungen aus zwei kleinen geladenen Körpern, erkennt man drei Zusammenhänge: Eine größere Ladungsmenge \(q\) verstärkt die Kraft, eine größere Ladungsmenge \(Q\) ebenfalls. Vergrößert man dagegen den Abstand \(r\) der Ladungsmittelpunkte, wird die Kraft schnell kleiner.</p>
+    <h3>Heuristische Modellformel</h3>
+    <p class="ef-formula">\[F_\mathrm{heur}=\frac{q\,Q}{r^2}\]</p>
+    <p>Diese erste Formel zeigt nur die Abhängigkeiten: \(F\propto q\), \(F\propto Q\) und \(F\propto 1/r^2\). Sie ist in SI-Einheiten noch nicht vollständig, weil der notwendige Proportionalitätsfaktor fehlt.</p>
+    <p>Damit kannst du schon sicher vorhersagen: Verdoppelst du nur eine Ladung, verdoppelt sich der Kraftbetrag. Verdoppelst du den Abstand, sinkt der Kraftbetrag auf ein Viertel. Beim dreifachen Abstand bleibt nur ein Neuntel übrig.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Das vollständige Coulomb-Gesetz</h2>
+    <p>Für zwei Punktladungen im Vakuum lautet der vollständige Zusammenhang:</p>
+    <h3>Coulomb-Gesetz</h3>
+    <p class="ef-formula">\[\vec F_{q\leftarrow Q}=\frac{1}{4\pi\varepsilon_0}\,\frac{q\,Q}{r^2}\,\hat{\vec r}\]</p>
+    <p>Der Einheitsvektor \(\hat{\vec r}\) zeigt von der felderzeugenden Ladung \(Q\) zur betrachteten Ladung \(q\). Das Vorzeichen von \(qQ\) entscheidet: Bei \(qQ&gt;0\) wirkt die Kraft in Richtung von \(\hat{\vec r}\), die Ladungen stoßen sich ab. Bei \(qQ&lt;0\) wirkt sie entgegengesetzt, die Ladungen ziehen sich an.</p>
+    <p><strong>Wenn nur der Betrag der Kraft gesucht ist, verwendest du:</strong></p>
+    <p class="ef-formula">\[F_\mathrm{el}=\frac{1}{4\pi\varepsilon_0}\,\frac{|q\,Q|}{r^2}\]</p>
+    <p>Dabei ist \(\varepsilon_0\) die elektrische Feldkonstante. Für sie und die daraus gebildete Coulomb-Konstante \(k\) gilt:</p>
+    <p class="ef-formula">\[\varepsilon_0\approx 8{,}854\cdot10^{-12}\,\frac{\mathrm{C^2}}{\mathrm{N\,m^2}},\qquad k=\frac{1}{4\pi\varepsilon_0}\approx 8{,}99\cdot10^9\,\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}\]</p>
+    <p>In Luft kann für schulische Rechnungen meist derselbe Wert verwendet werden. Das Gesetz gilt unmittelbar für Punktladungen und außerhalb kugelsymmetrischer Ladungsverteilungen. Die beiden Ladungen erfahren nach dem Wechselwirkungsprinzip gleich große, aber entgegengesetzt gerichtete Kräfte.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_verify_coulomb_abstand",
+        "title":"Stopp & check: Abstandsgesetz",
+        "hint":"Beurteile die Aussage, bevor du rechnest.",
+        "statement":"Wird der Abstand zweier unveränderter Punktladungen verdoppelt, halbiert sich der Betrag der elektrischen Kraft.",
+        "answer":false,
+        "explain":"Falsch. Wegen F ∝ 1/r² führt der doppelte Abstand zum Faktor 1/2² = 1/4. Der Kraftbetrag sinkt also auf ein Viertel."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
     <div class="wb-callout">
       <strong>Merke:</strong>
-      <p>Es gibt positive und negative Ladungen. Gleichnamige Ladungen stoßen sich ab, ungleichnamige ziehen sich an. Ladungen können transportiert, aber nicht erzeugt oder vernichtet werden: Die Gesamtladung bleibt in einem abgeschlossenen System erhalten.</p>
+      <p>Es gibt positive und negative Ladungen. Gleichnamige Ladungen stoßen sich ab, ungleichnamige ziehen sich an. Der Kraftbetrag ist proportional zu beiden Ladungsmengen und umgekehrt proportional zum Quadrat ihres Abstands. Ladungen können transportiert, aber nicht erzeugt oder vernichtet werden: Die Gesamtladung bleibt in einem abgeschlossenen System erhalten.</p>
     </div>
     <div class="wb-section-break"></div>
 
@@ -288,7 +322,7 @@
 
   <section data-wb-page="6" data-wb-page-title="Kraft">
     <h1>Elektrische Kraft und Feldstärke</h1>
-    <p>Eine Probeladung erfährt in der Nähe einer anderen Ladung eine elektrische Kraft. Um verschiedene Situationen vergleichen zu können, betrachtet man die Kraft pro Ladung. Diese Größe heißt elektrische Feldstärke.</p>
+    <p>Mit dem Coulomb-Gesetz auf Seite 2 hast du die direkte Kraft zwischen zwei Punktladungen berechnet. Jetzt wechselst du die Perspektive: Eine felderzeugende Ladung verändert den Raum um sich. Eine Probeladung erfährt dort eine elektrische Kraft. Um verschiedene Situationen vergleichen zu können, betrachtet man die Kraft pro Ladung. Diese Größe heißt elektrische Feldstärke.</p>
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
       <p class="ef-formula">\(F_\mathrm{el}=q\cdot E\)</p>

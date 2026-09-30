@@ -953,6 +953,11 @@ body.wb-global-fs{
   gap: 10px;
 }
 .wb-book .wb-submit-btn:hover{background:#f0fdfa}
+.wb-book .wb-submit-btn:disabled{
+  cursor:not-allowed;
+  opacity:.62;
+  background:#f1f5f9;
+}
 
 /* Content */
 .wb-book .wb-content{
@@ -1448,6 +1453,11 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-results-webhook-status.is-error{
   border-left-color: var(--wb-bad);
   background: #fff1f2;
+}
+.wb-results-webhook-status.is-cooldown{
+  border-left-color:#d97706;
+  background:#fff7ed;
+  color:#7c2d12;
 }
 .wb-results-essays{
   margin-top: 22px;

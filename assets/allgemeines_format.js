@@ -1519,8 +1519,69 @@ ${fi.input.value || ""}
   }
 
  
-  async function postWebhook(url, payload){
+  const WEBHOOK_COOLDOWN_MS = 5 * 60 * 1000;
+  const SUBMIT_BUTTON_LOCK_MS = 3000;
+  const webhookMemoryClaims = new Map();
+
+  function webhookHash(value){
+    let hash = 2166136261;
+    const text = String(value || "");
+    for(let i = 0; i < text.length; i++){
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return (hash >>> 0).toString(36);
+  }
+
+  function webhookCooldownKey(url){
+    const path = (global.location && global.location.pathname) ? global.location.pathname : "local";
+    return "wbWebhookLast:" + webhookHash(path + "|" + String(url || ""));
+  }
+
+  function claimWebhookSlot(url, requestedCooldownMs){
+    const requested = Number(requestedCooldownMs);
+    const cooldownMs = Number.isFinite(requested)
+      ? Math.max(WEBHOOK_COOLDOWN_MS, requested)
+      : WEBHOOK_COOLDOWN_MS;
+    const key = webhookCooldownKey(url);
+    const now = Date.now();
+    let lastAttempt = Number(webhookMemoryClaims.get(key) || 0);
+
+    try{
+      const stored = Number(global.localStorage.getItem(key) || 0);
+      if(Number.isFinite(stored) && stored > lastAttempt) lastAttempt = stored;
+    }catch(_e){}
+
+    const elapsed = now - lastAttempt;
+    if(lastAttempt > 0 && elapsed >= 0 && elapsed < cooldownMs){
+      return {allowed:false, remainingMs:cooldownMs - elapsed, cooldownMs};
+    }
+    if(lastAttempt > now){
+      return {allowed:false, remainingMs:cooldownMs, cooldownMs};
+    }
+
+    webhookMemoryClaims.set(key, now);
+    try{ global.localStorage.setItem(key, String(now)); }catch(_e){}
+    return {allowed:true, remainingMs:0, cooldownMs};
+  }
+
+  function formatCooldownTime(milliseconds){
+    const totalSeconds = Math.max(1, Math.ceil(Number(milliseconds || 0) / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    if(minutes <= 0) return seconds + " Sekunden";
+    return minutes + " Min. " + String(seconds).padStart(2, "0") + " Sek.";
+  }
+
+  async function postWebhook(url, payload, options={}){
     if(!url) throw new Error("Keine Webhook-URL konfiguriert.");
+    const slot = claimWebhookSlot(url, options.cooldownMs);
+    if(!slot.allowed){
+      const error = new Error("Webhook-Sperrzeit aktiv.");
+      error.code = "WEBHOOK_COOLDOWN";
+      error.remainingMs = slot.remainingMs;
+      throw error;
+    }
     const response = await fetch(url, {
       method: "POST",
       headers: {"Content-Type":"application/json;charset=utf-8"},
@@ -2213,13 +2274,23 @@ ${fi.input.value || ""}
       const url = String(cfg.webhookUrl).trim();
       const email = (cfg.webhookEmail != null) ? String(cfg.webhookEmail) : "";
       if(url){
-        postWebhook(url, { name: studentName, email, message: textLines.join("\n") })
+        postWebhook(
+          url,
+          { name: studentName, email, message: textLines.join("\n") },
+          { cooldownMs: cfg.webhookCooldownMs }
+        )
           .then(() => {
             if(!webhookStatus) return;
             webhookStatus.className = "wb-results-webhook-status is-success";
             webhookStatus.textContent = "Ergebnisse wurden online übermittelt.";
           })
           .catch(error => {
+            if(error && error.code === "WEBHOOK_COOLDOWN"){
+              if(!webhookStatus) return;
+              webhookStatus.className = "wb-results-webhook-status is-cooldown";
+              webhookStatus.textContent = "Diese Seite wurde bereits übermittelt. Ein weiterer Webhook ist erst in " + formatCooldownTime(error.remainingMs) + " möglich. Die Ergebnisdatei wurde trotzdem lokal gespeichert.";
+              return;
+            }
             try{ console.error("[Webhook] Übermittlung fehlgeschlagen:", error); }catch(_e){}
             if(!webhookStatus) return;
             webhookStatus.className = "wb-results-webhook-status is-error";
@@ -3136,13 +3207,26 @@ ${fi.input.value || ""}
       }, 80);
     });
 
+    let submitClickLocked = false;
     submitBtn.addEventListener("click", () => {
+      if(submitClickLocked) return;
       const nameInputEl = qs("[data-wb-student-name]", root);
       if(nameInputEl && !String(nameInputEl.value || "").trim()){
         alert("Bitte gib deinen Namen ein.");
         nameInputEl.focus();
         return;
       }
+      submitClickLocked = true;
+      const originalSubmitLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.setAttribute("aria-busy", "true");
+      submitBtn.textContent = "Bitte kurz warten ...";
+      global.setTimeout(() => {
+        submitClickLocked = false;
+        submitBtn.disabled = false;
+        submitBtn.removeAttribute("aria-busy");
+        submitBtn.textContent = originalSubmitLabel;
+      }, Math.max(2000, Number(cfg.submitLockMs) || SUBMIT_BUTTON_LOCK_MS));
       if(cfg.onSubmit === "exportResults" || cfg.onSubmit === "alert") {
         exportResults(root, cfg, showPage);
       } else if(typeof opts.onSubmit === "function") {
