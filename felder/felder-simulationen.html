@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Felder-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260814-4">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260926-7">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -25,7 +25,18 @@
   }
   </script>
 
-  <section data-wb-page="1" data-wb-page-title="Kondensator">
+  <section data-wb-page="1" data-wb-page-title="Elektrisches Feld">
+    <h1>Simulation: Feldlinien und Äquipotenziallinien</h1>
+    <p>Setze positive und negative Punktladungen oder geladene Platten frei auf die Zeichenfläche. Die Simulation überlagert ihre Felder und berechnet daraus Feldlinien, Äquipotenziallinien und eine farbige Potenzialfläche. Du kannst jede Ladung und Platte nachträglich verschieben und so die Feldstruktur unmittelbar verändern.</p>
+    <div class="wb-callout">
+      <strong>Zwei Darstellungen desselben Feldes</strong>
+      <p>Feldlinien zeigen in jedem Punkt die Richtung der Kraft auf eine positive Probeladung. Äquipotenziallinien verbinden Punkte gleichen Potenzials und stehen senkrecht zu den Feldlinien. Die optionale Farbfläche macht das Vorzeichen und den relativen Betrag des Potenzials sichtbar: Rot steht für positives, Blau für negatives Potenzial; der helle Übergang kennzeichnet ungefähr <span class="ef-formula">V = 0</span>.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div class="field-sim-card" data-field-sim="electrostatic-field"></div>
+    <div class="wb-section-break"></div>
+
     <h1>Simulation: Plattenkondensator</h1>
     <p class="wb-muted">Hier kannst du dieselbe Kondensator-Simulation unabhängig von der Lernseite öffnen und ausprobieren.</p>
     <p>Der Kondensator wird idealisiert dargestellt: zwei parallele Platten, eine positive und eine negative Platte, Feldlinien von Plus nach Minus und ein mögliches Dielektrikum im Zwischenraum.</p>
@@ -394,7 +405,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20260814-4"></script>
+  <script src="../assets/felder-simulations.js?v=20260926-7"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

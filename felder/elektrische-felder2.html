@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder 2: Potenzial und Kondensator</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260926-7">
   <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -147,6 +147,15 @@
         <p>Stellen gleichen Potenzials heißen Äquipotenziallinien. Sie verlaufen stets senkrecht zu den elektrischen Feldlinien. Im Inneren eines Plattenkondensators verlaufen sie näherungsweise parallel.</p>
       </div>
     </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Potenziallandschaft selbst untersuchen</h2>
+    <p>Im Feldlabor kannst du die Verbindung zwischen Feld und Potenzial direkt prüfen. Baue zuerst einen Dipol und schalte anschließend die Äquipotenziallinien ein. Vergleiche danach mit der Voreinstellung „Kondensator“. Der violette Pfeil zeigt die lokale Feldrichtung; entlang einer Äquipotenziallinie würde sich das Potenzial nicht ändern.</p>
+    <div class="wb-callout">
+      <strong>Untersuchungsauftrag:</strong>
+      <p>Suche Bereiche, in denen die Feldlinien dicht liegen. Prüfe dort den Abstand benachbarter Äquipotenziallinien. Untersuche außerdem, ob sich Feld- und Äquipotenziallinien irgendwo schneiden, ohne einen rechten Winkel zu bilden.</p>
+    </div>
+    <div class="field-sim-card" data-field-sim="electrostatic-field" data-initial-preset="capacitor" data-show-equipotential="true"></div>
     <div class="wb-section-break"></div>
 
     <div class="wb-callout">
@@ -1288,7 +1297,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script src="../assets/felder-simulations.js"></script>
+  <script src="../assets/felder-simulations.js?v=20260926-7"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

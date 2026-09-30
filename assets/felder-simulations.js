@@ -37,6 +37,630 @@
     ctx.fill();
   }
 
+  function initElectrostaticFieldLab(root) {
+    if (!root || (root.dataset && root.dataset.electrostaticFieldMounted === "1")) return;
+
+    if (!find(root, "canvas")) {
+      root.innerHTML = [
+        '<div class="field-sim-grid field-lab-grid">',
+          '<div class="field-sim-controls">',
+            '<h2>Feldanordnung bauen</h2>',
+            '<div class="field-lab-tools" role="toolbar" aria-label="Werkzeug auswählen">',
+              '<button class="field-lab-tool is-active" type="button" data-lab-tool="positive" title="Positive Punktladung setzen" aria-label="Positive Punktladung setzen"><span aria-hidden="true">+</span><small>Ladung</small></button>',
+              '<button class="field-lab-tool" type="button" data-lab-tool="negative" title="Negative Punktladung setzen" aria-label="Negative Punktladung setzen"><span aria-hidden="true">−</span><small>Ladung</small></button>',
+              '<button class="field-lab-tool" type="button" data-lab-tool="positive-plate" title="Positive Platte setzen" aria-label="Positive Platte setzen"><span aria-hidden="true">+▮</span><small>Platte</small></button>',
+              '<button class="field-lab-tool" type="button" data-lab-tool="negative-plate" title="Negative Platte setzen" aria-label="Negative Platte setzen"><span aria-hidden="true">−▮</span><small>Platte</small></button>',
+              '<button class="field-lab-tool" type="button" data-lab-tool="erase" title="Objekt löschen" aria-label="Objekt löschen"><span aria-hidden="true">⌫</span><small>Löschen</small></button>',
+            '</div>',
+            '<p class="field-lab-help">Wähle ein Werkzeug und tippe oder klicke in die Zeichenfläche. Ziehe eine vorhandene Ladung oder Platte, um sie zu verschieben.</p>',
+            '<label>Ladungsstärke</label>',
+            '<input data-role="charge-strength" type="range" min="1" max="5" value="2" step="0.5">',
+            '<div class="field-sim-mono">|q| = <span data-role="charge-strength-value">2,0</span> relative Einheiten</div>',
+            '<label>Plattenlänge</label>',
+            '<input data-role="plate-length" type="range" min="100" max="340" value="260" step="10">',
+            '<div class="field-sim-mono">l = <span data-role="plate-length-value">260</span> px</div>',
+            '<label>Plattenrichtung</label>',
+            '<select data-role="plate-orientation">',
+              '<option value="vertical" selected>senkrecht</option>',
+              '<option value="horizontal">waagrecht</option>',
+            '</select>',
+            '<div class="field-lab-switches">',
+              '<label><input data-role="show-field-lines" type="checkbox" checked> Feldlinien</label>',
+              '<label><input data-role="show-equipotential" type="checkbox"> Äquipotenziallinien</label>',
+              '<label><input data-role="show-potential-map" type="checkbox"> Potenzialfläche färben</label>',
+            '</div>',
+            '<label>Voreinstellung</label>',
+            '<div class="field-lab-presets">',
+              '<button class="wb-btn" type="button" data-preset="single">Einzelladung</button>',
+              '<button class="wb-btn" type="button" data-preset="dipole">Dipol</button>',
+              '<button class="wb-btn" type="button" data-preset="capacitor">Kondensator</button>',
+            '</div>',
+            '<div class="wb-row field-lab-actions">',
+              '<button class="wb-btn" type="button" data-role="undo" title="Letzte Änderung rückgängig machen" aria-label="Letzte Änderung rückgängig machen">↶ Rückgängig</button>',
+              '<button class="wb-btn" type="button" data-role="clear">Leeren</button>',
+            '</div>',
+            '<div class="field-sim-note">',
+              '<strong>Beobachte gezielt</strong>',
+              '<p>Feldlinien zeigen von Plus nach Minus. Äquipotenziallinien schneiden Feldlinien immer senkrecht. Die Potenzialfläche zeigt positives Potenzial rot, negatives blau und den Übergang bei V = 0 hell.</p>',
+            '</div>',
+          '</div>',
+          '<div>',
+            '<div class="field-lab-legend" aria-hidden="true"><span class="field-legend-line"></span> Feldlinie <span class="potential-legend-line"></span> Äquipotenziallinie <span class="potential-color-key"></span> Potenzialfläche</div>',
+            '<canvas data-role="canvas" width="980" height="560" aria-label="Interaktives elektrisches Feldlabor mit frei platzierbaren Ladungen, Kondensatorplatten, Feldlinien und Äquipotenziallinien"></canvas>',
+            '<div class="field-sim-mono" data-role="readout" aria-live="polite"></div>',
+          '</div>',
+        '</div>'
+      ].join("");
+    }
+
+    var canvas = find(root, "canvas");
+    var readout = find(root, "readout");
+    var strengthEl = find(root, "charge-strength");
+    var strengthVal = find(root, "charge-strength-value");
+    var plateLengthEl = find(root, "plate-length");
+    var plateLengthVal = find(root, "plate-length-value");
+    var orientationEl = find(root, "plate-orientation");
+    var showFieldEl = find(root, "show-field-lines");
+    var showEquipotentialEl = find(root, "show-equipotential");
+    var showPotentialMapEl = find(root, "show-potential-map");
+    var undoBtn = find(root, "undo");
+    var clearBtn = find(root, "clear");
+    if (!canvas || !readout || !strengthEl || !plateLengthEl || !orientationEl) return;
+
+    root.dataset.electrostaticFieldMounted = "1";
+    var ctx = canvas.getContext("2d");
+    var objects = [];
+    var history = [];
+    var tool = "positive";
+    var drag = null;
+    var probe = null;
+    var margin = 24;
+    var potentialMapCanvas = document.createElement("canvas");
+    var potentialMapSignature = "";
+
+    function cloneObjects() {
+      return objects.map(function (item) {
+        var copy = {};
+        Object.keys(item).forEach(function (key) { copy[key] = item[key]; });
+        return copy;
+      });
+    }
+
+    function remember() {
+      history.push(cloneObjects());
+      if (history.length > 24) history.shift();
+      if (undoBtn) undoBtn.disabled = history.length === 0;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function setPreset(name) {
+      remember();
+      if (name === "single") {
+        objects = [{ type: "charge", x: 490, y: 280, q: 3 }];
+      } else if (name === "dipole") {
+        objects = [
+          { type: "charge", x: 350, y: 280, q: 3 },
+          { type: "charge", x: 630, y: 280, q: -3 }
+        ];
+      } else {
+        objects = [
+          { type: "plate", x: 330, y: 280, q: 2.5, length: 320, orientation: "vertical" },
+          { type: "plate", x: 650, y: 280, q: -2.5, length: 320, orientation: "vertical" }
+        ];
+      }
+      probe = null;
+      draw();
+    }
+
+    function sourcePoints() {
+      var result = [];
+      objects.forEach(function (item, objectIndex) {
+        if (item.type === "charge") {
+          result.push({ x: item.x, y: item.y, q: item.q, objectIndex: objectIndex });
+          return;
+        }
+        var samples = Math.max(7, Math.round(item.length / 18));
+        for (var i = 0; i < samples; i += 1) {
+          var along = samples === 1 ? 0 : (i / (samples - 1) - 0.5) * item.length;
+          result.push({
+            x: item.x + (item.orientation === "horizontal" ? along : 0),
+            y: item.y + (item.orientation === "vertical" ? along : 0),
+            q: item.q * 0.32,
+            objectIndex: objectIndex
+          });
+        }
+      });
+      return result;
+    }
+
+    function fieldAt(x, y, sources) {
+      var ex = 0;
+      var ey = 0;
+      var potential = 0;
+      var softening = 15 * 15;
+      sources.forEach(function (source) {
+        var dx = x - source.x;
+        var dy = y - source.y;
+        var r2 = dx * dx + dy * dy + softening;
+        var r = Math.sqrt(r2);
+        var factor = source.q / (r2 * r);
+        ex += factor * dx;
+        ey += factor * dy;
+        potential += source.q / r;
+      });
+      return { ex: ex, ey: ey, magnitude: Math.sqrt(ex * ex + ey * ey), potential: potential };
+    }
+
+    function nearObject(x, y, maxDistance) {
+      for (var i = objects.length - 1; i >= 0; i -= 1) {
+        var item = objects[i];
+        if (item.type === "charge") {
+          if (Math.hypot(x - item.x, y - item.y) <= maxDistance + 10) return i;
+        } else {
+          var dx = item.orientation === "vertical" ? Math.abs(x - item.x) : Math.max(0, Math.abs(x - item.x) - item.length / 2);
+          var dy = item.orientation === "horizontal" ? Math.abs(y - item.y) : Math.max(0, Math.abs(y - item.y) - item.length / 2);
+          if (Math.hypot(dx, dy) <= maxDistance) return i;
+        }
+      }
+      return -1;
+    }
+
+    function traceLine(seedX, seedY, direction, sources) {
+      var points = [{ x: seedX, y: seedY }];
+      var x = seedX;
+      var y = seedY;
+      for (var i = 0; i < 520; i += 1) {
+        var field = fieldAt(x, y, sources);
+        if (field.magnitude < 1e-8) break;
+        var step = 4.2;
+        x += direction * field.ex / field.magnitude * step;
+        y += direction * field.ey / field.magnitude * step;
+        if (x < margin || x > canvas.width - margin || y < margin || y > canvas.height - margin) break;
+        points.push({ x: x, y: y });
+        if (i > 6 && nearObject(x, y, 11) >= 0) break;
+      }
+      if (direction < 0) points.reverse();
+      return points;
+    }
+
+    function fieldSeeds() {
+      var sourceSeeds = [];
+      var sinkSeeds = [];
+      objects.forEach(function (item) {
+        var direction = item.q > 0 ? 1 : -1;
+        var target = direction > 0 ? sourceSeeds : sinkSeeds;
+        if (item.type === "charge") {
+          var count = Math.min(20, 8 + Math.round(Math.abs(item.q) * 2));
+          for (var i = 0; i < count; i += 1) {
+            var angle = i / count * Math.PI * 2;
+            target.push({ x: item.x + Math.cos(angle) * 20, y: item.y + Math.sin(angle) * 20, direction: direction });
+          }
+        } else {
+          var countPlate = Math.max(7, Math.round(item.length / 34));
+          for (var p = 0; p < countPlate; p += 1) {
+            var along = (p / Math.max(1, countPlate - 1) - 0.5) * item.length * 0.9;
+            [-1, 1].forEach(function (side) {
+              target.push({
+                x: item.x + (item.orientation === "horizontal" ? along : side * 11),
+                y: item.y + (item.orientation === "vertical" ? along : side * 11),
+                direction: direction
+              });
+            });
+          }
+        }
+      });
+      return sourceSeeds.concat(sinkSeeds);
+    }
+
+    function drawFieldLines(sources) {
+      var occupied = Object.create(null);
+      var cellSize = 9;
+
+      function cell(point) {
+        return { x: Math.floor(point.x / cellSize), y: Math.floor(point.y / cellSize) };
+      }
+
+      function overlapRatio(points) {
+        var start = Math.floor(points.length * 0.12);
+        var end = Math.ceil(points.length * 0.88);
+        var checked = 0;
+        var overlaps = 0;
+        for (var i = start; i < end; i += 3) {
+          var current = cell(points[i]);
+          var found = false;
+          for (var ox = -1; ox <= 1 && !found; ox += 1) {
+            for (var oy = -1; oy <= 1; oy += 1) {
+              if (occupied[(current.x + ox) + ":" + (current.y + oy)]) {
+                found = true;
+                break;
+              }
+            }
+          }
+          checked += 1;
+          if (found) overlaps += 1;
+        }
+        return checked ? overlaps / checked : 0;
+      }
+
+      function rememberLine(points) {
+        var start = Math.floor(points.length * 0.1);
+        var end = Math.ceil(points.length * 0.9);
+        for (var i = start; i < end; i += 2) {
+          var current = cell(points[i]);
+          occupied[current.x + ":" + current.y] = true;
+        }
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(13,116,144,.72)";
+      ctx.fillStyle = "#0e7490";
+      ctx.lineWidth = 1.7;
+      fieldSeeds().forEach(function (seed) {
+        var points = traceLine(seed.x, seed.y, seed.direction, sources);
+        var showArrow = true;
+        if (points.length < 6) return;
+        if (seed.direction < 0) {
+          var startObject = nearObject(points[0].x, points[0].y, 16);
+          var startsAtPositive = startObject >= 0 && objects[startObject].q > 0;
+          if (overlapRatio(points) > 0.55) return;
+          showArrow = !startsAtPositive;
+        }
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i += 1) ctx.lineTo(points[i].x, points[i].y);
+        ctx.stroke();
+        var arrowIndex = Math.min(points.length - 2, Math.max(2, Math.floor(points.length * 0.58)));
+        var a = points[Math.max(0, arrowIndex - 2)];
+        var b = points[arrowIndex];
+        if (showArrow) drawArrow(ctx, a.x, a.y, b.x, b.y, "#0e7490");
+        rememberLine(points);
+      });
+      ctx.restore();
+    }
+
+    function potentialScale(sources) {
+      var values = [];
+      var columns = 32;
+      var rows = 18;
+      for (var y = 0; y <= rows; y += 1) {
+        for (var x = 0; x <= columns; x += 1) {
+          var px = (x + 0.5) * canvas.width / (columns + 1);
+          var py = (y + 0.5) * canvas.height / (rows + 1);
+          if (nearObject(px, py, 24) < 0) values.push(Math.abs(fieldAt(px, py, sources).potential));
+        }
+      }
+      values.sort(function (a, b) { return a - b; });
+      return values[Math.floor(values.length * 0.86)] || 0.02;
+    }
+
+    function drawPotentialMap(sources) {
+      var width = 196;
+      var height = 112;
+      var signature = objects.map(function (item) {
+        return [item.type, Math.round(item.x * 10), Math.round(item.y * 10), item.q, item.length || 0, item.orientation || ""].join(":");
+      }).join("|");
+
+      if (signature !== potentialMapSignature) {
+        potentialMapCanvas.width = width;
+        potentialMapCanvas.height = height;
+        var mapCtx = potentialMapCanvas.getContext("2d");
+        var image = mapCtx.createImageData(width, height);
+        var scale = potentialScale(sources);
+
+        for (var y = 0; y < height; y += 1) {
+          for (var x = 0; x < width; x += 1) {
+            var potential = fieldAt((x + 0.5) * canvas.width / width, (y + 0.5) * canvas.height / height, sources).potential;
+            var normalized = Math.tanh(potential / Math.max(1e-9, scale * 0.72));
+            var intensity = Math.pow(Math.abs(normalized), 0.72);
+            var neutral = { r: 248, g: 250, b: 252 };
+            var target = normalized >= 0 ? { r: 248, g: 113, b: 113 } : { r: 96, g: 165, b: 250 };
+            var index = (y * width + x) * 4;
+            image.data[index] = Math.round(neutral.r + (target.r - neutral.r) * intensity);
+            image.data[index + 1] = Math.round(neutral.g + (target.g - neutral.g) * intensity);
+            image.data[index + 2] = Math.round(neutral.b + (target.b - neutral.b) * intensity);
+            image.data[index + 3] = 255;
+          }
+        }
+        mapCtx.putImageData(image, 0, 0);
+        potentialMapSignature = signature;
+      }
+      ctx.save();
+      ctx.imageSmoothingEnabled = true;
+      ctx.globalAlpha = 0.74;
+      ctx.drawImage(potentialMapCanvas, 0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
+
+    function crossing(a, b, level) {
+      if ((a.value < level && b.value < level) || (a.value > level && b.value > level) || a.value === b.value) return null;
+      var t = (level - a.value) / (b.value - a.value);
+      if (t < 0 || t > 1) return null;
+      return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+    }
+
+    function drawEquipotentials(sources) {
+      var cols = 52;
+      var rows = 30;
+      var dx = canvas.width / cols;
+      var dy = canvas.height / rows;
+      var grid = [];
+      var absValues = [];
+      for (var gy = 0; gy <= rows; gy += 1) {
+        grid[gy] = [];
+        for (var gx = 0; gx <= cols; gx += 1) {
+          var px = gx * dx;
+          var py = gy * dy;
+          var value = fieldAt(px, py, sources).potential;
+          grid[gy][gx] = value;
+          if (nearObject(px, py, 18) < 0) absValues.push(Math.abs(value));
+        }
+      }
+      absValues.sort(function (a, b) { return a - b; });
+      var scale = absValues[Math.floor(absValues.length * 0.88)] || 0.02;
+      var levels = [-0.9, -0.6, -0.35, -0.18, 0, 0.18, 0.35, 0.6, 0.9].map(function (factor) { return factor * scale; });
+      levels.forEach(function (level) {
+        ctx.save();
+        ctx.strokeStyle = level > 1e-9 ? "rgba(220,38,38,.62)" : (level < -1e-9 ? "rgba(37,99,235,.62)" : "rgba(71,85,105,.72)");
+        ctx.lineWidth = Math.abs(level) < 1e-9 ? 2.1 : 1.35;
+        ctx.setLineDash([7, 5]);
+        for (var y = 0; y < rows; y += 1) {
+          for (var x = 0; x < cols; x += 1) {
+            var p0 = { x: x * dx, y: y * dy, value: grid[y][x] };
+            var p1 = { x: (x + 1) * dx, y: y * dy, value: grid[y][x + 1] };
+            var p2 = { x: (x + 1) * dx, y: (y + 1) * dy, value: grid[y + 1][x + 1] };
+            var p3 = { x: x * dx, y: (y + 1) * dy, value: grid[y + 1][x] };
+            var hits = [crossing(p0, p1, level), crossing(p1, p2, level), crossing(p2, p3, level), crossing(p3, p0, level)].filter(Boolean);
+            if (hits.length === 2) {
+              ctx.beginPath();
+              ctx.moveTo(hits[0].x, hits[0].y);
+              ctx.lineTo(hits[1].x, hits[1].y);
+              ctx.stroke();
+            } else if (hits.length === 4) {
+              ctx.beginPath();
+              ctx.moveTo(hits[0].x, hits[0].y);
+              ctx.lineTo(hits[1].x, hits[1].y);
+              ctx.moveTo(hits[2].x, hits[2].y);
+              ctx.lineTo(hits[3].x, hits[3].y);
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.restore();
+      });
+    }
+
+    function drawGrid(sources) {
+      ctx.fillStyle = "#f8fafc";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (sources.length && showPotentialMapEl && showPotentialMapEl.checked) drawPotentialMap(sources);
+      ctx.strokeStyle = "rgba(148,163,184,.18)";
+      ctx.lineWidth = 1;
+      for (var x = 20; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (var y = 20; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+      ctx.fillStyle = "#334155";
+      ctx.font = "700 18px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("Elektrisches Feldlabor", 20, 30);
+    }
+
+    function drawChargeLabel(item, positive, preferredX, preferredY) {
+      var chargeLabel = "q = " + (positive ? "+" : "−") + formatNumber(Math.abs(item.q), 1) + " rel.";
+      ctx.save();
+      ctx.font = "700 13px system-ui, sans-serif";
+      var labelWidth = ctx.measureText(chargeLabel).width + 12;
+      var labelX = clamp(preferredX, labelWidth / 2 + 4, canvas.width - labelWidth / 2 - 4);
+      var labelY = clamp(preferredY, 14, canvas.height - 14);
+      ctx.fillStyle = "rgba(255,255,255,.9)";
+      ctx.fillRect(labelX - labelWidth / 2, labelY - 10, labelWidth, 20);
+      ctx.strokeStyle = positive ? "rgba(220,38,38,.55)" : "rgba(37,99,235,.55)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(labelX - labelWidth / 2, labelY - 10, labelWidth, 20);
+      ctx.fillStyle = positive ? "#991b1b" : "#1d4ed8";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(chargeLabel, labelX, labelY);
+      ctx.restore();
+    }
+
+    function drawObjects() {
+      objects.forEach(function (item) {
+        var positive = item.q > 0;
+        var color = positive ? "#dc2626" : "#2563eb";
+        if (item.type === "charge") {
+          ctx.beginPath();
+          ctx.arc(item.x, item.y, 17, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.fillStyle = "#fff";
+          ctx.font = "800 23px system-ui, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(positive ? "+" : "−", item.x, item.y - 1);
+          drawChargeLabel(item, positive, item.x, item.y > canvas.height - 52 ? item.y - 31 : item.y + 31);
+        } else {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 12;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          if (item.orientation === "vertical") {
+            ctx.moveTo(item.x, item.y - item.length / 2);
+            ctx.lineTo(item.x, item.y + item.length / 2);
+          } else {
+            ctx.moveTo(item.x - item.length / 2, item.y);
+            ctx.lineTo(item.x + item.length / 2, item.y);
+          }
+          ctx.stroke();
+          ctx.fillStyle = "#fff";
+          ctx.font = "800 17px system-ui, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          var marks = Math.max(3, Math.floor(item.length / 55));
+          for (var i = 0; i < marks; i += 1) {
+            var along = (i / Math.max(1, marks - 1) - 0.5) * item.length * 0.82;
+            ctx.fillText(positive ? "+" : "−", item.x + (item.orientation === "horizontal" ? along : 0), item.y + (item.orientation === "vertical" ? along : 0));
+          }
+          if (item.orientation === "vertical") {
+            drawChargeLabel(item, positive, item.x + (item.x < canvas.width / 2 ? -62 : 62), item.y);
+          } else {
+            drawChargeLabel(item, positive, item.x, item.y + (item.y < canvas.height / 2 ? -25 : 25));
+          }
+        }
+      });
+    }
+
+    function drawProbe(sources) {
+      if (!probe || objects.length === 0) return;
+      var field = fieldAt(probe.x, probe.y, sources);
+      if (field.magnitude < 1e-9) return;
+      var length = 42;
+      drawArrow(ctx, probe.x, probe.y, probe.x + field.ex / field.magnitude * length, probe.y + field.ey / field.magnitude * length, "#7c3aed");
+      ctx.beginPath();
+      ctx.arc(probe.x, probe.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#7c3aed";
+      ctx.fill();
+    }
+
+    function updateReadout(sources) {
+      var charges = objects.filter(function (item) { return item.type === "charge"; }).length;
+      var plates = objects.length - charges;
+      var text = charges + " Punktladung" + (charges === 1 ? "" : "en") + ", " + plates + " Platte" + (plates === 1 ? "" : "n") + ".";
+      if (probe && sources.length) {
+        var field = fieldAt(probe.x, probe.y, sources);
+        text += "\nVioletter Pfeil: Feldrichtung am Zeiger. Relative Feldstärke: " + formatNumber(field.magnitude * 100000, 2) + "; Potenzial: " + formatNumber(field.potential * 100, 2) + ".";
+      } else {
+        text += "\nBewege den Zeiger über die Fläche, um die lokale Feldrichtung anzuzeigen.";
+      }
+      readout.textContent = text;
+    }
+
+    function draw() {
+      if (strengthVal) strengthVal.textContent = formatNumber(Number(strengthEl.value), 1);
+      if (plateLengthVal) plateLengthVal.textContent = formatNumber(Number(plateLengthEl.value), 0);
+      var sources = sourcePoints();
+      drawGrid(sources);
+      if (sources.length && showEquipotentialEl && showEquipotentialEl.checked) drawEquipotentials(sources);
+      if (sources.length && (!showFieldEl || showFieldEl.checked)) drawFieldLines(sources);
+      drawObjects();
+      drawProbe(sources);
+      updateReadout(sources);
+    }
+
+    function canvasPoint(event) {
+      var rect = canvas.getBoundingClientRect();
+      return {
+        x: clamp((event.clientX - rect.left) * canvas.width / rect.width, margin, canvas.width - margin),
+        y: clamp((event.clientY - rect.top) * canvas.height / rect.height, margin, canvas.height - margin)
+      };
+    }
+
+    function setTool(nextTool) {
+      tool = nextTool;
+      Array.prototype.forEach.call(root.querySelectorAll("[data-lab-tool]"), function (button) {
+        button.classList.toggle("is-active", button.getAttribute("data-lab-tool") === tool);
+      });
+      canvas.style.cursor = tool === "erase" ? "not-allowed" : "crosshair";
+    }
+
+    Array.prototype.forEach.call(root.querySelectorAll("[data-lab-tool]"), function (button) {
+      button.addEventListener("click", function () { setTool(button.getAttribute("data-lab-tool")); });
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-preset]"), function (button) {
+      button.addEventListener("click", function () { setPreset(button.getAttribute("data-preset")); });
+    });
+    [strengthEl, plateLengthEl].forEach(function (control) { control.addEventListener("input", draw); });
+    if (showFieldEl) showFieldEl.addEventListener("change", draw);
+    if (showEquipotentialEl) showEquipotentialEl.addEventListener("change", draw);
+    if (showPotentialMapEl) showPotentialMapEl.addEventListener("change", draw);
+
+    canvas.addEventListener("pointerdown", function (event) {
+      var point = canvasPoint(event);
+      var index = nearObject(point.x, point.y, 14);
+      if (tool === "erase") {
+        if (index >= 0) {
+          remember();
+          objects.splice(index, 1);
+          draw();
+        }
+        return;
+      }
+      if (index >= 0) {
+        remember();
+        drag = { index: index, dx: point.x - objects[index].x, dy: point.y - objects[index].y };
+        canvas.setPointerCapture(event.pointerId);
+        return;
+      }
+      if (objects.length >= 18) {
+        readout.textContent = "Maximal 18 Objekte. Lösche zuerst eine Ladung oder Platte.";
+        return;
+      }
+      remember();
+      var magnitude = Number(strengthEl.value);
+      if (tool === "positive" || tool === "negative") {
+        objects.push({ type: "charge", x: point.x, y: point.y, q: (tool === "positive" ? 1 : -1) * magnitude });
+      } else {
+        var length = Number(plateLengthEl.value);
+        var orientation = orientationEl.value;
+        var half = length / 2;
+        var x = orientation === "horizontal" ? clamp(point.x, margin + half, canvas.width - margin - half) : point.x;
+        var y = orientation === "vertical" ? clamp(point.y, margin + half, canvas.height - margin - half) : point.y;
+        objects.push({ type: "plate", x: x, y: y, q: (tool === "positive-plate" ? 1 : -1) * magnitude, length: length, orientation: orientation });
+      }
+      draw();
+    });
+
+    canvas.addEventListener("pointermove", function (event) {
+      var point = canvasPoint(event);
+      probe = point;
+      if (drag && objects[drag.index]) {
+        var item = objects[drag.index];
+        var half = item.type === "plate" ? item.length / 2 : 18;
+        item.x = clamp(point.x - drag.dx, item.type === "plate" && item.orientation === "horizontal" ? margin + half : margin, item.type === "plate" && item.orientation === "horizontal" ? canvas.width - margin - half : canvas.width - margin);
+        item.y = clamp(point.y - drag.dy, item.type === "plate" && item.orientation === "vertical" ? margin + half : margin, item.type === "plate" && item.orientation === "vertical" ? canvas.height - margin - half : canvas.height - margin);
+      }
+      draw();
+    });
+
+    function endDrag(event) {
+      if (drag && canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+      drag = null;
+    }
+    canvas.addEventListener("pointerup", endDrag);
+    canvas.addEventListener("pointercancel", endDrag);
+    canvas.addEventListener("pointerleave", function () { if (!drag) { probe = null; draw(); } });
+
+    if (undoBtn) undoBtn.addEventListener("click", function () {
+      if (!history.length) return;
+      objects = history.pop();
+      undoBtn.disabled = history.length === 0;
+      draw();
+    });
+    if (clearBtn) clearBtn.addEventListener("click", function () {
+      if (!objects.length) return;
+      remember();
+      objects = [];
+      probe = null;
+      draw();
+    });
+
+    if (showEquipotentialEl && root.getAttribute("data-show-equipotential") === "true") showEquipotentialEl.checked = true;
+    if (showPotentialMapEl && root.getAttribute("data-show-potential-map") === "true") showPotentialMapEl.checked = true;
+    setTool("positive");
+    setPreset(root.getAttribute("data-initial-preset") || "dipole");
+    history = [];
+    if (undoBtn) undoBtn.disabled = true;
+    draw();
+  }
+
   function initCapacitorSim(root) {
     if (!root || (root.dataset && root.dataset.fieldCapacitorMounted === "1")) return;
 
@@ -1519,6 +2143,7 @@
     Array.prototype.forEach.call(nodes, mount);
   }
 
+  register("electrostatic-field", initElectrostaticFieldLab);
   register("capacitor", initCapacitorSim);
   register("particle-trajectory", initParticleTrajectorySim);
   register("magnetic-trajectory", initMagneticTrajectorySim);

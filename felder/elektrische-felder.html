@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder und Ladungen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260926-7">
   <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -369,6 +370,27 @@
         <strong>Was du siehst:</strong>
         <p>Die Grießkörner machen die Feldstruktur sichtbar. Im Modellbild zeigen die Feldlinien radial nach außen, weil die felderzeugende Ladung positiv ist.</p>
       </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Feldlabor: Ladungen und Platten selbst anordnen</h2>
+    <p>Baue eigene Ladungsanordnungen und untersuche, wie sich ihre elektrischen Felder überlagern. Du kannst positive und negative Punktladungen sowie geladene Platten auf die Fläche setzen. Schalte die Feldlinien ein, um die Richtung des Feldes zu verfolgen. Die Äquipotenziallinien zeigen Orte gleichen elektrischen Potenzials.</p>
+    <div class="wb-callout">
+      <strong>So liest du das Bild:</strong>
+      <p>Der violette Pfeil zeigt die Feldrichtung an der Position deines Zeigers. Feldlinien beginnen an positiven Ladungen und enden an negativen Ladungen. Äquipotenziallinien stehen überall senkrecht auf den Feldlinien. Ihre berechneten Werte sind in dieser Darstellung relativ; entscheidend sind Form und räumlicher Verlauf.</p>
+    </div>
+    <div class="field-sim-card" data-field-sim="electrostatic-field"></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_feldlabor",
+        "title":"Stopp & check: Linien vergleichen",
+        "question":"Was solltest du beim Dipol und beim Plattenkondensator beobachten?",
+        "answer":"Beim Dipol verlaufen gekrümmte Feldlinien von der positiven zur negativen Ladung; die Äquipotenziallinien schneiden sie rechtwinklig. Zwischen zwei langen, entgegengesetzt geladenen Platten verlaufen die Feldlinien im mittleren Bereich nahezu parallel. Dort sind auch die Äquipotenziallinien nahezu parallel zu den Platten. An den Plattenenden treten Randfelder auf."
+      }
+      </script>
     </div>
     <div class="wb-section-break"></div>
 
@@ -770,6 +792,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+  <script src="../assets/felder-simulations.js?v=20260926-7"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>
