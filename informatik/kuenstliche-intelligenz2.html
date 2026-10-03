@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Künstliche Intelligenz 2: Maschinelles Lernen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <style>
+    .ki-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:22px;align-items:center;margin:10px 0 18px}
+    .ki-kicker{font-weight:850;color:#0f766e;text-transform:uppercase;font-size:.82rem;letter-spacing:0}
+    .ki-lead{font-size:1.08rem;line-height:1.65;color:#243244}
+    .ki-figure{margin:16px 0 20px;text-align:center}
+    .ki-figure img{display:block;width:100%;max-height:520px;object-fit:contain;margin:0 auto;border:1px solid var(--wb-line,#d8dee8);border-radius:8px;background:#fff}
+    .ki-figure.compact img{max-height:350px}
+    .ki-figure.formula img{width:auto;max-width:100%;max-height:115px;border:0;border-radius:0}
+    .ki-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
+    .ki-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+    .ki-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ki-panel{border:1px solid var(--wb-line,#d8dee8);border-radius:8px;padding:14px 15px;background:#fff;min-width:0}
+    .ki-panel h3{margin-top:0;margin-bottom:8px;font-size:1rem}
+    .ki-panel p:last-child,.ki-panel ul:last-child{margin-bottom:0}
+    .ki-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+    .ki-step{border:1px solid #d7dee8;border-left:5px solid #2563eb;border-radius:8px;padding:12px;background:#fbfdff;min-width:0}
+    .ki-step strong{display:block;margin-bottom:5px}
+    .ki-mini-table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff}
+    .ki-mini-table th,.ki-mini-table td{border:1px solid var(--wb-line,#d8dee8);padding:10px 12px;vertical-align:top}
+    .ki-mini-table th{background:#f8fafc;text-align:left}
+    .ki-table-scroll{overflow-x:auto}
+    .ki-note-green{border-left:6px solid #0f766e;background:#ecfdf5;padding:12px 14px;border-radius:8px;margin:14px 0;color:#113f36}
+    .ki-note-amber{border-left:6px solid #d97706;background:#fff7ed;padding:12px 14px;border-radius:8px;margin:14px 0;color:#4a2a0a}
+    .ki-source-list li{margin-bottom:8px}
+    .ki-lab{border:1px solid var(--wb-line,#d8dee8);border-radius:8px;padding:16px;background:#fff;color:#243244;margin:16px 0}
+    .ki-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:12px}
+    .ki-controls label{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:700}
+    .ki-controls select{font:inherit;max-width:100%;padding:6px;border:1px solid #aab7c6;border-radius:4px;background:#fff;color:#243244}
+    .ki-controls input[type=range]{width:min(260px,100%);accent-color:#0f766e}
+    .ki-controls input[type=checkbox]{accent-color:#0f766e;width:18px;height:18px}
+    .ki-controls output{min-width:3.5em;font-variant-numeric:tabular-nums}
+    .ki-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .ki-metrics div{padding:10px 0;border-top:3px solid #2563eb}
+    .ki-metrics div:nth-child(2){border-color:#0f766e}
+    .ki-metrics div:nth-child(3){border-color:#d97706}
+    .ki-metrics strong{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+    .ki-metrics span{display:block;font-size:.9rem}
+    .ki-cases{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:16px 0}
+    .ki-case{display:grid;place-items:center;min-height:38px;font-size:.78rem;font-weight:800;border:1px solid #8290a0;border-radius:4px}
+    .ki-case[data-result=TP]{background:#d1fae5;color:#065f46}
+    .ki-case[data-result=TN]{background:#dbeafe;color:#1e40af}
+    .ki-case[data-result=FP]{background:#fff3cd;color:#714d00}
+    .ki-case[data-result=FN]{background:#ffe4e6;color:#9f1239}
+    .ki-chart{width:100%;height:auto;aspect-ratio:16/10;display:block;background:#fff}
+    .ki-legend{display:flex;flex-wrap:wrap;gap:16px;margin:8px 0}
+    .ki-legend span{font-weight:700}
+    .ki-legend span:nth-child(1){color:#0f766e}
+    .ki-legend span:nth-child(2){color:#2563eb}
+    .ki-legend span:nth-child(3){color:#c2410c}
+    section[data-wb-page],.ki-hero>*,.ki-grid>*{min-width:0}
+    @media(max-width:860px){.ki-hero,.ki-grid,.ki-grid.three,.ki-flow{grid-template-columns:1fr}.ki-figure img{max-height:none}}
+    @media(max-width:720px){
+      .wb-book:not(.wb-present-mode){--wb-topH:104px}
+      .wb-book:not(.wb-present-mode) .wb-topbar{flex-direction:column;align-items:stretch;justify-content:center;padding:0 6px}
+      .wb-book:not(.wb-present-mode) .wb-top-left{min-width:0;gap:10px;height:44px}
+      .wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+      .wb-book:not(.wb-present-mode) .wb-brand{font-size:20px}
+      .wb-book:not(.wb-present-mode) .wb-top-right{justify-content:space-between;gap:4px;height:54px}
+      .wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:3px;min-width:0}
+      .wb-book:not(.wb-present-mode) .wb-theme-select{width:88px;max-width:100%;padding:6px 4px}
+      .wb-book:not(.wb-present-mode) .wb-page-ind{min-width:48px;font-size:15px;white-space:nowrap}
+      .wb-book:not(.wb-present-mode) .wb-icon-btn{width:34px;height:36px;flex-shrink:0;border-radius:6px}
+      .wb-book .wb-content{padding:12px}
+      .wb-book .wb-paper{padding:20px}
+    }
+    @media(max-width:480px){.ki-cases{grid-template-columns:repeat(5,minmax(0,1fr))}.ki-lab{padding:12px}.ki-mini-table th,.ki-mini-table td{padding:8px}.ki-metrics{gap:8px}.ki-metrics strong{font-size:1.1rem}}
+  </style>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {"bookTitle":"Informatik","sectionTitle":"Künstliche Intelligenz 2: Maschinelles Lernen","startPage":1,"submitLabel":"Zusammenfassung & abgeben","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"KI 2","themeDefault":"default","resultsPageTitle":"Ergebnisse"}
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <div class="ki-hero">
+      <div>
+        <div class="ki-kicker">Leitfrage · KI 2</div>
+        <h1>Wie lernen Maschinen aus Erfahrung?</h1>
+        <p class="ki-lead">Ein Modell erkennt Pflanzen, sortiert E-Mails oder wählt einen Spielzug. Aber was bekommt es beim Lernen zurückgemeldet? Und woran erkennst du, ob es auf neuen Daten wirklich gut arbeitet?</p>
+        <div class="wb-section-break"></div>
+        <p><a href="kuenstliche-intelligenz.html">Teil 1: KI-Grundlagen und wissensbasierte KI</a></p>
+      </div>
+      <figure class="ki-figure compact">
+        <img src="bilder/blaetterapp.png" alt="Beispiel einer App, die ein Eichenblatt auf einem Handyfoto bestimmt">
+        <figcaption>Eine richtige Antwort auf einem Foto ist ein Anfang. Eine gute Lernaufgabe verlangt überprüfbare Leistung auf vielen neuen Beispielen.</figcaption>
+      </figure>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Deine Lernziele</h2>
+    <ul>
+      <li>Du unterscheidest überwachtes, unüberwachtes und verstärkendes Lernen anhand des Feedbacks.</li>
+      <li>Du beschreibst eine Lernaufgabe mit Aufgabe T, Leistungsmaß P und Erfahrung E.</li>
+      <li>Du planst einen fairen Trainings- und Testablauf und erprobst ihn mit Teachable Machine.</li>
+      <li>Du berechnest Accuracy, Precision und Recall und begründest, welches Maß wichtig ist.</li>
+      <li>Du erkennst Datenlecks, gelernte Abkürzungen und Grenzen von Modellvorhersagen.</li>
+      <li>Du bereitest die Klassifikation von Iris-Blüten als nächste Lernaufgabe vor.</li>
+    </ul>
+    <div class="wb-section-break"></div>
+    <h2>Modell und Lernalgorithmus</h2>
+    <div class="ki-grid">
+      <div class="ki-panel"><h3>Verarbeitungsmodell</h3><p>Es bildet eine Eingabe auf eine Ausgabe ab, etwa ein Foto auf die Klasse „Hund“. Das Modell enthält gelernte Parameter und Verknüpfungen.</p></div>
+      <div class="ki-panel"><h3>Lernalgorithmus</h3><p>Er baut das Modell auf oder verändert es anhand von Daten und einem Lernziel. Er ist das Verfahren, mit dem das Modell entsteht.</p></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_start_reveal","title":"Stopp & check: Was lernt hier?","hint":"Trenne Training und Anwendung gedanklich.","question":"Eine Pflanzen-App nennt dir eine Art. Lernt sie dabei automatisch weiter?","answer":"Nicht unbedingt. Bei der Anwendung berechnet ein bereits trainiertes Modell eine Ausgabe. Weiterlernen setzt einen zusätzlichen Lernprozess voraus, beispielsweise mit neuen beschrifteten Fotos. Eine Vorhersage allein ist noch kein Training."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Überwacht und unüberwacht">
+    <h1>Zielausgaben kennen oder Muster entdecken?</h1>
+    <p>Die Lernvarianten unterscheiden sich vor allem darin, welche Rückmeldung zum Aufbau des Modells verfügbar ist. Beginnen wir mit zwei Varianten, die auf vorhandenen Daten arbeiten.</p>
+    <div class="wb-section-break"></div>
+    <h2>Überwachtes Lernen: Beispiele mit Label</h2>
+    <p>Jedes Trainingsbeispiel enthält eine Eingabe und eine gewünschte Zielausgabe, das <strong>Label</strong>. Der Lernalgorithmus vergleicht die Modellvorhersage mit dem Label und verändert das Modell, um den Fehler zu verringern. Eine Person muss dabei nicht jeden einzelnen Trainingsschritt beobachten.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/ueberwachtes-lernen.png" alt="Überwachtes Lernen: beschriftete Eingaben, ein Modell lernen, neue Eingaben zuordnen"><figcaption>Die Zielausgabe ist beim Training bekannt. Beim späteren Einsatz muss das Modell sie selbst abschätzen. Grafik: Stefan Seegerer, Tilman Michaeli, Sven Jatzlau, CC BY (Kennzeichnung im Bild).</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div class="ki-grid">
+      <div class="ki-panel"><h3>Klassifikation</h3><p>Die Ausgabe ist eine Kategorie: Spam oder normale E-Mail, Hund oder Katze, ein Verkehrszeichen oder eine handgeschriebene Ziffer.</p></div>
+      <div class="ki-panel"><h3>Regression</h3><p>Die Ausgabe ist ein Zahlenwert: etwa ein Hauspreis aus Fläche, Baujahr und Lage. Das Label ist hier der bekannte Verkaufspreis.</p></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/spam-classifier.png" alt="Ein Klassifikator sortiert Nachrichten in Posteingang und Spamordner"><figcaption>Beim Spamfilter zählen sowohl erkannte Spam-Mails als auch die normalen Nachrichten, die fälschlich im Spamordner landen.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <h2>Unüberwachtes Lernen: Struktur ohne Ziel-Label</h2>
+    <p>Die Eingabedaten besitzen keine vorgegebenen Zielausgaben. Der Algorithmus sucht Strukturen, beispielsweise <strong>Cluster</strong> ähnlicher Datenpunkte oder Ausreißer. Entwicklerinnen und Entwickler legen trotzdem Merkmale, Ähnlichkeitsmaß und Lernziel fest. „Unüberwacht“ bedeutet deshalb nicht „ohne menschliche Entscheidungen“.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/unueberwachtes-lernen.png" alt="Unüberwachtes Lernen: unbeschriftete Eingaben, Ähnlichkeiten suchen, Gruppen und Ausreißer finden"><figcaption>Die Gruppen entstehen aus den gewählten Merkmalen. Ihre Bedeutung muss anschließend interpretiert werden. Grafik: Stefan Seegerer, Tilman Michaeli, Sven Jatzlau, CC BY.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <p>Du könntest Songs nach Tempo und Klangstruktur gruppieren oder typische Einkaufsmuster in Warenkörben suchen. Ein ungewöhnlicher Kreditkartenumsatz kann als Ausreißer auffallen. Daraus folgt noch nicht, dass tatsächlich Betrug vorliegt. Reale Empfehlungssysteme und Betrugserkennung können mehrere Lernvarianten kombinieren.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_varianten_cloze","title":"Sicherung: Welche Information liegt vor?","hint":"Setze die Begriffe aus der Wortbank ein.","bank":["Labels","Klassifikation","Regression","Clustern"],"segments":[{"t":"text","v":"Überwachtes Lernen nutzt Beispiele mit "},{"t":"gap","a":"Labels"},{"t":"text","v":". Eine Kategorie als Ausgabe gehört zur "},{"t":"gap","a":"Klassifikation"},{"t":"text","v":", ein geschätzter Zahlenwert zur "},{"t":"gap","a":"Regression"},{"t":"text","v":". Unüberwachtes Lernen kann ähnliche Beispiele zu Gruppen, sogenannten "},{"t":"gap","a":"Clustern"},{"t":"text","v":", zusammenfassen."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_unueberwacht_mcq","title":"Mini-Check: Die Grenze liegt im Training","hint":"Achte auf die verfügbare Rückmeldung.","shuffleChoices":true,"questions":[{"text":"Welche Aufgabe ist in dieser Form unüberwacht?","choices":[{"id":"a","label":"Nachrichten anhand von Beispielen mit Spam-Label klassifizieren."},{"id":"b","label":"Kundendaten ohne vorgegebene Gruppennamen nach Ähnlichkeit gruppieren."},{"id":"c","label":"Aus bekannten Hausverkäufen den Verkaufspreis neuer Häuser schätzen."}],"correct":["b"],"explain":"Bei b gibt es keine Ziel-Labels. Die Cluster werden aus Merkmalen gebildet. Sowohl Kategorien als auch Zahlenwerte können dagegen Labels für überwachtes Lernen sein."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Überwacht bedeutet: Zielausgaben sind im Training bekannt. Unüberwacht bedeutet: Strukturen werden ohne solche Ziel-Labels gesucht.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Verstärkendes Lernen">
+    <h1>Handeln, Rückmeldung bekommen, Strategie verbessern</h1>
+    <p>In einem Videospiel probierst du Aktionen aus. Manche bringen Punkte, andere führen zum Neustart. Du lernst nicht nur eine einzelne richtige Antwort, sondern ein Verhalten, das sich über längere Zeit lohnt.</p>
+    <div class="wb-section-break"></div>
+    <h2>Verstärkendes Lernen</h2>
+    <p>Ein <strong>Agent</strong> nimmt den Zustand seiner Umgebung wahr, wählt eine Aktion und erhält eine zahlenmäßige <strong>Belohnung</strong>. Diese kann positiv, null oder negativ sein. Der Lernalgorithmus verbessert die <strong>Strategie</strong> des Agenten so, dass die erwartete Summe künftiger Belohnungen möglichst groß wird.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/verstaerkendes-lernen.png" alt="Kreislauf aus Zustand erfassen, Aktion ausführen, Belohnung erhalten und Strategie anpassen"><figcaption>Die Rückmeldung bewertet Folgen einer Handlung. Sie muss nicht den besten Zug vorgeben und kann erst später eintreffen. Grafik: Stefan Seegerer, Tilman Michaeli, Sven Jatzlau, CC BY.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <p>Ein Roboter kann in einer Simulation Würfe ausprobieren und Punkte für einen Korb erhalten. Ein Spielagent bekommt eine Rückmeldung bei Sieg oder Niederlage. Auch Werbung lässt sich auf Klicks als Belohnung optimieren; ob dieses Ziel sinnvoll ist, muss jedoch separat beurteilt werden.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>Merke: Das Belohnungsziel zählt.</strong><p>Ein Agent optimiert die festgelegte Rückmeldung. „Viele Klicks“ ist nicht automatisch „gute Information“. Ein schlecht gewähltes Ziel kann erfolgreiches, aber unerwünschtes Verhalten fördern.</p></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_varianten_categorize","title":"Ordne die Lernaufgaben zu","hint":"Entscheide anhand des ausdrücklich beschriebenen Trainings, nicht allein anhand der Anwendung.","categories":[{"id":"supervised","title":"Überwacht"},{"id":"unsupervised","title":"Unüberwacht"},{"id":"reinforcement","title":"Verstärkend"}],"items":[{"label":"Eine Pflanzen-App trainiert mit Fotos und zugehörigen Artnamen.","category":"supervised"},{"label":"Ein Modell schätzt Hauspreise aus Beispielen mit bekanntem Verkaufspreis.","category":"supervised"},{"label":"Ein Modell trainiert mit Gesichtern und von Personen vergebenen Emotionslabels.","category":"supervised"},{"label":"Ein Spamfilter lernt aus als Spam oder normal markierten E-Mails.","category":"supervised"},{"label":"Ein Supermarkt sucht ähnliche Kundengruppen ohne vorgegebene Gruppennamen.","category":"unsupervised"},{"label":"Ein System sucht Ausreißer in unbeschrifteten Transaktionsdaten.","category":"unsupervised"},{"label":"Ein Börsenagent probiert in einer Simulation Aktionen aus; Gewinne und Verluste sind seine Belohnung.","category":"reinforcement"},{"label":"Ein Roboter verbessert seine Würfe durch Punkte für einen Korb und negative Rückmeldungen für Fehlwürfe.","category":"reinforcement"}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_belohnung_verify","title":"Stopp & check: Belohnung ist kein Lösungslabel","hint":"Denke an eine verlorene Partie nach vielen einzelnen Zügen.","statement":"Eine Belohnung sagt dem Agenten immer, welche Aktion in einem Zustand die richtige gewesen wäre.","answer":false,"explain":"Die Rückmeldung bewertet das erreichte Ergebnis. Welche vorausgehenden Aktionen dazu beigetragen haben und welche besser gewesen wären, muss der Lernalgorithmus erst herausfinden."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Labels, Strukturziele und Belohnungen liefern drei unterschiedliche Lernsignale. Derselbe Anwendungsbereich kann je nach Trainingsverfahren zu verschiedenen Varianten gehören.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Lernaufgaben mit T–P–E">
+    <h1>Was genau soll das System lernen?</h1>
+    <p>„Die KI soll besser werden“ reicht als Auftrag nicht aus. Tom Mitchell beschreibt Lernen 1997 über drei Elemente: <strong>Task T</strong>, <strong>Performance P</strong> und <strong>Experience E</strong>. Sinngemäß lernt ein Programm, wenn sich seine Leistung P bei Aufgaben T durch Erfahrung E verbessert.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-flow">
+      <div class="ki-step"><strong>T · Aufgabe</strong>Welche Eingabe liegt vor? Welche Ausgabe oder Handlung wird erwartet?</div>
+      <div class="ki-step"><strong>P · Leistungsmaß</strong>Woran erkennst du eine Verbesserung? Welche Fehler sind besonders wichtig?</div>
+      <div class="ki-step"><strong>E · Erfahrung</strong>Welche Daten oder Interaktionen liefern das Lernsignal?</div>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Beispiel: Spamfilter</h2>
+    <p><strong>T:</strong> Eine eingehende Nachricht als Spam oder normale E-Mail klassifizieren. <strong>P:</strong> Möglichst viel Spam erkennen und möglichst wenige normale Nachrichten aussortieren. <strong>E:</strong> E-Mails, die von Nutzerinnen und Nutzern entsprechend markiert wurden. Die Variante ist überwacht.</p>
+    <div class="wb-section-break"></div>
+    <div data-p2 class="p2" data-p2-id="ki2_tpe_pairs" data-p2-title="Zuordnung: T, P oder E?" data-p2-hint="Trenne den Auftrag, seine Bewertung und das Trainingsmaterial.">
+      <div class="p2-banks">
+        <div><div class="p2-col-title">Beschreibung</div><div class="p2-bank" data-left-bank>
+          <div class="p2-piece p2-left" data-side="L" data-pair="1">Neue Pflanzenfotos mit einem Artnamen beschriften.</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="2">Anteil richtig bestimmter Pflanzen auf zurückgehaltenen Fotos.</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="3">Eine Sammlung von Pflanzenfotos mit geprüften Artnamen.</div>
+        </div></div>
+        <div><div class="p2-col-title">Element</div><div class="p2-bank" data-right-bank>
+          <div class="p2-piece p2-right" data-side="R" data-pair="1">T · Aufgabe</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="2">P · Leistungsmaß</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="3">E · Erfahrung</div>
+        </div></div>
+      </div>
+      <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+      <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Drei Bilder, drei Lernaufträge</h2>
+    <div class="ki-grid three">
+      <figure class="ki-figure compact"><img src="bilder/blaetterapp.png" alt="Pflanzenbestimmung anhand eines Blattfotos"><figcaption>A · Pflanzen anhand von Fotos benennen.</figcaption></figure>
+      <figure class="ki-figure compact"><img src="bilder/kundenkategorien.png" alt="Veranschaulichung von Gruppen ähnlicher Kundinnen und Kunden"><figcaption>B · Ähnliche Kundengruppen entdecken.</figcaption></figure>
+      <figure class="ki-figure compact"><img src="bilder/dame.png" alt="Ein lernendes Programm spielt Dame und erhält Rückmeldungen"><figcaption>C · Beim Damespiel eine erfolgreiche Strategie lernen.</figcaption></figure>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_tpe_essay","title":"Formuliere drei Lernaufgaben","hint":"Beschreibe für A, B und C jeweils T, P und E. Nenne die Lernvariante und begründe, wie du Leistung messen würdest.","storagePrefix":"ki2_","fields":[{"label":"A · Pflanzen-App","key":"pflanzen","kind":"textarea","placeholder":"T: ... P: ... E: ... Variante und Begründung: ..."},{"label":"B · Kundengruppen","key":"kunden","kind":"textarea","placeholder":"Welche Merkmale machen Kundengruppen ähnlich?"},{"label":"C · Damespiel","key":"dame","kind":"textarea","placeholder":"Wie machst du Partien gegen verschiedene Gegner vergleichbar?"}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_tpe_reveal","title":"Vergleiche deine Steckbriefe","hint":"Öffne die Beispiele erst nach deinem eigenen Entwurf.","question":"Wie könnten passende T–P–E-Steckbriefe aussehen?","answer":"A: T = Artnamen zu Fotos vorhersagen. P = Anteil korrekter Vorhersagen auf unabhängigen Fotos. E = beschriftete Pflanzenbilder; überwacht. B: T = ähnliche Kunden gruppieren. P = beispielsweise geringe Distanz zum eigenen Gruppenprototyp, ergänzt um sinnvolle Trennung und fachliche Nutzbarkeit der Gruppen. E = unbeschriftete, geeignet ausgewählte und skalierte Kundenmerkmale; unüberwacht. Eine kleine Distanz allein beweist keine nützliche Gruppierung. C: T = einen Zug im gegebenen Zustand auswählen. P = Gewinnquote in vielen Partien gegen festgelegte Vergleichsgegner. E = gespielte Partien mit Belohnungen bei Sieg und gegebenenfalls negativen Belohnungen bei Niederlage; verstärkend. Zehn Partien erlauben nur eine sehr unsichere Leistungsschätzung."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>T–P–E macht aus einer Idee einen überprüfbaren Lernauftrag. Ohne passende Erfahrungsquelle und messbare Leistung lässt sich „Lernen“ nicht sinnvoll belegen.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Daten und Lernzyklus">
+    <h1>Vom Lernauftrag zum fairen Test</h1>
+    <p>Ein Modell soll auf neuen Eingaben funktionieren. Wenn du nur die Daten prüfst, mit denen es gelernt hat, kannst du Auswendiglernen mit guter <strong>Generalisierung</strong> verwechseln.</p>
+    <div class="wb-section-break"></div>
+    <h2>Der Machine Learning Lifecycle</h2>
+    <ol start="0">
+      <li><strong>Auftrag klären:</strong> T, P und E festlegen.</li>
+      <li><strong>Daten vorbereiten:</strong> Labels prüfen, defekte Dateien und Duplikate behandeln, Daten aufteilen.</li>
+      <li><strong>Modell auswählen:</strong> Ein geeignetes Verfahren und seine Einstellungen bestimmen.</li>
+      <li><strong>Trainieren:</strong> Das Modell anhand der Trainingsdaten anpassen.</li>
+      <li><strong>Bewerten:</strong> Verbesserungen mit Validierungsdaten vergleichen; das fertige Modell unabhängig testen.</li>
+      <li><strong>Interpretieren und einsetzen:</strong> Fehler, Grenzen und Veränderungen im späteren Einsatz beobachten.</li>
+    </ol>
+    <div class="wb-section-break"></div>
+    <p>Der Ablauf ist ein Kreislauf: Ein schlechter Validierungswert kann dich zu einem anderen Modell führen, ein systematischer Fehler zu neuen Daten oder sogar zu einem veränderten Lernauftrag.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_lifecycle_order","title":"Ordne den ersten vollständigen Lernzyklus","hint":"Plane den Auftrag vor dem Training und den unabhängigen Test vor dem Einsatz.","shuffle":true,"items":["T, P und E festlegen","Daten vorbereiten und Trainings-, Validierungs- und Testdaten trennen","Modell auswählen und Einstellungen festlegen","Modell mit Trainingsdaten trainieren","Modell anhand der Validierungsdaten auswählen und abschließend mit Testdaten bewerten","Ergebnisse interpretieren und über den Einsatz entscheiden"]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Drei Rollen für Daten</h2>
+    <div class="ki-flow">
+      <div class="ki-step"><strong>Training</strong>Diese Daten verändern die Modellparameter.</div>
+      <div class="ki-step"><strong>Validierung</strong>Diese Daten helfen bei Modellwahl und Einstellungen, etwa der Zahl der Trainingsdurchläufe.</div>
+      <div class="ki-step"><strong>Test</strong>Diese Daten bleiben bis zur abschließenden Bewertung unberührt.</div>
+    </div>
+    <div class="wb-section-break"></div>
+    <p>Ein möglicher Ausgangspunkt ist, 20 % als Testmenge zurückzuhalten. Das ist eine Faustregel, keine feste Vorgabe. Die übrigen Daten werden für Training und Validierung genutzt. Jede Klasse sollte in allen Teilmengen vertreten sein. Fast identische Bilder, dieselben Tiere oder Aufnahmen derselben Serie können einen Test zu leicht machen und gehören je nach Lernauftrag gemeinsam in eine Teilmenge.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_daten_trace","title":"Ablaufspur: 200 Bilder aufteilen","hint":"Du hast 100 Hunde- und 100 Katzenbilder. Reserviere je 20 für den Test, danach je 10 für die Validierung. Trage nur Anzahlen ein.","columns":[{"label":"Schritt","width":"50%"},{"label":"Hund","width":"25%"},{"label":"Katze","width":"25%"}],"rows":[{"cells":[{"given":"Alle verfügbaren Bilder"},{"given":"100"},{"given":"100"}]},{"cells":[{"given":"Testmenge (20 % je Klasse)"},{"answers":["20"]},{"answers":["20"]}]},{"cells":[{"given":"Validierung (je 10 Bilder)"},{"answers":["10"]},{"answers":["10"]}]},{"cells":[{"given":"Verbleibende Trainingsbilder"},{"answers":["70"]},{"answers":["70"]}]},{"cells":[{"given":"Training + Validierung + Test"},{"answers":["100"]},{"answers":["100"]}]}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_testdaten_verify","title":"Mini-Check: Datenleck","hint":"Überlege, welche Information bei der Modellwahl genutzt wird.","statement":"Ich darf meine Einstellungen so lange anhand derselben Testbilder verbessern, bis die Testgenauigkeit hoch genug ist; der Test bleibt unabhängig.","answer":false,"explain":"Dann beeinflussen die Testdaten indirekt die Modellwahl. Sie übernehmen die Rolle von Validierungsdaten. Für eine unabhängige Abschlussbewertung brauchst du neue, bisher ungenutzte Testdaten."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Training, Validierung und Test haben verschiedene Aufgaben. Ein fairer Test bewertet das fertige Modell auf Daten, die seine Entwicklung nicht beeinflusst haben.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Teachable Machine">
+    <h1>Dein Versuch: Hund oder Katze?</h1>
+    <p>Mit <a href="https://teachablemachine.withgoogle.com/train/image" target="_blank" rel="noopener">Teachable Machine: Bildprojekt</a> kannst du ohne Programmcode ein Bildmodell trainieren. Dabei wird ein bereits vortrainiertes Bildmodell als Grundlage verwendet und für deine Klassen angepasst. Du trainierst also nicht die gesamte Bilderkennung von Grund auf.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/trainingsbilder.png" alt="Beschriftete Trainingsbeispiele: vier Hunde und zwei Katzen"><figcaption>Die Abbildung zeigt gelabelte Beispiele, aber keinen ausgewogenen Datensatz. Sammle für deinen Versuch möglichst ähnlich viele und vielfältige Bilder pro Klasse.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <h2>0 · Den Steckbrief festlegen</h2>
+    <p><strong>T:</strong> Ein Foto mit genau einem Hund oder einer Katze der passenden Klasse zuordnen. <strong>P:</strong> Anteil richtiger Vorhersagen auf zurückgehaltenen Fotos, zusätzlich Fehler je Klasse. <strong>E:</strong> Korrekt beschriftete und vielfältige Hunde- und Katzenbilder. Es handelt sich um überwachtes Lernen.</p>
+    <div class="wb-section-break"></div>
+    <h2>1 · Bilder vorbereiten und trennen</h2>
+    <p>Nutze eigene Tierfotos, bereitgestellte Unterrichtsdateien oder den <a href="https://www.microsoft.com/en-us/download/details.aspx?id=54765" target="_blank" rel="noopener">Katzen-und-Hunde-Datensatz im Microsoft Download Center</a>. Die zugehörige <a href="https://www.kaggle.com/c/dogs-vs-cats/data" target="_blank" rel="noopener">Kaggle-Datenseite</a> beschreibt die Herkunft; für deren Download kann ein Konto nötig sein. Wähle für den Schulversuch eine überschaubare Teilmenge, beispielsweise 50 Bilder je Klasse.</p>
+    <div class="wb-section-break"></div>
+    <p>Prüfe falsche Labels, beschädigte Bilder und Duplikate. Lege vier getrennte Ordner an: <code>train-cats</code>, <code>train-dogs</code>, <code>test-cats</code>, <code>test-dogs</code>. Reserviere beispielsweise je 10 der 50 Bilder als unabhängigen Test. Testbilder dürfen nicht in die Trainingsklassen hochgeladen werden.</p>
+    <div class="wb-section-break"></div>
+    <h2>2 und 3 · Modell wählen und trainieren</h2>
+    <ol>
+      <li>Öffne ein Bildprojekt mit dem Standard-Bildmodell.</li>
+      <li>Benenn die Klassen „Katze“ und „Hund“.</li>
+      <li>Lade die Bilder aus den beiden Trainingsordnern jeweils in die richtige Klasse.</li>
+      <li>Notiere die Einstellungen und starte das Training zunächst mit den Vorgaben.</li>
+    </ol>
+    <div class="wb-section-break"></div>
+    <p><strong>Epoche:</strong> Ein Durchlauf über die Trainingsbeispiele. <strong>Batch-Größe:</strong> Anzahl von Beispielen, die gemeinsam für einen Anpassungsschritt genutzt werden. <strong>Lernrate:</strong> Größe der Parameteränderungen. Mehr Epochen führen nicht automatisch zu besserer Leistung auf neuen Bildern.</p>
+    <div class="wb-section-break"></div>
+    <h2>4 und 5 · Testen und interpretieren</h2>
+    <p>Teachable Machine hält intern einen Teil der hochgeladenen Daten zur Bewertung zurück. Dieser interne Vergleich ersetzt deinen unabhängigen Test nicht. Lege dein endgültiges Modell und die Entscheidungsregel fest, etwa „die Klasse mit dem höheren Wert“. Prüfe erst dann jedes zurückgehaltene Testbild und zähle richtige und falsche Vorhersagen je Klasse.</p>
+    <div class="wb-section-break"></div>
+    <p>Prüfe zusätzlich ein Auto oder einen Elefanten als Grenzfall. Ein Zwei-Klassen-Modell kann dabei weiterhin „Hund“ oder „Katze“ ausgeben. Die angezeigten Prozentwerte sind Modellwerte; selbst ein hoher Wert garantiert keine korrekte oder zuverlässig kalibrierte Wahrscheinlichkeit.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_versuch_essay","title":"Dein Versuchsprotokoll","hint":"Dokumentiere so, dass eine andere Person deinen Versuch nachvollziehen kann. Trenne Beobachtungen von Vermutungen.","storagePrefix":"ki2_","fields":[{"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Daten und Einstellungen","key":"aufbau","kind":"textarea","placeholder":"Quelle; Anzahl je Klasse; Trainings-/Testaufteilung; Umgang mit Duplikaten; Epochen, Batch-Größe, Lernrate."},{"label":"Testergebnisse","key":"ergebnis","kind":"textarea","placeholder":"Richtig / insgesamt je Klasse; Gesamtgenauigkeit; Beispiele von Fehlern; Ausgabe für den Grenzfall."},{"label":"Interpretation und nächster Versuch","key":"interpretation","kind":"textarea","placeholder":"Welchen Fehler vermutest du? Was würdest du ändern und mit welchen neuen Daten fair prüfen?"}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_versuch_reveal","title":"Fehler finden: Warum klappt nur mein eigenes Foto?","hint":"Überlege zuerst, welche Unterschiede zwischen den Bildern bestehen.","question":"Ein Modell erkennt deine Trainingsbilder perfekt, neue Fotos aber schlecht. Was prüfst du?","answer":"Prüfe zuerst die Vielfalt, Labels und Duplikate deiner Daten. Haben alle Hunde denselben Hintergrund und alle Katzen einen anderen? Gibt es nur ähnliche Ausschnitte? Ein Modell kann solche Abkürzungen oder einzelne Trainingsbeispiele lernen, statt zuverlässig zu generalisieren. Sammle abwechslungsreiche Daten, vergleiche Änderungen mit Validierungsdaten und nutze für die Abschlussbewertung einen frischen, unabhängigen Test."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst ein Modell trainieren, ohne seine komplette Verarbeitung selbst zu programmieren. Seine Qualität musst du trotzdem mit passenden Daten und nachvollziehbaren Tests belegen.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Accuracy, Precision, Recall">
+    <h1>Wie gut ist eine Klassifikation?</h1>
+    <p>Eine Gesamtgenauigkeit beantwortet nur eine von mehreren Fragen. Für ein binäres Modell legst du zuerst fest, welche Klasse als <strong>positiv</strong> zählt. Im folgenden Rechenbeispiel ist das „krank“. Positiv bedeutet hier das Vorliegen der gesuchten Eigenschaft, nicht „gut“.</p>
+    <div class="wb-section-break"></div>
+    <h2>Die vier Felder der Konfusionsmatrix</h2>
+    <div class="ki-table-scroll">
+      <table class="ki-mini-table">
+        <caption>20 Fälle eines fiktiven Diagnosemodells</caption>
+        <thead><tr><th scope="col">Wirklichkeit / Vorhersage</th><th scope="col">Positiv (krank)</th><th scope="col">Negativ (gesund)</th></tr></thead>
+        <tbody><tr><th scope="row">Tatsächlich positiv</th><td>4 · TP: richtig positiv</td><td>2 · FN: übersehener positiver Fall</td></tr><tr><th scope="row">Tatsächlich negativ</th><td>2 · FP: Fehlalarm</td><td>12 · TN: richtig negativ</td></tr></tbody>
+      </table>
+    </div>
+    <div class="wb-section-break"></div>
+    <p><strong>True / False</strong> beschreibt, ob die Entscheidung stimmt. <strong>Positive / Negative</strong> beschreibt die Vorhersage des Modells. Die Diagonale enthält die richtigen Entscheidungen: TP und TN.</p>
+    <div class="wb-section-break"></div>
+    <h2>Accuracy · Wie viel ist insgesamt richtig?</h2>
+    <figure class="ki-figure formula"><img src="bilder/accuracy.png" alt="Accuracy gleich Anzahl korrekter Vorhersagen geteilt durch Anzahl aller Vorhersagen"></figure>
+    <figure class="ki-figure formula"><img src="bilder/accuracy2.png" alt="Accuracy = (TP + TN) / (TP + TN + FP + FN)"></figure>
+    <p>Hier: <strong>(4 + 12) / 20 = 0,8 = 80 %</strong>. Accuracy berücksichtigt alle vier Felder. Bei ungleichen Klassengrößen kann sie eine wichtige Schwäche verdecken.</p>
+    <div class="wb-section-break"></div>
+    <h2>Precision · Wie verlässlich ist eine positive Vorhersage?</h2>
+    <figure class="ki-figure formula"><img src="bilder/precision.png" alt="Precision gleich Anzahl korrekt positiver Vorhersagen geteilt durch Anzahl aller als positiv vorhergesagten Beispiele"></figure>
+    <p><strong>Precision = TP / (TP + FP)</strong>. Hier: <strong>4 / 6 ≈ 66,7 %</strong>. Zwei von sechs positiven Vorhersagen sind Fehlalarme. Hohe Precision ist beim Spamfilter nützlich, wenn normale E-Mails möglichst nicht fälschlich aussortiert werden sollen.</p>
+    <div class="wb-section-break"></div>
+    <h2>Recall · Wie viel vom tatsächlich Positiven wird erkannt?</h2>
+    <figure class="ki-figure formula"><img src="bilder/recall.png" alt="Recall gleich Anzahl korrekt positiver Vorhersagen geteilt durch Anzahl aller tatsächlich positiven Beispiele"></figure>
+    <figure class="ki-figure formula"><img src="bilder/recall2.png" alt="Recall = TP / (TP + FN)"></figure>
+    <p>Hier: <strong>4 / 6 ≈ 66,7 %</strong>. Das Modell übersieht zwei der sechs positiven Fälle. Ein hoher Recall, auch <strong>Sensitivität</strong>, ist wichtig, wenn übersehene Fälle besonders schwer wiegen.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_metriken_trace","title":"Rechenspur: Werte, Brüche und Prozentanteile","hint":"Nutze die Matrix. Gib die Prozentwerte als Zahlen ohne %-Zeichen an; 66,7 oder gerundet 67 ist zulässig.","columns":[{"label":"Größe","width":"30%"},{"label":"Zähler / Anzahl","width":"35%"},{"label":"Nenner / Prozent","width":"35%"}],"rows":[{"cells":[{"given":"TP"},{"answers":["4"]},{"given":"richtig positiv"}]},{"cells":[{"given":"TN"},{"answers":["12"]},{"given":"richtig negativ"}]},{"cells":[{"given":"FP"},{"answers":["2"]},{"given":"Fehlalarm"}]},{"cells":[{"given":"FN"},{"answers":["2"]},{"given":"übersehener Fall"}]},{"cells":[{"given":"Accuracy: Zähler / Nenner"},{"answers":["16"]},{"answers":["20"]}]},{"cells":[{"given":"Precision: Zähler / Nenner"},{"answers":["4"]},{"answers":["6"]}]},{"cells":[{"given":"Recall: Zähler / Nenner"},{"answers":["4"]},{"answers":["6"]}]},{"cells":[{"given":"Accuracy in %"},{"given":"(4 + 12) / 20"},{"answers":["80","80%"]}]},{"cells":[{"given":"Precision in %"},{"given":"4 / (4 + 2)"},{"answers":["66,7","66.7","67","66,67","66.67","66,7%","67%"]}]},{"cells":[{"given":"Recall in %"},{"given":"4 / (4 + 2)"},{"answers":["66,7","66.7","67","66,67","66.67","66,7%","67%"]}]}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>80 % ist kein ausreichendes Urteil.</strong><p>Das Modell übersieht ein Drittel der positiven Fälle. Ob es für eine konkrete medizinische Aufgabe geeignet wäre, lässt sich aus 20 fiktiven Fällen nicht entscheiden. Dafür wären unter anderem eine größere repräsentative Studie, passende Grenzwerte und eine Bewertung der Fehlerfolgen nötig.</p></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_accuracy_mcq","title":"Mini-Check: 90 % und trotzdem nutzlos?","hint":"Rechne für 90 negative und 10 positive Beispiele.","questions":[{"text":"Ein Modell sagt für alle 100 Fälle „negativ“. Welche Aussage stimmt?","choices":[{"id":"a","label":"Accuracy = 90 %, Recall = 0 %."},{"id":"b","label":"Accuracy = 90 %, Recall = 90 %."},{"id":"c","label":"Precision = 100 %, weil es keine Fehlalarme gibt."}],"correct":["a"],"explain":"TN = 90 und FN = 10, TP = FP = 0. Deshalb beträgt die Accuracy 90 %, der Recall aber 0 %. Precision ist wegen des Nenners 0 nicht definiert; sie ist nicht automatisch 100 %."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Accuracy bewertet alle Entscheidungen, Precision die positiven Vorhersagen und Recall die tatsächlich positiven Fälle. Die Fehlerfolgen bestimmen, welches Maß besonders wichtig ist.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Metrik-Labor und Grenzen">
+    <h1>Eine andere Schwelle, andere Fehler</h1>
+    <p>Ein binäres Modell liefert oft einen Wert zwischen 0 und 1 für die positive Klasse. Ein <strong>Schwellenwert</strong> macht daraus eine Entscheidung: Ab der Schwelle wird „positiv“ vorhergesagt. Eine niedrigere Schwelle erkennt häufig mehr positive Fälle, erzeugt aber auch mehr Fehlalarme.</p>
+    <div class="wb-section-break"></div>
+    <h2>Metrik-Labor</h2>
+    <p>Die folgenden 20 fiktiven Fälle besitzen feste Modellwerte und feste tatsächliche Klassen. Bei der Schwelle 0,50 erhältst du genau die Matrix der vorherigen Seite. Du veränderst nur die Entscheidungsregel, nicht das trainierte Modell.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-lab" id="ki2-metric-lab">
+      <div class="ki-controls"><label for="ki2-threshold">Schwellenwert <input id="ki2-threshold" type="range" min="0" max="1" step="0.05" value="0.5"><output id="ki2-threshold-value" for="ki2-threshold">0,50</output></label></div>
+      <div class="ki-table-scroll"><table class="ki-mini-table"><caption>Konfusionsmatrix · positiv ab Modellwert ≥ Schwelle</caption><thead><tr><th scope="col">Wirklichkeit / Vorhersage</th><th scope="col">Positiv</th><th scope="col">Negativ</th></tr></thead><tbody><tr><th scope="row">Tatsächlich positiv</th><td id="ki2-tp">TP: 4</td><td id="ki2-fn">FN: 2</td></tr><tr><th scope="row">Tatsächlich negativ</th><td id="ki2-fp">FP: 2</td><td id="ki2-tn">TN: 12</td></tr></tbody></table></div>
+      <div class="ki-metrics" aria-live="polite" aria-atomic="true"><div><span>Accuracy</span><strong id="ki2-accuracy">80,0 %</strong></div><div><span>Precision</span><strong id="ki2-precision">66,7 %</strong></div><div><span>Recall</span><strong id="ki2-recall">66,7 %</strong></div></div>
+      <div class="ki-cases" id="ki2-cases" aria-label="Ergebnis für jeden der 20 Fälle"></div>
+      <p class="wb-mini-note" id="ki2-metric-note">Die Fälle sind Übungsdaten, keine medizinische Leistungsstudie.</p>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_schwelle_essay","title":"Transfer: Welche Fehler willst du vermeiden?","hint":"Vergleiche die Schwellen 0,20, 0,50 und 0,90. Halte die Werte fest und begründe zwei unterschiedliche Entscheidungen.","storagePrefix":"ki2_","fields":[{"label":"Beobachtungen im Labor","key":"vergleich","kind":"textarea","placeholder":"Schwelle; TP, TN, FP, FN; Accuracy, Precision, Recall."},{"label":"Abwägung","key":"abwägung","kind":"textarea","placeholder":"Für einen Spamfilter würde ich ... Für ein Suchsystem nach gefährlichen Defekten würde ich ... Unterscheide Fehlalarme und übersehene Fälle."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Wenn das Modell eine Abkürzung lernt</h2>
+    <p>Ein Modell findet Zusammenhänge, die bei den Trainingsdaten nützlich sind. Diese müssen nicht die Merkmale sein, die du beabsichtigst. Wenn Hunde fast immer auf einer Wiese und Katzen fast immer auf einem Sofa fotografiert wurden, kann der Hintergrund zum entscheidenden Signal werden. Das nennt man <strong>Shortcut Learning</strong>.</p>
+    <div class="wb-section-break"></div>
+    <p>Das Magazin <em>fluter</em> berichtet in „Wie dumm ist das denn?“ über ein Hautbildmodell, bei dem mitfotografierte Lineale zum Hinweis auf einen problematischen Befund wurden. Die Anekdote verdeutlicht eine gelernte Korrelation; sie ist kein Beweis, dass solche Modelle generell nur Lineale erkennen. Forschung zu Shortcut Learning untersucht solche unerwünschten Zusammenhänge systematisch.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_shortcut_reveal","title":"Entwirf einen Gegencheck","hint":"Verändere den Hintergrund, während das Tier gleich bleibt.","question":"Wie prüfst du, ob ein Hund-Katze-Modell vor allem Wiese und Sofa unterscheidet?","answer":"Prüfe neue Hunde auf Sofas und neue Katzen auf Wiesen sowie beide Klassen vor vergleichbaren neutralen Hintergründen. Wenn die Entscheidungen mit dem Hintergrund wechseln, spricht das für eine gelernte Abkürzung. Ergänze vielfältige, ausgewogene Trainingsdaten und bewerte das neue Modell anschließend mit einem frischen Test. Ein einzelner Gegencheck beweist noch nicht alle Ursachen einer Entscheidung."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_grenzen_verify","title":"Mini-Check: Was bedeuten 99 %?","hint":"Denke an eine Eingabe außerhalb der trainierten Klassen.","statement":"Zeigt das Hund-Katze-Modell bei einem Auto „99 % Hund“, ist das Auto mit Sicherheit ein Hund.","answer":false,"explain":"Das Modell kann zwischen seinen trainierten Klassen wählen, obwohl keine davon passt. Hohe Modellwerte sind außerhalb des vorgesehenen Anwendungsbereichs besonders wenig aussagekräftig und garantieren auch innerhalb des Bereichs keine Richtigkeit."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Eine Schwelle verändert die Fehlerverteilung. Gute Metriken reichen trotzdem nicht aus, wenn Testdaten unpassend sind, Abkürzungen gelernt wurden oder Eingaben außerhalb des vorgesehenen Bereichs liegen.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Iris: hinter die Kulissen">
+    <h1>Vom Foto zu messbaren Merkmalen: Iris-Blüten</h1>
+    <p>Für den nächsten Blick hinter die Kulissen verwenden wir den <strong>Iris-Datensatz</strong>: 150 Messbeispiele mit vier Merkmalen und je 50 Beispielen der Arten Setosa, Versicolor und Virginica. Anders als beim Foto liegen die Eingaben bereits als überschaubare Zahlen vor.</p>
+    <div class="wb-section-break"></div>
+    <h2>Merkmale und Label</h2>
+    <p>Die vier Merkmale sind Länge und Breite von <strong>Kelchblatt</strong> (Sepal) und <strong>Kronblatt</strong> (Petal), jeweils in Zentimetern. Das Label ist der Artname. Die zu lösende Aufgabe ist eine überwachte Klassifikation.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-table-scroll"><table class="ki-mini-table"><caption>Je ein Messbeispiel aus dem UCI-Iris-Datensatz; alle Längen in cm</caption><thead><tr><th scope="col">Kelchblattlänge</th><th scope="col">Kelchblattbreite</th><th scope="col">Kronblattlänge</th><th scope="col">Kronblattbreite</th><th scope="col">Label</th></tr></thead><tbody><tr><td>5,1</td><td>3,5</td><td>1,4</td><td>0,2</td><td>Setosa</td></tr><tr><td>7,0</td><td>3,2</td><td>4,7</td><td>1,4</td><td>Versicolor</td></tr><tr><td>6,3</td><td>3,3</td><td>6,0</td><td>2,5</td><td>Virginica</td></tr></tbody></table></div>
+    <div class="wb-section-break"></div>
+    <h2>Daten sichten: Welche Merkmale trennen?</h2>
+    <p>Im Streudiagramm steht jeder Punkt für eine Blüte. Der Ausschnitt enthält je sechs echte Messbeispiele pro Art, nicht alle 150. Vergleiche die beiden Merkmalskombinationen. Farben und Punktformen kennzeichnen die bekannten Labels.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-lab" id="ki2-iris-lab">
+      <div class="ki-controls"><label for="ki2-iris-features">Merkmale <select id="ki2-iris-features"><option value="petal">Kronblatt: Länge und Breite</option><option value="sepal">Kelchblatt: Länge und Breite</option></select></label></div>
+      <div class="ki-controls" role="group" aria-label="Arten im Diagramm"><label><input type="checkbox" data-iris-class="0" checked>Setosa</label><label><input type="checkbox" data-iris-class="1" checked>Versicolor</label><label><input type="checkbox" data-iris-class="2" checked>Virginica</label></div>
+      <canvas class="ki-chart" id="ki2-iris-canvas" width="800" height="500" role="img" aria-label="Streudiagramm von 18 Iris-Blüten; Kronblattlänge horizontal und Kronblattbreite vertikal, jeweils in Zentimetern">Die Messwerte stehen in der Tabelle unter dem Diagramm.</canvas>
+      <div class="ki-legend"><span>Kreis: Setosa</span><span>Quadrat: Versicolor</span><span>Dreieck: Virginica</span></div>
+      <details><summary>Alle 18 Messbeispiele als Tabelle</summary><div class="ki-table-scroll"><table class="ki-mini-table"><thead><tr><th scope="col">Art</th><th scope="col">Kelchlänge (cm)</th><th scope="col">Kelchbreite (cm)</th><th scope="col">Kronlänge (cm)</th><th scope="col">Kronbreite (cm)</th></tr></thead><tbody id="ki2-iris-data"></tbody></table></div></details>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_iris_essay","title":"Formuliere den Iris-Lernauftrag","hint":"Beschreibe T, P und E. Vergleiche danach die zwei Diagramme und begründe, warum 18 Punkte keinen vollständigen Leistungstest ersetzen.","storagePrefix":"ki2_","fields":[{"label":"T–P–E-Steckbrief","key":"steckbrief","kind":"textarea","placeholder":"Welche Eingaben, welche Ausgabe, welches Leistungsmaß und welche Erfahrungsquelle?"},{"label":"Datenbeobachtung und Testplan","key":"datenbeobachtung","kind":"textarea","placeholder":"Welche Merkmale scheinen hilfreich? Wie teilst du den vollständigen Datensatz fair auf?"}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_iris_reveal","title":"Sicherung: Iris-Steckbrief","hint":"Vergleiche erst nach deiner eigenen Antwort.","question":"Was gehört in den Lernauftrag und was passiert als Nächstes?","answer":"T: Aus vier Messwerten die Art einer neuen Iris-Blüte vorhersagen. P: Anteil korrekter Klassifikationen auf unabhängigen Testbeispielen, zusätzlich Fehler pro Art. E: Mit Artnamen beschriftete Trainingsbeispiele des Iris-Datensatzes. Zuerst prüfst du Werte, Labels und Aufteilung. Bei 20 % Testanteil könntest du je Art 10 Beispiele zurückhalten; die übrigen 40 je Art stehen für Training und Validierung bereit. Als nächste Modelle kommen etwa k-nächste Nachbarn oder ein Entscheidungsbaum infrage. Das Diagramm zeigt nur zwei der vier Merkmale und einen kleinen Ausschnitt; es ersetzt keinen Modelltest."}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Ausblick: drei Modellideen</h2>
+    <div class="ki-grid three">
+      <div class="ki-panel"><h3>k-nächste Nachbarn</h3><p>Vergleiche eine neue Blüte mit nahegelegenen Trainingsbeispielen. Skalierung, Distanz und die Zahl k beeinflussen das Ergebnis.</p></div>
+      <div class="ki-panel"><h3>Entscheidungsbaum</h3><p>Lerne Fragen wie „Kronblattlänge kleiner als ein Grenzwert?“. Eine Folge solcher Fragen führt zur vorhergesagten Klasse.</p></div>
+      <div class="ki-panel"><h3>Regression</h3><p>Für Zahlenvorhersagen lernst du eine Funktion, etwa für Preise. Logistische Regression kann trotz ihres Namens für Klassifikation eingesetzt werden.</p></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><p>Vor dem Lernalgorithmus stehen ein klarer Auftrag, geeignete Merkmale, verlässliche Labels und eine faire Datenaufteilung. Streudiagramme helfen beim Erkunden, beweisen aber keine Vorhersageleistung.</p></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Zusammenfassung und Quellen">
+    <h1>Kurz & bündig: Lernen braucht überprüfbare Erfahrung</h1>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><ul><li>Überwachtes Lernen nutzt Labels, unüberwachtes Lernen sucht Strukturen ohne Ziel-Labels, verstärkendes Lernen optimiert Handlungen anhand von Belohnungen.</li><li>T, P und E beschreiben den Auftrag, das Leistungsmaß und die Erfahrungsquelle.</li><li>Der Lernzyklus führt von Datenaufbereitung über Modellwahl und Training zu Bewertung, Interpretation und Einsatz.</li><li>Training, Validierung und unabhängiger Test müssen getrennte Rollen behalten.</li><li>Accuracy, Precision und Recall beantworten verschiedene Fragen; Fehlerfolgen und Klassengrößen gehören zur Bewertung.</li><li>Ein Modell kann Abkürzungen lernen und auf ungeeigneten Eingaben überzeugend falsch liegen.</li></ul></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_abschluss_mcq","title":"Abschlusscheck","hint":"Bei der zweiten Frage sind mehrere Antworten richtig.","shuffleChoices":true,"questions":[{"text":"Welche Beschreibung belegt Lernen im Sinne von T–P–E am besten?","choices":[{"id":"a","label":"Das Modell wirkt nach dem Training beeindruckend."},{"id":"b","label":"Bei derselben klaren Aufgabe verbessert sich das festgelegte Leistungsmaß auf passenden unabhängigen Daten durch zusätzliche Trainingserfahrung."},{"id":"c","label":"Das Modell gibt für alle Eingaben sehr hohe Prozentwerte aus."}],"correct":["b"],"explain":"Eine Verbesserung benötigt eine definierte Aufgabe, ein messbares Kriterium und passende Erfahrung. Auftreten oder hohe Modellwerte genügen nicht."},{"text":"Welche Entscheidungen passen zu einem fairen ML-Versuch?","multiple":true,"choices":[{"id":"a","label":"Ich verwende Testbilder beim Training, damit der Test besser ausfällt."},{"id":"b","label":"Ich untersuche Fehlalarme und übersehene Fälle getrennt."},{"id":"c","label":"Ich lege Aufgabe und Leistungsmaß vor dem abschließenden Test fest."},{"id":"d","label":"Ich prüfe neue Hintergründe und ungewohnte Eingaben."},{"id":"e","label":"Ich schließe aus 100 % Trainingsgenauigkeit auf perfekte Generalisierung."}],"correct":["b","c","d"],"explain":"Getrennte Fehlerarten, ein vorher festgelegter Auftrag und gezielte Gegenchecks machen die Bewertung aussagekräftiger. Trainingsgenauigkeit allein kann Auswendiglernen verdecken."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"ki2_transfer_essay","title":"Transfer: Ein schulisches ML-Projekt planen","hint":"Wähle Mülltrennung, Pflanzenerkennung oder das Erkennen von Materialfehlern. Begründe deinen Plan in 6–10 Sätzen mit mindestens vier Fachbegriffen.","storagePrefix":"ki2_","fields":[{"label":"Dein Projektplan","key":"projekt","kind":"textarea","placeholder":"T, P, E und Lernvariante; Datenaufteilung; wichtigste Fehlerart; möglicher Shortcut; ein Gegencheck und eine Grenze des Einsatzes."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Quellen & Weiterforschen</h2>
+    <p>Die Erklärungen beruhen auf dem bereitgestellten Unterrichtsmaterial und den folgenden Quellen. Die Diagnosematrix und die Modellwerte im Metrik-Labor sind fiktive Rechen- und Vergleichsaufgaben.</p>
+    <div class="wb-section-break"></div>
+    <ul class="ki-source-list">
+      <li><a href="https://www.cs.cmu.edu/~tom/mlbook.html" target="_blank" rel="noopener">Tom Mitchell: Machine Learning (1997), Buchseite und Kapitel</a> · T–P–E.</li>
+      <li><a href="https://developers.google.com/machine-learning/intro-to-ml" target="_blank" rel="noopener">Google: Einführung in maschinelles Lernen</a> · Lernvarianten und Grundbegriffe.</li>
+      <li><a href="https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets" target="_blank" rel="noopener">Google: Trainings-, Validierungs- und Testdaten</a> · unabhängige Bewertung.</li>
+      <li><a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall" target="_blank" rel="noopener">Google: Accuracy, Precision und Recall</a> · Formeln, Schwellen und Klassenungleichgewicht.</li>
+      <li><a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">Teachable Machine</a> und <a href="https://github.com/googlecreativelab/teachablemachine-community" target="_blank" rel="noopener">Quellcode und Modellbibliotheken</a> · praktischer Versuch mit einem vorhandenen ML-Werkzeug.</li>
+      <li><a href="https://www.kaggle.com/c/dogs-vs-cats/data" target="_blank" rel="noopener">Kaggle: Dogs vs. Cats</a> und <a href="https://www.microsoft.com/en-us/download/details.aspx?id=54765" target="_blank" rel="noopener">Microsoft: Datensatz-Download</a> · Datenherkunft und alternative Bezugsquelle.</li>
+      <li><a href="https://archive.ics.uci.edu/dataset/53/iris" target="_blank" rel="noopener">UCI: Iris-Datensatz</a> · Fisher (1936), vier Merkmale, drei Arten; <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data" target="_blank" rel="noopener">Messwerte des dargestellten Ausschnitts</a>.</li>
+      <li><a href="https://scikit-learn.org/stable/supervised_learning.html" target="_blank" rel="noopener">scikit-learn: Überwachte Lernverfahren</a> · k-nächste Nachbarn, Entscheidungsbäume und Regression.</li>
+      <li><a href="https://www.fluter.de/sites/default/files/magazines/pdf/web_180907_fluter_68_korrektur_180927-1414.pdf#page=40" target="_blank" rel="noopener">fluter Nr. 68: „Wie dumm ist das denn?“, S. 40–41</a> · berichtete Lineal-Anekdote.</li>
+      <li><a href="https://www.nature.com/articles/s41467-023-39902-7" target="_blank" rel="noopener">Brown et al. (2023): Detecting shortcut learning for fair medical AI using shortcut testing</a> · Forschung zu unerwünschten Korrelationen.</li>
+    </ul>
+    <div class="wb-section-break"></div>
+    <p class="wb-mini-note">Bildmaterial: bereitgestelltes Unterrichtsmaterial. Die drei Lernvarianten-Grafiken nennen Stefan Seegerer, Tilman Michaeli und Sven Jatzlau und tragen eine CC-BY-Kennzeichnung; sie sind unverändert eingebunden. Die übrigen Bilder und Formeln stammen aus dem bereitgestellten Material.</p>
+    <div class="wb-section-break"></div>
+    <h2>Fragen zum Weiterdenken</h2>
+    <ul><li>Wie verändert eine andere Ähnlichkeitsdefinition die Kundengruppen?</li><li>Was passiert, wenn ein Agent ausschließlich für Klicks belohnt wird?</li><li>Wie würdest du die Leistung getrennt für verschiedene Lichtverhältnisse prüfen?</li><li>Wann ist eine verständliche Entscheidung wichtiger als ein kleiner Genauigkeitsvorteil?</li></ul>
+    <div class="wb-section-break"></div>
+    <p><a href="kuenstliche-intelligenz.html">Zurück zu Teil 1</a> · <a href="../index.html">Zur Themenübersicht</a></p>
+    <div class="wb-section-break"></div>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>
+  SBBook.autoMount();
+  SBBlocks.autoMount();
+  SBLibrary.autoMountAll();
+</script>
+<script src="ki2-experimente.js"></script>
+</body>
+</html>

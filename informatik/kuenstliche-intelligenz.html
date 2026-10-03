@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Künstliche Intelligenz verstehen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <style>
+    .ki-hero{
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);
+      gap:22px;
+      align-items:center;
+      margin:10px 0 18px;
+    }
+    .ki-kicker{font-weight:850;color:#0f766e;text-transform:uppercase;font-size:.82rem;letter-spacing:0}
+    .ki-lead{font-size:1.08rem;line-height:1.65;color:#243244}
+    .ki-figure{margin:16px 0 20px;text-align:center}
+    .ki-figure img{
+      display:block;
+      width:100%;
+      max-height:520px;
+      object-fit:contain;
+      margin:0 auto;
+      border:1px solid var(--wb-line,#d8dee8);
+      border-radius:8px;
+      background:#fff;
+    }
+    .ki-figure.compact img{max-height:350px}
+    .ki-figure.wide img{max-height:610px}
+    .ki-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
+    .ki-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+    .ki-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ki-panel{
+      border:1px solid var(--wb-line,#d8dee8);
+      border-radius:8px;
+      padding:14px 15px;
+      background:#fff;
+      min-height:100%;
+    }
+    .ki-panel h3{margin-top:0;margin-bottom:8px;font-size:1rem}
+    .ki-panel p:last-child,.ki-panel ul:last-child{margin-bottom:0}
+    .ki-tagline{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+    .ki-tag{
+      display:inline-flex;
+      align-items:center;
+      border:1px solid #b6d9d2;
+      background:#edfdf8;
+      color:#115e59;
+      border-radius:999px;
+      padding:5px 9px;
+      font-weight:750;
+      font-size:.9rem;
+    }
+    .ki-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+    .ki-step{
+      border:1px solid #d7dee8;
+      border-left:5px solid #2563eb;
+      border-radius:8px;
+      padding:12px;
+      background:#fbfdff;
+    }
+    .ki-step strong{display:block;margin-bottom:5px}
+    .ki-mini-table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff}
+    .ki-mini-table th,.ki-mini-table td{border:1px solid var(--wb-line,#d8dee8);padding:10px 12px;vertical-align:top}
+    .ki-mini-table th{background:#f8fafc;text-align:left}
+    .ki-code{
+      font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+      background:#0f172a;
+      color:#e5f0ff;
+      border-radius:8px;
+      padding:12px 14px;
+      line-height:1.6;
+      overflow:auto;
+      white-space:pre;
+    }
+    .ki-note-green{border-left:6px solid #0f766e;background:#ecfdf5;padding:12px 14px;border-radius:8px;margin:14px 0;color:#113f36}
+    .ki-note-amber{border-left:6px solid #d97706;background:#fff7ed;padding:12px 14px;border-radius:8px;margin:14px 0;color:#4a2a0a}
+    .ki-source-list li{margin-bottom:8px}
+    @media(max-width:860px){
+      .ki-hero,.ki-grid,.ki-grid.three,.ki-flow{grid-template-columns:1fr}
+      .ki-figure img{max-height:none}
+    }
+  </style>
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {
+    "bookTitle":"Informatik",
+    "sectionTitle":"Künstliche Intelligenz",
+    "startPage":1,
+    "submitLabel":"Zusammenfassung & abgeben",
+    "onSubmit":"exportResults",
+    "autoNav":true,
+    "autoNavHeadings":["h1","h2"],
+    "autoNavIncludeBlocks":false,
+    "autoNavGroupTitle":"KI",
+    "themeDefault":"default",
+    "resultsPageTitle":"Ergebnisse"
+  }
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Start">
+    <div class="ki-hero">
+      <div>
+        <div class="ki-kicker">Leitfrage</div>
+        <h1>Was ist eigentlich Künstliche Intelligenz?</h1>
+        <p class="ki-lead">KI klingt oft wie ein einzelnes Ding. In Wirklichkeit begegnet dir ein ganzes Bündel aus Perspektiven, technischen Ansätzen und gesellschaftlichen Erwartungen. Auf dieser Seite untersuchst du, wie man KI-Systeme sinnvoll abgrenzen kann.</p>
+        <div class="ki-tagline">
+          <span class="ki-tag">Definitionen prüfen</span>
+          <span class="ki-tag">Systeme einordnen</span>
+          <span class="ki-tag">Prolog ausprobieren</span>
+        </div>
+      </div>
+      <figure class="ki-figure compact">
+        <img src="bilder/bilderkennung.png" alt="Bilderkennung mit Katze und falsch markiertem Hund">
+        <figcaption>Ein KI-System kann beeindruckend wirken und trotzdem Fehler machen. Genau deshalb lohnt sich ein genauer Blick.</figcaption>
+      </figure>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Was du hier lernst</h2>
+    <ul>
+      <li>Du erklärst den KI-Effekt und erkennst, warum der Begriff KI schwer stabil zu definieren ist.</li>
+      <li>Du unterscheidest vier Perspektiven auf KI: menschliches Denken, menschliches Handeln, rationales Denken und rationales Handeln.</li>
+      <li>Du ordnest KI-Systeme nach Fähigkeiten ein: schwache KI, Allzweck-KI, starke KI und künstliche Superintelligenz.</li>
+      <li>Du vergleichst handprogrammierte Software, wissensbasierte KI und maschinelles Lernen.</li>
+      <li>Du formulierst einfache Prolog-Fakten, Regeln und Anfragen.</li>
+    </ul>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>So arbeitest du</strong>
+      <p>Lies jeweils einen kurzen Abschnitt, bearbeite die Aufgabe direkt darunter und nutze am Ende die Ergebnisseite. Du brauchst kein Vorwissen über KI, aber du solltest logisch genau lesen.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_start_reveal",
+        "title":"Was kannst du danach?",
+        "question":"Woran erkennst du am Ende eine gute KI-Definition?",
+        "answer":"Eine gute Definition grenzt Systeme nachvollziehbar ab, bleibt möglichst zeitlich stabil und passt zum Zweck: In der Informatik interessiert oft die technische Problemlösung, in der Politik zusätzlich das Risiko für Menschen und Gesellschaft."
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="KI-Effekt">
+    <h1>Der KI-Effekt</h1>
+    <p>Viele neue KI-Anwendungen werden als revolutionär, menschenähnlich oder als grundlegender Umbruch beschrieben. Medienberichte und Marketing betonen häufig scheinbar grenzenlose Fähigkeiten.</p>
+    <p>Der KI-Effekt beschreibt eine Gegenbewegung: Sobald ein System alltäglich, erklärlich oder technisch gut verstanden ist, wird es oft nicht mehr als KI wahrgenommen. Taschenrechner, Handschrifterkennung, regelbasierte Chatbots oder klassische Schachprogramme wirken heute weniger geheimnisvoll als früher.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ki-note-amber">
+      <strong>Merke</strong>
+      <p>KI ist ein bewegliches Ziel: Was gestern noch als KI galt, kann morgen als normale Informatik erscheinen. Larry Tesler wird der Satz zugeschrieben: „AI is whatever hasn't been done yet.“</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_effekt_mcq",
+        "title":"Check: Welche Aussage passt zum KI-Effekt?",
+        "hint":"Wähle die Aussage, die den Bedeutungswandel am besten trifft.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Welche Aussage bezieht sich auf den sogenannten KI-Effekt?",
+            "choices":[
+              {"id":"a","label":"KI-Systeme werden immer intelligenter."},
+              {"id":"b","label":"KI erscheint grundsätzlich menschlich."},
+              {"id":"c","label":"Als KI wird häufig nur neuartige oder noch nicht selbstverständlich gewordene Informationstechnik bezeichnet."},
+              {"id":"d","label":"Der KI-Effekt ist ein spezieller Effekt aus der aktuellen KI-Forschung."}
+            ],
+            "correct":["c"],
+            "explain":"Der KI-Effekt meint, dass erfolgreiche und alltägliche Lösungen oft aus der KI-Schublade herausfallen."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_effekt_verify",
+        "title":"Wahr oder falsch?",
+        "hint":"Prüfe die Aussage am Beispiel Taschenrechner oder Schachprogramm.",
+        "statement":"Ein System kann früher als KI gegolten haben und später als gewöhnliche Software wahrgenommen werden.",
+        "answer":true,
+        "explain":"Genau das ist der KI-Effekt: Die Kategorie wandert, sobald eine Fähigkeit technisch beherrscht und alltäglich wird."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass KI nicht nur eine technische, sondern auch eine sprachliche und gesellschaftliche Kategorie ist.</p>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Perspektiven">
+    <h1>Vier Perspektiven auf KI</h1>
+    <p>In Grundlagenvorlesungen und Lehrbüchern wird KI häufig als Simulation von Intelligenz betrachtet. Russell und Norvig ordnen Definitionen in vier Perspektiven ein: menschliches Denken, menschliches Handeln, rationales Denken und rationales Handeln.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ki-grid">
+      <div class="ki-panel">
+        <h3>Menschliches Denken</h3>
+        <p>Hier fragt man, ob ein System innere Denkprozesse des Menschen nachbildet. Das ist wichtig für Kognitionswissenschaft und Philosophie.</p>
+      </div>
+      <div class="ki-panel">
+        <h3>Menschliches Handeln</h3>
+        <p>Hier zählt, ob ein System sich nach außen menschenähnlich verhält. Der Turing-Test gehört in diese Perspektive.</p>
+      </div>
+      <div class="ki-panel">
+        <h3>Rationales Denken</h3>
+        <p>Hier geht es um logisches Schließen: Sind Entscheidungen aus Wissen und Regeln nachvollziehbar ableitbar?</p>
+      </div>
+      <div class="ki-panel">
+        <h3>Rationales Handeln</h3>
+        <p>Hier zählt zweckmäßiges Verhalten: Erreicht das System unter gegebenen Bedingungen möglichst gut seine Ziele?</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Turing-Test: starkes Signal, aber nicht alles</h2>
+    <p>Alan Turing schlug 1950 das imitation game vor: Ein menschlicher Interviewer stellt schriftliche Fragen und soll nicht erkennen können, ob die Antworten von einem Menschen oder einer Maschine stammen. Moderne Chatbots können in solchen Situationen überzeugend wirken.</p>
+    <p>Aber: Der Test prüft vor allem menschenähnliches Auftreten. Er beantwortet nicht sicher, ob ein System versteht, bewusst ist oder verantwortungsvoll handelt.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_perspektiven_cat",
+        "title":"Sortiere die Perspektiven",
+        "hint":"Ziehe jede Karte zu der Perspektive, die im Vordergrund steht.",
+        "categories":[
+          {"id":"mensch","title":"Menschlich orientiert"},
+          {"id":"rational","title":"Rational orientiert"}
+        ],
+        "items":[
+          {"label":"Ein Chatbot soll im Gespräch nicht von einem Menschen unterscheidbar sein.","category":"mensch"},
+          {"label":"Ein Modell soll menschliche Wahrnehmung möglichst realistisch nachbilden.","category":"mensch"},
+          {"label":"Ein System leitet Aussagen aus Regeln und Fakten logisch ab.","category":"rational"},
+          {"label":"Ein Agent wählt die Handlung mit der besten erwarteten Zielerreichung.","category":"rational"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_perspektiven_cloze",
+        "title":"Sicherung: Perspektiven einsetzen",
+        "hint":"Nutze die Wortbank, um die Grundidee der rationalen Perspektive zu sichern.",
+        "bank":["menschlich","rational","logisch","zweckmäßig"],
+        "segments":[
+          {"t":"text","v":"Die "},
+          {"t":"gap","a":"rational"},
+          {"t":"text","v":" orientierte Perspektive fragt weniger danach, ob ein System "},
+          {"t":"gap","a":"menschlich"},
+          {"t":"text","v":" wirkt. Beim rationalen Denken steht im Mittelpunkt, ob Schlüsse "},
+          {"t":"gap","a":"logisch"},
+          {"t":"text","v":" nachvollziehbar sind. Beim rationalen Handeln zählt, ob das Verhalten "},
+          {"t":"gap","a":"zweckmäßig"},
+          {"t":"text","v":" ist."}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass unterschiedliche KI-Definitionen oft deshalb kollidieren, weil sie verschiedene Perspektiven verwenden.</p>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="KI-Systeme">
+    <h1>Was ist ein KI-System?</h1>
+    <p>Für informatische Zwecke ist es oft hilfreicher, von einem KI-System statt von der KI zu sprechen. Dann geht es um maschinengestützte Systeme, die aus Eingaben für bestimmte Ziele Ausgaben wie Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen ableiten.</p>
+    <p>Eine mögliche Arbeitsdefinition für diesen Kurs lautet: KI-Systeme sind Informatiksysteme, die eigenständig geeignete Verfahren oder Modelle zur Lösung von Problemen oder zur Zielerreichung ermitteln.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="wb-callout">
+      <strong>Wichtiger Unterschied</strong>
+      <p>Ein KI-System muss nicht menschlich denken. Es zeigt ein im Sinne der Entwicklerinnen und Entwickler zweckmäßiges Verhalten. Ob es die Welt versteht, ist damit noch nicht geklärt.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Fähigkeitstypen</h2>
+    <table class="ki-mini-table">
+      <thead>
+        <tr><th>Typ</th><th>Grundidee</th><th>Status im Kurs</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Schwache KI (ANI)</td><td>Spezialisiert auf ein enges Aufgabengebiet, zum Beispiel Schach, Gesichtserkennung oder Spamfilter.</td><td>Sehr verbreitet.</td></tr>
+        <tr><td>Allzweck-KI (GPAI)</td><td>Vielseitig einsetzbar, zum Beispiel für Übersetzen, Zusammenfassen, Programmieren oder Generieren von Inhalten.</td><td>Aktuell praktisch wichtig.</td></tr>
+        <tr><td>Starke KI (AGI)</td><td>Soll unbekannte Aufgaben mindestens auf menschlichem Niveau lösen und Wissen flexibel übertragen.</td><td>Forschungsziel, kein allgemein anerkannt erreichtes System.</td></tr>
+        <tr><td>Künstliche Superintelligenz (ASI)</td><td>Würde menschliche kognitive Fähigkeiten deutlich übertreffen.</td><td>Hypothetisches Konzept.</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-section-break"></div>
+
+    <figure class="ki-figure compact">
+      <img src="bilder/zuordnung-ki.png" alt="Zuordnungskarten für KI-Typen">
+      <figcaption>Die Begriffe klingen ähnlich, unterscheiden aber stark, wie breit ein System eingesetzt werden kann.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <h2>Was für eine KI ist das?</h2>
+    <div data-p2 class="p2" data-p2-title="Zuordnung: KI-Typen" data-p2-hint="Ordne nach Fähigkeit, nicht nach Hype.">
+      <div class="p2-hint">Ziehe die Beschreibung auf den passenden KI-Typ.</div>
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Beschreibung</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">Ein Schachprogramm schlägt Weltmeister, kann aber keine E-Mails schreiben.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Das KI-System schreibt E-Mails, fasst Texte zusammen und hilft beim Programmieren. Es versteht die Welt allerdings nicht wie ein Mensch.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">Eine KI erlernt neue Berufe, überträgt Wissen zwischen Domänen und löst unbekannte Aufgaben wie ein Mensch.</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">Eine KI optimiert weltweit Verkehr, Energie und Forschung und findet Lösungen, die Menschen nicht mehr nachvollziehen können.</div>
+          </div>
+        </div>
+        <div>
+          <div class="p2-col-title">Typ</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Schwache KI (ANI)</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Allzweck-KI (GPAI)</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Starke KI (AGI)</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">Künstliche Superintelligenz (ASI)</div>
+          </div>
+        </div>
+      </div>
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="p2-col-title">Gelöst</div>
+        <div class="p2-solved" data-solved></div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass KI-Systeme nicht menschlich sein müssen und dass Breite der Einsetzbarkeit nicht dasselbe ist wie echtes Verstehen.</p>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Problemlösen">
+    <h1>KI-Systeme als Problemlöser</h1>
+    <p>Ein Problem liegt vor, wenn ein Ziel erreicht werden soll, der Lösungsweg aber nicht direkt klar ist. In der Informatik interessiert uns besonders, ob eine Berechnungsvorschrift von einer Eingabe zu einer gewünschten Ausgabe führt.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Das EVA-Prinzip</h2>
+    <div class="ki-flow" aria-label="EVA-Prinzip">
+      <div class="ki-step"><strong>Eingabe</strong>Unsortiertes Array, Bild, Text, Anfrage oder Messwerte.</div>
+      <div class="ki-step"><strong>Verarbeitung</strong>Algorithmus, Wissenssuche oder trainiertes Modell.</div>
+      <div class="ki-step"><strong>Ausgabe</strong>Sortierte Liste, Diagnose, Empfehlung, Übersetzung oder Entscheidung.</div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Drei technische Fälle</h2>
+    <div class="ki-grid three">
+      <div class="ki-panel">
+        <h3>Keine KI</h3>
+        <p>Menschen schreiben Schritt für Schritt, wie die Eingabe verarbeitet wird. Beispiel: Taschenrechner oder klassischer Sortieralgorithmus.</p>
+      </div>
+      <div class="ki-panel">
+        <h3>Wissensbasierte KI</h3>
+        <p>Fakten und Regeln werden formalisiert. Das System sucht regelbasiert nach einer passenden Antwort.</p>
+      </div>
+      <div class="ki-panel">
+        <h3>Maschinelles Lernen</h3>
+        <p>Ein Lernalgorithmus erzeugt oder verbessert ein Modell aus Trainingsdaten und Feedback.</p>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_ml_order",
+        "title":"Bring den ML-Ablauf in die richtige Reihenfolge",
+        "hint":"Denke an Trainingsphase und Anwendungsphase.",
+        "items":[
+          "Trainingsbeispiele sammeln und vorbereiten.",
+          "Ein zunächst unvollkommenes Modell mit einem Lernalgorithmus anpassen.",
+          "Fehler oder Rückmeldungen nutzen, um das Modell iterativ zu verbessern.",
+          "Das trainierte Modell an neuen Eingaben anwenden.",
+          "Die Ausgabe kritisch anhand von Qualitätskriterien bewerten."
+        ],
+        "shuffle":true
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="categorize">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_ansatz_cat",
+        "title":"Programmiert, wissensbasiert oder gelernt?",
+        "hint":"Ordne die Systeme nach dem wahrscheinlich prägenden Ansatz.",
+        "categories":[
+          {"id":"keine","title":"Keine KI"},
+          {"id":"wissen","title":"Wissensbasierte KI"},
+          {"id":"ml","title":"Maschinelles Lernen"}
+        ],
+        "items":[
+          {"label":"Taschenrechner","category":"keine"},
+          {"label":"Industrieroboter mit festen Abläufen","category":"keine"},
+          {"label":"Theorembeweiser","category":"wissen"},
+          {"label":"Fahrplanauskunft mit Regeln und Verbindungen","category":"wissen"},
+          {"label":"Regelbasiertes Schachprogramm","category":"wissen"},
+          {"label":"Übersetzer wie DeepL oder Google Translate","category":"ml"},
+          {"label":"System zur Erkennung von Katzen- und Hundebildern","category":"ml"},
+          {"label":"Musikempfehlung aus Nutzungsdaten","category":"ml"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass nicht jede nützliche Software KI ist und dass KI-Methoden auf unterschiedliche Weise Problemlösungen erzeugen.</p>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Maschinelles Lernen">
+    <h1>Warum Maschinelles Lernen?</h1>
+    <p>Bei klassischer Software erwarten wir oft Korrektheit, Nachvollziehbarkeit und Transparenz. Maschinelles Lernen ist anders: Modelle können Fehler machen, halluzinieren oder schwer erklärbar sein. Trotzdem wird ML eingesetzt, wenn handgeschriebene Regeln unpraktisch, zu teuer oder zu starr wären.</p>
+    <div class="wb-section-break"></div>
+
+    <figure class="ki-figure compact">
+      <img src="bilder/bilderkennung.png" alt="Ein Klassifikationssystem markiert eine Katze richtig und einen Hund falsch">
+      <figcaption>Bildklassifikation zeigt die Stärke und Schwäche von ML zugleich: Muster werden gelernt, aber Ausgaben bleiben statistische Entscheidungen.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <h2>Fünf typische Gründe</h2>
+    <div class="ki-grid">
+      <div class="ki-panel"><h3>Wissen ist schwer formulierbar</h3><p>Ärztinnen erkennen Muster in Bildern, die sich nicht leicht als Wenn-Dann-Regeln schreiben lassen.</p></div>
+      <div class="ki-panel"><h3>Aufgaben sind zu komplex</h3><p>Eine Katze lässt sich nicht einfach durch ein paar feste Pixelregeln definieren.</p></div>
+      <div class="ki-panel"><h3>Systeme müssen sich anpassen</h3><p>Spam-Muster ändern sich. ML kann mit neuen Beispielen aktualisiert werden.</p></div>
+      <div class="ki-panel"><h3>Forschung braucht Werkzeuge</h3><p>Systeme wie AlphaFold können wissenschaftliche Hypothesen und neue Erkenntnisse unterstützen.</p></div>
+      <div class="ki-panel"><h3>Kreativität ist erwünscht</h3><p>Generative Systeme können ungewöhnliche Varianten erzeugen, die als Inspiration dienen.</p></div>
+      <div class="ki-panel"><h3>Aber kritisch bleiben</h3><p>Fehlerfreiheit, Erklärbarkeit und Sicherheit müssen je nach Einsatz besonders geprüft werden.</p></div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_ml_reveal",
+        "title":"Fehler finden",
+        "question":"Warum wäre es problematisch zu sagen: Ein ML-System hat die Katze verstanden?",
+        "answer":"Ein ML-System verarbeitet Muster in Daten und erzeugt eine Ausgabe mit bestimmter statistischer Qualität. Daraus folgt nicht automatisch, dass es den Begriff Katze wie ein Mensch versteht, Erfahrungen hat oder die Welt kausal erklären kann."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_ml_essay",
+        "title":"Reflexion: Wann ist ML sinnvoll?",
+        "hint":"Antworte in 5 bis 8 Sätzen. Nutze mindestens zwei Fachbegriffe, zum Beispiel Trainingsdaten, Modell, Fehlermaß, Regel, Transparenz.",
+        "storagePrefix":"ki_",
+        "fields":[
+          {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
+          {"label":"Deine begründete Einschätzung","key":"text","kind":"textarea","placeholder":"Vergleiche ein handprogrammiertes System mit einem ML-System. Wann würdest du welches bevorzugen?"}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Wissensbasierte KI">
+    <h1>Wissensbasierte KI und Prolog</h1>
+    <p>Wissensbasierte KI wird auch symbolische, klassische, logikbasierte oder regelbasierte KI genannt. In den 1970er bis 1990er Jahren war sie ein zentraler Ansatz. Ihr Vorteil: Wissen liegt explizit vor, und Antworten lassen sich logisch nachvollziehen.</p>
+    <div class="wb-section-break"></div>
+
+    <figure class="ki-figure compact">
+      <img src="bilder/schach.png" alt="Schach als Beispiel für regelbasierte Suche">
+      <figcaption>Deep Blue besiegte 1997 Garri Kasparov. Solche Systeme zeigen, wie stark Suche, Regeln, Bewertung und Expertenwissen sein können.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <h2>Von Fakten zu Regeln</h2>
+    <p>In Prolog beschreibst du Wissen deklarativ: Du sagst, was gilt, statt einen genauen Ablauf zu programmieren. Zwei Bausteine sind wichtig.</p>
+    <div class="ki-grid">
+      <div>
+        <figure class="ki-figure compact">
+          <img src="bilder/syntax.png" alt="Prolog-Fakt mit Prädikat und Konstanten">
+          <figcaption>Ein Fakt endet mit einem Punkt. Konstanten beginnen klein.</figcaption>
+        </figure>
+      </div>
+      <div>
+        <figure class="ki-figure compact">
+          <img src="bilder/syntax2.png" alt="Prolog-Regel mit Regelkopf, Operator und Regelrumpf">
+          <figcaption>Eine Regel gilt, wenn alle Bedingungen im Regelrumpf erfüllt sind.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <pre class="ki-code">maennlich(zeus).
+weiblich(leto).
+kind(apollo, zeus).
+kind(apollo, leto).
+
+mutter(PERSON, KIND) :- kind(KIND, PERSON), weiblich(PERSON).
+vater(PERSON, KIND) :- kind(KIND, PERSON), maennlich(PERSON).</pre>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="trace">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_prolog_trace",
+        "title":"Ablaufspur: Prolog-Anfrage verfolgen",
+        "hint":"Verfolge, wie die Anfrage mutter(X, apollo) geprüft wird.",
+        "columns":[
+          {"label":"Schritt","width":"12%"},
+          {"label":"Was prüft Prolog?","width":"38%"},
+          {"label":"Belegung / Ergebnis","width":"25%"},
+          {"label":"Begründung","width":"25%"}
+        ],
+        "rows":[
+          {"cells":[
+            {"given":"1"},
+            {"given":"mutter(X, apollo) passt zum Regelkopf mutter(PERSON, KIND).","code":true},
+            {"answers":["PERSON=X, KIND=apollo","kind=apollo, person=x","PERSON = X, KIND = apollo"],"ariaLabel":"Belegung nach Schritt 1"},
+            {"answers":["Regelkopf"],"ariaLabel":"Begründung Schritt 1","match":"contains"}
+          ]},
+          {"cells":[
+            {"given":"2"},
+            {"given":"Prüfe kind(apollo, X).","code":true},
+            {"answers":["X=zeus oder X=leto","X = zeus oder X = leto","zeus oder leto"],"ariaLabel":"Mögliche Werte nach Schritt 2"},
+            {"answers":["Fakten"],"ariaLabel":"Begründung Schritt 2","match":"contains"}
+          ]},
+          {"cells":[
+            {"given":"3"},
+            {"given":"Prüfe weiblich(X).","code":true},
+            {"answers":["X=leto","X = leto","leto"],"ariaLabel":"Wert nach Schritt 3"},
+            {"answers":["weiblich(leto)"],"ariaLabel":"Begründung Schritt 3","match":"contains"}
+          ]},
+          {"cells":[
+            {"given":"4"},
+            {"given":"Antwort auf die Anfrage.","code":true},
+            {"answers":["X=leto","X = leto","leto"],"ariaLabel":"Endergebnis"},
+            {"answers":["leto ist weiblich"],"ariaLabel":"Endbegründung","match":"contains"}
+          ]}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass eine wissensbasierte KI nicht nur Daten abruft, sondern aus Fakten und Regeln neue Aussagen ableiten kann.</p>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Prolog anwenden">
+    <h1>Eine Wissensbasis befragen</h1>
+    <p>Die olympische Götterfamilie eignet sich als überschaubarer Wissensbereich. Du kannst Personen als Konstanten und Verwandtschaften als Fakten und Regeln abbilden.</p>
+    <div class="wb-section-break"></div>
+
+    <figure class="ki-figure wide">
+      <img src="bilder/goetterfamilie.png" alt="Stammbaum der olympischen Götterfamilie">
+      <figcaption>Aus direkten Kind-Beziehungen lassen sich mit Regeln neue Beziehungen wie Mutter, Vater oder Großvater ableiten.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <h2>SWISH ausprobieren</h2>
+    <p>Eine browserbasierte Prolog-Umgebung findest du unter <a href="https://swish.swi-prolog.org/" target="_blank" rel="noopener">swish.swi-prolog.org</a>. Dort kannst du ein Programm anlegen und rechts unten Anfragen ausführen.</p>
+    <figure class="ki-figure">
+      <img src="bilder/swich.png" alt="SWISH-Oberfläche mit Prolog-Fakten und Anfragen">
+      <figcaption>Beispiel: Die Anfrage <code>mutter(X, apollo)</code> liefert <code>X = leto</code>, wenn die passenden Fakten und Regeln vorhanden sind.</figcaption>
+    </figure>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="cloze">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_prolog_cloze",
+        "title":"Sicherung: Prolog-Grammatik",
+        "hint":"Achte besonders auf Groß- und Kleinschreibung.",
+        "bank":["Fakt","Regel","Variable","Konstante","Punkt"],
+        "segments":[
+          {"t":"text","v":"Ein "},
+          {"t":"gap","a":"Fakt"},
+          {"t":"text","v":" beschreibt eine Aussage, die als wahr angenommen wird. Eine "},
+          {"t":"gap","a":"Regel"},
+          {"t":"text","v":" leitet neues Wissen aus Bedingungen ab. Eine "},
+          {"t":"gap","a":"Variable"},
+          {"t":"text","v":" beginnt in Prolog groß, eine "},
+          {"t":"gap","a":"Konstante"},
+          {"t":"text","v":" beginnt klein. Fakten und Regeln enden mit einem "},
+          {"t":"gap","a":"Punkt"},
+          {"t":"text","v":"."}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Welche Anfrage passt?</h2>
+    <div data-p2 class="p2" data-p2-title="Zuordnung: Frage und Prolog-Anfrage" data-p2-hint="Achte auf die Reihenfolge der Argumente.">
+      <div class="p2-hint">Ziehe die natürliche Frage auf die passende formale Anfrage.</div>
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Frage</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">Ist Athene das Kind von Zeus?</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Wer ist das Kind von Hades?</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">Wer ist die Mutter von Apollo?</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">Wer sind die Enkel von Cronus?</div>
+          </div>
+        </div>
+        <div>
+          <div class="p2-col-title">Anfrage</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">?- kind(athene, zeus).</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">?- kind(X, hades).</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">?- mutter(X, apollo).</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">?- opa(cronus, X).</div>
+          </div>
+        </div>
+      </div>
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="p2-col-title">Gelöst</div>
+        <div class="p2-solved" data-solved></div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_prolog_essay",
+        "title":"Interpretation: Warum antwortet Prolog falsch?",
+        "hint":"Antworte in 3 bis 6 Sätzen. Nutze die Begriffe Fakt, Regel und ableitbar.",
+        "storagePrefix":"ki_",
+        "fields":[
+          {"label":"Deine Erklärung","key":"erklaerung","kind":"textarea","placeholder":"Erkläre, warum kind(alexiares, heracles) wahr sein kann, vater(heracles, alexiares) aber falsch ausgegeben wird, wenn maennlich(heracles) fehlt."}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Grenzen und Zusammenfassung">
+    <h1>Grenzen, Überblick und Transfer</h1>
+    <p>Wissensbasierte KI ist nachvollziehbar, stößt aber an Grenzen: Viele reale Situationen enthalten implizites Wissen, Sonderfälle und unwichtige Details. Wenn man die Welt zu vollständig abbilden will, wird es schwer, zur richtigen Zeit das Wesentliche zu finden. Dieses Problem wird häufig mit dem Frame-Problem verbunden.</p>
+    <p>Maschinelles Lernen umgeht manche Modellierungsarbeit, bringt aber neue Risiken mit sich: statistische Fehler, schwer erklärbare Entscheidungen, Datenabhängigkeit und mögliche Verzerrungen.</p>
+    <div class="wb-section-break"></div>
+
+    <div class="ki-note-green">
+      <strong>Jetzt hast du das gelernt</strong>
+      <ul>
+        <li>Der KI-Effekt macht KI zu einem beweglichen Ziel.</li>
+        <li>Die vier Perspektiven auf KI erklären, warum Definitionen unterschiedlich ausfallen.</li>
+        <li>Rationalität ist für die Informatik nützlich, weil sie Verhalten und Problemlösung messbarer macht.</li>
+        <li>KI-Systeme können wissensbasiert arbeiten oder aus Daten Modelle lernen.</li>
+        <li>Wissensbasierte KI ist nachvollziehbar, ML ist oft flexibler, aber weniger transparent.</li>
+      </ul>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_abschluss_mcq",
+        "title":"Abschlusscheck",
+        "hint":"Mehrere Antworten können richtig sein.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Welche Aussagen passen zu einer informatischen Sicht auf KI-Systeme?",
+            "multiple":true,
+            "choices":[
+              {"id":"a","label":"Ein KI-System muss immer wie ein Mensch denken."},
+              {"id":"b","label":"Rationales Handeln bewertet, ob ein System seine Ziele unter Bedingungen zweckmäßig erreicht."},
+              {"id":"c","label":"Maschinelles Lernen erzeugt oder verbessert ein Modell mithilfe von Daten."},
+              {"id":"d","label":"Wissensbasierte KI kann aus expliziten Fakten und Regeln neue Aussagen ableiten."},
+              {"id":"e","label":"Eine starke KI ist eine normale Fachsoftware für ein enges Problem."}
+            ],
+            "correct":["b","c","d"],
+            "explain":"KI-Systeme müssen nicht menschlich sein. Entscheidend sind je nach Perspektive nachvollziehbares Schließen, zweckmäßiges Handeln oder datengetriebene Modellbildung."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="verify">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_abschluss_verify",
+        "title":"Letzte Selbstkontrolle",
+        "hint":"Überlege, ob diese Aussage zu eng ist.",
+        "statement":"Nur Systeme mit maschinellem Lernen sind KI-Systeme.",
+        "answer":false,
+        "explain":"Auch wissensbasierte, regel- und logikbasierte Systeme können KI-Systeme sein. Maschinelles Lernen ist aktuell sehr wichtig, aber nicht der einzige KI-Ansatz."
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Transferfrage</h2>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_transfer_essay",
+        "title":"Transfer: Entscheide begründet",
+        "hint":"Wähle ein Beispiel aus Schule, Medizin, Verkehr, Musik oder Social Media. Begründe mit mindestens drei Fachbegriffen.",
+        "storagePrefix":"ki_",
+        "fields":[
+          {"label":"Beispiel","key":"beispiel","kind":"text","placeholder":"Zum Beispiel: Notenempfehlung, Hautkrebs-Screening, Musikempfehlung"},
+          {"label":"Deine Entscheidung","key":"entscheidung","kind":"textarea","placeholder":"Ist hier keine KI, wissensbasierte KI oder maschinelles Lernen plausibel? Welche Risiken oder Qualitätskriterien wären wichtig?"}
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Quellen">
+    <h1>Quellen & Weiterforschen</h1>
+    <p>Diese Seite paraphrasiert den bereitgestellten Unterrichtstext und stützt zentrale Definitionen und Beispiele zusätzlich auf die folgenden Quellen.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Quellen</h2>
+    <ul class="ki-source-list">
+      <li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-3" target="_blank" rel="noopener">EU AI Act Service Desk: Article 3, Definition of AI system</a></li>
+      <li><a href="https://aima.cs.berkeley.edu/~russell/intro.html" target="_blank" rel="noopener">Russell & Norvig: Artificial Intelligence, A Modern Approach, Einführung und vier Perspektiven</a></li>
+      <li><a href="https://academic.oup.com/mind/article/LIX/236/433/986238" target="_blank" rel="noopener">Alan Turing: Computing Machinery and Intelligence, Mind 1950</a></li>
+      <li><a href="https://www.nomodes.com/larry-tesler-consulting/adages-and-coinages" target="_blank" rel="noopener">Larry Tesler: Tesler's Theorem and other adages and coinages</a></li>
+      <li><a href="https://www.ibm.com/history/deep-blue" target="_blank" rel="noopener">IBM: Deep Blue und der Kasparov-Match 1997</a></li>
+      <li><a href="https://search.googleblog.com/2012/05/introducing-knowledge-graph-things-not.html" target="_blank" rel="noopener">Google Search Blog: Introducing the Knowledge Graph</a></li>
+      <li><a href="https://people.dbmi.columbia.edu/~ehs7001/Buchanan-Shortliffe-1984/Chapter-05.pdf" target="_blank" rel="noopener">Buchanan & Shortliffe: Rule-Based Expert Systems, MYCIN Experiments</a></li>
+      <li><a href="https://swish.swi-prolog.org/" target="_blank" rel="noopener">SWISH: browserbasierte SWI-Prolog-Umgebung</a></li>
+    </ul>
+    <div class="wb-section-break"></div>
+
+    <h2>Fragen zum Weiterdenken</h2>
+    <p><a href="kuenstliche-intelligenz2.html">Weiter zu Teil 2: Maschinelles Lernen, Trainingsdaten und Modellbewertung</a></p>
+    <div class="wb-section-break"></div>
+    <ul>
+      <li>Welche KI-Systeme verschwinden gerade aus der KI-Schublade, weil sie alltäglich werden?</li>
+      <li>Wann ist Nachvollziehbarkeit wichtiger als maximale Trefferquote?</li>
+      <li>Kann ein hybrides System aus Wissensbasis und ML-Modell die Schwächen beider Ansätze ausgleichen?</li>
+      <li>Welche Definition von KI wäre für Schule, Medizin oder Gesetzgebung jeweils sinnvoll?</li>
+    </ul>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_quellen_reveal",
+        "title":"Abgabe-Hinweis",
+        "question":"Wie bekommst du deine Ergebnisse?",
+        "answer":"Klicke in der Seitenleiste auf Zusammenfassung & abgeben. Die Seite erstellt dann eine Ergebnisseite mit deinen Checks, Zuordnungen und Freitextantworten."
+      }
+      </script>
+    </div>
+  </section>
+</div>
+
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>
+  SBBook.autoMount();
+  SBBlocks.autoMount();
+  SBLibrary.autoMountAll();
+</script>
+</body>
+</html>
