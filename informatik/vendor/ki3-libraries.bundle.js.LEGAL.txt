@@ -1,0 +1,36 @@
+Bundled license information:
+
+ml-knn/src/KDTree.js:
+  /*
+   * Original code from:
+   *
+   * k-d Tree JavaScript - V 1.01
+   *
+   * https://github.com/ubilabs/kd-tree-javascript
+   *
+   * @author Mircea Pricop <pricop@ubilabs.net>, 2012
+   * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
+   * @author Ubilabs http://ubilabs.net, 2012
+   * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
+   */
+
+lucide/dist/esm/defaultAttributes.mjs:
+lucide/dist/esm/createElement.mjs:
+lucide/dist/esm/shared/src/utils/mergeClasses.mjs:
+lucide/dist/esm/shared/src/utils/hasA11yProp.mjs:
+lucide/dist/esm/shared/src/utils/toCamelCase.mjs:
+lucide/dist/esm/shared/src/utils/toPascalCase.mjs:
+lucide/dist/esm/replaceElement.mjs:
+lucide/dist/esm/icons/clipboard-list.mjs:
+lucide/dist/esm/icons/fast-forward.mjs:
+lucide/dist/esm/icons/pause.mjs:
+lucide/dist/esm/icons/play.mjs:
+lucide/dist/esm/icons/rotate-ccw.mjs:
+lucide/dist/esm/icons/step-forward.mjs:
+lucide/dist/esm/lucide.mjs:
+  /**
+   * @license lucide v1.51.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */

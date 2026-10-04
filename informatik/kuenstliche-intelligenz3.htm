@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Künstliche Intelligenz 3: Lernalgorithmen verstehen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="ki3-format.css">
+</head>
+<body>
+<div data-wb-book>
+  <script class="wb-book-config" type="application/json">
+  {"bookTitle":"Informatik","sectionTitle":"Künstliche Intelligenz 3: Lernalgorithmen","startPage":1,"submitLabel":"Zusammenfassung & abgeben","onSubmit":"exportResults","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"KI 3","themeDefault":"default","resultsPageTitle":"Ergebnisse"}
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Start: Nachbarschaft">
+    <div class="ki-kicker">Leitfrage · KI 3</div>
+    <h1>Wie wird aus Erfahrung eine Entscheidung?</h1>
+    <p class="ki-lead">Eine unbekannte Blüte bestimmen, Goldfelder finden oder einen Weg zum Ziel lernen: Du untersuchst, wie Lernalgorithmen aus Beispielen und Rückmeldungen brauchbare Entscheidungen erzeugen. Dabei rechnest du selbst, verfolgst Abläufe und überprüfst Modelle im Experiment.</p>
+    <div class="wb-section-break"></div>
+    <p><a href="kuenstliche-intelligenz2.html">Teil 2: Lernvarianten, Trainingsdaten und Modellbewertung</a> · <a href="kuenstliche-intelligenz.html">Teil 1: KI-Grundlagen</a></p>
+    <div class="wb-section-break"></div>
+    <h2>Deine Lernroute</h2>
+    <ul><li>Du berechnest Ähnlichkeit und erklärst 1-NN und k-NN.</li><li>Du verfolgst einen Entscheidungsbaum und begründest einen geeigneten Split.</li><li>Du erkennst Über- und Unteranpassung und planst einen fairen Modellvergleich.</li><li>Du beschreibst k-Means als Wechsel von Zuordnung und Mittelwertbildung.</li><li>Du unterscheidest Zustand, Aktion, Belohnung und Policy und verfolgst ein Q-Update.</li></ul>
+    <div class="wb-section-break"></div>
+    <h2>Die Nachbarschaft entscheidet</h2>
+    <p>Beim <strong>Nächste-Nachbar-Verfahren</strong> vergleichst du ein neues Objekt mit bekannten, beschrifteten Beispielen. Die Grundidee: „Das ist so etwas wie dieses bekannte Beispiel.“ Im Iris-Datensatz besitzt jede Blüte vier Messwerte: Länge und Breite von Kelchblatt (<code>sepal</code>) und Kronblatt (<code>petal</code>), jeweils in Zentimetern. Zunächst betrachten wir nur zwei Merkmale.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/iris-datensatz.png" alt="Iris-Streudiagramm: Kelchblattlänge und Kelchblattbreite, rote Setosa-, grüne Versicolor- und blaue Virginica-Punkte sowie unbekannte Proben A, B und C"><figcaption>Jeder Punkt ist eine Blüte. Die Farben sind bekannte Labels; A, B und C sollen erst bestimmt werden. Zwei Merkmale zeigen nicht alle Unterschiede zwischen den Arten.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_iris_essay","title":"Erste Vermutung: A, B und C","hint":"Begründe mit der sichtbaren Nachbarschaft. Benenne auch eine Unsicherheit.","fields":[{"label":"Deine Zuordnungen mit Begründung","key":"iris","kind":"textarea","placeholder":"A: ... B: ... C: ... Welche Merkmale fehlen dir?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">
+    {"id":"ki3_iris_reveal","title":"Stopp & check: Wie sicher ist dein Blick?","hint":"Vergleiche erst nach deiner eigenen Vermutung.","question":"Was lässt sich aus dem Diagramm über A, B und C sagen?","answer":"A liegt im roten Setosa-Bereich. Bei B wirkt die blaue Virginica-Nachbarschaft naheliegend. C liegt in einer Überlappung von Versicolor und Virginica: Eine Zuordnung ist dort unsicher. Für eine genaue Entscheidung benötigst du die tatsächlichen Koordinaten, ein festgelegtes Abstandsmaß und die gewählte Anzahl der Nachbarn. Die folgende Rechenaufgabe verwendet ausdrücklich vorgegebene Messwerte, nicht aus dem Bild abgelesene Punkte."}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Ähnlichkeit berechnen">
+    <h1>Was heißt „ähnlich“?</h1>
+    <p>Bei vergleichbar skalierten numerischen Merkmalen kannst du räumliche Nähe als Ähnlichkeit verwenden. Die <strong>euklidische Distanz</strong> ist der direkte Abstand zweier Punkte. In zwei Dimensionen liefert der Satz des Pythagoras die Rechnung.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/pythagoras.png" alt="Rechtwinkliges Dreieck zwischen zwei Punkten: Der Abstand c ergibt sich aus der Wurzel der Summe der Quadrate von a und b"><figcaption>Die Differenzen der Koordinaten sind die Katheten; der gesuchte Abstand ist die Hypotenuse.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <p class="ki-formula">d(x, y) = √((x₁ − y₁)² + (x₂ − y₂)²)<br>Allgemein: d(x, y) = √(Σᵢ (xᵢ − yᵢ)²)</p>
+    <div class="wb-section-break"></div>
+    <h2>Rechne nach: die Probe B</h2>
+    <p>Verwende die Reihenfolge <strong>(Kelchblattbreite, Kelchblattlänge)</strong>. Probe B hat (3,4; 6,5) cm, der hier betrachtete grüne Versicolor-Nachbar (3,3; 6,7) cm und der blaue Virginica-Nachbar (3,2; 7,0) cm. Welcher dieser beiden Nachbarn liegt näher?</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script class="wb-config" type="application/json">
+    {"id":"ki3_distance_trace","title":"Ablaufspur: Zwei Abstände vergleichen","hint":"Trage Zahlen ohne Einheit ein. Runde den Abstand auf drei Nachkommastellen.","columns":[{"label":"Nachbar"},{"label":"Quadratsumme"},{"label":"Abstand in cm"}],"rows":[{"cells":[{"given":"Versicolor: √(0,1² + (−0,2)²)"},{"answers":["0,05","0.05"],"ariaLabel":"Quadratsumme Versicolor"},{"answers":["0,224","0.224"],"ariaLabel":"Abstand Versicolor"}]},{"cells":[{"given":"Virginica: √(0,2² + (−0,5)²)"},{"answers":["0,29","0.29"],"ariaLabel":"Quadratsumme Virginica"},{"answers":["0,539","0.539"],"ariaLabel":"Abstand Virginica"}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>Fehler gefunden:</strong> Für diese Zahlen ist Versicolor näher: 0,224 cm &lt; 0,539 cm. Die Zuordnung zu Virginica aus dem ursprünglichen Lösungstext folgt nicht aus den angegebenen Messwerten. Rechnen ist hier verlässlicher als eine grobe Bildvermutung. Ein nächster Nachbar ist außerdem noch kein sicherer biologischer Nachweis.</div>
+    <div class="wb-section-break"></div>
+    <h2>Vier Merkmale statt zwei</h2>
+    <p>Die Formel funktioniert auch ohne zeichnbares Koordinatensystem. In der Reihenfolge (sepal-length, sepal-width, petal-length, petal-width) lautet die neue Probe <strong>(4,9; 3,0; 1,4; 0,2)</strong>. Vergleiche sie mit zwei ausdrücklich ausgewählten Übungspunkten: S = (5,0; 3,0; 1,4; 0,2), Label Setosa, und V = (6,0; 3,0; 4,5; 1,5), Label Versicolor.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">
+    {"id":"ki3_4d_reveal","title":"Rechencheck: Abstand in vier Dimensionen","hint":"Berechne beide Distanzen vor dem Öffnen.","question":"Welcher der beiden Übungspunkte ist ähnlicher?","answer":"Zu S: √(0,1² + 0² + 0² + 0²) = 0,1 cm. Zu V: √(1,1² + 0² + 3,1² + 1,3²) = √12,51 ≈ 3,537 cm. S ist wesentlich näher. Nach 1-NN mit diesen beiden Punkten erhält die Probe das Label Setosa. In einer echten Anwendung werden alle verfügbaren Trainingsbeispiele berücksichtigt."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Der Kontext bestimmt das Abstandsmaß</h2>
+    <p>Für Tippfehler eignet sich die <strong>Levenshtein-Distanz</strong>: die kleinste Anzahl von Einfügungen, Löschungen und Ersetzungen. Haus → Maus braucht eine Ersetzung; Bar → Bir → Bier braucht zwei Schritte. Bei Richtungspfeilen ist eher der Winkel oder eine Kosinus-Ähnlichkeit relevant, unabhängig von der Länge der Pfeile.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/pfeile.png" alt="Pfeile unterschiedlicher Länge und Lage, deren Richtungen verglichen werden können"><figcaption>Ein anderer Ort oder eine andere Länge muss nicht bedeuten, dass die Richtung unähnlich ist.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green"><strong>Merke:</strong> Das Ähnlichkeitsmaß prägt das Ergebnis. Auch gleiche Einheiten garantieren keine faire Gewichtung: Ein Merkmal mit viel größerer Streuung kann den Abstand dominieren. Skalierung wird nur anhand der Trainingsdaten bestimmt und dann unverändert auf neue Daten angewendet.</div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">
+    {"id":"ki3_similarity_mcq","title":"Mini-Check: Merkmale skalieren","hint":"Überlege, welche Zahlen die Quadratsumme dominieren.","questions":[{"text":"Ein Modell verwendet Körpergröße in Zentimetern und Einkommen in Euro ohne Skalierung. Was ist problematisch?","choices":[{"id":"a","label":"Euklidische Abstände funktionieren nur in Bildern."},{"id":"b","label":"Das Einkommen kann allein wegen seiner großen Zahlenwerte fast jede Distanz bestimmen."},{"id":"c","label":"Mehr Merkmale verbessern immer das Ergebnis."}],"correct":["b"],"explain":"Die Größenordnung beeinflusst den Abstand. Ob ein Merkmal wichtig ist, darf nicht unbeabsichtigt von seiner Einheit abhängen."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="k-NN im Experiment">
+    <h1>Eine größere Nachbarschaft: k-NN</h1>
+    <p>Ein einzelner Ausreißer kann 1-NN stark beeinflussen. Beim <strong>k-nächste-Nachbarn-Algorithmus</strong> stimmen stattdessen die k ähnlichsten Trainingsbeispiele über das Label ab. Kleine k-Werte erzeugen oft sehr kleinteilige Entscheidungsbereiche; größere k-Werte glätten sie, können aber kleine Gruppen überdecken.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/k-naechster-nachbar.png" alt="Ein unbekannter Punkt wird mit seinen drei nächsten Nachbarn verbunden und nach deren Mehrheit blau klassifiziert"><figcaption>Für k = 3 zählt die Mehrheit der drei Nachbarn, nicht nur die Klasse des allernächsten Punkts.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script class="wb-config" type="application/json">
+    {"id":"ki3_knn_order","title":"Ordne eine k-NN-Klassifikation","hint":"Die beschrifteten Trainingsbeispiele und das Abstandsmaß stehen schon fest.","items":["Abstände vom neuen Punkt zu allen Trainingsbeispielen berechnen.","Trainingsbeispiele nach Abstand aufsteigend sortieren.","Die ersten k Beispiele auswählen.","Ihre Klassen zählen und die Mehrheitsklasse ausgeben."]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-lab" id="knn-lab">
+      <h2>Nachbarschaftslabor</h2>
+      <div class="ki-controls">
+        <label for="knn-k">k <input id="knn-k" type="range" min="1" max="15" step="2" value="1"><output id="knn-k-value" for="knn-k">1</output></label>
+        <label for="knn-data">Daten <select id="knn-data"><option value="mixed">Überlappende Klassen</option><option value="outlier">Mit Ausreißer</option></select></label>
+        <button class="ki-tool" type="button" id="knn-reset" title="Zurücksetzen" aria-label="Zurücksetzen"><i data-lucide="rotate-ccw"></i></button>
+        <button class="ki-tool" type="button" data-snapshot="knn" title="Messwerte ins Protokoll übernehmen" aria-label="Messwerte ins Protokoll übernehmen"><i data-lucide="clipboard-list"></i></button>
+      </div>
+      <div class="ki-controls"><label for="knn-x">Probe x <input id="knn-x" type="number" min="0" max="100" step="1" value="52"></label><label for="knn-y">y <input id="knn-y" type="number" min="0" max="100" step="1" value="48"></label></div>
+      <div class="ki-lab-grid">
+        <div><canvas class="ki-chart" id="knn-canvas" width="600" height="600" tabindex="0" role="img" aria-label="k-NN-Entscheidungsbereiche und verschiebbare Probe; alternative Eingabe über Probe x und y"></canvas><div class="ki-legend"><span><span class="ki-dot"></span>Blau · Klasse 0</span><span><span class="ki-dot orange"></span>Orange · Klasse 1</span><span>+ Unbekannte Probe</span></div></div>
+        <div class="ki-readout"><strong id="knn-result" aria-live="polite"></strong><div id="knn-votes"></div><div class="ki-table-scroll"><table class="ki-mini-table"><caption>Nächste Nachbarn</caption><thead><tr><th>Rang</th><th>Klasse</th><th>d</th></tr></thead><tbody id="knn-neighbors"></tbody></table></div></div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_knn_essay","title":"Experiment: Was ändert k?","hint":"Vergleiche dieselbe Probe mit k = 1, 3 und 11. Untersuche danach den Ausreißer-Datensatz. Du kannst Messwerte ins Protokoll übernehmen.","fields":[{"label":"Messwerte und Erklärung","key":"experiment","kind":"textarea","placeholder":"Vorhersage vor dem Versuch; Probe x/y; k und Mehrheiten; Beobachtung; Erklärung; Grenze eines sehr großen k."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">
+    {"id":"ki3_tie_verify","title":"Stopp & check: Ungerades k","hint":"Denke an drei verschiedene Klassen.","statement":"Ein ungerades k verhindert bei jeder Anzahl von Klassen einen Gleichstand.","answer":false,"explain":"Bei zwei Klassen und ungewichteter Abstimmung verhindert ein ungerades k einen Stimmengleichstand. Bei drei Klassen kann k = 3 die Verteilung 1:1:1 erzeugen. Auch gleich weit entfernte Nachbarn an der Auswahlgrenze benötigen eine festgelegte Regel. Im Labor gibt es zwei Klassen und nur ungerade k-Werte."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Lazy Learner: Aufwand erst bei der Anfrage</h2>
+    <p>k-NN speichert die Trainingsbeispiele, statt beim Training einen kompakten Satz von Regeln zu bilden. Deshalb zählt es zu den <strong>Lazy Learners</strong>. Vorbereitung wie Skalierung oder ein Suchindex ist trotzdem möglich. Beim einfachen vollständigen Durchsuchen werden für n Beispiele mit d Merkmalen ungefähr n · d Rechenschritte für die Distanzen benötigt. Eine vollständige Sortierung kostet zusätzlich Aufwand; eine Auswahl der besten k oder Suchindizes können helfen.</p>
+    <div class="wb-section-break"></div>
+    <p>Ein größeres k multipliziert nicht automatisch jede Distanzrechnung mit k. Entscheidend sind Datenmenge, Merkmalszahl und Suchverfahren. Viele gespeicherte Beispiele benötigen viel Speicher. Die eingefärbten Bereiche im Labor zeigen: Auch dieses Verfahren verallgemeinert auf neue Punkte.</p>
+    <div class="wb-section-break"></div>
+    <p><a href="https://snap.berkeley.edu/" target="_blank" rel="noopener">Weiterforschen mit Snap!</a>: Stelle den Ablauf als Blöcke dar: Abstände berechnen → mit Label speichern → sortieren → erste k auswählen → Klassen zählen. Snap! ist eine blockbasierte Sprache; eigene Blöcke können komplexe Teilaufgaben kapseln. Ohne konkreten Projektlink wird hier kein fertiges Fremdprogramm vorausgesetzt.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green">Jetzt hast du gelernt, dass Nachbarschaftsentscheidungen von Merkmalen, Abstandsmaß und k abhängen. Die Mehrheitsklasse ist eine Modellentscheidung, keine Garantie für die richtige Antwort.</div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Entscheidungsbäume lesen">
+    <h1>Ein Modell aus Fragen</h1>
+    <p>Ein <strong>Modell</strong> ist eine zweckmäßige Vereinfachung eines Ausschnitts der realen Welt. Es lässt Unwichtiges weg und erhält die Informationen, die für eine Aufgabe gebraucht werden. Ein gelerntes Modell ist zugleich eine überprüfbare Hypothese über Zusammenhänge und eine ausführbare Vorschrift für Vorhersagen.</p>
+    <div class="wb-section-break"></div>
+    <h2>Wurzel, Entscheidungsknoten und Blatt</h2>
+    <p>Ein <strong>Entscheidungsbaum</strong> stellt an jedem inneren Knoten eine Frage zu einem Merkmal. Die Antwort bestimmt den nächsten Zweig. Du beginnst an der Wurzel und folgst genau einem Pfad, bis ein Blatt erreicht ist. Dort steht die Ausgabe. Die folgenden Beispiele verwenden binäre Ja-Nein-Tests; andere Baumverfahren können auch mehr Zweige besitzen.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/entscheidungsbaum.png" alt="Vereinfachter Tier-Entscheidungsbaum mit Fragen nach Schulterhöhe, spitzen Ohren und Fell"><figcaption>Ein Anschauungsmodell, kein zuverlässiger Tierbestimmer: Kleine Hunde und Katzen mit unterschiedlichen Ohren zeigen sofort Grenzen der gewählten Regeln.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/entscheidungsbaum2.png" alt="Gelernter Iris-Entscheidungsbaum: erster Test petal length kleiner gleich 2,60, danach weitere Tests unter anderem zu petal width 1,75 und petal length 4,85"><figcaption>Ein gelernter Baum bildet Messwerte auf ein Artenlabel ab. Im rechten Ast stehen die für unsere Probe wichtigen Schwellen 1,75 und 4,85.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <p>Verfolge die Probe: <code>sepal-length = 5,9</code>, <code>sepal-width = 3,0</code>, <code>petal-length = 5,1</code>, <code>petal-width = 1,8</code>. Verwende die tatsächlich im Bild stehenden Tests, insbesondere <strong>petal-length ≤ 4,85</strong> im rechten Ast.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script class="wb-config" type="application/json">
+    {"id":"ki3_tree_trace","title":"Ablaufspur: Die Blüte durch den Baum schicken","hint":"Trage bei den Tests ja oder nein ein, zuletzt das Artenlabel.","columns":[{"label":"Schritt"},{"label":"Test / Ausgabe"},{"label":"Dein Ergebnis"}],"rows":[{"cells":[{"given":"1 · Wurzel"},{"given":"petal-length ≤ 2,60","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis erster Test"}]},{"cells":[{"given":"2 · rechter Ast"},{"given":"petal-width ≤ 1,75","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis zweiter Test"}]},{"cells":[{"given":"3 · rechter Ast"},{"given":"petal-length ≤ 4,85","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis dritter Test"}]},{"cells":[{"given":"4 · Blatt"},{"given":"Label ausgeben"},{"answers":["Iris-virginica","virginica","Iris virginica"],"ariaLabel":"Erreichtes Label"}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">
+    {"id":"ki3_effort_reveal","title":"Vergleich: Baum oder 1-NN?","hint":"Zähle Tests und überlege, welche Daten geprüft werden.","question":"Warum kann die Anwendung eines kleinen Baums viel weniger Rechenarbeit benötigen?","answer":"Hier reichen drei Merkmalsvergleiche bis zum Blatt. Der Aufwand einer Baumvorhersage hängt von der Länge des durchlaufenen Pfads ab. Eine einfache 1-NN-Suche über 135 Trainingsbeispiele benötigt dagegen 135 Distanzberechnungen und die Auswahl des Minimums. Ein Suchindex kann die Nachbarsuche beschleunigen; ein sehr tiefer Baum kann ebenfalls teuer werden. Baumtraining und Baumvorhersage sind verschiedene Vorgänge."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green">Jetzt hast du gelernt, dass ein Entscheidungsbaum ein kompaktes Modell sein kann. Du kannst einen konkreten Entscheidungsweg nachvollziehen, musst seine Regeln aber trotzdem mit unabhängigen Daten prüfen.</div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Einen Baum lernen">
+    <h1>Welche Frage trennt die Daten am besten?</h1>
+    <p>Ein Lernalgorithmus erhält viele beschriftete Beispiele. Er sucht an jedem Knoten einen <strong>Split</strong>, der die Daten in möglichst homogene Gruppen teilt: In einer Gruppe sollen möglichst viele Beispiele dasselbe Label haben. Danach wird das Verfahren für beide Teilmengen wiederholt, also <strong>rekursiv</strong>.</p>
+    <div class="wb-section-break"></div>
+    <p>Ein Blatt entsteht beispielsweise, wenn die Teilmenge nur noch eine Klasse enthält, die maximale Tiefe erreicht ist oder weitere Teilungen nicht ausreichend helfen. Bei gemischten Blättern wird etwa die Mehrheitsklasse ausgegeben. Die Wahl eines Merkmals und einer Schwelle erfolgt anhand eines Gütekriteriums, nicht durch „Verstehen“ der E-Mails.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/spam-filter.png" alt="Acht Trainings-E-Mails mit den Merkmalen Gewinn im Betreff, Absender bekannt, viele Ausrufezeichen und dem Label Spam oder normale E-Mail"><figcaption>Der kleine Beispieldatensatz enthält drei Spam-Mails und fünf normale E-Mails. Er dient zum Nachrechnen, nicht zum Bau eines echten Spamfilters.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_split_essay","title":"Wähle den ersten Split","hint":"Vergleiche alle drei Merkmale. Zähle in jedem Zweig Spam und normale Nachrichten.","fields":[{"label":"Deine Wahl mit Datenbeleg","key":"split","kind":"textarea","placeholder":"Mein Merkmal: ... Im Ja-Zweig ...; im Nein-Zweig ... . Die Alternativen trennen schlechter, weil ..."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Homogenität messbar machen: Gini-Unreinheit</h2>
+    <p>Für zwei Klassen mit Anteilen p und q gilt <strong>Gini = 1 − p² − q²</strong>. Ein reiner Knoten hat Gini 0. Bei einem Split werden die Unreinheiten der Kinder nach der Anzahl ihrer Beispiele gewichtet. Ein kleinerer gewichteter Wert bedeutet eine homogenere Aufteilung.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-table-scroll"><table class="ki-mini-table"><caption>Alle drei möglichen ersten Fragen</caption><thead><tr><th>Merkmal</th><th>Ja-Zweig</th><th>Nein-Zweig</th><th>Gewichtete Gini-Unreinheit</th></tr></thead><tbody><tr><td>„Gewinn“ im Betreff</td><td>2 Spam, 2 normal</td><td>1 Spam, 3 normal</td><td>0,4375</td></tr><tr><td>Absender bekannt</td><td>0 Spam, 4 normal</td><td>3 Spam, 1 normal</td><td>0,1875</td></tr><tr><td>Viele Ausrufezeichen</td><td>2 Spam, 2 normal</td><td>1 Spam, 3 normal</td><td>0,4375</td></tr></tbody></table></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script class="wb-config" type="application/json">
+    {"id":"ki3_gini_reveal","title":"Auflösung: Der erste Split","hint":"Vergleiche deine Zählung mit der Tabelle.","question":"Warum eignet sich „Absender bekannt?“ am besten?","answer":"Der Ja-Zweig ist rein: vier normale E-Mails, Gini 0. Der Nein-Zweig enthält drei Spam-Mails und eine normale E-Mail: Gini = 1 − (3/4)² − (1/4)² = 0,375. Gewichtet ergibt sich (4/8) · 0 + (4/8) · 0,375 = 0,1875. Die beiden anderen Fragen erreichen nur 0,4375. Die Unreinheit der Wurzel ist 0,46875; der beste Split senkt sie um 0,28125. Das ist eine Aussage über diese acht Beispiele, nicht über sämtliche E-Mails."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure compact"><img src="bilder/spam-filter-baum.png" alt="Spam-Entscheidungsbaum: bekannte Absender werden normal zugeordnet, unbekannte nach Gewinn im Betreff getrennt"><figcaption>Ein erster Baum. Der gemischte Zweig mit je einer Spam- und einer normalen Nachricht ließe sich im Übungsdatensatz durch die Ausrufezeichen weiter trennen.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script class="wb-config" type="application/json">
+    {"id":"ki3_tree_cloze","title":"Sicherung: Ein Baum entsteht","hint":"Nutze jeden Begriff an der passenden Stelle.","bank":["Wurzel","homogene","rekursiv","Mehrheitsklasse"],"segments":[{"t":"text","v":"Der Aufbau beginnt an der "},{"t":"gap","a":"Wurzel"},{"t":"text","v":". Ein Split soll möglichst "},{"t":"gap","a":"homogene"},{"t":"text","v":" Teilmengen erzeugen. Der Algorithmus arbeitet auf den Teilmengen "},{"t":"gap","a":"rekursiv"},{"t":"text","v":" weiter. Wird bei einem gemischten Knoten gestoppt, kann sein Blatt die "},{"t":"gap","a":"Mehrheitsklasse"},{"t":"text","v":" ausgeben."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Generalisieren statt auswendig lernen">
+    <h1>Wie viele Details braucht ein gutes Modell?</h1>
+    <p>Das Ziel ist nicht, jedes Trainingsbeispiel perfekt abzubilden. Das Modell soll auf <strong>neuen, passenden Daten</strong> funktionieren. Bei <strong>Overfitting</strong> werden zufällige Details, Messfehler oder Ausreißer der Trainingsdaten mitgelernt. Bei <strong>Underfitting</strong> ist das Modell zu einfach, um wichtige Zusammenhänge abzubilden.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-grid"><div class="ki-panel"><h3>Zu komplex</h3><p>Ein sehr tiefer Baum kann für fast jedes Trainingsbeispiel eine eigene Sonderregel erzeugen. Hohe Trainingsgenauigkeit und deutlich schlechtere Validierungsleistung sind ein Warnsignal für Überanpassung.</p></div><div class="ki-panel"><h3>Zu einfach</h3><p>Ein Baum mit nur einem Split kann notwendige Unterschiede übersehen. Schwache Leistung auf Trainings- und Validierungsdaten kann auf Unteranpassung hinweisen.</p></div></div>
+    <div class="wb-section-break"></div>
+    <h2>Ein genauer Blick auf Prozentwerte</h2>
+    <p>Im bereitgestellten Vergleich erreicht ein Baum mit maximaler Tiefe 6 auf einer kleinen Testmenge 100 %, ein Baum mit Tiefe 10 dagegen 93,3 %. Das <em>kann</em> zu Überanpassung passen, beweist sie aber nicht. Bei 15 Tests entspricht ein einziger zusätzlicher Fehler bereits einem Rückgang von 100 % auf rund 93,3 %. Datenauswahl und Zufall spielen eine Rolle.</p>
+    <div class="wb-section-break"></div>
+    <p>Wähle Baumtiefe und k anhand von <strong>Validierungsdaten</strong> oder Kreuzvalidierung. Den abschließenden Test nutzt du erst nach dieser Wahl. Sonst optimierst du unbeabsichtigt auf den Test und seine Aussagekraft geht verloren.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script class="wb-config" type="application/json">
+    {"id":"ki3_fit_categorize","title":"Ordne die Diagnose zu","hint":"Die Zahlen sind fiktive Vergleichsfälle mit passenden, unabhängigen Validierungsdaten.","categories":[{"id":"over","title":"Hinweis auf Overfitting"},{"id":"under","title":"Hinweis auf Underfitting"},{"id":"fair","title":"Fairer Modellvergleich"}],"items":[{"label":"Training 100 %, Validierung 61 %; viele Sonderregeln.","category":"over"},{"label":"Training 55 %, Validierung 53 %; Modell hat nur einen groben Split.","category":"under"},{"label":"k anhand der Validierung wählen, danach einmal unabhängig testen.","category":"fair"},{"label":"Tieferer Baum verbessert Training, verschlechtert wiederholt die Validierung.","category":"over"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Nachvollziehbar, aber nicht grenzenlos</h2>
+    <p>Kleine Entscheidungsbäume sind gut interpretierbar: Du kannst jeden Test auf einem Entscheidungspfad prüfen. Sie sind aber <strong>nicht die einzigen interpretierbaren Modelle</strong>; auch einfache lineare Modelle oder Regellisten können verständlich sein. Sehr große Bäume verlieren diesen Vorteil. Nachvollziehbarkeit allein garantiert keine Richtigkeit oder Fairness.</p>
+    <div class="wb-section-break"></div>
+    <p>Bei klassischen Batch-Verfahren wird ein Baum auf einem gesamten Datensatz aufgebaut. Neue Beispiele erfordern häufig erneutes Training. Es gibt jedoch auch inkrementelle Baumverfahren. Die Aussage „Bäume können grundsätzlich nicht schrittweise lernen“ wäre deshalb zu pauschal.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">
+    {"id":"ki3_fit_mcq","title":"Mini-Check: Welche Aussage ist belastbar?","hint":"Trenne Beobachtung, Vermutung und Nachweis.","questions":[{"text":"Ein tiefer Baum schneidet in einem einzigen kleinen Test schlechter ab. Was folgt daraus?","choices":[{"id":"a","label":"Tiefe Bäume sind grundsätzlich ungeeignet."},{"id":"b","label":"Overfitting ist bewiesen; weitere Prüfungen sind unnötig."},{"id":"c","label":"Es gibt einen möglichen Hinweis. Trainings- und Validierungsleistung sowie weitere Daten helfen bei der Einordnung."}],"correct":["c"],"explain":"Ein einzelner Testwert ist keine allgemeine Gesetzmäßigkeit. Modellkomplexität, Datenqualität und unabhängige Vergleiche müssen zusammen betrachtet werden."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green">Jetzt hast du gelernt, dass ein gutes Modell die richtige Menge an Details enthält. k-NN und Entscheidungsbäume besitzen unterschiedliche Stellschrauben, aber beide müssen unabhängig überprüft werden.</div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Cluster und Zentroiden">
+    <h1>Strukturen entdecken ohne Labels</h1>
+    <p>Beim <strong>unüberwachten Lernen</strong> liegen keine vorgegebenen Ziel-Labels vor. Du kannst beispielsweise ähnliche Kundengruppen, Dokumente oder Musikstücke gruppieren und ungewöhnliche Transaktionen untersuchen. Ein <strong>Cluster</strong> ist eine Gruppe von Punkten, die sich nach den gewählten Merkmalen ähnlicher sind als Punkte außerhalb der Gruppe.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/cluster.png" alt="Drei räumlich getrennte Punktgruppen: orange oben links, blau oben rechts und grün unten"><figcaption>Die Gruppen wirken hier klar getrennt. In echten Daten sind Anzahl, Grenzen und Bedeutung häufig weniger eindeutig.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <h2>k-Means: Mittelpunkte finden</h2>
+    <p>Bei <strong>k-Means</strong> legst du zuerst die Anzahl k der Cluster fest. Jeder Cluster wird durch einen <strong>Zentroiden</strong> repräsentiert, den Mittelwert seiner Punktkoordinaten. Der Algorithmus beginnt mit Startzentren, ordnet jeden Punkt dem nächsten Zentrum zu und berechnet dann aus jeder Gruppe einen neuen Mittelwert. Dieser Wechsel wird wiederholt, bis sich die Zentren kaum noch ändern oder eine Iterationsgrenze erreicht ist.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/cluster2.png" alt="Die drei Punktgruppen mit markierten Zentroiden c1, c2 und c3 sowie geraden Grenzen der nächstgelegenen Zentren"><figcaption>Die Zentren erzeugen Bereiche des jeweils nächsten Mittelpunkts. Ein Clustername wie „c1“ besitzt zunächst keine inhaltliche Bedeutung.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <p class="ki-formula">Kosten (SSE) = Σ über alle Punkte ‖Punkt − zugeordnetes Zentrum‖²</p>
+    <div class="wb-section-break"></div>
+    <p>k-Means verringert die <strong>Summe der quadrierten Abstände</strong>, nicht einfach nur die Summe der Abstände. Das macht die Wahl des arithmetischen Mittelwerts als Zentrum sinnvoll. Das Ergebnis kann von den Startzentren abhängen und muss nicht das global beste sein. Weniger Kosten bei größerem k bedeuten nicht automatisch sinnvollere Gruppen.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script class="wb-config" type="application/json">
+    {"id":"ki3_centroid_trace","title":"Ablaufspur: Ein Zentrum verschieben","hint":"Die drei Fundorte gehören bereits zu derselben Gruppe. Rechne getrennt für x und y.","columns":[{"label":"Schritt"},{"label":"Rechnung"},{"label":"Ergebnis"}],"rows":[{"cells":[{"given":"Fundorte"},{"given":"(2; 2), (4; 2), (3; 5)"},{"given":"3 Punkte"}]},{"cells":[{"given":"Mittelwert x"},{"given":"(2 + 4 + 3) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere x-Koordinate"}]},{"cells":[{"given":"Mittelwert y"},{"given":"(2 + 2 + 5) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere y-Koordinate"}]},{"cells":[{"given":"Kosten am neuen Zentrum"},{"given":"2 + 2 + 4"},{"answers":["8"],"ariaLabel":"Summe der quadrierten Abstände"}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script class="wb-config" type="application/json">
+    {"id":"ki3_kmeans_order","title":"Ordne eine k-Means-Iteration","hint":"Die Anzahl k ist vorgegeben; unterscheide Zuordnung und Aktualisierung.","items":["k Startzentren festlegen.","Jeden Punkt dem nächstgelegenen Zentrum zuordnen.","Für jede Gruppe den Mittelwert als neues Zentrum berechnen.","Änderung prüfen und bei Bedarf Zuordnung und Aktualisierung wiederholen."]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Was können Cluster leisten?</h2>
+    <p>Cluster können beim Beschriften großer Datenmengen helfen. Ihre Bedeutung muss aber von Menschen geprüft werden. Ein Punkt mit großem Abstand zu seinem Zentrum kann auffällig sein; k-Means ist damit noch kein allgemeiner zuverlässiger Anomaliedetektor. Auffällig bedeutet auch nicht automatisch betrügerisch.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>Grenzen:</strong> k-Means passt besonders gut zu ungefähr kugelförmigen Gruppen mit vergleichbaren Größen und Streuungen. Ausreißer können Mittelwerte verschieben; längliche oder ineinander verschlungene Gruppen werden oft unpassend zerlegt. DBSCAN verfolgt stattdessen einen dichtebasierten Ansatz.</div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Goldfelder: k-Means-Labor">
+    <h1>Der große Goldrausch</h1>
+    <p>Du kennst die gemeldeten Fundorte, aber keine fertigen Goldfeld-Labels. Deine Grabungsteams sollen möglichst zentral in den Fundgruppen stehen. Im Modell ist ein Team ein Zentroid und ein Goldfund ein Datenpunkt. Das Szenario greift die Goldrush-Lernidee aus dem bereitgestellten Material auf; das folgende Labor ist eine eigene vereinfachte Umsetzung.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-grid"><div class="ki-panel"><h3>T · Aufgabe</h3><p>k Grabungsorte anhand der Fundkoordinaten finden.</p><h3>P · Leistung</h3><p>Die Summe der quadrierten Abstände vom Fund zum zugeordneten Team verringern.</p></div><div class="ki-panel"><h3>E · Erfahrung</h3><p>Unbeschriftete Fundkoordinaten. Eingabe: Punkte. Ausgabe: Zentren und Gruppenzuordnungen.</p><p>Ein gutes Clustering ist keine Garantie, dass an einem Mittelpunkt tatsächlich Gold liegt.</p></div></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-lab" id="kmeans-lab">
+      <h2>Goldfeldlabor</h2>
+      <div class="ki-controls">
+        <label for="km-k">Teams k <input id="km-k" type="number" min="1" max="5" value="3"></label>
+        <label for="km-start">Start <select id="km-start"><option value="spread">Verteilt</option><option value="close">Nahe beieinander</option></select></label>
+        <button class="ki-tool" type="button" id="km-step" title="Eine Iteration" aria-label="Eine Iteration"><i data-lucide="step-forward"></i></button>
+        <button class="ki-tool" type="button" id="km-play" title="Automatisch laufen lassen" aria-label="Automatisch laufen lassen"><i data-lucide="play"></i></button>
+        <button class="ki-tool" type="button" id="km-reset" title="Startplätze zurücksetzen" aria-label="Startplätze zurücksetzen"><i data-lucide="rotate-ccw"></i></button>
+        <button class="ki-tool" type="button" data-snapshot="kmeans" title="Messwerte ins Protokoll übernehmen" aria-label="Messwerte ins Protokoll übernehmen"><i data-lucide="clipboard-list"></i></button>
+      </div>
+      <canvas class="ki-chart" id="km-canvas" width="600" height="600" role="img" aria-label="Goldfundorte und nummerierte Grabungsteams; Farben zeigen die Zuordnung zum nächsten Team"></canvas>
+      <div class="ki-stats"><div><strong id="km-iteration">0</strong><span>Iterationen</span></div><div><strong id="km-cost">0</strong><span>Quadrierte Abstände (SSE)</span></div><div><strong id="km-change">–</strong><span>Größte Zentrumverschiebung</span></div></div>
+      <div id="km-status" class="ki-status" aria-live="polite"></div>
+      <div class="ki-table-scroll"><table class="ki-mini-table"><caption>Grabungsteams</caption><thead><tr><th>Team</th><th>x</th><th>y</th><th>Funde</th></tr></thead><tbody id="km-centers"></tbody></table></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_kmeans_essay","title":"Experiment: Teams und Startplätze","hint":"Vergleiche k = 2, 3 und 4. Nutze bei k = 3 beide Startvarianten. Halte Anfang und Ende fest.","fields":[{"label":"Messprotokoll und Interpretation","key":"experiment","kind":"textarea","placeholder":"k, Startplätze, Iterationen und SSE; Welche Fundgruppe wird geteilt oder zusammengelegt? Warum ist die kleinste SSE nicht allein entscheidend?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script class="wb-config" type="application/json">
+    {"id":"ki3_kmeans_verify","title":"Mini-Check: Bedeutet k dasselbe?","hint":"Vergleiche die Rolle von k in beiden Verfahren.","statement":"Bei k-NN und k-Means legt k jeweils die Anzahl der gefundenen Cluster fest.","answer":false,"explain":"Bei k-NN ist k die Zahl der Nachbarn, die über ein bekanntes Klassenlabel abstimmen. Bei k-Means ist k die vorgegebene Anzahl der Clusterzentren. k-Means benötigt keine Ziel-Labels."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-green">Jetzt hast du gelernt, dass k-Means durch wiederholtes Zuordnen und Mittelwertbilden eine Kostenfunktion verbessert. Die Merkmalswahl, k und die Startzentren bleiben wichtige menschliche Entscheidungen.</div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Agenten und Q-Learning">
+    <h1>Lernen durch Handeln und Rückmeldung</h1>
+    <p>Beim <strong>verstärkenden Lernen</strong> handelt ein Agent in einer Umgebung. Er sammelt Erfahrungen als Zustandsübergänge und Belohnungen und verbessert seine <strong>Policy</strong>, also die Regel zur Aktionswahl. Anders als beim überwachten Lernen bekommt er nicht für jeden Zustand die richtige Aktion vorgemacht.</p>
+    <div class="wb-section-break"></div>
+    <p>Ein Agent nimmt seine Umgebung wahr und wirkt zielgerichtet auf sie ein. Nicht jeder Agent lernt. Lernende Agenten können ihre Daten selbst durch Interaktion erzeugen, benötigen dafür aber oft sehr viele Versuche. Auch Lernen aus bereits aufgezeichneten Erfahrungen ist möglich; „RL braucht nie vorhandene Daten“ wäre falsch.</p>
+    <div class="wb-section-break"></div>
+    <figure class="ki-figure"><img src="bilder/handlungszyklus.png" alt="Handlungszyklus zwischen Umgebung und Agent: Zustand und Belohnung gehen zum Agenten, eine ausgewählte Aktion wirkt auf die Umgebung"><figcaption>Zustand erfassen → Aktion wählen und ausführen → neuen Zustand und Belohnung beobachten → Steuerung verbessern.</figcaption></figure>
+    <div class="wb-section-break"></div>
+    <div class="ki-table-scroll"><table class="ki-mini-table"><caption>Zentrale Begriffe</caption><thead><tr><th>Begriff</th><th>Bedeutung im Labor</th></tr></thead><tbody><tr><td>Zustand s</td><td>Die aktuelle Rasterposition.</td></tr><tr><td>Aktion a</td><td>Ein Schritt nach oben, rechts, unten oder links.</td></tr><tr><td>Belohnung r</td><td>+10 am Ziel, −10 in einer Falle, −0,1 pro sonstigem Schritt.</td></tr><tr><td>Policy π</td><td>Auswahlregel für eine Aktion in einem Zustand.</td></tr><tr><td>Episode</td><td>Ein Versuch vom Start bis Ziel, Falle oder einer Grenze von 150 Schritten.</td></tr><tr><td>Q(s, a)</td><td>Gelernte Schätzung der künftig erreichbaren, diskontierten Belohnung für eine Aktion in einem Zustand.</td></tr></tbody></table></div>
+    <div class="wb-section-break"></div>
+    <h2>Q-Learning: Erwartungen rückwirkend verbessern</h2>
+    <p>Eine Q-Tabelle bewertet Zustands-Aktions-Paare. Nach einer Aktion wird ihr Wert in Richtung der beobachteten Belohnung plus der besten geschätzten Zukunftserwartung verschoben. So können sich gute Erwartungen vom Ziel aus rückwärts entlang besuchter Wege ausbreiten. Diese Tabelle ist ein <strong>Wertemodell</strong>, kein vollständiges Modell der Umgebung.</p>
+    <div class="wb-section-break"></div>
+    <p class="ki-formula">Q<sub>neu</sub>(s, a) = Q(s, a) + α · [r + γ · max<sub>a′</sub> Q(s′, a′) − Q(s, a)]</p>
+    <div class="wb-section-break"></div>
+    <p><strong>α</strong> bestimmt die Stärke des Updates; <strong>γ</strong> gewichtet künftige Belohnungen. In einem echten Endzustand entfällt der Zukunftsterm. Das Lernziel ist eine hohe erwartete Belohnungssumme, nicht nur eine große unmittelbare Belohnung. Bei einer Zeitbegrenzung ist die Episode abgebrochen; die Zukunftserwartung des erreichten Zustands kann trotzdem zum Update beitragen.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script class="wb-config" type="application/json">
+    {"id":"ki3_q_trace","title":"Ablaufspur: Ein Q-Wert wird aktualisiert","hint":"Gegeben: Q alt = 2, α = 0,5, γ = 0,9, r = 1, bester Q-Wert im Folgezustand = 4.","columns":[{"label":"Schritt"},{"label":"Rechnung"},{"label":"Ergebnis"}],"rows":[{"cells":[{"given":"Zielwert"},{"given":"1 + 0,9 · 4"},{"answers":["4,6","4.6"],"ariaLabel":"Q-Zielwert"}]},{"cells":[{"given":"Korrektur"},{"given":"0,5 · (4,6 − 2)"},{"answers":["1,3","1.3"],"ariaLabel":"Q-Korrektur"}]},{"cells":[{"given":"Neuer Q-Wert"},{"given":"2 + 1,3"},{"answers":["3,3","3.3"],"ariaLabel":"Neuer Q-Wert"}]},{"cells":[{"given":"Alternativ: Ziel erreicht"},{"given":"Q alt = 2, α = 0,5, r = 10, Zukunftsterm = 0"},{"answers":["6","6,0","6.0"],"ariaLabel":"Q-Wert bei terminaler Belohnung"}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Exploration oder bekannte gute Aktion?</h2>
+    <p>Eine <strong>ε-greedy-Policy</strong> wählt mit Wahrscheinlichkeit ε eine zufällige Aktion (<strong>Exploration</strong>), sonst eine Aktion mit dem höchsten aktuellen Q-Wert (<strong>Exploitation</strong>). Ohne Erkunden können bessere Wege unentdeckt bleiben. Zu viel Zufall kann nach dem Lernen gute Wege unnötig verlassen.</p>
+    <div class="wb-section-break"></div>
+    <div class="ki-lab" id="rl-lab">
+      <h2>Agentenlabor</h2>
+      <div class="ki-controls">
+        <label for="rl-epsilon">ε <input id="rl-epsilon" type="range" min="0" max="1" step="0.05" value="0.25"><output id="rl-epsilon-value" for="rl-epsilon">0,25</output></label>
+        <label for="rl-learn"><input id="rl-learn" type="checkbox" checked> Lernen</label>
+        <button class="ki-tool" type="button" id="rl-step" title="Eine Aktion" aria-label="Eine Aktion"><i data-lucide="step-forward"></i></button>
+        <button class="ki-tool" type="button" id="rl-play" title="Laufen lassen" aria-label="Laufen lassen"><i data-lucide="play"></i></button>
+        <button class="ki-tool" type="button" id="rl-batch" title="100 Episoden trainieren" aria-label="100 Episoden trainieren"><i data-lucide="fast-forward"></i></button>
+        <button class="ki-tool" type="button" id="rl-reset" title="Lernen zurücksetzen" aria-label="Lernen zurücksetzen"><i data-lucide="rotate-ccw"></i></button>
+        <button class="ki-tool" type="button" data-snapshot="rl" title="Messwerte ins Protokoll übernehmen" aria-label="Messwerte ins Protokoll übernehmen"><i data-lucide="clipboard-list"></i></button>
+      </div>
+      <canvas class="ki-chart" id="rl-canvas" width="600" height="600" tabindex="0" role="img" aria-label="Rasterwelt mit Start S, Ziel Z, Fallen X, Mauern und einem Agenten; wähle ein Feld, um seine Q-Werte in der Tabelle anzusehen"></canvas>
+      <div class="ki-controls"><label for="rl-inspect">Q-Tabelle für Feld <select id="rl-inspect"></select></label></div>
+      <div class="ki-stats"><div><strong id="rl-episodes">0</strong><span>Episoden abgeschlossen</span></div><div><strong id="rl-success">–</strong><span>Zielquote (letzte 30)</span></div><div><strong id="rl-return">0</strong><span>Belohnung letzter Versuch</span></div></div>
+      <div class="ki-status" id="rl-status" aria-live="polite"></div>
+      <div class="ki-table-scroll"><table class="ki-mini-table"><caption id="rl-q-caption">Q-Werte</caption><thead><tr><th>Aktion</th><th>Q-Wert</th></tr></thead><tbody id="rl-q"></tbody></table></div>
+      <div class="ki-legend"><span>S Start · Z Ziel · X Falle</span><span>● Agent</span><span>Pfeil: eine aktuell beste Aktion</span></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_rl_essay","title":"Experiment: Erst erkunden, dann anwenden","hint":"Trainiere mit ε = 0,25. Schalte danach Lernen aus und ε auf 0. Vergleiche mit ε = 1. Nutze bei einem neuen Vergleich das Zurücksetzen.","fields":[{"label":"Beobachtung und Erklärung","key":"experiment","kind":"textarea","placeholder":"Episoden, Zielquote und Belohnung; Unterschied zwischen Lernen und Anwenden; Warum zeigen Q-Werte keine Erfolgswahrscheinlichkeit? Was wäre eine problematische Belohnung?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>Belohnung ist ein Auftrag, kein Menschenverstand:</strong> Wird ein Agent nur für Klicks belohnt, kann er Aufmerksamkeit maximieren statt gute Informationen anzubieten. Sichere Simulationen sind deshalb wichtige Lernumgebungen. Das Labor löst seine kleine Rasteraufgabe; daraus folgt keine allgemeine Intelligenz.</div>
+    <div class="wb-section-break"></div>
+    <p>Ein Spiel wie Flappy Bird lässt sich ebenso beschreiben: Zustand = Höhe und Abstand zu Hindernissen, Aktionen = steigen oder fallen lassen, Belohnung = Fortschritt ohne Kollision. Die geeignete Zustandsbeschreibung und Belohnung müssen festgelegt werden. <a href="https://snap.berkeley.edu/" target="_blank" rel="noopener">Snap!</a> eignet sich zum Erproben eigener Agentenprogramme.</p>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="10" data-wb-page-title="Sicherung und Weiterforschen">
+    <h1>Vier Verfahren, drei Lernvarianten</h1>
+    <div class="ki-note-green"><strong>Jetzt hast du das gelernt:</strong><ul><li><strong>k-NN:</strong> Labels ähnlicher gespeicherter Beispiele entscheiden; k und das Abstandsmaß sind wichtig.</li><li><strong>Entscheidungsbaum:</strong> Gelernte Merkmalsfragen führen zum Label eines Blatts; Splitgüte und Tiefe beeinflussen das Modell.</li><li><strong>k-Means:</strong> Ohne Ziel-Labels werden Punkte Zentren zugeordnet und die Zentren als Mittelwerte aktualisiert.</li><li><strong>Q-Learning:</strong> Ein Agent verbessert die Bewertung seiner Aktionen aus Belohnung und Zukunftserwartung.</li><li><strong>Für alle:</strong> Daten, Modellannahmen und ein passendes Leistungsmaß entscheiden über brauchbare Ergebnisse.</li></ul></div>
+    <div class="wb-section-break"></div>
+    <div data-p2 class="p2" data-p2-id="ki3_method_pairs" data-p2-title="Zuordnung: Was steckt im Modell?" data-p2-hint="Ordne jede Darstellung genau einem Verfahren zu.">
+      <div class="p2-banks"><div><div class="p2-col-title">Modell</div><div class="p2-bank" data-left-bank>
+        <div class="p2-piece p2-left" data-side="L" data-pair="1">Beschriftete Beispiele und ein Abstandsmaß.</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="2">Merkmalstests an inneren Knoten und Ausgaben an Blättern.</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="3">k Zentren als Mittelwerte von Punktgruppen.</div>
+        <div class="p2-piece p2-left" data-side="L" data-pair="4">Werte für Aktionen in Zuständen anhand erwarteter Belohnung.</div>
+      </div></div><div><div class="p2-col-title">Verfahren</div><div class="p2-bank" data-right-bank>
+        <div class="p2-piece p2-right" data-side="R" data-pair="1">k-NN</div><div class="p2-piece p2-right" data-side="R" data-pair="2">Entscheidungsbaum</div><div class="p2-piece p2-right" data-side="R" data-pair="3">k-Means</div><div class="p2-piece p2-right" data-side="R" data-pair="4">Q-Learning</div>
+      </div></div></div>
+      <div class="p2-row" style="margin-top:12px"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+      <div style="margin-top:12px"><div class="p2-col-title">Gelöst</div><div class="p2-solved" data-solved></div></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script class="wb-config" type="application/json">
+    {"id":"ki3_final_mcq","title":"Abschlusscheck: Hinter die Kulissen","hint":"Mehrere Aussagen sind richtig. Prüfe jede einzeln.","questions":[{"text":"Welche Aussagen passen zu den untersuchten Lernalgorithmen?","multiple":true,"choices":[{"id":"a","label":"Ein kleiner Entscheidungsbaum lässt sich oft nachvollziehen, kann aber trotzdem falsch liegen."},{"id":"b","label":"k-Means erhält die richtigen Ziel-Labels für alle Trainingspunkte."},{"id":"c","label":"Eine Belohnung muss so gestaltet sein, dass erwünschtes Verhalten gefördert wird."},{"id":"d","label":"100 % Trainingsgenauigkeit beweist gute Generalisierung."},{"id":"e","label":"Das Ähnlichkeitsmaß kann die k-NN-Klassifikation verändern."}],"correct":["a","c","e"],"explain":"Interpretierbarkeit und Richtigkeit sind verschieden. k-Means arbeitet ohne Ziel-Labels. Die Belohnung prägt das Agentenverhalten. Generalisierung verlangt unabhängige Daten, und Nachbarschaft hängt vom Ähnlichkeitsmaß ab."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script class="wb-config" type="application/json">
+    {"id":"ki3_transfer_essay","title":"Transfer: Wähle ein Verfahren und verteidige deine Wahl","hint":"Wähle Materialfehler erkennen, Besuchergruppen untersuchen oder einen Roboter steuern. Argumentiere in 6–10 Sätzen mit T, P, E, Modell und Risiko.","fields":[{"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},{"label":"Deine begründete Entscheidung","key":"transfer","kind":"textarea","placeholder":"Auftrag, Daten und Feedback; passendes Verfahren; wichtigste Einstellung; fairer Test; eine Grenze und eine Alternative."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <h2>Quellen & Weiterforschen</h2>
+    <p>Grundlage ist das bereitgestellte Unterrichtsmaterial. Die Simulationen verwenden synthetische Beispieldaten, keine echten Iris-Messreihen oder Goldfunde. Die Rechenbeispiele und Entscheidungspfade wurden mit den angegebenen Zahlen und Bildern abgeglichen.</p>
+    <div class="wb-section-break"></div>
+    <ul class="ki-source-list">
+      <li><a href="https://archive.ics.uci.edu/dataset/53/iris" target="_blank" rel="noopener">UCI: Iris-Datensatz</a> · Merkmale und Arten.</li>
+      <li><a href="https://scikit-learn.org/stable/modules/neighbors.html" target="_blank" rel="noopener">scikit-learn: Nearest Neighbors</a> · Abstand, Abstimmung, Suchverfahren und Aufwand.</li>
+      <li><a href="https://scikit-learn.org/stable/modules/tree.html" target="_blank" rel="noopener">scikit-learn: Decision Trees</a> · Splitkriterien, Interpretierbarkeit und Überanpassung.</li>
+      <li><a href="https://scikit-learn.org/stable/modules/clustering.html#k-means" target="_blank" rel="noopener">scikit-learn: Clustering</a> · k-Means, Zielfunktion, Voraussetzungen und DBSCAN.</li>
+      <li><a href="https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets" target="_blank" rel="noopener">Google: Trainings-, Validierungs- und Testdaten</a> · fairer Modellvergleich.</li>
+      <li><a href="https://incompleteideas.net/book/the-book-2nd.html" target="_blank" rel="noopener">Sutton & Barto: Reinforcement Learning, zweite Auflage</a> · Agenten, ε-greedy und Q-Learning.</li>
+      <li><a href="https://www.cs.cmu.edu/~tom/mlbook.html" target="_blank" rel="noopener">Tom Mitchell: Machine Learning</a> · T–P–E.</li>
+      <li><a href="https://snap.berkeley.edu/" target="_blank" rel="noopener">Snap!</a> · eigene blockbasierte Umsetzungen.</li>
+      <li><a href="https://github.com/mljs/knn" target="_blank" rel="noopener">ml-knn</a>, <a href="https://github.com/mljs/kmeans" target="_blank" rel="noopener">ml-kmeans</a> und <a href="https://github.com/mvrahden/reinforce-js" target="_blank" rel="noopener">reinforce-js</a> · lokal eingebundene Lernbibliotheken; <a href="vendor/ki3-LICENSES.txt">Lizenzen und Versionen</a>.</li>
+    </ul>
+    <div class="wb-section-break"></div>
+    <p class="wb-mini-note">Alle elf neuen Abbildungen stammen aus dem bereitgestellten Material und sind unverändert eingebunden. Die interaktiven Diagramme ergänzen sie; Bibliotheken und Lucide-Icons werden lokal ausgeliefert. Die Bezeichnung Goldrush und die didaktische Idee werden im Ausgangsmaterial T. Michaeli, S. Seegerer und S. Jatzlau zugeschrieben.</p>
+    <div class="wb-section-break"></div>
+    <h2>Fragen zum Weiterdenken</h2>
+    <ul><li>Wie würde eine andere Skalierung die Entscheidungsbereiche verändern?</li><li>Wann ist ein verständliches Modell wichtiger als ein kleiner Genauigkeitsvorteil?</li><li>Warum kann eine Gruppe mathematisch kompakt, aber inhaltlich nutzlos sein?</li><li>Welche unerwünschte Strategie könnte eine schlecht gewählte Belohnung auslösen?</li></ul>
+    <div class="wb-section-break"></div>
+    <p><a href="kuenstliche-intelligenz2.html">Zurück zu Teil 2</a> · <a href="kuenstliche-intelligenz.html">Teil 1</a> · <a href="../index.html">Zur Themenübersicht</a></p>
+    <div class="wb-section-break"></div>
+  </section>
+</div>
+<script src="../assets/wb-webhook-loader.js"></script>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+<script src="vendor/ki3-libraries.bundle.js"></script>
+<script src="ki3-experimente.js"></script>
+</body>
+</html>
