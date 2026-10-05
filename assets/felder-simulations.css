@@ -30,6 +30,13 @@
 .field-legend-line,.potential-legend-line{display:inline-block;width:28px;height:0;border-top:2px solid #0e7490}
 .potential-legend-line{border-top-color:#dc2626;border-top-style:dashed;margin-left:8px}
 [data-field-sim="electrostatic-field"] [data-role="canvas"]{touch-action:none;cursor:crosshair;aspect-ratio:980/560}
+.field-mini-sim .field-sim-grid{grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr)}
+.field-mini-sim [data-role="canvas"]{aspect-ratio:840/420;background:#f8fafc}
+.field-mini-sim .field-sim-controls h3{margin:0 0 8px;font-size:1.15rem}
+.field-mini-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.field-mini-check{display:flex!important;align-items:center;gap:8px;font-weight:750!important;margin-top:12px!important}
+.field-mini-check input{width:18px;height:18px;margin:0;accent-color:#0e7490}
+@media (max-width:900px){.field-mini-sim .field-sim-grid{grid-template-columns:1fr}}
 @media (max-width:1050px){.field-lab-grid{grid-template-columns:1fr}}
 .wb-book[data-theme="dark"] .field-sim-card,.wb-book[data-theme="dark-blue"] .field-sim-card{background:rgba(255,255,255,.18)}
 .wb-book[data-theme="dark"] [data-field-sim] [data-role="canvas"],.wb-book[data-theme="dark-blue"] [data-field-sim] [data-role="canvas"]{background:rgba(255,255,255,.88)!important;border-color:rgba(255,255,255,.4)!important}

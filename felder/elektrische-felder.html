@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder und Ladungen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20260926-7">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
   <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -14,7 +14,19 @@
     .ef-img-grid{display:grid;grid-template-columns:minmax(220px,520px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
     .ef-img-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
     .ef-formula{font-size:1.15rem;font-weight:700}
-    @media (max-width:760px){.ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
+    .ef-observation-scroll{width:100%;max-width:100%;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .ef-observation-table{width:100%;min-width:660px;border-collapse:collapse;margin:12px 0}
+    .ef-observation-table th,.ef-observation-table td{padding:10px 12px;border:1px solid rgba(0,0,0,.18);text-align:left;vertical-align:top}
+    .ef-observation-table th{background:rgba(49,95,157,.1)}
+    .ef-influence-chain{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;margin:14px 0}
+    .ef-influence-step{border:1px solid rgba(0,0,0,.16);border-radius:6px;padding:12px;background:#fff}
+    .ef-influence-step strong{display:block;margin-bottom:5px;color:#214f87}
+    @media (max-width:760px){
+      .ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}
+      .ef-influence-chain{grid-template-columns:1fr 1fr}
+      .ef-observation-table{font-size:.94rem}
+    }
+    @media (max-width:600px){.ef-influence-chain{grid-template-columns:1fr}}
   </style>
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -44,7 +56,7 @@
     <div class="ef-two">
       <div>
         <h2>Das brauchst du sicher</h2>
-        <p>Ladungsarten, Anziehung und Abstoßung, Ladungserhaltung, Elektroskop, Influenz, Polarisation, Feldstärke, Feldlinien, homogenes Feld und Faraday-Käfig.</p>
+        <p>Ladungsarten, Anziehung und Abstoßung, Ladungserhaltung, Elektroskop, Influenz, Feldstärke, Feldlinien, homogenes Feld und Faraday-Käfig.</p>
       </div>
       <div>
         <h2>Vertiefung</h2>
@@ -259,10 +271,31 @@
   </section>
 
   <section data-wb-page="5" data-wb-page-title="Influenz">
-    <h1>Influenz und Polarisation</h1>
-    <p>Elektrische Leiter, zum Beispiel Metalle, besitzen frei bewegliche Elektronen. Bringst du eine geladene Kugel in die Nähe eines neutralen Leiters, werden diese Elektronen verschoben: Sie werden von positiven Ladungen angezogen und von negativen abgestoßen. Dadurch entstehen im Leiter getrennte Bereiche mit Elektronenüberschuss und Elektronenmangel. Dieser Vorgang heißt Influenz.</p>
-    <p>Isolatoren besitzen keine frei beweglichen Ladungsträger wie Metalle. Trotzdem können sich ihre Atomhüllen geringfügig verformen. Die Elektronenwolke verschiebt sich ein wenig gegenüber dem Atomkern. Dadurch entstehen kleine elektrische Dipole. Diesen Vorgang nennt man Polarisation.</p>
-    <p>Influenz und Polarisation sehen ähnlich aus, sind aber nicht gleich stark: Bei Influenz bewegen sich freie Elektronen durch den Leiter. Bei Polarisation werden Ladungen nur innerhalb der Atome oder Moleküle minimal verschoben.</p>
+    <h1>Influenz: Ladungen reagieren ohne Berührung</h1>
+    <p class="wb-muted">Wie kann ein neutraler Metallring von einer geladenen Platte angezogen werden, obwohl seine Gesamtladung null ist?</p>
+    <p>In einem Metall können sich Elektronen durch den ganzen Körper bewegen. Kommt ein geladener Körper in die Nähe, übt sein elektrisches Feld Kräfte auf diese Elektronen aus. Sie verteilen sich neu, bis im Metall ein elektrostatisches Gleichgewicht erreicht ist. Die dadurch entstehende Ladungstrennung im Leiter heißt <strong>Influenz</strong>. Der Leiter wird dabei nicht automatisch geladen: Ohne Berührung und ohne Erdung bleibt seine Gesamtladung unverändert.</p>
+    <p>Bei einem nicht leitenden Stoff wie Glas können Ladungen nicht durch die ganze Platte wandern. Die gebundenen positiven und negativen Ladungsanteile können sich nur sehr wenig gegeneinander verschieben. Deshalb schirmt eine Glasplatte ein äußeres elektrisches Feld nicht einfach ab.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Geladene Platte und neutraler Metallring</h2>
+    <p>Nähere eine positiv geladene Platte einem neutralen Metallring. Die frei beweglichen Elektronen des Rings werden zur Platte gezogen. Auf der nahen Ringseite entsteht ein Elektronenüberschuss, auf der fernen Seite ein gleich großer Elektronenmangel.</p>
+    <div class="ef-img-grid">
+      <figure class="ef-figure">
+        <img src="bilder/metallring.png" alt="Neutraler Metallring zwischen einer positiven und einer negativen Kondensatorplatte mit getrennten Ladungen am Ring">
+        <figcaption class="ef-caption">Influenz am neutralen Metallring im Feld zweier geladener Platten.</figcaption>
+      </figure>
+      <div class="ef-img-note">
+        <strong>Lies das Feldbild:</strong>
+        <p>Die Feldlinien verlaufen von der positiven zur negativen Platte. Elektronen sammeln sich auf der linken Ringseite; rechts bleibt Elektronenmangel. Im leitenden Metall selbst verlaufen im elektrostatischen Gleichgewicht keine Feldlinien.</p>
+      </div>
+    </div>
+    <div class="ef-influence-chain" aria-label="Vier Schritte der Influenz an einem neutralen Metallring">
+      <div class="ef-influence-step"><strong>1. Ausgangslage</strong>Im Ring sind positive und negative Ladungen gleichmäßig verteilt. Seine Gesamtladung ist null.</div>
+      <div class="ef-influence-step"><strong>2. Platte annähern</strong>Das Feld der positiven Platte zieht die beweglichen Elektronen des Rings zur nahen Seite.</div>
+      <div class="ef-influence-step"><strong>3. Ladungstrennung</strong>Nahe Seite: negativ. Ferne Seite: positiv. Der Ring bleibt insgesamt neutral.</div>
+      <div class="ef-influence-step"><strong>4. Platte entfernen</strong>Ohne äußeres Feld verteilen sich die Elektronen wieder gleichmäßig.</div>
+    </div>
+    <p>Im Randbereich einer endlichen Platte ist das Feld nicht überall gleich stark. Die entgegengesetzte Ladung auf der nahen Ringseite ist näher an der Platte als die gleichnamige Ladung auf der fernen Seite. Deshalb überwiegt dort die Anziehung. Bei einer negativ geladenen Platte werden alle Vorzeichen vertauscht; die Anziehung bleibt bestehen.</p>
     <div class="wb-section-break"></div>
 
     <div class="ef-img-grid">
@@ -277,47 +310,212 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div data-wb-type="categorize">
+    <div data-wb-type="trace">
       <script class="wb-config" type="application/json">
       {
-        "id":"ef_cat_influenz_polarisation",
-        "title":"Aufgabe: Influenz oder Polarisation?",
-        "hint":"Sortiere die Gegenstände. Begründe anschließend mündlich oder schriftlich.",
-        "categories":[
-          {"id":"influenz","title":"Influenzladung im Leiter"},
-          {"id":"polarisation","title":"Dipolladungen im Isolator"}
+        "id":"ef_trace_metallring",
+        "title":"Ablaufspur: Was geschieht im Metallring?",
+        "hint":"Gehe von einer positiv geladenen Platte aus. Trage die Ladungsverteilung nach jedem Schritt ein.",
+        "columns":[
+          {"label":"Schritt","width":"18%"},
+          {"label":"Nahe Ringseite","width":"25%"},
+          {"label":"Ferne Ringseite","width":"25%"},
+          {"label":"Gesamtladung","width":"32%"}
         ],
-        "items":[
-          {"label":"Aluminium","category":"influenz"},
-          {"label":"Eisen","category":"influenz"},
-          {"label":"Kupfer","category":"influenz"},
-          {"label":"Glas","category":"polarisation"},
-          {"label":"Porzellan","category":"polarisation"},
-          {"label":"Papier","category":"polarisation"}
+        "rows":[
+          {"cells":[
+            {"given":"Platte weit entfernt"},
+            {"answers":["neutral","gleichmäßig verteilt","gleichmaessig verteilt"],"ariaLabel":"Nahe Ringseite vor der Annäherung"},
+            {"answers":["neutral","gleichmäßig verteilt","gleichmaessig verteilt"],"ariaLabel":"Ferne Ringseite vor der Annäherung"},
+            {"answers":["0","null","neutral"],"ariaLabel":"Gesamtladung vor der Annäherung"}
+          ]},
+          {"cells":[
+            {"given":"Positive Platte nahe"},
+            {"answers":["negativ","-","minus"],"ariaLabel":"Nahe Ringseite bei positiver Platte"},
+            {"answers":["positiv","+","plus"],"ariaLabel":"Ferne Ringseite bei positiver Platte"},
+            {"answers":["0","null","neutral"],"ariaLabel":"Gesamtladung bei positiver Platte"}
+          ]},
+          {"cells":[
+            {"given":"Platte wieder entfernt"},
+            {"answers":["neutral","gleichmäßig verteilt","gleichmaessig verteilt"],"ariaLabel":"Nahe Ringseite nach dem Entfernen"},
+            {"answers":["neutral","gleichmäßig verteilt","gleichmaessig verteilt"],"ariaLabel":"Ferne Ringseite nach dem Entfernen"},
+            {"answers":["0","null","neutral"],"ariaLabel":"Gesamtladung nach dem Entfernen"}
+          ]}
         ]
       }
       </script>
     </div>
     <div class="wb-section-break"></div>
 
-    <div data-wb-type="essay">
+    <div data-wb-type="reveal">
       <script class="wb-config" type="application/json">
       {
-              "id": "ef_essay_influenz",
-              "title": "Aufgabe: Versuch erklären",
-              "hint": "Wähle Influenz oder Polarisation und erkläre den Vorgang in 5-8 Sätzen.",
-              "storagePrefix": "ef_",
-              "fields": [
-                      {
-                              "label": "Deine Erklärung: Erkläre, was in einem Leiter oder Isolator passiert, wenn ein geladener Körper in die Nähe gebracht wird.",
-                              "key": "text",
-                              "kind": "textarea",
-                              "placeholder": "Schreibe deine Lösung hier."
-                      }
-              ]
+        "id":"ef_reveal_homogenes_feld",
+        "title":"Stopp & check: Wird ein neutraler Ring immer angezogen?",
+        "question":"Warum ist die Aussage ‚Influenz bedeutet immer eine resultierende Anziehungskraft‘ zu ungenau?",
+        "answer":"Influenz bedeutet zunächst nur Ladungstrennung. In einem ideal homogenen Feld können sich die Kräfte auf die getrennten Ladungsbereiche gegenseitig aufheben. Eine resultierende Anziehung entsteht im inhomogenen Feld, weil auf die nähere Seite eine stärkere Kraft wirkt als auf die weiter entfernte Seite. Das ist bei einer realen endlichen Platte besonders am Rand der Fall."
       }
       </script>
     </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Was wird zwischen Platte und Ring geschoben?</h2>
+    <div class="ef-observation-scroll" tabindex="0" aria-label="Vergleich von Glasplatte und Metallgitter, horizontal scrollbar">
+      <table class="ef-observation-table">
+        <thead><tr><th>Zwischenstück</th><th>Was geschieht?</th><th>Begründung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Glasplatte</strong></td><td>Der Metallring zeigt weiterhin eine Ladungstrennung. Stärke und Verlauf des Feldes ändern sich.</td><td>Glas besitzt keine frei durch die Platte beweglichen Ladungsträger. Das elektrische Feld wird daher nicht abgeschirmt.</td></tr>
+          <tr><td><strong>Geerdetes Metallgitter</strong></td><td>Das Feld hinter dem Gitter wird deutlich schwächer; die Wirkung auf den Ring nimmt stark ab.</td><td>Bewegliche Elektronen ordnen sich an der Metalloberfläche neu. Über die Erdverbindung kann Ladung zu- oder abfließen. Feldlinien enden beziehungsweise beginnen an den Oberflächenladungen.</td></tr>
+          <tr><td><strong>Große Maschen oder Lücken</strong></td><td>Ein Restfeld kann durch die Öffnungen reichen.</td><td>Ein Gitter schirmt weniger vollständig ab als eine geschlossene Metallfläche. Kleinere Maschen verbessern die Abschirmung.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Wichtig:</strong> Ein ungeerdetes einzelnes Metallgitter und eine geschlossene geerdete Metallhülle sind nicht dasselbe. Für eine möglichst eindeutige Abschirmung verwendest du im Gedankenexperiment ein geerdetes Gitter.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Simulation: Metallgitter oder geschlossene Hülle?</h2>
+    <p>Vergleiche zuerst ein Metallgitter mit unterschiedlich großen Öffnungen. Wechsle danach zum geschlossenen Faraday-Käfig. Beobachte an der gelben Probe, wie stark das äußere Feld hinter dem Gitter beziehungsweise in der Hülle noch wirkt.</p>
+    <div class="field-sim-card field-mini-sim" data-field-sim="electrostatic-shielding"></div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_mcq_ring_schirm",
+        "title":"Prognose: Ring, Glas und Metallgitter",
+        "hint":"Es können mehrere Antworten richtig sein.",
+        "shuffleChoices":true,
+        "questions":[
+          {
+            "text":"Eine positiv geladene Platte wird einem neutralen Metallring genähert. Welche Aussagen stimmen?",
+            "choices":[
+              {"id":"A","label":"Elektronen sammeln sich bevorzugt auf der nahen Ringseite."},
+              {"id":"B","label":"Die ferne Ringseite besitzt Elektronenmangel."},
+              {"id":"C","label":"Der gesamte Ring erhält dadurch eine negative Gesamtladung."},
+              {"id":"D","label":"Nach Entfernen der Platte verteilt sich die Ladung wieder gleichmäßig."}
+            ],
+            "correct":["A","B","D"],
+            "explain":"Die Platte trennt Ladungen im Ring, überträgt aber ohne Kontakt und Erdung keine Nettoladung auf ihn."
+          },
+          {
+            "text":"Was erwartest du beim Einschieben einer Glasplatte zwischen geladene Platte und Metallring?",
+            "choices":[
+              {"id":"A","label":"Das Feld verschwindet vollständig hinter dem Glas."},
+              {"id":"B","label":"Das Feld und damit die Ladungsverteilung im Ring verändern sich, aber Glas schirmt nicht wie ein Metall ab."},
+              {"id":"C","label":"Freie Elektronen fließen durch die Glasplatte zur Erde."}
+            ],
+            "correct":["B"],
+            "explain":"In Glas sind die Ladungen gebunden. Ein elektrisches Feld kann deshalb durch die Platte wirken, wird aber durch das Material verändert."
+          },
+          {
+            "text":"Welche Veränderungen verbessern die elektrostatische Abschirmung durch ein Metallgitter?",
+            "choices":[
+              {"id":"A","label":"Das Gitter erden."},
+              {"id":"B","label":"Die Maschen kleiner machen."},
+              {"id":"C","label":"Das Metall durch Glas ersetzen."},
+              {"id":"D","label":"Die leitende Abschirmung möglichst geschlossen ausführen."}
+            ],
+            "correct":["A","B","D"],
+            "explain":"Eine geerdete, möglichst geschlossene leitende Hülle bietet die deutlichste Abschirmung. Große Öffnungen lassen stärkere Restfelder zu."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Flamme, Metallspitze und elektrischer Wind</h2>
+    <p>Eine Kerzenflamme ist kein gewöhnliches neutrales Gas. Durch die hohe Temperatur enthält sie bewegliche Elektronen und Ionen. In einem äußeren Feld werden positive und negative Ladungsträger in entgegengesetzte Richtungen beschleunigt. Bei vielen Schulversuchen prägen die positiven Ionen die sichtbare Ablenkung: Ein negativer Körper zieht sie an, ein positiver stößt sie ab. Deshalb kann sich die Flamme je nach Ladung und Aufbau zum Stab hin oder von ihm weg bewegen.</p>
+    <p>Bei einer <strong>scharfen geladenen Metallspitze</strong> kommt ein zweiter Effekt hinzu. Auf engem Raum ist die Oberflächenladung dort besonders dicht und die elektrische Feldstärke sehr groß. Luftmoleküle können ionisiert werden. Die erzeugten Ionen werden beschleunigt und stoßen mit neutralen Luftmolekülen zusammen. So entsteht ein spürbarer <strong>elektrischer Wind</strong>, der eine Flamme zur Seite drücken oder sogar ausblasen kann. Gleichzeitig verliert die Metallspitze nach und nach Ladung an die Luft.</p>
+    <div class="field-sim-card field-mini-sim" data-field-sim="candle-flame"></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Vom Ionenwind zum Propeller</h2>
+    <p>Ein <strong>elektrostatischer Propeller</strong> nutzt genau diesen Effekt. Seine Arme enden in scharfen, seitlich gebogenen Spitzen. An jeder Spitze entstehen Ionen, die in eine bevorzugte Richtung davonfliegen und die umgebende Luft mitnehmen. Nach dem Wechselwirkungsprinzip wirkt auf die Spitze eine entgegengesetzte Kraft. Weil die Spitzen gleichsinnig gebogen sind, erzeugen diese Kräfte zusammen ein Drehmoment: Der Propeller dreht sich entgegen der Richtung des Ionenwinds.</p>
+    <div class="field-sim-card field-mini-sim" data-field-sim="electrostatic-propeller"></div>
+    <div class="wb-callout">
+      <strong>Sicherheit:</strong>
+      <p>Versuche mit Hochspannung, offenen Flammen und Spitzenentladung führst du nur als beaufsichtigten Demonstrationsversuch durch. Auch bei kleiner Stromstärke können Funken erschrecken, Bauteile beschädigen oder brennbare Stoffe entzünden.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-p2 class="p2" data-p2-title="Finde Paare: Versuch und Erklärung" data-p2-hint="Verbinde jede Beobachtung mit der passenden physikalischen Erklärung.">
+      <div class="p2-hint">Tippe oder ziehe zuerst einen Versuch und dann die passende Erklärung in die Mitte.</div>
+      <div class="p2-banks">
+        <div>
+          <div class="p2-col-title">Versuch oder Anordnung</div>
+          <div class="p2-bank" data-left-bank>
+            <div class="p2-piece p2-left" data-side="L" data-pair="1">Neutraler Metallring an positiver Platte</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="2">Glasplatte zwischen Platte und Ring</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="3">Geerdetes Metallgitter</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="4">Geladene Metallspitze</div>
+            <div class="p2-piece p2-left" data-side="L" data-pair="5">Elektrostatischer Propeller</div>
+          </div>
+        </div>
+        <div>
+          <div class="p2-col-title">Physikalische Erklärung</div>
+          <div class="p2-bank" data-right-bank>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">Elektronenüberschuss auf der nahen Ringseite</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="2">Feld wird verändert, aber nicht leitend abgeschirmt</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="3">Feldwirkung hinter dem Gitter wird stark reduziert</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="4">Starkes Feld kann Luft ionisieren</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="5">Rückstoß des Ionenwinds erzeugt ein Drehmoment</div>
+          </div>
+        </div>
+      </div>
+      <div class="p2-row" style="margin-top:12px">
+        <button class="wb-btn" type="button" data-shuffle>Neu mischen</button>
+        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+        <div class="p2-score" data-score></div>
+      </div>
+      <div style="margin-top:12px"><div class="p2-col-title">Zusammengesetzte Paare</div><div class="p2-solved" data-solved></div></div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_essay_influenz_transfer",
+        "title":"Transfer: Beobachtung vorhersagen und begründen",
+        "hint":"Antworte in vollständigen Sätzen. Verwende die Begriffe Elektron, Influenz, Feldstärke und Ionenwind an den passenden Stellen.",
+        "storagePrefix":"ef_",
+        "fields":[
+          {
+            "label":"1. Eine negativ geladene Platte wird einem neutralen Metallring genähert. Beschreibe Ladungsverteilung, Gesamtladung und Kraftrichtung.",
+            "key":"ring_negativ",
+            "kind":"textarea",
+            "placeholder":"Vorhersage und Begründung ..."
+          },
+          {
+            "label":"2. Vergleiche eine Glasplatte und ein geerdetes Metallgitter zwischen Platte und Ring. Welche Beobachtung erwartest du jeweils?",
+            "key":"glas_gitter",
+            "kind":"textarea",
+            "placeholder":"Vergleich ..."
+          },
+          {
+            "label":"3. Erkläre zwei mögliche Ursachen für die Bewegung einer Kerzenflamme am geladenen Stab und anschließend die Drehrichtung eines elektrostatischen Propellers.",
+            "key":"flamme_propeller",
+            "kind":"textarea",
+            "placeholder":"Erklärung ..."
+          }
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="reveal">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_reveal_influenz_sicherung",
+        "title":"Jetzt hast du das gelernt",
+        "question":"Welche gemeinsame Idee verbindet Metallring, Abschirmgitter, Flamme, Spitze und Propeller?",
+        "answer":"Elektrische Felder üben Kräfte auf bewegliche Ladungen aus. Im Metall führt das zur Influenz, im ionisierten Gas zur Bewegung von Ionen und Elektronen. An scharfen Spitzen kann die Feldstärke so groß werden, dass Luft ionisiert wird. Der daraus entstehende Ionenwind kann eine Flamme bewegen und über Rückstoß einen Propeller antreiben."
+      }
+      </script>
+    </div>
+    <p class="wb-muted">Weiterforschen: <a href="https://web.physics.ucsb.edu/~lecturedemonstrations/Composer/Pages/56.30.html" target="_blank" rel="noopener">UCSB: Electrostatic Pinwheel</a> · <a href="https://www.physics.purdue.edu/demos/display_page.php?item=5A-23" target="_blank" rel="noopener">Purdue University: Electric Wind</a></p>
   </section>
 
   <section data-wb-page="6" data-wb-page-title="Kraft">
@@ -521,9 +719,17 @@
 
   <section data-wb-page="9" data-wb-page-title="Faraday">
     <h1>Faradayscher Käfig: Warum Metall abschirmt</h1>
-    <p>Metalle enthalten frei bewegliche Elektronen. Befindet sich ein metallischer Körper in einem äußeren elektrischen Feld, verschieben sich diese Elektronen an der Oberfläche so lange, bis im Inneren kein elektrisches Feld mehr vorhanden ist. Das Innere ist dann feldfrei.</p>
-    <p>Diese Abschirmung nennt man Faraday-Käfig. Beispiele sind Auto- und Flugzeughüllen aus Metall. Bei einem Blitz verteilt sich Ladung auf der äußeren Metalloberfläche; im Inneren bleibt man geschützt.</p>
-    <p>Feldlinien treffen metallische Oberflächen im elektrostatischen Gleichgewicht senkrecht. Hätten sie eine Komponente entlang der Oberfläche, würden freie Elektronen weiter verschoben werden.</p>
+    <p>Metalle enthalten frei bewegliche Elektronen. Befindet sich eine geschlossene leitende Hülle in einem äußeren elektrischen Feld, bewegen sich diese Elektronen zunächst. Auf der Außenfläche entstehen Influenzladungen. Deren Feld überlagert das äußere Feld so, dass im Metall selbst schließlich (E=0) gilt. In einer vollständig umschlossenen, ladungsfreien Höhlung ist dann ebenfalls kein elektrostatisches Feld vorhanden.</p>
+    <p>Diese Abschirmung nennt man <strong>Faraday-Käfig</strong>. Die Ladungen verschwinden nicht, sondern verteilen sich auf der äußeren Oberfläche neu. Eine Erdung ist für die Feldfreiheit einer geschlossenen, ladungsfreien Höhlung nicht notwendig. Sie legt jedoch das elektrische Potenzial des Käfigs fest und ermöglicht, dass Ladung zur Erde abfließt oder von dort zufließt.</p>
+    <p>Feldlinien treffen eine leitende Oberfläche im elektrostatischen Gleichgewicht senkrecht. Hätten sie eine Komponente parallel zur Oberfläche, würden die Elektronen weiterbewegt und es läge noch kein Gleichgewicht vor.</p>
+    <div class="wb-callout">
+      <strong>Drei Fälle, die du unterscheiden musst:</strong>
+      <ul>
+        <li><strong>Äußeres statisches Feld, geschlossene Hülle, keine Ladung innen:</strong> Die Höhlung ist feldfrei.</li>
+        <li><strong>Gitter oder Hülle mit Öffnungen:</strong> Das Feld wird stark geschwächt, kann aber in der Nähe großer Öffnungen teilweise eindringen.</li>
+        <li><strong>Geladener Körper in der Höhlung:</strong> In der Höhlung gibt es ein Feld. Auf der inneren Oberfläche entstehen dann Influenzladungen.</li>
+      </ul>
+    </div>
     <div class="wb-section-break"></div>
 
     <div class="ef-img-grid">
@@ -538,12 +744,38 @@
     </div>
     <div class="wb-section-break"></div>
 
+    <h2>Simulation: Vom Gitter zum Faraday-Käfig</h2>
+    <p>Die Simulation startet mit einer geschlossenen Metallhülle. Schalte auf Metallgitter um und vergrößere die Öffnungen. Vergleiche außerdem den geerdeten und den ungeerdeten Leiter. Achte darauf, welche Aussage sich auf die Feldstärke und welche sich nur auf das elektrische Potenzial bezieht.</p>
+    <div class="field-sim-card field-mini-sim" data-field-sim="electrostatic-shielding" data-default-mode="cage"></div>
+    <div class="wb-section-break"></div>
+
+    <h2>Warum schützt ein Auto?</h2>
+    <p>Bei einem Blitz fließt der größte Teil des Stroms über die leitende Außenhaut des Fahrzeugs. Der Schutz entsteht durch die zusammenhängende Metallhülle, nicht durch die Gummireifen. Im Innenraum solltest du während eines Gewitters keine leitenden Teile berühren, die mit der Außenhaut verbunden sind. Ein Cabriolet mit offenem Dach bildet dagegen keine geschlossene leitende Hülle.</p>
+    <p>Auch Flugzeugrümpfe und abgeschirmte Messleitungen nutzen dieses Prinzip. Ein Drahtgeflecht kann genügen, wenn seine Maschen für die jeweilige Anwendung klein genug und alle Teile gut leitend miteinander verbunden sind. Für zeitlich veränderliche Felder hängt die Abschirmwirkung zusätzlich von der Frequenz, dem Material und der Dicke der Hülle ab.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="order">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef_order_faraday_ausgleich",
+        "title":"Bringe den Ladungsausgleich in die richtige Reihenfolge",
+        "items":[
+          "Ein äußeres elektrisches Feld wirkt auf die beweglichen Elektronen des Metalls.",
+          "Elektronen verschieben sich und erzeugen Influenzladungen auf der Außenfläche.",
+          "Das Feld der Influenzladungen wirkt dem äußeren Feld im Leiter entgegen.",
+          "Im elektrostatischen Gleichgewicht gilt im Metall und in der ladungsfreien geschlossenen Höhlung E = 0."
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
     <div data-wb-type="mcq">
       <script class="wb-config" type="application/json">
       {
         "id":"ef_mcq_faraday",
         "title":"Check: Faraday-Käfig",
-        "hint":"Wähle die fachlich beste Erklärung.",
+        "hint":"Prüfe die Aussagen genau. Bei einzelnen Fragen können mehrere Antworten richtig sein.",
         "questions":[
           {
             "text":"Warum schützt ein geschlossenes Auto aus Metall bei einem Gewitter?",
@@ -553,7 +785,29 @@
               {"id":"c","label":"Weil Blitze nur Isolatoren treffen."}
             ],
             "correct":["a"],
-            "explain":"Freie Elektronen im Metall verschieben sich so, dass das Innere feldfrei wird. Die Ladung bleibt außen."
+            "explain":"Die leitende Außenhaut führt den Strom außen herum und schirmt den Innenraum ab. Die Gummireifen sind nicht die entscheidende Ursache."
+          },
+          {
+            "text":"Welche Aussagen gelten für eine geschlossene leitende Hülle in einem äußeren statischen Feld?",
+            "choices":[
+              {"id":"a","label":"Ohne Ladung in der Höhlung ist das elektrische Feld dort null."},
+              {"id":"b","label":"Die Hülle muss dafür zwingend geerdet sein."},
+              {"id":"c","label":"Influenzladungen befinden sich auf der äußeren Oberfläche."},
+              {"id":"d","label":"Im Metall der Hülle gilt im elektrostatischen Gleichgewicht E = 0."}
+            ],
+            "correct":["a","c","d"],
+            "explain":"Die Erdung ist für die Feldfreiheit der ladungsfreien Höhlung nicht erforderlich. Sie legt das Potenzial fest und erlaubt Ladungsaustausch."
+          },
+          {
+            "text":"Wann ist das Innere nicht vollständig feldfrei?",
+            "choices":[
+              {"id":"a","label":"Wenn sich eine Ladung in der Höhlung befindet."},
+              {"id":"b","label":"In unmittelbarer Nähe einer großen Öffnung im Käfig."},
+              {"id":"c","label":"Nur weil der geschlossene Käfig nicht geerdet ist."},
+              {"id":"d","label":"Wenn statt einer geschlossenen Hülle ein grobes Gitter verwendet wird."}
+            ],
+            "correct":["a","b","d"],
+            "explain":"Innere Ladungen erzeugen ein Feld in der Höhlung. Öffnungen und grobe Gitter ermöglichen Restfelder. Eine fehlende Erdung allein hebt die elektrostatische Abschirmung einer geschlossenen Hülle nicht auf."
           }
         ]
       }
@@ -567,7 +821,7 @@
         "id":"ef_reveal_metall",
         "title":"Fehler finden",
         "question":"Ein Schüler sagt: Im Faraday-Käfig verschwinden die Ladungen. Was ist falsch?",
-        "answer":"Die Ladungen verschwinden nicht. Sie verschieben sich auf der Metalloberfläche so, dass das elektrische Feld im Inneren aufgehoben wird. Das ist ein Beispiel für Ladungstrennung und Ladungserhaltung."
+        "answer":"Die Ladungen verschwinden nicht. Sie verschieben sich auf der Metalloberfläche so, dass ihr Feld das äußere Feld im Inneren aufhebt. Das ist ein Beispiel für Influenz und Ladungserhaltung. Befindet sich jedoch eine Ladung in der Höhlung, ist diese Höhlung nicht feldfrei."
       }
       </script>
     </div>
@@ -826,7 +1080,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20260926-7"></script>
+  <script src="../assets/felder-simulations.js?v=20261005-2"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

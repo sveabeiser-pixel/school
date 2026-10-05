@@ -2130,6 +2130,455 @@
     draw();
   }
 
+  function initElectrostaticShieldingSim(root) {
+    if (!root || (root.dataset && root.dataset.electrostaticShieldingMounted === "1")) return;
+    root.innerHTML = [
+      '<div class="field-sim-grid">',
+        '<div class="field-sim-controls">',
+          '<h3>Abschirmung untersuchen</h3>',
+          '<label>Anordnung</label>',
+          '<select data-role="shield-mode">',
+            '<option value="grid">Metallgitter zwischen Platte und Probe</option>',
+            '<option value="cage">Geschlossener Faraday-Käfig</option>',
+          '</select>',
+          '<label>Vorzeichen der Platte</label>',
+          '<select data-role="shield-polarity"><option value="positive">positiv</option><option value="negative">negativ</option></select>',
+          '<label>Äußere Feldstärke</label>',
+          '<input data-role="shield-strength" type="range" min="1" max="5" value="3" step="1">',
+          '<div class="field-sim-mono">E außen = <span data-role="shield-strength-value">3</span> relative Einheiten</div>',
+          '<label>Feinheit des Gitters</label>',
+          '<input data-role="shield-mesh" type="range" min="3" max="12" value="7" step="1">',
+          '<div class="field-sim-mono">Querstreben = <span data-role="shield-mesh-value">7</span></div>',
+          '<label class="field-mini-check"><input data-role="shield-grounded" type="checkbox" checked> Leiter erden</label>',
+          '<div class="field-sim-note"><strong>Modellgrenze</strong><p>Die Prozentangabe ist ein qualitativer Vergleich, kein Messwert. Entscheidend ist: Ein Gitter schwächt das Feld; eine geschlossene leitende Hülle hält ihre ladungsfreie Höhlung im elektrostatischen Gleichgewicht feldfrei.</p></div>',
+        '</div>',
+        '<div>',
+          '<canvas data-role="canvas" width="840" height="420" aria-label="Simulation zur elektrostatischen Abschirmung durch Metallgitter und Faraday-Käfig"></canvas>',
+          '<div class="field-sim-mono" data-role="readout" aria-live="polite"></div>',
+        '</div>',
+      '</div>'
+    ].join("");
+
+    var canvas = find(root, "canvas");
+    var modeEl = find(root, "shield-mode");
+    var polarityEl = find(root, "shield-polarity");
+    var strengthEl = find(root, "shield-strength");
+    var strengthValue = find(root, "shield-strength-value");
+    var meshEl = find(root, "shield-mesh");
+    var meshValue = find(root, "shield-mesh-value");
+    var groundedEl = find(root, "shield-grounded");
+    var readout = find(root, "readout");
+    if (!canvas || !modeEl || !polarityEl || !strengthEl || !meshEl || !groundedEl || !readout) return;
+
+    root.dataset.electrostaticShieldingMounted = "1";
+    var requestedMode = root.getAttribute("data-default-mode");
+    if (requestedMode === "cage") modeEl.value = "cage";
+    var ctx = canvas.getContext("2d");
+
+    function signFor(side) {
+      var positiveSource = polarityEl.value === "positive";
+      if (side === "near") return positiveSource ? "−" : "+";
+      return positiveSource ? "+" : "−";
+    }
+
+    function drawGround(x, y) {
+      ctx.strokeStyle = "#334155";
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 18); ctx.stroke();
+      [18, 12, 6].forEach(function (width, index) {
+        ctx.beginPath(); ctx.moveTo(x - width / 2, y + 18 + index * 6); ctx.lineTo(x + width / 2, y + 18 + index * 6); ctx.stroke();
+      });
+    }
+
+    function drawSourcePlate() {
+      ctx.fillStyle = "#475569";
+      ctx.fillRect(72, 70, 22, 280);
+      ctx.fillStyle = polarityEl.value === "positive" ? "#b91c1c" : "#1d4ed8";
+      ctx.font = "bold 26px system-ui";
+      ctx.textAlign = "center";
+      for (var y = 105; y <= 325; y += 44) ctx.fillText(polarityEl.value === "positive" ? "+" : "−", 83, y);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 15px system-ui";
+      ctx.fillText("geladene Platte", 83, 382);
+    }
+
+    function drawFieldSegment(x1, x2, y, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      var color = "#0e7490";
+      if (polarityEl.value === "positive") drawArrow(ctx, x1, y, x2, y, color);
+      else drawArrow(ctx, x2, y, x1, y, color);
+      ctx.restore();
+    }
+
+    function drawGrid(strength, mesh, grounded) {
+      var x = 425;
+      var attenuation = grounded ? Math.max(0.08, 0.46 - mesh * 0.032) : Math.max(0.24, 0.68 - mesh * 0.03);
+      var lineCount = 4 + strength * 3;
+      for (var i = 0; i < lineCount; i++) {
+        var y = 80 + i * 260 / Math.max(1, lineCount - 1);
+        drawFieldSegment(105, x - 20, y, 0.92);
+        drawFieldSegment(x + 20, 760, y, attenuation);
+      }
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 8;
+      ctx.beginPath(); ctx.moveTo(x, 60); ctx.lineTo(x, 350); ctx.stroke();
+      ctx.lineWidth = 3;
+      for (var j = 0; j < mesh; j++) {
+        var gy = 72 + j * 266 / Math.max(1, mesh - 1);
+        ctx.beginPath(); ctx.moveTo(x - 42, gy); ctx.lineTo(x + 42, gy); ctx.stroke();
+      }
+      ctx.font = "bold 18px system-ui";
+      ctx.fillStyle = signFor("near") === "−" ? "#1d4ed8" : "#b91c1c";
+      ctx.fillText(signFor("near"), x - 17, 48);
+      ctx.fillStyle = signFor("far") === "−" ? "#1d4ed8" : "#b91c1c";
+      ctx.fillText(signFor("far"), x + 17, 48);
+      if (grounded) drawGround(x, 352);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 15px system-ui";
+      ctx.fillText("Metallgitter", x, 395);
+      ctx.fillStyle = "#f59e0b";
+      ctx.beginPath(); ctx.arc(720, 210, 16, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 14px system-ui";
+      ctx.fillText("Probe", 720, 244);
+      if (attenuation > 0.12) drawArrow(ctx, 690, 210, 690 + (polarityEl.value === "positive" ? 42 : -42), 210, "#7c3aed");
+      return attenuation;
+    }
+
+    function drawCage(strength, grounded) {
+      var left = 350, top = 75, width = 360, height = 270;
+      var lineCount = 4 + strength * 3;
+      for (var i = 0; i < lineCount; i++) {
+        var y = 90 + i * 240 / Math.max(1, lineCount - 1);
+        drawFieldSegment(105, left - 14, y, 0.92);
+      }
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 16;
+      ctx.strokeRect(left, top, width, height);
+      ctx.font = "bold 18px system-ui";
+      ctx.fillStyle = signFor("near") === "−" ? "#1d4ed8" : "#b91c1c";
+      for (var yq = 120; yq <= 300; yq += 45) ctx.fillText(signFor("near"), left - 20, yq);
+      if (!grounded) {
+        ctx.fillStyle = signFor("far") === "−" ? "#1d4ed8" : "#b91c1c";
+        for (var yr = 120; yr <= 300; yr += 45) ctx.fillText(signFor("far"), left + width + 20, yr);
+      }
+      if (grounded) drawGround(left + width / 2, top + height + 8);
+      ctx.fillStyle = "#f59e0b";
+      ctx.beginPath(); ctx.arc(left + width / 2, top + height / 2, 17, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 15px system-ui";
+      ctx.fillText("E innen ≈ 0", left + width / 2, top + height / 2 + 48);
+      ctx.fillText("geschlossene Metallhülle", left + width / 2, 395);
+      return 0;
+    }
+
+    function draw() {
+      var strength = Number(strengthEl.value);
+      var mesh = Number(meshEl.value);
+      var grounded = groundedEl.checked;
+      strengthValue.textContent = String(strength);
+      meshValue.textContent = String(mesh);
+      meshEl.disabled = modeEl.value === "cage";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      drawSourcePlate();
+      var attenuation = modeEl.value === "cage" ? drawCage(strength, grounded) : drawGrid(strength, mesh, grounded);
+      if (modeEl.value === "cage") {
+        readout.textContent = "Geschlossene Hülle: In der ladungsfreien Höhlung gilt im elektrostatischen Gleichgewicht E ≈ 0. Eine Erdung ist dafür nicht zwingend; sie legt zusätzlich das Potenzial fest und ermöglicht Ladungsaustausch.";
+      } else {
+        readout.textContent = "Metallgitter: qualitative Restfeldstärke hinter dem Gitter etwa " + Math.round(attenuation * 100) + " %. Kleinere Öffnungen und Erdung verbessern die Abschirmung.";
+      }
+    }
+
+    [modeEl, polarityEl].forEach(function (control) { control.addEventListener("change", draw); });
+    [strengthEl, meshEl].forEach(function (control) { control.addEventListener("input", draw); });
+    groundedEl.addEventListener("change", draw);
+    draw();
+  }
+
+  function initCandleFlameSim(root) {
+    if (!root || (root.dataset && root.dataset.candleFlameMounted === "1")) return;
+    root.innerHTML = [
+      '<div class="field-sim-grid">',
+        '<div class="field-sim-controls">',
+          '<h3>Kerzenflamme im elektrischen Feld</h3>',
+          '<label>Ladung des Stabs</label>',
+          '<select data-role="flame-polarity"><option value="negative">negativ</option><option value="positive">positiv</option></select>',
+          '<label>Form des Leiters</label>',
+          '<select data-role="flame-shape"><option value="blunt">abgerundeter Stab</option><option value="sharp">scharfe Metallspitze</option></select>',
+          '<label>Feldstärke</label>',
+          '<input data-role="flame-strength" type="range" min="1" max="5" value="3" step="1">',
+          '<div class="field-sim-mono">Stärke = <span data-role="flame-strength-value">3</span></div>',
+          '<div class="field-mini-actions"><button class="wb-btn primary" type="button" data-role="play">Start</button><button class="wb-btn" type="button" data-role="reset">Zurücksetzen</button></div>',
+          '<div class="field-sim-note"><strong>Vergleiche</strong><p>Beim abgerundeten Stab steht die Kraft auf die Ladungsträger der Flamme im Vordergrund. An der Spitze kann zusätzlich ein Ionenwind entstehen, der die Flamme vom Leiter wegdrückt.</p></div>',
+        '</div>',
+        '<div>',
+          '<canvas data-role="canvas" width="840" height="420" aria-label="Animation einer Kerzenflamme neben einem geladenen Stab oder einer geladenen Metallspitze"></canvas>',
+          '<div class="field-sim-mono" data-role="readout" aria-live="polite"></div>',
+        '</div>',
+      '</div>'
+    ].join("");
+
+    var canvas = find(root, "canvas");
+    var polarityEl = find(root, "flame-polarity");
+    var shapeEl = find(root, "flame-shape");
+    var strengthEl = find(root, "flame-strength");
+    var strengthValue = find(root, "flame-strength-value");
+    var playBtn = find(root, "play");
+    var resetBtn = find(root, "reset");
+    var readout = find(root, "readout");
+    if (!canvas || !polarityEl || !shapeEl || !strengthEl || !playBtn || !resetBtn || !readout) return;
+
+    root.dataset.candleFlameMounted = "1";
+    var ctx = canvas.getContext("2d");
+    var running = false;
+    var phase = 0;
+    var lastTs = null;
+    var rafId = null;
+
+    function flameBend(strength) {
+      if (shapeEl.value === "sharp") return 20 + strength * 15;
+      return (polarityEl.value === "negative" ? -1 : 1) * strength * 12;
+    }
+
+    function drawFlame(baseX, baseY, bend, flicker) {
+      var tipX = baseX + bend + flicker;
+      ctx.fillStyle = "#f59e0b";
+      ctx.beginPath();
+      ctx.moveTo(baseX - 30, baseY);
+      ctx.bezierCurveTo(baseX - 48, baseY - 65, tipX - 18, baseY - 135, tipX, baseY - 185);
+      ctx.bezierCurveTo(tipX + 34, baseY - 120, baseX + 48, baseY - 62, baseX + 30, baseY);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#2563eb";
+      ctx.beginPath();
+      ctx.moveTo(baseX - 11, baseY - 4);
+      ctx.quadraticCurveTo(baseX + bend * 0.25, baseY - 62, baseX + 10, baseY - 8);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#dc2626";
+      ctx.font = "bold 14px system-ui";
+      for (var i = 0; i < 4; i++) ctx.fillText("+", baseX - 12 + i * 9 + bend * 0.28, baseY - 55 - i * 21);
+    }
+
+    function draw() {
+      var strength = Number(strengthEl.value);
+      var bend = flameBend(strength);
+      var flicker = running ? Math.sin(phase * 7) * 5 : 0;
+      strengthValue.textContent = String(strength);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "#475569"; ctx.lineWidth = 30; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(35, 205); ctx.lineTo(shapeEl.value === "sharp" ? 245 : 225, 205); ctx.stroke();
+      var fieldLineCount = 3 + strength * 2;
+      for (var fieldLine = 0; fieldLine < fieldLineCount; fieldLine++) {
+        var fieldY = 112 + fieldLine * 184 / Math.max(1, fieldLineCount - 1);
+        if (polarityEl.value === "positive") drawArrow(ctx, tip + 18, fieldY, 590, fieldY, "rgba(14,116,144,.48)");
+        else drawArrow(ctx, 590, fieldY, tip + 18, fieldY, "rgba(14,116,144,.48)");
+      }
+      if (shapeEl.value === "sharp") {
+        ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(225, 190); ctx.lineTo(270, 205); ctx.lineTo(225, 220); ctx.stroke();
+      }
+      ctx.fillStyle = polarityEl.value === "positive" ? "#b91c1c" : "#1d4ed8";
+      ctx.font = "bold 30px system-ui";
+      ctx.fillText(polarityEl.value === "positive" ? "+" : "−", 120, 165);
+      var tip = shapeEl.value === "sharp" ? 270 : 240;
+      var ionColor = polarityEl.value === "positive" ? "#ef4444" : "#3b82f6";
+      if (shapeEl.value === "sharp") {
+        for (var i = 0; i < 8; i++) {
+          var progress = ((phase * 0.55 + i / 8) % 1);
+          var x = tip + progress * 390;
+          var y = 205 + Math.sin(i * 2.1 + phase * 2) * (18 + progress * 28);
+          ctx.fillStyle = ionColor; ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#fff"; ctx.font = "bold 10px system-ui"; ctx.fillText(polarityEl.value === "positive" ? "+" : "−", x - 3, y + 3);
+        }
+        drawArrow(ctx, 300, 285, 575, 285, "#0e7490");
+        ctx.fillStyle = "#0f172a"; ctx.font = "bold 14px system-ui"; ctx.fillText("Ionenwind", 430, 310);
+      }
+      ctx.fillStyle = "#d97706"; ctx.fillRect(630, 315, 70, 80);
+      ctx.fillStyle = "#1f2937"; ctx.fillRect(662, 300, 6, 24);
+      drawFlame(665, 315, bend, flicker);
+      ctx.fillStyle = "#0f172a"; ctx.font = "bold 15px system-ui";
+      ctx.fillText(shapeEl.value === "sharp" ? "Spitzenentladung" : "Kraft auf Ionen", 150, 375);
+      if (shapeEl.value === "sharp") {
+        readout.textContent = "Scharfe Spitze: Das starke Feld ionisiert Luft. Der Ionenwind drückt die Flamme nach rechts, unabhängig davon, ob die Spitze positiv oder negativ geladen ist.";
+      } else if (polarityEl.value === "negative") {
+        readout.textContent = "Negativer Stab: Die in der Flamme häufig dominierenden positiven Ionen werden zum Stab gezogen. Die Flamme neigt sich zum Stab.";
+      } else {
+        readout.textContent = "Positiver Stab: Positive Ionen der Flamme werden abgestoßen. Die Flamme neigt sich vom Stab weg.";
+      }
+    }
+
+    function frame(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      phase += Math.min(0.04, (ts - lastTs) / 1000) * Number(strengthEl.value);
+      lastTs = ts;
+      draw();
+      rafId = window.requestAnimationFrame(frame);
+    }
+
+    function toggle() {
+      running = !running;
+      playBtn.textContent = running ? "Stopp" : "Start";
+      lastTs = null;
+      if (running) rafId = window.requestAnimationFrame(frame);
+      else if (rafId) window.cancelAnimationFrame(rafId);
+      draw();
+    }
+
+    function reset() {
+      running = false; phase = 0; lastTs = null;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      polarityEl.value = "negative"; shapeEl.value = "blunt"; strengthEl.value = "3"; playBtn.textContent = "Start"; draw();
+    }
+
+    [polarityEl, shapeEl].forEach(function (control) { control.addEventListener("change", draw); });
+    strengthEl.addEventListener("input", draw);
+    playBtn.addEventListener("click", toggle);
+    resetBtn.addEventListener("click", reset);
+    draw();
+  }
+
+  function initElectrostaticPropellerSim(root) {
+    if (!root || (root.dataset && root.dataset.electrostaticPropellerMounted === "1")) return;
+    root.innerHTML = [
+      '<div class="field-sim-grid">',
+        '<div class="field-sim-controls">',
+          '<h3>Elektrostatischer Propeller</h3>',
+          '<label>Ladung des Propellers</label>',
+          '<select data-role="propeller-polarity"><option value="positive">positiv</option><option value="negative">negativ</option></select>',
+          '<label>Enden der Rotorblätter</label>',
+          '<select data-role="propeller-tips"><option value="sharp">geschwungen, mit feiner Spitze</option><option value="round">geschwungen, vollständig abgerundet</option></select>',
+          '<label>Feldstärke an den Spitzen</label>',
+          '<input data-role="propeller-strength" type="range" min="1" max="5" value="3" step="1">',
+          '<div class="field-sim-mono">Stärke = <span data-role="propeller-strength-value">3</span></div>',
+          '<div class="field-mini-actions"><button class="wb-btn primary" type="button" data-role="play">Start</button><button class="wb-btn" type="button" data-role="reset">Zurücksetzen</button></div>',
+          '<div class="field-sim-note"><strong>Prüfe die Richtung</strong><p>Drei geschwungene Rotorblätter enden jeweils in einer kurzen Entladungsspitze. Die Ionen verlassen die Spitzen tangential. Die Reaktionskraft zeigt entgegengesetzt und dreht den Propeller.</p></div>',
+        '</div>',
+        '<div>',
+          '<canvas data-role="canvas" width="840" height="420" aria-label="Animation eines elektrostatischen Propellers mit Ionenwind"></canvas>',
+          '<div class="field-sim-mono" data-role="readout" aria-live="polite"></div>',
+        '</div>',
+      '</div>'
+    ].join("");
+
+    var canvas = find(root, "canvas");
+    var polarityEl = find(root, "propeller-polarity");
+    var tipsEl = find(root, "propeller-tips");
+    var strengthEl = find(root, "propeller-strength");
+    var strengthValue = find(root, "propeller-strength-value");
+    var playBtn = find(root, "play");
+    var resetBtn = find(root, "reset");
+    var readout = find(root, "readout");
+    if (!canvas || !polarityEl || !tipsEl || !strengthEl || !playBtn || !resetBtn || !readout) return;
+
+    root.dataset.electrostaticPropellerMounted = "1";
+    var ctx = canvas.getContext("2d");
+    var running = false;
+    var angle = 0;
+    var ionPhase = 0;
+    var lastTs = null;
+    var rafId = null;
+
+    function draw() {
+      var sharp = tipsEl.value === "sharp";
+      var strength = Number(strengthEl.value);
+      var cx = 430, cy = 210;
+      strengthValue.textContent = String(strength);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "#94a3b8"; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, 385); ctx.stroke();
+      var ionColor = polarityEl.value === "positive" ? "#ef4444" : "#3b82f6";
+      for (var arm = 0; arm < 3; arm++) {
+        var theta = angle + arm * Math.PI * 2 / 3;
+        var ux = Math.cos(theta), uy = Math.sin(theta);
+        var tx = -uy, ty = ux;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(theta);
+        ctx.fillStyle = "#0f766e";
+        ctx.strokeStyle = "#134e4a";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(14, -13);
+        ctx.bezierCurveTo(54, -30, 108, -30, 142, 14);
+        ctx.bezierCurveTo(114, 13, 62, 30, 14, 13);
+        ctx.quadraticCurveTo(5, 0, 14, -13);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+        var tipX = cx + ux * 142 + tx * 14;
+        var tipY = cy + uy * 142 + ty * 14;
+        if (sharp) {
+          ctx.strokeStyle = "#334155";
+          ctx.lineWidth = 3;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(tipX, tipY);
+          ctx.lineTo(tipX + tx * 20, tipY + ty * 20);
+          ctx.stroke();
+          tipX += tx * 20;
+          tipY += ty * 20;
+        }
+        ctx.fillStyle = ionColor; ctx.font = "bold 17px system-ui";
+        ctx.fillText(polarityEl.value === "positive" ? "+" : "−", cx + ux * 96 + tx * 8 - 5, cy + uy * 96 + ty * 8 + 5);
+        if (sharp) {
+          var particleCount = 2 + strength;
+          for (var p = 0; p < particleCount; p++) {
+            var distance = 18 + ((ionPhase * 70 + p * (115 / particleCount)) % 115);
+            var px = tipX + tx * distance, py = tipY + ty * distance;
+            ctx.fillStyle = ionColor; ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
+          }
+          drawArrow(ctx, tipX + tx * 10, tipY + ty * 10, tipX + tx * 76, tipY + ty * 76, "#0e7490");
+        }
+      }
+      ctx.fillStyle = "#475569"; ctx.beginPath(); ctx.arc(cx, cy, 19, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#cbd5e1"; ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#0f172a"; ctx.font = "bold 15px system-ui"; ctx.textAlign = "center";
+      ctx.fillText(sharp ? "Ionenstrom: gegen den Uhrzeigersinn" : "Kaum Spitzenentladung", cx, 35);
+      ctx.fillText(sharp ? "Reaktion und Drehung: im Uhrzeigersinn" : "Kein nennenswertes Drehmoment", cx, 58);
+      ctx.textAlign = "start";
+      readout.textContent = sharp
+        ? "Scharfe Enden: relative Drehzahl " + strength + ". Ein Wechsel des Ladungsvorzeichens ändert die Ionenart, aber nicht die durch die Form festgelegte Drehrichtung."
+        : "Abgerundete Enden: Die Feldstärke bleibt kleiner, die Luft wird kaum ionisiert und der Propeller dreht sich im Modell nicht.";
+    }
+
+    function frame(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      var dt = Math.min(0.04, (ts - lastTs) / 1000);
+      lastTs = ts;
+      var strength = Number(strengthEl.value);
+      if (tipsEl.value === "sharp") angle -= dt * strength * 0.75;
+      ionPhase += dt * strength;
+      draw();
+      rafId = window.requestAnimationFrame(frame);
+    }
+
+    function toggle() {
+      running = !running;
+      playBtn.textContent = running ? "Stopp" : "Start";
+      lastTs = null;
+      if (running) rafId = window.requestAnimationFrame(frame);
+      else if (rafId) window.cancelAnimationFrame(rafId);
+      draw();
+    }
+
+    function reset() {
+      running = false; angle = 0; ionPhase = 0; lastTs = null;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      polarityEl.value = "positive"; tipsEl.value = "sharp"; strengthEl.value = "3"; playBtn.textContent = "Start"; draw();
+    }
+
+    [polarityEl, tipsEl].forEach(function (control) { control.addEventListener("change", draw); });
+    strengthEl.addEventListener("input", draw);
+    playBtn.addEventListener("click", toggle);
+    resetBtn.addEventListener("click", reset);
+    draw();
+  }
+
   function mount(root) {
     if (!root || !root.getAttribute) return;
     var key = root.getAttribute("data-field-sim");
@@ -2149,5 +2598,8 @@
   register("magnetic-trajectory", initMagneticTrajectorySim);
   register("helix-trajectory", initHelixTrajectorySim);
   register("induction-lab", initInductionLab);
+  register("electrostatic-shielding", initElectrostaticShieldingSim);
+  register("candle-flame", initCandleFlameSim);
+  register("electrostatic-propeller", initElectrostaticPropellerSim);
   window.FieldSim = { mountAll: mountAll, mount: mount };
 })(window, document);
