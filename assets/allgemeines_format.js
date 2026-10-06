@@ -198,7 +198,8 @@ function el(tag, attrs = {}, children = []) {
     cfg.questions.forEach((q, qi) => {
       const qEl = el("div", {class:"wb-q", "data-qi": String(qi)});
       qEl.appendChild(el("h3", {}, [`${qi+1}. ${q.text || ""}`]));
-      const type = q.multiple ? "checkbox" : "radio";
+      const hasMultipleCorrect = Array.isArray(q.correct) && q.correct.length > 1;
+      const type = (q.multiple || hasMultipleCorrect) ? "checkbox" : "radio";
       const name = `wbq_${cfg.id || "mcq"}_${qi}`;
       const choices = (q.choices || []).slice();
       if(cfg.shuffleChoices !== false) shuffle(choices);
