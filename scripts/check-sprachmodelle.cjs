@@ -8,7 +8,7 @@ const html = fs.readFileSync(file, 'utf8');
 const configs = [...html.matchAll(/<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
 const blocks = configs.filter(config => config.id);
 assert.equal(new Set(blocks.map(config => config.id)).size, blocks.length);
-assert.equal([...html.matchAll(/<section data-wb-page=/g)].length, 11);
+assert.equal([...html.matchAll(/<section data-wb-page=/g)].length, 12);
 assert.ok(!/konsti/i.test(html));
 for (const type of ['mcq', 'verify', 'cloze', 'categorize', 'trace', 'reveal', 'essay', 'order']) assert.ok(html.includes(`data-wb-type="${type}"`), type);
 assert.equal([...html.matchAll(/data-p2-id=/g)].length, 2);
@@ -27,7 +27,7 @@ assert.equal([...html.matchAll(/<img /g)].length, 7);
 const webhooks = JSON.parse(fs.readFileSync(path.join(root, 'wb-webhooks.json'), 'utf8'));
 assert.equal(webhooks.map['informatik/sprachmodelle.html'], webhooks.map['nwt/arduino-einstieg.html']);
 const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-assert.equal([...index.matchAll(/href="informatik\/sprachmodelle.html"/g)].length, 3);
+assert.equal([...index.matchAll(/href="informatik\/sprachmodelle.html"/g)].length, 2);
 assert.ok(fs.readFileSync(path.join(root, 'informatik/kuenstliche-intelligenz3.htm'), 'utf8').includes('href="sprachmodelle.html"'));
 const model = require('../informatik/sprachmodelle-modelle.js');
 const table = model.counts();
@@ -81,7 +81,25 @@ const topP = model.sampling(logits, 1, 'topp', 3, .9);
 assert.deepEqual(topP.retained, [0, 1, 2]);
 assert.ok(topP.base[0] + topP.base[1] < .9 && topP.base[0] + topP.base[1] + topP.base[2] >= .9);
 assert.ok(model.sampling(logits, .2).base[0] > model.sampling(logits, 1.5).base[0]);
-console.log(`Static checks: 11 pages, ${blocks.length} JSON blocks, 2 matching tasks, 7 images, all interaction types, links and NWT webhook. Löwenherz corpus, greedy generation and sampling checks passed.`);
+assert.deepEqual(blocks.find(config => config.id === 'sm_diagnose_mcq').questions.map(question => question.correct), [['token'], ['embedding'], ['attention']]);
+const errorsTask = blocks.find(config => config.id === 'sm_error_cases_categorize');
+assert.equal(errorsTask.items.length, 5);
+for (const category of errorsTask.categories) assert.equal(errorsTask.items.filter(item => item.category === category.id).length, 1);
+assert.deepEqual(blocks.find(config => config.id === 'sm_error_checks_mcq').questions.map(question => question.correct), [['source'], ['pairs'], ['inspect']]);
+assert.equal(Number(blocks.find(config => config.id === 'sm_error_corrections_trace').rows[0].cells[2].answers[0]), 127 * 8);
+for (const id of ['sm_repair_categorize', 'sm_settings_cases_categorize']) {
+  const config = blocks.find(config => config.id === id);
+  assert.equal(config.items.length, 6);
+  for (const category of config.categories) assert.equal(config.items.filter(item => item.category === category.id).length, id === 'sm_repair_categorize' ? 2 : 1);
+}
+const filterTrace = blocks.find(config => config.id === 'sm_settings_filter_trace');
+[['topk', 1, .9], ['topk', 3, .9], ['topp', 3, .8], ['topp', 3, .9]].forEach(([strategy, k, p], index) => {
+  const result = model.sampling([.55, .25, .15, .05].map(Math.log), 1, strategy, k, p);
+  const mass = result.retained.reduce((sum, candidate) => sum + result.base[candidate], 0);
+  assert.equal(String(result.retained.length), filterTrace.rows[index].cells[1].answers[0]);
+  assert.ok(Math.abs(mass - Number(filterTrace.rows[index].cells[2].answers[0].replace(',', '.'))) < 1e-9);
+});
+console.log(`Static checks: 12 pages, ${blocks.length} JSON blocks, 2 matching tasks, 7 images, all interaction types, links and NWT webhook. Diagnosis, settings, Löwenherz corpus, greedy generation and sampling checks passed.`);
 
 async function browserCheck() {
   const { chromium } = require(path.join(process.env.TEMP, 'school-ki2-check/node_modules/playwright'));
@@ -107,7 +125,7 @@ async function browserCheck() {
       await page.waitForFunction(() => document.getElementById('sm-sampling-status').textContent.includes('100,0'));
       assert.equal(await page.locator('[data-p2-mounted="1"]').count(), 2);
       assert.equal(await page.locator('.wb-block').count(), blocks.length + 2);
-      assert.equal(await page.locator('section[data-wb-page]').count(), 12);
+      assert.equal(await page.locator('section[data-wb-page]').count(), 13);
       assert.equal(await page.locator('section[data-wb-page="3"] h1').textContent(), 'Dein Trainingskorpus: Löwenherz und das Schloss');
       assert.equal(await page.locator('section[data-wb-page="3"] [data-sm-corpus-trace]').count(), 1);
       assert.equal(await page.locator('section[data-wb-page="3"] .wb-block[data-wb-type="trace"]').count(), 2);
@@ -116,7 +134,7 @@ async function browserCheck() {
       assert.equal(await page.locator('[data-sm-corpus-trace] tbody tr').count(), 23);
       assert.equal(await page.locator('[data-sm-corpus-trace] [data-wb-trace-field]').count(), 44);
       assert.equal(await page.locator('[data-sm-problem-selects] select').count(), 5);
-      for (let n = 1; n <= 11; n++) {
+      for (let n = 1; n <= 12; n++) {
         if (n > 1) { await page.locator('[data-wb-next]').click(); await page.waitForFunction(n => document.querySelector('[data-wb-pagenow]').textContent === String(n), n); }
         const section = page.locator(`section[data-wb-page="${n}"]`);
         const bad = await section.evaluate(section => [...section.querySelectorAll('img,input,select,button,.p2-piece')].filter(el => {
@@ -190,7 +208,49 @@ async function browserCheck() {
             await page.screenshot({ path: path.join(process.env.TEMP, `sprachmodelle-${width}-transitions.png`) });
           }
         }
-        if (n === 8 || n === 9) {
+        for (const categories of await section.locator('.wb-block[data-wb-type="categorize"]').all()) {
+          const count = await categories.locator('.wb-categorize-chip').count();
+          await categories.locator('.wb-btn:not(.primary)').click();
+          assert.equal(await categories.locator('.wb-categorize-bank .wb-categorize-chip').count(), count);
+          await categories.evaluate(root => {
+            [...root.querySelectorAll('.wb-categorize-chip')].forEach(chip => {
+              chip.click(); root.querySelector(`.wb-categorize-zone[data-category="${chip.dataset.answer}"]`).click();
+            });
+          });
+          await categories.locator('.wb-btn.primary').click();
+          assert.equal(await categories.locator('.wb-categorize-chip.correct').count(), count);
+          assert.equal(await categories.locator('.wb-categorize-chip.wrong').count(), 0);
+        }
+        if (n === 9 || n === 10) {
+          const essay = section.locator(n === 9 ? '[data-sm-diagnose-essay]' : '[data-sm-settings-transfer]');
+          for (const [index, input] of (await essay.locator('textarea').all()).entries()) {
+            await input.fill(`Prüfprotokoll ${n}.${index}: kontrollierter Vergleich und begründete Erwartung.`);
+          }
+          if (n === 9) {
+            const mcq = section.locator('[data-sm-diagnose-mcq]');
+            assert.equal(await section.locator('.sm-diagnostic-cases li').count(), 3);
+            for (const [index, answer] of ['token', 'embedding', 'attention'].entries()) await mcq.locator('.wb-q').nth(index).locator(`input[value="${answer}"]`).check();
+            await mcq.locator('.wb-btn.primary').click();
+            assert.equal(await mcq.locator('.wb-q.correct').count(), 3);
+          }
+          if ([1440, 390].includes(width)) {
+            await section.locator(n === 9 ? 'h1' : '[data-sm-settings-cases]').scrollIntoViewIfNeeded();
+            await page.screenshot({ path: path.join(process.env.TEMP, `sprachmodelle-${width}-${n === 9 ? 'diagnosis' : 'settings'}.png`) });
+          }
+        }
+        if (n === 12) {
+          assert.equal(await section.locator('[data-sm-error-cases] .wb-categorize-chip.correct').count(), 5);
+          const mcq = section.locator('[data-sm-error-checks]');
+          for (const [index, answer] of ['source', 'pairs', 'inspect'].entries()) await mcq.locator('.wb-q').nth(index).locator(`input[value="${answer}"]`).check();
+          await mcq.locator('.wb-btn.primary').click();
+          assert.equal(await mcq.locator('.wb-q.correct').count(), 3);
+          await section.locator('[data-sm-error-essay] textarea').fill('Fehleranalyse: Beobachtung von einer Ursache unterscheiden und einen unabhängigen Gegencheck planen.');
+          if ([1440, 390].includes(width)) {
+            await section.locator('[data-sm-error-cases]').scrollIntoViewIfNeeded();
+            await page.screenshot({ path: path.join(process.env.TEMP, `sprachmodelle-${width}-errors.png`) });
+          }
+        }
+        if (n === 8 || n === 10) {
           const pairs = section.locator('[data-p2]');
           await pairs.evaluate(root => {
             [...root.querySelectorAll('[data-side="L"]')].forEach(left => {
@@ -201,7 +261,7 @@ async function browserCheck() {
           assert.equal(await pairs.locator('.p2-bad').count(), 0);
           assert.equal(await pairs.locator('.p2-ok').count(), n === 8 ? 6 : 5);
         }
-        if (n === 9) {
+        if (n === 10) {
           const initial = Number.parseFloat((await page.locator('#sm-sampling-rows tr').first().locator('td').nth(2).textContent()).replace(',', '.'));
           await setRange('#sm-temperature', '.2');
           const cold = Number.parseFloat((await page.locator('#sm-sampling-rows tr').first().locator('td').nth(2).textContent()).replace(',', '.'));
@@ -221,7 +281,7 @@ async function browserCheck() {
           await page.locator('#sm-draw-batch').click();
           assert.deepEqual(await page.locator('#sm-sampling-rows td:nth-child(5)').allTextContents(), ['100', '0', '0', '0', '0']);
           await page.locator('[data-sm-snapshot]').click();
-          assert.match(await section.locator('[data-wb-type="essay"] textarea').inputValue(), /Top-K = 1/);
+          assert.match(await section.locator('[data-wb-type="essay"] textarea').first().inputValue(), /Top-K = 1/);
           await page.locator('#sm-sampling-reset').click();
           await setRange('#sm-temperature', '0');
           assert.deepEqual(await page.locator('#sm-sampling-rows td:nth-child(4)').allTextContents(), ['100,0 %', '0,0 %', '0,0 %', '0,0 %', '0,0 %']);
@@ -239,16 +299,29 @@ async function browserCheck() {
       await page.waitForFunction(() => document.getElementById('sm-sampling-status').textContent.includes('100,0'));
       assert.equal(await page.locator('[data-sm-problem-selects] select').first().inputValue(), 'Fehlender Kontext');
       assert.equal(await page.locator('[data-sm-corpus-trace] [data-wb-trace-field]').first().inputValue(), 'er');
-      assert.match(await page.locator('section[data-wb-page="9"] [data-wb-type="essay"] textarea').inputValue(), /Top-K = 1/);
+      assert.match(await page.locator('section[data-wb-page="10"] [data-wb-type="essay"] textarea').first().inputValue(), /Top-K = 1/);
+      assert.match(await page.locator('[data-sm-diagnose-essay] textarea').first().inputValue(), /Prüfprotokoll 9.0/);
+      assert.match(await page.locator('[data-sm-settings-transfer] textarea').first().inputValue(), /Prüfprotokoll 10.0/);
+      for (const selector of ['[data-sm-repair-categorize]', '[data-sm-settings-cases]']) assert.equal(await page.locator(`${selector} .wb-categorize-zone .wb-categorize-chip`).count(), 6);
+      for (const categories of await page.locator('.wb-block[data-wb-type="categorize"]').all()) assert.equal(await categories.locator('.wb-categorize-bank .wb-categorize-chip').count(), 0, 'All old and new categorizations restored');
+      assert.equal(await page.locator('[data-sm-diagnose-mcq] input:checked').count(), 3);
+      assert.equal(await page.locator('[data-sm-error-checks] input:checked').count(), 3);
+      assert.match(await page.locator('[data-sm-error-essay] textarea').inputValue(), /Fehleranalyse/);
       await page.locator('[data-wb-student-name]').evaluate(input => { input.value = 'Browserprüfung'; input.dispatchEvent(new Event('input', { bubbles: true })); });
       await page.locator('.wb-submit-btn').evaluate(button => button.click());
-      await page.waitForFunction(() => document.querySelector('[data-wb-pagenow]').textContent === '12');
+      await page.waitForFunction(() => document.querySelector('[data-wb-pagenow]').textContent === '13');
       const results = await page.locator('[data-wb-results]').textContent();
       assert.ok(results.includes('Top-K = 1'), 'Results include saved sampling settings');
       assert.ok(results.includes('Fülle die vollständige Bigramm-Tabelle'), 'Results include corpus task');
+      assert.ok(results.includes('Prüfprotokoll 9.0') && results.includes('Prüfprotokoll 10.0'), 'Results include both new reflections');
+      assert.ok(results.includes('Fehleranalyse'), 'Results include limitations reflection');
       await page.waitForSelector('.wb-results-webhook-status.is-success');
       const report = JSON.parse(posts[posts.length - 1]).message;
       assert.ok(report.includes('Fehlender Kontext') && report.includes('Häufigkeit') && report.includes('Top-K = 1'), 'Export includes dropdown, corpus and sampling answers');
+      assert.ok(report.includes('Prüfprotokoll 9.0'), 'Export includes diagnosis reflection');
+      assert.ok(report.includes('Prüfprotokoll 10.0'), 'Export includes settings reflection');
+      assert.ok(report.includes('4B-Modell'), 'Export includes parameter-count categorization');
+      assert.ok(report.includes('Fehleranalyse') && report.includes('Welche Gegenprüfung hilft wirklich?'), 'Export includes limitations tasks');
       await page.close(); console.log(`Browser ${width}px: navigation, 7 images, layout, trace grading, dropdowns, both matching tasks, sampling, persistence and results passed.`);
     }
     assert.deepEqual(errors, []);

@@ -1267,7 +1267,6 @@ function el(tag, attrs = {}, children = []) {
 
     items.forEach(item => bank.appendChild(makeChip(item)));
     if(cfg.shuffle !== false) shuffle(Array.from(bank.children)).forEach(ch => bank.appendChild(ch));
-    loadState();
 
     const controls = el("div", {class:"wb-row"}, [
       el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
@@ -1279,6 +1278,7 @@ function el(tag, attrs = {}, children = []) {
     host.appendChild(grid);
     host.appendChild(bank);
     host.appendChild(controls);
+    loadState();
     return { node: wrapBlock("categorize", cfg, host), check, reset };
   }
 
