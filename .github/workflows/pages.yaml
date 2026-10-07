@@ -31,6 +31,9 @@ jobs:
           rsync -av --exclude '.git' --exclude '.github' --exclude '_site' ./ _site/bbz/
           rsync -av --exclude '.git' --exclude '.github' --exclude '_site' ./ _site/public/
 
+          # publish the BBZ overview under an unlisted filename
+          mv _site/bbz/index.html _site/bbz/uebersicht-7e93c2a84f6b410db598e0a327dc615f.html
+
           # remove webhook only from public
           rm -f _site/public/wb-webhooks.json
 
