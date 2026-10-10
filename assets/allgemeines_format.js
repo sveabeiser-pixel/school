@@ -1607,6 +1607,30 @@ ${fi.input.value || ""}
     return inp ? String(inp.value || "").trim() : "";
   }
 
+  function getSubmissionTimestamp(){
+    const date = new Date();
+    let local = "";
+    try{
+      local = new Intl.DateTimeFormat("de-DE", {
+        dateStyle: "medium",
+        timeStyle: "medium"
+      }).format(date);
+    }catch(_e){
+      local = date.toLocaleString("de-DE");
+    }
+
+    let timeZone = "";
+    try{
+      timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    }catch(_e){}
+
+    return {
+      local,
+      iso: date.toISOString(),
+      timeZone
+    };
+  }
+
   function buildClozePrompt(cfg){
     if(!cfg || !Array.isArray(cfg.segments)) return "";
     return cfg.segments.map(s => {
@@ -1918,8 +1942,12 @@ ${fi.input.value || ""}
     let totalPossible = 0;
     let webhookStatus = null;
     const pageTotals = new Map();
+    const submittedAt = getSubmissionTimestamp();
 
     const studentName = getStudentName(root);
+    textLines.push("Abgabezeit: " + submittedAt.local + (submittedAt.timeZone ? " (" + submittedAt.timeZone + ")" : ""));
+    textLines.push("Abgabezeit ISO: " + submittedAt.iso);
+    textLines.push("");
     if(studentName){
       textLines.push("Name: " + studentName);
       textLines.push("");
@@ -2179,6 +2207,7 @@ ${fi.input.value || ""}
       if(studentName){
         panelTopChildren.push(el("p", {class:"wb-results-name"}, ["Name: " + studentName]));
       }
+      panelTopChildren.push(el("p", {class:"wb-results-name"}, ["Abgabe: " + submittedAt.local]));
 
       const tableRows = results.map(r => {
         const scoreText = (r.type === "mcq" || r.type === "verify" || r.type === "cloze" || r.type === "order" || r.type === "puzzle" || r.type === "trace")
@@ -2277,7 +2306,14 @@ ${fi.input.value || ""}
       if(url){
         postWebhook(
           url,
-          { name: studentName, email, message: textLines.join("\n") },
+          {
+            name: studentName,
+            email,
+            message: textLines.join("\n"),
+            submittedAt: submittedAt.iso,
+            submittedAtLocal: submittedAt.local,
+            submittedAtTimeZone: submittedAt.timeZone
+          },
           { cooldownMs: cfg.webhookCooldownMs }
         )
           .then(() => {
