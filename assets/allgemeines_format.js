@@ -14,6 +14,11 @@
   "use strict";
   const qs  = (sel, el=document) => el.querySelector(sel);
   const qsa = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+  const NAME_MAX_LENGTH = 30;
+
+  function limitName(value){
+    return String(value || "").slice(0, NAME_MAX_LENGTH);
+  }
 
 function el(tag, attrs = {}, children = []) {
   const SVG_NS = "http://www.w3.org/2000/svg";
@@ -1292,11 +1297,13 @@ function el(tag, attrs = {}, children = []) {
     ];
     const status = el("div", {class:"wb-score", "aria-live":"polite"});
     const inputs = fields.map(f => {
+      const isName = String(f.key || "").trim().toLowerCase() === "name";
       const label = el("label", {class:"wb-label"}, [String(f.label || f.key || "")]);
       const input = (f.kind === "textarea")
         ? el("textarea", {class:"wb-textarea", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")})
         : el("input", {class:"wb-input", type:"text", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")});
-      return {label, input, key: String(f.key || "")};
+      if(isName) input.maxLength = NAME_MAX_LENGTH;
+      return {label, input, key: String(f.key || ""), isName};
     });
 
     const body = el("div", {});
@@ -1309,10 +1316,13 @@ function el(tag, attrs = {}, children = []) {
     const storageKey = (k) => `${storagePrefix}${pageKey}_${id}__${k}`;
     const load = () => inputs.forEach(fi => {
       const v = localStorage.getItem(storageKey(fi.key));
-      if(v != null) fi.input.value = v;
+      if(v != null) fi.input.value = fi.isName ? limitName(v) : v;
     });
     const save = () => {
-      inputs.forEach(fi => localStorage.setItem(storageKey(fi.key), fi.input.value || ""));
+      inputs.forEach(fi => {
+        if(fi.isName) fi.input.value = limitName(fi.input.value);
+        localStorage.setItem(storageKey(fi.key), fi.input.value || "");
+      });
       status.textContent = "Gespeichert.";
       clearTimeout(global.__wbSaveTimer);
       global.__wbSaveTimer = setTimeout(() => status.textContent = "", 900);
@@ -1604,7 +1614,7 @@ ${fi.input.value || ""}
 
   function getStudentName(root){
     const inp = qs("[data-wb-student-name]", root);
-    return inp ? String(inp.value || "").trim() : "";
+    return inp ? limitName(inp.value).trim() : "";
   }
 
   function getSubmissionTimestamp(){
@@ -2513,18 +2523,21 @@ ${fi.input.value || ""}
       sideNav.appendChild(det);
     });
 
-    const nameInput = el("input", {class:"wb-input", type:"text", placeholder: namePlaceholder, "data-wb-student-name":"1"});
+    const nameInput = el("input", {class:"wb-input", type:"text", maxlength: NAME_MAX_LENGTH, placeholder: namePlaceholder, "data-wb-student-name":"1"});
     try{
       const storedName = localStorage.getItem(nameStorageKey);
-      if(storedName != null) nameInput.value = storedName;
-      nameInput.addEventListener("input", () => {
-        localStorage.setItem(nameStorageKey, nameInput.value || "");
-      });
+      if(storedName != null) nameInput.value = limitName(storedName);
     }catch(_){}
     if(!String(nameInput.value || "").trim()){
       const scormName = scormGetStudentName();
-      if(scormName) nameInput.value = scormName;
+      if(scormName) nameInput.value = limitName(scormName);
     }
+    nameInput.addEventListener("input", () => {
+      nameInput.value = limitName(nameInput.value);
+      try{
+        localStorage.setItem(nameStorageKey, nameInput.value || "");
+      }catch(_){}
+    });
     const nameWrap = el("div", {class:"wb-name-field"}, [
       el("label", {class:"wb-label"}, [nameLabel]),
       nameInput
