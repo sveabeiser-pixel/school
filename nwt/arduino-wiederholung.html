@@ -181,6 +181,9 @@
     @media (prefers-reduced-motion: reduce) {
       .aw-node, .aw-pulse { transition: none; }
     }
+    .aw-goal, .aw-card, .aw-motor, .aw-check-item, .aw-danger, .aw-note, .aw-success, .aw-formula, .aw-route > div, .aw-pin-board, .aw-flow { color: var(--aw-ink); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .aw-kicker { color: #67e8d5; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .aw-image figcaption { color: var(--wb-muted); }
   </style>
 </head>
 <body>
@@ -1476,6 +1479,7 @@ noTone(8);</div>
         values.round.textContent = String(current.round);
         percent.textContent = Math.round(level * 100) + " %";
         lamp.style.backgroundColor = "rgb(" + Math.round(70 + 185 * level) + "," + Math.round(78 + 150 * level) + "," + Math.round(82 - 38 * level) + ")";
+        percent.style.color = level < 0.5 ? "#ffffff" : "#172033";
         lamp.style.boxShadow = level ? "0 0 " + Math.round(8 + 28 * level) + "px rgba(242,182,51," + (0.2 + 0.45 * level) + ")" : "none";
         output.textContent = current.text;
       }

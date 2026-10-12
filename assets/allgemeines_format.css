@@ -619,7 +619,7 @@ body.wb-global-fs{
 .wb-book[data-theme="dark"] li,
 .wb-book[data-theme="dark"] label,
 .wb-book[data-theme="dark"] .wb-muted{
-  color: var(--wb-text);
+  color: inherit;
 }
 .wb-book[data-theme="dark"] .wb-muted{
   color: var(--wb-muted);
@@ -673,7 +673,7 @@ body.wb-global-fs{
 .wb-book[data-theme="dark-blue"] li,
 .wb-book[data-theme="dark-blue"] label,
 .wb-book[data-theme="dark-blue"] .wb-muted{
-  color: var(--wb-text);
+  color: inherit;
 }
 .wb-book[data-theme="dark-blue"] .wb-muted{
   color: var(--wb-muted);
@@ -683,6 +683,23 @@ body.wb-global-fs{
 }
 .wb-book[data-theme="dark-blue"] a:hover{
   color: #cfe7fb;
+}
+
+/* Light controls keep dark text even when they are links. */
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-btn:not(.primary){
+  color:#172033;
+}
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-btn.primary{
+  color:#ffffff;
+}
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-score,
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-results-blue,
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-kv b,
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-top-right{
+  color:#9fe6f5;
+}
+.wb-book[data-theme="dark-blue"] .wb-icon-btn svg{
+  fill:#cfe7fb;
 }
 
 .wb-book[data-theme="candy"] .wb-btn,
@@ -1199,6 +1216,7 @@ body.wb-global-fs{
 }
 .wb-trace-given{
   background:var(--wb-soft-bg, #f7f9fa);
+  color:#172033;
   font-weight:750;
 }
 .wb-trace-input{
@@ -1214,8 +1232,8 @@ body.wb-global-fs{
 }
 textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-trace-input:focus{outline:3px solid rgba(30,102,200,.18); border-color:var(--wb-blue, #1e66c8)}
-.wb-trace-input.is-correct{border-color:#16834a; background:#eaf8f0; box-shadow:0 0 0 2px rgba(22,131,74,.12)}
-.wb-trace-input.is-wrong{border-color:#c5303c; background:#fff0f1; box-shadow:0 0 0 2px rgba(197,48,60,.10)}
+.wb-trace-input.is-correct{border-color:#16834a; background:#eaf8f0; color:#172033; box-shadow:0 0 0 2px rgba(22,131,74,.12)}
+.wb-trace-input.is-wrong{border-color:#c5303c; background:#fff0f1; color:#172033; box-shadow:0 0 0 2px rgba(197,48,60,.10)}
 .wb-trace-controls{justify-content:flex-start}
 .wb-trace-status{font-weight:850; color:var(--wb-muted, #526270)}
 
@@ -1365,6 +1383,8 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-results-row{
   border-top:1px solid var(--wb-line);
   background: #fff;
+  color:#0b1220;
+  --wb-muted:#4b5563;
 }
 .wb-results-dot{
   width:14px;
@@ -1434,7 +1454,7 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-results-progress-score{
   font-weight:800;
   font-size:20px;
-  color:#1e293b;
+  color:var(--wb-text);
   letter-spacing:-.01em;
   white-space:nowrap;
 }
@@ -1449,10 +1469,12 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-results-webhook-status.is-success{
   border-left-color: var(--wb-ok);
   background: #ecf8f1;
+  color:#172033;
 }
 .wb-results-webhook-status.is-error{
   border-left-color: var(--wb-bad);
   background: #fff1f2;
+  color:#172033;
 }
 .wb-results-webhook-status.is-cooldown{
   border-left-color:#d97706;
@@ -1547,6 +1569,10 @@ textarea.wb-trace-input{min-height:72px; resize:vertical}
 .wb-book[data-theme="dark"] .wb-callout,
 .wb-book[data-theme="dark-blue"] .wb-callout{
   color: #000000;
+  --wb-formula:#006b63;
+  --wb-formula-bg:#e9f8f5;
+  --wb-formula-border:#82cfc4;
+  --wb-muted:#4b5563;
 }
 .wb-book[data-theme="dark"] .wb-callout ul,
 .wb-book[data-theme="dark"] .wb-callout li,
@@ -1707,6 +1733,8 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
 .wb-book[data-theme="dark-blue"] .wb-categorize-zone,
 .wb-book[data-theme="dark"] .wb-categorize-zone {
   color: #000000;
+  --wb-chip-bg:#ffffff;
+  --wb-chip-text:#172033;
 }
 
 .wb-categorize-zone{
@@ -2038,6 +2066,8 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   border-radius:10px;
   padding:12px 14px;
   margin:12px 0;
+  --wb-formula:#006b63;
+  --wb-muted:#4b5563;
 }
 .wb-book .lf-only-box strong{display:block;color:#733a18;margin-bottom:4px}
 .wb-book .lf-only-badge{

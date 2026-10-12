@@ -5,6 +5,9 @@
 .ki-figure.compact img{max-height:350px}
 .ki-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
 .ki-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.ki-panel,.ki-mini-table,.ki-note-green,.ki-note-amber,.ki-formula,.ki-lab{--wb-muted:#526270}
+.wb-book:is([data-theme="dark"],[data-theme="dark-blue"]) .ki-kicker{color:#67e8d5}
+.wb-book:is([data-theme="dark"],[data-theme="dark-blue"]) .ki-formula{color:#243244}
 .ki-panel{border:1px solid var(--wb-line,#d8dee8);border-radius:8px;padding:14px 15px;background:#fff;color:#243244;min-width:0}
 .ki-panel h3{margin:0 0 8px;font-size:1rem}
 .ki-mini-table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff;color:#243244}

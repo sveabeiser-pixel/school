@@ -1,3 +1,6 @@
+.wb-book { --sw-frequency-text:#215cc4; --sw-speed-text:#11733a; --sw-wavelength-text:#b91c1c; }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) { --sw-frequency-text:#bfdbfe; --sw-speed-text:#bbf7d0; --sw-wavelength-text:#fecdd3; }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .sw-sim-card { --wb-muted:#e2e8f0; }
 .sw-sim-card { border: 1px solid var(--wb-line, #e5e7eb); border-radius: 14px; padding: 14px; background: var(--wb-text-bg, #fff); box-shadow: var(--wb-shadow, 0 6px 20px rgba(0,0,0,.08)); margin: 14px 0; }
 .sw-sim-grid { display:grid; grid-template-columns:0.8fr 1.2fr; gap:14px; align-items:start; }
 @media (max-width:900px){ .sw-sim-grid{ grid-template-columns:1fr; } }

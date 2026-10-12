@@ -66,6 +66,7 @@
   padding: 14px 15px;
   border-top: 4px solid var(--ak-blue);
   background: var(--ak-soft);
+  color: var(--ak-ink);
 }
 .concept-tile:nth-child(2) { border-color: var(--ak-yellow); }
 .concept-tile:nth-child(3) { border-color: var(--ak-red); }
@@ -172,6 +173,12 @@
 .tag { border-radius: 4px !important; }
 .code-card pre { margin: 0; }
 .code-card code { white-space: pre; }
+
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) :is(.course-kicker, .next-module a) { color: #67e8d5; }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) :is(.course-route b, .prediction-band strong) { color: #9fd7ff; }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .course-route .is-current b { color: #07645f; }
+.motor-box, .tip-box, .warn-box, .panel, .info-box, .task-card { color: var(--ak-ink); --wb-muted: var(--ak-muted); }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) :is(.motor-box, .tip-box, .warn-box, .panel, .info-box, .task-card) a:not(.wb-btn) { color: #075985; }
 
 @media (max-width: 900px) {
   .course-route { grid-template-columns: 1fr; }

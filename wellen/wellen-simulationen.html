@@ -797,24 +797,24 @@
             <label for="lwAmp">Amplitude $\hat{y}$ = <span id="lwAmpVal" data-role="amp-value">2.0</span> m</label>
             <input id="lwAmp" data-role="amp" type="range" min="0.1" max="4.0" value="2.0" step="0.1" />
 
-            <label for="lwFreq" style="color:#3b82f6;">Frequenz $f$ = <span id="lwFreqVal" data-role="freq-value">0.40</span> Hz</label>
+            <label for="lwFreq" style="color:var(--sw-frequency-text);">Frequenz $f$ = <span id="lwFreqVal" data-role="freq-value">0.40</span> Hz</label>
             <input id="lwFreq" data-role="freq" type="range" min="0.1" max="0.7" value="0.40" step="0.01" />
 
-            <label for="lwSpeed" style="color:#16a34a;">Ausbreitungsgeschwindigkeit $c$ = <span
+            <label for="lwSpeed" style="color:var(--sw-speed-text);">Ausbreitungsgeschwindigkeit $c$ = <span
                 id="lwSpeedVal" data-role="speed-value">2.5</span> m/s</label>
             <input id="lwSpeed" data-role="speed" type="range" min="2.5" max="5.0" value="2.5" step="0.1" />
 
-            <div style="color:#dc2626; font-weight:bold; margin-top:20px; font-size:18px;">
+            <div style="color:var(--sw-wavelength-text); font-weight:bold; margin-top:20px; font-size:18px;">
               Wellenlänge $\lambda$ = <span id="lwLamVal" data-role="lam-value">6.25</span> m
             </div>
 
             <div style="margin-top: 25px; display:flex; flex-direction:column; gap:8px;">
               <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbAmp" data-role="show-amp" checked> Amplitude</label>
-              <label style="font-weight:normal; margin:0; color:#3b82f6;"><input type="checkbox" id="cbPer" data-role="show-period" checked>
+              <label style="font-weight:normal; margin:0; color:var(--sw-frequency-text);"><input type="checkbox" id="cbPer" data-role="show-period" checked>
                 Periodendauer</label>
-              <label style="font-weight:normal; margin:0; color:#16a34a;"><input type="checkbox" id="cbVel" data-role="show-velocity" checked>
+              <label style="font-weight:normal; margin:0; color:var(--sw-speed-text);"><input type="checkbox" id="cbVel" data-role="show-velocity" checked>
                 Ausbreitungsgeschw.</label>
-              <label style="font-weight:normal; margin:0; color:#dc2626;"><input type="checkbox" id="cbLam" data-role="show-lambda" checked>
+              <label style="font-weight:normal; margin:0; color:var(--sw-wavelength-text);"><input type="checkbox" id="cbLam" data-role="show-lambda" checked>
                 Wellenlänge</label>
               <label style="font-weight:normal; margin:0;"><input type="checkbox" id="cbCoord" data-role="show-coords" checked>
                 Koordinatensystem</label>

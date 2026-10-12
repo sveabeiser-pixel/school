@@ -6,6 +6,7 @@
   box-shadow: var(--wb-shadow, 0 6px 20px rgba(0, 0, 0, .08));
   margin: 16px 0;
 }
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .pe-spectrum-note { color:#e2e8f0; }
 
 .pe-sim-intro {
   margin-bottom: 14px;
@@ -26,7 +27,7 @@
   grid-template-columns: repeat(8, 1fr);
   gap: 0;
   font-weight: 800;
-  color: #243b53;
+  color: var(--wb-text, #243b53);
   margin-bottom: 8px;
 }
 
@@ -90,7 +91,7 @@
 .pe-spectrum-axis {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  color: #243b53;
+  color: var(--wb-text, #243b53);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-weight: 700;
   margin-top: 8px;
@@ -128,6 +129,8 @@
 }
 
 .pe-sim-controls {
+  color:#243b53;
+  --wb-muted:#52606d;
   border-radius: 14px;
   border: 1px solid rgba(39, 67, 96, .14);
   background: linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
@@ -219,12 +222,12 @@
 
 .pe-status-on {
   border-color: rgba(22, 163, 74, .35);
-  background: rgba(22, 163, 74, .08);
+  background: #eaf8f0;
 }
 
 .pe-status-off {
   border-color: rgba(220, 38, 38, .25);
-  background: rgba(220, 38, 38, .08);
+  background: #fff0f1;
 }
 
 @media (max-width: 980px) {

@@ -12,6 +12,7 @@
 .sm-bar-row output{font-variant-numeric:tabular-nums;text-align:right;font-size:.9rem}
 .sm-table-select{width:100%;font:inherit;padding:8px;background:#fff;border:1px solid #91a6b3;border-radius:5px;color:#243244;min-height:42px}
 .sm-small{font-size:.9rem;line-height:1.5;color:#526270}
+.wb-book:is([data-theme="dark"],[data-theme="dark-blue"]) :is(.sm-small,.sm-bar-row.excluded){color:var(--wb-muted)}
 .sm-details{border-block:1px solid #d8dee8;padding:10px 0;margin:16px 0}
 .sm-details summary{cursor:pointer;font-weight:700;line-height:1.5}
 .sm-distribution{font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.6}
@@ -32,6 +33,7 @@
 .sm-bank-context{padding-top:10px;border-top:1px solid #bbcdd7;font-size:.9rem;line-height:1.5}
 @media(max-width:640px){.sm-bank-branches{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:16px}.sm-bank-word::after,.sm-bank-branches::before,.sm-bank-meaning::before{display:none}}
 .sm-context-examples{display:grid;gap:10px;margin:0;padding-left:28px}
+.wb-book .sm-context-examples li::marker{color:var(--wb-text)}
 .wb-book .sm-context-examples li{margin:0;padding:12px 14px;border-left:4px solid #377dae;background:#eaf3fb;color:#243244;line-height:1.65;overflow-wrap:anywhere}
 .wb-book .sm-context-examples li:nth-child(2){border-left-color:#0f8b65;background:#e8f6ef}
 .wb-book .sm-context-examples li:nth-child(3){border-left-color:#c58a25;background:#fff4d9}
