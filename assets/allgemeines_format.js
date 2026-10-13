@@ -1300,6 +1300,34 @@ function el(tag, attrs = {}, children = []) {
     return fields.filter(f => String(f.key || "").trim().toLowerCase() !== "name");
   }
 
+  let fieldPromptSequence = 0;
+  function attachFieldPrompt(input, text){
+    const promptText = String(text || "").trim();
+    if(!promptText) return null;
+    const prompt = el("p", {class:"wb-field-prompt"}, [promptText]);
+    ensureId(prompt, `wb-field-prompt-${++fieldPromptSequence}`);
+    const descriptions = String(input.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+    input.setAttribute("aria-describedby", [...descriptions, prompt.id].join(" "));
+    input.removeAttribute("placeholder");
+    return prompt;
+  }
+
+  function fieldPrompt(placeholder, label){
+    const text = String(placeholder || "").trim();
+    if(text === String(label || "").trim() || /^(?:schreibe hier|deine antwort|antwort)[.\s\u2026]*$/i.test(text)) return "";
+    return text;
+  }
+
+  function mountExportPrompts(){
+    qsa("textarea[data-wb-export],input[data-wb-export]").forEach(input => {
+      if(input.hasAttribute("data-wb-prompt-mounted")) return;
+      const text = input.getAttribute("data-wb-prompt") || fieldPrompt(input.getAttribute("placeholder"), input.getAttribute("data-wb-label"));
+      const prompt = attachFieldPrompt(input, text);
+      if(prompt) input.before(prompt);
+      input.setAttribute("data-wb-prompt-mounted", "1");
+    });
+  }
+
   function createEssay(cfg){
     const storagePrefix = (cfg.storagePrefix != null ? String(cfg.storagePrefix) : "wb_");
     const id = String(cfg.id || "essay");
@@ -1311,12 +1339,16 @@ function el(tag, attrs = {}, children = []) {
       const input = (f.kind === "textarea")
         ? el("textarea", {class:"wb-textarea", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")})
         : el("input", {class:"wb-input", type:"text", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")});
-      return {label, input, key: String(f.key || "")};
+      const inputId = ensureId(input, `wb-essay-field-${++fieldPromptSequence}`);
+      label.setAttribute("for", inputId);
+      const prompt = attachFieldPrompt(input, f.prompt || fieldPrompt(f.placeholder, f.label));
+      return {label, prompt, input, key: String(f.key || "")};
     });
 
     const body = el("div", {});
     inputs.forEach((fi, i) => {
       body.appendChild(fi.label);
+      if(fi.prompt) body.appendChild(fi.prompt);
       body.appendChild(fi.input);
       if(i < inputs.length-1) body.appendChild(el("div", {class:"wb-spacer"}));
     });
@@ -1512,6 +1544,7 @@ ${fi.input.value || ""}
 
 
   function autoMountBlocks(opts={}){
+  mountExportPrompts();
   const mounts = qsa("[data-wb-type]").filter(m => !m.hasAttribute("data-wb-mounted") && !m.hasAttribute("data-wb-rendered"));
   return mounts.map((m, idx) => {
     m.setAttribute("data-wb-mounted","1");

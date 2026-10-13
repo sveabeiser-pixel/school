@@ -257,6 +257,7 @@ Für längere Begründungen kann eine Eingabezelle zusätzlich `"kind":"textarea
 #### Essay
 
 Frage den Namen nicht in einzelnen Freitextaufgaben ab. Nutze ausschließlich die zentrale Namenseingabe der Book-Abgabe; `fields` enthält nur die fachlichen Antworten.
+Aufgabenstellungen, Leitfragen und wichtige Antwortvorgaben müssen dauerhaft über dem Eingabefeld stehen, nicht nur als `placeholder`. Verwende dafür pro Feld `prompt`; ein Platzhalter darf nur ein kurzer allgemeiner Eingabehinweis sein. Bei normalen exportierbaren Textfeldern verwende `data-wb-prompt` oder einen sichtbaren Aufgabenabsatz über dem Feld. Das gemeinsame Modul zeigt auch ältere fachliche Platzhalter dauerhaft an.
 
 <div data-wb-type="essay">
   <script class="wb-config" type="application/json">
@@ -265,7 +266,7 @@ Frage den Namen nicht in einzelnen Freitextaufgaben ab. Nutze ausschließlich di
     "title":"Reflexion",
     "hint":"Antworte in 4–8 Sätzen. Nutze mindestens ein Fachwort korrekt.",
     "fields":[
-      {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Schreibe hier…"}
+      {"label":"Deine Antwort","key":"text","kind":"textarea","prompt":"Was würde sich ändern, wenn du eine Bedingung des Beispiels veränderst? Begründe deine Vermutung.","placeholder":"Schreibe hier…"}
     ]
   }
   </script>
