@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1. Systemaufbau, Sicherheit und Datenschutz - Musterlösung</title>
+<meta name="musterloesung-source" content="01-systemaufbau.html">
+<meta name="musterloesung-source-sha256" content="912d163b09638b24f8f25fa2d524f421a472da67ff03e00d3d82cea89ac77eab">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"1. Systemaufbau, Sicherheit und Datenschutz · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 1","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Einstieg"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>1. Vom Hühnerstall zum technischen System</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="system_architecture_mcq"><h2>Check: Welches Gerät passt?</h2><h3>Warum ist der ESP32 für die zyklische Sensorabfrage geeignet?</h3><ul><li>Er ist für direkte Ein-/Ausgaben und wiederholte Steuerungsaufgaben ausgelegt.</li></ul><p>Der ESP32 ist ein Mikrocontroller. Seine Stärke liegt in direkter Hardwareanbindung, geringer Leistungsaufnahme und wiederholten Abläufen.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Sicherheit"><h1>Sicherheit vor Funktion</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="system_safety_categories"><h2>Sortiere die Maßnahmen</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Auswertung"><table><thead><tr><th scope="col">Bereich</th><th scope="col">Maßnahmen</th></tr></thead><tbody><tr><td>Hardware-/Betriebssicherheit</td><td>Keine Netzspannung im Schüleraufbau; konkrete Versorgungsspannung des Sensors prüfen</td></tr><tr><td>Datenschutz</td><td>Kamera auf den Hühnerbereich ausrichten; Zugriffsrechte vor dem Betrieb festlegen</td></tr><tr><td>Beides berücksichtigen</td><td>Keine der vier Maßnahmen betrifft für sich zwingend beide Bereiche.</td></tr></tbody></table></div><p>Die Spannungsprüfung schützt vor Fehlbetrieb und Schäden; sie ist keine Datenschutzmaßnahme. Die Zuordnung „Beides“ in der Aufgaben-Konfiguration ist hier fachlich zu korrigieren.</p></article></section>
+<section data-wb-page="3" data-wb-page-title="Datenweg"><h1>Der Datenweg</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="p2_0"><h2>Gerät und typische Aufgabe</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th scope="col">Begriff / Anschluss</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>ESP32</td><td>Sensorwerte lesen und kleinen Dienst anbieten</td></tr><tr><td>Raspberry Pi</td><td>Kamera, Linux-Prozesse und Videodateien verwalten</td></tr><tr><td>Webseite</td><td>Informationen für Menschen darstellen</td></tr><tr><td>Arduino Uno</td><td>Einfaches Mikrocontroller-Board ohne eingebautes WLAN</td></tr></tbody></table></div></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-system-datenformat"><h2>Gemeinsame Schnittstelle</h2><p>Messdaten: Temperatur in °C, relative Feuchte in %RH, LDR als ADC-Rohwert, Messzeit, Alter des Datensatzes und Status. Kameradaten: Streamadresse des freigegebenen Dienstes, Kamerastatus und letzter erfolgreicher lokaler Test. Ein fehlender Messwert ist <code>null</code> mit Fehlerstatus und wird niemals als 0 °C ausgegeben.</p></article></section>
+<section data-wb-page="4" data-wb-page-title="Transfer"><h1>Transfer und Sicherung</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="system_transfer_essay"><h2>Begründe deinen Diagnoseweg</h2><span class="answer-label">Eine mögliche Antwort</span><p>Da der lokale Test funktioniert, beginne ich hinter der lokalen Kameraaufnahme im Datenweg. Ich prüfe, ob der Pi tatsächlich Videodaten codiert und an den Streamingdienst sendet. Danach kontrolliere ich das Netzwerk und den Empfang beim Dienst. Ein dort abspielbarer Stream zeigt, dass die Übertragung bis zu diesem Punkt gelingt. Dann prüfe ich den Zugriff auf den Player, seine Freigabe und die Einbettungsadresse auf der Homepage. Funktioniert der Player direkt, aber nicht eingebettet, liegt die Ursache wahrscheinlich an Einbettungsregeln oder der Homepage. So überprüfe ich jeden Übergang mit einem eigenen Test.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

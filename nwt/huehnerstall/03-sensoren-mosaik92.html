@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3. Temperatur und Luftfeuchtigkeit - Musterlösung</title>
+<meta name="musterloesung-source" content="03-sensoren.html">
+<meta name="musterloesung-source-sha256" content="5ef1e7dd4e3cb5b78606052846e78a9ac78af1491b705fdbd9c7a9773a656249">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"3. Temperatur und Luftfeuchtigkeit · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 3","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Messprinzip"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>3. Temperatur und relative Luftfeuchtigkeit</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="sensoren_begriffe"><h2>Sicherung: Fachbegriffe</h2><p>Der KY-015 gibt <strong>digital</strong> codierte Werte für <strong>Temperatur</strong> und <strong>relative Luftfeuchtigkeit</strong> aus. Für die Bewertung müssen unter anderem der <strong>Messbereich</strong> und die Genauigkeit bekannt sein.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="KY-015 anschließen"><h1>KY-015 / DHT11 an den ESP32 anschließen</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="dht11_verdrahtung_p2"><h2>Zuordnung: KY-015 richtig anschließen</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th scope="col">Begriff / Anschluss</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>S / Signal</td><td>GPIO 4</td></tr><tr><td>+ / VCC</td><td>3V3</td></tr><tr><td>− / GND</td><td>GND</td></tr></tbody></table></div></article></section>
+<section data-wb-page="3" data-wb-page-title="Bibliothek und Testprogramm"><h1>Bibliothek installieren und ersten Messwert lesen</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="dht11_start_order"><h2>Reihenfolge: Vom Sensor zum Messwert</h2><ol><li>KY-015 mit S an GPIO 4, + an 3V3 und - an GND anschließen</li><li>DHT sensor library by Adafruit installieren</li><li>Sketch mit DHTPIN 4 und DHTTYPE DHT11 hochladen</li><li>Seriellen Monitor öffnen</li><li>Baudrate auf 115200 stellen und Messwerte prüfen</li></ol></article></section>
+<section data-wb-page="4" data-wb-page-title="Code verstehen"><h1>Was passiert im Programm?</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="dht11_code_cloze"><h2>Sicherung: Codebausteine</h2><p>Mit <strong>DHTPIN</strong> legst du den Signalpin fest. Mit <strong>DHTTYPE</strong> wählst du den Sensortyp. In setup() startet <strong>dht.begin()</strong> den Sensor. Die Temperatur liest du mit <strong>readTemperature()</strong>, die Luftfeuchtigkeit mit <strong>readHumidity()</strong>.</p></article></section>
+<section data-wb-page="5" data-wb-page-title="Fehlerprüfung"><h1>Sinnvolle Fehlerprüfung</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="dht11_verify_fehler"><h2>Wahr oder falsch?</h2><p><strong>Wahr.</strong> Wenn der DHT11 keine gültigen Werte liefert, sollte man zuerst die Verdrahtung, die Versorgung und die Pin-Nummer im Code prüfen.</p><p>Genau diese drei Punkte sind die häufigsten Fehlerquellen: 3V3/GND vertauscht, Signalpin falsch gesteckt oder DHTPIN im Sketch passt nicht zum Aufbau.</p></article></section>
+<section data-wb-page="6" data-wb-page-title="Messprotokoll und Aufgabe"><h1>Messreihe, Plausibilität und Unterrichtsaufgabe</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="sensoren_mcq"><h2>Plausibilitätscheck</h2><h3>Warum sind mehrere Messungen sinnvoll?</h3><ul><li>Sie zeigen Schwankungen und helfen, Ausreißer zu erkennen.</li></ul><p>Mehrere Messungen machen zufällige Schwankungen sichtbar. Sie ersetzen aber weder Datenblatt noch Kalibrierung.</p></article>
+<div class="wb-section-break"></div><article class="sample-answer" data-solution="dht11_reflexion"><h2>Klausurtraining: Vom Messwert zur Entscheidung</h2><span class="answer-label">Eine mögliche Antwort</span><p>Der DHT11 übermittelt seine Messdaten digital über GPIO4 an den ESP32. Die Temperatur wird in °C und die relative Luftfeuchtigkeit in %RH angezeigt. Im Programm muss DHTPIN zum tatsächlich angeschlossenen GPIO passen. Vor einer Entscheidung prüfe ich mit <code>isnan()</code>, ob beide Werte gültig sind. Bei einem Lesefehler melde ich den Fehler und behandle ihn nicht als 0 °C. Bei gültiger Temperatur über 30 °C kann das Beispielprogramm eine Warnung ausgeben; dieser Grenzwert ist eine Übungsregel und keine vollständige Tierwohlbewertung. Mehrere Messwerte mit bekanntem Einbauort helfen mir, Schwankungen und Wärmeeinflüsse zu beurteilen.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-sensoren-programmierauftrag"><h2>Unterrichtsaufgabe: Luftfeuchtigkeit ergänzen</h2><pre><code>#include &lt;DHT.h&gt;
+#include &lt;math.h&gt;
+constexpr int DHTPIN = 4;
+DHT dht(DHTPIN, DHT11);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);
+  float temperatur = dht.readTemperature();
+  float luftfeuchtigkeit = dht.readHumidity();
+  if (isnan(temperatur) || isnan(luftfeuchtigkeit)) {
+    Serial.println("DHT11: Lesefehler");
+    return;
+  }
+  Serial.printf("Temperatur: %.1f C; Feuchte: %.1f %%RH\n",
+                temperatur, luftfeuchtigkeit);
+  if (temperatur &gt; 30.0f) Serial.println("Zu warm!");
+}</code></pre><p>Nach der Temperaturabfrage kommt <code>dht.readHumidity()</code> hinzu. Die gemeinsame Fehlerprüfung verhindert, dass eine ungültige Feuchte als gültige Messung angezeigt wird. Das Programm setzt die Adafruit-DHT-Bibliothek und ein für 3,3 V geeignetes Modul voraus; die erste Abfrage und alle weiteren erfolgen im Abstand von mindestens 2 s.</p></article>
+<div class="wb-section-break"></div><article class="sample-answer" data-solution="text-sensoren-messreihe"><h2>Messreihe mit gleichen Zeitabständen</h2><p>Fiktive Beispielwerte zur Auswertung, keine tatsächlich aufgenommenen Messdaten. Messort: Raumluft, keine Berührung, keine direkte Wärmequelle, 2-s-Intervall.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Auswertung"><table><thead><tr><th scope="col">Bedingung / Zeitpunkt</th><th scope="col">Temperatur</th><th scope="col">Relative Feuchte</th><th scope="col">Auswertung</th></tr></thead><tbody><tr><td>Beispiel 0 s, Raumluft</td><td>21 °C</td><td>53 %RH</td><td>Ausgangszustand</td></tr><tr><td>Beispiel 2 s, gleicher Ort</td><td>21 °C</td><td>53 %RH</td><td>gleiche Anzeige</td></tr><tr><td>Beispiel 4 s, gleicher Ort</td><td>21 °C</td><td>54 %RH</td><td>Schwankung um 1 Prozentpunkt</td></tr><tr><td>Beispiel 6 s, gleicher Ort</td><td>21 °C</td><td>53 %RH</td><td>Mittelwert 53,25 %RH; Anzeige sinnvoll etwa 53 %RH</td></tr></tbody></table></div><p>Die Temperatur bleibt in dieser kurzen Reihe konstant. Die Feuchte schwankt um einen Prozentpunkt; der Mittelwert beseitigt keine systematische Sensorabweichung. Nach Öffnen eines Fensters sind veränderte Lufttemperatur und Feuchte möglich, ihre Richtung hängt aber von Innen- und Außenbedingungen ab. Berührung oder Nähe zur Elektronik können die Temperatur lokal erhöhen.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

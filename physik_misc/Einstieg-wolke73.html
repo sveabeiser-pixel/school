@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="Einstieg.html">
+<meta name="musterloesung-source-sha256" content="365953073ce89bebd4b47e0aa2863e36eda57f5d0247188073668d4abdf17bcd">
+<title>Physik Oberstufe: Einstieg und physikalische Größen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    :root {
+      --ep-ink: #172033;
+      --ep-muted: #526174;
+      --ep-teal: #087f7a;
+      --ep-blue: #2563a6;
+      --ep-red: #c63f4f;
+      --ep-amber: #b86b08;
+      --ep-line: #cbd8df;
+      --ep-soft: #f3f8f9;
+      --ep-paper: #ffffff;
+      --ep-good: #157347;
+      --ep-bad: #b42318;
+    }
+
+    .wb-book section[data-wb-page] {
+      padding-top: 22px;
+      min-width: 0;
+    }
+    .wb-book .wb-content,
+    .wb-book .wb-paper {
+      min-width: 0;
+    }
+    .wb-book .wb-paper {
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .ep-intro {
+      padding: 8px 0 20px;
+      border-bottom: 4px solid var(--ep-teal);
+    }
+    .ep-kicker {
+      color: var(--ep-teal);
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .ep-intro h1 {
+      max-width: 850px;
+      margin: 8px 0 12px;
+      font-size: 2.45rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .ep-lead {
+      max-width: 820px;
+      color: var(--ep-muted);
+      font-size: 1.12rem;
+      line-height: 1.65;
+    }
+    .ep-lab {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin: 22px 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--ep-paper);
+    }
+    .ep-lab-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--ep-line);
+      background: #f7fafb;
+    }
+    .ep-segments,
+    .ep-icon-actions,
+    .ep-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .ep-segment,
+    .ep-icon-btn,
+    .ep-action-btn {
+      min-height: 40px;
+      border: 1px solid #9fb1bc;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ep-ink);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    .ep-segment { padding: 8px 13px; }
+    .ep-segment[aria-pressed="true"] {
+      border-color: var(--ep-teal);
+      background: #dff4f2;
+      color: #075b57;
+    }
+    .ep-icon-btn {
+      width: 42px;
+      padding: 7px;
+      font-size: 1.05rem;
+    }
+    .ep-action-btn { padding: 8px 13px; }
+    .ep-action-btn.primary {
+      border-color: var(--ep-teal);
+      background: var(--ep-teal);
+      color: #fff;
+    }
+    .ep-lab-canvas-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: auto;
+      background: #f7fafb;
+    }
+    #epLabCanvas {
+      display: block;
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+      aspect-ratio: 980 / 420;
+      background: #f7fafb;
+    }
+    .ep-lab-readout {
+      min-height: 58px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--ep-line);
+      color: var(--ep-ink);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre-line;
+    }
+    .ep-question-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin: 20px 0;
+      border: 1px solid var(--ep-line);
+      background: var(--ep-line);
+    }
+    .ep-question-strip > div {
+      padding: 16px;
+      background: #fff;
+    }
+    .ep-question-strip strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ep-blue);
+    }
+    .ep-route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .ep-route-step {
+      min-height: 130px;
+      padding: 14px;
+      border-top: 4px solid var(--ep-blue);
+      background: var(--ep-soft);
+    }
+    .ep-route-step span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ep-blue);
+      font-weight: 800;
+    }
+    .ep-concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .ep-concept {
+      padding: 16px;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-concept h3 { margin-top: 0; }
+    .ep-equation {
+      margin: 16px 0;
+      padding: 16px;
+      border-left: 5px solid var(--ep-amber);
+      background: #fff8eb;
+      color: #5f3a06;
+      font-size: 1.08rem;
+    }
+    .ep-table-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .ep-save-state {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid #9ac9c5;
+      border-radius: 6px;
+      background: #e9f7f6;
+      color: #075b57;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    .ep-table-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin: 16px 0;
+      overflow-x: auto;
+      border: 1px solid #96a9b4;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-quantity-table {
+      width: 100%;
+      min-width: 1060px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .ep-quantity-table th,
+    .ep-quantity-table td {
+      padding: 10px;
+      border-right: 1px solid #b9c7ce;
+      border-bottom: 1px solid #b9c7ce;
+      text-align: left;
+      vertical-align: top;
+    }
+    .ep-quantity-table th:last-child,
+    .ep-quantity-table td:last-child { border-right: 0; }
+    .ep-quantity-table tbody tr:last-child td { border-bottom: 0; }
+    .ep-quantity-table th {
+      background: #e9f0f3;
+      color: #1c2a35;
+      font-size: .92rem;
+    }
+    .ep-quantity-table th:nth-child(1) { width: 14%; }
+    .ep-quantity-table th:nth-child(2) { width: 27%; }
+    .ep-quantity-table th:nth-child(3) { width: 10%; }
+    .ep-quantity-table th:nth-child(4) { width: 10%; }
+    .ep-quantity-table th:nth-child(5) { width: 16%; }
+    .ep-quantity-table th:nth-child(6) { width: 23%; }
+    .ep-entry {
+      width: 100%;
+      min-height: 40px;
+      box-sizing: border-box;
+      border: 1px solid #93a6b2;
+      border-radius: 4px;
+      background: #fffef8;
+      color: var(--ep-ink);
+      font: inherit;
+      padding: 8px;
+    }
+    textarea.ep-entry {
+      min-height: 84px;
+      resize: vertical;
+    }
+    .ep-entry:focus {
+      outline: 3px solid rgba(37, 99, 166, .18);
+      border-color: var(--ep-blue);
+    }
+    .ep-entry.is-correct {
+      border-color: var(--ep-good);
+      background: #effaf4;
+    }
+    .ep-entry.is-wrong {
+      border-color: var(--ep-bad);
+      background: #fff2f0;
+    }
+    .ep-help {
+      margin-top: 9px;
+      border-top: 1px dashed #b8c5cc;
+      padding-top: 7px;
+    }
+    .ep-help summary {
+      color: var(--ep-blue);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .ep-help p { margin: 7px 0 0; font-size: .91rem; }
+    .ep-check-result {
+      min-height: 25px;
+      margin: 10px 0 0;
+      color: var(--ep-muted);
+      font-weight: 700;
+    }
+    .ep-mission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .ep-mission {
+      padding: 16px;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .ep-mission h3 { margin-top: 0; color: var(--ep-teal); }
+    .ep-final-list li + li { margin-top: 8px; }
+    .ep-export-status { color: var(--ep-muted); font-weight: 700; }
+    .ep-source-list li + li { margin-top: 10px; }
+
+    .ep-motion-formulas {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin: 18px 0;
+      border: 1px solid var(--ep-line);
+      background: var(--ep-line);
+    }
+    .ep-motion-formulas > div {
+      min-width: 0;
+      padding: 14px 15px;
+      background: #fff;
+    }
+    .ep-motion-formulas strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ep-blue);
+    }
+    .ep-motion-formulas code {
+      display: block;
+      margin-top: 5px;
+      color: var(--ep-ink);
+      font-size: .98rem;
+      white-space: normal;
+    }
+    .ep-diagram-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1.1fr) minmax(250px, .9fr);
+      gap: 18px;
+      align-items: start;
+      margin: 16px 0;
+    }
+    .ep-diagram-card {
+      min-width: 0;
+      margin: 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 7px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ep-diagram-card svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+    .ep-diagram-card figcaption {
+      padding: 9px 12px;
+      border-top: 1px solid var(--ep-line);
+      color: var(--ep-muted);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+    .ep-diagram-task {
+      padding: 14px 16px;
+      border-left: 4px solid var(--ep-amber);
+      background: #fff8eb;
+    }
+    .ep-diagram-task strong { color: #684006; }
+    .ep-diagram-task ol { margin-bottom: 0; padding-left: 22px; }
+    .ep-diagram-task li + li { margin-top: 8px; }
+    .ep-mini-diagrams {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .ep-mini-diagram {
+      min-width: 0;
+      margin: 0;
+      border: 1px solid var(--ep-line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ep-mini-diagram svg { display: block; width: 100%; height: auto; }
+    .ep-mini-diagram figcaption {
+      padding: 8px 10px;
+      border-top: 1px solid var(--ep-line);
+      font-weight: 700;
+      color: var(--ep-ink);
+    }
+    .ep-chart-grid { fill: none; stroke: #d9e2e7; stroke-width: 1; }
+    .ep-chart-axis { fill: none; stroke: #263746; stroke-width: 2; }
+    .ep-chart-guide { fill: none; stroke: #7d8d98; stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .ep-chart-line { fill: none; stroke: var(--ep-blue); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+    .ep-chart-line.accel { stroke: var(--ep-red); }
+    .ep-chart-line.velocity { stroke: var(--ep-teal); }
+    .ep-chart-area { fill: rgba(8, 127, 122, .16); stroke: none; }
+    .ep-chart-point { fill: var(--ep-amber); stroke: #fff; stroke-width: 3; }
+    .ep-chart-text { fill: #263746; font: 15px system-ui, sans-serif; }
+    .ep-chart-label { fill: #172033; font: 700 16px system-ui, sans-serif; }
+
+    .wb-book [data-wb-page] .wb-reveal-item-pending,
+    .wb-book [data-wb-page] .wb-reveal-item-done {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .wb-book[data-theme="dark"] .ep-intro,
+    .wb-book[data-theme="dark-blue"] .ep-intro,
+    .wb-book[data-theme="dark"] .ep-concept,
+    .wb-book[data-theme="dark-blue"] .ep-concept,
+    .wb-book[data-theme="dark"] .ep-mission,
+    .wb-book[data-theme="dark-blue"] .ep-mission,
+    .wb-book[data-theme="dark"] .ep-question-strip > div,
+    .wb-book[data-theme="dark-blue"] .ep-question-strip > div,
+    .wb-book[data-theme="dark"] .ep-table-wrap,
+    .wb-book[data-theme="dark-blue"] .ep-table-wrap { color: #172033; }
+
+    @media (max-width: 920px) {
+      .ep-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ep-mission-grid { grid-template-columns: 1fr; }
+      .ep-motion-formulas { grid-template-columns: 1fr; }
+      #epLabCanvas { min-width: 720px; }
+    }
+    @media (max-width: 700px) {
+      .ep-intro h1 { font-size: 2rem; }
+      .ep-question-strip,
+      .ep-concept-grid,
+      .ep-route,
+      .ep-diagram-layout,
+      .ep-mini-diagrams { grid-template-columns: 1fr; }
+      .ep-lab-toolbar,
+      .ep-table-intro { align-items: stretch; flex-direction: column; }
+      .ep-lab-canvas-wrap { overflow: hidden; }
+      #epLabCanvas {
+        width: 100%;
+        min-width: 0;
+      }
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .wb-book .wb-brand { font-size: 17px; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 52px; font-size: 15px; }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand,
+      .wb-book .wb-theme-wrap,
+      .wb-book .wb-present-btn,
+      .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+    }
+    .ep-route-step, .ep-concept, .ep-help, .ep-mission, .ep-diagram-task { color: var(--ep-ink); --wb-muted: var(--ep-muted); }
+    .ep-motion-formulas > div { color: var(--ep-ink); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ep-intro { color: var(--wb-text); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ep-intro .ep-kicker { color: #67e8d5; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) :is(.ep-help, .ep-mission) a { color: #075985; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Einstieg und physikalische Größen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Physik beginnt mit Fragen">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Physik beginnt nicht mit einer Formel, sondern mit einer guten Frage.</h1>
+<h2>Drei Phänomene, eine gemeinsame Sprache</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-reveal-start"><h3>Denkpause: Was ist neu?</h3><p>Eine Beschreibung hält fest, was beobachtet wird. Eine physikalische Erklärung verwendet Begriffe, Größen, Modelle und überprüfbare Beziehungen. Sie muss außerdem deutlich machen, unter welchen Voraussetzungen sie gilt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-mcq-start"><h3>Stopp &amp; check: Rolle einer Formel</h3><h4>1. Was leistet eine physikalische Formel?</h4><ul><li><b>B</b>: Sie beschreibt einen überprüfbaren Zusammenhang zwischen Größen unter bestimmten Voraussetzungen.</li></ul><p>Eine Formel ist Teil eines Modells. Größen, Einheiten, Annahmen und Gültigkeitsbereich gehören zur Aussage dazu.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-drei-phaenomene"><h3>Drei Phänomene: direkt messen und berechnen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Phänomen</th><th scope="col">Direkt messbare Größen und Geräte</th><th scope="col">Berechnete Größen</th></tr></thead><tbody><tr><td>Bewegung</td><td>Ort s in m: Maßstab/Video; Zeit t in s: Uhr</td><td>Mittlere Geschwindigkeit Δs/Δt in m/s; Beschleunigung Δv/Δt in m/s²</td></tr><tr><td>Schwingung</td><td>Auslenkung y und Länge l in m: Maßstab; Zeit für mehrere Perioden in s: Uhr</td><td>Periodendauer T = t/N; Frequenz f = 1/T; bei bekanntem m und D die Energie</td></tr><tr><td>Stromkreis</td><td>Spannung U in V: Voltmeter parallel; Strom I in A: Amperemeter in Reihe; Zeit t in s: Uhr</td><td>Widerstand R = U/I in Ω; Leistung P = UI in W; Energie E = UIt in J bei konstanten Werten</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Vom Phänomen zum Modell">
+<h1>Vom Phänomen zum überprüfbaren Modell</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-order-method"><h3>Ordne einen Untersuchungsweg</h3><ol><li>Eine auffällige Beobachtung sachlich festhalten</li><li>Eine messbare Fragestellung formulieren</li><li>Größen, Messverfahren und Bedingungen festlegen</li><li>Eine begründete Vorhersage ableiten</li><li>Messdaten aufnehmen und auswerten</li><li>Modell und Unsicherheiten beurteilen</li></ol></article>
+<h2>Größe, Zahlenwert und Einheit</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-cloze-quantity"><h3>Sicherung: Die Sprache einer Messung</h3><p>Ein Messwert besteht aus <b>Zahlenwert</b> und <b>Einheit</b>. Für eine vektorielle <b>Größe</b> muss zusätzlich die <b>Richtung</b> angegeben werden.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-cat-scalars-vectors"><h3>Sortiere Größen nach ihrem Charakter</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>Skalar</td><td>Masse</td></tr><tr><td>Skalar</td><td>Temperatur</td></tr><tr><td>Skalar</td><td>Energie</td></tr><tr><td>Vektor</td><td>Kraft</td></tr><tr><td>Vektor</td><td>Geschwindigkeit</td></tr><tr><td>Vektor</td><td>Impuls</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-erkenntnisweg"><h3>Verbinde Aussage und Rolle</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Der Wagen legt in 2,0 s eine Strecke von 3,1 m zurück.</td><td>Messwert</td></tr><tr><td>Die Reibung wird in erster Näherung vernachlässigt.</td><td>Modellannahme</td></tr><tr><td>Bei doppelter Zeit erwarten wir die doppelte Strecke.</td><td>Vorhersage</td></tr><tr><td>Die Punkte liegen nicht exakt auf der Geraden.</td><td>Bewertung der Messdaten</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-verify-units"><h3>Wahr oder falsch?</h3><p><b>Falsch:</b> Meter ist das Formelzeichen für die Länge.</p><p>Meter ist der Name der SI-Einheit, m ihr Einheitenzeichen. Ein mögliches Formelzeichen für eine Länge ist l, für einen Weg häufig s.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Größentabelle I">
+<h1>Physikalische Größen und Formeln aus der Mittelstufe I</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-groessentabelle-mechanics-basic"><h3>Größentabelle I vollständig</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Größe</th><th scope="col">Bedeutung</th><th scope="col">Formelzeichen</th><th scope="col">Einheit</th><th scope="col">Messgerät / Verfahren</th><th scope="col">Berechnung</th></tr></thead><tbody><tr><td>Länge / Weg</td><td>Abstand oder zurückgelegte Strecke</td><td>l, s, x</td><td>m</td><td>Lineal, Maßband, Messschieber</td><td>Keine allgemeine Definitionsformel; gleichförmig: Δs = vΔt</td></tr><tr><td>Radius</td><td>Abstand eines Kreispunktes zum Mittelpunkt</td><td>r</td><td>m</td><td>Lineal oder Durchmessermessung</td><td>r = d/2; Umfang u = 2πr; Kreisfläche A = πr²</td></tr><tr><td>Fläche</td><td>Größe einer begrenzten Fläche</td><td>A</td><td>m²</td><td>Lineal/Maßband; aus Längen berechnet</td><td>Rechteck A = ab; Parallelogramm A = gh; Kreis A = πr²</td></tr><tr><td>Volumen</td><td>Rauminhalt</td><td>V</td><td>m³</td><td>Messzylinder; Verdrängung; Längenmessung</td><td>Quader V = abc; Zylinder V = πr²h</td></tr><tr><td>Zeitdauer</td><td>Abstand zweier Ereignisse in der Zeit</td><td>t, Δt</td><td>s</td><td>Uhr, Stoppuhr, Lichtschranke</td><td>Δt = t₂ − t₁</td></tr><tr><td>Geschwindigkeit</td><td>Änderung des Ortes pro Zeit mit Richtung</td><td>v⃗</td><td>m/s</td><td>Tachometer/Radar für Betrag; Positionen und Uhr für Richtung</td><td>v⃗<sub>mittel</sub> = Δr⃗/Δt; geradlinig v = Δs/Δt</td></tr><tr><td>Beschleunigung</td><td>Änderung der Geschwindigkeit pro Zeit</td><td>a⃗</td><td>m/s²</td><td>Beschleunigungssensor; Geschwindigkeiten und Uhr</td><td>a⃗<sub>mittel</sub> = Δv⃗/Δt</td></tr><tr><td>Temperatur</td><td>Thermischer Zustand</td><td>T, ϑ</td><td>K; gebräuchlich auch °C</td><td>Thermometer</td><td>Keine allgemeine Berechnungsformel; T/K = ϑ/°C + 273,15</td></tr><tr><td>Masse</td><td>Maß für Trägheit und gravitative Wechselwirkung</td><td>m</td><td>kg</td><td>Waage</td><td>Keine allgemeine Berechnungsformel; bei bekannter Dichte m = ρV</td></tr><tr><td>Dichte</td><td>Masse pro Volumen</td><td>ρ</td><td>kg/m³</td><td>Waage und Messzylinder; Aräometer für Flüssigkeiten</td><td>ρ = m/V</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Größentabelle II">
+<h1>Physikalische Größen und Formeln aus der Mittelstufe II</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-mcq-energy-power"><h3>Arbeit, Energie oder Leistung?</h3><h4>1. Zwei Kräne heben dieselbe Last auf dieselbe Höhe. Kran A benötigt halb so viel Zeit. Welche Aussage stimmt?</h4><ul><li><b>B</b>: Beide verrichten gleich viel Arbeit; Kran A hat die doppelte Leistung.</li></ul><p>Bei gleicher Last und Höhe ist die Energieänderung und damit die Hubarbeit gleich. Leistung berücksichtigt zusätzlich die benötigte Zeit.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-groessentabelle-mechanics-energy"><h3>Größentabelle II vollständig</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Größe</th><th scope="col">Bedeutung</th><th scope="col">Formelzeichen</th><th scope="col">Einheit</th><th scope="col">Messgerät / Verfahren</th><th scope="col">Berechnung</th></tr></thead><tbody><tr><td>Kraft</td><td>Wechselwirkung, die Bewegung oder Form ändern kann</td><td>F⃗</td><td>N = kg·m/s²</td><td>Federkraftmesser</td><td>F⃗<sub>res</sub> = ma⃗; F<sub>G</sub> = mg; F<sub>Feder</sub> = −Dy; F<sub>Z</sub> = mv²/r</td></tr><tr><td>Impuls</td><td>Vektorielle Bewegungsgröße</td><td>p⃗</td><td>kg·m/s = N·s</td><td>Aus Masse und Geschwindigkeit; Waage + Lichtschranke</td><td>Nichtrelativistisch p⃗ = mv⃗</td></tr><tr><td>Arbeit</td><td>Energieübertragung durch Kraft längs eines Weges</td><td>W</td><td>J = N·m</td><td>Kraftmesser und Wegmessung; aus Daten berechnet</td><td>Konstante Kraft: W = Fs cos α; W<sub>Hub</sub> = mgh; W<sub>Beschl.</sub> = ½m(v₂² − v₁²); W<sub>Spann</sub> = ½D(y₂² − y₁²); Reibungsarbeit am Körper W = −F<sub>R</sub>s</td></tr><tr><td>Energie</td><td>Erhaltene Zustandsgröße; Bilanz von Veränderungsprozessen</td><td>E</td><td>J</td><td>Je nach Form berechnet; Kalorimeter für Wärmeübertragung</td><td>E<sub>kin</sub> = ½mv²; E<sub>pot</sub> = mgh; E<sub>Spann</sub> = ½Dy²</td></tr><tr><td>Leistung</td><td>Energieänderung oder Arbeit pro Zeit</td><td>P</td><td>W = J/s</td><td>Wattmeter; Energie- und Zeitmessung</td><td>P<sub>mittel</sub> = W/Δt = ΔE/Δt</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Größentabelle Elektrizität">
+<h1>Elektrische Größen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-cloze-electricity"><h3>Sicherung: Elektrische Grundgrößen</h3><p>Die elektrische <b>Stromstärke</b> beschreibt transportierte Ladung pro <b>Zeit</b>. Die elektrische <b>Spannung</b> beschreibt Energie pro <b>Ladung</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-groessentabelle-electricity"><h3>Elektrische Größentabelle vollständig</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Größe</th><th scope="col">Bedeutung</th><th scope="col">Formelzeichen</th><th scope="col">Einheit</th><th scope="col">Messgerät / Anschluss</th><th scope="col">Berechnung</th></tr></thead><tbody><tr><td>Ladung</td><td>Elektrische Eigenschaft; übertragene Ladungsmenge</td><td>Q, q</td><td>C = A·s</td><td>Elektrometer / Coulombmeter</td><td>Q = IΔt für konstanten Strom</td></tr><tr><td>Stromstärke</td><td>Ladung durch einen Querschnitt pro Zeit</td><td>I</td><td>A</td><td>Amperemeter in Reihe</td><td>I = ΔQ/Δt</td></tr><tr><td>Spannung</td><td>Potenzialdifferenz; Energieübertragung pro Ladung</td><td>U</td><td>V = J/C</td><td>Voltmeter parallel</td><td>U = W/Q; Reihe: U<sub>ges</sub> = U₁ + U₂; parallel: U<sub>ges</sub> = U₁ = U₂</td></tr><tr><td>Widerstand</td><td>Quotient aus Spannung und Stromstärke</td><td>R</td><td>Ω = V/A</td><td>Ohmmeter am spannungsfreien Bauteil</td><td>R = U/I; Reihe: R<sub>ges</sub> = R₁ + R₂; parallel: 1/R<sub>ges</sub> = 1/R₁ + 1/R₂</td></tr></tbody></table></div><p>Bei einem ohmschen Widerstand bleibt R bei konstanten Bedingungen unabhängig von U und I. Ein Tachometer zeigt nur den Geschwindigkeitsbetrag, nicht die vollständige vektorielle Geschwindigkeit.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Einheiten als Prüfwerkzeug">
+<h1>Einheiten sind ein eingebauter Fehlerdetektor</h1>
+<h2>Fehlerlabor: 72 km/h sind nicht 72 m/s</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-reveal-unit-error"><h3>Finde und korrigiere den Fehler</h3><p>Die Einheiten passen nicht zusammen: 72 km/h müssen vor dem Multiplizieren mit Sekunden in m/s umgerechnet werden. Es gilt 72 km/h = 20 m/s. Daher ist s = 20 m/s · 5 s = 100 m.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-mcq-dimension"><h3>Dimensionscheck</h3><h4>1. Welche Einheit ergibt sich aus Energie geteilt durch Zeit?</h4><ul><li><b>B</b>: Watt</li></ul><p>Joule pro Sekunde ist Watt und gehört zur Leistung.</p><h4>2. Welche Einheit besitzt der Quotient Masse durch Volumen?</h4><ul><li><b>A</b>: kg/m³</li></ul><p>Der Quotient m/V ist die Dichte ρ mit der SI-Einheit kg/m³.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Deine erste Untersuchung">
+<h1>Deine erste kleine Oberstufen-Untersuchung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-essay-investigation"><h3>Plane deine Untersuchung</h3><span class="solution-label">Eine mögliche Antwort</span><p><b>Mission und Frage:</b> Ich untersuche, ob sich die Erdbeschleunigung mit einem Fadenpendel bestimmen lässt. <b>Methode:</b> Ich messe die Pendellänge l vom Aufhängepunkt bis zum Schwerpunkt des Pendelkörpers mit einem Maßband in Metern. Bei kleiner Auslenkung messe ich mit einer Stoppuhr die Zeit t für 20 volle Perioden in Sekunden und berechne T = t/20. Ich wiederhole diese Zeitmessung mehrfach und berechne g = 4π²l/T² in m/s². <b>Vorhersage:</b> Für die angenommene Länge l = 1,00 m erwarte ich mit g = 9,81 m/s² eine Periodendauer von ungefähr 2,01 s und eine Zeit von etwa 40,1 s für 20 Perioden. Das sind Modellvorhersagen, keine gemessenen Werte. <b>Unsicherheit:</b> Reaktionszeit, ungenaue Schwerpunktlage und zu große Auslenkung können das Ergebnis beeinflussen; lange Messintervalle und Wiederholungen verkleinern den relativen Zeitfehler. Näherungsweise gilt für unabhängige Unsicherheiten Δg/g ≈ √[(Δl/l)² + (2ΔT/T)²].</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-mission-treppenleistung"><h3>Mission Treppenleistung: Beobachtung und Auswertung</h3><p>Du gewinnst beim Hinaufgehen die Lageenergie ΔE = mgh; die mittlere mechanische Leistung ist P = mgh/t. Mit angenommenen Beispielwerten m = 60 kg, h = 3,0 m, t = 10 s folgt ΔE = 1765,8 J und P ≈ 177 W. Bei derselben Höhe und halber Zeit verdoppelt sich die Leistung, die Hubarbeit bleibt gleich. Die Stoffwechselleistung ist größer, weil nur ein Teil der aufgenommenen Energie als äußere mechanische Arbeit erscheint; Wärme und weitere Bewegung benötigen ebenfalls Energie. Die Werte sind ein Rechenbeispiel, keine Versuchsmessung.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-mission-pendel"><h3>Mission Pendel als Gravimeter: Auswertung und Unsicherheit</h3><p>Für kleine Auslenkung gilt T = 2π√(l/g), daher g = 4π²l/T². Die Länge reicht bis zum Schwerpunkt; aus der Zeit t für N Perioden folgt T = t/N. Der relative Fehler der Periodendauer geht mit dem Faktor 2 in g ein. Bei einer einzelnen handgestoppten Periode ist deshalb oft die Reaktionszeit besonders wichtig. Bei langen Zeitintervallen kann stattdessen die ungenaue Längenmessung dominieren. Ohne Messwerte lässt sich die größte tatsächliche Unsicherheit nicht eindeutig bestimmen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-mission-video"><h3>Mission Bewegung im Video: Diagrammauswertung</h3><p>Eine ruhende Kamera und ein Maßstab in der Bewegungsebene erlauben die Zuordnung von Bildpositionen zu Orten s und Bildnummern zu Zeiten t. Bei konstanter Bildrate f<sub>Bild</sub> gilt Δt = Δn/f<sub>Bild</sub>. Gleichförmige Bewegung liefert eine Gerade im s-t-Diagramm mit konstanter Steigung. Gleichmäßig beschleunigte Bewegung liefert eine Parabel; ihre Steigung wächst linear mit der Zeit. Perspektive, bewegte Kamera, ungenauer Maßstab und begrenzte Bildauflösung verursachen Unsicherheiten.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Bewegungen in Diagrammen">
+<h1>Bewegungen aus Diagrammen lesen</h1>
+<h2>Station 1: Eine Gerade im Weg-Zeit-Diagramm</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-st-trace"><h3>Ablaufspur: Werte aus der Geraden lesen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Zeit t in s</th><th scope="col">Ort s in m</th></tr></thead><tbody><tr><td>1,0</td><td>2,0</td></tr><tr><td>3,0</td><td>6,0</td></tr><tr><td>5,0</td><td>10,0</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-st-mcq"><h3>Steigungscheck</h3><h4>1. Welche Geschwindigkeit und welche Bewegungsgleichung gehören zur blauen Geraden?</h4><ul><li><b>B</b>: v = 2,0 m/s und s(t) = 2,0 m/s · t</li></ul><p>Die Steigung beträgt Δs/Δt = 10 m/5 s = 2,0 m/s. Weil die Gerade durch den Ursprung verläuft, gilt s₀ = 0 und damit s(t) = 2,0 m/s · t.</p></article>
+<h2>Station 2: Beschleunigung und zurückgelegter Weg</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-vt-mcq"><h3>Diagrammcheck: Beschleunigte Bewegung</h3><h4>1. Welche Aussagen passen zum v-t-Diagramm?</h4><ul><li><b>A</b>: Die Beschleunigung beträgt 2,0 m/s².</li><li><b>B</b>: Nach 2,0 s beträgt die Geschwindigkeit 4,0 m/s.</li><li><b>C</b>: In 4,0 s werden 16 m zurückgelegt.</li></ul><p>Es gilt a = 8 m/s ÷ 4 s = 2 m/s². Bei t = 2 s liest du v = 4 m/s ab. Die Dreiecksfläche ist Δs = 1/2 · 4 s · 8 m/s = 16 m.</p></article>
+<h2>Station 3: Vier Diagramme, zwei Bewegungen</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-classify-mcq"><h3>Ordne die Diagramme zu</h3><h4>1. Welche Diagramme beschreiben eine gleichförmige Bewegung mit positiver Geschwindigkeit?</h4><ul><li><b>A</b>: Diagramm A</li><li><b>C</b>: Diagramm C</li></ul><p>Bei A wächst der Weg linear; die Steigung und damit v sind konstant. C zeigt die konstante positive Geschwindigkeit direkt.</p><h4>2. Welche Diagramme beschreiben eine gleichmäßig beschleunigte Bewegung aus der Ruhe?</h4><ul><li><b>B</b>: Diagramm B</li><li><b>D</b>: Diagramm D</li></ul><p>Bei B wächst die Steigung des s-t-Graphen mit der Zeit. D zeigt die dazugehörige linear zunehmende Geschwindigkeit.</p></article>
+<h2>Station 4: Vom Text zum Diagramm</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-transfer-reveal"><h3>Kontrolle: Auto mit Anfangsgeschwindigkeit</h3><p>Der Graph beginnt bei 2,0 m/s und endet bei v(4 s) = 2,0 m/s + 1,5 m/s² · 4 s = 8,0 m/s. Die Fläche unter dem Graphen ist ein Trapez: Δs = (2,0 m/s + 8,0 m/s) / 2 · 4 s = 20 m. Gleichwertig ist s = v₀t + 1/2 · a · t² = 20 m.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-motion-transfer-essay"><h3>Erkläre mit Diagrammsprache</h3><span class="solution-label">Eine mögliche Antwort</span><p>Eine Gerade im s-t-Diagramm beschreibt konstante Geschwindigkeit, weil ihre Steigung Δs/Δt unverändert bleibt. Die Geschwindigkeit entspricht also der Steigung des Ortsgraphen. Im v-t-Diagramm beschreibt die Steigung dagegen die Beschleunigung. Die Fläche unter dem Geschwindigkeitsgraphen ist die Ortsänderung; bei ausschließlich positiver Geschwindigkeit ist sie auch der zurückgelegte Weg. Für das Auto steigt v von 2 m/s auf 8 m/s, sodass die Trapezfläche in vier Sekunden 20 m beträgt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-station1-steigung"><h3>Station 1: Steigung und Bewegungsgleichung</h3><p>Mit (t,s) = (0 s,0 m) und (5 s,10 m) folgt v = Δs/Δt = 10 m/5 s = 2,0 m/s. Die Gerade beginnt bei s₀ = 0: s(t) = (2,0 m/s)t. Bei 1 s, 3 s und 5 s sind die Orte 2 m, 6 m und 10 m.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-station2-flaeche"><h3>Station 2: Beschleunigung und Weg</h3><p>Die Geschwindigkeit steigt von 0 auf 8 m/s in 4 s: a = 2,0 m/s². Bei 2 s gilt v = 4,0 m/s. Die Dreiecksfläche beträgt Δs = ½ · 4 s · 8 m/s = 16 m; die Flächeneinheit ist (m/s) · s = m.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-station4-skizze"><h3>Station 4: Graph mit Anfangsgeschwindigkeit</h3><p>Der gesuchte Graph ist die Gerade v(t) = 2,0 m/s + (1,5 m/s²)t zwischen den Punkten (0 s,2 m/s) und (4 s,8 m/s). Die Trapezfläche darunter ist Δs = ½(2 + 8) m/s · 4 s = 20 m. Gleichwertig: Δs = v₀t + ½at² = 8 m + 12 m = 20 m.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Zusammenfassung">
+<h1>Dein Werkzeugkasten für die Kursstufe</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ep-mcq-final"><h3>Abschlusscheck</h3><h4>1. Was gehört zu einem belastbaren Ergebnis?</h4><ul><li><b>A</b>: Größe und Formelzeichen eindeutig benennen</li><li><b>B</b>: Einheit angeben und prüfen</li><li><b>D</b>: Messverfahren und Unsicherheiten berücksichtigen</li><li><b>E</b>: Plausibilität der Größenordnung prüfen</li></ul><p>Ein Ergebnis ist mehr als eine Zahl. Es braucht Bedeutung, Einheit, nachvollziehbare Methode, Voraussetzungen und eine Plausibilitätsprüfung.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

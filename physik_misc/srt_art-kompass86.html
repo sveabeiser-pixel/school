@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="srt_art.html">
+<meta name="musterloesung-source-sha256" content="f98c4d9beaec8d564f912fec2885041713cca10fae97f806fcd8f6706cae930f">
+<title>Spezielle und allgemeine Relativitätstheorie – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    :root {
+      --srt-accent: #8a1c3a;
+      --srt-accent-soft: #f4dde5;
+      --srt-ink: #172033;
+      --srt-panel: #f8fafc;
+      --srt-border: #d8e0ec;
+    }
+    .srt-hero {
+      background: linear-gradient(135deg, #f7e5c9 0%, #f7f4ff 52%, #dce8f8 100%);
+      border: 1px solid var(--srt-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+    }
+    .srt-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--srt-accent-soft);
+      color: var(--srt-accent);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .srt-grid,
+    .srt-grid-3 {
+      display: grid;
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .srt-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .srt-grid-3 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+    .srt-card {
+      background: var(--srt-panel);
+      border: 1px solid var(--srt-border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .srt-card h3, .srt-card h4 { margin-top: 0; }
+    .srt-figure {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid var(--srt-border);
+      border-radius: 18px;
+      background: #fff;
+    }
+    .srt-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .srt-figure figcaption {
+      margin-top: 10px;
+      color: #536077;
+      font-size: 0.95rem;
+    }
+    .srt-formula {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--srt-accent);
+      border-radius: 14px;
+      background: #fff8fb;
+      font-size: 1.05rem;
+    }
+    .srt-timeline {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 20px;
+    }
+    .srt-step {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--srt-border);
+    }
+    .srt-step strong { color: var(--srt-accent); }
+    .srt-quote {
+      margin: 18px 0;
+      padding: 16px 18px;
+      background: linear-gradient(90deg, #fff4df 0%, #fff 100%);
+      border: 1px solid #eed9b2;
+      border-radius: 18px;
+      font-style: italic;
+    }
+    .srt-checklist {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .srt-checklist li + li { margin-top: 8px; }
+    .wb-book[data-theme="dark"] .srt-card,
+    .wb-book[data-theme="dark-blue"] .srt-card,
+    .wb-book[data-theme="dark"] .srt-card p,
+    .wb-book[data-theme="dark-blue"] .srt-card p,
+    .wb-book[data-theme="dark"] .srt-card li,
+    .wb-book[data-theme="dark-blue"] .srt-card li,
+    .wb-book[data-theme="dark"] .srt-card strong,
+    .wb-book[data-theme="dark-blue"] .srt-card strong,
+    .wb-book[data-theme="dark"] .srt-card h3,
+    .wb-book[data-theme="dark-blue"] .srt-card h3,
+    .wb-book[data-theme="dark"] .srt-card h4,
+    .wb-book[data-theme="dark-blue"] .srt-card h4,
+    .wb-book[data-theme="dark"] .srt-card a,
+    .wb-book[data-theme="dark-blue"] .srt-card a,
+    .wb-book[data-theme="dark"] .srt-hero,
+    .wb-book[data-theme="dark-blue"] .srt-hero,
+    .wb-book[data-theme="dark"] .srt-hero p,
+    .wb-book[data-theme="dark-blue"] .srt-hero p,
+    .wb-book[data-theme="dark"] .srt-hero h1,
+    .wb-book[data-theme="dark-blue"] .srt-hero h1,
+    .wb-book[data-theme="dark"] .srt-kicker,
+    .wb-book[data-theme="dark-blue"] .srt-kicker,
+    .wb-book[data-theme="dark"] .srt-quote,
+    .wb-book[data-theme="dark-blue"] .srt-quote {
+      color: #111;
+    }
+    @media (max-width: 760px) {
+      .srt-hero { padding: 18px; }
+    }
+    .srt-formula, .srt-step { color: var(--srt-ink); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Spezielle und allgemeine Relativitätstheorie · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start &amp; Leitfrage">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Spezielle und allgemeine Relativitätstheorie</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-start-reveal"><h3>Was kannst du danach?</h3><p>Die Naturgesetze gelten in allen Inertialsystemen gleich, und alle Inertialbeobachter messen für Licht im Vakuum denselben Wert c. Daraus folgen Zeitdilatation Δt = γΔτ, Längenkontraktion L = L₀/γ und relative Gleichzeitigkeit, mit γ = 1/√(1 − v²/c²). Die ART beschreibt Gravitation als Raumzeitkrümmung durch Energie und Impuls; frei fallende Körper und Licht folgen Geodäten.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Warum eine neue Theorie?">
+<h1>Warum eine neue Theorie? </h1>
+<h2>Was ist ein Inertialsystem?</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-cloze-postulate"><h3>Sicherung: Die Grundidee der SRT</h3><p>Einstein widersprach der <b>klassischen</b> Vorstellung, dass Raum und Zeit <b>absolut</b> sind. Er forderte, dass die Naturgesetze in allen <b>Inertialsystemen</b> gelten und dass die <b>Lichtgeschwindigkeit</b> immer <b>gleich</b> bleibt. Deshalb mussten Raum und Zeit <b>neu</b> gedacht werden.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-verify-newton"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Die spezielle Relativitätstheorie behauptet, dass es ein ausgezeichnetes Ruhesystem im Universum geben muss.</p><p>Gerade das lehnt Einstein ab: Für alle Inertialsysteme gelten dieselben Naturgesetze. Es gibt kein physikalisch bevorzugtes Ruhesystem.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Zeitdilatation, Kontraktion, Gleichzeitigkeit">
+<h1>Zeitdilatation, Längenkontraktion und Gleichzeitigkeit:</h1>
+<h2>Was ist Gleichzeitigkeit in einem Inertialsystem?</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-mcq-effects"><h3>Mini-Check: Folgen der SRT</h3><p><b>Frage 1: b.</b> Weil das Licht einen längeren Weg zurücklegt, während seine Geschwindigkeit gleich bleibt. Gemeint ist die Zeit zwischen zwei Ticks, die ein äußerer Inertialbeobachter für die relativ zu ihm bewegte Uhr misst. Im Ruhesystem der Rakete misst dieselbe Uhr die kürzere Eigenzeit.</p><p><b>Frage 2: b.</b> Gleichzeitigkeit kann sich zwischen zwei Inertialsystemen unterscheiden. Räumlich getrennte Ereignisse, die am Bahnsteig gleichzeitig sind, müssen im Zug nicht gleichzeitig sein.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-order-lightclock"><h3>Anwendung: So leitest du die Zeitdilatation gedanklich her</h3><ol><li>Du gehst davon aus, dass die Lichtgeschwindigkeit für alle Beobachter gleich ist.</li><li>Du stellst fest, dass das Licht in der bewegten Rakete einen längeren Weg zurücklegt.</li><li>Du folgerst: Wenn c gleich bleibt und der Weg länger ist, muss mehr Zeit vergehen.</li><li>Du erhältst das Ergebnis: Bewegte Uhren gehen langsamer.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-reveal-causality"><h3>Warum kippt die Kausalität trotzdem nicht um?</h3><p>Weil keine Information schneller als Licht übertragen werden kann. Dadurch kann ein Effekt nicht in einem anderen Inertialsystem vor seiner Ursache eintreten, solange die Ereignisse kausal verbunden sind.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="bild-lichtuhr-herleitung"><h3>Lichtuhr: Herleitung mit dem Materialdreieck</h3><p>Im Ruhesystem beträgt die Hin-und-zurück-Zeit Δτ = 2h/c. Im äußeren System gilt für den halben Lichtweg (cΔt/2)² = h² + (vΔt/2)². Einsetzen von h = cΔτ/2 ergibt (c² − v²)Δt² = c²Δτ² und damit Δt = Δτ/√(1 − v²/c²). Für v = 0,99c ist γ ≈ 7,09. Die im Bild genannte Spiegelentfernung 150 000 km ergibt mit c ≈ 300 000 km/s die Eigenzeit Δτ ≈ 1,00 s; äußerlich vergehen etwa 7,09 s. Bei einem ruhenden Stab der Eigenlänge L₀ wird seine Länge im bewegten System aus gleichzeitig gemessenen Endpunkten zu L = L₀/γ ≈ 0,141L₀.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Raumzeit und E = mc²">
+<h1>Raumzeit und Masse-Energie-Äquivalenz:</h1>
+<h2>Energie und Masse</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-categorize-spacetime"><h3>Sortiere die Aussagen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>Raumzeit &amp; Lichtkegel</td><td>Trennt kausal erreichbare von nicht erreichbaren Ereignissen</td></tr><tr><td>Raumzeit &amp; Lichtkegel</td><td>Verknüpft Raum und Zeit zu einer gemeinsamen Beschreibung</td></tr><tr><td>Masse-Energie-Äquivalenz</td><td>Erklärt, warum Energie zur Masse eines Systems beiträgt</td></tr><tr><td>Masse-Energie-Äquivalenz</td><td>Spielt bei Kernspaltung und radioaktivem Zerfall eine Rolle</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_0"><h3>Begriffe verknüpfen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Zukunftskegel</td><td>Bereich aller Ereignisse, die A noch beeinflussen kann</td></tr><tr><td>Vergangenheitskegel</td><td>Bereich aller Ereignisse, die A beeinflusst haben könnten</td></tr><tr><td>Ruheenergie</td><td>Energie, die ein Körper schon ohne Bewegung besitzt</td></tr><tr><td>E = mc²</td><td>Formel für die Äquivalenz von Masse und Energie</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Vom Fahrstuhl zur Raumzeitkrümmung">
+<h1>Vom Fahrstuhl zur Raumzeitkrümmung:</h1>
+<h2>Der entscheidende Gedanke</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="art-verify-equivalence"><h3>Wahr oder falsch?</h3><p><b>Falsch:</b> Wenn eine Rakete mit 9,81 m/s² beschleunigt, kann man im Inneren mit einer Waage eindeutig erkennen, dass man nicht auf der Erde steht.</p><p>Genau das bestreitet das Äquivalenzprinzip: Lokal liefert die Waage dieselbe Anzeige wie im Gravitationsfeld der Erde.</p></article>
+<h2>Warum wird dann Licht abgelenkt?</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="art-essay-transfer"><h3>Transfer: Erkläre den Schritt von der SRT zur ART</h3><span class="solution-label">Eine mögliche Antwort</span><p>Die SRT beschreibt Raum und Zeit in flacher Raumzeit und enthält keine dynamische Theorie der Gravitation. Beschleunigte Bewegungen lassen sich auch in der SRT behandeln; für Gravitation wird jedoch die ART benötigt. Nach dem Äquivalenzprinzip sind eine gleichmäßig beschleunigte Rakete und ein entsprechend betrachtetes Gravitationsfeld in einem kleinen Labor lokal nicht unterscheidbar. Im freien Fall verschwindet die empfundene Gewichtskraft, weil keine stützende Kraft wirkt. In einer beschleunigten Kabine bewegt sich der Boden während der Laufzeit eines quer gerichteten Lichtsignals, sodass der Lichtweg in diesen Koordinaten gebogen erscheint. Das legt Lichtablenkung auch im Gravitationsfeld nahe. Die ART beschreibt sie durch nullartige Geodäten in gekrümmter Raumzeit; eine vollständige Ablenkungsrechnung benötigt zusätzlich die Raumkrümmung.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="ART, Belege und Anwendungen">
+<h1>ART, Belege und Anwendungen:</h1>
+<h2>Historischer Kontext:</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="art-mcq-evidence"><h3>Mini-Check: ART verstehen</h3><h4>1. Welche Aussage trifft die ART am besten?</h4><ul><li><b>b</b>: Masse und Energie beeinflussen die Geometrie der Raumzeit.</li></ul><p>Das ist die Grundidee der ART.</p><h4>2. Welche Beispiele gelten als Bestätigung oder Anwendung relativer Effekte?</h4><ul><li><b>a</b>: GPS-Satellitennavigation</li><li><b>b</b>: Gravitationslinsen</li></ul><p>GPS und Gravitationslinsen gehören zu den Standardbeispielen. Aussage c ist falsch.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="art-reveal-blackhole"><h3>Weiterdenken: Schwarzes Loch</h3><p>Weil jenseits des Ereignishorizonts kein Licht mehr entkommt. Sichtbar werden Schwarze Löcher deshalb meist indirekt, zum Beispiel über Materie in ihrer Umgebung, über abgelenktes Licht oder über ihre Wirkung auf andere Himmelskörper.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Zusammenfassung, Quellen">
+<h1>Zusammenfassung, Weiterforschen</h1>
+<h2>Eckdaten zu Albert Einstein</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-art-final-check"><h3>Abschluss-Check</h3><p><b>c ist die beabsichtigte Auswahl:</b> Das Äquivalenzprinzip führt von der SRT zur ART. Die Formulierung der Auswahl benötigt allerdings eine Präzisierung: Die SRT kann beschleunigte Bewegungen in flacher Raumzeit beschreiben, liefert aber keine dynamische Gravitationstheorie. Dafür wird die ART mit gekrümmter Raumzeit benötigt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="srt-art-reflection"><h3>Erkläre Einstein in deinen eigenen Worten</h3><span class="solution-label">Eine mögliche Antwort</span><p>Am überraschendsten finde ich, dass Gleichzeitigkeit vom Bezugssystem abhängt. Im Alltag wirkt es selbstverständlich, dass zwei räumlich getrennte Ereignisse für alle zur gleichen Zeit stattfinden. Bei einem Zug und einem Bahnsteig können Beobachter aber nach Synchronisation ihrer eigenen Uhren zu unterschiedlichen Zeitzuordnungen kommen. Ursache ist die für alle Inertialbeobachter gleiche Lichtgeschwindigkeit. Eine bloße Korrektur für die Signallaufzeit stellt keine universelle Gleichzeitigkeit wieder her. Trotzdem bleibt die zeitliche Reihenfolge kausal verbundener Ereignisse erhalten. So ist die Theorie ungewohnt, aber nicht widersprüchlich.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

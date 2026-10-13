@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="musterloesung-source" content="arduino-1.html" />
+  <meta name="musterloesung-source-sha256" content="7e163658dc4bf8632bebbadcba777f0aa36e4315f20c6aeba16659c8fc55f7de" />
+  <title>Arduino Modul 1 – Musterlösungen</title>
+  <link rel="stylesheet" href="../assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="arduino-kurs.css" />
+  <link rel="stylesheet" href="../assets/musterloesungen.css" />
+  <style>
+    .wb-book .wb-side-footer{display:none}
+    .sample-answer{min-width:0}
+    .sample-answer h3{font-size:18px; line-height:1.45; margin:0 0 8px}
+    .answer-label{display:block; margin-bottom:6px; color:var(--wb-muted); font-size:13px; font-weight:700}
+    .table-scroll{max-width:100%; overflow-x:auto; margin:12px 0}
+    table{width:100%; border-collapse:collapse; font-size:14px}
+    .wide-table{min-width:560px}
+    th,td{padding:9px 10px; border:1px solid var(--wb-line); text-align:left; vertical-align:top; overflow-wrap:normal}
+    th{background:var(--wb-head-bg); color:var(--wb-text)}
+    caption{text-align:left; color:var(--wb-muted); padding-bottom:8px}
+    .circuit{padding:12px 0; color:var(--wb-text); font-weight:700; overflow-wrap:anywhere}
+    @media (max-width:600px){
+      .wb-book:not(.wb-present-mode){--wb-topH:112px}
+      .wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap; gap:6px; padding:8px 12px; box-sizing:border-box}
+      .wb-book:not(.wb-present-mode) .wb-top-left{width:100%; min-width:0; gap:10px}
+      .wb-book:not(.wb-present-mode) .wb-hamburger{width:44px; height:44px; flex-shrink:0}
+      .wb-book:not(.wb-present-mode) .wb-brand{font-size:17px; line-height:1.25}
+      .wb-book:not(.wb-present-mode) .wb-top-right{width:100%; justify-content:space-between; gap:4px}
+      .wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px; gap:0}
+      .wb-book:not(.wb-present-mode) .wb-theme-select{width:90px; padding:6px 4px}
+      .wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px; font-size:14px}
+      .wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px; height:32px; flex-shrink:0}
+    }
+  </style>
+</head>
+<body>
+  <div data-wb-book>
+    <script type="application/json" class="wb-book-config">
+      {
+        "bookTitle":"Arduino 1 · Musterlösung",
+        "sectionTitle":"Hardware und erste Schaltung · Musterlösungen",
+        "autoNav":true,
+        "autoNavHeadings":["h1","h2","h3"],
+        "autoNavIncludeBlocks":false,
+        "enableResultsPage":false,
+        "studentNameStorageKey":"arduino1_muster_name"
+      }
+    </script>
+      <section data-wb-page="1" data-wb-page-title="Einführung in den Mikrocontroller Arduino">
+        <div class="course-hero">
+          <div class="course-kicker">Musterlösung</div>
+          <h1>Einführung in den Mikrocontroller Arduino</h1>
+        </div>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_primm_reveal">
+          <h3>Warum nicht sofort losprogrammieren?</h3>
+          <p>Wenn du zuerst vorhersagst, was die Schaltung tun soll, kannst du deine Beobachtung später damit vergleichen. Du prüfst zunächst die Polung der LED, den Vorwiderstand, den geschlossenen Stromweg und die verwendeten Pins. So kannst du einen Hardwarefehler von einem Fehler im Programm oder beim Upload unterscheiden.</p>
+        </article>
+      </section>
+
+      <section data-wb-page="2" data-wb-page-title="Inhaltsverzeichnis">
+        <h2>Inhaltsverzeichnis (Überblick)</h2>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="expect">
+          <h3>Mini-Check-in: Was erwartest du vom Arduino? Schreibe 2–4 Sätze.</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>Ich möchte lernen, wie ich mit einem Programm eine LED und später einen Motor steuern kann. Außerdem möchte ich verstehen, wie ein Sensor Messwerte an den Arduino liefert. Als eigenes Projekt würde ich eine Lampe bauen, die bei Dunkelheit automatisch eingeschaltet wird.</p>
+        </article>
+      </section>
+
+      <section data-wb-page="3" data-wb-page-title="1. Was ist ein Mikrocontroller?">
+        <h2>1. Was ist ein Mikrocontroller?</h2>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_io_kategorien">
+          <h3>Sortiere: Eingabe, Verarbeitung, Ausgabe</h3>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Richtig sortierte Begriffe">
+            <table>
+              <thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Eingabe</th><td>Taster oder Sensor liefert ein Signal</td></tr>
+                <tr><th scope="row">Verarbeitung</th><td>Mikrocontroller führt das Programm aus<br>Programm entscheidet anhand eines Messwerts</td></tr>
+                <tr><th scope="row">Ausgabe</th><td>LED leuchtet<br>Lautsprecher erzeugt einen Ton</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc">
+          <h3>Aufgabe 1: Mikrocontroller im Alltag, Beispiele: Gerät 1 – Gerät 2 – Gerät 3 – + kurze Erklärung</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>In einer Waschmaschine, einer Mikrowelle und einer automatischen Schiebetür steckt typischerweise ein Mikrocontroller. In der Waschmaschine verarbeitet er zum Beispiel Messwerte zur Temperatur und steuert den Ablauf des Waschprogramms. Er schaltet die Heizung, die Pumpe und den Motor passend zum gewählten Programm.</p>
+        </article>
+      </section>
+
+      <section data-wb-page="4" data-wb-page-title="2. Es leuchtet!">
+        <h2>2. Es leuchtet!</h2>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_led_verify">
+          <h3>Wahr oder falsch?</h3>
+          <p><b>Wahr.</b> Der Widerstand darf vor oder hinter der LED liegen, solange er in Reihe mit ihr geschaltet ist. In beiden Fällen fließt derselbe Strom durch LED und Widerstand.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_hardware_trace">
+          <h3>Ablaufspur: Drei Hardwarefehler vorhersagen</h3>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Ausgefüllte Ablaufspur zu Hardwarefehlern">
+            <table class="wide-table">
+              <thead><tr><th scope="col">Veränderung</th><th scope="col">Beobachtung</th><th scope="col">Begründung</th></tr></thead>
+              <tbody>
+                <tr><td>LED wird umgedreht</td><td>LED aus</td><td>Falsche Polung: Die LED sperrt in dieser Richtung.</td></tr>
+                <tr><td>Verbindung zu GND fehlt</td><td>LED aus</td><td>Der Stromkreis ist offen; es fließt kein Strom durch die LED.</td></tr>
+                <tr><td>Widerstand fehlt, LED richtig gepolt</td><td>LED kann kaputtgehen</td><td>Der Strom ist zu groß, weil der Vorwiderstand ihn nicht begrenzt.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="led">
+          <h3>Aufgabe 2: Warum braucht die LED einen Widerstand? Erkläre in 3–5 Sätzen.</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>Der Vorwiderstand begrenzt den Strom durch die LED. Ohne ihn kann bei direktem Anschluss an die 5-V-Versorgung ein zu großer Strom fließen. Dadurch kann die LED überhitzen und beschädigt werden. Der Widerstand wird deshalb in Reihe mit der LED eingebaut.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="pins">
+          <h3>Aufgabe 3: Wofür sind die Pins, das Breadboard und die Jumper-Wires gut? Erkläre in 5–8 Sätzen.</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>Über die Pins verbindest du den Arduino mit anderen Bauteilen. Die Anschlüsse 5 V und GND bilden in dieser Aufgabe die Spannungsversorgung. Auf dem Breadboard kannst du Bauteile ohne Löten verbinden; die Buchsen innerhalb einer Fünfergruppe sind elektrisch miteinander verbunden. Jump-Wires verbinden die Arduino-Anschlüsse mit dem Breadboard oder verbinden Stellen auf dem Breadboard miteinander. Für die LED-Schaltung verbindest du 5 V mit der Anode der LED, ihre Kathode über einen 220-Ω-Widerstand mit GND. Dadurch entsteht ein geschlossener Stromkreis durch LED und Widerstand.</p>
+        </article>
+      </section>
+
+      <section data-wb-page="5" data-wb-page-title="Aufgaben">
+        <h2>Aufgaben 2.1–2.3</h2>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_led_order">
+          <h3>Ordne den sicheren LED-Aufbau</h3>
+          <ol>
+            <li>Schaltbild ansehen und Plus/GND markieren</li>
+            <li>LED-Polung prüfen</li>
+            <li>Widerstand in Reihe zur LED setzen</li>
+            <li>Stromkreis auf dem Breadboard schließen</li>
+            <li>Erst dann USB einstecken und Beobachtung notieren</li>
+          </ol>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="a21">
+          <h3>2.1 LED + 220-Ohm-Widerstand (Farben laut Bild)</h3>
+          <span class="answer-label">Musterlösung</span>
+          <p>Bei der neuen LED erkennst du die Anode am längeren Beinchen. Sie gehört an die Seite mit 5 V. Das kürzere Beinchen ist die Kathode; von dort führt die Verbindung über den Widerstand zu GND.</p>
+          <div class="circuit" aria-label="Strompfad">5 V → LED (Anode → Kathode) → 220 Ω → GND</div>
+          <p>Bei korrektem Aufbau leuchtet die LED dauerhaft, weil sie an der 5-V-Versorgung angeschlossen ist. Der Widerstand kann auch vor der LED liegen: In beiden Fällen fließt in der Reihenschaltung derselbe Strom durch beide Bauteile.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="a22">
+          <h3>2.2 Schaltbild lesen</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>Ein Schaltbild zeigt die Bauteile, ihre elektrischen Verbindungen und wichtige Angaben wie die Versorgungsspannung oder den Widerstandswert. In dieser Schaltung führt der Strompfad von 5 V durch die LED und den 220-Ω-Widerstand zu GND. Die LED erkennst du am Diodensymbol mit zwei nach außen gerichteten Pfeilen, den Widerstand am Rechteck und GND am Massesymbol. Das Schaltbild zeigt die elektrische Funktion unabhängig davon, wo die Bauteile auf dem Breadboard stecken.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="a23">
+          <h3>2.3 Widerstands-Farbcodes</h3>
+          <span class="answer-label">Musterlösung</span>
+          <p>Bei einem Widerstand mit vier Farbringen geben die ersten beiden Ringe die Ziffern des Wertes an. Der dritte Ring legt den Multiplikator fest, der vierte die Toleranz. Du liest von der Seite, auf der die ersten Ringe näher beieinanderliegen; der Toleranzring steht meist etwas abgesetzt. Um den Wert sicher zu bestimmen, brauchst du die Farbtabelle, die Leserichtung und die Bedeutung der jeweiligen Ringposition. Bei Widerständen mit fünf Ringen stehen die ersten drei Ringe für Ziffern.</p>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Widerstandswerte aus dem Material">
+            <table class="wide-table">
+              <caption>Werte aus dem Materialbild</caption>
+              <thead><tr><th scope="col">Erste drei Ringe</th><th scope="col">Rechnung</th><th scope="col">Wert</th></tr></thead>
+              <tbody>
+                <tr><td>Rot – Rot – Braun</td><td>22 × 10 Ω</td><td>220 Ω</td></tr>
+                <tr><td>Gelb – Lila – Braun</td><td>47 × 10 Ω</td><td>470 Ω</td></tr>
+                <tr><td>Braun – Schwarz – Rot</td><td>10 × 100 Ω</td><td>1 000 Ω</td></tr>
+                <tr><td>Rot – Rot – Orange</td><td>22 × 1 000 Ω</td><td>22 000 Ω</td></tr>
+                <tr><td>Gelb – Lila – Gelb</td><td>47 × 10 000 Ω</td><td>470 000 Ω</td></tr>
+                <tr><td>Grün – Grün – Grün</td><td>55 × 100 000 Ω</td><td>5 500 000 Ω = 5,5 MΩ</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Ein goldener Toleranzring bedeutet ±5 %, ein silberner ±10 %. Ohne Toleranzring sind es bei der gezeigten Codierung ±20 %. Ein 220-Ω-Widerstand mit goldenem Ring darf somit einen Wert zwischen 209 Ω und 231 Ω haben.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="rp">
+          <h3>Reflexion: Wo würdest du Reihe/Parallel im Alltag vermuten?</h3>
+          <span class="answer-label">Eine mögliche Antwort</span>
+          <p>Die Zellen in vielen Taschenlampen sind in Reihe geschaltet, damit sich ihre Spannungen addieren. In unserer LED-Schaltung liegen die LED und ihr Vorwiderstand ebenfalls in Reihe; durch beide fließt derselbe Strom. Die einzelnen Lampen einer Wohnung sind dagegen parallel angeschlossen. Sie erhalten dadurch jeweils die Versorgungsspannung und können unabhängig voneinander eingeschaltet werden; eine ausgeschaltete Lampe unterbricht nicht den Strompfad der anderen.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_pairs">
+          <h3>Verbinde Begriff und Bedeutung</h3>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Richtig verbundene Begriffspaare">
+            <table>
+              <thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">GND</th><td>Bezugspunkt/Masse, über den der Stromkreis zurückgeführt wird</td></tr>
+                <tr><th scope="row">Pin</th><td>Anschluss, den der Arduino lesen oder schalten kann</td></tr>
+                <tr><th scope="row">Widerstand</th><td>Bauteil, das den Strom begrenzt</td></tr>
+                <tr><th scope="row">LED</th><td>Leuchtdiode, die nur in Durchlassrichtung leuchtet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="arduino1_led_cloze">
+          <h3>Sicherung: Stromkreis</h3>
+          <p>Eine <b>LED</b> braucht einen <b>Widerstand</b>, der in <b>Reihe</b> geschaltet wird. Der Stromkreis wird über <b>GND</b> geschlossen.</p>
+        </article>
+      </section>
+
+      <section data-wb-page="6" data-wb-page-title="Multiple Choice">
+        <h2>Multiple Choice und Abgabe</h2>
+        <div class="wb-section-break"></div>
+        <div data-solution="mcq-arduino-1">
+        <h3>Multiple Choice – Seiten 2–5</h3>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc_1">
+          <h3>1. Was ist ein Mikrocontroller?</h3>
+          <p><b>C</b> – Eine kleine Steuerzentrale für Geräte.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc_2">
+          <h3>2. Wozu dient der USB-Anschluss am Arduino?</h3>
+          <p><b>B</b> – Zum Übertragen von Programmen.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc_3">
+          <h3>3. Warum braucht eine LED einen Widerstand?</h3>
+          <p><b>C</b> – Damit der Strom begrenzt wird.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc_4">
+          <h3>4. Was bedeutet HIGH an einem Arduino-Pin?</h3>
+          <p><b>B</b> – Der Pin liefert Spannung. Bei einem als Ausgang eingestellten Pin des hier verwendeten Arduino Uno liegt HIGH ungefähr bei 5 V gegenüber GND.</p>
+        </article>
+        <div class="wb-section-break"></div>
+        <article class="sample-answer" data-solution="mc_5">
+          <h3>5. Was ist eine Reihenschaltung?</h3>
+          <p><b>C</b> – Strom fließt nacheinander durch alle Bauteile.</p>
+        </article>
+        </div>
+      </section>
+  </div>
+
+  <script src="../assets/allgemeines_format.js"></script>
+  <script>SBLibrary.autoMountAll({storagePrefix:"arduino1_muster__"});</script>
+</body>
+</html>

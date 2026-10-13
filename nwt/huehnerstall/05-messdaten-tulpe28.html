@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5. Messfehler und Datenqualität - Musterlösung</title>
+<meta name="musterloesung-source" content="05-messdaten.html">
+<meta name="musterloesung-source-sha256" content="824338a6035a439a9769fad87141471a6f4f3da15b0b08575bc5dc6d04c4df0a">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"5. Messfehler und Datenqualität · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 5","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Datenqualität"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>5. Messfehler und Datenqualität</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="messdaten_fehlertypen"><h2>Ordne die Fehler zu</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriffe</th></tr></thead><tbody><tr><td>zufällig</td><td>Messwerte schwanken um einen Mittelwert</td></tr><tr><td>systematisch</td><td>Alle Werte sind wegen falscher Referenz zu hoch</td></tr><tr><td>grob</td><td>DHT-Datenpin steckt am falschen GPIO</td></tr></tbody></table></div></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-messdaten-protokoll"><h2>Messprotokoll: Rohdaten und Unsicherheit</h2><p>Eine mögliche Protokollzeile: Messgröße relative Feuchte; Anzeige 53 %RH; Zeitpunkt 10:00:00; Ort Raumluft; KY-015/DHT11 an GPIO4, 3,3 V; Intervall 2 s; keine Berührung, kein geöffnetes Fenster. Die Genauigkeit wird aus dem Datenblatt der konkreten Variante übernommen, nicht aus der Anzahl angezeigter Nachkommastellen. ADC-Rohdaten werden getrennt von der daraus abgeleiteten Projektkategorie gespeichert.</p><p>Beispielrechnung mit fiktiven LDR-Rohwerten 1420, 1430, 1440: Mittelwert = (1420 + 1430 + 1440) / 3 = 1430; Spannweite = 20 Codes. Ein falscher GPIO oder eine falsche ADC-Referenz wird durch Mitteln nicht korrigiert.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Transfer"><h1>Transfer: Messwert oder Aussage?</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="messdaten_mcq"><h2>Datenqualität prüfen</h2><h3>Was bewirkt ein Mittelwert aus mehreren LDR-Messungen?</h3><ul><li>Er kann zufällige Schwankungen reduzieren.</li></ul><p>Mittelwerte helfen gegen zufälliges Rauschen. Systematische und grobe Fehler bleiben bestehen.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-messdaten-stallstatus"><h2>Transfer: Messwert oder Aussage?</h2><span class="answer-label">Eine mögliche Antwort</span><p>Die Anzeige zeigt 21 °C, 53 %RH und die Projektkategorie „Raumlicht“, jeweils mit Messzeit und Sensorstatus. Eine grüne Anzeige bedeutet nur, dass die Messwerte innerhalb unserer begründeten Projektgrenzen liegen. Sie bedeutet nicht, dass sämtliche Tierwohlkriterien erfüllt sind. Fällt ein Sensor aus oder ist der letzte Datensatz älter als zehn Sekunden, wird sein Status „nicht aktuell“ statt „gut“.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

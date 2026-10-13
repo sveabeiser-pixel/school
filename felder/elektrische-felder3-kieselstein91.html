@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="elektrische-felder3.html">
+<meta name="musterloesung-source-sha256" content="46dccd932feb2cae8d6eb98cedb28b5c26cbeff494784b93f8eea87f9ca9ec3a">
+<title>Elektrische Felder 3: Energie, Laden und Entladen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .ef-figure{margin:0 auto;max-width:560px}
+    .ef-figure img{width:100%;max-height:350px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .ef-wide-figure img{max-height:420px}
+    .ef-caption{font-size:.92rem;color:#555;margin-top:6px}
+    .ef-img-grid{display:grid;grid-template-columns:minmax(230px,560px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .ef-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .ef-side-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .ef-formula{font-size:1.15rem;font-weight:700}
+    .ef-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+    .ef-table th,.ef-table td{border:1px solid rgba(0,0,0,.16);padding:7px;text-align:center}
+    .ef-table th{background:rgba(49,95,157,.1)}
+    .ef-task-list li{margin:.35rem 0}
+    @media (max-width:760px){.ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Elektrische Felder 3 · Musterlösung","sectionTitle":"Energie, Laden und Entladen eines Kondensators · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="course-kicker">Musterlösung</div>
+<h1>Energie im Kondensator</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_rev_start"><h3>Was kannst du nach dieser Seite?</h3>
+<p>Du kannst die Energie eines Kondensators berechnen, die Energie als Feldenergie deuten, Stromstärke als Ladungstransport erklären und U-t-, Q-t- und I-t-Diagramme beim Laden und Entladen qualitativ und rechnerisch auswerten.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Energieformel">
+<h1>Wie viel Energie speichert ein Kondensator?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_mcq_energie"><h3>Check: Energiefläche</h3>
+<h4>Warum gilt für den idealen Kondensator Eₑₗ = 1/2 · Q · U und nicht einfach Eₑₗ = Q · U?</h4><p>Weil die Spannung am Kondensator beim Aufladen von 0 bis U ansteigt.</p><p>Beim Aufladen wächst U proportional zu Q. Im U-Q-Diagramm entsteht deshalb eine Dreiecksfläche mit dem Inhalt 1/2 Q U.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Feldenergie">
+<h1>Wo steckt die Energie?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_cloze_feldenergie"><h3>Sicherung: Feldenergie</h3>
+<p>Die Energie eines Kondensators lässt sich als Energie im <b>elektrischen Feld</b> deuten. Sie wächst mit dem felddurchsetzten <b>Volumen</b> und mit der Feldstärke <b>quadratisch</b>. Der Quotient aus Energie und Volumen heißt <b>Energiedichte</b>.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Strom und Schaltung">
+<h1>Elektrischer Strom: bewegte Ladungen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_order_schaltung"><h3>Ablauf: Kondensator laden und entladen</h3>
+<ol><li>Schalter auf A stellen: Der Kondensator wird an die Spannungsquelle angeschlossen.</li><li>Warten, bis die Kondensatorspannung praktisch U₀ erreicht hat.</li><li>Messung für das Entladen starten.</li><li>Schalter auf E stellen: Der Kondensator ist nur noch mit dem Widerstand verbunden.</li><li>U(t), I(t) und t aufnehmen und auswerten.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3-p4-messversuch"><h3>Versuch: Aufladen und Entladen</h3>
+<p>Für C = 10 µF, R = 1 MΩ und U₀ = 20 V gilt τ = RC = 10 s, Q₀ = 200 µC und I₀ = 20 µA. Beim Aufladen wächst U_C von 0 gegen 20 V und Q von 0 gegen 200 µC; I fällt positiv von 20 µA gegen 0. Beim Entladen fallen U_C und Q exponentiell ab, I ist mit derselben Richtungskonvention negativ. Nach 10 s liegen beim Aufladen U_C ≈ 12,64 V und beim Entladen U_C ≈ 7,36 V vor. Das sind Modellwerte, keine behaupteten Versuchsmessungen.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Entladen">
+<h1>Entladevorgang eines Kondensators</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_verify_entladen"><h3>Wahr oder falsch?</h3>
+<p><b>Wahr.</b> Beim idealen Entladen eines Kondensators halbieren sich Spannung, Ladung und Stromstärke in gleichen Zeitabständen.</p><p>Ja. Das ist ein Kennzeichen exponentieller Abnahme. Die Zeitspanne für eine Halbierung heißt Halbwertszeit.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Aufladen">
+<h1>Aufladevorgang eines Kondensators</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_cat_laden_entladen"><h3>Sortiere: Aufladen oder Entladen?</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Vorgang</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Aufladen</td><td>U_C nähert sich der Quellspannung U₀; Q nähert sich Q₀ = C·U₀.</td></tr><tr><td>Entladen</td><td>U_C fällt gegen 0 V; der Ladungsüberschuss wird kleiner; der Kondensator gibt gespeicherte Energie ab.</td></tr><tr><td>Beide Vorgänge</td><td>Der Strombetrag ist zu Beginn groß und wird dann kleiner. Diese Aussage wird in der Quellkonfiguration nur dem Aufladen zugeordnet, gilt fachlich aber ebenso beim Entladen.</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Halbwertszeit und DGL">
+<h1>Halbwertszeit, Zeitkonstante und Differenzialgleichung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_rev_dgl"><h3>Methode: Entladefunktion prüfen</h3>
+<p>Die Ableitung ist Q'(t) = -(ln(2) / T₁/₂) · Q₀ · exp(-ln(2) · t / T₁/₂). Setzt man Q(t) und Q'(t) in Q(t) = -R · C · Q'(t) ein, kürzt sich der Exponentialterm. Es bleibt 1 = R · C · ln(2) / T₁/₂, also T₁/₂ = R · C · ln(2).</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3-entladung-symbole"><h3>Größen beim Entladen</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>U_C(t)</td><td>Spannung am Kondensator</td></tr><tr><td>Q(t)</td><td>Ladung auf den Kondensatorplatten</td></tr><tr><td>I(t)</td><td>Änderungsrate der Ladung</td></tr><tr><td>T₁/₂</td><td>Zeit bis zur Halbierung</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Aufgaben Energie">
+<h1>Rechenaufgaben: Energie und Energiedichte</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_essay_energie_aufgaben"><h3>Löse selbst: Energie eines Kondensators</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. 100-µF-Kondensator</h4><p>W = ½CU² = ½·100·10⁻⁶ F·(12 V)² = <b>7,2·10⁻³ J = 7,2 mJ</b>.</p><h4>2a–c. Schokolade anheben</h4><p>a) W = ½QU = ½·500 C·2,50 V = <b>625 J</b>. b) Ideal W = mgh, daher h = 625/(0,100·9,81) m = <b>637 m</b>. c) Reale Verluste entstehen in Motor und Leitungen als Wärme, durch Reibung im Getriebe und bei der Bewegung. Außerdem kann der Motor die Restenergie bei kleiner Kondensatorspannung nicht vollständig nutzen; daher ist die Höhe geringer.</p><h4>3. Ultracap und Kleinwagen</h4><p>W = ½·100 F·(50,0 V)² = <b>125000 J = 125 kJ</b>. Ideal W = ½mv²: v = √(2W/m) = √(250000/500) m/s = <b>22,4 m/s = 80,5 km/h</b>.</p><h4>4a–c. Plattenkondensator</h4><p>a) A = π·(0,12 m)² = 0,04524 m²; C = ε₀A/d = 1,00·10⁻¹⁰ F. W = ½CU² = <b>4,51·10⁻⁴ J = 0,451 mJ</b>. E = 3000/0,004 = 7,50·10⁵ V/m; ρ = ½ε₀E² = <b>2,49 J/m³</b>. b) Doppelte Spannung vervierfacht W auf 1,80 mJ und ρ auf 9,96 J/m³. c) Bei konstantem U, A und εᵣ gilt W ∝ 1/d: Halbierung von d verdoppelt W. Die Energiedichte steigt dabei auf das Vierfache. Bei stattdessen getrennter Quelle und konstantem Q wäre W ∝ d, also bei Halbierung von d halb so groß.</p><h4>5. Ladungsausgleich</h4><p>Bei gleichnamiger Verbindung der Platten ist Qges = C·200 V+C·100 V = 3,0 mC. Cges = 20 µF, also <b>Ugemeinsam = 150 V</b>. Wvor = ½·10 µF·(200²+100²) V² = 0,250 J. Wnach = ½·20 µF·150² V² = 0,225 J. Daher werden <b>0,025 J = 25 mJ</b> als Wärme und ggf. Strahlung abgegeben. Ladungserhaltung bedeutet hier nicht Erhaltung der gespeicherten Feldenergie. Bei entgegen gesetzter Verbindung wäre die gemeinsame Spannung betragsmäßig 50 V und der Energieverlust 0,225 J; die Aufgabenpolung muss deshalb festgelegt werden.</p><h4>6. Erdatmosphäre</h4><p>Mit Erdradius R ≈ 6,371·10⁶ m ist das 1000 m hohe Schalenvolumen näherungsweise V = 4πR²h = 5,10·10¹⁷ m³. ρ = ½ε₀E² = 9,96·10⁻⁸ J/m³. Somit <b>W ≈ 5,08·10¹⁰ J ≈ 51 GJ</b>. Das ist eine Abschätzung für überall 150 V/m; reale räumlich veränderliche Felder erfordern ein Integral über E².</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Aufgaben Laden">
+<h1>Rechenaufgaben: Laden und Entladen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_essay_laden_aufgaben"><h3>Löse selbst: Laden und Entladen eines Kondensators</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–c. Diagramme</h4><p>Aufladen: U(t) = U₀(1−exp(−t/RC)), beginnend bei 0 mit großer Steigung, dann abflachend gegen U₀. Entladen: U(t) = U₀exp(−t/RC), beginnend bei U₀, dann abfallend gegen 0. Anfangs treibt die große Spannungsdifferenz einen großen Strom; sie nimmt im Verlauf ab. Q(t) = CU(t) ist eine entsprechend skalierte Kurve. I(t) = C·U′(t) ergibt sich aus der Tangentensteigung: beim Laden positiv und abnehmend, beim Entladen negativ und betragsmäßig abnehmend, wenn Aufladerichtung positiv gewählt wird.</p><h4>2. Stromkurve und Anfangsladung</h4><p>R = 200 Ω. Zu t = 0, 1, 2, 3, 4, 5, 6 s gehören |I| = <b>60; 36,5; 22; 13,5; 8; 5; 3 mA</b>. Diese Punkte bilden eine abklingende Exponentialkurve. Trapezsumme von 0 bis 6 s: ΔQ ≈ 1 s·[(60+3)/2+36,5+22+13,5+8+5] mA = <b>0,1165 C</b>. Das ist noch nicht die gesamte Anfangsladung: Ab 6 s folgt eine Restfläche. Aus den Werten ergibt sich τ ≈ 2,0 s, daher Restfläche ≈ 3 mA·2 s = 0,006 C; mit Trapezsumme insgesamt etwa <b>0,123 C</b>. Eine Exponentialanpassung liefert Q₀ = I₀τ ≈ <b>0,120 C</b> und C ≈ 0,010 F; der kleine Unterschied erklärt sich durch Rundung und Trapeznäherung.</p><h4>3a–c. Halbwertszeit</h4><p>Je größer R bei festem C, desto länger T₁/₂; je größer C bei festem R, desto länger T₁/₂. Es gilt T₁/₂ = RC ln 2, also T₁/₂ ∝ R bzw. T₁/₂ ∝ C. Im Versuch wird ein Kondensator jeweils auf dieselbe U₀ geladen und über einen bekannten Widerstand entladen. Ein hochohmiger Spannungslogger erfasst die Zeit bis U₀/2. Zuerst wird nur R, danach nur C variiert. Beide T₁/₂-Diagramme sind Ursprungsgeraden mit Steigungen C ln 2 bzw. R ln 2. Der Messgeräte-Innenwiderstand darf den gewählten Entladewiderstand nicht merklich verändern.</p><h4>4a. Lämpchen</h4><p>Die volle Kondensatorenergie ist W = ½·1 F·(4 V)² = 8 J. Die Nennleistung ist P = 3,8 V·0,070 A = 0,266 W. Mit konstanter mittlerer Leistung und vollständiger Energienutzung ergibt sich als grobe Größenordnung <b>t ≈ W/P ≈ 30 s</b>. Die Helligkeit fällt beim Entladen ab; volle Nennhelligkeit ist deutlich kürzer verfügbar. Wenn nur die Energie zwischen 4,0 und 3,8 V betrachtet wird, sind 0,78 J nutzbar, also rund 2,9 s. Eine feste exakte Leuchtdauer erfordert eine Helligkeitsgrenze und die Strom-Spannungs-Kennlinie des Lämpchens.</p><h4>4b. LED</h4><p>Nutzbar ist W = ½C(4²−2²) V² = 6 J. Bei mittlerer Leistung 20 mW ergibt sich <b>t = 6 J/0,020 W = 300 s = 5 min</b>.</p><h4>5. Energie-Zeit-Diagramm</h4><p><b>Diagramm 3</b> passt: W(t) = ½CU₀²(1−exp(−t/RC))² startet bei 0 mit zunächst null Steigung, wächst dann stärker und flacht schließlich zum endlichen Grenzwert ab. Anfangs ist W ∝ t², später wird die Steigung kleiner; ein dauerhaft nach oben gekrümmtes Diagramm 2 ist daher falsch. Der Wendepunkt liegt bei t = RC ln 2.</p><h4>6a–b. Fusionsplasma-Anlage</h4><p>W = ½·0,10 F·(50000 V)² = <b>1,25·10⁸ J = 125 MJ</b>. Pmittel = W/0,001 s = <b>1,25·10¹¹ W = 125 GW</b>. Das ist etwa 125000/992 ≈ <b>126-mal</b> die vorgegebene Leistung des Kraftwerks Wehr, aber nur für 1 ms; große Momentanleistung bedeutet keine dauerhafte Energiequelle.</p><h4>7a–b. DGL und Funktionen</h4><p>Q′(t) = Q₀/(RC)·exp(−t/RC). Einsetzen: Q₀−RCQ′ = Q₀−Q₀exp(−t/RC) = Q(t); zudem Q(0) = 0. Daher <b>U(t) = U₀(1−exp(−t/RC))</b> und <b>I(t) = Q′(t) = (U₀/R)exp(−t/RC)</b>. Mit positiver Aufladerichtung ist I positiv; es nähert sich null von oben.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Gesamtabschluss">
+<h1>Gesamtzusammenfassung: Das elektrische Feld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_essay_gesamtaufgaben"><h3>Lösungsfeld: Gesamtaufgaben</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Schweben</h4><p>E = mg/|q| = (1,0·10⁻⁵ kg · 9,81 m/s²)/(1,0·10⁻¹⁰ C) = <b>9,81·10⁵ V/m</b>. Die Gewichtskraft zeigt nach unten, die elektrische Kraft nach oben. Da die Watte negativ geladen ist, zeigt das Feld nach unten.</p><h4>2. Coulomb-Kräfte</h4><p>a) F = ke²/r² = 8,99·10⁹ · (1,602·10⁻¹⁹)²/(5,0·10⁻¹¹)² N = <b>9,23·10⁻⁸ N</b>, anziehend. b) Für r = 3,0·10⁻¹⁵ m folgt <b>25,6 N</b>, abstoßend. Die starke Kernwechselwirkung muss im gebundenen Kern die elektrische Abstoßung überwinden; Gravitation reicht dafür nicht aus. Das Punktladungsmodell ist auf diesen Skalen eine elektrostatische Abschätzung.</p><h4>3. Braunsche Röhre</h4><p>a) E = Uᵧ/d = 100 V/0,010 m = 1,0·10⁴ V/m; |F| = eE = <b>1,60·10⁻¹⁵ N</b>; |aᵧ| = eE/m = <b>1,76·10¹⁵ m/s²</b>. Die Ablenkung zeigt zur positiven Platte. vₓ = √(2eU/m) = <b>1,88·10⁷ m/s</b>. b) t = l/vₓ = <b>2,13 ns</b>. c) y₁ = ½aᵧt² = <b>4,0 mm</b>; vᵧ = aᵧt = 3,75·10⁶ m/s. Hinter dem Kondensator ist die Bahn geradlinig: y₂ = vᵧs/vₓ = 40 mm, somit <b>ygesamt = 44 mm = 4,4 cm</b>, sofern s = 20 cm ab dem Kondensatorende gemessen wird. Bei Eintritt auf der Mittellinie bleibt y₁ unter d/2 = 5 mm, daher trifft der Strahl keine Platte.</p><h4>4. Ersatzkapazität</h4><p>Im Bild liegen C₄ und C₅ parallel. Diese Gruppe liegt in Reihe mit C₃; der untere Zweig enthält C₆ und C₇ in Reihe. Beide Zweige liegen parallel, danach liegt diese Ersatzgruppe in Reihe mit C₁ und C₂. Damit: Coben = C₃(C₄+C₅)/(C₃+C₄+C₅), Cunten = C₆C₇/(C₆+C₇), Czweige = Coben+Cunten und 1/Cges = 1/C₁+1/C₂+1/Czweige. a) Für überall C gilt Coben = 2C/3, Cunten = C/2, Czweige = 7C/6 und <b>Cges = 7C/20</b>. b) Setze Cⱼ = C₁/j: C₄+C₅ = 9C₁/20, Coben = 9C₁/47, Cunten = C₁/13 und Czweige = 164C₁/611. Somit <b>Cges = 164C₁/1103 ≈ 0,14869 C₁</b>. Ein absoluter Zahlenwert ist ohne Angabe von C₁ nicht festgelegt.</p><h4>5. Elektronenenergie</h4><p>Bei beschleunigender Polung: Ekin,0 = ½mv₀² = 4,55·10⁻¹⁷ J = 284 eV; ΔEkin = eU = 1,602·10⁻¹⁷ J = 100 eV. Daher <b>Ekin = 6,15·10⁻¹⁷ J = 384 eV</b> und v = √(v₀²+2eU/m) = <b>1,16·10⁷ m/s</b>. Ist die nicht angegebene Polung bremsend, ergeben sich stattdessen 184 eV = 2,95·10⁻¹⁷ J und v = 8,05·10⁶ m/s.</p><h4>6. Bremsendes Feld</h4><p>v₀ = √(2eU₀/m) = 5,93·10⁶ m/s. Die Feldlinien zeigen in Flugrichtung, deshalb wirkt die Kraft auf Elektronen entgegen der Flugrichtung. a) aₓ = −eU₁/(md) = <b>−1,23·10¹⁴ m/s²</b>. Die Restenergie ist 30 eV, v₁ = √(2e·30 V/m) = 3,25·10⁶ m/s. Aus d = ½(v₀+v₁)t folgt <b>t = 21,8 ns</b>; äquivalent t = (v₁−v₀)/aₓ. b) Beim Bremsfeld U₂/d = 4000 V/m ist die Umkehrstrecke x = U₀/E = U₀d/U₂ = <b>0,025 m = 2,5 cm</b>.</p><h4>7. Pendelschalter</h4><p>Pro Aufladung wird Q = CU übertragen. Der mittlere Quellenstrom ist I = fCU. Daher C = I/(fU) = 0,0020 A/(20 s⁻¹·40 V) = <b>2,5 µF</b>. Gemeint ist der Aufladestrom der Quelle; ein Mittelwert über Auf- und Entladestrom mit Vorzeichen wäre anders definiert.</p><h4>8a. Kondensatorwerte</h4><p>A = 0,045 m², d = 0,050 m, U = 10000 V. E = U/d = <b>2,0·10⁵ V/m</b>; σ = ε₀E = <b>1,77·10⁻⁶ C/m²</b>; |Q| = σA = <b>7,97·10⁻⁸ C = 79,7 nC</b>. C = 7,97 pF und W₀ = ½CU² = 0,398 mJ.</p><h4>8b. Abstand verdoppeln</h4><p>Angeschlossen: U = 10 kV bleibt konstant, C halbiert sich auf 3,98 pF, Q auf 39,8 nC und E auf 1,0·10⁵ V/m. Getrennt: Q = 79,7 nC bleibt konstant, C halbiert sich, U verdoppelt sich auf 20 kV, E bleibt 2,0·10⁵ V/m.</p><h4>8c. Energiebilanz</h4><p>Getrennt verdoppelt sich W = Q²/(2C) auf 0,797 mJ: Die mechanische Arbeit <b>0,398 mJ</b> erhöht die Feldenergie. Angeschlossen halbiert sich W = ½CU² auf 0,199 mJ. Trotzdem wird positive mechanische Arbeit von <b>0,199 mJ</b> gegen die Anziehung geleistet; zusätzlich werden 0,199 mJ aus dem Feld frei. Zusammen fließen <b>0,398 mJ</b> in die ideale Spannungsquelle zurück (U·|ΔQ|). Die Kraft nimmt bei konstantem U während des Ziehens ab.</p><h4>9. Halbwertszeit</h4><p>T₁/₂ = RC ln 2 = 300000 Ω·100·10⁻⁶ F·0,693 = <b>20,8 s</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_mcq_abschluss"><h3>Mini-Check: Alles zusammen</h3>
+<h4>Welche Aussagen passen zum RC-Kondensator?</h4><p>Beim Entladen nimmt U exponentiell ab.; Die Halbwertszeit wächst, wenn R größer wird.; Die Energie wächst bei konstantem C proportional zu U^2.</p><p>A, C und D sind richtig. Beim Aufladen nimmt der Strombetrag ab, weil die Kondensatorspannung der Quellspannung immer stärker entgegenwirkt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3-p10-weiterdenkfrage"><h3>Weiterdenkfrage: Kamerablitz und Elektroauto</h3>
+<p>Ein Kondensator kann kurzfristig hohe Leistungen liefern und wird schnell geladen, daher eignet er sich für den kurzen Kamerablitz. Seine speicherbare Energie bei vorgegebener Masse und Baugröße ist deutlich geringer als die eines geeigneten Fahrakkus; außerdem sinkt seine Spannung beim Entladen. Für lange Fahrstrecken wäre ein alleiniger Kondensatorspeicher deshalb sehr groß und schwer. Als Speicher für kurze Leistungsimpulse oder Bremsenergie bleibt er sinnvoll.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"elektrische-felder3-kieselstein91.html__"});</script>
+</body>
+</html>

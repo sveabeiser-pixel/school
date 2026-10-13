@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="magnetische-felder2.html">
+<meta name="musterloesung-source-sha256" content="7f28c579609ba4729e29394b7aa38d1857cbc64194a31362cc6ac608c9d2aac7">
+<title>Magnetische Felder 2: Vertiefung und Anwendungen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+<style>
+    .mf-grid{display:grid;grid-template-columns:minmax(240px,520px) minmax(260px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .mf-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .mf-figure{margin:0 auto;max-width:520px}
+    .mf-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .mf-figure.wide{max-width:720px}
+    .mf-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .mf-basis{border-left:5px solid #1f8a4c;background:rgba(31,138,76,.09);padding:12px;border-radius:8px}
+    .mf-formula{font-size:1.15rem;font-weight:700}
+    .mf-task-list li{margin-bottom:10px}
+    .mf-mini{font-size:.92rem;color:#555}
+    .mf-route{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+    .mf-route div{border:1px solid rgba(49,95,157,.18);background:rgba(49,95,157,.06);border-radius:8px;padding:12px}
+    .mf-route strong{display:block;margin-bottom:4px;color:#1f3f6f}
+    .mf-stop{border-left:5px solid #b45309;background:#fff7ed;padding:12px;border-radius:8px;margin:14px 0}
+    .mf-strategy{border:1px solid rgba(31,138,76,.2);background:rgba(31,138,76,.06);border-radius:8px;padding:12px;margin:14px 0}
+    @media (max-width:760px){.mf-grid{grid-template-columns:1fr}.mf-figure{max-width:100%}}
+    .mf-stop { color: #172033; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .mf-route strong { color: #9fd7ff; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .mf-mini { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Magnetische Felder 2 · Musterlösung","sectionTitle":"Vertiefung: Spulen, Teilchenbahnen und Anwendungen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Spulenarten">
+<div class="course-kicker">Musterlösung</div>
+<h1>Kurze Spulen, Material und Ferromagnetismus</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_spulenarten"><h3>Lösungsfeld: Spulenarten</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–b. Kurze Spule</h4><p>Im B-x-Diagramm werden die Messpunkte (0 cm;8,9 mT), (1;7,4), (2;3,8), (3;1,5), (4;0,7), (5;0,4) durch eine glatt abfallende Kurve verbunden; für die Gegenseite der Spule kann das achsensymmetrische Profil ergänzt werden, falls x vom Mittelpunkt gemessen wird. Die Langspulenformel ergäbe B = µ₀nI/l = 1,257·10⁻⁶·600·0,5/0,030 T = <b>12,6 mT</b>. Das ist rund 41 % größer als der zentrale Messwert 8,9 mT. Das rasch abfallende Profil und die Abweichung zeigen die Grenze der Langspulennäherung.</p><h4>2a–b. Helmholtzspulen</h4><p>c_H = BR/(µ₀nI) = 1,5·10⁻³·0,150/(1,257·10⁻⁶·125·2,0) = <b>0,716</b>. Bei Rneu = 0,200 m und I = 2 A gilt Bneu = B·0,150/0,200 = <b>1,125 mT</b>. Für 1,5 mT ist I = 2,0·0,200/0,150 = <b>2,67 A</b> nötig. Der Spulenabstand muss weiterhin dem Radius entsprechen, damit es dieselbe Helmholtzgeometrie bleibt.</p><h4>3. Schrottplatz-Elektromagnet</h4><p>Magnetisch weiches Eisen ist geeignet: Es lässt sich stark magnetisieren, besitzt aber eine kleine Koerzitivfeldstärke und geringe Restmagnetisierung. Nach Abschalten soll der Schrott zuverlässig abfallen. Magnetisch hartes Material würde stärker magnetisiert bleiben und das Ablösen erschweren.</p><h4>4. Hysterese</h4><p>Eine breite Hystereseschleife bedeutet eine große zur Entmagnetisierung benötigte Gegenfeldstärke. Magnetisch harte Materialien halten ihre Ausrichtung durch stärkere Hemmung der Domänenbewegung länger fest und besitzen eine große Koerzitivfeldstärke. Magnetisch weiche Materialien werden leichter ummagnetisiert und zeigen eine schmale Schleife mit geringeren Ummagnetisierungsverlusten.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Erdmagnetfeld">
+<h1>Das Magnetfeld der Erde</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_erde"><h3>Lösungsfeld: Erdmagnetfeld</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a. Athen</h4><p>B_h = B cos δ = 46 µT·cos 53° = <b>27,7 µT</b>. Bei 45° Ablenkung ist BSp = B_h. I = B_hl/(µ₀n) = 27,7·10⁻⁶·0,30/(1,257·10⁻⁶·40) A = <b>0,165 A</b>.</p><h4>1b. Island</h4><p>B_h = BSp = µ₀(n/l)I = 1,257·10⁻⁶·40/0,30·0,080 T = <b>13,4 µT</b>. B = B_h/cos 75° = <b>51,8 µT</b>.</p><h4>2. 60° Ablenkung</h4><p>Die Kompassrichtung ist die Resultierende der orthogonalen Komponenten B_h nach Norden und BSp nach Osten/Westen. Das rechtwinklige Vektordreieck liefert tan α = BSp/B_h. BSp = µ₀·100/0,50·0,130 = 32,7 µT. Daher B_h = 32,7 µT/tan 60° = <b>18,9 µT</b>.</p><h4>3. Gewöhnliche Kompassnadel</h4><p>Eine horizontal gelagerte Kompassnadel kann nur um die vertikale Achse drehen. Sie reagiert damit auf die Richtung der horizontalen Feldkomponente und nicht auf die vertikale Komponente. Aus ihrer Ausrichtung allein lässt sich auch der Betrag von B_h nicht ablesen; dafür braucht man eine bekannte Vergleichskraft bzw. ein bekanntes Spulenfeld.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Fadenstrahlrohr">
+<h1>Elektronen im magnetischen Feld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_fadenstrahlrohr"><h3>Lösungsfeld: Fadenstrahlrohr</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–b. Radius, Umfang und Umlaufdauer</h4><p>v = √(2eU/m) = <b>7,27·10⁶ m/s</b>. r = mv/(eB) = <b>0,0486 m = 4,86 cm</b>; Umfang 2πr = <b>0,305 m</b>. T = 2πr/v = 2πm/(eB) = <b>4,20·10⁻⁸ s = 42,0 ns</b>.</p><h4>1c. Halbe Spannung</h4><p>v und r sinken um den Faktor 1/√2: vneu = 5,14·10⁶ m/s und rneu = 3,43 cm. Die Umlaufdauer T = 2πm/(eB) bleibt unverändert, solange das klassische Modell gilt.</p><h4>2. Spezifische Ladung aus vier Messwerten</h4><p>Für jedes Paar gilt e/m = 2U/(B²r²). Mit U = 223 V erhältst du <b>1,715; 1,715; 1,842; 1,858 ·10¹¹ C/kg</b>. Der gleich gewichtete Mittelwert aller vier Messwerte ist <b>1,781·10¹¹ C/kg</b>. Er liegt rund 1,2 % über dem schulischen Literaturwert 1,76·10¹¹ C/kg; ohne Fehlerangaben ist eine gleichmäßige Gewichtung eine begründete Wahl.</p><h4>3. He²⁺-Ionen</h4><p>q = 2e, m = 4u = 6,64·10⁻²⁷ kg. r = mv/(qB) = 6,64·10⁻²⁷·4·10⁶/(2·1,602·10⁻¹⁹·0,80) m = <b>0,104 m = 10,4 cm</b>.</p><h4>4. Proton gegenüber Elektron</h4><p>Bei gleichem v, B und gleichem Ladungsbetrag e gilt r ∝ m. Das Proton ist etwa 1836-mal schwerer und hat deshalb einen etwa 1836-mal größeren Radius. Wegen des entgegengesetzten Ladungsvorzeichens ist auch die Umlaufrichtung entgegengesetzt.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Massenspektrometer">
+<h1>Massenspektrometer und wienscher Geschwindigkeitsfilter</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_massenspektrometer"><h3>Lösungsfeld: Massenspektrometer</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a. Geschwindigkeit</h4><p>v = E/B = 46600/0,311 m/s = <b>1,50·10⁵ m/s</b>.</p><h4>1b. Massen und Nukleonen</h4><p>Der Abstand auf der Fotoplatte entspricht nach dem Halbkreis dem Durchmesser 2r, also r₁ = 0,060 m und r₂ = 0,100 m. m = qBr/v. Damit m₁ = <b>1,995·10⁻²⁶ kg ≈ 12,0u</b> und m₂ = <b>3,325·10⁻²⁶ kg ≈ 20,0u</b>. Die Massenzahlen sind etwa <b>12 und 20 Nukleonen</b>; das Element ist allein aus Masse und Ladung nicht eindeutig festgelegt.</p><h4>2a–b. Sauerstoffionen</h4><p>v = 10⁵/0,5 = <b>2,00·10⁵ m/s</b>. r₁ = m₁v/(eB₂) = <b>0,1107 m</b>; r₂ = <b>0,1244 m</b>. Die Trefferabstände von der Blende sind 2r₁ = 22,14 cm und 2r₂ = 24,89 cm; die beiden Trefferstellen sind <b>2(r₂−r₁) = 2,75 cm</b> voneinander entfernt.</p><h4>3. Isotopentrennung</h4><p>Isotope desselben Elements besitzen gleiche Protonenzahl und bei gleichem Ionisationszustand gleiche Ladung, aber unterschiedliche Neutronenzahl und Masse. Der Filter wählt dieselbe Geschwindigkeit v = E/B₁ aus. Deshalb ist im Ablenkmagneten r = mv/(|q|B₂) für das schwerere Isotop größer und es trifft weiter von der Blende entfernt auf.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Zyklotron">
+<h1>Exkurs: Zyklotron und Abiturtraining zu E- und B-Feldern</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_abitur_eb"><h3>Lösungsfeld: Abiturtraining E- und B-Felder</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a. Geschwindigkeitsauswahl</h4><p>Im Magnetfeld gilt evB = mv²/r, also v = (e/m)Br. Mit festem r = 4,8 cm und B = 1,8 mT passt nur ein bestimmtes v zur Blende S₁; langsamere Elektronen haben kleinere, schnellere größere Radien und treffen sie nicht. Mit bekanntem e/m ergibt sich v ≈ 1,52·10⁷ m/s.</p><h4>1b. Kondensatorablenkung</h4><p>Bei Durchflugzeit t = l/v gilt vᵧ = aᵧt = eUᵧl/(mdv). Der Austrittswinkel erfüllt tan α = |vᵧ|/v, daher <b>tan α = eUᵧl/(mdv²)</b>. Die horizontale Geschwindigkeit bleibt konstant; die Vorzeichenrichtung folgt aus der Plattenpolung.</p><h4>1c. e/m bestimmen</h4><p>Setze s = e/m und v = sBr in die Winkelgleichung ein: tan α = Uᵧl/(d s B²r²). Daher s = Uᵧl/(d tan α B²r²) = 153·0,15/[0,034·tan 27°·(1,8·10⁻³)²·0,048²] = <b>1,77·10¹¹ C/kg</b>. Daraus folgt v ≈ 1,53·10⁷ m/s. Das eingebettete Bild zeigt tatsächlich eine Schraubenbahn statt der im Text beschriebenen Blenden-Kondensator-Geometrie; für diese Rechnung sind deshalb die ausdrücklich angegebenen Textwerte maßgebend.</p><h4>2. Wachsender Zyklotronradius</h4><p>Zwischen den Dosen erhöht das elektrische Feld die kinetische Energie und die Geschwindigkeit. Bei konstantem B gilt r = mv/(|q|B), deshalb wächst der Radius nach jedem Beschleunigungsdurchgang. Das Magnetfeld selbst erhöht die Energie nicht.</p><h4>3. Proton und Heliumion</h4><p>f = |q|B/(2πm). Für Protonen gilt q/m = e/m_p, für He²⁺ ungefähr 2e/(4m_p) = e/(2m_p). Das Heliumion hat deshalb <b>die halbe Zyklotronfrequenz</b> des Protons.</p><h4>4. Sehr hohe Energie</h4><p>Relativistisch wächst der Impuls stärker als mv; die Umlaufzeit ist T = 2πγm/(|q|B). Damit sinkt f = |q|B/(2πγm), wenn γ wächst. Eine exakt konstante Umpolfrequenz verliert die Synchronisation; weiterentwickelte Beschleuniger passen Frequenz oder Feld an.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf2-p5-zyklotron-check"><h3>Stopp &amp; check: Spannung umpolen</h3>
+<p>Nach jeder Halbkreisbahn erreicht das Ion die Beschleunigungsstrecke von der anderen Seite. Die Richtung des elektrischen Feldes muss deshalb rechtzeitig umgekehrt werden, damit die elektrische Kraft wieder entlang der neuen Flugrichtung wirkt und Energie zuführt. Bei falschem Zeitpunkt würde das Feld bremsen. Die Spannung hat im klassischen Zyklotron die Periodendauer der vollständigen Kreisbahn und wechselt nach jedem halben Umlauf ihr Vorzeichen.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Natur und Technik">
+<h1>Magnetfelder in Natur, Forschung und Technik</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_anwendungen"><h3>Lösungsfeld: Anwendungen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Polarlichter</h4><p>Geladene Teilchen werden im Erdmagnetfeld abgelenkt und entlang von Feldlinien geführt. In den Polarregionen können energiereiche Elektronen leichter in die obere Atmosphäre gelangen. Dort regen sie Atome und Moleküle durch Stöße an. Deren anschließende Lichtemission bildet das Polarlicht; die Feldlinien selbst leuchten nicht.</p><h4>2. Polarlicht und van-Allen-Gürtel</h4><p>In beiden Fällen beeinflusst die Lorentzkraft geladene Teilchen im Erdmagnetfeld. Beim Polarlicht gelangen Teilchen in die Atmosphäre und regen sie zum Leuchten an. In den Strahlungsgürteln bleiben viele Elektronen und Protonen über längere Zeit eingefangen: Sie kreisen um Feldlinien, bewegen sich entlang ihnen und werden in stärker werdenden Polfeldern magnetisch gespiegelt. Die hohe Teilchenenergie kann Satelliten und Menschen gefährden.</p><h4>3. Penning-Falle</h4><p>Ein statisches B-Feld lenkt die Querbewegung geladener Teilchen auf gekrümmte Bahnen, verhindert aber kein Entweichen entlang der Feldlinien. Das geeignete elektrische Quadrupolfeld liefert eine rückstellende Kraft entlang der Achse. Dieses E-Feld allein würde seitlich instabil sein; erst die Kombination mit dem Magnetfeld ermöglicht räumliche Speicherung.</p><h4>4. Magnetische und optische Linse</h4><p>Gemeinsam ist die gezielte Bündelung von Strahlen zur Abbildung. Eine optische Sammellinse beeinflusst Licht durch Brechung. Eine magnetische Linse übt dagegen Lorentzkräfte auf bewegte Elektronen in einem geformten Magnetfeld aus und ändert ihre Bahnen. Die Brennwirkung hängt dabei auch von Elektronenenergie und Spulenstrom ab.</p><h4>5. Festplatte</h4><p>Der Schreibkopf richtet kleine magnetische Bereiche der Scheibe aus. Diese Magnetisierungen müssen nach Abschalten erhalten bleiben, damit Daten dauerhaft gespeichert werden. Der Lesekopf erkennt ihre Feldwirkung bzw. Magnetisierungswechsel. Ohne magnetisch beschreibbares Material gäbe es keine solchen dauerhaften Bitzustände.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_cat_anwendungen"><h3>Anwendungen sortieren</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Bewegte Ladungen im Feld</td><td>Polarlicht</td></tr><tr><td>Bewegte Ladungen im Feld</td><td>van-Allen-Strahlungsgürtel</td></tr><tr><td>Bewegte Ladungen im Feld</td><td>Penning-Falle</td></tr><tr><td>Magnetisierung von Material</td><td>magnetische Festplatte</td></tr><tr><td>Fokussierung/Ablenkung</td><td>magnetische Linse</td></tr><tr><td>Fokussierung/Ablenkung</td><td>Elektronenmikroskop</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Gesamtaufgaben">
+<h1>Gesamtzusammenfassung und gemischte Aufgaben</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_verify_feldvergleich"><h3>Feldvergleich prüfen</h3>
+<p><b>Falsch.</b> Ein homogenes Magnetfeld kann ein geladenes Teilchen aus der Ruhe beschleunigen und seine kinetische Energie erhöhen.</p><p>Ein ruhendes geladenes Teilchen erfährt keine Lorentzkraft. Bei einem bewegten Teilchen steht die Lorentzkraft senkrecht zur Geschwindigkeit und ändert im reinen statischen Magnetfeld nur deren Richtung, nicht den Betrag.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_gesamtaufgaben"><h3>Lösungsfeld: Gesamtaufgaben</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–c. Flussdichte aus Leiterkraft</h4><p>Ein Leiterstück mit s = 0,040 m wird senkrecht zu B⃗ an einem Kraftmesser befestigt; die Zuleitungen sind so angeordnet, dass ihre Kräfte den Messwert nicht verfälschen. Die wirksame Länge ist nur der vom Feld durchsetzte, senkrechte Abschnitt. F/I = 2,400; 2,350; 2,367; 2,375 mN/A ist annähernd konstant. Die Ursprungs-Ausgleichsgerade hat a = ΣIᵢFᵢ/ΣIᵢ² = 71,1/30 = 2,370 mN/A. Daher <b>B = a/s = 0,05925 T = 59,25 mT</b>.</p><h4>2a–b. Lange Spule</h4><p>a) I = Bl/(µ₀n) = 0,002·0,60/(1,257·10⁻⁶·1200) = <b>0,796 A</b>. b) Bei µᵣ = 5 und B = 5 mT gilt I = 0,005·0,60/(1,257·10⁻⁶·5·1200) = <b>0,398 A</b>. Die Aufgabe setzt eine konstante effektive Permeabilität voraus.</p><h4>3a–c. Hall-Effekt und Ausgleichsgerade</h4><p>Im stromführenden Plättchen lenkt qv⃗ × B⃗ die Ladungsträger seitlich ab. Die Ladungstrennung erzeugt ein E-Feld, dessen Kraft der Lorentzkraft entgegenwirkt. Im Gleichgewicht gilt eE = evB; mit E = U_H/h folgt <b>U_H = vhB</b>. Die Messpunkte B in mT / U_H in mV ergeben mit einer Ursprungsgeraden a = ΣBᵢUᵢ/ΣBᵢ² = 165/1375 = <b>0,120 mV/mT</b>, also U_H = (0,120 V/T)B. Die Gerade nutzt alle fünf Daten und setzt einen korrigierten Nullpunkt voraus.</p><h4>4a–b. Spezifische Ladung und Datenproblem</h4><p>Aus |q|U = ½mv² und |q|vB = mv²/r folgt |q|/m = 2U/(B²r²). Mit B = 0,051 mT = 5,1·10⁻⁵ T und r = 0,040 m erhältst du <b>4,81·10¹³ C/kg</b>. Das ist rund 273-mal die spezifische Elektronenladung und passt weder zu Elektronen/Positronen noch zu gewöhnlichen atomaren Ionen. Das Ladungsvorzeichen ist aus dem Betrag nicht bestimmbar. Die Angaben erlauben daher keine sinnvolle Identifikation eines üblichen Teilchens; ein möglicher Einheiten- oder Zahlenfehler muss in der Quelle geklärt werden. Für Elektronen wären bei diesen U und r etwa 0,843 mT erforderlich.</p><h4>5a–d. Stickstoffionen und Lochblenden</h4><p>Im Bild ist die obere Platte positiv, E⃗ zeigt nach unten. Die positiven Ionen fliegen nach rechts; zur Gegenkraft nach oben muss <b>B₁ in die Zeichenebene</b> zeigen. |q|U/d = |q|vB₁ ergibt <b>v = U/(dB₁) = 500/(0,015·0,051) = 6,54·10⁵ m/s</b>; die Durchlassgeschwindigkeit ist unabhängig von Masse und Ladungsbetrag. Nach dem Filter gilt m = |q|B₂r/v = <b>4,53·10⁻²⁶ kg ≈ 27,3u</b>. Das passt näherungsweise zu einem einfach geladenen Stickstoffmolekül N₂⁺ (etwa 28u), nicht zu einem einzelnen N⁺-Atom (etwa 14u); die gerundeten Daten sind nur näherungsweise konsistent. Bei gleicher Ladung und Durchlassgeschwindigkeit steigt r mit der Masse, also verschiebt sich der Trefferort.</p><h4>6a–c. Schraubenbahn</h4><p>Die Querkomponente v⊥ erzeugt eine Kreisbahn, die parallele Komponente v∥ bleibt im reinen B-Feld konstant. r = mv⊥/(eB) = <b>1,42 cm</b>; T = 2πm/(eB) = <b>5,95 ns</b>; Ganghöhe h = v∥T = <b>7,73 mm</b>. |v| = √(v⊥²+v∥²) = <b>1,506·10⁷ m/s</b>. Der spitze Winkel der Geschwindigkeit zur Feldachse beträgt arctan(v⊥/v∥) = <b>85,0°</b>, zur senkrechten Ebene 5,0°. Bei entgegengesetzt gerichteter Parallelkomponente wäre der Winkel zur gerichteten B-Achse 95,0°.</p><h4>7. Fehleranalyse</h4><p>F = BIs gilt für ein stromdurchflossenes Leiterstück, nicht unmittelbar für ein einzelnes frei fliegendes Teilchen. Die richtige Grundgleichung ist <b>|q|vB = mv²/r</b> beim senkrechten Eintritt. Daraus folgt r = mv/(|q|B). Es gibt in der Einzelteilchenaufgabe keine frei wählbare Leiterlänge s oder Leiterstromstärke I.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Simulationen">
+<h1>Simulationen: Kreisbahn und Schraubenbahn</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_order_schraube"><h3>Ablauf: Warum entsteht eine Schraubenbahn?</h3>
+<ol><li>Die Geschwindigkeit wird in eine parallele und eine senkrechte Komponente zum Magnetfeld zerlegt.</li><li>Die parallele Komponente erfährt keine magnetische Kraft.</li><li>Die senkrechte Komponente wird durch die Lorentzkraft zur Kreisbewegung.</li><li>Beide Bewegungen überlagern sich.</li><li>Die Bahn wird zu einer Schraubenbahn.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_simulationen"><h3>Lösungsfeld: Simulationen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1–3. Kreisbahn</h4><p>Bei festem m, |q| und B ist r = mv/(|q|B) proportional zu v: Doppelte Geschwindigkeit verdoppelt r. Bei doppeltem B halbiert sich r, weil die magnetische Kraft bei gleichem v doppelt so groß ist. Ein Vorzeichenwechsel von q bei unverändertem Betrag kehrt die Drehrichtung um; Radius, Umlaufdauer und Geschwindigkeitsbetrag bleiben gleich. Beispiel: Für Bewegung nach rechts und B aus der Zeichenfläche krümmt sich eine positive Ladung zunächst nach unten, eine negative nach oben.</p><h4>4–5. Schraubenbahn im E- und B-Feld</h4><p>Das E-Feld liegt parallel zur B-Achse. Es verursacht a∥ = qE/m und verändert v∥, daher wächst die Ganghöhe von Windung zu Windung, wenn die Kraft die Axialbewegung unterstützt. Verdoppeltes E verdoppelt die Axialbeschleunigung; der durch v⊥ bestimmte Radius bleibt zunächst gleich. Bei umgekehrter Ladung kann dasselbe E-Feld die anfängliche Axialbewegung bremsen. Ein sehr kleines B liefert eine kleine Krümmung und einen großen Radius; bei B = 0 gibt es keine magnetische Kreisbewegung mehr, sondern gleichförmige Querbewegung und elektrisch beschleunigte Axialbewegung.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Abschluss">
+<h1>Zusammenfassung und Abgabe</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_cat_fachliche_ordnung"><h3>Sortiere: Welche physikalische Idee steckt dahinter?</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Feld erzeugen oder beschreiben</td><td>Feldlinien eines Stabmagneten zeichnen</td></tr><tr><td>Feld erzeugen oder beschreiben</td><td>Magnetfeld einer langen Spule mit B = mu0 · mur · n/l · I bestimmen</td></tr><tr><td>Feld erzeugen oder beschreiben</td><td>Erdmagnetfeld mit Deklination und Inklination beschreiben</td></tr><tr><td>Kraft und Bahn</td><td>Kraft auf einen stromführenden Leiter mit F = B · I · s berechnen</td></tr><tr><td>Kraft und Bahn</td><td>Lorentzkraft auf bewegte Ladungen erklären</td></tr><tr><td>Kraft und Bahn</td><td>Kreisbahn im Magnetfeld mit Lorentzkraft als Zentripetalkraft deuten</td></tr><tr><td>Kraft und Bahn</td><td>Schraubenbahn durch Zerlegung der Geschwindigkeit erklären</td></tr><tr><td>Messen und Anwenden</td><td>Hallspannung zur Messung von B nutzen</td></tr><tr><td>Messen und Anwenden</td><td>Massenspektrometer zur Trennung von Ionen verwenden</td></tr><tr><td>Messen und Anwenden</td><td>Daten auf einer Festplatte magnetisch speichern</td></tr><tr><td>Messen und Anwenden</td><td>Polarlicht als Anwendung bewegter Ladungen im Erdmagnetfeld erklären</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_final_mcq"><h3>Mini-Check: typische Verwechslungen</h3>
+<h4>Welche Aussage zur Lorentzkraft auf ein einzelnes Teilchen ist richtig?</h4><p>Sie steht bei senkrechtem Eintritt senkrecht zu Geschwindigkeit und Magnetfeld.</p><p>Im Magnetfeld wirkt die Lorentzkraft seitlich zur Bewegung. Deshalb kann sie eine Kreisbahn erzeugen.</p><h4>Wann passt die Formel F = B · I · s?</h4><p>Bei einem stromdurchflossenen Leiter im Magnetfeld.</p><p>Die Formel beschreibt die Kraft auf einen Leiter mit Stromstärke I und wirksamer Leiterlänge s.</p><h4>Was macht ein wienscher Geschwindigkeitsfilter zuerst?</h4><p>Er lässt nur Teilchen einer bestimmten Geschwindigkeit geradlinig durch.</p><p>Erst nach der Geschwindigkeitsauswahl kann der Bahnradius im Massenspektrometer zur Massenbestimmung genutzt werden.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_abschluss"><h3>Abgabe: Magnetische Felder</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>Grundlagen</h4><p>Ein Magnetfeld beschreibt die Wirkung auf magnetische Dipole, Ströme und bewegte Ladungen. Die Richtung seiner geschlossenen Feldlinien zeigt die Nordpolrichtung einer Kompassnadel; dichtere Linien kennzeichnen qualitativ größere magnetische Flussdichte B. Ein stromführender Leiter erfährt F = BIs bei senkrechter Lage, allgemein F = BIl sin θ. Eine lange Spule erzeugt innen näherungsweise ein homogenes Feld B = µ₀µᵣ(n/l)I. Mehr Strom oder größere Windungszahldichte verstärken das Feld; ein geeigneter Eisenkern kann es zusätzlich verstärken.</p><h4>Vertiefung</h4><p>Die Lorentzkraft F⃗ = qv⃗ × B⃗ steht senkrecht zur Bewegung und verrichtet am freien Teilchen im reinen B-Feld keine Arbeit. Im Fadenstrahlrohr liefert sie die Zentripetalkraft einer Kreisbahn; aus U, B und r wird e/m bestimmt. Beim Hall-Effekt entsteht eine seitliche Ladungstrennung, bis elektrische und magnetische Kraft sich ausgleichen; die Hallspannung erlaubt die Messung von B. Ein wienscher Filter wählt v = E/B, danach trennt ein Massenspektrometer nach m/|q| über unterschiedliche Radien. Im Zyklotron erhöhen elektrische Felder die Energie, während das Magnetfeld die Halbkreisbahnen erzeugt. Eine zusätzliche parallele Geschwindigkeit ergibt eine Schraubenbahn. Hysterese beschreibt die Abhängigkeit der Magnetisierung von ihrer Vorgeschichte.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"magnetische-felder2-wolldecke62.html__"});</script>
+</body>
+</html>

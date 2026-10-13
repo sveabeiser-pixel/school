@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>8. Kamera, NoIR und Infrarot - Musterlösung</title>
+<meta name="musterloesung-source" content="08-kamera-noir.html">
+<meta name="musterloesung-source-sha256" content="f655f4dca517eef7a18bcaa07f7c857ce58be9935e721f28a9076b173baf6f43">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"8. Kamera, NoIR und Infrarot · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 8","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Bildsensor"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>8. Kamera, NoIR und Infrarot</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="noir_reveal"><h2>Erklärung öffnen</h2><p>NoIR entfernt nur den IR-Sperrfilter. Der Sensor muss weiterhin Photonen empfangen. Das kann sichtbares Licht oder die Strahlung einer geeigneten Infrarotquelle sein.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Versuch"><h1>Nachtversuch und Sicherheit</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="noir_mcq"><h2>Klausurcheck: NoIR</h2><h3>Was ändert ein fehlender IR-Sperrfilter?</h3><ul><li>Der Sensor kann zusätzlich nahes Infrarot aufnehmen.</li></ul><p>NoIR erweitert den nutzbaren Spektralbereich. Es ersetzt keine Lichtquelle und keinen Klimasensor.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-noir-nachtversuch"><h2>Nachtversuch: drei Beleuchtungen vergleichen</h2><p>Erwartete Beobachtungen bei gleichem Motiv, Abstand und zunächst gleicher Belichtungszeit/Verstärkung; die Tabelle nennt Erwartungen, keine aufgenommenen Messwerte.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Auswertung"><table><thead><tr><th scope="col">Beleuchtung</th><th scope="col">Bildhelligkeit und Details</th><th scope="col">Schlussfolgerung</th></tr></thead><tbody><tr><td>Sichtbare Lampe</td><td>Motivdetails bei ausreichender Beleuchtung; Farbwirkung abhängig von Kamera/Weißabgleich</td><td>Sichtbare Photonen erzeugen Bildsignal</td></tr><tr><td>Geeignete nahe IR-Beleuchtung</td><td>Motivdetails trotz für Menschen kaum sichtbarer Beleuchtung; Farben können unnatürlich sein</td><td>NoIR-Sensor erfasst zusätzlich nahes IR</td></tr><tr><td>Vollständige Dunkelheit, beide Lampen aus</td><td>Keine verlässlichen Motivdetails; Dunkelrauschen oder Hotpixel möglich</td><td>NoIR erzeugt keine Photonen und ist keine Wärmebildkamera</td></tr></tbody></table></div><p>Eine automatische Belichtung kann Helligkeit anpassen und den Vergleich verfälschen; ihre Einstellungen werden deshalb dokumentiert oder festgehalten. Größerer Lampenabstand verringert im einfachen Punktquellenmodell die Bestrahlungsstärke ungefähr mit 1/r²; reale Leuchten und Reflexionen können davon abweichen. Gleiche Kameraeinstellungen machen sichtbare und IR-Lichtquellen nicht automatisch gleich stark. Die IR-Leuchte wird auf freigegebene Versorgung, Erwärmung und sichere Montage geprüft; der Ausschnitt erfasst keine Wege oder Personen.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

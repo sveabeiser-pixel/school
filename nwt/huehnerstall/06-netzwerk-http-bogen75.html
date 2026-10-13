@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6. WLAN, IP und HTTP - Musterlösung</title>
+<meta name="musterloesung-source" content="06-netzwerk-http.html">
+<meta name="musterloesung-source-sha256" content="44dd7e0bfc3c54fa64d2db129aea2dda413ab2db13b5e519ce20ff432b9e73b8">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"6. WLAN, IP und HTTP · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 6","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Netzwerk"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>6. WLAN, IP-Adresse und HTTP</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="http_ablauf"><h2>HTTP-Ablauf ordnen</h2><ol><li>Browser sendet Anfrage an IP-Adresse</li><li>ESP32 empfängt und verarbeitet die Anfrage</li><li>ESP32 sendet eine Antwort</li><li>Browser zeigt die Webseite an</li></ol></article></section>
+<section data-wb-page="2" data-wb-page-title="Diagnose"><h1>Netzwerkdiagnose</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="p2_0"><h2>Begriff und Bedeutung</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th scope="col">Begriff / Anschluss</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>IP-Adresse</td><td>Adresse eines Geräts im Netz</td></tr><tr><td>Client</td><td>Stellt eine Anfrage</td></tr><tr><td>HTTP</td><td>Regelt Anfrage und Antwort auf Anwendungsebene</td></tr></tbody></table></div></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-http-diagnose"><h2>Diagnose einer nicht erreichbaren Webseite</h2><p>Zuerst zeigt der serielle Startlog, dass der ESP32 läuft. Dann muss <code>WiFi.status() == WL_CONNECTED</code> gelten und <code>WiFi.localIP()</code> die aktuelle Adresse liefern. Im freigegebenen LAN wird genau diese Adresse angefragt, etwa <code>http://192.168.1.50/api</code>; die Adresse ist ein Beispiel. Eine HTTP-404-Antwort beweist Erreichbarkeit des Servers, weist aber auf eine falsche Route hin. Eine Zeitüberschreitung führt zurück zu Adresse, WLAN, Client-Isolation oder Serverlauf. Erst nach erfolgreichem HTTP-200-Test werden JSON und Darstellung geprüft. Ein erfolgloser Ping allein beweist keinen ausgefallenen HTTP-Server, da ICMP blockiert sein kann.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

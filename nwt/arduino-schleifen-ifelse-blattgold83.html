@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="arduino-schleifen-ifelse.html">
+<meta name="musterloesung-source-sha256" content="f38936d92e920e007b179f750706b3a7b3915bd424d8aa64c62135aa112831e6">
+<title>Arduino: if/else, while und for-Schleifen verfolgen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="arduino-kurs.css">
+<style>
+    :root {
+      --li-ink: #172033;
+      --li-muted: #536274;
+      --li-teal: #087f7a;
+      --li-blue: #2468a9;
+      --li-yellow: #d89200;
+      --li-red: #b83a4b;
+      --li-green: #237a55;
+      --li-line: #cbd7df;
+      --li-soft: #f3f7f8;
+      --li-paper: #ffffff;
+    }
+
+    .wb-book section[data-wb-page] { min-width: 0; padding-top: 24px; }
+    .wb-book .wb-content,
+    .wb-book .wb-paper { min-width: 0; }
+    .wb-book .wb-paper { width: 100%; box-sizing: border-box; overflow: hidden; }
+    .li-hero { padding: 4px 0 18px; border-bottom: 4px solid var(--li-teal); }
+    .li-kicker { color: var(--li-teal); font-size: .84rem; font-weight: 900; letter-spacing: 0; text-transform: uppercase; }
+    .li-hero h1 { max-width: 920px; margin: 8px 0 12px; font-size: 2.28rem; line-height: 1.14; letter-spacing: 0; }
+    .li-lead { max-width: 860px; color: var(--li-muted); font-size: 1.08rem; line-height: 1.65; }
+    .li-band { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 18px 0; border-top: 1px solid var(--li-line); border-bottom: 1px solid var(--li-line); }
+    .li-band > div { min-width: 0; padding: 14px; }
+    .li-band > div + div { border-left: 1px solid var(--li-line); }
+    .li-band strong { display: block; color: var(--li-blue); margin-bottom: 4px; }
+    .li-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .li-card { padding: 14px 15px; border-top: 4px solid var(--li-blue); background: var(--li-soft); }
+    .li-card:nth-child(2) { border-color: var(--li-yellow); }
+    .li-card:nth-child(3) { border-color: var(--li-red); }
+    .li-card strong { display: block; margin-bottom: 5px; color: var(--li-ink); }
+    .li-translation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 18px 0; }
+    .li-translation-part { min-width: 0; padding: 14px 16px; border-top: 4px solid var(--li-teal); background: var(--li-soft); }
+    .li-translation-part:nth-child(2) { border-color: var(--li-yellow); }
+    .li-translation-part h3 { margin: 0 0 8px; font-size: 1.08rem; }
+    .li-translation-part .li-code { margin-bottom: 0; background: #fff; }
+    .li-word-map { display: grid; grid-template-columns: minmax(115px, .7fr) minmax(0, 1.3fr); gap: 6px 12px; margin: 12px 0; }
+    .li-word-map dt { font-weight: 900; color: var(--li-teal); }
+    .li-word-map dd { margin: 0; color: var(--li-muted); }
+    .li-code {
+      overflow-x: auto;
+      margin: 14px 0;
+      padding: 15px 18px;
+      border-left: 5px solid var(--li-teal);
+      background: #f4f7f8;
+      color: var(--li-ink);
+      font: 750 .98rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+    }
+    .li-code .kw { color: #075f5b; font-weight: 900; }
+    .li-sim { margin: 18px 0; border: 1px solid var(--li-line); border-radius: 8px; overflow: hidden; background: var(--li-paper); }
+    .li-sim-toolbar { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--li-line); background: #f6f9fa; }
+    .li-sim-title { font-weight: 900; color: var(--li-ink); }
+    .li-sim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .li-sim-button { min-height: 40px; padding: 8px 13px; border: 1px solid #9cadb8; border-radius: 5px; background: #fff; color: var(--li-ink); font: inherit; font-weight: 850; cursor: pointer; }
+    .li-sim-button.primary { border-color: var(--li-teal); background: var(--li-teal); color: #fff; }
+    .li-sim-body { display: grid; grid-template-columns: minmax(250px, .72fr) minmax(390px, 1.28fr); min-width: 0; }
+    .li-sim-stage { display: grid; place-items: center; align-content: center; gap: 14px; min-height: 250px; padding: 20px; border-right: 1px solid var(--li-line); background: #eef5f5; text-align: center; }
+    .li-sim-device { display: grid; place-items: center; width: 118px; aspect-ratio: 1; border: 6px solid #607381; border-radius: 16px; background: #dce5e9; box-shadow: inset 0 0 0 5px #fff; transition: background-color .2s, box-shadow .2s; }
+    .li-sim-device::before { content: ""; width: 56px; aspect-ratio: 1; border: 4px solid #596b77; border-radius: 50%; background: #8b9aa3; }
+    .li-sim-device[data-state="on"] { background: #ffe694; box-shadow: inset 0 0 0 5px #fff, 0 0 24px rgba(216,146,0,.42); }
+    .li-sim-device[data-state="on"]::before { background: #ffd02f; }
+    .li-sim-device[data-state="blink"]::before { background: #fff2a8; }
+    .li-sim-device[data-state="done"] { border-color: var(--li-green); }
+    .li-sim-output { min-height: 46px; max-width: 290px; color: var(--li-ink); font-weight: 850; }
+    .li-sim-code { min-width: 0; padding: 16px; }
+    .li-sim-lines { margin: 0; padding: 0; list-style: none; overflow-x: auto; border: 1px solid #dbe4e9; font: 750 .92rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .li-sim-lines li { display: grid; grid-template-columns: 32px minmax(320px, 1fr); gap: 10px; min-height: 31px; padding: 5px 10px; border-bottom: 1px solid #e3e9ed; white-space: pre; }
+    .li-sim-lines li:last-child { border-bottom: 0; }
+    .li-sim-lines li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .li-sim-lines li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 var(--li-yellow); }
+    .li-sim-state { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .li-sim-state > div { min-width: 0; padding: 8px; border: 1px solid var(--li-line); background: #fff; }
+    .li-sim-state span { display: block; color: var(--li-muted); font-size: .75rem; overflow-wrap: anywhere; }
+    .li-sim-state strong { display: block; margin-top: 3px; color: var(--li-ink); overflow-wrap: anywhere; }
+    .li-note { border-left: 4px solid var(--li-yellow); background: #fff8e8; padding: 12px 14px; margin: 14px 0; }
+    .li-success { border-left: 4px solid var(--li-green); background: #edf8f2; padding: 12px 14px; margin: 14px 0; }
+    .li-warn { border-left: 4px solid var(--li-red); background: #fff1f1; padding: 12px 14px; margin: 14px 0; }
+    .li-flow {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      max-width: 720px;
+      margin: 18px auto;
+      padding: 18px;
+      border: 1px solid var(--li-line);
+      background: #f8fafb;
+    }
+    .li-flow.wide { max-width: 860px; }
+    .li-symbol {
+      display: grid;
+      place-items: center;
+      min-height: 68px;
+      width: min(100%, 245px);
+      padding: 8px;
+      border: 2px solid #245d86;
+      background: #ffffff;
+      color: var(--li-ink);
+      font-weight: 900;
+      text-align: center;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+    }
+    .li-symbol.start { border-radius: 999px; background: #e8f4f3; }
+    .li-symbol.process { border-radius: 2px; }
+    .li-symbol.io { transform: skew(-12deg); background: #edf3fb; }
+    .li-symbol.io span { transform: skew(12deg); }
+    .li-symbol.decision { width: 124px; min-height: 124px; transform: rotate(45deg); background: #fff5d6; }
+    .li-symbol.decision span { max-width: 88px; transform: rotate(-45deg); font-size: .82rem; line-height: 1.25; }
+    .li-arrow { color: var(--li-blue); font-size: 1.55rem; line-height: 1; font-weight: 900; }
+    .li-branch-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; width: 100%; align-items: start; }
+    .li-branch { display: grid; justify-items: center; gap: 5px; min-width: 0; }
+    .li-branch-label { font-weight: 900; color: var(--li-teal); }
+    .li-loopback { align-self: stretch; display: grid; place-items: center; min-width: 42px; color: var(--li-blue); font-weight: 900; }
+    .li-mini { display: inline-block; padding: 2px 6px; border: 1px solid var(--li-line); border-radius: 4px; background: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 800; }
+    .li-checklist { list-style: none; padding: 0; margin: 14px 0; }
+    .li-checklist li { position: relative; padding: 9px 10px 9px 34px; border-bottom: 1px solid var(--li-line); }
+    .li-checklist li::before { content: "✓"; position: absolute; left: 10px; color: var(--li-green); font-weight: 900; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-joined {
+      display: grid;
+      grid-template-columns: minmax(170px, .9fr) 2px minmax(230px, 1.1fr);
+      width: 100%;
+      max-width: 100%;
+      align-items: stretch;
+    }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-piece { overflow-wrap: anywhere; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-piece { width: auto; max-width: none; }
+    :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-seam { width: 2px; min-height: 100%; background: #9fb1bd; }
+    .li-source-list li + li { margin-top: 8px; }
+
+    @media (max-width: 860px) {
+      .li-cards,
+      .li-band,
+      .li-translation { grid-template-columns: 1fr; }
+      .li-sim-body { grid-template-columns: 1fr; }
+      .li-sim-stage { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--li-line); }
+      .li-band > div + div { border-left: 0; border-top: 1px solid var(--li-line); }
+      .li-branch-row { grid-template-columns: 1fr; }
+      .li-branch-row > .li-arrow,
+      .li-loopback { transform: rotate(90deg); justify-self: center; min-height: 38px; }
+    }
+    @media (max-width: 560px) {
+      .li-hero h1 { font-size: 1.92rem; }
+      .li-symbol { width: min(100%, 220px); }
+      .li-sim-toolbar { align-items: stretch; flex-direction: column; }
+      .li-sim-state { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      :is([data-p2-id="li-flow-syntax"], [data-p2-id="li-words-to-code"]) .p2-solved .p2-joined { grid-template-columns: minmax(110px, .8fr) 2px minmax(150px, 1.2fr); }
+    }
+    .li-card, .li-translation-part, .li-note, .li-warn, .li-success, .li-mini { color: var(--li-ink); }
+    .li-sim-lines { color: var(--li-ink); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .li-word-map dt { color: #67e8d5; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .li-band strong { color: #9fd7ff; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .li-kicker { color: #67e8d5; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .li-word-map dd { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Schleifen · Musterlösung","sectionTitle":"if/else, while und for verfolgen · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Leitfrage"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Wo steckt dein Programm gerade: in der Bedingung, im Zweig oder in der Schleife?</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-words-to-code"><h3>Zuordnung: Von Ablaufwörtern zu Code</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>WENN Bedingung, DANN Aktion</td><td>if(Bedingung){Aktion}</td></tr><tr><td>SONST Aktion</td><td>else{Aktion}</td></tr><tr><td>WIEDERHOLE, SOLANGE Bedingung</td><td>while(Bedingung){Aktion}</td></tr><tr><td>WIEDERHOLE 3-MAL</td><td>zaehler = 0; while(zaehler &lt; 3){Aktion; zaehler++;}</td></tr><tr><td>ENDE WENN / ENDE WIEDERHOLUNG</td><td>}</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-reveal-goal"><h3>Denkpause: Was kannst du danach?</h3><p>Beim Programmieren musst du erklären können, wie das Ergebnis entsteht. Besonders bei if/else und while ist wichtig, an welcher Bedingung das Programm gerade steht, welcher Block ausgeführt wird und ob danach ein Rücksprung zur Schleifenbedingung passiert.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-mcq-start"><h3>Erster Check: Block und Bedingung</h3><h4>Was entscheidet bei if(Bedingung){...}else{...}, welcher Block ausgeführt wird?</h4><p>Ob die Bedingung beim Prüfen wahr oder falsch ist</p><p>Die Bedingung wird geprüft. Ist sie wahr, läuft der frühere Dann-Block. Ist sie falsch, läuft mit else der frühere Sonst-Block.</p><h4>Welche bekannte Formulierung passt direkt zu while(Bedingung){Aktion}?</h4><p>WIEDERHOLE die Aktion, SOLANGE die Bedingung wahr ist</p><p>while ist eine bedingte Wiederholung: Vor jedem Durchlauf wird geprüft, ob die Bedingung noch wahr ist.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="if/else lesen"><h1>if/else: eine Bedingung, zwei mögliche Wege</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-ifelse-light"><h3>Ablaufspur: Welcher Zweig läuft?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Fall</th><th scope="col">helligkeit</th><th scope="col">Bedingung helligkeit &lt; 400</th><th scope="col">Ausgeführter Block (if/else)</th><th scope="col">led danach (aus/an)</th></tr></thead><tbody><tr><td>A</td><td>350</td><td>wahr</td><td>if</td><td>AN</td></tr><tr><td>B</td><td>400</td><td>falsch</td><td>else</td><td>AUS</td></tr><tr><td>C</td><td>650</td><td>falsch</td><td>else</td><td>AUS</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Bedingungen formulieren"><h1>Bedingungen müssen eindeutig prüfbar sein</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-cat-conditions"><h3>Sortiere: Bedingung oder Aktion?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Bedingung</td><td>temperatur &gt; 28</td></tr><tr><td>Aktion</td><td>led = AN</td></tr><tr><td>Aktion</td><td>motorStopp()</td></tr><tr><td>Bedingung</td><td>taste == HIGH</td></tr><tr><td>Zu ungenau</td><td>es ist dunkel</td></tr><tr><td>Bedingung</td><td>abstand &lt; 12</td></tr><tr><td>Aktion</td><td>warte 500 ms</td></tr><tr><td>Zu ungenau</td><td>irgendwann zu heiß</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-cloze-ifelse"><h3>Sicherung: if/else einsetzen</h3><p>Bei <b>if</b> steht in runden Klammern eine <b>Bedingung</b>. Ist sie <b>wahr</b>, läuft der erste <b>Block</b>. Ist sie <b>falsch</b>, läuft der <b>else</b>-Block.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-verify-border"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Bei der Bedingung temperatur &gt; 28 ist der Messwert 28 schon wahr.</p><p>Falsch. Größer als 28 bedeutet erst ab einem Wert über 28. Der Wert 28 selbst wäre nur bei temperatur &gt;= 28 eingeschlossen.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="while verstehen"><h1>while: prüfen, ausführen, zurückspringen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-while-counter"><h3>Ablaufspur: In welchem Schleifendurchlauf bist du?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">zaehler vor Prüfung</th><th scope="col">zaehler &lt; 3?</th><th scope="col">Wo steckt das Programm? (while-Schleife/fertig)</th><th scope="col">zaehler danach</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>wahr</td><td>while-schleife</td><td>1</td></tr><tr><td>2</td><td>1</td><td>wahr</td><td>while-schleife</td><td>2</td></tr><tr><td>3</td><td>2</td><td>wahr</td><td>while-schleife</td><td>3</td></tr><tr><td>4</td><td>3</td><td>falsch</td><td>außerhalb der Schleife</td><td>3</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Schleifenfehler"><h1>Eine Schleife braucht eine Veränderung</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-endless"><h3>Ablaufspur: Warum endet die Schleife nicht?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">abstand vorher</th><th scope="col">abstand &gt; 10?</th><th scope="col">Aktion im Rumpf (piep/ nichts)</th><th scope="col">abstand nachher</th></tr></thead><tbody><tr><td>1</td><td>20</td><td>wahr</td><td>piep</td><td>20</td></tr><tr><td>2</td><td>20</td><td>wahr</td><td>piep</td><td>20</td></tr><tr><td>3 und weitere</td><td>20</td><td>wahr</td><td>piep</td><td>20</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-order-debug-loop"><h3>Debugging-Reihenfolge bei while</h3><ol><li>Startwert der beteiligten Variable notieren</li><li>Bedingung vor dem ersten Durchlauf auswerten</li><li>Schleifenrumpf Schritt für Schritt ausführen</li><li>prüfen, ob eine Anweisung die Bedingung verändern kann</li><li>zur Bedingung zurückspringen und erneut auswerten</li><li>bei falscher Bedingung hinter der Schleife fortsetzen</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-reveal-fix-loop"><h3>Auflösung: Schleife reparieren</h3><p>Im Schleifenrumpf muss der Abstand neu gemessen oder anders verändert werden, zum Beispiel abstand = liesUltraschallsensor();. Dann kann aus abstand &gt; 10 später abstand &lt;= 10 werden, und die Schleife wird verlassen.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Kombinieren"><h1>while und if/else arbeiten oft zusammen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-while-ifelse-combo"><h3>Ablaufspur: Schleife mit if/else</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">zeit vor Prüfung</th><th scope="col">zeit &lt; 4?</th><th scope="col">helligkeit</th><th scope="col">if helligkeit &lt; 400</th><th scope="col">Block / led(if oder else / an oder aus)</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>wahr</td><td>320</td><td>wahr</td><td>if / an</td></tr><tr><td>2</td><td>1</td><td>wahr</td><td>500</td><td>falsch</td><td>else / aus</td></tr><tr><td>3</td><td>2</td><td>wahr</td><td>390</td><td>wahr</td><td>if / an</td></tr><tr><td>4</td><td>3</td><td>wahr</td><td>410</td><td>falsch</td><td>else / aus</td></tr><tr><td>5</td><td>4</td><td>falsch</td><td>-</td><td>-</td><td>hinter der schleife</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Zuordnen"><h1>Syntax, Flussdiagramm und Bedeutung zusammenbringen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-flow-syntax"><h3>Zuordnung: Codebaustein und Bedeutung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>if(taste == HIGH){...}</td><td>führt den Block nur bei wahrer Bedingung aus</td></tr><tr><td>else{...}</td><td>läuft, wenn die if-Bedingung falsch war</td></tr><tr><td>while(zaehler &lt; 3){...}</td><td>wiederholt den Block, solange die Bedingung wahr ist</td></tr><tr><td>Raute im Flussdiagramm</td><td>prüft eine Ja-Nein-Frage</td></tr><tr><td>zaehler = zaehler + 1;</td><td>verändert den Zustand für die nächste Prüfung</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-mcq-comparison"><h3>Check: if oder while?</h3><h4>Welche Aussage beschreibt while(Bedingung){Aktion} am besten?</h4><p>Die Aktion läuft wiederholt, solange die Bedingung wahr bleibt.</p><p>Bei while wird vor jedem Durchlauf geprüft. Ist die Bedingung wahr, läuft der Rumpf; danach springt das Programm zur Bedingung zurück.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Transfer"><h1>Transfer: Einen Arduino-Ablauf selbst erklären</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-essay-transfer"><h3>Erkläre den Ablauf</h3><span class="solution-label">Eine mögliche Antwort</span><p>Vor jedem Durchlauf prüft die while-Schleife, ob der gespeicherte Wert temperatur kleiner als 30 ist. Bei wahr wird der Rumpf betreten und ein neuer Sensorwert gelesen. Danach entscheidet temperatur >= 26, ob der if-Block den Lüfter einschaltet oder der else-Block ihn ausschaltet. Nach dem Zweig folgt der Rücksprung zur while-Bedingung. Ist diese falsch, wird die Schleife verlassen und der Alarm eingeschaltet. Bei einem gespeicherten Startwert von 26 wird der Rumpf betreten; über den Lüfter entscheidet dann der neu gelesene Wert. Bei einem gespeicherten Startwert von 30 wird der Rumpf gar nicht betreten und der Alarm sofort eingeschaltet. Wird 30 erst innerhalb des Rumpfes gemessen, läuft der if-Block noch einmal, bevor die nächste while-Prüfung die Schleife beendet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-transfer-temp"><h3>Mini-Check: Temperaturfolge verfolgen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Durchlauf / Prüfung</th><th scope="col">temperatur nach liesSensor()</th><th scope="col">if temperatur &gt;= 26</th><th scope="col">luefter danach</th><th scope="col">while für nächsten Durchlauf?</th></tr></thead><tbody><tr><td>1</td><td>24</td><td>falsch</td><td>AUS</td><td>ja</td></tr><tr><td>2</td><td>27</td><td>wahr</td><td>AN</td><td>ja</td></tr><tr><td>3</td><td>29</td><td>wahr</td><td>AN</td><td>ja</td></tr><tr><td>4</td><td>30</td><td>wahr</td><td>AN</td><td>nein</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="for-Schleife"><h1>Von while zu for: feste Wiederholungen kompakt schreiben</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-trace-for-counter"><h3>Ablaufspur: Die for-Schleife vollständig verfolgen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">zaehler vor Bedingung</th><th scope="col">zaehler &lt; 3?</th><th scope="col">Aktion / Ort</th><th scope="col">zaehler nach Veränderung</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>wahr</td><td>led blinkt</td><td>1</td></tr><tr><td>2</td><td>1</td><td>wahr</td><td>led blinkt</td><td>2</td></tr><tr><td>3</td><td>2</td><td>wahr</td><td>led blinkt</td><td>3</td></tr><tr><td>4</td><td>3</td><td>falsch</td><td>hinter der schleife</td><td>3</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-order-for-cycle"><h3>Ordne einen Durchlauf der for-Schleife</h3><ol><li>Bedingung prüfen: zaehler &lt; 3</li><li>Aktion im Schleifenrumpf ausführen</li><li>Veränderung ausführen: zaehler++</li><li>Zur Bedingung zurückkehren</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-mcq-for-while"><h3>Check: while oder for?</h3><h4>Welche Schleife passt am besten, wenn eine LED genau fünfmal blinken soll?</h4><p>for, weil die Anzahl der Wiederholungen schon feststeht.</p><p>Bei einer vorher bekannten Anzahl ist for besonders übersichtlich: Start, Bedingung und Veränderung stehen gemeinsam im Schleifenkopf. Mit while wäre derselbe Ablauf ebenfalls möglich, aber ausführlicher.</p><h4>Welche Werte hat zaehler während der drei Aktionen bei for(int zaehler = 0; zaehler &lt; 3; zaehler++)?</h4><p>0, 1 und 2</p><p>Die Aktion läuft bei 0, 1 und 2. Beim Wert 3 ist die Bedingung 3 &lt; 3 falsch, deshalb gibt es keinen vierten Durchlauf.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Abschluss"><h1>Werkzeugkasten für Schleifen und Verzweigungen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="li-mcq-final"><h3>Abschlusscheck</h3><h4>Welche Aussagen sind richtig?</h4><p>Bei if/else läuft genau einer der beiden Blöcke.; Bei while wird die Bedingung vor jedem Durchlauf geprüft.; Ein Grenzwert kann entscheiden, ob ein Block noch läuft oder nicht.; Der Schleifenrumpf sollte einen Zustand verändern können, der für die Bedingung wichtig ist.; Bei for stehen Initialisierung, Bedingung und Veränderung im Schleifenkopf.</p><p>if/else wählt einen Zweig. while und for prüfen vor jedem Durchlauf eine Bedingung. Bei for stehen Initialisierung, Bedingung und Veränderung kompakt im Schleifenkopf. Grenzwerte und Zustandsänderungen entscheiden, ob ein Programm korrekt weiterläuft oder stecken bleibt.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"arduino-schleifen-ifelse-blattgold83.html__"});</script>
+</body>
+</html>

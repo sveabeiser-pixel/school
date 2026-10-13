@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="induktion.html">
+<meta name="musterloesung-source-sha256" content="f3744706f762073edce65c3533bdf616af0f62a0e60ddbf43b56f0925ab2a74a">
+<title>Elektromagnetische Induktion – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .ind-grid{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:1.25rem;align-items:center}
+    .ind-figure{margin:0;text-align:center}
+    .ind-figure img{display:block;width:100%;max-width:520px;max-height:430px;object-fit:contain;margin:0 auto}
+    .ind-figure--tall img{max-width:360px;max-height:520px}
+    .ind-figure figcaption{margin-top:.55rem;color:var(--wb-muted,#596273);font-size:.92rem}
+    .ind-task{border-left:4px solid #2368b2;padding:.9rem 1rem;background:#f4f8fd;margin:1rem 0}
+    .ind-task h3{margin-top:0}
+    .ind-task ol{margin-bottom:.25rem}
+    .ind-formula-note{margin-top:.5rem}
+    .ind-grid>*{min-width:0}
+    /* Eine Formelbox statt verschachtelter Rahmen von Callout, Formelblock und MathJax. */
+    .wb-book .wb-callout .physics-formula{
+      display:block;width:auto;max-width:100%;margin:.7rem 0;padding:0;
+      border:0;border-radius:0;background:transparent;box-shadow:none;overflow-x:auto
+    }
+    .wb-book .wb-callout .physics-formula mjx-container[display="true"]{
+      display:block;width:auto;max-width:100%;margin:0;padding:.25rem 0;
+      border:0;border-radius:0;background:transparent;box-shadow:none;overflow-x:visible
+    }
+    @media (max-width:800px){
+      .ind-grid{grid-template-columns:1fr}
+      .ind-figure img,.ind-figure--tall img{max-height:380px}
+      .wb-book .wb-content{min-width:0;padding:0 6px 40px}
+      .wb-book .wb-paper{box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding:24px 14px;overflow-x:hidden}
+      .wb-book [data-wb-page]{min-width:0;max-width:100%}
+      .wb-book .physics-formula{max-width:100%;overflow-x:auto}
+      .wb-book h1{font-size:27px;overflow-wrap:anywhere}
+      .wb-book h2{font-size:21px;overflow-wrap:anywhere}
+    }
+    @media (max-width:520px){
+      .wb-book .wb-top-left{min-width:0;gap:6px}
+      .wb-book .wb-brand{font-size:18px;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .wb-book .wb-top-right{gap:4px}
+      .wb-book .wb-theme-wrap,.wb-book [data-wb-present],.wb-book [data-wb-fs]{display:none}
+      .wb-book .wb-page-ind{min-width:40px;font-size:14px}
+      .wb-book .wb-icon-btn{width:36px;height:36px}
+    }
+    .ind-task { color: #172033; --wb-muted: #4b5563; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Induktion · Musterlösung","sectionTitle":"Änderung erzeugt Spannung · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="course-kicker">Musterlösung</div>
+<h1>Induktion: Wenn Änderung Spannung erzeugt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_start"><h3>Leitfrage</h3>
+<p>Nicht ein ruhendes Magnetfeld allein erzeugt Induktionsspannung, sondern eine Änderung: Entweder ändert sich das Magnetfeld, die durchsetzte Fläche, die Orientierung oder die Bewegung eines Leiters im Feld.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Grundversuche">
+<h1>Grundversuche: Wann wird eine Spannung induziert?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_mcq_grund"><h3>Check: Wann entsteht Induktionsspannung?</h3>
+<h4>Welche Situationen können eine Induktionsspannung erzeugen?</h4><p>Ein Magnet wird in eine Spule hineingeschoben.; Die Stromstärke in einer benachbarten Spule ändert sich.; Eine Leiterschleife dreht sich in einem Magnetfeld.</p><p>In b, c und d ändert sich die magnetische Situation der Leiterschleife. Ein unveränderter Ruhezustand erzeugt dagegen keine dauerhafte Induktionsspannung.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_fallmagnet"><h3>Deine Auswertung zum fallenden Magneten</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Zeitdiagramme</h4><p>Bei vernachlässigter Luftreibung und Induktionsbremsung wächst die Fallgeschwindigkeit mit v(t) = v₀+gt linear. Vor dem Erreichen der Spule ist U nahezu null. Beim Annähern wächst der Fluss und es entsteht ein Spannungspuls; beim Durchgang durch die symmetrische Lage erreicht der Fluss ein Extremum und U wechselt über null das Vorzeichen. Beim Entfernen folgt ein entgegengesetzter Puls. Weil der Magnet inzwischen schneller fällt, ist der zweite Puls typischerweise höher und schmaler. Für vollständig vorübergehenden Magneten sind die vorzeichenbehafteten Pulsflächen insgesamt entgegengesetzt gleich groß, da der Fluss am Anfang und Ende wieder gleich ist.</p><h4>b. Fallhöhe, Stärke und Windungszahl</h4><p>Größere Fallhöhe erhöht die Eintrittsgeschwindigkeit: Die Spannungspulse werden höher und zeitlich schmaler. Ein stärkerer Magnet vergrößert die Flussänderung und damit beide Spannungsbeträge, ohne im unbelasteten Idealversuch den Geschwindigkeitsverlauf zu ändern. Mehr Windungen multiplizieren U = −nΦ′, etwa doppelte Windungszahl → doppelte Spannung. Bei geschlossenem Stromkreis kann die Lenz-Gegenkraft den Fall abbremsen; dann ist v(t) nicht mehr exakt linear.</p><h4>c. Vertauschte Pole</h4><p>Der magnetische Fluss und die Spannung wechseln bei derselben Bewegung ihr Vorzeichen. Das U-t-Diagramm wird an der Zeitachse gespiegelt; Beträge und zeitliche Form bleiben im sonst gleichen Versuch erhalten.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Bewegter Leiter">
+<h1>Bewegter Leiter: Erklärung mit der Lorentzkraft</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_verify_parallel"><h3>Stopp und check</h3>
+<p><b>Falsch.</b> Ein Leiter, der sich parallel zu den Magnetfeldlinien bewegt, zeigt eine Induktionsspannung, weil seine Geschwindigkeit nicht null ist.</p><p>Parallel zum Magnetfeld ist die senkrechte Geschwindigkeitskomponente null. Deshalb wirkt keine Lorentzkraft längs des Leiters und U_ind ist null.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_bewegter_leiter"><h3>Rechnung zum bewegten Leiter</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Ladungstrennung</h4><p>Die mit dem Leiter bewegten Elektronen erfahren die magnetische Lorentzkraft und werden zu einem Ende verschoben. Dadurch entstehen ein Minus- und ein Pluspol. Das elektrische Gegenfeld wächst, bis eE = evB gilt. Die Spannung ist dann U = Ed = Bvd; ihre Polung folgt aus Bewegung und Feldrichtung, nicht allein aus den Zahlenwerten.</p><h4>b–d. Spannung, Strom und Kraft</h4><p>d = 0,050 m, v = 0,20 m/s. U = Bvd = 0,10·0,20·0,050 V = <b>1,0 mV</b>. Bei vernachlässigbarem Leiterwiderstand I = U/R = 0,0010/20 A = <b>50 µA</b>. F = BId = 0,10·50·10⁻⁶·0,050 N = <b>2,5·10⁻⁷ N = 0,25 µN</b>. Diese Kraft wirkt nach Lenz entgegen der Bewegung. Um v konstant zu halten, muss eine äußere Kraft gleichen Betrags in Bewegungsrichtung wirken.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_bewegter_leiter"><h3>Lösung kontrollieren</h3>
+<p>Mit d = 0,050 m und v = 0,20 m/s folgt U_ind = Bvd = 1,0 mV. Daraus ergibt sich I = U/R = 50 µA. Der stromdurchflossene Leiter erfährt F = BId = 2,5 · 10⁻⁷ N. Nach der Lenz'schen Regel ist diese Kraft der verursachenden Bewegung entgegengerichtet.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Flächenänderung">
+<h1>Induktion in Leiterschleifen: Die durchsetzte Fläche ändert sich</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_flaechenbeispiel"><h3>Beispielrechnung öffnen</h3>
+<p>Die Fläche ändert sich um 48 cm² = 0,0048 m². Deshalb ist der Mittelwert U_ind = B · ΔA/Δt = 1,2 mV. Für die beschleunigte Bewegung folgt aus h = 1/2 at² die Beschleunigung a = 3,0 m/s². Mit v(t) = at und dA/dt = d · v(t) ergibt sich U_ind(t) = 0,012 V/s · t für 0 ≤ t ≤ 0,20 s. Die Spannung steigt linear von 0 auf 2,4 mV; ihr Zeitmittel beträgt wieder 1,2 mV.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_flaechenaenderung"><h3>Deine Lösung zur Flächenänderung</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Ursache</h4><p>Beim Zusammendrücken sinkt die senkrecht durchsetzte Fläche und damit Φ = BA. Eine abnehmende Flussgröße erzeugt nach Faraday eine Spannung; ein dadurch fließender Strom würde die Abnahme des Flusses entgegenwirkend beeinflussen.</p><h4>b. Mittelwert</h4><p>A₁ = 0,0050 m², A₂ = 0,00050 m². |Umittel| = B|A₂−A₁|/Δt = 0,20·0,00450/0,10 V = <b>0,0090 V = 9,0 mV</b>. Es handelt sich um eine Windung. Bei positiver Flussorientierung und sinkendem Φ ist U positiv.</p><h4>c. Gleiche Änderung durch Drehung</h4><p>Die wirksame Fläche muss von A₁ auf 0,1A₁ sinken. Mit A⊥ = A₁ cos φ folgt cos φ = 0,1, also <b>φ = arccos 0,1 = 84,3°</b>. Der Winkel wird zwischen Flächennormale und Magnetfeld gemessen; beide Vorgänge liefern denselben Spannungszeitmittelwert, aber nicht zwingend denselben momentanen Verlauf.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_flaechenaufgabe"><h3>Ergebnisse kontrollieren</h3>
+<p>Die Flächenänderung beträgt 45 cm² = 4,5 · 10⁻³ m². Damit ist der Betrag der mittleren Spannung 9,0 mV. Beim Drehen muss die wirksame Fläche von A auf 0,1 A sinken. Aus cos(phi) = 0,1 folgt phi ≈ 84,3°.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Wirksame Fläche und B-Änderung">
+<h1>Wirksame Fläche und zeitlich veränderliches Magnetfeld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_induktionsspule"><h3>Auswertung der Induktionsspule</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Maximaler Fluss</h4><p>Aus dem Bild folgt Imax = 0,100 A. Bmax = µ₀(N/l)Imax = 1,257·10⁻⁶·16000/0,48·0,100 T = <b>4,19 mT</b>. Mit A = 28 cm² = 2,8·10⁻³ m² ist der maximale Fluss <b>Φmax = 1,17·10⁻⁵ Wb = 11,7 µWb pro Windung</b>. Die Flussverkettung nΦmax beträgt 0,0117 Wb.</p><h4>b–c. Zeitintervalle und Spannung</h4><p>Für Orientierung entlang des von positivem Feldstrom erzeugten Feldes gilt U = −nAµ₀(N/l)I′ = −(0,11732 V·s/A)I′. Eine Spannung entsteht nur auf den geneigten I-t-Abschnitten. Die folgende Tabelle ist zugleich das stückweise konstante U-t-Diagramm; bei vertauschten Messleitungen kehren sich alle Vorzeichen um.</p><div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Zeit in s</th><th>I′ in A/s</th><th>Uind</th></tr></thead><tbody><tr><td>0–1</td><td>0</td><td>0</td></tr><tr><td>1–2</td><td>−0,100</td><td>+11,7 mV</td></tr><tr><td>2–4</td><td>+0,050</td><td>−5,87 mV</td></tr><tr><td>4–7</td><td>0</td><td>0</td></tr><tr><td>7–8</td><td>−0,100</td><td>+11,7 mV</td></tr></tbody></table></div><p>An den Knickzeitpunkten 1, 2, 4 und 7 s ist die idealisierte Ableitung nicht eindeutig. Insbesondere ist bei t = 2 s U nicht aufgrund eines konstanten Stromabschnitts null: Dort treffen zwei verschiedene nichtzero Steigungen aufeinander.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_induktionsspule"><h3>Ergebnisse kontrollieren</h3>
+<p>Imax = 0,100 A liefert Bmax ≈ 4,19 mT und Φmax ≈ 11,7 µWb pro Windung. Bei positiver Flussorientierung ist U = 0 für 0–1 s und 4–7 s, +11,7 mV für 1–2 s und 7–8 s sowie −5,87 mV für 2–4 s. Am Knick t = 2 s besitzt das idealisierte Diagramm keine eindeutige Ableitung; ein konstanter Abschnitt liegt dort nicht vor. Bei umgekehrter Anschlussrichtung kehren sich die Spannungsvorzeichen um.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Magnetischer Fluss und Lenz">
+<h1>Magnetischer Fluss, Faraday-Gesetz und Lenz'sche Regel</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_cloze"><h3>Sicherung: Induktionsidee</h3>
+<p>Induktion entsteht durch eine <b>Änderung</b> des <b>magnetischen Flusses</b>. Nach der Lenz'schen Regel wirkt die induzierte Wirkung der Ursache <b>entgegen</b>. Das passt zur <b>Energieerhaltung</b>.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Lenz und Energie">
+<h1>Lenz'sches Gesetz: Energie bestimmt die Richtung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_verify_lenz"><h3>Stopp und check: Energieerhaltung</h3>
+<p><b>Wahr.</b> Wenn der geschlossene Minigenerator elektrische Energie an die Lampe abgibt, muss die magnetische Kraft den bewegten Stab abbremsen.</p><p>Die elektrische Energie stammt aus der mechanischen Energie des Stabs. Die Gegenkraft nach Lenz sorgt dafür, dass die Energiebilanz stimmt.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Thomson-Ring und Polung">
+<h1>Thomsonscher Ringversuch und Polung der Induktionsspannung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_ring"><h3>Deine Lenz-Begründungen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Nordpol nähert sich dem Ring</h4><p>Der Fluss des Magnetfeldes durch den Ring nimmt zu. Der induzierte Strom erzeugt ein Gegenfeld; die dem Magneten zugewandte Ringseite wird selbst zum Nordpol. Der Ring wird deshalb <b>abgestoßen</b>. Von der Magnetseite betrachtet ist der technische Strom gegen den Uhrzeigersinn gerichtet, die gefragten Elektronen laufen <b>im Uhrzeigersinn</b>.</p><h4>b. Gekoppelte Leiterschleifen</h4><p>Unter der üblichen Anordnung hintereinander liegender, gleichsinnig betrachteter Schleifen erzeugt der zunehmende gegen den Uhrzeigersinn fließende technische Strom in A einen zunehmenden Fluss durch B in Richtung zum Betrachter. B erzeugt ein Gegenfeld vom Betrachter weg, daher fließt sein technischer Strom <b>im Uhrzeigersinn</b>, seine Elektronen entgegen dem Uhrzeigersinn. Der Strom entsteht nur solange die Stromstärke in A sich ändert. Bei rein seitlich nebeneinander liegenden Schleifen kann die Richtung des gegenseitigen Flusses anders sein; ohne genauere Skizze ist die geometrische Annahme nötig.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_ring"><h3>Lösung kontrollieren</h3>
+<p>a) Der Nordpol vergrößert beim Annähern den magnetischen Fluss durch den Ring. Der Ring erzeugt auf der Magnetseite ebenfalls einen Nordpol und wird abgestoßen. Von der Magnetseite aus betrachtet muss der technische Induktionsstrom gegen den Uhrzeigersinn, der Elektronenstrom also im Uhrzeigersinn verlaufen. b) Der zunehmende Strom in A vergrößert den Fluss durch B. B erzeugt ein Gegenfeld; sein technischer Strom verläuft deshalb im Uhrzeigersinn, der Elektronenstrom gegen den Uhrzeigersinn.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"induktion-buchruecken37.html__"});</script>
+</body>
+</html>

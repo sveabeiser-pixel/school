@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="photoeffekt-simulationen.html">
+<meta name="musterloesung-source-sha256" content="60aa609e4a542858c9b160c1f8b24065bb3909a09aa7c0d75edd4fc6cc091dae">
+<title>Photoeffekt-Simulationen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/photoeffekt-simulation.css">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Photoeffekt-Simulationen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Überblick">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Photoeffekt-Simulationen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-grundbilanz"><h3>Musterlösung: Energiebilanz des untersuchten Modells</h3><p>E<sub>ph</sub> = hf = hc/λ. Für E<sub>ph</sub> &gt; E<sub>A</sub> können Elektronen mit E<sub>kin,max</sub> = E<sub>ph</sub> − E<sub>A</sub> austreten. Die Stoppspannung erfüllt eU<sub>stop</sub> = E<sub>kin,max</sub>. Die folgenden Parametervergleiche beziehen sich auf dieselben Materialwerte wie die ausgelagerte Simulation.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Äußerer Photoeffekt">
+<h1>Simulation: Äußerer Photoeffekt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-wellenlaenge"><h3>Wellenlänge und Frequenz variieren</h3><p>Bei Natrium gilt E<sub>A</sub> = 2,28 eV. Mit E<sub>ph</sub> = hc/λ ≈ 1240 eV·nm/λ erhältst du bei 420 nm eine Photonenenergie von 2,95 eV und E<sub>kin,max</sub> ≈ 0,67 eV. Bei 350 nm sind es 3,54 eV und 1,26 eV. Kürzere Wellenlänge bedeutet höhere Frequenz und größere maximale Elektronenenergie. Bei 600 nm ist E<sub>ph</sub> ≈ 2,07 eV &lt; E<sub>A</sub>; es werden keine Elektronen ausgelöst. Die Grenzwellenlänge liegt bei etwa 544 nm, die Grenzfrequenz bei 5,51 · 10<sup>14</sup> Hz.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-material"><h3>Material bei gleicher Wellenlänge vergleichen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Material im Simulationsmodell</th><th scope="col">Austrittsenergie</th><th scope="col">Grenzwellenlänge</th><th scope="col">Ergebnis bei 420 nm</th></tr></thead><tbody><tr><td>Natrium</td><td>2,28 eV</td><td>544 nm</td><td>Emission; E<sub>kin,max</sub> ≈ 0,67 eV</td></tr><tr><td>Zink</td><td>4,27 eV</td><td>290 nm</td><td>Keine Emission</td></tr><tr><td>Kupfer</td><td>4,70 eV</td><td>264 nm</td><td>Keine Emission</td></tr><tr><td>Platin</td><td>5,36 eV</td><td>231 nm</td><td>Keine Emission</td></tr><tr><td>Calcium</td><td>2,90 eV</td><td>428 nm</td><td>Emission; E<sub>kin,max</sub> ≈ 0,05 eV</td></tr></tbody></table></div><p>Die Austrittsenergien stammen aus dem verwendeten Simulationsmodell. Bei gleicher Frequenz haben alle Photonen dieselbe Energie; ein Material mit größerer Austrittsenergie liefert kleinere maximale Elektronenenergien oder gar keine Emission. Platin lässt sich im angebotenen Bereich ab 280 nm nicht zur Emission bringen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-intensitaet"><h3>Intensität bei unveränderter Frequenz vergleichen</h3><p>Bei Natrium und 420 nm erhöht eine größere Intensität die Zahl einfallender Photonen pro Zeit. Deshalb steigen im vereinfachten Modell Emissionsrate und Photostrom; E<sub>kin,max</sub> ≈ 0,67 eV und die Stoppspannung ≈ 0,67 V bleiben gleich. Bei 600 nm bleibt die Emission auch bei maximaler Intensität aus, weil jedes einzelne Photon zu wenig Energie besitzt. Bei Intensität null gibt es keine eingestrahlten Photonen und damit keinen Photostrom.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-gegenfeld"><h3>Gegenfeldspannung variieren</h3><p>Für Natrium bei 420 nm gilt eU<sub>stop</sub> = E<sub>kin,max</sub>, also U<sub>stop</sub> ≈ 0,67 V. Bei 0 V können Elektronen gesammelt werden; mit zunehmender Gegenspannung erreichen immer weniger die Anode. Ab etwa 0,67 V verschwindet der Photostrom. Die Photoemission an der Kathode kann dabei weiter stattfinden: Das Gegenfeld stoppt den Transport, nicht das Herauslösen. Nach Verkürzen auf 350 nm steigt die nötige Stoppspannung auf etwa 1,26 V.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

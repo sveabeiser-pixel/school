@@ -1,0 +1,7 @@
+{
+  "source":"nwt/arduino-6.html","output":"nwt/arduino-6-kompass57.html","bookTitle":"Arduino 6 · Musterlösung",
+  "answers":{
+    "a6-essay-battery":"<p>analogRead(A0) liefert beim Uno einen ADC-Rohwert von 0 bis 1023, den ich als int in messwert speichere. Mit spannung = messwert * (5.0 / 1023.0) rechne ich bei angenommener 5-V-Referenz näherungsweise in Volt um. float erhält dabei Nachkommastellen. Danach vergleicht die if/else-if-Kette denselben gespeicherten Spannungswert mit den Grenzwerten. Bei 1,19 V sind beide Vergleiche falsch, sodass die rote LED gewählt wird. Bei 1,20 V ist spannung >= 1.2 wahr: Gelb leuchtet. Bei 1,40 V ist schon spannung >= 1.4 wahr: Grün leuchtet und die späteren Zweige werden übersprungen. Bei echten Messungen können ADC-Auflösung, Referenzabweichung und Rundung eine Entscheidung unmittelbar an einem Grenzwert beeinflussen.</p>"
+  },
+  "extras":{"9":[{"id":"a6_sensor_richtung","title":"Weiterdenken: Umgekehrte Sensorwert-Richtung","html":"<p>Vertausche ich LDR und Festwiderstand im Spannungsteiler, kehrt sich die Richtung der Spannungsänderung am Mittelabgriff um. Alternativ passe ich das Vergleichszeichen im Code an und ermittle einen passenden Grenzwert aus hellen und dunklen Testwerten. Ein bisheriges helligkeit > 500 darf ich bei fallenden Helligkeitswerten nicht unverändert als gleiche physikalische Aussage übernehmen.</p>"}]}
+}

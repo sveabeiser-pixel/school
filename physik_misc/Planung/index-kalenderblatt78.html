@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="index.html">
+<meta name="musterloesung-source-sha256" content="3a1b8479c81ac5368c6d74508b5f4f1e4af690e8dea68472b1765b46b708c33b">
+<title>Kursstufenplanung Physik V3.0 – Musterlösung</title>
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<style>
+    .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0}
+    .plan-card{border:1px solid rgba(120,120,120,.26);border-radius:8px;padding:14px;background:rgba(255,255,255,.72)}
+    .plan-card h3{margin-top:0}
+    .plan-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+    .plan-table th,.plan-table td{border:1px solid rgba(120,120,120,.28);padding:8px;vertical-align:top}
+    .plan-table th{background:rgba(0,0,0,.05);text-align:left}
+    .track-common{border-left:5px solid #2f7d57}
+    .track-lf{border-left:5px solid #8f4b1f}
+    .track-bf{border-left:5px solid #315f9d}
+    .tag{display:inline-block;border:1px solid rgba(0,0,0,.18);border-radius:999px;padding:2px 8px;margin:2px 3px 2px 0;font-size:.82rem;background:rgba(255,255,255,.7)}
+    .tag-common{border-color:#2f7d57;color:#235f43}
+    .tag-lf{border-color:#8f4b1f;color:#733a18}
+    .tag-bf{border-color:#315f9d;color:#254a7c}
+    .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
+    .change-box{border-radius:8px;padding:16px;border:2px solid transparent;background:rgba(255,255,255,.78)}
+    .change-removed{border-color:#b94343;background:#fff1f1}
+    .change-added{border-color:#2f7d57;background:#effaf3}
+    .change-box h2{margin-top:0}
+    .change-box ul{margin-bottom:0}
+    .change-box li{margin:7px 0}
+    .removed-text{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#8c2222}
+    .added-text{font-weight:700;color:#235f43}
+    .bp-label{display:inline-block;border:2px solid #555;padding:4px 12px;margin:0 0 8px 0;background:#ddd;font-weight:700}
+    .bp-label-new{border-color:#d6d000;background:#ffff43}
+    .material-link{font-weight:700}
+    .scope-ok{border-left:5px solid #2f7d57;background:#effaf3}
+    .scope-mixed{border-left:5px solid #d7a525;background:#fff8df}
+    .scope-lf{border-left:5px solid #8f4b1f;background:#fff0e7}
+    .scope-skip{border-left:5px solid #b94343;background:#fff1f1}
+    .lf-mark{display:inline-block;background:#fff0e7;border:1px solid #8f4b1f;color:#733a18;border-radius:6px;padding:2px 6px;margin:2px 3px 2px 0;font-weight:700}
+    .bf-mark{display:inline-block;background:#eef5ff;border:1px solid #315f9d;color:#254a7c;border-radius:6px;padding:2px 6px;margin:2px 3px 2px 0;font-weight:700}
+    .common-mark{display:inline-block;background:#effaf3;border:1px solid #2f7d57;color:#235f43;border-radius:6px;padding:2px 6px;margin:2px 3px 2px 0;font-weight:700}
+    .lf-note{border-left:5px solid #8f4b1f;background:#fff0e7;border-radius:8px;padding:12px;margin:12px 0}
+    .week{font-weight:700;white-space:nowrap}
+    .week-plan-wrap{width:100%;overflow-x:auto;margin:14px 0 24px}
+    .week-plan{min-width:1080px;margin:0;font-size:.9rem}
+    .week-plan th:first-child,.week-plan td:first-child{width:92px;min-width:92px}
+    .week-plan th:nth-child(2),.week-plan td:nth-child(2){width:42%}
+    .week-plan th:nth-child(3),.week-plan td:nth-child(3){width:36%}
+    .week-plan th:nth-child(4),.week-plan td:nth-child(4){width:15%}
+    .week-plan thead th{position:sticky;top:0;z-index:1;background:#eef2f4}
+    .hour-list{margin:0;padding-left:1.25rem}
+    .hour-list li{margin:0 0 7px}
+    .hour-list li:last-child{margin-bottom:0}
+    .material-ref{display:block;margin-top:4px;font-size:.84rem;font-weight:700}
+    .semester-note{border-left:5px solid #315f9d;background:#eef5ff;border-radius:8px;padding:12px;margin:14px 0}
+    .buffer-row{background:rgba(49,95,157,.06)}
+    .compact-list li{margin:4px 0}
+    .source-list li{margin:8px 0}
+    .plan-card, .change-box, .bp-label, .scope-ok, .scope-mixed, .scope-lf, .scope-skip, .lf-note, .semester-note, .week-plan thead th { color: #172033; --wb-formula: #006b63; --wb-muted: #4b5563; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) :is(.scope-ok, .scope-mixed, .scope-lf, .scope-skip) a { color: #075985; }
+  </style>
+<script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<link rel="stylesheet" href="../../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Kursplanung · Musterlösung","sectionTitle":"V3.0: Basisfach Quantenphysik + Leistungsfach · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Überblick"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Kursstufenplanung Physik: Basisfach und Leistungsfach parallel</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="rev_start_v3"><h3>Leitfrage</h3><p>Du führst gemeinsame Konzepte zusammen ein und trennst danach die Tiefe: Das Basisfach bleibt bei den verbindlichen BF-Kompetenzen, das Leistungsfach nutzt die Zusatzstunden für quantitative Herleitungen, komplexere Auswertungen, zusätzliche Experimente und LF-exklusive Kompetenzpunkte.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Änderungen"><h1>Farbig eingepflegte Änderungen: BP2016.V2 → BP2026</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="verify_aenderungen_2026"><h3>Änderungscheck</h3><p><b>Wahr.</b> Die Zerlegung polychromatischen Lichts sollte nach der neuen Änderung weiterhin am Gitter als Standard eingeplant werden.</p><p>Ja. Die offizielle V3.0-Fassung nennt Spektralzerlegung polychromatischen Lichts am Doppelspalt oder Gitter. Wenn die Fachschaft lokal Doppelspalt priorisiert, ist das eine lokale Schwerpunktsetzung, aber keine Streichung des Gitters aus V3.0.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="PDF-Abgleich"><h1>Abgleich mit den ZPG-Jahresplanungen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="verify_pdf_abgleich_selbstinduktion"><h3>Planungscheck: Selbstinduktion</h3><p><b>Falsch.</b> Selbstinduktion darf in der Parallelplanung nie im gemeinsamen Unterricht auftauchen.</p><p>Zu stark formuliert. Die Basisfach-Jahresplanung nennt Selbstinduktion und Induktivität. Für die gemeinsame Spur eignet sich eine qualitative Einordnung; die formale und rechnerische Behandlung gehört in die LF-Zusatzstunden.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Stoffvergleich"><h1>Vollständiger Stoffvergleich: 3.4 gegen 3.6</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="cat_stoffspuren_v3"><h3>Sortiere V3.0-Inhalte</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Gemeinsamer Kern</td><td>Feldlinien, homogenes Feld und Superposition zeichnerisch</td></tr><tr><td>BF-Tiefe</td><td>Bewegung geladener Teilchen im B-Feld qualitativ beschreiben</td></tr><tr><td>LF-Zusatz</td><td>Hall-Effekt, Wien-Filter und Schraubenbahnen</td></tr><tr><td>Gemeinsamer Kern</td><td>Kohärentes Licht und Doppelspalt/Gitter</td></tr><tr><td>LF-Zusatz</td><td>Michelson-Interferometer und Einzelspalt-Minima</td></tr><tr><td>Gemeinsamer Kern</td><td>Dielektrizitätszahl epsilon_r beim Kondensator</td></tr><tr><td>Gemeinsamer Kern</td><td>Fotoeffekt mit Einstein-Gleichung</td></tr><tr><td>LF-Zusatz</td><td>Potentialtopf und Röntgenspektrum</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Jahresplan 12"><h1>Jahresplan 2026/27: Klasse 12</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="order_jahr_12_v3"><h3>Reihenfolge prüfen</h3><ol><li>Elektrische Felder und Kondensator</li><li>Magnetische Felder und Induktion</li><li>Mechanische und elektromagnetische Schwingungen</li><li>Wellen und elektromagnetisches Spektrum</li><li>Wellenoptik</li><li>Quantenphysik und Materie</li></ol></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Jahr 13"><h1>Jahrgangsstufe 13: Schließen, Vertiefen, Prüfen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="verify_magnetfeld_v3"><h3>V3.0-Korrektur</h3><p><b>Falsch.</b> Magnetfeld und Induktion gehören nach V3.0 im Basisfach Quantenphysik gar nicht vor.</p><p>Falsch. In 3.4 kommen elektrische und magnetische Felder sowie Elektrodynamik ausdrücklich vor. Der Unterschied liegt vor allem in der Tiefe: Das LF behandelt deutlich mehr quantitative und zusätzliche Aspekte.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="LF-Zusatzspur"><h1>Konsequente LF-Zusatzspur</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="p2_0"><h3>Zuordnung: V3.0-Trennung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Lorentzkraft qualitativ</td><td>Gemeinsam einführen, BF qualitativ sichern.</td></tr><tr><td>Wien-Filter</td><td>LF-Zusatz wegen gekreuzter Felder und quantitativer Analyse.</td></tr><tr><td>Doppelspalt und Gitter</td><td>Gemeinsamer Kern, LF rechnet zusätzliche Fälle.</td></tr><tr><td>Michelson-Interferometer</td><td>LF-Zusatz als vertiefte Wellenoptik.</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Wochenraster"><h1>Wochengenauer Materialplan für die gesamte Kursstufe</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="cloze_planungsregel_v3"><h3>Sicherung: Wochenregel</h3><p>In den drei gemeinsamen Stunden liegt der <b>gemeinsamen Kern</b>. Das <b>Basisfach</b> braucht eine sichere reduzierte <b>Tiefe</b>. Die <b>LF-Zusatzstunden</b> liefern quantitative Vertiefung und Zusatzkompetenzen.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Materialmatrix"><h1>Materialmatrix: Basisfach und Leistungsfach geprüft</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mcq_materiallinks"><h3>Materialcheck</h3><h4>Du möchtest die Spektralzerlegung polychromatischen Lichts nach V3.0 behandeln. Welches Material nutzt du wie?</h4><p>Interferenz2: Doppelspalt oder Gitter gemeinsam; Einzelspalt/Michelson ins LF.</p><p>Die offizielle V3.0-Fassung nennt im Basisfach die Spektralzerlegung am Doppelspalt oder Gitter; Einzelspalt, Michelson und reale Spaltbreite sind LF-Vertiefung.</p><h4>Welche Seite ist überwiegend LF-Zusatzstoff?</h4><p>quanten/roentgen_compton.html</p><p>Röntgen, Bragg, Compton und Unbestimmtheit gehören in dieser Planung in die LF-Zusatzspur.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Notizen"><h1>Deine Planungsnotizen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="essay_planung_v3"><h3>Planung anpassen</h3><span class="solution-label">Eine mögliche Antwort</span><p>Beispiel für eine Planungsanpassung ohne erfundene reale Termine: Gemeinsame Einführung und Grundversuche werden vor einer LF-Vertiefung eingeplant. Zwei zusätzliche LF-Stunden dienen der quantitativen Auswertung und nicht dem Vorgriff auf ein noch unbekanntes gemeinsames Thema. Tatsächliche Klausur- und Ferienfenster werden erst nach Vorliegen des Schulkalenders eingesetzt. Für eine Induktionseinheit werden Magnet, Spule, Messgerät und ein passend vorbereiteter Versuch benötigt; zusätzliche LF-Auswertung kann Messdaten und Selbstinduktion vertiefen. Bei Zeitverlust kürze ich doppelte Übungsformen, erhalte aber Einführung, Anwendung und Sicherung. Das Beispiel ersetzt keine verbindliche schulische Jahresplanung.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mcq_planungscheck_v3"><h3>Mini-Check: V3.0 sauber geplant?</h3><h4>Welche Aussage passt zur Planung von Magnetfeld und Induktion nach V3.0?</h4><p>Beides kommt auch im BF vor; das LF vertieft quantitativ und ergänzt zusätzliche Anwendungen.</p><p>3.4 enthält magnetische Felder und Elektrodynamik. Das LF geht deutlich weiter, etwa mit Hall-Effekt, gekreuzten Feldern, quantitativer Selbstinduktion und Wirbelströmen.</p><h4>Welche LF-Zusatzstunde ist sauber geplant?</h4><p>Gemeinsam wurde der Fotoeffekt eingeführt; LF wertet zusätzlich Messdaten zur Einstein-Gleichung aus.</p><p>Der gemeinsame Kern ist für alle da. Die LF-Zeit erweitert die Tiefe, ohne eine gemeinsame Voraussetzung exklusiv einzuführen.</p></article>
+</section>
+<section data-wb-page="11" data-wb-page-title="Quellen"><h1>Quellen und Weiterforschen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="rev_naechster_schritt_v3"><h3>Nächster Schritt</h3><p>Trage deine realen Klausurtermine, Ferienverschiebungen, Exkursionen und Fachschaftsabsprachen ein. Prüfe danach für jede Woche: Ist der gemeinsame Kern in 3.4 und 3.6 enthalten? Ist die LF-Zusatzzeit wirklich Vertiefung oder Zusatz?</p></article>
+</section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"index-kalenderblatt78.html__"});</script>
+</body>
+</html>

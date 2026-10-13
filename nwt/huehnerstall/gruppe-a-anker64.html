@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gruppe A – Sensorik und ESP32 - Musterlösung</title>
+<meta name="musterloesung-source" content="gruppe-a.html">
+<meta name="musterloesung-source-sha256" content="6375f6eae1764be46175c19463eb5d9b979ad136aebe749d962a061990eb3d73">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"Gruppe A – Sensorik und ESP32 · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Gruppe A","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Auftrag"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>Gruppe A: Sensorik und ESP32</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupa_verify"><h2>Stopp &amp; check</h2><p><strong>Falsch.</strong> Der ADC misst direkt die Helligkeit in Lux.</p><p>Der ADC misst eine elektrische Spannung und wandelt sie in einen Rohwert um. Eine Helligkeitsskala muss für den konkreten Aufbau experimentell festgelegt werden.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupa-musterprojekt"><h2>Musterprojekt: beide Sensoren und lokales HTTP</h2><p>Verdrahtung: KY-015 S→GPIO4, +→3V3, −→GND; KY-018 analoger Mittelabgriff→GPIO34/ADC1, Versorgung und Schaltung nach der tatsächlichen Modulbeschriftung, gemeinsame GND-Verbindung. Beide Signalpegel bleiben innerhalb der 3,3-V-Grenzen. Adafruit-DHT-Bibliothek erforderlich. Das folgende Kernprogramm liest alle 2 s, mittelt 16 LDR-Werte und stellt lokale Messdaten unter <code>/api</code> bereit.</p><pre><code>#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &lt;DHT.h&gt;
+#include &lt;math.h&gt;
+
+// Beispielkonfiguration; im Schulnetz gelten die freigegebenen Zugangsdaten.
+const char* ssid = "Schul-Labornetz";
+const char* password = "BeispielzugangNurLokal";
+constexpr int LDRPIN = 34;
+DHT dht(4, DHT11);
+WebServer server(80);
+float temperatur = NAN, feuchte = NAN;
+int licht = 0;
+bool gueltig = false, gemessen = false, wlanWarVerbunden = false;
+unsigned long letzteMessung = 0, letzterVersuch = 0;
+
+String datensatz() {
+  String s = "{\"temp\":";
+  s += gueltig ? String(temperatur, 1) : "null";
+  s += ",\"humidity\":";
+  s += gueltig ? String(feuchte, 1) : "null";
+  s += ",\"light_raw\":";
+  s += gemessen ? String(licht) : "null";
+  s += ",\"sample_uptime_ms\":";
+  s += gemessen ? String(letzteMessung) : "null";
+  s += ",\"age_ms\":";
+  s += gemessen ? String(millis() - letzteMessung) : "null";
+  s += ",\"interval_ms\":2000,\"status\":\"";
+  s += !gemessen ? "pending" : (gueltig ? "ok" : "dht_error");
+  s += "\"}";
+  return s;
+}
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+  analogReadResolution(12);
+  pinMode(LDRPIN, INPUT);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  server.on("/", []() {
+    server.send(200, "text/html; charset=utf-8",
+      "&lt;!doctype html&gt;&lt;html lang='de'&gt;&lt;meta charset='utf-8'&gt;"
+      "&lt;title&gt;Stallmessung&lt;/title&gt;&lt;h1&gt;Stallmessung&lt;/h1&gt;"
+      "&lt;p&gt;Temperatur in C, Feuchte in %RH, Licht als ADC-Rohwert.&lt;/p&gt;"
+      "&lt;a href='/api'&gt;Aktueller Datensatz&lt;/a&gt;&lt;/html&gt;");
+  });
+  server.on("/api", []() {
+    server.sendHeader("Cache-Control", "no-store");
+    server.send(200, "application/json", datensatz());
+  });
+  server.begin();
+}
+
+void loop() {
+  unsigned long jetzt = millis();
+  if (jetzt - letzteMessung &gt;= 2000) {
+    temperatur = dht.readTemperature();
+    feuchte = dht.readHumidity();
+    gueltig = !isnan(temperatur) &amp;&amp; !isnan(feuchte);
+    long summe = 0;
+    for (int i = 0; i &lt; 16; ++i) summe += analogRead(LDRPIN);
+    licht = summe / 16;
+    letzteMessung = millis();
+    gemessen = true;
+    Serial.println(datensatz());
+  }
+  if (WiFi.status() != WL_CONNECTED &amp;&amp; jetzt - letzterVersuch &gt;= 10000) {
+    letzterVersuch = jetzt;
+    WiFi.reconnect();
+  }
+  bool wlanVerbunden = WiFi.status() == WL_CONNECTED;
+  if (wlanVerbunden &amp;&amp; !wlanWarVerbunden) {
+    Serial.print("HTTP-Adresse: http://");
+    Serial.println(WiFi.localIP());
+  }
+  wlanWarVerbunden = wlanVerbunden;
+  if (wlanVerbunden) server.handleClient();
+}</code></pre><p>Die WLAN-Werte sind eine gekennzeichnete Beispielkonfiguration. <code>sample_uptime_ms</code> ist Laufzeit seit Reset, kein Kalenderdatum; <code>age_ms</code> zeigt das Messalter. Die Anzeige wartet nach dem Start auf den ersten Datensatz. Die Richtung der Lichtänderung und die Kategoriegrenzen werden am konkreten Spannungsteiler bestimmt.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupa_cloze"><h2>Sicherung: Fachbegriffe einsetzen</h2><p>Der <strong>ADC</strong> wandelt eine elektrische <strong>Spannung</strong> in einen digitalen <strong>Rohwert</strong> um. Für die Übertragung nutzt der ESP32 <strong>WLAN</strong>.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupa-uebergabe"><h2>Technische Notiz an Gruppe B</h2><span class="answer-label">Eine mögliche Antwort</span><p>Schnittstelle: lokales HTTP, GET /api am im seriellen Monitor dokumentierten ESP32-Host; Beispieladresse 192.168.1.50. Datenformat: temp in °C, humidity in %RH, light_raw als 12-Bit-Rohwert; Intervall 2000 ms; Messzeit als Laufzeit plus age_ms. Bei DHT-Lesefehler sind Temperatur und Feuchte null und status=dht_error. Bekannte Grenzen: DHT-Genauigkeit nach Datenblatt, LDR ohne Lux-Kalibrierung und mögliche ADC-Sättigung. Letzter Meilenstein des Musters ist eine gültige HTTP-200-Antwort mit aktuellem Datensatz; im echten Protokoll steht die tatsächlich getestete IP. Als Fehlerfall testen wir gelöste Signalleitung und kurz getrenntes WLAN; ein Fehler darf niemals durch erfundene Nullwerte verdeckt werden.</p><p>Beispiel für Mess- und Fehlersuchnachweis: Fiktive Rohwerte 1420/1430/1440 ergeben Mittelwert 1430. Bei <code>dht_error</code> werden vor dem nächsten Test Versorgung, Masse, GPIO4 und DHTPIN geprüft. Ein Screenshot oder Log muss Datum und tatsächliche Ausgabe des eigenen Tests enthalten; die Musterlösung ersetzt keinen Messnachweis.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

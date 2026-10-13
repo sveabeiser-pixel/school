@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>9. Video, Streaming und Homepage - Musterlösung</title>
+<meta name="musterloesung-source" content="09-streaming-homepage.html">
+<meta name="musterloesung-source-sha256" content="41e992e233ceeac2d05f88d54345bfcc56cd810608a2e7f80b4f82d4b4ea2282">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"9. Video, Streaming und Homepage · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 9","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Video"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>9. Video, Streaming und Homepage</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="streaming_kette"><h2>Ordne die Streamingkette</h2><ol><li>Kamera erzeugt Bilddaten</li><li>Pi verarbeitet und codiert Video</li><li>Freigegebener Dienst verteilt den Stream</li><li>Homepage bettet die Darstellung ein</li></ol></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-streaming-datenrate"><h2>Parametervergleich und Beispielrechnung</h2><p>Bei 1280 × 720 Bildpunkten, 24 Bit pro Bildpunkt und 25 Bildern/s wären unkomprimiert 1280 · 720 · 24 · 25 = 552 960 000 bit/s = 552,96 Mbit/s nötig. Ein beispielhaft auf 2 Mbit/s codierter H.264-Stream benötigt in einer Minute 2 000 000 · 60 / 8 = 15 000 000 Byte = 15 MB, zuzüglich Übertragungsaufwand. Eine Minute Datei mit 15 MB entspricht umgekehrt 2 Mbit/s. Bei fest vorgegebener Bitrate bewirkt höhere Auflösung oder Bildrate nicht zwingend mehr Daten, kann aber die Qualität pro Bild reduzieren. Eine begründete Ausgangswahl ist 1280 × 720 bei 15–25 fps; sie wird anhand Detailerkennbarkeit, Netz und tatsächlicher Datenrate geprüft.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Homepage"><h1>Messwerte und Stream zusammenführen</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="stream_homepage_essay"><h2>Designentscheidung begründen</h2><span class="answer-label">Eine mögliche Antwort</span><p>Die Homepage zeigt Temperatur in °C und relative Feuchte in %RH mit dem Zeitpunkt der letzten gültigen Messung. Der LDR erscheint als ADC-Rohwert oder als dokumentierte Projektkategorie, niemals ungeprüft als Lux. Ein eigener Kamerastatus unterscheidet „online“, „keine aktuelle Aufnahme“ und „Stream nicht erreichbar“. Der Zugriff erfolgt über die freigegebene Anmeldung, und die Kamera zeigt nur den Hühnerbereich ohne Ton. Der Pi überträgt den Stream ausgehend zum freigegebenen Dienst; sein lokaler Kameraport wird nicht öffentlich freigegeben. Bei Streamausfall bleibt die Sensoranzeige erreichbar und zeigt den Videoausfall ausdrücklich. Ein letztes Bild wird höchstens mit deutlich sichtbarer Aufnahmezeit dargestellt und nie als Livebild bezeichnet. Veraltete Sensordaten erhalten ebenfalls einen Status und werden nicht still als aktuell angezeigt.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-homepage-json"><h2>Datenformat der gemeinsamen Anzeige</h2><pre><code>{"temp":18.7,"temp_unit":"C","humidity":65,"humidity_unit":"%RH","light_raw":1430,"measured_at":"2026-10-13T08:00:00Z","sensor_status":"ok","camera_status":"offline"}</code></pre><p>Dieser Datensatz ist ein fiktives Formatbeispiel. <code>light_raw</code> bezeichnet ausdrücklich den Rohwert. Der UTC-Zeitstempel setzt eine synchronisierte Uhr voraus; alternativ übermittelt der ESP32 Laufzeit und Messalter, und der empfangende Server ergänzt die Empfangszeit. Ein DHT-Ausfall liefert <code>temp:null</code> und <code>humidity:null</code> mit Fehlerstatus; ungültiges <code>NaN</code> ist kein gültiger JSON-Zahlenwert.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

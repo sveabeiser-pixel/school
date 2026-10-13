@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="roentgen_compton.html">
+<meta name="musterloesung-source-sha256" content="0e4c582984121e700d309ddfdfb4ca0a11e3749fc601911a8e29d5f3e3454ec8">
+<title>Quantenphysik: Röntgenstrahlung und Bragg-Bedingung – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .wave-figure {
+      margin: 0;
+    }
+
+    .wave-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .wave-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #4a5b6a;
+    }
+
+    .formula-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #edf5fb 100%);
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.08);
+    }
+
+    .formula-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .formula-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .equation-line {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+
+    .xr-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .formula-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .timeline-step {
+      padding: 14px 16px;
+      border-left: 4px solid #2f6da1;
+      background: #f6fbff;
+      border-radius: 0 14px 14px 0;
+      margin-bottom: 12px;
+    }
+
+    section[data-wb-page="2"] .grid2,
+    section[data-wb-page="3"] .grid2,
+    section[data-wb-page="4"] .grid2,
+    section[data-wb-page="5"] .grid2,
+    section[data-wb-page="6"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="2"] .grid2 > *,
+    section[data-wb-page="3"] .grid2 > *,
+    section[data-wb-page="4"] .grid2 > *,
+    section[data-wb-page="5"] .grid2 > *,
+    section[data-wb-page="6"] .grid2 > * {
+      align-self: center;
+    }
+
+      section[data-wb-page="2"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="2"] .grid2 > * {
+      align-self: center;
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure {
+      justify-self: center;
+      text-align: center;
+      width: min(100%, 92%);
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure img {
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    section[data-wb-page="2"] .grid2:first-of-type > .wave-figure img {
+      max-height: 340px;
+      object-fit: contain;
+    }
+
+    .wave-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    .timeline-step { color: #172033; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wave-figure figcaption { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Röntgenstrahlung und Bragg-Bedingung · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Röntgenstrahlung: Wenn Elektronen Licht erzeugen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_reveal_start"><h3>Vorwissen aktivieren</h3><p>Du brauchst zwei Ideen gleichzeitig: Erstens ist Licht quantisiert, also an Photonen mit der Energie <span class="solution-math">E = hf</span> gebunden. Zweitens kennst du aus Interferenz und Doppelspalt den Wellencharakter. Genau diese beiden Seiten tauchen auf den nächsten Seiten immer wieder zusammen auf.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Röntgen">
+<h1>Umkehrung des Photoeffekts: Röntgenstrahlung und Bragg-Bedingung</h1>
+<h2>Geschichte und Idee</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_verify_geschichte"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Röntgenstrahlung ist für Anwendungen unproblematisch, weil sie unsichtbar ist.</p><p>Unsichtbarkeit macht sie nicht harmlos. Gerade weil Röntgenstrahlung ionisiert, sind Abschirmung und geringe Dosis wichtig.</p></article>
+<h2>Umkehrung des Photoeffekts in der Röntgenröhre</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cloze_röhre"><h3>Sicherung: Formeln einsetzen</h3><p>In der Röntgenröhre erhält jedes Elektron die Energie <b><span class="solution-math">eU</span></b> . Gibt es sie in <b>einem</b> einzigen Prozess an ein Photon ab, dann gilt <b><span class="solution-math">hf<sub>max</sub></span></b> = <span class="solution-math">eU</span> und damit <span class="solution-math">λ<sub>min</sub> = </span> <b><span class="solution-math">ch/eU</span></b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_formeln_v2"><h3>Paare finden</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td><span class="solution-math">E<sub>el</sub>  =  eU</span></td><td>Energie eines Elektrons nach der Beschleunigung</td></tr><tr><td><span class="solution-math">E<sub>ph,max</sub> = eU</span></td><td>größte mögliche Energie eines einzelnen Röntgenphotons</td></tr><tr><td><span class="solution-math">λ<sub>min</sub> = <span class="math-frac"><span>ch</span><span>eU</span></span></span></td><td>kleinste mögliche Wellenlänge bei gegebener Spannung</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-roentgen-30kv"><h3>Grenzwerte bei 30 kV</h3><p>E<sub>ph,max</sub> = eU = 30 keV = 4,8065 · 10<sup>−15</sup> J. Daraus folgt f<sub>max</sub> = eU/h ≈ 7,254 · 10<sup>18</sup> Hz und λ<sub>min</sub> = hc/(eU) ≈ 41,33 pm. Voraussetzung ist, dass ein Elektron seine gesamte durch die Spannung gewonnene kinetische Energie an ein einziges Photon abgibt.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Bragg/Röntgenspektrum">
+<h1>Bragg-Bedingung und Röntgenspektrum</h1>
+<h2>Wann ein Kristall „glänzt“: Auch hier spielt konstruktive Interferenz eine wichtige  Rolle</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_order_bragg"><h3>Ablauf sortieren</h3><ol><li>Ein dünner Röntgenstrahl trifft auf den Kristall.</li><li>An verschiedenen Netzebenen werden Teilwellen gestreut.</li><li>Nur bei passendem Wegunterschied entsteht konstruktive Interferenz.</li><li>Das Zählrohr registriert ein Intensitätsmaximum beim Glanzwinkel.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cat_bragg"><h3>Begriffe sortieren</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>beschreibt die Welle</td><td>Wellenlänge <span class="solution-math">λ</span></td></tr><tr><td>beschreibt die Welle</td><td>Ordnung <span class="solution-math">k</span></td></tr><tr><td>beschreibt den Kristall</td><td>Netzebenenabstand <span class="solution-math">d</span></td></tr><tr><td>beschreibt den Kristall</td><td>Schar paralleler Ebenen</td></tr></tbody></table></div></article>
+<h2>Minimale Wellenlänge und kleinsteter Winkel</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_mcq_roentgen"><h3>Check: Röntgenstrahlung und Bragg-Bedingung</h3><h4>1. Welche Aussagen sind fachlich korrekt?</h4><ul><li><b>a</b>: Die maximale Quantenenergie der Röntgenstrahlung ist durch <span class="solution-math">E<sub>ph,max</sub> = eU</span> bestimmt.</li><li><b>b</b>: Die Bragg-Bedingung lautet <span class="solution-math">kλ = 2dsinφ</span>.</li><li><b>d</b>: Charakteristische Linien verraten etwas über das Anodenmaterial.</li><li><b>e</b>: Kristalle können Röntgenstrahlung beugen, weil ihre Netzebenenabstände zur kleinen Wellenlänge passen.</li></ul><p>Richtig sind a, b, d und e. Falsch ist c, denn die Grenzwellenlänge hängt bei gleicher Spannung nicht vom Material, sondern von <span class="solution-math">U</span> ab.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-bragg-material-auswertung"><h3>Bragg-Spektren: Winkel, Wellenlängen und Ordnungen</h3><p>Die horizontale Achse in <code>bragg4.png</code> zeigt <b>2φ</b>, also den doppelten Glanzwinkel. Für d = 282 pm und φ₁ = 15° sowie φ₂ = 16° erhältst du in erster Ordnung λ₁ = 2d sin φ₁ ≈ 146,0 pm = 0,146 nm und λ₂ ≈ 155,5 pm = 0,155 nm. Die im Text genannten 0,14 nm und 0,15 nm sind grobe Näherungen.</p><p>Die Linien ③ und ④ gehören zur zweiten Ordnung, ⑤ und ⑥ zur dritten. Mit den obigen Winkeln liegen die Maxima etwa bei φ = 31,17° / 33,46° beziehungsweise 50,94° / 55,78°; auf der 2φ-Achse also bei 62,35° / 66,91° beziehungsweise 101,88° / 111,56°. Der Materialvergleich bei 50 kV in <code>roentgen3.png</code> besitzt für alle Anoden dieselbe Grenzwellenlänge hc/(eU) ≈ 24,80 pm; die Linienlagen unterscheiden sich.</p><p>Für LiF mit d = 201 pm und φ<sub>min</sub> = 6° ergibt sich λ<sub>min</sub> = 402 pm · sin 6° ≈ 42,02 pm. Umgekehrt liefert die exakte 30-kV-Grenze φ<sub>min</sub> = arcsin[41,33/(2 · 201)] ≈ 5,90°. Bei 20 kV steigen λ<sub>min</sub> auf 61,99 pm und φ<sub>min</sub> auf 8,87°.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="De-Broglie-Wellenlänge">
+<h1>De-Broglie-Wellenlänge: Wenn Teilchen auch Wellen sind</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_verify_debroglie"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Nach de Broglie wird die Wellenlänge eines Elektrons größer, wenn sein Impuls größer wird.</p><p>Falsch. Aus <span class="solution-math">λ<sub>B</sub> = h/p</span> folgt gerade: größerer Impuls bedeutet kleinere Wellenlänge.</p></article>
+<h2>Photonenmasse, Gravitationslinsen und Photonenimpuls</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cat_debroglie"><h3>Ordne die Aussagen zu</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>passt zu Photonen</td><td>Impuls <span class="solution-math"> p = h/λ</span></td></tr><tr><td>passt zu Elektronen</td><td>De-Broglie-Wellenlänge <span class="solution-math"> λ<sub>B</sub> = h/p</span></td></tr><tr><td>passt zu Photonen</td><td>zugeordneter Massewert <span class="solution-math"> m = hf/c<sup>2</sup></span></td></tr><tr><td>passt zu Elektronen</td><td>kann Beugung und Interferenz als Materiewelle zeigen</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_essay_debroglie"><h3>Transfer</h3><span class="solution-label">Eine mögliche Antwort</span><p>De Broglies Vorschlag war ungewöhnlich, weil Elektronen bis dahin vor allem als lokalisierte, geladene Teilchen beschrieben wurden. Er ordnete auch ihnen die Materiewellenlänge λ = h/p zu. Das passt zur Entwicklung der Quantenphysik, weil umgekehrt der Photoeffekt bereits diskrete Energieübertragung durch Licht gezeigt hatte. Aus dem Wellencharakter von Elektronen folgt die Vorhersage, dass sie Beugung und Interferenz zeigen können. Elektronenbeugung an Strukturen mit passenden Abständen bestätigt genau diese Vorhersage. Elektronen sind dabei keine klassischen Wasserwellen, sondern Quantenobjekte, deren Nachweise Wahrscheinlichkeiten folgen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-photonen-gravitationslinse"><h3>Photonenenergie, Ruhemasse und Lichtablenkung</h3><p>Die Ruhemasse eines Photons ist null; E/c² ist nur ein Masseäquivalent seiner Energie. Sein Impuls ist p = E/c = h/λ. Lichtablenkung in einer Gravitationslinse wird durch die Geometrie der Raumzeit beschrieben. Im geometrisch-optischen Vakuummodell ist die Ablenkung nicht größer, nur weil das Photon eine höhere Frequenz besitzt. Beim Kometen wirkt Strahlungsdruck besonders auf Staub; der Ionenschweif wird wesentlich vom Sonnenwind geprägt.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Compton-Effekt">
+<h1>Compton-Effekt: Stöße mit Photonen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cloze_compton"><h3>Sicherung: Compton-Effekt</h3><p>Beim Compton-Effekt stößt ein Photon auf ein <b>Elektron</b> und überträgt dabei Energie und <b>Impuls</b> . Die Wellenlängenzunahme wird mit wachsendem <b>Streuwinkel</b> größer, deshalb ist die Wellenlänge nach dem Stoß <b>größer</b> als vorher.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_mcq_compton"><h3>Mini-Check</h3><h4>1. Welche Aussagen zum Compton-Effekt stimmen?</h4><ul><li><b>a</b>: Photonen können bei einem Stoß Impuls auf Elektronen übertragen.</li><li><b>c</b>: Die Wellenlängenzunahme hängt vom Streuwinkel ab.</li><li><b>d</b>: Der Compton-Effekt war ein starkes Argument für den Teilchencharakter des Lichts.</li></ul><p>Richtig sind a, c und d. Nach der Streuung wird die Wellenlänge größer, nicht kleiner, und bei sichtbarem Licht ist die Verschiebung meist zu klein, um eine große Rolle zu spielen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="bild-compton3-streuwinkel"><h3>Compton-Spektren im Materialbild</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Photonstreuwinkel β</th><th scope="col">Rechnung mit λ<sub>C</sub> ≈ 2,426 pm</th><th scope="col">λ′ für λ = 70,8 pm</th></tr></thead><tbody><tr><td>0°</td><td>Δλ = 2,426 pm · (1 − 1) = 0</td><td>70,8 pm</td></tr><tr><td>90°</td><td>Δλ = 2,426 pm · (1 − 0) = 2,426 pm</td><td>73,23 pm</td></tr><tr><td>135°</td><td>Δλ = 2,426 pm · (1 + √2/2) ≈ 4,142 pm</td><td>74,94 pm</td></tr></tbody></table></div><p>Die unverschobene Linie stammt unter anderem aus Streuprozessen an gebundenen Elektronen beziehungsweise dem Atom als Ganzem. Die verschobene Linie zeigt die Compton-Streuung an näherungsweise freien, anfänglich ruhenden Elektronen. Bei β = 0° gibt es keine Verschiebung; für andere Winkel zwischen 0° und 180° wächst die Wellenlänge. Bei 180° wäre Δλ<sub>max</sub> = 2λ<sub>C</sub> ≈ 4,853 pm.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Unbestimmtheitsrelation">
+<h1>Wellenfunktion und Unbestimmtheitsrelation</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_verify_wellenfunktion"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Wenn du in der Quantenphysik nur genauer messen würdest, könntest du Ort und Impuls eines Elektrons gleichzeitig beliebig exakt bestimmen.</p><p>Genau das ist der Punkt der Unbestimmtheitsrelation: Die Grenze ist nicht nur technisch, sondern prinzipiell.</p></article>
+<h2>Einzelspalt: Warum ein enger Spalt den Impuls streut</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_order_ubr"><h3>Gedankengang ordnen</h3><ol><li>Der Spalt legt den Ort des Elektrons in Querrichtung näher fest.</li><li>Hinter dem Spalt wird der Elektronenstrahl gebeugt.</li><li>Dadurch entsteht eine Verteilung der Querimpulse.</li><li>Kleine Ortsstreuung führt zu großer Impulsstreuung.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cloze_ubr"><h3>Sicherung: Satz ergänzen</h3><p>Wird die Ortsstreuung Δx <b>kleiner</b>, muss die minimal mögliche Streuung des <b>Impuls</b>es <b>größer</b> sein. Die im Lückentext gesuchte Größenordnung ist <b>h</b>. Für Standardabweichungen gilt exakt Δx · Δpₓ ≥ ℏ/2 = h/(4π). Die Spaltbreite und der Querimpuls bis zum ersten Beugungsminimum ergeben dagegen nur die Größenordnung b · Δpₓ ≈ h; diese Breiten sind keine Standardabweichungen.</p></article>
+<h2>Beispiel: Warum du in der Elektronenstrahlröhre trotzdem eine „Bahn“ siehst</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_essay_ubr"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Die Unbestimmtheitsrelation beschreibt die Streuungen von Orts- und Impulsmessungen an gleich präparierten Zuständen. Sie bleibt auch bei idealen Messgeräten bestehen. Ein räumlich enges Wellenpaket muss viele verschiedene Impulsanteile enthalten. Deshalb kann ein Elektron nicht zugleich eine beliebig kleine Orts- und Impulsstreuung besitzen. Für Standardabweichungen gilt exakt Δx · Δpₓ ≥ ℏ/2 = h/(4π). Die Spaltbreite und der Querimpuls bis zum ersten Beugungsminimum ergeben dagegen nur die Größenordnung b · Δpₓ ≈ h; diese Breiten sind keine Standardabweichungen. Technische Messfehler können zusätzlich auftreten, sind aber nicht der Ursprung dieser Grenze.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-elektronenstrahl-aufweitung"><h3>Elektronenstrahl: Größenordnung der Aufweitung</h3><p>Mit der im Spaltmodell verwendeten Breite b = 0,1 mm und U = 1 kV folgt nichtrelativistisch p = √(2m<sub>e</sub>eU) ≈ 1,708 · 10<sup>−23</sup> kg·m/s und λ = h/p ≈ 38,8 pm. Der Winkel zum ersten Beugungsminimum ist α ≈ λ/b ≈ 3,88 · 10<sup>−7</sup> rad. Auf L = 0,20 m ergibt sich die seitliche Entfernung Lα ≈ 7,76 · 10<sup>−8</sup> m = 0,078 µm; der Abstand beider erster Minima beträgt ungefähr 0,155 µm. Dies ist die Beugungsskala des idealisierten Spalts, keine zusätzlich gemessene Strahlbreite. Sie ist gegenüber den makroskopischen Abmessungen der Röhre winzig. Für Standardabweichungen gilt exakt Δx · Δpₓ ≥ ℏ/2 = h/(4π). Die Spaltbreite und der Querimpuls bis zum ersten Beugungsminimum ergeben dagegen nur die Größenordnung b · Δpₓ ≈ h; diese Breiten sind keine Standardabweichungen.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Transfer">
+<h1>Anwenden und weiterdenken</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_essay_transfer"><h3>Transfer</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein klassisches Teilchenmodell des Lichts erklärt die Interferenz an einem Kristall nicht; dafür brauchst du die Bragg-Bedingung und die Überlagerung von Amplituden. Beim Compton-Effekt überträgt ein Photon dagegen Energie und Impuls auf ein Elektron, sodass eine rein klassische Wellenvorstellung ebenfalls nicht genügt. Elektronen besitzen nach de Broglie die Wellenlänge λ = h/p und können gebeugt werden. Sie werden trotzdem einzeln und lokalisiert nachgewiesen. Die Wellenfunktion liefert mit |ψ|² eine Wahrscheinlichkeitsdichte für diese Nachweise. Die Unbestimmtheitsrelation begrenzt zugleich die möglichen Orts- und Impulsstreuungen. Zusammen verlangen diese Befunde eine quantenmechanische Beschreibung.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_mcq_transfer"><h3>Zusammenhänge prüfen</h3><h4>1. Welche Aussagen verbinden mehrere Kapitel dieser Seite korrekt?</h4><ul><li><b>a</b>: Die Bragg-Bedingung nutzt den Wellencharakter von Röntgenstrahlung.</li><li><b>b</b>: Der Compton-Effekt zeigt, dass Photonen Impuls übertragen können.</li><li><b>e</b>: Röntgenröhre und Photoeffekt hängen beide mit der Beziehung <span class="solution-math">E = hf</span> zusammen.</li></ul><p>Richtig sind a, b und e. Falsch sind c und d: größerer Impuls bedeutet kleinere De-Broglie-Wellenlänge, und die Unbestimmtheit ist prinzipiell, nicht nur technisch.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_verify_transfer"><h3>Wahr oder falsch?</h3><p><b>Falsch:</b> Wenn Licht Teilchencharakter zeigt, können Interferenz und Beugung in der Quantenphysik keine Rolle mehr spielen.</p><p>Falsch. Genau das Gegenteil ist typisch für Quantenobjekte: Sie zeigen sowohl diskrete Energie- und Impulsübertragung als auch Wellenphänomene wie Beugung und Interferenz.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cloze_transfer"><h3>Transfer-Lückentext</h3><p>Die De-Broglie-Wellenlänge eines Elektrons berechnest du mit λ<sub>B</sub> = <b>h/p</b>. Der <b>Compton-Effekt</b> zeigt, dass Photonen Impuls übertragen können. Mit der <b>Bragg-Bedingung</b> deutest du Interferenz an Kristallen. |ψ|² liefert eine <b>Wahrscheinlichkeit</b>sdichte; die Wahrscheinlichkeit für einen Bereich erhältst du durch Integration über diesen Bereich.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_cat_transfer"><h3>Sortiere die Aussagen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>zeigt vor allem Wellencharakter</td><td>Bragg-Reflexion am Kristall</td></tr><tr><td>zeigt vor allem Teilchencharakter</td><td>Stoß von Photon und Elektron</td></tr><tr><td>zeigt statistische Deutung</td><td>Bornsche Interpretation mit <span class="solution-math">|Ψ|<sup>2</sup></span></td></tr><tr><td>zeigt vor allem Wellencharakter</td><td>Beugung am Einzelspalt</td></tr><tr><td>zeigt vor allem Teilchencharakter</td><td>Photonenimpuls beim Compton-Effekt</td></tr><tr><td>zeigt statistische Deutung</td><td>Verteilung vieler Messorte am Schirm</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_order_transfer"><h3>Gedankenkette ordnen</h3><ol><li>Ein Elektron wird in der Röntgenröhre beschleunigt.</li><li>Beim Abbremsen kann ein energiereiches Photon entstehen.</li><li>Am Kristall zeigt die Strahlung Interferenz nach der Bragg-Bedingung.</li><li>Beim Compton-Effekt überträgt ein Photon Impuls auf ein Elektron.</li><li>Die Quantenphysik beschreibt Messergebnisse schließlich nur statistisch vollständig.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_transfer_p2"><h3>Paare finden</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Bragg-Bedingung</td><td>Konstruktive Interferenz tritt auf, wenn <span class="solution-math">kλ = 2dsinφ</span> gilt.</td></tr><tr><td>De-Broglie-Wellenlänge</td><td>Teilchen mit Impuls <span class="solution-math">p</span> kann man eine Materiewellenlänge <span class="solution-math">h/p</span> zuordnen.</td></tr><tr><td>Compton-Effekt</td><td>Photonen können bei Stößen Energie und Impuls übertragen.</td></tr><tr><td>Wellenfunktion</td><td><span class="solution-math">|Ψ|<sup>2</sup></span> beschreibt die Wahrscheinlichkeit eines Messergebnisses.</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="roentgen_reveal_compton"><h3>Weiterforschen</h3><p>In allen vier Kapiteln scheitert die klassische Trennung zwischen Welle und Teilchen. Quantenobjekte tragen Energie und Impuls in diskreten Zusammenhängen, zeigen aber zugleich Interferenz, Beugung und nur statistisch vorhersagbare Messergebnisse.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Zusammenfassung">
+<h1>Zusammenfassung und Quellen</h1>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

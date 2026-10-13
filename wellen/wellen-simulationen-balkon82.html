@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Simulationen · Musterlösung</title><meta name="musterloesung-source" content="wellen-simulationen.html"><meta name="musterloesung-source-sha256" content="605d54d68762a334cb8a1f361f1344dddde04add1c0260c86c471fce77e61d7f">
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/wellen-simulations.css">
+<style>
+    .sim-index-list li { margin: 6px 0; }
+    .sim-prompt { margin: 14px 0 0; padding-left: 14px; border-left: 4px solid #2563eb; }
+    .sim-prompt strong { display:block; margin-bottom:4px; }
+    .sim-inline-check { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    .sim-inline-check label { display:flex; align-items:center; gap:6px; margin:0; font-weight:700; }
+  
+
+.wb-book .wb-side-footer{display:none}
+.sample-answer{min-width:0}.sample-answer h3{font-size:18px;line-height:1.45}
+.sample-answer img{display:block;width:auto;max-width:100%;height:auto;margin:12px 0}
+.sample-answer :is(.grid2,.wb-soft-callout){display:block;background:transparent;color:var(--wb-text);border:0;box-shadow:none;padding:0}
+.sample-answer svg{display:block;width:100%;max-width:720px;height:auto;background:white;color:#172033;border:1px solid var(--wb-line)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;border:1px solid var(--wb-line);text-align:left;vertical-align:top}th{background:var(--wb-head-bg);color:var(--wb-text)}
+.sample-answer p{overflow-wrap:anywhere}.sample-answer h3{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><link rel="stylesheet" href="../assets/musterloesungen.css"></head><body><div data-wb-book><script class="wb-book-config" type="application/json">{"bookTitle":"Wellen · Musterlösung","sectionTitle":"Simulationen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Mechanische Schwinger"><h1>Musterlösung</h1><h2>Mechanische Schwinger vergleichen</h2><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-feder"><h3>Federpendel: Masse und Amplitude</h3><p>Bei m = 0,50 kg, D = 25 N/m und A = 0,20 m gilt T = 0,889 s, E = ½DA² = 0,50 J und v<sub>max</sub> = √(D/m)A = 1,414 m/s. Verdopplung nur der Masse liefert T′ = 1,257 s, gleiche Gesamtenergie und v′<sub>max</sub> = 1,00 m/s. Verdopplung nur der Amplitude bei Ausgangsmasse lässt T gleich, vervierfacht E auf 2,00 J und verdoppelt v<sub>max</sub> auf 2,828 m/s. Werden beide Änderungen nacheinander beibehalten, gelten T = 1,257 s, E = 2,00 J und v<sub>max</sub> = 2,00 m/s. Am Umkehrpunkt sind v = 0 und E<sub>pot</sub> maximal; in der Ruhelage sind |v| und E<sub>kin</sub> maximal.</p></article><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-u-rohr"><h3>U-Rohr: Dichte und Querschnitt</h3><p>m = ρAl und D* = 2ρgA. In T = 2π√(m/D*) kürzen sich ρ und A: T = 2π√(l/(2g)). Bei l = 0,80 m und g = 9,81 m/s² ist T = 1,269 s, unabhängig von Dichte und Querschnitt im idealen Modell. Doppelte Dichte bzw. doppelter Querschnitt verdoppelt sowohl die Trägheit als auch die Rückstellkraft. Die Oberflächen bewegen sich gegenläufig mit Höhenunterschied 2s.</p></article><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-wagen"><h3>Wagen: Neigungswinkel</h3><p>D* = D₁+D₂ = 30 N/m und T = 2π√(0,60/30) s = 0,889 s. Der Winkel verändert T nicht. Die Ruhelage verschiebt sich hangabwärts um s₀ = mg sinα/D*. Bei α = 30° ist s₀ = 9,81 cm. Die Schwingungsamplitude ist relativ zu dieser neuen Lage zu messen; nur konstante Federkonstanten, gleiche Masse und vernachlässigte Reibung liefern die unveränderte Periodendauer.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Pendel und Überlagerung"><h2>Modellgrenzen und Überlagerung</h2><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-pendel"><h3>Fadenpendel: 5°, 20° und 50°</h3><p>Die Kleinwinkelnäherung liefert bei l = 1 m T₀ = 2,006 s. Mit dem exakten sinα-Gesetz wird die Periode amplitudenabhängig: ungefähr 2,007 s bei 5°, 2,021 s bei 20° und 2,106 s bei 50°. Bei 5° überdecken sich die Modelle fast; bei 20° wächst über mehrere Perioden eine sichtbare Phasendifferenz; bei 50° beträgt die Periodenabweichung etwa 5 %. Ändern nur der Masse verändert weder die exakte noch die angenäherte Bewegung, weil sich m in der Bewegungsgleichung kürzt.</p></article><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-ueberlagerung"><h3>Phase und Schwebung</h3><p>Bei gleichen Frequenzen und A₁ = A₂ = 0,60 beträgt die Summenamplitude bei 0°: 1,20; bei 90°: 0,60√2 ≈ 0,849 und die Summenphase 45°; bei 180°: 0. Für f₁ = 1,00 Hz und f₂ = 1,15 Hz gilt f<sub>S</sub> = 0,15 Hz, sodass Lautstärkemaxima im Abstand von 6,67 s wiederkehren. Die schnelle Trägerschwingung besitzt die mittlere Frequenz 1,075 Hz; die signierte Kosinushülle hat halbe Differenzfrequenz, ihr Betrag wiederholt sich mit 0,15 Hz.</p></article></section>
+<section data-wb-page="3" data-wb-page-title="Überblick"><h2>Wellen-Simulationen im Überblick</h2></section>
+<section data-wb-page="4" data-wb-page-title="Einstieg"><h2>Einstieg</h2><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-huygens"><h3>Beugung am Spalt</h3><p>Ein engerer Spalt erzeugt hinter der Öffnung eine stärker gekrümmte, fächerförmige Wellenfront; ein breiter Spalt lässt die Mitte näherungsweise eben. Die dünnen Kreise sind Elementarwellen, die kräftige Front ist ihre Einhüllende. Transversal schwingen die Teilchen quer, longitudinal parallel zur Ausbreitung; ihre lokale Bewegung wandert nicht mit der Front.</p></article></section>
+<section data-wb-page="7" data-wb-page-title="Interferenz 1"><h2>Interferenz 1</h2></section>
+<section data-wb-page="8" data-wb-page-title="Interferenz 2"><h2>Interferenz 2</h2></section>
+<section data-wb-page="6" data-wb-page-title="Reflexion und stehende Wellen"><h2>Reflexion und stehende Wellen</h2></section>
+<section data-wb-page="5" data-wb-page-title="Wellenfunktion"><h2>Wellenfunktion</h2></section>
+<section data-wb-page="9" data-wb-page-title="Elektromagnetischer Schwingkreis"><h2>Elektromagnetischer Schwingkreis</h2><div class="wb-section-break"></div>
+<article class="sample-answer" data-solution="sim-lc"><h3>LC-Kreis: Kapazität und Induktivität</h3><p>Ausgangswerte L = 5,0 mH und C = 1,00 µF: T = 2π√(LC) = 0,444 ms und f = 2251 Hz. Vergrößern eines Faktors um 4 verdoppelt T; Vergrößern beider um 4 vervierfacht T. Q und U verlaufen gleichphasig, I ist um eine Viertelperiode verschoben. Bei maximaler Kondensatorladung ruht der Strom; bei Q = 0 sind Strombetrag und magnetische Feldenergie maximal. Die Summe elektrischer und magnetischer Energie bleibt im idealen Modell konstant.</p></article></section>
+</div><script src="../assets/allgemeines_format.js"></script><script>SBLibrary.autoMountAll();</script></body></html>

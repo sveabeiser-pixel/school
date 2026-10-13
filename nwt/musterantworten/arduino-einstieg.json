@@ -1,0 +1,6 @@
+{
+  "source":"nwt/arduino-einstieg.html","output":"nwt/arduino-einstieg-windrad82.html","bookTitle":"Einstieg · Musterlösung",
+  "answers":{
+    "ae-essay-own-algorithm":"<p>Situation: Eine Raumlüftung soll bei mehr als 26 °C laufen und sonst ausgeschaltet bleiben. Eingabe ist die gemessene Temperatur, Zustand ist der gespeicherte Messwert, Ausgabe ist der Lüfterzustand.</p><pre><code>START\nWIEDERHOLE, SOLANGE die Steuerung aktiv ist\n  LIES Temperatur\n  WENN Temperatur &gt; 26\n    DANN schalte Lüfter AN\n    SONST schalte Lüfter AUS\n  ENDE WENN\n  WARTE kurz\nENDE WIEDERHOLUNG\nENDE</code></pre><p>Testfall 1: 25 °C → Vergleich falsch, Lüfter aus. Testfall 2: 28 °C → Vergleich wahr, Lüfter an. Am Grenzwert 26 °C bleibt der Lüfter wegen des strengen Größer-Vergleichs aus.</p>"
+  }
+}

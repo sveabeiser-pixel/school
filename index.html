@@ -5,10 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>school: Übersicht</title>
   <link rel="stylesheet" href="assets/allgemeines_format.css" />
+  <link rel="stylesheet" href="assets/musterloesungen.css" />
   <style>
     .wb-book .wb-content{
       padding-top: 18px;
     }
+    .index-material-list{margin:12px 0;padding-left:22px;list-style:disc}
+    .index-material-item{font-size:17px;line-height:1.55;min-width:0}
+    .index-material-item + .index-material-item{margin-top:22px}
+    .index-solution-line{display:block;margin-top:4px;line-height:1.5}
+    .wb-book .index-material-link{color:#075985;font-weight:700;font-size:17px;text-underline-offset:3px;overflow-wrap:anywhere}
+    .wb-book .index-solution-link{color:#52616e;font-weight:400;font-size:14px;text-underline-offset:3px;overflow-wrap:anywhere}
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .index-material-link{color:#67e8d5}
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .index-solution-link{color:#a6b7c5}
     .index-section-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 24px;margin:18px 0}
     .index-section-link{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 4px;border-top:1px solid var(--wb-line,#d6dee3);color:inherit;text-decoration:none}
     .index-section-link:nth-last-child(-n+2){border-bottom:1px solid var(--wb-line,#d6dee3)}
@@ -47,7 +56,7 @@
         <a class="index-section-link" href="#page-4"><span><strong>Physik: Kursstufe</strong>Felder, Induktion, Wellen, Quantenphysik und Planung</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-5"><span><strong>Physik: Akustik</strong>Versuche und Materialien zu Schall und Akustik</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-6"><span><strong>Simulationen</strong>Interaktive Modelle für Wellen und elektrische Felder</span><b aria-hidden="true">→</b></a>
-        <a class="index-section-link" href="#page-7"><span><strong>Alle Links</strong>Alle vorhandenen Lernseiten als vollständige Linkliste</span><b aria-hidden="true">→</b></a>
+        <a class="index-section-link" href="#page-7"><span><strong>Alle Links</strong>Lernseiten und zugehörige Musterlösungen im Überblick</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-8"><span><strong>Für Lehrkräfte</strong>Anleitung und technische Musterseite</span><b aria-hidden="true">→</b></a>
       </nav>
       <div class="wb-section-break"></div>
@@ -65,10 +74,10 @@
       <div class="wb-soft-callout">
         <strong>Scratch und Medienkritik</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Scratch Programmieren: <a href="medien/Scratch.html">medien/Scratch.html</a></li>
-          <li>Scratch (Fortsetzung): <a href="medien/Scratch2.html">medien/Scratch2.html</a></li>
-          <li>Glaubwürdigkeit von Informationen: <a href="medien/glaubwuerdigkeit.html">medien/glaubwuerdigkeit.html</a></li>
-          <li>Fake News und Bilder: <a href="medien/Fake-News-Bilder.html">medien/Fake-News-Bilder.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="medien/Scratch.html">Scratch 1: Oberfläche, Bewegung, Malstift und Tastatursteuerung</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Scratch-stempel81.html">Musterlösung: Scratch 1: Oberfläche, Bewegung, Malstift und Tastatursteuerung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="medien/Scratch2.html">Scratch 2: Straßen-Spiel, Variablen, Kollisionen und Level</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Scratch2-kreidekasten68.html">Musterlösung: Scratch 2: Straßen-Spiel, Variablen, Kollisionen und Level</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="medien/glaubwuerdigkeit.html">Quellenkritik: Nachrichten prüfen, Fakefinder und KI-Antworten</a><span class="index-solution-line"><a class="index-solution-link" href="medien/glaubwuerdigkeit-lupenglas54.html">Musterlösung: Quellenkritik: Nachrichten prüfen, Fakefinder und KI-Antworten</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="medien/Fake-News-Bilder.html">Bildkritik: Fake News, KI-Bilder und falscher Kontext</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Fake-News-Bilder-lichtschalter76.html">Musterlösung: Bildkritik: Fake News, KI-Bilder und falscher Kontext</a></span></li>
         </ul>
       </div>
 
@@ -85,26 +94,28 @@
       <div class="wb-soft-callout">
         <strong>Künstliche Intelligenz</strong>
         <p>Untersuche, was KI-Systeme ausmacht, wie sie Probleme lösen und wie sich wissensbasierte KI und maschinelles Lernen unterscheiden.</p>
-        <p><a href="informatik/kuenstliche-intelligenz.html">Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog</a></p>
-        <p><a href="informatik/kuenstliche-intelligenz2.html">Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung</a></p>
-        <p><a href="informatik/kuenstliche-intelligenz3.htm">Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten</a></p>
-        <p><a href="informatik/sprachmodelle.html">Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten</a></p>
+        <ul class="index-material-list">
+          <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz.html">Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz-schatulle43.html">Musterlösung: Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz2.html">Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz2-pergament87.html">Musterlösung: Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz3.htm">Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz3-brosche62.html">Musterlösung: Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="informatik/sprachmodelle.html">Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/sprachmodelle-kaleidoskop29.html">Musterlösung: Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten</a></span></li>
+        </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Arduino-Reihe</strong>
         <ul style="margin:0; padding-left:18px">
-          <li><a href="nwt/arduino-einstieg.html">nwt/arduino-einstieg.html</a> – sprachunabhängiger Einstieg in Algorithmen, Bedingungen und Schleifen</li>
-          <li><a href="nwt/arduino-schleifen-ifelse.html">nwt/arduino-schleifen-ifelse.html</a> – interaktive Vertiefung zu <code>if/else</code> und <code>while</code></li>
-          <li><a href="nwt/arduino-1.html">nwt/arduino-1.html</a></li>
-          <li><a href="nwt/arduino-2.html">nwt/arduino-2.html</a></li>
-          <li><a href="nwt/arduino-3.html">nwt/arduino-3.html</a></li>
-          <li><a href="nwt/arduino-4.html">nwt/arduino-4.html</a></li>
-          <li><a href="nwt/arduino-klausur.html">nwt/arduino-klausur.html</a></li>
-          <li><a href="nwt/arduino-5.html">nwt/arduino-5.html</a></li>
-          <li><a href="nwt/arduino-6.html">nwt/arduino-6.html</a> – analoge Eingänge, Messwerte und Sensoren</li>
-          <li><a href="nwt/arduino-motoren.html">nwt/arduino-motoren.html</a></li>
-          <li><a href="nwt/arduino-wiederholung.html">nwt/arduino-wiederholung.html</a> – interaktive Gesamtwiederholung mit Systemcheck, Ablaufspuren und Fehlerlabor</li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-einstieg.html">Arduino-Einstieg: Algorithmen, Bedingungen und Wiederholungen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-einstieg-windrad82.html">Musterlösung: Arduino-Einstieg: Algorithmen, Bedingungen und Wiederholungen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-schleifen-ifelse.html">Arduino: if/else, while-Schleifen und Ablaufspuren</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-schleifen-ifelse-blattgold83.html">Musterlösung: Arduino: if/else, while-Schleifen und Ablaufspuren</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-1.html">Arduino 1: Board, Pins und LED-Schaltung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-1-fensterglas34.html">Musterlösung: Arduino 1: Board, Pins und LED-Schaltung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-2.html">Arduino 2: Arduino-IDE, Upload, Blinken und Funktionen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-2-kupferband71.html">Musterlösung: Arduino 2: Arduino-IDE, Upload, Blinken und Funktionen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-3.html">Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-3-tintenfass28.html">Musterlösung: Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-4.html">Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-4-lichtblick63.html">Musterlösung: Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-klausur.html">Arduino-Klausurtraining: Code erklären, Fehler finden und Transfer</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-klausur-glasperle46.html">Musterlösung: Arduino-Klausurtraining: Code erklären, Fehler finden und Transfer</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-5.html">Arduino 5: Arrays, Interrupts und systematische Fehlersuche</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-5-mosaik94.html">Musterlösung: Arduino 5: Arrays, Interrupts und systematische Fehlersuche</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-6.html">Arduino 6: Analoge Eingänge, Sensorwerte und Batterietester</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-6-kompass57.html">Musterlösung: Arduino 6: Analoge Eingänge, Sensorwerte und Batterietester</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-motoren.html">Arduino-Motoren: H-Brücke, Gleichstrommotor, Servo und Schrittmotor</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-motoren-federhalter19.html">Musterlösung: Arduino-Motoren: H-Brücke, Gleichstrommotor, Servo und Schrittmotor</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-wiederholung.html">Arduino-Wiederholung: Systemcheck, Ablaufspuren und Fehlerlabor</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-wiederholung-wasserzeichen52.html">Musterlösung: Arduino-Wiederholung: Systemcheck, Ablaufspuren und Fehlerlabor</a></span></li>
         </ul>
       </div>
 
@@ -112,19 +123,19 @@
         <strong>Smart Chicken Coop</strong>
         <p>Interaktives NWT-Projekt zu ESP32, Sensorik, Raspberry Pi, Kamera, Netzwerk und Datenschutz:</p>
         <ul style="margin:0; padding-left:18px">
-          <li><a href="nwt/huehnerstall/index.html">Projektübersicht</a></li>
-          <li><a href="nwt/huehnerstall/gruppe-a.html">Arbeitsroute Gruppe A</a></li>
-          <li><a href="nwt/huehnerstall/gruppe-b.html">Arbeitsroute Gruppe B</a></li>
-          <li><a href="nwt/huehnerstall/01-systemaufbau.html">1. Systemaufbau, Sicherheit und Datenschutz</a></li>
-          <li><a href="nwt/huehnerstall/02-esp32.html">2. ESP32: Board, Pins und Programmierung</a></li>
-          <li><a href="nwt/huehnerstall/03-sensoren.html">3. KY-015: Temperatur und Luftfeuchtigkeit</a></li>
-          <li><a href="nwt/huehnerstall/04-ldr-adc.html">4. KY-018: LDR, Spannungsteiler und ADC</a></li>
-          <li><a href="nwt/huehnerstall/05-messdaten.html">5. Messfehler und Datenqualität</a></li>
-          <li><a href="nwt/huehnerstall/06-netzwerk-http.html">6. WLAN, IP, HTTP und ESP32-Webserver</a></li>
-          <li><a href="nwt/huehnerstall/07-pi-linux.html">7. Raspberry Pi: Hardware, Linux und SSH</a></li>
-          <li><a href="nwt/huehnerstall/08-kamera-noir.html">8. Kamera, NoIR und Infrarot</a></li>
-          <li><a href="nwt/huehnerstall/09-streaming-homepage.html">9. Video, Streaming und Homepage</a></li>
-          <li><a href="nwt/huehnerstall/10-ausfallsicherheit-abgabe.html">10. Ausfallsicherheit, Abnahme und Reflexion</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/index.html">Smart Chicken Coop: Projektüberblick und vernetzte Systemplanung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/index-wuerfel72.html">Musterlösung: Smart Chicken Coop: Projektüberblick und vernetzte Systemplanung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/gruppe-a.html">Gruppe A: ESP32, Sensorik, Messdaten und Webserver</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/gruppe-a-anker64.html">Musterlösung: Gruppe A: ESP32, Sensorik, Messdaten und Webserver</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/gruppe-b.html">Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/gruppe-b-laterne97.html">Musterlösung: Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/01-systemaufbau.html">1. Systemaufbau, Sicherheit und Datenschutz</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/01-systemaufbau-kiesel83.html">Musterlösung: 1. Systemaufbau, Sicherheit und Datenschutz</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/02-esp32.html">2. ESP32: Board, Pins und Programmierung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/02-esp32-segel47.html">Musterlösung: 2. ESP32: Board, Pins und Programmierung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/03-sensoren.html">3. KY-015: Temperatur und Luftfeuchtigkeit messen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/03-sensoren-mosaik92.html">Musterlösung: 3. KY-015: Temperatur und Luftfeuchtigkeit messen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/04-ldr-adc.html">4. KY-018: LDR, Spannungsteiler und ADC</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/04-ldr-adc-koffer61.html">Musterlösung: 4. KY-018: LDR, Spannungsteiler und ADC</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/05-messdaten.html">5. Messfehler, Datenqualität und Auswertung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/05-messdaten-tulpe28.html">Musterlösung: 5. Messfehler, Datenqualität und Auswertung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/06-netzwerk-http.html">6. WLAN, IP, HTTP und ESP32-Webserver</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/06-netzwerk-http-bogen75.html">Musterlösung: 6. WLAN, IP, HTTP und ESP32-Webserver</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/07-pi-linux.html">7. Raspberry Pi: Hardware, Linux und SSH</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/07-pi-linux-prisma39.html">Musterlösung: 7. Raspberry Pi: Hardware, Linux und SSH</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/08-kamera-noir.html">8. Kamera: NoIR, Infrarot und Bildaufnahme</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/08-kamera-noir-feder86.html">Musterlösung: 8. Kamera: NoIR, Infrarot und Bildaufnahme</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/09-streaming-homepage.html">9. Video, Streaming und eigene Homepage</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/09-streaming-homepage-vase53.html">Musterlösung: 9. Video, Streaming und eigene Homepage</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/10-ausfallsicherheit-abgabe.html">10. Ausfallsicherheit, Abnahme und Projektreflexion</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/10-ausfallsicherheit-abgabe-wolke19.html">Musterlösung: 10. Ausfallsicherheit, Abnahme und Projektreflexion</a></span></li>
         </ul>
       </div>
 
@@ -138,54 +149,54 @@
       <div class="wb-soft-callout">
         <strong>Felder und Induktion</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Elektrische Felder 1: Ladung, Kraft und Feldlinien: <a href="felder/elektrische-felder.html">felder/elektrische-felder.html</a></li>
-          <li>Elektrische Felder 2: Potenzial, Spannung und Kondensator: <a href="felder/elektrische-felder2.html">felder/elektrische-felder2.html</a></li>
-          <li>Elektrische Felder 3: Energie, Laden und Entladen eines Kondensators: <a href="felder/elektrische-felder3.html">felder/elektrische-felder3.html</a></li>
-          <li>Felder-Simulationen: Kondensator und Teilchenbahn: <a href="felder/felder-simulationen.html">felder/felder-simulationen.html</a></li>
-          <li>Magnetische Felder 1: Grundlagen, Flussdichte und Spule: <a href="felder/magnetische-felder.html">felder/magnetische-felder.html</a></li>
-          <li>Magnetische Felder 2: Vertiefung, Anwendungen und Simulationen: <a href="felder/magnetische-felder2.html">felder/magnetische-felder2.html</a></li>
-          <li>Elektromagnetische Induktion 1: Grundversuche, Fluss und Lenz: <a href="felder/induktion.html">felder/induktion.html</a></li>
-          <li>Elektromagnetische Induktion 2: Anwendungen, Selbstinduktion und Maxwell: <a href="felder/induktion2.html">felder/induktion2.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder.html">Elektrische Felder 1: Ladung, Kraft und Feldlinien</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder-briefkasten73.html">Musterlösung: Elektrische Felder 1: Ladung, Kraft und Feldlinien</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder2.html">Elektrische Felder 2: Potenzial, Spannung und Kondensator</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder2-regenschirm28.html">Musterlösung: Elektrische Felder 2: Potenzial, Spannung und Kondensator</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder3.html">Elektrische Felder 3: Energie, Laden und Entladen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder3-kieselstein91.html">Musterlösung: Elektrische Felder 3: Energie, Laden und Entladen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/felder-simulationen.html">Felder-Simulationen: Kondensator und Teilchenbahnen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/felder-simulationen-hausschuh19.html">Musterlösung: Felder-Simulationen: Kondensator und Teilchenbahnen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/magnetische-felder.html">Magnetische Felder 1: Feldlinien, Flussdichte und Spule</a><span class="index-solution-line"><a class="index-solution-link" href="felder/magnetische-felder-teetasse46.html">Musterlösung: Magnetische Felder 1: Feldlinien, Flussdichte und Spule</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/magnetische-felder2.html">Magnetische Felder 2: Lorentzkraft und Anwendungen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/magnetische-felder2-wolldecke62.html">Musterlösung: Magnetische Felder 2: Lorentzkraft und Anwendungen</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/induktion.html">Induktion 1: Grundversuche, magnetischer Fluss und Lenz</a><span class="index-solution-line"><a class="index-solution-link" href="felder/induktion-buchruecken37.html">Musterlösung: Induktion 1: Grundversuche, magnetischer Fluss und Lenz</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/induktion2.html">Induktion 2: Anwendungen, Selbstinduktion und Maxwell</a><span class="index-solution-line"><a class="index-solution-link" href="felder/induktion2-garderobe84.html">Musterlösung: Induktion 2: Anwendungen, Selbstinduktion und Maxwell</a></span></li>
         </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Wellen</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Schwingungen: <a href="wellen/schwingungen.html">wellen/schwingungen.html</a></li>
-          <li>Einstieg in Wellen: <a href="wellen/wellen-book-Einstieg.html">wellen/wellen-book-Einstieg.html</a></li>
-          <li>Die Wellenfunktion: <a href="wellen/wellen-book-wellenfunktion.html">wellen/wellen-book-wellenfunktion.html</a></li>
-          <li>Stehende Wellen: <a href="wellen/wellen-book-stehende-Welle.html">wellen/wellen-book-stehende-Welle.html</a></li>
-          <li>Interferenz: <a href="wellen/wellen-book-Interferenz.html">wellen/wellen-book-Interferenz.html</a></li>
-          <li>Interferenz (Fortsetzung): <a href="wellen/wellen-book-Interferenz2.html">wellen/wellen-book-Interferenz2.html</a></li>
-          <li>Wellenoptik im Leistungsfach: <a href="wellen/wellenoptik-lf.html">wellen/wellenoptik-lf.html</a></li>
-          <li>Verschiedene Wellen-Eigenschaften: <a href="wellen/wellen-book-Eigenschaften.html">wellen/wellen-book-Eigenschaften.html</a></li>
-          <li>Wellen-Simulationen: <a href="wellen/wellen-simulationen.html">wellen/wellen-simulationen.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/schwingungen.html">Schwingungen: Periodendauer, Frequenz, Energie und Modelle</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/schwingungen-atlas73.html">Musterlösung: Schwingungen: Periodendauer, Frequenz, Energie und Modelle</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Einstieg.html">Wellen-Einstieg: Ausbreitung, Wellentypen und Brechung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Einstieg-garderobe86.html">Musterlösung: Wellen-Einstieg: Ausbreitung, Wellentypen und Brechung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-wellenfunktion.html">Wellenfunktion: Zeit, Ort, Phase und Wellengleichung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-wellenfunktion-mosaik38.html">Musterlösung: Wellenfunktion: Zeit, Ort, Phase und Wellengleichung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-stehende-Welle.html">Stehende Wellen: Knoten, Bäuche, Eigenfrequenzen und Resonanz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-stehende-Welle-schublade61.html">Musterlösung: Stehende Wellen: Knoten, Bäuche, Eigenfrequenzen und Resonanz</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Interferenz.html">Interferenz 1: Überlagerung, Gangunterschied und Kohärenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Interferenz-teekanne47.html">Musterlösung: Interferenz 1: Überlagerung, Gangunterschied und Kohärenz</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Interferenz2.html">Interferenz 2: Doppelspalt, Gitter, Einzelspalt und Michelson</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Interferenz2-briefmarke93.html">Musterlösung: Interferenz 2: Doppelspalt, Gitter, Einzelspalt und Michelson</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellenoptik-lf.html">Wellenoptik im Leistungsfach: Polarisation, Beugung und Interferenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellenoptik-lf-klammer57.html">Musterlösung: Wellenoptik im Leistungsfach: Polarisation, Beugung und Interferenz</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Eigenschaften.html">Welleneigenschaften: Reflexion, Brechung, Beugung und Überlagerung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Eigenschaften-kiesel29.html">Musterlösung: Welleneigenschaften: Reflexion, Brechung, Beugung und Überlagerung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-simulationen.html">Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-simulationen-balkon82.html">Musterlösung: Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a></span></li>
         </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Quantenphysik</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Quantenobjekte: <a href="quanten/quantenobjekte.html">quanten/quantenobjekte.html</a></li>
-          <li>Photoeffekt: <a href="quanten/photoeffekt.html">quanten/photoeffekt.html</a></li>
-          <li>Röntgen, de Broglie, Compton: <a href="quanten/roentgen_compton.html">quanten/roentgen_compton.html</a></li>
-          <li>Atommodelle, Spektren und Quantisierung: <a href="quanten/atome.html">quanten/atome.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="quanten/quantenobjekte.html">Quantenobjekte: Doppelspalt, Wahrscheinlichkeit und Messung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/quantenobjekte-spiegel46.html">Musterlösung: Quantenobjekte: Doppelspalt, Wahrscheinlichkeit und Messung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="quanten/photoeffekt.html">Photoeffekt: Lichtquanten, Grenzfrequenz und Einstein-Gleichung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/photoeffekt-gardine64.html">Musterlösung: Photoeffekt: Lichtquanten, Grenzfrequenz und Einstein-Gleichung</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="quanten/roentgen_compton.html">Röntgenstrahlung und Compton-Effekt: Energie und Impuls</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/roentgen_compton-kirsche58.html">Musterlösung: Röntgenstrahlung und Compton-Effekt: Energie und Impuls</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="quanten/atome.html">Atome: Modelle, Spektren, Energieniveaus und Quantisierung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/atome-koffer83.html">Musterlösung: Atome: Modelle, Spektren, Energieniveaus und Quantisierung</a></span></li>
         </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Planung</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Kursstufenplanung Basisfach und Leistungsfach: <a href="physik_misc/Planung/index.html">physik_misc/Planung/index.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="physik_misc/Planung/index.html">Kursstufenplanung: Basisfach und Leistungsfach parallel</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Planung/index-kalenderblatt78.html">Musterlösung: Kursstufenplanung: Basisfach und Leistungsfach parallel</a></span></li>
         </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Formeln und Einheiten</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Einstieg in die Oberstufenphysik und ausfüllbare Größentabelle: <a href="physik_misc/Einstieg.html">physik_misc/Einstieg.html</a></li>
-          <li>Formelsammlung mit Einheiten, Konstanten und Aufgaben: <a href="physik_misc/Einheiten_Formeln.html">physik_misc/Einheiten_Formeln.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="physik_misc/Einstieg.html">Oberstufenphysik: Größen, Einheiten und ausfüllbare Tabelle</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Einstieg-wolke73.html">Musterlösung: Oberstufenphysik: Größen, Einheiten und ausfüllbare Tabelle</a></span></li>
+          <li class="index-material-item"><a class="index-material-link" href="physik_misc/Einheiten_Formeln.html">Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Einheiten_Formeln-farn39.html">Musterlösung: Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben</a></span></li>
         </ul>
          </div>
 
@@ -202,7 +213,7 @@
       <div class="wb-soft-callout">
         <strong>Akustik</strong>
         <ul style="margin:0; padding-left:18px">
-          <li>Akustik Versuche: <a href="physik_1/Akustik-Versuche.html">physik_1/Akustik-Versuche.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="physik_1/Akustik-Versuche.html">Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung</a><span class="index-solution-line"><a class="index-solution-link" href="physik_1/Akustik-Versuche-segeltuch24.html">Musterlösung: Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung</a></span></li>
         </ul>
       </div>
 
@@ -220,12 +231,16 @@
         <div class="wb-soft-callout">
           <strong>HowTo: Lernseiten bauen</strong>
           <p>Die Anleitung erklärt Programme, Konten, VS Code, GitHub, KI-Agenten, Interaktionsblöcke, SCORM und Qualitätskontrolle.</p>
-          <p><a href="howto-lehrkraefte.html">howto-lehrkraefte.html öffnen</a></p>
+          <ul class="index-material-list">
+            <li class="index-material-item"><a class="index-material-link" href="howto-lehrkraefte.html">Lernseiten erstellen: Werkzeuge, GitHub, Interaktionen und SCORM</a></li>
+          </ul>
         </div>
         <div class="wb-soft-callout">
           <strong>Technische Musterseite</strong>
           <p>Die Musterseite zeigt die vorhandenen Interaktionsblöcke und das Book-Layout als technische Vorlage.</p>
-          <p><a href="assets/muster-book.html">assets/muster-book.html öffnen</a></p>
+          <ul class="index-material-list">
+            <li class="index-material-item"><a class="index-material-link" href="assets/muster-book.html">Technische Vorlage: Book-Layout und alle Interaktionsblöcke</a></li>
+          </ul>
         </div>
       </div>
 
@@ -236,86 +251,111 @@
     </section>
 
     <section data-wb-page="7" data-wb-page-title="Alle Links">
-      <h1>Alle Links auf einen Blick</h1>
-      <p>Hier siehst du alle eingebundenen Seiten noch einmal gesammelt.</p>
+      <h1>Alle Lernseiten und Musterlösungen</h1>
+      <p>Wähle eine Lernseite oder die zugehörige Musterlösung.</p>
 
       <h2>Für Lehrkräfte</h2>
-      <ul style="margin:0; padding-left:18px">
-        <li>HowTo für Lehrkräfte: <a href="howto-lehrkraefte.html">howto-lehrkraefte.html</a></li>
-        <li>Technische Musterseite: <a href="assets/muster-book.html">assets/muster-book.html</a></li>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="howto-lehrkraefte.html">Lernseiten erstellen: Werkzeuge, GitHub, Interaktionen und SCORM</a></li>
+        <li class="index-material-item"><a class="index-material-link" href="assets/muster-book.html">Technische Vorlage: Book-Layout und alle Interaktionsblöcke</a></li>
       </ul>
 
       <h2>Medienbildung</h2>
-      <ul style="margin:0; padding-left:18px">
-        <li><a href="medien/Scratch.html">medien/Scratch.html</a></li>
-        <li><a href="medien/Scratch2.html">medien/Scratch2.html</a></li>
-        <li><a href="medien/glaubwuerdigkeit.html">medien/glaubwuerdigkeit.html</a></li>
-        <li><a href="medien/Fake-News-Bilder.html">medien/Fake-News-Bilder.html</a></li>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="medien/Scratch.html">Scratch 1: Oberfläche, Bewegung, Malstift und Tastatursteuerung</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Scratch-stempel81.html">Musterlösung: Scratch 1: Oberfläche, Bewegung, Malstift und Tastatursteuerung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/Scratch2.html">Scratch 2: Straßen-Spiel, Variablen, Kollisionen und Level</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Scratch2-kreidekasten68.html">Musterlösung: Scratch 2: Straßen-Spiel, Variablen, Kollisionen und Level</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/scratch01.html">Scratch-Kurs: Bewegungen, Zeichnungen und ein eigenes Spiel</a><span class="index-solution-line"><a class="index-solution-link" href="medien/scratch01-faltkarte37.html">Musterlösung: Scratch-Kurs: Bewegungen, Zeichnungen und ein eigenes Spiel</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/scratch_1.html">Scratch-Einstieg: Sequenzen, geometrische Figuren und Fangspiel</a><span class="index-solution-line"><a class="index-solution-link" href="medien/scratch_1-lochkarte45.html">Musterlösung: Scratch-Einstieg: Sequenzen, geometrische Figuren und Fangspiel</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="misc/Scratch.html">Scratch-Übungen: Koordinaten, Malstift und Kostümwechsel</a><span class="index-solution-line"><a class="index-solution-link" href="misc/Scratch-zeichendreieck59.html">Musterlösung: Scratch-Übungen: Koordinaten, Malstift und Kostümwechsel</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/glaubwuerdigkeit.html">Quellenkritik: Nachrichten prüfen, Fakefinder und KI-Antworten</a><span class="index-solution-line"><a class="index-solution-link" href="medien/glaubwuerdigkeit-lupenglas54.html">Musterlösung: Quellenkritik: Nachrichten prüfen, Fakefinder und KI-Antworten</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/Fake-News-Bilder.html">Bildkritik: Fake News, KI-Bilder und falscher Kontext</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Fake-News-Bilder-lichtschalter76.html">Musterlösung: Bildkritik: Fake News, KI-Bilder und falscher Kontext</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/Internetregeln.html">Internetregeln: Nutzungszeiten, Schutz und eigene Meinung</a><span class="index-solution-line"><a class="index-solution-link" href="medien/Internetregeln-papierboot93.html">Musterlösung: Internetregeln: Nutzungszeiten, Schutz und eigene Meinung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="medien/technik.html">Technik verstehen: Hardware, Software, Eingabe und Ausgabe</a><span class="index-solution-line"><a class="index-solution-link" href="medien/technik-bleistift97.html">Musterlösung: Technik verstehen: Hardware, Software, Eingabe und Ausgabe</a></span></li>
       </ul>
 
-      <h2>NWT</h2>
-      <ul style="margin:0; padding-left:18px">
-        <li>Künstliche Intelligenz: <a href="informatik/kuenstliche-intelligenz.html">informatik/kuenstliche-intelligenz.html</a></li>
-        <li>Maschinelles Lernen: <a href="informatik/kuenstliche-intelligenz2.html">informatik/kuenstliche-intelligenz2.html</a></li>
-        <li>KI-Lernalgorithmen: <a href="informatik/kuenstliche-intelligenz3.htm">informatik/kuenstliche-intelligenz3.htm</a></li>
-        <li>Sprachmodelle: <a href="informatik/sprachmodelle.html">informatik/sprachmodelle.html</a></li>
-        <li><a href="nwt/arduino-einstieg.html">nwt/arduino-einstieg.html</a></li>
-        <li><a href="nwt/arduino-schleifen-ifelse.html">nwt/arduino-schleifen-ifelse.html</a></li>
-        <li><a href="nwt/arduino-1.html">nwt/arduino-1.html</a></li>
-        <li><a href="nwt/arduino-2.html">nwt/arduino-2.html</a></li>
-        <li><a href="nwt/arduino-3.html">nwt/arduino-3.html</a></li>
-        <li><a href="nwt/arduino-4.html">nwt/arduino-4.html</a></li>
-        <li><a href="nwt/arduino-klausur.html">nwt/arduino-klausur.html</a></li>
-        <li><a href="nwt/arduino-5.html">nwt/arduino-5.html</a></li>
-        <li><a href="nwt/arduino-6.html">nwt/arduino-6.html</a></li>
-        <li><a href="nwt/arduino-motoren.html">nwt/arduino-motoren.html</a></li>
-        <li><a href="nwt/arduino-wiederholung.html">nwt/arduino-wiederholung.html</a></li>
+      <h2>Informatik</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz.html">Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz-schatulle43.html">Musterlösung: Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz2.html">Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz2-pergament87.html">Musterlösung: Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="informatik/kuenstliche-intelligenz3.htm">Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/kuenstliche-intelligenz3-brosche62.html">Musterlösung: Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="informatik/sprachmodelle.html">Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten</a><span class="index-solution-line"><a class="index-solution-link" href="informatik/sprachmodelle-kaleidoskop29.html">Musterlösung: Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten</a></span></li>
       </ul>
 
-      <h3>Smart Chicken Coop</h3>
-      <ul style="margin:0; padding-left:18px">
-        <li><a href="nwt/huehnerstall/index.html">Projektübersicht</a></li>
-        <li><a href="nwt/huehnerstall/gruppe-a.html">Arbeitsroute Gruppe A</a></li>
-        <li><a href="nwt/huehnerstall/gruppe-b.html">Arbeitsroute Gruppe B</a></li>
-        <li><a href="nwt/huehnerstall/01-systemaufbau.html">1. Systemaufbau, Sicherheit und Datenschutz</a></li>
-        <li><a href="nwt/huehnerstall/02-esp32.html">2. ESP32: Board, Pins und Programmierung</a></li>
-        <li><a href="nwt/huehnerstall/03-sensoren.html">3. KY-015: Temperatur und Luftfeuchtigkeit</a></li>
-        <li><a href="nwt/huehnerstall/04-ldr-adc.html">4. KY-018: LDR, Spannungsteiler und ADC</a></li>
-        <li><a href="nwt/huehnerstall/05-messdaten.html">5. Messfehler und Datenqualität</a></li>
-        <li><a href="nwt/huehnerstall/06-netzwerk-http.html">6. WLAN, IP, HTTP und ESP32-Webserver</a></li>
-        <li><a href="nwt/huehnerstall/07-pi-linux.html">7. Raspberry Pi: Hardware, Linux und SSH</a></li>
-        <li><a href="nwt/huehnerstall/08-kamera-noir.html">8. Kamera, NoIR und Infrarot</a></li>
-        <li><a href="nwt/huehnerstall/09-streaming-homepage.html">9. Video, Streaming und Homepage</a></li>
-        <li><a href="nwt/huehnerstall/10-ausfallsicherheit-abgabe.html">10. Ausfallsicherheit, Abnahme und Reflexion</a></li>
+      <h2>Arduino</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-einstieg.html">Arduino-Einstieg: Algorithmen, Bedingungen und Wiederholungen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-einstieg-windrad82.html">Musterlösung: Arduino-Einstieg: Algorithmen, Bedingungen und Wiederholungen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-schleifen-ifelse.html">Arduino: if/else, while-Schleifen und Ablaufspuren</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-schleifen-ifelse-blattgold83.html">Musterlösung: Arduino: if/else, while-Schleifen und Ablaufspuren</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-1.html">Arduino 1: Board, Pins und LED-Schaltung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-1-fensterglas34.html">Musterlösung: Arduino 1: Board, Pins und LED-Schaltung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-2.html">Arduino 2: Arduino-IDE, Upload, Blinken und Funktionen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-2-kupferband71.html">Musterlösung: Arduino 2: Arduino-IDE, Upload, Blinken und Funktionen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-3.html">Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-3-tintenfass28.html">Musterlösung: Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-4.html">Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-4-lichtblick63.html">Musterlösung: Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-5.html">Arduino 5: Arrays, Interrupts und systematische Fehlersuche</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-5-mosaik94.html">Musterlösung: Arduino 5: Arrays, Interrupts und systematische Fehlersuche</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-6.html">Arduino 6: Analoge Eingänge, Sensorwerte und Batterietester</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-6-kompass57.html">Musterlösung: Arduino 6: Analoge Eingänge, Sensorwerte und Batterietester</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-klausur.html">Arduino-Klausurtraining: Code erklären, Fehler finden und Transfer</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-klausur-glasperle46.html">Musterlösung: Arduino-Klausurtraining: Code erklären, Fehler finden und Transfer</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-motoren.html">Arduino-Motoren: H-Brücke, Gleichstrommotor, Servo und Schrittmotor</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-motoren-federhalter19.html">Musterlösung: Arduino-Motoren: H-Brücke, Gleichstrommotor, Servo und Schrittmotor</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/arduino-wiederholung.html">Arduino-Wiederholung: Systemcheck, Ablaufspuren und Fehlerlabor</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/arduino-wiederholung-wasserzeichen52.html">Musterlösung: Arduino-Wiederholung: Systemcheck, Ablaufspuren und Fehlerlabor</a></span></li>
       </ul>
 
-      <h2>Physik</h2>
-      <ul style="margin:0; padding-left:18px">
-        <li><a href="felder/elektrische-felder.html">felder/elektrische-felder.html</a></li>
-        <li><a href="felder/elektrische-felder2.html">felder/elektrische-felder2.html</a></li>
-        <li><a href="felder/elektrische-felder3.html">felder/elektrische-felder3.html</a></li>
-        <li><a href="felder/felder-simulationen.html">felder/felder-simulationen.html</a></li>
-        <li><a href="felder/magnetische-felder.html">felder/magnetische-felder.html</a></li>
-        <li><a href="felder/magnetische-felder2.html">felder/magnetische-felder2.html</a></li>
-        <li><a href="felder/induktion.html">felder/induktion.html</a></li>
-        <li><a href="felder/induktion2.html">felder/induktion2.html</a></li>
-        <li><a href="wellen/schwingungen.html">wellen/schwingungen.html</a></li>
-        <li><a href="wellen/wellen-book-Einstieg.html">wellen/wellen-book-Einstieg.html</a></li>
-        <li><a href="wellen/wellen-book-wellenfunktion.html">wellen/wellen-book-wellenfunktion.html</a></li>
-        <li><a href="wellen/wellen-book-stehende-Welle.html">wellen/wellen-book-stehende-Welle.html</a></li>
-        <li><a href="wellen/wellen-book-Interferenz.html">wellen/wellen-book-Interferenz.html</a></li>
-        <li><a href="wellen/wellen-book-Interferenz2.html">wellen/wellen-book-Interferenz2.html</a></li>
-        <li><a href="wellen/wellenoptik-lf.html">wellen/wellenoptik-lf.html</a></li>
-        <li><a href="wellen/wellen-book-Eigenschaften.html">wellen/wellen-book-Eigenschaften.html</a></li>
-        <li><a href="wellen/wellen-simulationen.html">wellen/wellen-simulationen.html</a></li>
-        <li><a href="quanten/quantenobjekte.html">quanten/quantenobjekte.html</a></li>
-        <li><a href="quanten/photoeffekt.html">quanten/photoeffekt.html</a></li>
-        <li><a href="quanten/atome.html">quanten/atome.html</a></li>
-        <li><a href="quanten/roentgen_compton.html">quanten/roentgen_compton.html</a></li>
-        <li><a href="physik_1/Akustik-Versuche.html">physik_1/Akustik-Versuche.html</a></li>
-        <li><a href="physik_misc/Planung/index.html">physik_misc/Planung/index.html</a></li>
-        <li><a href="physik_misc/Einstieg.html">physik_misc/Einstieg.html</a></li>
-        <li><a href="physik_misc/Einheiten_Formeln.html">physik_misc/Einheiten_Formeln.html</a></li>
+      <h2>Smart Chicken Coop</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/index.html">Smart Chicken Coop: Projektüberblick und vernetzte Systemplanung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/index-wuerfel72.html">Musterlösung: Smart Chicken Coop: Projektüberblick und vernetzte Systemplanung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/gruppe-a.html">Gruppe A: ESP32, Sensorik, Messdaten und Webserver</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/gruppe-a-anker64.html">Musterlösung: Gruppe A: ESP32, Sensorik, Messdaten und Webserver</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/gruppe-b.html">Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/gruppe-b-laterne97.html">Musterlösung: Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/01-systemaufbau.html">1. Systemaufbau, Sicherheit und Datenschutz</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/01-systemaufbau-kiesel83.html">Musterlösung: 1. Systemaufbau, Sicherheit und Datenschutz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/02-esp32.html">2. ESP32: Board, Pins und Programmierung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/02-esp32-segel47.html">Musterlösung: 2. ESP32: Board, Pins und Programmierung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/03-sensoren.html">3. KY-015: Temperatur und Luftfeuchtigkeit messen</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/03-sensoren-mosaik92.html">Musterlösung: 3. KY-015: Temperatur und Luftfeuchtigkeit messen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/04-ldr-adc.html">4. KY-018: LDR, Spannungsteiler und ADC</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/04-ldr-adc-koffer61.html">Musterlösung: 4. KY-018: LDR, Spannungsteiler und ADC</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/05-messdaten.html">5. Messfehler, Datenqualität und Auswertung</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/05-messdaten-tulpe28.html">Musterlösung: 5. Messfehler, Datenqualität und Auswertung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/06-netzwerk-http.html">6. WLAN, IP, HTTP und ESP32-Webserver</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/06-netzwerk-http-bogen75.html">Musterlösung: 6. WLAN, IP, HTTP und ESP32-Webserver</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/07-pi-linux.html">7. Raspberry Pi: Hardware, Linux und SSH</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/07-pi-linux-prisma39.html">Musterlösung: 7. Raspberry Pi: Hardware, Linux und SSH</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/08-kamera-noir.html">8. Kamera: NoIR, Infrarot und Bildaufnahme</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/08-kamera-noir-feder86.html">Musterlösung: 8. Kamera: NoIR, Infrarot und Bildaufnahme</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/09-streaming-homepage.html">9. Video, Streaming und eigene Homepage</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/09-streaming-homepage-vase53.html">Musterlösung: 9. Video, Streaming und eigene Homepage</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="nwt/huehnerstall/10-ausfallsicherheit-abgabe.html">10. Ausfallsicherheit, Abnahme und Projektreflexion</a><span class="index-solution-line"><a class="index-solution-link" href="nwt/huehnerstall/10-ausfallsicherheit-abgabe-wolke19.html">Musterlösung: 10. Ausfallsicherheit, Abnahme und Projektreflexion</a></span></li>
+      </ul>
+
+      <h2>Physik: Felder und Induktion</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder.html">Elektrische Felder 1: Ladung, Kraft und Feldlinien</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder-briefkasten73.html">Musterlösung: Elektrische Felder 1: Ladung, Kraft und Feldlinien</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder2.html">Elektrische Felder 2: Potenzial, Spannung und Kondensator</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder2-regenschirm28.html">Musterlösung: Elektrische Felder 2: Potenzial, Spannung und Kondensator</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder3.html">Elektrische Felder 3: Energie, Laden und Entladen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder3-kieselstein91.html">Musterlösung: Elektrische Felder 3: Energie, Laden und Entladen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/felder-simulationen.html">Felder-Simulationen: Kondensator und Teilchenbahnen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/felder-simulationen-hausschuh19.html">Musterlösung: Felder-Simulationen: Kondensator und Teilchenbahnen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/magnetische-felder.html">Magnetische Felder 1: Feldlinien, Flussdichte und Spule</a><span class="index-solution-line"><a class="index-solution-link" href="felder/magnetische-felder-teetasse46.html">Musterlösung: Magnetische Felder 1: Feldlinien, Flussdichte und Spule</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/magnetische-felder2.html">Magnetische Felder 2: Lorentzkraft und Anwendungen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/magnetische-felder2-wolldecke62.html">Musterlösung: Magnetische Felder 2: Lorentzkraft und Anwendungen</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/induktion.html">Induktion 1: Grundversuche, magnetischer Fluss und Lenz</a><span class="index-solution-line"><a class="index-solution-link" href="felder/induktion-buchruecken37.html">Musterlösung: Induktion 1: Grundversuche, magnetischer Fluss und Lenz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/induktion2.html">Induktion 2: Anwendungen, Selbstinduktion und Maxwell</a><span class="index-solution-line"><a class="index-solution-link" href="felder/induktion2-garderobe84.html">Musterlösung: Induktion 2: Anwendungen, Selbstinduktion und Maxwell</a></span></li>
+      </ul>
+
+      <h2>Physik: Schwingungen und Wellen</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="wellen/schwingungen.html">Schwingungen: Periodendauer, Frequenz, Energie und Modelle</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/schwingungen-atlas73.html">Musterlösung: Schwingungen: Periodendauer, Frequenz, Energie und Modelle</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Einstieg.html">Wellen-Einstieg: Ausbreitung, Wellentypen und Brechung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Einstieg-garderobe86.html">Musterlösung: Wellen-Einstieg: Ausbreitung, Wellentypen und Brechung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-wellenfunktion.html">Wellenfunktion: Zeit, Ort, Phase und Wellengleichung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-wellenfunktion-mosaik38.html">Musterlösung: Wellenfunktion: Zeit, Ort, Phase und Wellengleichung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-stehende-Welle.html">Stehende Wellen: Knoten, Bäuche, Eigenfrequenzen und Resonanz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-stehende-Welle-schublade61.html">Musterlösung: Stehende Wellen: Knoten, Bäuche, Eigenfrequenzen und Resonanz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Interferenz.html">Interferenz 1: Überlagerung, Gangunterschied und Kohärenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Interferenz-teekanne47.html">Musterlösung: Interferenz 1: Überlagerung, Gangunterschied und Kohärenz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Interferenz2.html">Interferenz 2: Doppelspalt, Gitter, Einzelspalt und Michelson</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Interferenz2-briefmarke93.html">Musterlösung: Interferenz 2: Doppelspalt, Gitter, Einzelspalt und Michelson</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellenoptik-lf.html">Wellenoptik im Leistungsfach: Polarisation, Beugung und Interferenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellenoptik-lf-klammer57.html">Musterlösung: Wellenoptik im Leistungsfach: Polarisation, Beugung und Interferenz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book-Eigenschaften.html">Welleneigenschaften: Reflexion, Brechung, Beugung und Überlagerung</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book-Eigenschaften-kiesel29.html">Musterlösung: Welleneigenschaften: Reflexion, Brechung, Beugung und Überlagerung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-simulationen.html">Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-simulationen-balkon82.html">Musterlösung: Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-book..html">Wellen-Sammlung: Grundbegriffe und Übungsaufgaben</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-book.-karton68.html">Musterlösung: Wellen-Sammlung: Grundbegriffe und Übungsaufgaben</a></span></li>
+      </ul>
+
+      <h2>Physik: Quanten und Atome</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="quanten/quantenobjekte.html">Quantenobjekte: Doppelspalt, Wahrscheinlichkeit und Messung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/quantenobjekte-spiegel46.html">Musterlösung: Quantenobjekte: Doppelspalt, Wahrscheinlichkeit und Messung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="quanten/photoeffekt.html">Photoeffekt: Lichtquanten, Grenzfrequenz und Einstein-Gleichung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/photoeffekt-gardine64.html">Musterlösung: Photoeffekt: Lichtquanten, Grenzfrequenz und Einstein-Gleichung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="quanten/photoeffekt-simulationen.html">Photoeffekt-Simulationen: Frequenz, Intensität und Gegenspannung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/photoeffekt-simulationen-mosaik91.html">Musterlösung: Photoeffekt-Simulationen: Frequenz, Intensität und Gegenspannung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="quanten/debroglie.html">Materiewellen: De-Broglie-Wellenlänge und Elektronenbeugung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/debroglie-kiesel27.html">Musterlösung: Materiewellen: De-Broglie-Wellenlänge und Elektronenbeugung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="quanten/roentgen_compton.html">Röntgenstrahlung und Compton-Effekt: Energie und Impuls</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/roentgen_compton-kirsche58.html">Musterlösung: Röntgenstrahlung und Compton-Effekt: Energie und Impuls</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="quanten/atome.html">Atome: Modelle, Spektren, Energieniveaus und Quantisierung</a><span class="index-solution-line"><a class="index-solution-link" href="quanten/atome-koffer83.html">Musterlösung: Atome: Modelle, Spektren, Energieniveaus und Quantisierung</a></span></li>
+      </ul>
+
+      <h2>Physik: Weitere Themen und Planung</h2>
+      <ul class="index-material-list">
+        <li class="index-material-item"><a class="index-material-link" href="physik_1/Akustik-Versuche.html">Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung</a><span class="index-solution-line"><a class="index-solution-link" href="physik_1/Akustik-Versuche-segeltuch24.html">Musterlösung: Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="physik_misc/Planung/index.html">Kursstufenplanung: Basisfach und Leistungsfach parallel</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Planung/index-kalenderblatt78.html">Musterlösung: Kursstufenplanung: Basisfach und Leistungsfach parallel</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="physik_misc/Einstieg.html">Oberstufenphysik: Größen, Einheiten und ausfüllbare Tabelle</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Einstieg-wolke73.html">Musterlösung: Oberstufenphysik: Größen, Einheiten und ausfüllbare Tabelle</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="physik_misc/Einheiten_Formeln.html">Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/Einheiten_Formeln-farn39.html">Musterlösung: Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="physik_misc/srt_art.html">Relativität: Zeitdilatation, Raumzeit und Modellgrenzen</a><span class="index-solution-line"><a class="index-solution-link" href="physik_misc/srt_art-kompass86.html">Musterlösung: Relativität: Zeitdilatation, Raumzeit und Modellgrenzen</a></span></li>
       </ul>
     </section>
 
@@ -326,14 +366,14 @@
       <div class="wb-soft-callout">
         <strong>Wellen</strong>
         <ul style="margin:0; padding-left:18px">
-          <li><a href="wellen/wellen-simulationen.html">wellen/wellen-simulationen.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="wellen/wellen-simulationen.html">Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a><span class="index-solution-line"><a class="index-solution-link" href="wellen/wellen-simulationen-balkon82.html">Musterlösung: Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz</a></span></li>
         </ul>
       </div>
 
       <div class="wb-soft-callout">
         <strong>Elektrische Felder</strong>
         <ul style="margin:0; padding-left:18px">
-          <li><a href="felder/felder-simulationen.html">felder/felder-simulationen.html</a></li>
+          <li class="index-material-item"><a class="index-material-link" href="felder/felder-simulationen.html">Felder-Simulationen: Kondensator und Teilchenbahnen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/felder-simulationen-hausschuh19.html">Musterlösung: Felder-Simulationen: Kondensator und Teilchenbahnen</a></span></li>
         </ul>
       </div>
 

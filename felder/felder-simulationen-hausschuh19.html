@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="felder-simulationen.html">
+<meta name="musterloesung-source-sha256" content="394166686a555696563f4a7fd956ab2b8d330aed7fb1e61b4c273a587bc690b1">
+<title>Felder-Simulationen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Felder-Simulationen · Musterlösung","sectionTitle":"Felder, Teilchenbahnen und Induktion · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Elektrisches Feld">
+<div class="course-kicker">Musterlösung</div>
+<h1>Simulation: Feldlinien und Äquipotenziallinien</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_essay"><h3>Auswertung</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>Plattenkondensator</h4><p>Bei angeschlossener Quelle und Ausgangswerten U = 2,0 kV, d = 4,0 cm, A = 200 cm², εᵣ = 1 gilt E = U/d = <b>50 kV/m</b>, C = ε₀εᵣA/d = <b>4,43 pF</b> und Q = CU = <b>8,85 nC</b>. Doppelte Spannung verdoppelt E und Q, die Feldlinien werden dichter und die Ladungszeichen mehr. Doppelter Abstand halbiert E, C und Q. Doppelte Fläche oder εᵣ verdoppelt C und Q bei unverändertem E. Bei abgetrennter Quelle bleibt Q konstant: Doppeltes d verdoppelt U, E bleibt gleich; doppeltes A oder εᵣ halbiert U und E. Damit unterscheiden sich gespeicherte Ladung und Feldstärke klar.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="fs-p1-feldlinien-aequipotenzial"><h3>Feldlabor: Ladungen, Platten und Linien</h3>
+<p>Bei einer positiven Einzelquelle zeigen die Feldlinien radial nach außen und bei einer negativen nach innen. Ein Dipol verbindet + und − mit gekrümmten Linien. Zwischen langen entgegengesetzt geladenen Platten entsteht näherungsweise ein homogenes Feld; an den Enden treten Randfelder auf. Äquipotenziallinien stehen an regulären Feldpunkten senkrecht zu Feldlinien. Rot markiert positives und Blau negatives relatives Potenzial; heller Übergang bedeutet ungefähr φ = 0 und nicht automatisch E = 0.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="fs-p1-abschirmung"><h3>Abschirmung: Glas, Gitter und geschlossener Käfig</h3>
+<p>Glas wird polarisiert und verändert die Feldstruktur, erlaubt aber keinen leitenden Ladungsausgleich wie Metall. Hinter einem Metallgitter ist das Feld kleiner; größere Maschen lassen mehr Restfeld hindurch. In einer geschlossenen leitenden Hülle ist die ladungsfreie Höhlung im elektrostatischen Gleichgewicht feldfrei. Die Erdung legt zusätzlich das Potenzial fest, ist für die Feldfreiheit dieser Höhlung aber nicht erforderlich.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="fs-p1-flamme"><h3>Kerzenflamme: Polarität und Feldstärke</h3>
+<p>Positive Ionen bewegen sich mit E⃗, Elektronen und negative Ionen entgegen E⃗. Bei dominierender sichtbarer Bewegung positiver Flammenionen wird die Flamme zum negativen Stab gezogen und vom positiven weggedrückt. Größere Feldstärke verstärkt die elektrische Kraft und den Ladungsträgertransport. An einer starken geladenen Spitze kann zusätzlich Ionenwind entstehen, der die Flamme durch Luftströmung von der Spitze wegdrückt; direkte elektrische Ablenkung und Luftströmung sind zu unterscheiden.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="fs-p1-propeller"><h3>Propeller: runde und zugespitzte Enden</h3>
+<p>An feinen Spitzen ist die lokale Feldstärke bei gleicher Ladung größer als an abgerundeten Enden. Oberhalb der Ionisationsschwelle werden Luftmoleküle ionisiert; beschleunigte Ionen nehmen neutrale Luft mit. Bei gleichsinnig gekrümmten Spitzen liefert deren Rückstoß ein gleichgerichtetes Drehmoment, der Rotor dreht entgegen der Ausströmrichtung. Runde Enden liefern bei derselben angelegten Spannung weniger oder keinen Ionenwind und damit geringere oder keine Drehbewegung.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Teilchenbahn">
+<h1>Simulation: Geladene Teilchen im Kondensator</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_teilchen_essay"><h3>Auswertung: Teilchenbahn</h3>
+<span class="solution-label">Eine mögliche Antwort</span><p>Die Querbeschleunigung ist aᵧ = qE/m, die Bahn y(x) = qEx²/(2mvₓ²). Bei unverändertem m und vₓ verdoppelt doppelt so großes |q| oder E die Ablenkung bei demselben x. Doppelte waagrechte Geschwindigkeit reduziert die Ablenkung auf ein Viertel, weil die Durchflugzeit halb so lang ist. Das Umkehren des Ladungsvorzeichens oder der Spannungsrichtung kehrt die Ablenkung um; beide zusammen erhalten die Richtung. Beim Startwert q = −2 nC und oberer positiver Platte zeigt E nach unten und die Kraft nach oben. Mit U = 2 kV und d = 5 cm gilt E = 40 kV/m und |F| = |q|E = 80 µN.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Magnetfeld-Kreisbahn">
+<h1>Simulation: Geladene Teilchen im Magnetfeld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_magnetfeld_essay"><h3>Auswertung: Kreisbahn</h3>
+<span class="solution-label">Eine mögliche Antwort</span><p>Aus |q|vB = mv²/r folgt r = mv/(|q|B). Doppelte Geschwindigkeit verdoppelt den Radius, doppeltes |q| oder B halbiert ihn. Trotz F_L ∝ v erhöht ein stärkeres B den Geschwindigkeitsbetrag nicht: Die Kraft steht senkrecht zur Bewegung und krümmt nur die Bahn. Bei positiver Ladung, Bewegung nach rechts und Feld aus der Zeichenfläche erfolgt die erste Ablenkung nach unten, also eine Drehung im Uhrzeigersinn. Ein Wechsel von q oder B kehrt die Drehrichtung um; bei gleicher Betragsgröße bleibt r unverändert. Werden q und B beide umgekehrt, bleibt die Drehrichtung gleich.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="E- und B-Feld">
+<h1>Simulation: Schraubenbahn im E- und B-Feld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_helix_essay"><h3>Auswertung: Schraubenbahn</h3>
+<span class="solution-label">Eine mögliche Antwort</span><p>Die Querkomponente v⊥ erzeugt r = mv⊥/(|q|B), die Parallelkomponente die Bewegung entlang der Achse. Bei gleichem Eintrittswinkel erhöht größeres v beide Komponenten: Radius und anfängliche Ganghöhe werden größer. Größeres B oder |q| verkleinert den Radius und die Umlaufzeit T = 2πm/(|q|B); bei gleichem momentanen v∥ wird die Ganghöhe v∥T kleiner. Vorzeichenwechsel von q kehrt die Drehrichtung um und auch die elektrische Axialbeschleunigung a∥ = qE/m. Größeres E verändert nur die Parallelbewegung: Bei unterstützender Kraft wächst die Ganghöhe zunehmend, bei bremsender Kraft kann sie kleiner werden und sich die Axialbewegung umkehren. Der Querbahnradius bleibt dabei im idealen Modell konstant. Während einer Umdrehung ist die genaue Axialverschiebung h = v∥(t)T+½(qE/m)T²; bei E ≠ 0 sind die Windungsabstände daher nicht konstant.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Induktionslabor">
+<h1>Simulation: Induktion durch Flussänderung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_induktion_essay"><h3>Auswertung: Vier Ursachen vergleichen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>Vier Modi</h4><p>Hinein-/Herausfahren: U ≠ 0 nur an den Feldgrenzen, U = 0 bei unveränderter Überlappung im Inneren oder außerhalb. Drehung: Φ = BA cos(ωt), U = nBAω sin(ωt); bei maximalem Fluss ist U = 0, beim Flussnulldurchgang ist |U| maximal. Flächenänderung: Bei konstantem B gilt U = −nBA′; Vergrößern und Verkleinern haben entgegengesetzte Vorzeichen, Stillstand U = 0. Feldänderung: Bei festem A⊥ gilt U = −nA⊥B′; konstantes B bedeutet U = 0, lineare Änderung konstantes U.</p><h4>Vorzeichen, Betrag und Gegenwirkung</h4><p>Allgemein Φ = BA⊥ und U = −nΦ′. U wechselt das Vorzeichen, wenn die Flussänderung ihre Richtung umkehrt, etwa beim Übergang von Eintritt zu Austritt oder von steigendem zu fallendem B. Doppelte Windungszahl oder doppelte Änderungsrate verdoppelt |U|. Größere Fläche bzw. größeres B verstärkt U nur bei weiterhin stattfindender Änderung der jeweils anderen Größe. Ein größerer konstanter Fluss allein erzeugt keine Spannung. Umgekehrtes B kehrt bei derselben Bewegung das Vorzeichen um. Im geschlossenen Stromkreis gilt I = U/R und das Eigenfeld des Stroms wirkt der Flussänderung entgegen; beim Öffnen bleibt eine Spannung messbar, aber es fließt kein dauernder Strom.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"felder-simulationen-hausschuh19.html__"});</script>
+</body>
+</html>

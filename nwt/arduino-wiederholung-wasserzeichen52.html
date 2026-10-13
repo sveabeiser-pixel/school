@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="arduino-wiederholung.html">
+<meta name="musterloesung-source-sha256" content="9fb24e56db680244805d8763ee4db05e19a793b294f5e755c4af11925085c7e6">
+<title>Arduino-Wiederholung – vom Signal zum funktionierenden System – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    :root {
+      --aw-ink: #172033;
+      --aw-muted: #536274;
+      --aw-teal: #087f7a;
+      --aw-blue: #2468a9;
+      --aw-yellow: #f2b633;
+      --aw-red: #bf3d4d;
+      --aw-green: #25845a;
+      --aw-line: #c8d5dd;
+      --aw-soft: #f3f7f8;
+      --aw-paper: #fff;
+    }
+
+    .wb-book section[data-wb-page], .wb-book .wb-content { min-width: 0; }
+    .wb-book section[data-wb-page] { padding-top: 24px; }
+    .wb-book .wb-paper { width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .aw-kicker { color: var(--aw-teal); font-size: .84rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0; }
+    .aw-hero { padding: 4px 0 19px; border-bottom: 4px solid var(--aw-teal); }
+    .aw-hero h1 { max-width: 920px; margin: 8px 0 12px; font-size: 2.35rem; line-height: 1.12; letter-spacing: 0; }
+    .aw-lead { max-width: 880px; color: var(--aw-muted); font-size: 1.1rem; }
+    .aw-goals, .aw-cards, .aw-motor-grid, .aw-check-grid { display: grid; gap: 12px; }
+    .aw-goals { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 18px 0; }
+    .aw-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .aw-motor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .aw-check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .aw-goal, .aw-card, .aw-motor, .aw-check-item { min-width: 0; padding: 14px; background: var(--aw-soft); border-top: 4px solid var(--aw-blue); }
+    .aw-goal:nth-child(2), .aw-card:nth-child(2), .aw-motor:nth-child(2) { border-color: var(--aw-yellow); }
+    .aw-goal:nth-child(3), .aw-card:nth-child(3), .aw-motor:nth-child(3) { border-color: var(--aw-red); }
+    .aw-goal:nth-child(4) { border-color: var(--aw-green); }
+    .aw-goal strong, .aw-card h3, .aw-motor h3 { display: block; margin: 0 0 6px; color: var(--aw-ink); }
+
+    .aw-system-lab { margin: 20px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--aw-line); background: #f6f9fa; }
+    .aw-toolbar strong { font-size: 1.02rem; }
+    .aw-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .aw-btn { min-height: 40px; padding: 8px 13px; border: 1px solid #9cafba; border-radius: 6px; background: #fff; color: var(--aw-ink); font: inherit; font-weight: 800; cursor: pointer; }
+    .aw-btn.primary { border-color: var(--aw-teal); background: var(--aw-teal); color: #fff; }
+    .aw-system { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding: 34px 22px 25px; background: #edf5f5; }
+    .aw-system::before { content: ""; position: absolute; left: 10%; right: 10%; top: 48%; height: 4px; background: #9ab2bd; }
+    .aw-node { position: relative; z-index: 1; display: grid; place-items: center; min-height: 115px; padding: 12px; border: 3px solid #8da5b0; background: #fff; text-align: center; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+    .aw-node strong { display: block; color: var(--aw-blue); }
+    .aw-node span { display: block; margin-top: 5px; font-size: .88rem; color: var(--aw-muted); }
+    .aw-node.is-active { transform: translateY(-6px); border-color: var(--aw-yellow); box-shadow: 0 8px 0 rgba(204, 139, 0, .18); }
+    .aw-node.is-done { border-color: var(--aw-green); }
+    .aw-pulse { position: absolute; z-index: 2; top: calc(48% - 7px); left: 10%; width: 18px; height: 18px; border-radius: 50%; background: var(--aw-red); box-shadow: 0 0 0 7px rgba(191, 61, 77, .15); transition: left .42s ease; pointer-events: none; }
+    .aw-lab-state { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 1px; background: var(--aw-line); border-top: 1px solid var(--aw-line); }
+    .aw-lab-state > div { padding: 10px 12px; background: #fff; }
+    .aw-lab-state span { display: block; font-size: .76rem; color: var(--aw-muted); }
+    .aw-lab-state strong { display: block; margin-top: 3px; }
+
+    .aw-var-sim { margin: 18px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-var-sim-body { display: grid; grid-template-columns: minmax(270px, .72fr) minmax(430px, 1.28fr); min-width: 0; }
+    .aw-var-stage { display: grid; align-content: center; gap: 14px; min-width: 0; padding: 20px; border-right: 1px solid var(--aw-line); background: #edf5f5; }
+    .aw-switch-control { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; border: 1px solid var(--aw-line); background: #fff; font-weight: 850; }
+    .aw-switch-control input { width: 24px; height: 24px; accent-color: var(--aw-teal); }
+    .aw-pin-signal { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 13px; border-left: 5px solid var(--aw-blue); background: #fff; }
+    .aw-pin-signal strong { font-size: 1.35rem; color: var(--aw-blue); }
+    .aw-var-led { width: 64px; aspect-ratio: 1; margin: 2px auto; border: 5px solid #697c87; border-radius: 50%; background: #9aa8af; }
+    .aw-var-led.is-on { border-color: #b77a00; background: #ffd12f; box-shadow: 0 0 24px rgba(216,146,0,.52); }
+    .aw-var-output { min-height: 46px; font-weight: 850; text-align: center; }
+    [data-variable-sim] .aw-var-stage { grid-template-rows: 54px 68px 74px 92px; align-content: center; }
+    [data-variable-sim] .aw-switch-control, [data-variable-sim] .aw-pin-signal { box-sizing: border-box; min-width: 0; height: 100%; }
+    [data-variable-sim] .aw-var-led { box-sizing: border-box; align-self: center; width: 64px; height: 64px; margin: 0 auto; }
+    [data-variable-sim] .aw-var-output { display: grid; place-items: center; box-sizing: border-box; width: 100%; height: 92px; min-height: 92px; overflow-wrap: anywhere; }
+    .aw-var-code { min-width: 0; padding: 16px; }
+    .aw-var-lines { margin: 0; padding: 0; list-style: none; overflow-x: auto; border: 1px solid #dbe4e9; font: 750 .88rem/1.36 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .aw-var-lines li { display: grid; grid-template-columns: 30px minmax(410px, 1fr); gap: 9px; min-height: 29px; padding: 5px 9px; border-bottom: 1px solid #e3e9ed; white-space: pre; }
+    .aw-var-lines li:last-child { border-bottom: 0; }
+    .aw-var-lines li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .aw-var-lines li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 var(--aw-yellow); }
+    .aw-var-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .aw-var-values > div { min-width: 0; padding: 8px; border: 1px solid var(--aw-line); background: #fff; }
+    .aw-var-values span { display: block; color: var(--aw-muted); font-size: .72rem; overflow-wrap: anywhere; }
+    .aw-var-values strong { display: block; margin-top: 3px; overflow-wrap: anywhere; }
+    .aw-pwm-lamp { display: grid; place-items: center; width: 132px; aspect-ratio: 1; margin: 4px auto 10px; border: 6px solid #667985; border-radius: 50%; background: #454d52; transition: background-color .2s, box-shadow .2s; }
+    .aw-pwm-lamp strong { color: #172033; font-size: 1.1rem; }
+    .aw-sim-caption { min-height: 48px; color: var(--aw-ink); font-weight: 850; text-align: center; }
+    .aw-array-strip { display: grid; grid-template-columns: repeat(4, minmax(48px, 1fr)); gap: 7px; }
+    .aw-array-cell { display: grid; place-items: center; min-height: 68px; padding: 7px; border: 3px solid #8da5b0; background: #fff; text-align: center; }
+    .aw-array-cell span { display: block; color: var(--aw-muted); font-size: .72rem; }
+    .aw-array-cell strong { display: block; margin-top: 2px; }
+    .aw-array-cell.is-current { border-color: var(--aw-yellow); background: #fff1bd; box-shadow: 0 0 0 4px rgba(242,182,51,.18); }
+    .aw-array-cell.is-done { border-color: var(--aw-green); background: #edf8f2; }
+
+    .aw-image { margin: 16px 0; }
+    .aw-image img { display: block; width: 100%; max-height: 560px; object-fit: contain; border: 1px solid var(--aw-line); background: #fff; }
+    .aw-image.narrow img { max-width: 760px; margin-inline: auto; }
+    .aw-image.tall img { max-height: none; }
+    .aw-image figcaption { margin-top: 7px; color: var(--aw-muted); font-size: .9rem; }
+    .aw-code { max-width: 100%; overflow-x: auto; margin: 14px 0; padding: 15px 18px; border-left: 5px solid var(--aw-teal); background: #f4f7f8; color: #172033; font: 700 .94rem/1.58 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre; }
+    .aw-code .mark { display: inline-block; background: #fff0b5; }
+    .aw-formula { margin: 14px 0; padding: 13px 15px; border-left: 5px solid var(--aw-blue); background: #eef4fb; font-weight: 800; }
+    .aw-note, .aw-danger, .aw-success { margin: 14px 0; padding: 12px 14px; border-left: 4px solid var(--aw-yellow); background: #fff8e7; }
+    .aw-danger { border-color: var(--aw-red); background: #fff0f1; }
+    .aw-success { border-color: var(--aw-green); background: #edf8f2; }
+    .aw-route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 16px 0; }
+    .aw-route > div { padding: 12px; border-top: 4px solid var(--aw-teal); background: var(--aw-soft); }
+    .aw-route strong { display: block; color: var(--aw-blue); }
+
+    .aw-table-wrap { max-width: 100%; overflow-x: auto; margin: 14px 0; border: 1px solid var(--aw-line); border-radius: 7px; background: #fff; color: var(--aw-ink); }
+    .aw-trace { width: 100%; min-width: 740px; border-collapse: collapse; table-layout: fixed; }
+    .aw-trace th, .aw-trace td { padding: 9px; border-right: 1px solid var(--aw-line); border-bottom: 1px solid var(--aw-line); vertical-align: top; }
+    .aw-trace th:last-child, .aw-trace td:last-child { border-right: 0; }
+    .aw-trace tbody tr:last-child td { border-bottom: 0; }
+    .aw-trace th { background: #e6eff3; text-align: left; }
+    .aw-trace .given { background: #f7f9fa; font-weight: 700; }
+    .aw-trace input, .aw-trace textarea { width: 100%; min-height: 40px; box-sizing: border-box; padding: 7px 8px; border: 1px solid #9cafba; border-radius: 4px; background: #fff; color: var(--aw-ink); font: inherit; }
+    .aw-trace textarea { min-height: 65px; resize: vertical; }
+    .aw-trace input.is-correct, .aw-trace textarea.is-correct { border-color: var(--aw-green); background: #eaf7f0; }
+    .aw-trace input.is-wrong, .aw-trace textarea.is-wrong { border-color: var(--aw-red); background: #fff0f1; }
+    .aw-table-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 12px; border-top: 1px solid var(--aw-line); background: #f8fafb; }
+    .aw-table-status { color: var(--aw-muted); font-weight: 800; }
+
+    .aw-pin-board { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 10px; align-items: stretch; margin: 16px 0; }
+    .aw-pin-board > div { display: grid; place-items: center; padding: 14px; border: 2px solid var(--aw-line); background: #fff; text-align: center; }
+    .aw-pin-board .board { background: #087f7a; color: #fff; border-color: #075f5b; }
+    .aw-pin-board strong { display: block; }
+    .aw-pin-board small { display: block; margin-top: 5px; }
+
+    .aw-flow { display: grid; justify-items: center; gap: 7px; max-width: 650px; margin: 16px auto; padding: 17px; border: 1px solid var(--aw-line); background: #f8fafb; }
+    .aw-flow-step { width: min(100%, 310px); box-sizing: border-box; padding: 11px; border: 2px solid var(--aw-blue); background: #fff; text-align: center; font-weight: 800; }
+    .aw-flow-step.round { border-radius: 999px; background: #e8f4f3; }
+    .aw-flow-step.decision { width: 150px; min-height: 150px; display: grid; place-items: center; transform: rotate(45deg); background: #fff3c9; }
+    .aw-flow-step.decision span { max-width: 105px; transform: rotate(-45deg); }
+    .aw-arrow { color: var(--aw-blue); font-size: 1.45rem; font-weight: 900; line-height: 1; }
+    .aw-flow-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; }
+    .aw-flow-branch { display: grid; justify-items: center; gap: 6px; }
+    .aw-flow-branch strong { color: var(--aw-teal); }
+
+    .aw-bug-lab { margin: 17px 0; overflow: hidden; border: 1px solid var(--aw-line); border-radius: 8px; background: #fff; color: var(--aw-ink); }
+    .aw-bug-code { padding: 15px; background: #1e2935; color: #edf6f8; font: 700 .94rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .aw-bug-line { display: grid; grid-template-columns: 35px 1fr; width: 100%; padding: 7px 9px; border: 0; border-left: 4px solid transparent; background: transparent; color: inherit; text-align: left; font: inherit; cursor: pointer; }
+    .aw-bug-line::before { content: attr(data-number); color: #8da2b2; }
+    .aw-bug-line:hover, .aw-bug-line:focus-visible { background: #2c3c49; }
+    .aw-bug-line.is-right { border-color: #54cf91; background: #183f34; }
+    .aw-bug-line.is-wrong { border-color: #ff7181; background: #47232a; }
+    .aw-bug-feedback { min-height: 48px; padding: 12px 14px; border-top: 1px solid var(--aw-line); background: #f8fafb; }
+
+    .aw-source-list li + li { margin-top: 7px; }
+    .wb-book[data-theme="dark"] .aw-system-lab,
+    .wb-book[data-theme="dark-blue"] .aw-system-lab,
+    .wb-book[data-theme="dark"] .aw-table-wrap,
+    .wb-book[data-theme="dark-blue"] .aw-table-wrap,
+    .wb-book[data-theme="dark"] .aw-bug-lab,
+    .wb-book[data-theme="dark-blue"] .aw-bug-lab { color: #172033; }
+
+    @media (max-width: 950px) {
+      .aw-goals, .aw-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aw-system { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aw-system::before, .aw-pulse { display: none; }
+    }
+    @media (max-width: 720px) {
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .aw-hero h1 { font-size: 2rem; }
+      .aw-goals, .aw-cards, .aw-motor-grid, .aw-check-grid, .aw-route, .aw-pin-board { grid-template-columns: 1fr; }
+      .aw-toolbar, .aw-table-footer { align-items: stretch; flex-direction: column; }
+      .aw-system { grid-template-columns: 1fr; padding: 18px; }
+      .aw-var-sim-body { grid-template-columns: 1fr; }
+      .aw-var-stage { border-right: 0; border-bottom: 1px solid var(--aw-line); }
+      .aw-lab-state { grid-template-columns: 1fr 1fr; }
+      .aw-var-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aw-flow-branches { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand, .wb-book .wb-theme-wrap, .wb-book .wb-present-btn, .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 50px; font-size: 15px; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+      .aw-lab-state { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .aw-node, .aw-pulse { transition: none; }
+    }
+    .aw-goal, .aw-card, .aw-motor, .aw-check-item, .aw-danger, .aw-note, .aw-success, .aw-formula, .aw-route > div, .aw-pin-board, .aw-flow { color: var(--aw-ink); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .aw-kicker { color: #67e8d5; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .aw-image figcaption { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Wiederholung · Musterlösung","sectionTitle":"Vom Signal zum funktionierenden System · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Systemcheck"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Kannst du aus einem Messwert eine zuverlässige Handlung machen?</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-reveal-chain"><h3>Denkpause: Warum gehört ein Motortreiber in die Wirkungskette?</h3><p>Ein Ausgangspin liefert nur einen kleinen Steuerstrom. Ein Motor benötigt meist deutlich mehr Strom und erzeugt beim Schalten störende Spannungsspitzen. Ein geeigneter Treiber übernimmt den Laststrom; Arduino und Treiber brauchen dabei eine gemeinsame Masse.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-mcq-diagnose"><h3>Einstiegsdiagnose: Wirkungskette erkennen</h3><h4>Wie verarbeitet ein Arduino-System einen Messwert, damit daraus eine passende technische Handlung entsteht?</h4><p>Sensor erfasst einen Wert → Arduino speichert und prüft ihn → Ausgang steuert den Aktor.</p><p>Der Sensor liefert die Eingabe. Der Arduino speichert beziehungsweise verarbeitet den Messwert und prüft die Bedingung. Erst danach erzeugt er ein Ausgangssignal für den Aktor.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Board und Schaltung"><h1>Hardware sicher lesen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-hardware-pairs"><h3>Bauteil und Aufgabe verbinden</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>LED-Vorwiderstand</td><td>Strom durch die Leuchtdiode begrenzen</td></tr><tr><td>GND</td><td>gemeinsames Bezugspotenzial bilden</td></tr><tr><td>USB-Verbindung</td><td>Programm übertragen und serielle Kommunikation ermöglichen</td></tr><tr><td>Motortreiber</td><td>großen Laststrom mit einem kleinen Steuersignal schalten</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-verify-led"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Es ist gleichgültig, in welcher Richtung eine LED eingebaut wird, solange ein Widerstand vorhanden ist.</p><p>Eine LED leitet nur in Durchlassrichtung. Der Vorwiderstand schützt sie vor zu großem Strom, ersetzt aber nicht die richtige Polung.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Programm und Upload"><h1>Vom Quelltext zur wiederholten Ausführung</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-trace-blink"><h3>Ablaufspur: Was passiert wann?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Phase</th><th scope="col">Anweisung</th><th scope="col">LED danach</th><th scope="col">vergangene Zeit seit Beginn</th><th scope="col">Wird erneut ausgeführt?</th></tr></thead><tbody><tr><td>Start</td><td>pinMode(LED, OUTPUT)</td><td>unverändert</td><td>0</td><td>nein</td></tr><tr><td>loop 1</td><td>digitalWrite(LED, HIGH)</td><td>an</td><td>0</td><td>ja</td></tr><tr><td>loop 1</td><td>delay(500)</td><td>an</td><td>500</td><td>ja</td></tr><tr><td>loop 1</td><td>digitalWrite(LED, LOW)</td><td>aus</td><td>500</td><td>ja</td></tr><tr><td>loop 1</td><td>delay(500)</td><td>aus</td><td>1000</td><td>ja</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-order-upload"><h3>Upload in sinnvoller Reihenfolge</h3><ol><li>Schaltung und gewünschtes Verhalten planen</li><li>Quelltext schreiben</li><li>Board und Port kontrollieren</li><li>Programm kompilieren und übertragen</li><li>Ein- und Ausgaben gezielt testen</li><li>Beobachtung mit der Erwartung vergleichen</li></ol></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Werte, Funktionen, Serial"><h1>Werte speichern und Verhalten sichtbar machen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-cat-code-roles"><h3>Welche Rolle spielt die Zeile?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Vorbereiten / Deklarieren</td><td>int temperatur = 0;</td></tr><tr><td>Wert verändern</td><td>temperatur = temperatur + 2;</td></tr><tr><td>Beobachten / Ausgeben</td><td>Serial.println(temperatur);</td></tr><tr><td>Funktion aufrufen</td><td>warnsignal();</td></tr><tr><td>Vorbereiten / Deklarieren</td><td>Serial.begin(9600);</td></tr><tr><td>Wert verändern</td><td>helligkeit = 127;</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Variablen und Schalterzustand"><h1>Variablen merken sich den aktuellen Zustand</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-trace-switch-variable"><h3>Ablaufspur: Schalterstellung, Variable und if/else</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Durchlauf</th><th scope="col">Taster</th><th scope="col">digitalRead()</th><th scope="col">schalterZustand</th><th scope="col">Bedingung == LOW</th><th scope="col">LED</th></tr></thead><tbody><tr><td>1</td><td>nicht gedrückt</td><td>HIGH</td><td>HIGH</td><td>falsch</td><td>AUS</td></tr><tr><td>2</td><td>gedrückt</td><td>LOW</td><td>LOW</td><td>wahr</td><td>AN</td></tr><tr><td>3</td><td>gedrückt</td><td>LOW</td><td>LOW</td><td>wahr</td><td>AN</td></tr><tr><td>4</td><td>nicht gedrückt</td><td>HIGH</td><td>HIGH</td><td>falsch</td><td>AUS</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-reveal-variable-purpose"><h3>Denkpause: Warum nicht direkt in if erneut lesen?</h3><p>Der gelesene Eingang erhält einen verständlichen Namen und bleibt für diesen Schleifendurchlauf erhalten. Du kannst denselben Zustand in der Bedingung, im seriellen Monitor und an weiteren Stellen verwenden, ohne den Pin jedes Mal neu zu lesen. Das macht den Ablauf nachvollziehbar und leichter zu prüfen.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Schleifen und PWM"><h1>Wiederholen, zählen und Helligkeit steuern</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-cloze-loops-pwm"><h3>Sicherung: Schleifen und PWM</h3><p>Eine for-Schleife besteht im Kopf aus <b>Initialisierung</b>, <b>Bedingung</b> und <b>Änderung</b>. analogWrite() nutzt am Arduino Uno <b>PWM</b> mit Werten von <b>0</b> bis <b>255</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-mcq-pwm-rgb"><h3>Transfer: RGB-LED</h3><h4>Wie entsteht bei einer RGB-LED eine neue Mischfarbe?</h4><p>Durch unterschiedliche PWM-Werte für Rot, Grün und Blau</p><p>Die wahrgenommene Farbe entsteht aus den Helligkeitsanteilen der drei Farbkanäle. Die Baudrate betrifft dagegen die serielle Kommunikation.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Eingaben und Entscheidungen"><h1>Taster lesen und Bedingungen präzise formulieren</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-mcq-while"><h3>if oder while?</h3><h4>Ein Warnlicht soll genau einmal entsprechend dem aktuellen Messwert ein- oder ausgeschaltet werden. Was passt?</h4><p>if / else</p><p>if / else wählt anhand des aktuellen Zustands einen Zweig. Eine Schleife ist dafür nicht notwendig.</p><h4>Der Arduino soll weiter warten, solange der Taster nicht gedrückt ist. Was passt grundsätzlich?</h4><p>while mit erneuter Tasterabfrage</p><p>Eine while-Schleife wiederholt ihren Rumpf, solange die Bedingung wahr bleibt. Der relevante Zustand muss darin erneut geprüft werden können.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Arrays und Interrupts"><h1>Viele Werte ordnen, kurze Ereignisse bemerken</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-cat-array-interrupt"><h3>Array, Polling oder Interrupt?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Array</td><td>acht Tonfrequenzen geordnet speichern</td></tr><tr><td>Polling</td><td>Taster in jeder loop-Runde abfragen</td></tr><tr><td>Interrupt</td><td>einen sehr kurzen Impuls zuverlässig bemerken</td></tr><tr><td>Array</td><td>Messwerte über Indizes nacheinander ausgeben</td></tr><tr><td>Interrupt</td><td>ein Ereignis außerhalb des normalen Ablaufs markieren</td></tr><tr><td>Polling</td><td>einen langsam veränderlichen Sensor regelmäßig prüfen</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-verify-isr"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Eine ISR ist der richtige Ort für lange Wartezeiten, Displayausgaben und umfangreiche Berechnungen.</p><p>Eine ISR bleibt kurz. Sie merkt sich das Ereignis, häufig mit einer volatile-Variablen. Die eigentliche Verarbeitung übernimmt anschließend der normale Programmablauf.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Displays und Motoren"><h1>Die passende Ausgabe für die Aufgabe wählen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-cat-output-choice"><h3>Wähle die passende Ausgabe</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>LCD</td><td>Temperatur als Zahl anzeigen</td></tr><tr><td>DC-Motor</td><td>Lüfter dauerhaft drehen lassen</td></tr><tr><td>Servo</td><td>Klappe auf 70 Grad stellen</td></tr><tr><td>Schrittmotor</td><td>Drehteller exakt 200 Schritte bewegen</td></tr><tr><td>LCD</td><td>Menütext in zwei Zeilen darstellen</td></tr><tr><td>DC-Motor</td><td>Fahrzeugrad mit veränderbarer Drehzahl antreiben</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-mcq-motors"><h3>Motor- und Displaycheck</h3><h4>Was muss bei einem Motor mit externer Versorgung beachtet werden?</h4><p>Arduino und Treiber benötigen eine gemeinsame Masse.; Die Versorgung muss zum Motor und Treiber passen.; Induktive Spannungsspitzen müssen berücksichtigt werden.</p><p>Der Ausgangspin liefert das Steuersignal. Treiber, passende Versorgung, gemeinsame Masse und Schutz vor Spannungsspitzen sorgen für einen belastbaren Aufbau.</p><h4>Was gehört typischerweise zur Initialisierung eines LCD?</h4><p>Bibliothek und Anschlussart festlegen; Displaygröße beziehungsweise Adresse passend konfigurieren</p><p>Die konkrete Initialisierung hängt davon ab, ob das Display parallel oder beispielsweise über I²C angeschlossen ist.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Fehlerlabor"><h1>Debugging beginnt bei der ersten Abweichung</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-reveal-debug-plan"><h3>Ein belastbarer Debugging-Plan</h3><p>1. Versorgung, GND und sichtbare Schäden prüfen. 2. Ein minimales Testprogramm für den Treiberausgang verwenden. 3. Sensorwert im seriellen Monitor ausgeben. 4. Den tatsächlichen Wert mit dem Grenzwert vergleichen. 5. Den gewählten Zweig markieren. 6. Erst danach das Gesamtsystem erneut testen. So weißt du nach jedem Schritt mehr als zuvor.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-essay-project"><h3>Transfer: Plane ein vollständiges Arduino-System</h3><span class="solution-label">Eine mögliche Antwort</span><p><b>Problem:</b> Eine Modellbeleuchtung soll bei Dunkelheit angehen. Ein Taster kann sie zusätzlich unabhängig vom Licht einschalten.</p><p><b>Eingänge, Zustände, Ausgänge:</b> Ein LDR-Spannungsteiler liefert einen analogen Wert an A0; ein Taster mit INPUT_PULLUP wird an Pin 2 gelesen. Variablen speichern messwert und tasteGedrueckt. Eine LED mit Vorwiderstand an Pin 13 ist die Ausgabe.</p><p><b>Programmstruktur:</b> setup() konfiguriert LED und Taster und startet Serial.begin(9600). loop() liest beide Eingaben neu, gibt den Messwert aus und entscheidet per if: Bei messwert &lt; 400 oder gedrücktem Taster wird die LED eingeschaltet. Im Beispiel sinkt der gemessene LDR-Wert bei Dunkelheit. Eine kurze Pause begrenzt die Ausgaberate.</p><p><b>Hardware:</b> Der Spannungsteiler liegt zwischen 5 V und GND; sein Mittelabgriff führt zu A0. Die LED ist in Reihe mit einem passenden Widerstand verbunden. Der Taster verbindet den Pullup-Eingang bei Druck mit GND. Ein größerer Verbraucher würde einen Treiber und eine geeignete Versorgung benötigen.</p><ol><li>Messwert 250, Taster frei → LED an.</li><li>Messwert 700, Taster frei → LED aus.</li><li>Messwert 700, Taster gedrückt → LED an.</li></ol><p><b>Debugging:</b> Ich teste zuerst die LED allein, dann die Hell-/Dunkelwerte des Sensors und danach die Tasterzustände HIGH/LOW. Erst wenn die Teilstrecken stimmen, prüfe ich die kombinierte Bedingung im seriellen Monitor.</p></article>
+</section>
+<section data-wb-page="11" data-wb-page-title="Abschlusscheck"><h1>Das Arduino-System als Ganzes beherrschen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="aw-mcq-final"><h3>Gemischter Abschlusscheck</h3><h4>Welche Aussage zu setup() und loop() ist richtig?</h4><p>setup() läuft nach Start oder Reset einmal; loop() wiederholt sich.</p><p>setup() initialisiert das System. Danach beginnt die fortlaufende loop()-Wiederholung.</p><h4>Bei INPUT_PULLUP ist ein Taster zwischen Pin und GND angeschlossen. Was wird beim Drücken meist gelesen?</h4><p>LOW</p><p>Der gedrückte Taster verbindet den Eingang mit GND; deshalb ergibt die Abfrage LOW.</p><h4>Ein Array enthält fünf Werte. Welche Indizes sind gültig?</h4><p>0 bis 4</p><p>Der erste Index ist 0. Fünf Elemente belegen daher die Plätze 0, 1, 2, 3 und 4.</p><h4>Welche Aussagen zu PWM sind richtig?</h4><p>analogWrite() nutzt beim Uno typischerweise Werte von 0 bis 255.; PWM schaltet sehr schnell ein und aus.; PWM kann LED-Helligkeit oder Motordrehzahl beeinflussen.</p><p>PWM steht nur an geeigneten Pins zur Verfügung. Das Tastverhältnis beeinflusst die mittlere Wirkung am Verbraucher.</p><h4>Was ist eine sinnvolle Aufgabe für eine kurze ISR?</h4><p>Eine volatile-Merker-Variable setzen</p><p>Die ISR unterbricht den normalen Ablauf nur kurz und merkt das Ereignis.</p><h4>Welcher Motor passt am besten zu einer Klappe, die gezielt auf 0°, 45° und 90° fahren soll?</h4><p>Standard-Servo</p><p>Ein Servo ist für definierte Winkelpositionen ausgelegt.</p><h4>Das Programm kompiliert, wird übertragen, aber ein Sensorwert scheint falsch. Was ist der nächste sinnvolle Schritt?</h4><p>Messwert seriell ausgeben und mit einer bekannten Situation vergleichen</p><p>Die serielle Ausgabe macht den internen Zustand sichtbar und liefert eine gezielte nächste Erkenntnis.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"arduino-wiederholung-wasserzeichen52.html__"});</script>
+</body>
+</html>

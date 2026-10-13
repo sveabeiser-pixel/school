@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="induktion2.html">
+<meta name="musterloesung-source-sha256" content="c185158286a465f7334f39c3ab1bb86560c510371ce4d31f3ee07c9a7f3aa470">
+<title>Elektromagnetische Induktion 2 – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .ind-grid{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:1.25rem;align-items:center}
+    .ind-figure{margin:0;text-align:center}
+    .ind-figure img{display:block;width:100%;max-width:520px;max-height:430px;object-fit:contain;margin:0 auto}
+    .ind-figure--tall img{max-width:360px;max-height:520px}
+    .ind-figure figcaption{margin-top:.55rem;color:var(--wb-muted,#596273);font-size:.92rem}
+    .ind-task{border-left:4px solid #2368b2;padding:.9rem 1rem;background:#f4f8fd;margin:1rem 0}
+    .ind-task h3{margin-top:0}
+    .ind-task ol{margin-bottom:.25rem}
+    .ind-formula-note{margin-top:.5rem}
+    .ind-grid>*{min-width:0}
+    /* Eine Formelbox statt verschachtelter Rahmen von Callout, Formelblock und MathJax. */
+    .wb-book .wb-callout .physics-formula{
+      display:block;width:auto;max-width:100%;margin:.7rem 0;padding:0;
+      border:0;border-radius:0;background:transparent;box-shadow:none;overflow-x:auto
+    }
+    .wb-book .wb-callout .physics-formula mjx-container[display="true"]{
+      display:block;width:auto;max-width:100%;margin:0;padding:.25rem 0;
+      border:0;border-radius:0;background:transparent;box-shadow:none;overflow-x:visible
+    }
+    @media (max-width:800px){
+      .ind-grid{grid-template-columns:1fr}
+      .ind-figure img,.ind-figure--tall img{max-height:380px}
+      .wb-book .wb-content{min-width:0;padding:0 6px 40px}
+      .wb-book .wb-paper{box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding:24px 14px;overflow-x:hidden}
+      .wb-book [data-wb-page]{min-width:0;max-width:100%}
+      .wb-book .physics-formula{max-width:100%;overflow-x:auto}
+      .wb-book h1{font-size:27px;overflow-wrap:anywhere}
+      .wb-book h2{font-size:21px;overflow-wrap:anywhere}
+    }
+    @media (max-width:520px){
+      .wb-book .wb-top-left{min-width:0;gap:6px}
+      .wb-book .wb-brand{font-size:18px;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .wb-book .wb-top-right{gap:4px}
+      .wb-book .wb-theme-wrap,.wb-book [data-wb-present],.wb-book [data-wb-fs]{display:none}
+      .wb-book .wb-page-ind{min-width:40px;font-size:14px}
+      .wb-book .wb-icon-btn{width:36px;height:36px}
+    }
+    .ind-task { color: #172033; --wb-muted: #4b5563; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Induktion 2 · Musterlösung","sectionTitle":"Anwendungen, Selbstinduktion und Maxwell · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Abiturtraining">
+<div class="course-kicker">Musterlösung</div>
+<h1>Abiturtraining: Flussänderungen aus Diagrammen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_zweifelder"><h3>Deine vollständige Diagrammauswertung</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a–b. Flussänderung und Umschaltzeiten</h4><p>Der rechte Rahmenrand liegt bei xrechts = vt, der linke bei xlinks = vt−a. Die Feldgrenzen liegen bei 0,3 m, 0,9 m und 1,5 m. Rechts überschreitet sie nach 1,5; 4,5; 7,5 s, links nach 3,0; 6,0; 9,0 s. D ist nach 10,5 s erreicht; dort endet die Fahrt, ohne dass eine neue Flussänderung entsteht. Für die im Kontrollbild gewählte Vorzeichenkonvention sind die Spannungen folgende.</p><div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Zeit in s</th><th>Bewegungsabschnitt</th><th>Uind</th></tr></thead><tbody><tr><td>0–1,5</td><td>Noch vor B₁</td><td>0 V</td></tr><tr><td>1,5–3,0</td><td>Eintritt in B₁</td><td>−nB₁av = −3,6 V</td></tr><tr><td>3,0–4,5</td><td>Vollständig in B₁</td><td>0 V</td></tr><tr><td>4,5–6,0</td><td>Übergang B₁ → B₂</td><td>n(B₁−B₂)av = +1,8 V</td></tr><tr><td>6,0–7,5</td><td>Vollständig in B₂</td><td>0 V</td></tr><tr><td>7,5–9,0</td><td>Austritt aus B₂</td><td>+nB₂av = +1,8 V</td></tr><tr><td>9,0–10,5</td><td>Außerhalb beider Felder</td><td>0 V</td></tr></tbody></table></div><h4>c. Interpretation des U-t-Diagramms</h4><p>U ist abschnittsweise konstant, weil Flächen und damit Flüsse in den Übergangsphasen linear mit t variieren. Beim Übergang zwischen den beiden Feldern verliert der Rahmen pro Zeit mehr B₁-Fluss, als er B₂-Fluss hinzugewinnt: Der Fluss sinkt trotz vollständig vom Feld durchsetzter Fläche. Die tatsächlichen Sprünge der Spannung liegen bei 1,5; 3,0; 4,5; 6,0; 7,5 und 9,0 s. An diesen idealisierten Knicken wird ein sprunghafter Übergang dargestellt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_saegezahn"><h3>Deine Sägezahn-Auswertung</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a–b. Spannung aus dem Bild</h4><p>A = π(0,032/2)² m² = <b>8,04·10⁻⁴ m²</b>. Von 0–2 ms wächst B von 0 auf 40 mT, B′ = +20 T/s; von 2–6 ms sinkt es auf 0, B′ = −10 T/s. Die Periode ist 6 ms. Für jede ganze Zahl k ≥ 0 gilt U = <b>−3,22 V</b> auf 6k bis 6k+2 ms und <b>+1,61 V</b> auf 6k+2 bis 6k+6 ms. Die Spannung ist also rechteckartig stückweise konstant, nicht sägezahnförmig. Das Vorzeichen ist entgegengesetzt zur B-Steigung.</p><h4>c. Windungszahl und Durchmesser</h4><p>U ∝ nA ∝ nd². Doppeltes n bei halbem d ergibt 2·(1/2)² = 1/2: <b>−1,61 V und +0,804 V</b>. Die Zeiten und qualitative Form bleiben gleich.</p><h4>d. Linear wachsende Spannung</h4><p>Für U(t) = at+b mit t in Sekunden folgt B′(t) = −(at+b)/(nA), also <b>B(t) = B₀−a t²/(2nA)−b t/(nA)</b>. B muss in diesem Zeitintervall eine nach unten gekrümmte Parabel sein, wenn a positiv ist; Anfangsbedingungen bestimmen B₀ und b.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Wirbelströme">
+<h1>Wirbelströme: Bremsen und Heizen ohne Kontakt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_cat_wirbel"><h3>Ordne Ursache und Wirkung</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Wirbelstrombremse</td><td>Bewegungsenergie wird gezielt verringert.</td></tr><tr><td>Induktionskochfeld</td><td>Ein hochfrequentes Wechselfeld erwärmt den Topfboden.</td></tr><tr><td>Beide</td><td>Eine Änderung des magnetischen Flusses erzeugt geschlossene Ströme im Metall.</td></tr><tr><td>Beide</td><td>Die Wirkung folgt dem Lenz'schen Gesetz.</td></tr><tr><td>Wirbelstrombremse</td><td>Schlitze im Metall schwächen die Wirkung deutlich.</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Wechselspannung">
+<h1>Wechselspannung aus einer rotierenden Spule</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_order_generator"><h3>Ablauf im Generator</h3>
+<ol><li>Eine Leiterschleife oder ein Magnet wird mechanisch gedreht.</li><li>Der magnetische Fluss durch die Spule ändert sich periodisch.</li><li>Es entsteht eine Induktionsspannung mit wechselnder Polung.</li><li>Bei geschlossenem Stromkreis fließt Wechselstrom.</li><li>Mechanische Energie wird in elektrische Energie umgewandelt.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_wechselspannung"><h3>Deine Wechselspannungsrechnungen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>8a–b. Rotierende Spule</h4><p>A = 1,5·10⁻³ m², B = 0,040 T, ω = 2πf = 50π s⁻¹. Û = nBAω = <b>0,942 V</b>; T = 0,040 s. Bei anfänglich maximal positivem Fluss ist <b>U(t) = 0,942 V·sin((50π s⁻¹)t)</b>. Eine Periode hat die Punkte (0 ms;0 V), (10 ms;+0,942 V), (20 ms;0 V), (30 ms;−0,942 V), (40 ms;0 V).</p><h4>8c. Doppelte Drehfrequenz</h4><p>fneu = 50 Hz, ωneu = 100π s⁻¹, Tneu = <b>20 ms</b>, Ûneu = <b>1,885 V</b>. Daher U(t) = 1,885 V·sin((100π s⁻¹)t); sowohl Frequenz als auch Scheitelwert verdoppeln sich.</p><h4>9a–c. 50-Hz-Spannung</h4><p>T = 1/f = <b>20 ms</b>, U(t) = 10 V·sin((100π s⁻¹)t). Somit U(5 ms) = <b>+10 V</b>, U(10 ms) = <b>0 V</b>, U(15 ms) = <b>−10 V</b>. Nulldurchgänge: t = kT/2 = k·10 ms. Maxima: t = T/4+kT = 5 ms+k·20 ms; Minima: t = 3T/4+kT = 15 ms+k·20 ms, mit ganzen k ≥ 0. U(7 ms) = 10 sin(0,7π) V = <b>8,09 V</b>.</p><h4>9d. Strom am Widerstand</h4><p><b>I(t) = (10 V/R)·sin((100π s⁻¹)t)</b>. Am ohmschen Widerstand haben Spannung und Strom dieselben Nulldurchgänge und Extremwertzeitpunkte, sind also in Phase.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_wechsel"><h3>Ergebnisse kontrollieren</h3>
+<p>Aufgabe 8: A = 1,5·10⁻³ m² und ω = 50π s⁻¹. Damit ist Û = nBAω ≈ 0,94 V und U(t) = 0,94 V·sin(50π t). Bei doppelter Frequenz verdoppeln sich ω und Û; die Periodendauer halbiert sich. Aufgabe 9: T = 20 ms und U(t) = 10 V·sin(100π t). Es gilt U(5 ms)=10 V, U(10 ms)=0 V, U(15 ms)=−10 V und U(7 ms)≈8,09 V. Nulldurchgänge liegen bei t=kT/2, Extremwerte bei t=T/4+kT/2. Am Widerstand ist I(t)=(10 V/R)·sin(100π t).</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Selbstinduktion">
+<h1>Selbstinduktion: Eine Spule reagiert auf ihre eigene Stromänderung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_cloze_selbst"><h3>Sicherung: Selbstinduktion</h3>
+<p>Eine <b>Stromänderung</b> erzeugt in der Spule eine Selbstinduktionsspannung. Sie wirkt der Änderung <b>entgegen</b>. Die <b>Induktivität</b> kennzeichnet die Stärke dieses Effekts. Bei größerem L steigt der Strom <b>langsamer</b> an.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Induktivität messen">
+<h1>Induktivität bestimmen und Schaltvorgänge auswerten</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_selbst_rechnen"><h3>Deine Rechnungen zur Selbstinduktion</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>10a. Parameter</h4><p>L = µ₀µᵣn²A/l. Doppeltes n bewirkt Faktor 4, doppelte Fläche Faktor 2; zusammen gilt <b>Lneu = 8L</b>. Der ohmsche Widerstand kommt in dieser geometrischen Formel nicht vor. Er beeinflusst aber die Zeitkonstante L/R und die Endstromstärke U₀/R; Änderungen der Wicklung können in der Praxis sowohl L als auch R ändern.</p><h4>10b. Ausschaltspannung</h4><p>Imax = U₀/R₁ = 2 V/10 Ω = <b>0,20 A</b>. Direkt nach dem Umschalten kann der Spulenstrom nicht sprunghaft verschwinden. Der fortfließende Strom Imax durch R₁+R₂ erfordert |Uind,max| = (R₁+R₂)Imax. Aus 80 V = (10 Ω+R₂)·0,20 A folgt <b>R₂ = 390 Ω</b>. Die induzierte Spannung unterstützt den bisherigen Strom, obwohl die Quelle getrennt ist.</p><h4>10c. Luftgefüllte Zylinderspule</h4><p>A = π(0,030 m)² = 2,827·10⁻³ m². L = µ₀n²A/l = <b>0,100 H</b>. Imax = 5 V/20 Ω = <b>0,250 A</b>. I′(0) = U₀/L = <b>50,0 A/s</b>, τ = L/R = <b>5,0 ms</b>. I(t) = 0,250 A·(1−exp(−t/(5,0 ms))). Der Graph beginnt bei 0 mit großer Steigung und flacht gegen 0,250 A ab.</p><h4>10d. Diagramm</h4><p>Bei t = 0 ist I = 0 und die Spule baut eine Gegenspannung Uind = <b>−6,0 V</b> auf. Danach sinkt |Uind|, während I asymptotisch gegen den Bildwert Imax ≈ 0,12 A wächst. R = U₀/Imax = <b>50 Ω</b>. Die Anfangstangente hat näherungsweise die Steigung 0,060 A/s, daher <b>L = U₀/I′(0) ≈ 100 H</b> und τ ≈ 2,0 s. I(t) ≈ 0,12 A·(1−exp(−t/(2,0 s))) passt zum gezeigten Verlauf; Ablesewerte sind näherungsweise.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_selbst_rechnen"><h3>Ergebnisse kontrollieren</h3>
+<p>a) Wegen L ∼ n²A wächst L insgesamt auf das Achtfache; der ohmsche Widerstand kommt in der geometrischen L-Formel nicht vor. b) I_max = 0,20 A und aus 80 V = (10 Ω + R₂)·0,20 A folgt R₂ = 390 Ω. c) Mit A = π(0,030 m)² folgt L ≈ 0,100 H, I_max = 0,250 A und İ(0) = U₀/L ≈ 50 A/s. d) Zu Beginn ist U_ind = −6,0 V. Aus I_max ≈ 0,12 A folgt R ≈ 50 Ω. Die Anfangstangente liefert ungefähr İ(0) ≈ 0,060 A/s und damit L ≈ 100 H.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Magnetfeldenergie">
+<h1>Energie des Magnetfeldes</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_magnetenergie"><h3>Energiebilanz öffnen</h3>
+<p>Für die Spule folgt E_mag = 1/2·0,0080 H·(0,20 A)² = 1,60·10⁻⁴ J. Der Kondensator speichert E_el = 1/2·0,50·10⁻⁶ F·(25 V)² = 1,56·10⁻⁴ J. Die Abweichung beträgt nur etwa 2,3 %. Im realen Versuch treten zusätzlich Verluste durch Widerstände und Messgeräte auf.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind2-p6-aufgabe11-energiebilanz"><h3>Aufgabe 11: Energieübertragung auf einen Kondensator</h3>
+<h4>a. Magnetische Energie</h4><p>Wmag = ½LI² = ½·8,0·10⁻³ H·(0,20 A)² = <b>1,60·10⁻⁴ J = 0,160 mJ</b>.</p><h4>b. Kondensatorenergie</h4><p>Wel = ½CU² = ½·0,50·10⁻⁶ F·(25 V)² = <b>1,5625·10⁻⁴ J = 0,156 mJ</b>.</p><h4>c. Vergleich</h4><p>Wel/Wmag = 0,97656, also werden nach diesen Werten etwa <b>97,7 %</b> der anfänglichen Feldenergie gespeichert. Die Differenz beträgt <b>3,75 µJ bzw. 2,34 %</b> und kann durch Widerstands- und Messverluste sowie Rundung erklärt werden. Die Bilanz ist mit Energieerhaltung vereinbar.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Maxwell-Gleichungen">
+<h1>Die Maxwell-Gleichungen: Vier Aussagen verbinden die Elektrodynamik</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="induktion-maxwell"><h3>Maxwell-Aussagen verbinden</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>elektrische Ladung</td><td>Quelle oder Senke eines elektrischen Feldes</td></tr><tr><td>magnetisches Feld</td><td>besitzt geschlossene, quellfreie Feldlinien</td></tr><tr><td>veränderliches Magnetfeld</td><td>erzeugt ein elektrisches Wirbelfeld</td></tr><tr><td>Strom oder veränderliches elektrisches Feld</td><td>erzeugt ein magnetisches Wirbelfeld</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Zusammenfassung und Aufgaben">
+<h1>Zusammenfassung und Aufgaben</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_abschlussaufgaben"><h3>Deine Lösungen zu den Abschlussaufgaben</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>12a–b. Rahmen und Polung</h4><p>Bei Bewegung nach oben und B in die Zeichenebene wirkt v⃗ × B⃗ auf positive Ladungen nach links. Die Elektronen sammeln sich am rechten Ende Q; <b>P ist positiv, Q negativ</b>. Mit U_PQ = φP−φQ ergibt sich U_PQ = nBav = 500·2,1·10⁻³ T·0,060 m·0,0010 m/s = <b>+6,3·10⁻⁵ V = +0,063 mV</b>, solange die wirksame Fläche beim Herausziehen sinkt.</p><h4>12c. Fallender Rahmen</h4><p>Während des Eintauchens gilt für den Spannungsbetrag |U| = nBav(t) = nBa(v₀+gt), also ein linearer Anstieg. <b>Diagramm 2</b> entspricht der zusätzlich nötigen Annahme v₀ = 0 am Feldrand. Fällt der Rahmen tatsächlich aus einer Höhe oberhalb des Randes frei, besitzt er dort bereits v₀ &gt; 0; dann ist <b>Diagramm 4</b> der passende Betragverlauf. Die Formulierung legt die Fallhöhe nicht fest, daher sind diese beiden Fälle zu unterscheiden. Für dieselbe U_PQ-Konvention wie beim Herausziehen ist das Spannungsvorzeichen während des Eintauchens negativ. Diagramme 1 und 3 passen nicht zum ungebremsten Fall mit konstantem g. Nach vollständigem Eintauchen wird U = 0.</p><h4>13a–c. Energie beim Einschieben</h4><p>Mit einer Windung, a = 0,50 m und Δt = 0,50 s ist v = a/Δt = 1,0 m/s. |U| = Bav = <b>1,0 V</b>, I = U/R = <b>5,0 A</b>. Die magnetische Bremskraft F = BIa = <b>5,0 N</b> wird durch eine äußere Kraft in Einschubrichtung ausgeglichen. Wmech = Fa = <b>2,5 J</b>, Pmech = Fv = <b>5,0 W</b>. Elektrisch: W = UIΔt = <b>2,5 J</b>; unabhängig ebenso W = I²RΔt = <b>2,5 J</b>.</p><h4>13d. Halbe Einschubzeit</h4><p>Δtneu = 0,25 s, vneu = 2 m/s, Uneu = 2 V, Ineu = 10 A und Fneu = 10 N. Wneu = 5 J, also doppelte Energie. Pneu = 20 W, also vierfache Leistung. Mechanisch W = F·a und elektrisch I²RΔt liefern beide 5 J. Die Gegenkraft steigt, deshalb muss trotz kürzerer Zeit mehr Arbeit geleistet werden.</p><h4>14a. Rotation bei konstantem Feld</h4><p>B = µ₀(n_F/l)I_F = <b>0,05028 T</b>, A = 0,010 m² und ω = 40π s⁻¹. Bei zu Beginn maximalem positivem Fluss gilt <b>U(t) = (63,2 V)sin((40π s⁻¹)t)</b>. Der Phasenursprung ist damit ausdrücklich festgelegt.</p><h4>14b. Ruhender Rahmen, linear steigendes Feld</h4><p>I_F(t) = (0,10 A/s)t. B(t) = βt mit β = µ₀(n_F/l)·0,10 A/s = <b>2,514·10⁻³ T/s</b>. U = −n_R Aβ = <b>−0,02514 V = −25,1 mV</b>. Die Spannung ist konstant, weil B′ konstant ist.</p><h4>14c. Beides gleichzeitig</h4><p>Φ(t) = βt A cos(ωt). Aus der Produktregel folgt <b>U(t) = −n_RAβ cos(ωt)+n_RAβωt sin(ωt)</b>. Numerisch: U(t) = −0,02514 V·cos((40π s⁻¹)t)+(3,159 V/s)t·sin((40π s⁻¹)t), t in Sekunden. Der erste Anteil stammt vom Feldanstieg, der zweite von der Rotation. Falls der Feldanstieg zusätzlich auf einem anfänglichen B₀ = 0,05028 T statt bei null beginnt, kommt n_RAωB₀ sin(ωt) = 63,2 V sin(ωt) hinzu.</p><h4>15a–b. Aus U(t) auf B(t) schließen</h4><p>nA = 100·0,050² m² = 0,250 m². U = −nAB′. Daher B′ = −0,040 T/s für 0–5 s, 0 für 5–10 s und +0,020 T/s für 10–20 s. Mit B(0) = 0 ist <b>B(t) = −0,040t T</b> für t in Sekunden bis 5 s; danach <b>−0,20 T</b> bis 10 s; schließlich <b>−0,20 T+(0,020 T/s)(t−10 s)</b> bis 20 s. Der Graph verläuft durch (0;0), (5;−0,20), (10;−0,20), (20;0). Negative B-Werte bedeuten Feldrichtung entgegen der gewählten positiven Flächennormale. Solch ein Verlauf kann durch einen passend gesteuerten Feldspulenstrom erzeugt werden.</p><h4>15c. Konstantes B, bewegter Rahmen</h4><p>Bei B = 0,20 T ist A′ = −U/(nB). Zuerst wird die überlappende Feldfläche mit −5,0·10⁻⁴ m²/s von 0,0025 m² auf null verkleinert, dann 5 s konstant gehalten und schließlich mit +2,5·10⁻⁴ m²/s wieder auf die volle Fläche vergrößert. Für eine geradlinige Feldkante und Rahmenkante 5 cm bedeutet das: <b>0–5 s mit 1,0 cm/s vollständig herausziehen, 5–10 s stillhalten, 10–20 s mit 0,50 cm/s vollständig hineinschieben</b>. Der Spannungsgraph ergibt sich direkt aus dieser Bewegung.</p><h4>16a–c. Spule an Gleichspannung</h4><p>Imax = U₀/R = <b>0,40 A</b>. I′(0) = U₀/L = <b>0,75 A/s</b>. τ = L/R = <b>0,533 s</b>, also <b>I(t) = 0,40 A·(1−exp(−t/(0,533 s)))</b>. Die Kurve beginnt bei 0 mit Steigung 0,75 A/s und nähert sich 0,40 A; nach einer Zeitkonstante erreicht sie 0,253 A.</p><h4>16d. Halbe Windungszahl</h4><p>Bei gleicher Spulenlänge, Querschnittsfläche und Permeabilität sinkt L wegen n² auf <b>2,0 H</b>. Wenn der Gesamtwiderstand weiterhin 15 Ω beträgt, bleibt Imax = 0,40 A, die Anfangssteigung wächst auf 3,0 A/s und τ sinkt auf 0,133 s. Wird bei gleichem Draht auch die Drahtlänge halbiert, sinkt der Spulenwiderstand näherungsweise auf 7,5 Ω: Dann Imax = 0,80 A und τ = 0,267 s, die Anfangssteigung bleibt 3,0 A/s. Die Widerstandsannahme ist entscheidend.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_reveal_abschlussaufgaben"><h3>Ergebnischeck öffnen</h3>
+<p>Aufgabe 12: P ist beim Herausziehen positiv, U_PQ = +0,063 mV. Der Spannungsbetrag beim Fall wächst linear: Diagramm 2 für Start aus Ruhe am Feldrand, Diagramm 4 für vorherigen Fall aus Höhe; bei gleicher Messkonvention ist das Eintauchvorzeichen negativ. Aufgabe 13: U = 1,0 V, I = 5,0 A, F = 5,0 N, W = 2,5 J und P = 5,0 W; bei halber Zeit verdoppeln sich U, I, F und W, während P sich vervierfacht. Aufgabe 14: Bei konstantem Feld Û = 63,2 V; bei ruhendem Rahmen und linear zunehmendem Strom U = −25,1 mV; gleichzeitig wirken beide Produktregelanteile. Aufgabe 15: B-Steigungen −0,040; 0; +0,020 T/s. Aufgabe 16: Imax = 0,40 A, I′(0) = 0,75 A/s, τ = 0,533 s. Halbes n bedeutet L/4; die weitere Änderung hängt davon ab, ob R konstant bleibt oder mit der Drahtlänge abnimmt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_mcq_abschluss"><h3>Abschlusscheck: Elektrodynamik</h3>
+<h4>Welche Aussage zur Selbstinduktion ist richtig?</h4><p>Die Selbstinduktionsspannung wirkt einer Stromänderung entgegen.</p><p>Selbstinduktion tritt nur bei einer Stromänderung auf und verzögert deren Verlauf.</p><h4>Welche Maxwell-Aussage erklärt das Magnetfeld zwischen den Platten eines sich ladenden Kondensators?</h4><p>Das erweiterte ampèresche Gesetz mit dem veränderlichen elektrischen Feld.</p><p>Auch ohne Leitungsstrom erzeugt ein zeitlich veränderliches elektrisches Feld ein magnetisches Wirbelfeld.</p><h4>Welche Änderung vervierfacht die magnetische Energie einer Spule?</h4><p>Verdopplung der Stromstärke bei konstantem L.</p><p>Wegen E_mag = 1/2 L I² führt die Verdopplung von I zum Faktor vier.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind2-p8-weiterdenkfragen"><h3>Weiterdenken: Relaisdiode, Wellen und Feldenergie</h3>
+<p>Eine zur Versorgung in Sperrrichtung parallel geschaltete Freilaufdiode gibt dem Spulenstrom nach dem Abschalten einen geschlossenen Weg. Sie begrenzt die hohe induzierte Spannung und schützt den Schalttransistor, verlängert aber den Stromabbau. Aus dem Faraday- und Ampère-Maxwell-Gesetz folgt die gekoppelte Ausbreitung veränderlicher E- und B-Felder auch im Vakuum; die Ausbreitungsgeschwindigkeit beträgt c = 1/√(ε₀µ₀). Magnetische Feldenergie ist auch ohne Eisenkern vorhanden: Ihre Energiedichte ist im Vakuum B²/(2µ₀). Material beeinflusst das Feld und die Energiespeicherung, ist aber keine Voraussetzung für die Existenz des Feldes.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"induktion2-garderobe84.html__"});</script>
+</body>
+</html>

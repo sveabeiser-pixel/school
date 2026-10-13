@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="arduino-5.html">
+<meta name="musterloesung-source-sha256" content="1050c9122cb4bef005f536aff7d83b630bb92cd0241db7574f338392ef32b2e4">
+<title>Arduino 5: Arrays, Interrupt und Troubleshooting – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .grid2x,
+    .grid3x {
+      display: grid;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .grid2x {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid2x-narrow-figure {
+      grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr);
+    }
+
+    .grid3x {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel,
+    .info-box,
+    .warn-box,
+    .code-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.06);
+      background: #fff;
+    }
+
+    .info-box {
+      background: #edf6ff;
+      border-left: 5px solid #2f6da1;
+    }
+
+    .warn-box {
+      background: #fff4e8;
+      border-left: 5px solid #d9891b;
+    }
+
+    .code-card {
+      background: #0f172a;
+      color: #e8f0ff;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: 1.45;
+    }
+
+    .topic-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .topic-figure figcaption {
+      padding: 10px 14px 14px;
+      color: #4a5b6a;
+      font-size: 0.95rem;
+    }
+
+    .topic-figure {
+      margin: 0;
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(25, 69, 98, 0.06);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #e8f5f7;
+      color: #0f6470;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .task-card {
+      border: 1px dashed rgba(24, 63, 92, 0.22);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #fbfdff;
+    }
+
+    .task-card h3 {
+      margin: 0 0 8px;
+    }
+
+    .source-list,
+    .check-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .source-list li + li,
+    .check-list li + li {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .grid2x,
+      .grid3x {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="arduino-kurs.css">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Arduino 5 · Musterlösung","sectionTitle":"Arrays, Interrupt und Troubleshooting · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Überblick"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Arrays, Interrupts und Troubleshooting</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_start_reveal"><h3>Vor dem Start</h3><p>Weil du in echten Arduino-Projekten fast immer mehrere Dinge gleichzeitig brauchst: übersichtliche Datenstrukturen, schnelle Reaktionen auf Ereignisse und eine saubere Methode zur Fehlersuche. Genau diese Kombination trainierst du hier.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Arrays"><h1>Arrays: Arbeiten mit Listen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_array_trace"><h3>Ablaufspur: Sechs Schleifendurchgänge</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Durchgang</th><th scope="col">i</th><th scope="col">Melodie[i]</th><th scope="col">notenWert[i]</th><th scope="col">tonDauer in ms</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>175</td><td>8</td><td>125</td></tr><tr><td>2</td><td>1</td><td>175</td><td>8</td><td>125</td></tr><tr><td>3</td><td>2</td><td>196</td><td>4</td><td>250</td></tr><tr><td>4</td><td>3</td><td>175</td><td>4</td><td>250</td></tr><tr><td>5</td><td>4</td><td>262</td><td>4</td><td>250</td></tr><tr><td>6</td><td>5</td><td>247</td><td>2</td><td>500</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_cloze"><h3>Sicherung: Wie funktionieren Arrays?</h3><p>Ein Array ist eine geordnete <b>Liste</b> von Werten. Jeder Eintrag wird über einen <b>Index</b> angesprochen. Der erste Listenplatz hat die Nummer <b>0</b> . Im Melodie-Beispiel berechnet man die <b>Tondauer</b> aus dem <b>Notenwert</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Das erste Element eines Arrays hat normalerweise den Index 1.</p><p>Falsch. Das erste Element einer Liste bekommt immer Index 0.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_mcq"><h3>Mini-Check zu 6.1 bis 6.4</h3><h4>Warum muss die Schleife in Aufgabe 6.1 länger laufen als im ersten kurzen Beispiel?</h4><p>Weil die erweiterte Melodie mehr als 6 Töne enthält.</p><p>Die erweiterte Melodie enthält deutlich mehr Töne. Deshalb muss auch die Schleife mehr Elemente durchlaufen.</p><h4>Was ist der entscheidende Unterschied zwischen einem char-Array und einem Array mit Wörtern?</h4><p>Ein char-Array speichert einzelne Zeichen, für Wörter braucht man Zeichenketten mit Pointer.</p><p>Genau das gilt hier: einzelne Zeichen mit char, ganze Wörter als Zeichenketten mit Pointer.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_p2"><h3>Verbinde Aufgabe und Kernidee</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>6.1 Melodie erweitern</td><td>Viele Frequenzen und Notenwerte mit zwei Arrays abarbeiten.</td></tr><tr><td>6.2 Tafeldienst</td><td>Einen Namen per Zufallsindex auswählen.</td></tr><tr><td>6.3 Literaturautomat</td><td>Mit Wortlisten zufällige Sätze erzeugen.</td></tr><tr><td>6.4 Hausarbeiten</td><td>Zuweisungen so planen, dass niemand doppelt vorkommt.</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_essay"><h3>Transfer: Entwickle deinen eigenen Array-Einsatz</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich würde einen Melodiespieler bauen. Ein Array speichert die Frequenzen, zum Beispiel 262, 294 und 330 Hz. Ein zweites Array enthält die zugehörigen Tondauern. Über denselben Index wähle ich Frequenz und Dauer eines Tons aus. Eine for-Schleife spielt die Liste nacheinander ab. Mit dieser Struktur kann ich die Melodie durch Änderung der Listen erweitern, ohne jeden Ton als eigenen Codeblock zu schreiben.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_melodie"><h3>1. Melodie erweitern</h3><pre><code>int melodie[] = {196,196,220,196,262,247,196,196,220,196,294,262,196,196,392,330,262,247,220,349,349,330,262,294,262};
+int notenWert[] = {8,8,4,4,4,2,8,8,4,4,4,2,8,8,4,4,4,4,8,8,4,4,4,4,2};
+void setup() {}
+void loop() {
+  for (int i = 0; i &lt; 25; i++) {
+    int dauer = 1000 / notenWert[i];
+    tone(11, melodie[i], dauer);
+    delay(dauer * 1.3);
+    noTone(11);
+  }
+  delay(1000);
+}</code></pre><p>Beide Arrays enthalten die 25 Werte aus dem Material. Der Index läuft von 0 bis 24; für jeden Eintrag werden Frequenz und Notenwert gemeinsam verwendet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_tafeldienst"><h3>2. Tafeldienst auslosen</h3><pre><code>const char* namen[] = {"Martin", "Volker", "Frank", "Kolja", "Alexander", "Mario", "Peter", "Rainer"};
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+  int index = random(8);
+  Serial.println(namen[index]);
+}
+void loop() {}</code></pre><p>random(8) liefert einen Index von 0 bis 7. Das Beispiel lost einmal beim Start aus. Der Seed über einen freien Analogeingang ist für eine einfache Unterrichtsdemonstration gedacht, nicht für eine garantierte zufällige oder faire Zuteilung über längere Zeit.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_literatur"><h3>3. Literaturautomat</h3><pre><code>const char* x[] = {"Nacht", "Regen", "Nebel"};
+const char* y[] = {"Wind", "Sturm", "Schnee"};
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+  Serial.print("Wer reitet so spaet durch " );
+  Serial.print(x[random(3)]);
+  Serial.print(" und " );
+  Serial.print(y[random(3)]);
+  Serial.println("?");
+}
+void loop() {}</code></pre><p>Eine mögliche Ausgabe ist: Wer reitet so spaet durch Nebel und Wind? Jeder Begriff wird über einen gültigen Index ausgewählt.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_hausarbeiten"><h3>4. Hausarbeiten verteilen</h3><pre><code>const char* namen[] = {"Alex", "Robin", "Sam"};
+const char* dienste[] = {"abwaschen", "aufräumen", "Staub wischen"};
+int reihenfolge[] = {0, 1, 2};
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+  for (int i = 2; i &gt; 0; i--) {
+    int j = random(i + 1);
+    int temp = reihenfolge[i];
+    reihenfolge[i] = reihenfolge[j];
+    reihenfolge[j] = temp;
+  }
+  for (int i = 0; i &lt; 3; i++) {
+    Serial.print(namen[reihenfolge[i]]);
+    Serial.print(" darf " );
+    Serial.println(dienste[i]);
+  }
+}
+void loop() {}</code></pre><p>Die Indexliste wird mit dem Fisher-Yates-Verfahren gemischt. Jeder ursprüngliche Index bleibt genau einmal enthalten; niemand bekommt im Beispiel zwei Dienste.</p></article></section>
+<section data-wb-page="3" data-wb-page-title="Interrupt"><h1>Interrupt: Auf Ereignisse sofort reagieren</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_trace"><h3>Ablaufspur: Vom Tastendruck zur Reaktion</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Ereignis</th><th scope="col">aktiver Bereich</th><th scope="col">zustand</th><th scope="col">nächster Schritt</th></tr></thead><tbody><tr><td>Normalbetrieb</td><td>loop()</td><td>0</td><td>Hauptprogramm läuft weiter</td></tr><tr><td>Signal wechselt von HIGH zu LOW</td><td>ISR</td><td>1</td><td>ISR wird beendet</td></tr><tr><td>ISR ist beendet</td><td>loop()</td><td>1</td><td>Aktion ausführen</td></tr><tr><td>Aktion ist abgeschlossen</td><td>loop()</td><td>0</td><td>Hauptprogramm fortsetzen</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_order"><h3>Ordne den Interrupt-Ablauf</h3><ol><li>Am Taster ändert sich das Signal am Pin.</li><li>Der Interrupt erkennt die Signaländerung.</li><li>Das Hauptprogramm wird kurz unterbrochen.</li><li>Die Interrupt Service Routine wird ausgeführt.</li><li>Nach der ISR läuft das Hauptprogramm an der unterbrochenen Stelle weiter.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_categorize"><h3>Was gehört in eine ISR, was nicht?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>In einer ISR sinnvoll</td><td>Nur kurz einen Zustand merken</td></tr><tr><td>In einer ISR sinnvoll</td><td>Eine Variable auf 1 setzen</td></tr><tr><td>In einer ISR vermeiden</td><td>delay() benutzen</td></tr><tr><td>In einer ISR vermeiden</td><td>Seriellen Monitor umfangreich benutzen</td></tr><tr><td>In einer ISR vermeiden</td><td>LC-Display ansteuern</td></tr><tr><td>In einer ISR vermeiden</td><td>Aufwändige Berechnungen machen</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_reveal"><h3>Warum volatile?</h3><p>Weil sich ihr Wert außerhalb des normalen Programmflusses ändern kann. Variablen im Interrupt müssen als volatile deklariert werden, damit der Compiler sie nicht falsch optimiert.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Während einer ISR sind delay(), serieller Monitor und aufwändige Berechnungen gute Ideen, weil der Interrupt dann besonders viel erledigt.</p><p>Falsch. Eine ISR muss kurz gehalten werden. delay(), serieller Monitor, LC-Display und aufwändige Berechnungen sollen dort nicht benutzt werden.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_essay"><h3>Transfer: Interrupt sinnvoll beschreiben</h3><span class="solution-label">Eine mögliche Antwort</span><p>Beim Polling wird ein Eingang nur an bestimmten Stellen des Hauptprogramms gelesen, sodass ein kurzes Signal zwischen zwei Abfragen übersehen werden kann. Ein Interrupt kann auf eine passende Signalflanke reagieren und kurz die ISR ausführen. Die ISR setzt nur eine als volatile deklarierte Ereignisvariable. Die eigentliche Aktion folgt in loop(), damit die ISR kurz bleibt. Wenn das Ereignis übernommen und gelöscht wird, schütze ich diesen gemeinsamen Zugriff vor einer gleichzeitig eintreffenden ISR; volatile allein verhindert keinen solchen Konflikt. Ein einzelnes Flag speichert nur, dass mindestens ein Ereignis aufgetreten ist, und zählt keine beliebig vielen Ereignisse.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_lauflicht"><h3>Aufgabe: Lauflicht mit Interrupt</h3><pre><code>const byte leds[] = {4,5,6,7,8,9,10,11};
+const byte rot = 12;
+volatile byte ereignis = 0;
+void tasteISR() { ereignis = 1; }
+void setup() {
+  for (byte i = 0; i &lt; 8; i++) pinMode(leds[i], OUTPUT);
+  pinMode(rot, OUTPUT);
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), tasteISR, FALLING);
+}
+void loop() {
+  for (byte i = 0; i &lt; 8; i++) {
+    digitalWrite(leds[i], HIGH); delay(100);
+    digitalWrite(leds[i], LOW);
+    noInterrupts();
+    byte merken = ereignis; ereignis = 0;
+    interrupts();
+    if (merken) digitalWrite(rot, HIGH);
+  }
+}</code></pre><p>Ein Tasterdruck nach GND löst eine FALLING-Flanke aus. Die ISR merkt das Ereignis; die rote LED wird spätestens nach dem nächsten 100-ms-Lauflichtschritt eingeschaltet. Jede LED benötigt einen passenden eigenen Vorwiderstand.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_ereignis"><h3>Aufgabe: Ereignis merken</h3><pre><code>volatile byte zustand = 0;
+void tasteISR() { zustand = 1; }
+void machIrgendwas() { digitalWrite(13, HIGH); }
+void setup() {
+  pinMode(13, OUTPUT); pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), tasteISR, FALLING);
+}
+void loop() {
+  noInterrupts();
+  byte ausloesen = zustand; zustand = 0;
+  interrupts();
+  if (ausloesen) machIrgendwas();
+}</code></pre><p>Die Übernahme und das Löschen des Flags erfolgen gemeinsam bei kurz gesperrten Interrupts. Ein später eintreffendes Ereignis bleibt damit für den nächsten Durchlauf erhalten.</p></article></section>
+<section data-wb-page="4" data-wb-page-title="Troubleshooting"><h1>Troubleshooting: Fehler systematisch finden</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_trace"><h3>Ablaufspur: In welcher Fehlerebene suchst du?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Beobachtung</th><th scope="col">Fehlerebene</th><th scope="col">erster Prüfschritt</th></tr></thead><tbody><tr><td>Der Sketch kompiliert nicht; eine Zeile ist rot markiert.</td><td>Code</td><td>Fehlermeldung und vorherige Zeile prüfen</td></tr><tr><td>Der Sketch kompiliert, lässt sich aber nicht hochladen.</td><td>Upload</td><td>Board, Port und USB-Verbindung prüfen</td></tr><tr><td>Upload erfolgreich, aber alle externen Bauteile bleiben aus.</td><td>Hardware</td><td>GND und Spannungsversorgung prüfen</td></tr><tr><td>Messwerte erscheinen, aber das Programm wählt den falschen Zweig.</td><td>Logik</td><td>Bedingung und Vergleichsoperator prüfen</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_mcq"><h3>Mini-Check: Troubleshooting</h3><h4>Was prüfst du zuerst, wenn ein Sketch gar nicht kompiliert?</h4><p>Die Fehlermeldung verstehen und auf setup(), loop() oder fehlende Bibliotheken achten.</p><p>Das ist der erste Schritt: Compilerfehler lesen und die eigentliche Ursache finden.</p><h4>Welcher Fehler führt oft dazu, dass ein Block gar nicht ausgeführt wird?</h4><p>Ein zusätzliches Semikolon direkt nach if(), while() oder for().</p><p>Genau dieser Fehler ist besonders tückisch: Dann wird der Block in den geschweiften Klammern übersprungen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_reveal"><h3>Fehlermeldung einordnen</h3><p>Dann liegt das Problem häufig nicht mehr im Quelltext, sondern bei den Einstellungen oder der Verbindung: falsches Board, falscher COM-Port, Treiberproblem oder ein verstellter Programmer.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_essay"><h3>Dein Fehlersuchplan</h3><span class="solution-label">Eine mögliche Antwort</span><p>Zuerst kompiliere ich und korrigiere Syntaxfehler anhand der ersten Fehlermeldung. Danach prüfe ich den Upload mit Board-Typ, Port und USB-Verbindung. Bei erfolgreichem Upload prüfe ich Versorgung, gemeinsamen GND, Polung und Stromweg. Ich vergleiche die verwendeten Pins mit dem Sketch. Anschließend lasse ich einen einfachen Teiltest laufen, zum Beispiel nur eine LED. Mit serieller Ausgabe untersuche ich Messwerte und Entscheidungen. Nach jeder einzelnen Änderung wiederhole ich denselben Test und notiere, ob die Beobachtung nun zur Vorhersage passt.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"arduino-5-mosaik94.html__"});</script>
+</body>
+</html>

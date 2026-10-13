@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10. Ausfallsicherheit, Abnahme und Reflexion - Musterlösung</title>
+<meta name="musterloesung-source" content="10-ausfallsicherheit-abgabe.html">
+<meta name="musterloesung-source-sha256" content="123b703e6457e62f71fd7274d0ef5907a3219aff80b43779e3492e7c04666e24">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"10. Ausfallsicherheit, Abnahme und Reflexion · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Kapitel 10","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Ausfallsicherheit"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>10. Autostart und Ausfallsicherheit</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="abnahme_systemteile"><h2>Ordne die Nachweise zu</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriffe</th></tr></thead><tbody><tr><td>ESP32</td><td>Sensorwerte im Serial Monitor; WLAN-Wiederverbindung</td></tr><tr><td>Raspberry Pi</td><td>Kamera wird erkannt</td></tr><tr><td>Netzwerk</td><td>IP-Adresse und HTTP-Antwort</td></tr></tbody></table></div></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-abnahme-neustart"><h2>Neustart- und Fehlerprotokoll</h2><p>Ein mögliches <strong>Prüfszenario</strong>: kontrollierter Pi-Neustart; SSH erreichbar; Kameradienst aktiv; neues Foto lesbar; Streamempfang beim Dienst; aktualisierter Player. Beim ESP32-Reset startet die Firmware neu und die Messzeitbasis beginnt bei 0; die Anzeige muss einen neuen Datensatz abwarten. Wird WLAN kurz getrennt, laufen die Messungen weiter; HTTP ist zeitweise nicht erreichbar. Nach Wiederverbindung werden neue Daten angezeigt, die alten bleiben als veraltet markiert. Bei kontrolliert beendetem Kameraprozess muss der konfigurierte Dienst neu starten. Diese Erwartungen sind am Gerät mit Zeiten und Logs zu belegen, keine behauptete erfolgreiche Abnahme.</p><pre><code>systemctl is-enabled huehnerkamera.service
+systemctl is-active huehnerkamera.service
+journalctl -u huehnerkamera.service -b --no-pager</code></pre><p><code>enabled</code> bezeichnet die Aktivierung für einen passenden Startzeitpunkt, <code>active</code> den momentanen Dienstzustand. Beides ersetzt keinen Bildtest.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Abgabe"><h1>Abnahme, Dokumentation und Reflexion</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="abgabe_reflexion"><h2>Abschlussreflexion</h2><span class="answer-label">Eine mögliche Antwort</span><p>Unsere wichtigste Entscheidung war die Trennung von Sensorik auf dem ESP32 und Video auf dem Pi. Ein beispielhafter Messwert von 21 °C kann dadurch weiter über HTTP bereitgestellt werden, selbst wenn der Kameraprozess ausfällt. Die Schnittstelle zwischen ESP32 und Anzeige ist ein JSON-Datensatz mit Einheiten und Aktualitätsstatus. Als Fehlerquelle haben wir eine unterbrochene WLAN-Verbindung untersucht; dann muss die Anzeige „nicht aktuell“ zeigen. Der ESP32 versucht die Verbindung erneut, ohne seine Sensorabfrage dauerhaft zu blockieren. Nach einem Neustart startet systemd den Kameradienst und protokolliert Fehler. Ein erfolgreicher Dienststart wird trotzdem mit einer echten lokalen Aufnahme und anschließendem Streamempfang überprüft. Beim Kamerabildausschnitt haben wir uns auf den Hühnerbereich beschränkt und keinen Ton aufgenommen.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-abnahme-individuell"><h2>Individuelle Abschlussleistung</h2><span class="answer-label">Eine mögliche Antwort</span><p>Datenweg: Licht senkt den LDR-Widerstand, der Spannungsteiler erzeugt eine Spannung, ADC1 an GPIO34 digitalisiert sie, und HTTP übermittelt einen JSON-Rohwert. Eine fiktive Messreihe 1420, 1430, 1440 hat Mittelwert 1430 und Spannweite 20; daraus folgt eine kleine Streuung, keine Lux-Kalibrierung. Gelingt ein lokales Foto, aber kein Stream, prüfe ich zuerst die Videocodierung, danach Verbindung und Freigabe beim Streamingdienst. Ein geöffneter lokaler Kameraport würde unnötigen externen Zugriff ermöglichen; deshalb sendet der Pi ausgehend an den freigegebenen Dienst. Der Kamerabildausschnitt und ausgeschaltetes Audio begrenzen unnötige Erfassung.</p></article>
+<div class="wb-section-break"></div><article class="sample-answer" data-solution="text-abnahme-checkliste"><h2>Musterbewertung der Abnahme-Checkliste</h2><div class="table-scroll" tabindex="0" role="region" aria-label="Auswertung"><table><thead><tr><th scope="col">Nachweis</th><th scope="col">Erfülltes Kriterium</th></tr></thead><tbody><tr><td>Temperatur / Feuchte</td><td>Gültige Werte mit Einheiten, Zeit, Einbauort und Grenzen; Fehlerstatus bei DHT-Ausfall</td></tr><tr><td>LDR</td><td>Messreihe mit drei Beleuchtungen, dokumentierter Richtung und Rohwertkennzeichnung</td></tr><tr><td>ESP32-Webseite</td><td>HTTP-200 und aktueller JSON-Datensatz im erlaubten Netz</td></tr><tr><td>Pi / Kamera</td><td>SSH-Identität korrekt; Kamera erkannt; Foto geöffnet; Video abgespielt</td></tr><tr><td>Datenschutz / Montage</td><td>Nur Stallbereich, kein Audio, Zugriff festgelegt; geprüfte Kleinspannung, trockene geschützte Montage, Zugentlastung, keine erreichbaren losen Leitungen</td></tr><tr><td>Autostart</td><td>Kontrollierter Neustart und Dienstausfall mit Wiederanlauf und tatsächlichem Bildnachweis protokolliert</td></tr></tbody></table></div></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="kuenstliche-intelligenz2.html">
+<meta name="musterloesung-source-sha256" content="a73e7ed29784a7c47d03d3f2ebccb04bce3cc925b24c9edf97de06a1c2f9de86">
+<title>Künstliche Intelligenz 2: Maschinelles Lernen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .ki-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:22px;align-items:center;margin:10px 0 18px}
+    .ki-kicker{font-weight:850;color:#0f766e;text-transform:uppercase;font-size:.82rem;letter-spacing:0}
+    .ki-lead{font-size:1.08rem;line-height:1.65;color:#243244}
+    .ki-figure{margin:16px 0 20px;text-align:center}
+    .ki-figure img{display:block;width:100%;max-height:520px;object-fit:contain;margin:0 auto;border:1px solid var(--wb-line,#d8dee8);border-radius:8px;background:#fff}
+    .ki-figure.compact img{max-height:350px}
+    .ki-figure.formula img{width:auto;max-width:100%;max-height:115px;border:0;border-radius:0}
+    .ki-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
+    .ki-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+    .ki-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ki-panel{border:1px solid var(--wb-line,#d8dee8);border-radius:8px;padding:14px 15px;background:#fff;min-width:0}
+    .ki-panel h3{margin-top:0;margin-bottom:8px;font-size:1rem}
+    .ki-panel p:last-child,.ki-panel ul:last-child{margin-bottom:0}
+    .ki-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+    .ki-step{border:1px solid #d7dee8;border-left:5px solid #2563eb;border-radius:8px;padding:12px;background:#fbfdff;min-width:0}
+    .ki-step strong{display:block;margin-bottom:5px}
+    .ki-mini-table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff}
+    .ki-mini-table th,.ki-mini-table td{border:1px solid var(--wb-line,#d8dee8);padding:10px 12px;vertical-align:top}
+    .ki-mini-table th{background:#f8fafc;text-align:left}
+    .ki-table-scroll{overflow-x:auto}
+    .ki-note-green{border-left:6px solid #0f766e;background:#ecfdf5;padding:12px 14px;border-radius:8px;margin:14px 0;color:#113f36}
+    .ki-note-amber{border-left:6px solid #d97706;background:#fff7ed;padding:12px 14px;border-radius:8px;margin:14px 0;color:#4a2a0a}
+    .ki-source-list li{margin-bottom:8px}
+    .ki-lab{border:1px solid var(--wb-line,#d8dee8);border-radius:8px;padding:16px;background:#fff;color:#243244;margin:16px 0}
+    .ki-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:12px}
+    .ki-controls label{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:700}
+    .ki-controls select{font:inherit;max-width:100%;padding:6px;border:1px solid #aab7c6;border-radius:4px;background:#fff;color:#243244}
+    .ki-controls input[type=range]{width:min(260px,100%);accent-color:#0f766e}
+    .ki-controls input[type=checkbox]{accent-color:#0f766e;width:18px;height:18px}
+    .ki-controls output{min-width:3.5em;font-variant-numeric:tabular-nums}
+    .ki-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .ki-metrics div{padding:10px 0;border-top:3px solid #2563eb}
+    .ki-metrics div:nth-child(2){border-color:#0f766e}
+    .ki-metrics div:nth-child(3){border-color:#d97706}
+    .ki-metrics strong{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+    .ki-metrics span{display:block;font-size:.9rem}
+    .ki-cases{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:16px 0}
+    .ki-case{display:grid;place-items:center;min-height:38px;font-size:.78rem;font-weight:800;border:1px solid #8290a0;border-radius:4px}
+    .ki-case[data-result=TP]{background:#d1fae5;color:#065f46}
+    .ki-case[data-result=TN]{background:#dbeafe;color:#1e40af}
+    .ki-case[data-result=FP]{background:#fff3cd;color:#714d00}
+    .ki-case[data-result=FN]{background:#ffe4e6;color:#9f1239}
+    .ki-chart{width:100%;height:auto;aspect-ratio:16/10;display:block;background:#fff}
+    .ki-legend{display:flex;flex-wrap:wrap;gap:16px;margin:8px 0}
+    .ki-legend span{font-weight:700}
+    .ki-legend span:nth-child(1){color:#0f766e}
+    .ki-legend span:nth-child(2){color:#2563eb}
+    .ki-legend span:nth-child(3){color:#c2410c}
+    section[data-wb-page],.ki-hero>*,.ki-grid>*{min-width:0}
+    @media(max-width:860px){.ki-hero,.ki-grid,.ki-grid.three,.ki-flow{grid-template-columns:1fr}.ki-figure img{max-height:none}}
+    @media(max-width:720px){
+      .wb-book:not(.wb-present-mode){--wb-topH:104px}
+      .wb-book:not(.wb-present-mode) .wb-topbar{flex-direction:column;align-items:stretch;justify-content:center;padding:0 6px}
+      .wb-book:not(.wb-present-mode) .wb-top-left{min-width:0;gap:10px;height:44px}
+      .wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+      .wb-book:not(.wb-present-mode) .wb-brand{font-size:20px}
+      .wb-book:not(.wb-present-mode) .wb-top-right{justify-content:space-between;gap:4px;height:54px}
+      .wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:3px;min-width:0}
+      .wb-book:not(.wb-present-mode) .wb-theme-select{width:88px;max-width:100%;padding:6px 4px}
+      .wb-book:not(.wb-present-mode) .wb-page-ind{min-width:48px;font-size:15px;white-space:nowrap}
+      .wb-book:not(.wb-present-mode) .wb-icon-btn{width:34px;height:36px;flex-shrink:0;border-radius:6px}
+      .wb-book .wb-content{padding:12px}
+      .wb-book .wb-paper{padding:20px}
+    }
+    @media(max-width:480px){.ki-cases{grid-template-columns:repeat(5,minmax(0,1fr))}.ki-lab{padding:12px}.ki-mini-table th,.ki-mini-table td{padding:8px}.ki-metrics{gap:8px}.ki-metrics strong{font-size:1.1rem}}
+    .ki-panel, .ki-step, .ki-mini-table, .ki-lab { color: #243244; }
+    .ki-panel, .ki-step, .ki-mini-table, .ki-lab, .ki-note-green, .ki-note-amber { --wb-muted: #526270; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ki-kicker { color: #67e8d5; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Maschinelles Lernen · Musterlösung","sectionTitle":"Künstliche Intelligenz 2: Maschinelles Lernen · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Wie lernen Maschinen aus Erfahrung?</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_start_reveal"><h3>Stopp &amp; check: Was lernt hier?</h3><p>Nicht unbedingt. Bei der Anwendung berechnet ein bereits trainiertes Modell eine Ausgabe. Weiterlernen setzt einen zusätzlichen Lernprozess voraus, beispielsweise mit neuen beschrifteten Fotos. Eine Vorhersage allein ist noch kein Training.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Überwacht und unüberwacht"><h1>Zielausgaben kennen oder Muster entdecken?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_varianten_cloze"><h3>Sicherung: Welche Information liegt vor?</h3><p>Überwachtes Lernen nutzt Beispiele mit <b>Labels</b>. Eine Kategorie als Ausgabe gehört zur <b>Klassifikation</b>, ein geschätzter Zahlenwert zur <b>Regression</b>. Unüberwachtes Lernen kann ähnliche Beispiele zu Gruppen, sogenannten <b>Clustern</b>, zusammenfassen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_unueberwacht_mcq"><h3>Mini-Check: Die Grenze liegt im Training</h3><h4>Welche Aufgabe ist in dieser Form unüberwacht?</h4><p>Kundendaten ohne vorgegebene Gruppennamen nach Ähnlichkeit gruppieren.</p><p>Bei b gibt es keine Ziel-Labels. Die Cluster werden aus Merkmalen gebildet. Sowohl Kategorien als auch Zahlenwerte können dagegen Labels für überwachtes Lernen sein.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Verstärkendes Lernen"><h1>Handeln, Rückmeldung bekommen, Strategie verbessern</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_varianten_categorize"><h3>Ordne die Lernaufgaben zu</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Überwacht</td><td>Eine Pflanzen-App trainiert mit Fotos und zugehörigen Artnamen.</td></tr><tr><td>Überwacht</td><td>Ein Modell schätzt Hauspreise aus Beispielen mit bekanntem Verkaufspreis.</td></tr><tr><td>Überwacht</td><td>Ein Modell trainiert mit Gesichtern und von Personen vergebenen Emotionslabels.</td></tr><tr><td>Überwacht</td><td>Ein Spamfilter lernt aus als Spam oder normal markierten E-Mails.</td></tr><tr><td>Unüberwacht</td><td>Ein Supermarkt sucht ähnliche Kundengruppen ohne vorgegebene Gruppennamen.</td></tr><tr><td>Unüberwacht</td><td>Ein System sucht Ausreißer in unbeschrifteten Transaktionsdaten.</td></tr><tr><td>Verstärkend</td><td>Ein Börsenagent probiert in einer Simulation Aktionen aus; Gewinne und Verluste sind seine Belohnung.</td></tr><tr><td>Verstärkend</td><td>Ein Roboter verbessert seine Würfe durch Punkte für einen Korb und negative Rückmeldungen für Fehlwürfe.</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_belohnung_verify"><h3>Stopp &amp; check: Belohnung ist kein Lösungslabel</h3><p><b>Falsch.</b> Eine Belohnung sagt dem Agenten immer, welche Aktion in einem Zustand die richtige gewesen wäre.</p><p>Die Rückmeldung bewertet das erreichte Ergebnis. Welche vorausgehenden Aktionen dazu beigetragen haben und welche besser gewesen wären, muss der Lernalgorithmus erst herausfinden.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Lernaufgaben mit T–P–E"><h1>Was genau soll das System lernen?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_tpe_pairs"><h3>Zuordnung: T, P oder E?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Neue Pflanzenfotos mit einem Artnamen beschriften.</td><td>T · Aufgabe</td></tr><tr><td>Anteil richtig bestimmter Pflanzen auf zurückgehaltenen Fotos.</td><td>P · Leistungsmaß</td></tr><tr><td>Eine Sammlung von Pflanzenfotos mit geprüften Artnamen.</td><td>E · Erfahrung</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_tpe_essay"><h3>Formuliere drei Lernaufgaben</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li><b>Pflanzen-App:</b> T ist die Bestimmung einer Art aus einem Foto. P ist beispielsweise die Genauigkeit je Art auf unabhängigen Testfotos. E sind vielfältige Fotos mit verlässlichen Art-Labels; die Variante ist überwacht.</li><li><b>Kundengruppen:</b> T ist das Finden ähnlicher Gruppen anhand festgelegter Merkmale, etwa Kaufhäufigkeit und Warenkorbwert. E sind unbeschriftete Kundendaten; die Variante ist unüberwacht. P kann die Stabilität und Trennung der Gruppen messen, ergänzt durch ihre fachliche Nutzbarkeit und einen Datenschutzcheck.</li><li><b>Damespiel:</b> T ist die Auswahl erfolgreicher Spielzüge. E sind Partien mit Zuständen, Aktionen und Rückmeldungen; verstärkendes Lernen ist plausibel. P ist eine Gewinn-/Remisquote gegen eine unveränderte Auswahl verschiedener Gegner bei gleichen Spielregeln und ausreichender Zahl von Partien.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_tpe_reveal"><h3>Vergleiche deine Steckbriefe</h3><p>A: T = Artnamen zu Fotos vorhersagen. P = Anteil korrekter Vorhersagen auf unabhängigen Fotos. E = beschriftete Pflanzenbilder; überwacht. B: T = ähnliche Kunden gruppieren. P = beispielsweise geringe Distanz zum eigenen Gruppenprototyp, ergänzt um sinnvolle Trennung und fachliche Nutzbarkeit der Gruppen. E = unbeschriftete, geeignet ausgewählte und skalierte Kundenmerkmale; unüberwacht. Eine kleine Distanz allein beweist keine nützliche Gruppierung. C: T = einen Zug im gegebenen Zustand auswählen. P = Gewinnquote in vielen Partien gegen festgelegte Vergleichsgegner. E = gespielte Partien mit Belohnungen bei Sieg und gegebenenfalls negativen Belohnungen bei Niederlage; verstärkend. Zehn Partien erlauben nur eine sehr unsichere Leistungsschätzung.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Daten und Lernzyklus"><h1>Vom Lernauftrag zum fairen Test</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_lifecycle_order"><h3>Ordne den ersten vollständigen Lernzyklus</h3><ol><li>T, P und E festlegen</li><li>Daten vorbereiten und Trainings-, Validierungs- und Testdaten trennen</li><li>Modell auswählen und Einstellungen festlegen</li><li>Modell mit Trainingsdaten trainieren</li><li>Modell anhand der Validierungsdaten auswählen und abschließend mit Testdaten bewerten</li><li>Ergebnisse interpretieren und über den Einsatz entscheiden</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_daten_trace"><h3>Ablaufspur: 200 Bilder aufteilen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Schritt</th><th scope="col">Hund</th><th scope="col">Katze</th></tr></thead><tbody><tr><td>Alle verfügbaren Bilder</td><td>100</td><td>100</td></tr><tr><td>Testmenge (20 % je Klasse)</td><td>20</td><td>20</td></tr><tr><td>Validierung (je 10 Bilder)</td><td>10</td><td>10</td></tr><tr><td>Verbleibende Trainingsbilder</td><td>70</td><td>70</td></tr><tr><td>Training + Validierung + Test</td><td>100</td><td>100</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_testdaten_verify"><h3>Mini-Check: Datenleck</h3><p><b>Falsch.</b> Ich darf meine Einstellungen so lange anhand derselben Testbilder verbessern, bis die Testgenauigkeit hoch genug ist; der Test bleibt unabhängig.</p><p>Dann beeinflussen die Testdaten indirekt die Modellwahl. Sie übernehmen die Rolle von Validierungsdaten. Für eine unabhängige Abschlussbewertung brauchst du neue, bisher ungenutzte Testdaten.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Teachable Machine"><h1>Dein Versuch: Hund oder Katze?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_versuch_essay"><h3>Dein Versuchsprotokoll</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein reales Protokoll hängt von deinem trainierten Modell ab. Folgendes ist ausdrücklich ein <b>fiktives Rechenbeispiel</b>: Von 50 beschrifteten Bildern je Klasse werden 40 zum Training und 10 als unabhängiger Test reserviert; Duplikate und Fotos derselben Serie werden nicht auf beide Gruppen verteilt. Epochenzahl, Batch-Größe und Lernrate werden als tatsächlich gewählte Werte im eigenen Versuch festgehalten, nicht aus diesem Beispiel übernommen.</p><p>Angenommen, der Test ergibt 8/10 richtige Katzen- und 9/10 richtige Hundevorhersagen: Gesamtgenauigkeit = 17/20 = 85 %. Ein zusätzliches Autofoto wird trotzdem einer dieser beiden Klassen zugeordnet; das Modell besitzt keine automatisch gelernte Klasse für alles Andere. Als nächsten Test nehme ich neue Fotos mit vertauschten Hintergründen, um einen möglichen Shortcut zu prüfen. Diese Beispielzahlen sind keine gemessene Leistung von Teachable Machine.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_versuch_reveal"><h3>Fehler finden: Warum klappt nur mein eigenes Foto?</h3><p>Prüfe zuerst die Vielfalt, Labels und Duplikate deiner Daten. Haben alle Hunde denselben Hintergrund und alle Katzen einen anderen? Gibt es nur ähnliche Ausschnitte? Ein Modell kann solche Abkürzungen oder einzelne Trainingsbeispiele lernen, statt zuverlässig zu generalisieren. Sammle abwechslungsreiche Daten, vergleiche Änderungen mit Validierungsdaten und nutze für die Abschlussbewertung einen frischen, unabhängigen Test.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Accuracy, Precision, Recall"><h1>Wie gut ist eine Klassifikation?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_metriken_trace"><h3>Rechenspur: Werte, Brüche und Prozentanteile</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Größe</th><th scope="col">Zähler / Anzahl</th><th scope="col">Nenner / Prozent</th></tr></thead><tbody><tr><td>TP</td><td>4</td><td>richtig positiv</td></tr><tr><td>TN</td><td>12</td><td>richtig negativ</td></tr><tr><td>FP</td><td>2</td><td>Fehlalarm</td></tr><tr><td>FN</td><td>2</td><td>übersehener Fall</td></tr><tr><td>Accuracy: Zähler / Nenner</td><td>16</td><td>20</td></tr><tr><td>Precision: Zähler / Nenner</td><td>4</td><td>6</td></tr><tr><td>Recall: Zähler / Nenner</td><td>4</td><td>6</td></tr><tr><td>Accuracy in %</td><td>(4 + 12) / 20</td><td>80</td></tr><tr><td>Precision in %</td><td>4 / (4 + 2)</td><td>66,7</td></tr><tr><td>Recall in %</td><td>4 / (4 + 2)</td><td>66,7</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_accuracy_mcq"><h3>Mini-Check: 90 % und trotzdem nutzlos?</h3><h4>Ein Modell sagt für alle 100 Fälle „negativ“. Welche Aussage stimmt?</h4><p>Accuracy = 90 %, Recall = 0 %.</p><p>TN = 90 und FN = 10, TP = FP = 0. Deshalb beträgt die Accuracy 90 %, der Recall aber 0 %. Precision ist wegen des Nenners 0 nicht definiert; sie ist nicht automatisch 100 %.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Metrik-Labor und Grenzen"><h1>Eine andere Schwelle, andere Fehler</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_schwelle_essay"><h3>Transfer: Welche Fehler willst du vermeiden?</h3><span class="solution-label">Eine mögliche Antwort</span><table><thead><tr><th>Schwelle</th><th>TP/TN/FP/FN</th><th>Accuracy</th><th>Precision</th><th>Recall</th></tr></thead><tbody><tr><td>0,20</td><td>6 / 7 / 7 / 0</td><td>65 %</td><td>46,2 %</td><td>100 %</td></tr><tr><td>0,50</td><td>4 / 12 / 2 / 2</td><td>80 %</td><td>66,7 %</td><td>66,7 %</td></tr><tr><td>0,90</td><td>1 / 14 / 0 / 5</td><td>75 %</td><td>100 %</td><td>16,7 %</td></tr></tbody></table><p>Diese Werte stammen aus den 20 festen Übungsfällen der Seite. Für einen Spamfilter kann eine höhere Schwelle sinnvoll sein, wenn normale Nachrichten möglichst selten aussortiert werden sollen; übersehener Spam bleibt dann der Nachteil. Bei einer Vorprüfung gefährlicher Defekte kann eine niedrige Schwelle sinnvoll sein, wenn übersehene Fälle besonders teuer sind und Fehlalarme anschließend kontrolliert werden. Die Entscheidung hängt von den Fehlerfolgen ab; die Übungsdaten belegen keine reale Sicherheitsleistung.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_shortcut_reveal"><h3>Entwirf einen Gegencheck</h3><p>Prüfe neue Hunde auf Sofas und neue Katzen auf Wiesen sowie beide Klassen vor vergleichbaren neutralen Hintergründen. Wenn die Entscheidungen mit dem Hintergrund wechseln, spricht das für eine gelernte Abkürzung. Ergänze vielfältige, ausgewogene Trainingsdaten und bewerte das neue Modell anschließend mit einem frischen Test. Ein einzelner Gegencheck beweist noch nicht alle Ursachen einer Entscheidung.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_grenzen_verify"><h3>Mini-Check: Was bedeuten 99 %?</h3><p><b>Falsch.</b> Zeigt das Hund-Katze-Modell bei einem Auto „99 % Hund“, ist das Auto mit Sicherheit ein Hund.</p><p>Das Modell kann zwischen seinen trainierten Klassen wählen, obwohl keine davon passt. Hohe Modellwerte sind außerhalb des vorgesehenen Anwendungsbereichs besonders wenig aussagekräftig und garantieren auch innerhalb des Bereichs keine Richtigkeit.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Iris: hinter die Kulissen"><h1>Vom Foto zu messbaren Merkmalen: Iris-Blüten</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_iris_essay"><h3>Formuliere den Iris-Lernauftrag</h3><span class="solution-label">Eine mögliche Antwort</span><p>T: Aus vier Längen-/Breitenwerten in cm die Iris-Art bestimmen. E: Messbeispiele mit Art-Labels. P: Klassifikationsleistung auf unabhängig zurückgehaltenen Beispielen, getrennt je Art. Das ist überwachtes Lernen. Im dargestellten Ausschnitt trennen Kronblattlänge und -breite besonders Setosa klarer von den anderen Arten; die Kelchblattmerkmale überlappen stärker. 18 ausgewählte Punkte repräsentieren den vollständigen Datensatz nicht zuverlässig. Ich teile die 150 Beispiele nach Arten geschichtet in Training und Test und wähle Einstellungen nur mit Trainings-/Validierungsdaten. Den endgültigen Test verwende ich erst nach Festlegung des Modells.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_iris_reveal"><h3>Sicherung: Iris-Steckbrief</h3><p>T: Aus vier Messwerten die Art einer neuen Iris-Blüte vorhersagen. P: Anteil korrekter Klassifikationen auf unabhängigen Testbeispielen, zusätzlich Fehler pro Art. E: Mit Artnamen beschriftete Trainingsbeispiele des Iris-Datensatzes. Zuerst prüfst du Werte, Labels und Aufteilung. Bei 20 % Testanteil könntest du je Art 10 Beispiele zurückhalten; die übrigen 40 je Art stehen für Training und Validierung bereit. Als nächste Modelle kommen etwa k-nächste Nachbarn oder ein Entscheidungsbaum infrage. Das Diagramm zeigt nur zwei der vier Merkmale und einen kleinen Ausschnitt; es ersetzt keinen Modelltest.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Zusammenfassung und Quellen"><h1>Kurz &amp; bündig: Lernen braucht überprüfbare Erfahrung</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_abschluss_mcq"><h3>Abschlusscheck</h3><h4>Welche Beschreibung belegt Lernen im Sinne von T–P–E am besten?</h4><p>Bei derselben klaren Aufgabe verbessert sich das festgelegte Leistungsmaß auf passenden unabhängigen Daten durch zusätzliche Trainingserfahrung.</p><p>Eine Verbesserung benötigt eine definierte Aufgabe, ein messbares Kriterium und passende Erfahrung. Auftreten oder hohe Modellwerte genügen nicht.</p><h4>Welche Entscheidungen passen zu einem fairen ML-Versuch?</h4><p>Ich untersuche Fehlalarme und übersehene Fälle getrennt.; Ich lege Aufgabe und Leistungsmaß vor dem abschließenden Test fest.; Ich prüfe neue Hintergründe und ungewohnte Eingaben.</p><p>Getrennte Fehlerarten, ein vorher festgelegter Auftrag und gezielte Gegenchecks machen die Bewertung aussagekräftiger. Trainingsgenauigkeit allein kann Auswendiglernen verdecken.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki2_transfer_essay"><h3>Transfer: Ein schulisches ML-Projekt planen</h3><span class="solution-label">Eine mögliche Antwort</span><p>Mein Projekt erkennt Papier und Kunststoff aus Fotos für ein schulisches Sortiermodell. T ist die Klassifikation eines einzelnen Gegenstands; E sind beschriftete, vielfältige Trainingsfotos. P sind Precision und Recall je Material auf einem unabhängigen Test. Ich trenne Trainings-, Validierungs- und Testdaten vor dem Training und halte Aufnahmen derselben Gegenstände möglichst in derselben Gruppe. Ein möglicher Shortcut wäre der Hintergrund statt des Materials. Deshalb teste ich beide Materialien vor denselben und vor neuen Hintergründen. Falsch zugeordnete Stoffe sind die wichtigste Fehlerart und werden je Klasse ausgewertet. Das Modell unterstützt eine Demonstration, entscheidet aber nicht ohne Nachkontrolle über unbekannte oder gefährliche Abfälle.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"kuenstliche-intelligenz2-pergament87.html__"});</script>
+</body>
+</html>

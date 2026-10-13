@@ -1,0 +1,59 @@
+.wb-book .wb-brand { overflow-wrap: anywhere; }
+
+@media (max-width: 980px) {
+  .wb-book:not(.wb-present-mode) { --wb-topH: 112px; }
+  .wb-book:not(.wb-present-mode) .wb-topbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+  }
+  .wb-book:not(.wb-present-mode) .wb-top-left {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    gap: 10px;
+  }
+  .wb-book:not(.wb-present-mode) .wb-brand {
+    font-size: 17px;
+    line-height: 1.25;
+  }
+  .wb-book:not(.wb-present-mode) .wb-hamburger {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+  .wb-book:not(.wb-present-mode) .wb-top-right {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  .wb-book:not(.wb-present-mode) .wb-theme-wrap {
+    display: flex !important;
+    min-width: 0;
+    padding: 4px;
+    gap: 0;
+  }
+  .wb-book:not(.wb-present-mode) .wb-theme-label { display: none; }
+  .wb-book:not(.wb-present-mode) .wb-theme-select {
+    width: 90px;
+    max-width: 100%;
+    padding: 6px 4px;
+  }
+  .wb-book:not(.wb-present-mode) .wb-page-ind {
+    min-width: 36px;
+    font-size: 14px;
+  }
+  .wb-book:not(.wb-present-mode) .wb-icon-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+}

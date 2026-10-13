@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gruppe B – Kamera und Raspberry Pi - Musterlösung</title>
+<meta name="musterloesung-source" content="gruppe-b.html">
+<meta name="musterloesung-source-sha256" content="8b08cf9a922171b573303dd00767e44e130e3ae1b544f4e15a46193fdf6ad7f8">
+<link rel="stylesheet" href="../../assets/allgemeines_format.css">
+<link rel="stylesheet" href="projekt.css">
+<style>
+@import url('../../assets/musterloesungen.css');
+.wb-book .wb-side-footer{display:none}
+.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
+.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
+.sample-answer h2{font-size:20px;line-height:1.4}
+.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
+.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
+th{background:var(--wb-head-bg);color:var(--wb-text)}
+pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
+.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"Gruppe B – Kamera und Raspberry Pi · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Gruppe B","themeDefault":"default","enableResultsPage":false}</script>
+<section data-wb-page="1" data-wb-page-title="Auftrag"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>Gruppe B: Kamera und Raspberry Pi</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupb_mcq"><h2>Check: NoIR-Kamera</h2><h3>Was gilt für eine NoIR-Kamera im vollständig dunklen Stall?</h3><ul><li>Sie kann nahes Infrarot erfassen, braucht aber eine Lichtquelle.</li></ul><p>NoIR bedeutet, dass ein IR-Sperrfilter fehlt. Ohne sichtbares oder infrarotes Licht entstehen trotzdem keine Bildinformationen.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupb-musterprojekt"><h2>Musterprojekt: Kamera und überwachter Dienst</h2><p>Aufbau: Pi 4 B mit OS Lite 64-bit, 2 GB RAM, 64-GB-microSD und geeigneter 5,1-V-/3-A-Versorgung; Camera Module 3 Wide NoIR am CSI-Anschluss, nur stromlos gesteckt. Headless-Test erzeugt ein Foto und ein zehnsekündiges Video. Als konkretes lokales Musterprojekt nimmt ein systemd-Dienst fortlaufend ein Bild auf; die spätere Übertragung an den gewählten freigegebenen Streamingdienst wird davon getrennt geprüft.</p><pre><code>rpicam-hello --list-cameras
+rpicam-still --nopreview -o huhn.jpg
+rpicam-vid --nopreview -t 10000 --codec h264 --width 1280 --height 720 --framerate 25 --bitrate 2000000 -o huhn.h264</code></pre><p>Datei <code>/home/bbzstegen/huehnerstall/kamera.py</code>:</p><pre><code>from pathlib import Path
+import subprocess
+import time
+
+ziel = Path("/home/bbzstegen/huehnerstall")
+ziel.mkdir(parents=True, exist_ok=True)
+while True:
+    temporaer = ziel / "aktuell.tmp.jpg"
+    subprocess.run([
+        "rpicam-still", "--nopreview", "--timeout", "1000",
+        "--width", "1280", "--height", "720", "-o", str(temporaer)
+    ], check=True, timeout=20)
+    temporaer.replace(ziel / "aktuell.jpg")
+    print("Lokales Kamerabild erneuert", flush=True)
+    time.sleep(30)
+</code></pre><p>Dienstdatei <code>/etc/systemd/system/huehnerkamera.service</code>:</p><pre><code>[Unit]
+Description=Lokaler Hühnerstall-Kameratest
+After=local-fs.target
+
+[Service]
+Type=simple
+User=bbzstegen
+SupplementaryGroups=video
+WorkingDirectory=/home/bbzstegen/huehnerstall
+ExecStart=/usr/bin/python3 /home/bbzstegen/huehnerstall/kamera.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now huehnerkamera.service
+systemctl status huehnerkamera.service
+journalctl -u huehnerkamera.service -b --no-pager</code></pre><p>Die Datei wird erst nach erfolgreicher Aufnahme atomar ersetzt; ein Prozessfehler führt über <code>check=True</code> zum Neustart durch systemd. Die zuletzt vorhandene Datei kann danach alt sein und darf ohne Altersprüfung nicht als Livebild gelten. Der lokale Fotodienst ist kein Livestream und beansprucht die Kamera: Vor dem Videotest wird er mit <code>sudo systemctl stop huehnerkamera.service</code> beendet.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupb_order"><h2>Diagnose: Kamera liefert kein Bild</h2><ol><li>Kamera wird vom Pi erkannt?</li><li>Lokale Vorschau funktioniert?</li><li>Lokale Aufnahme funktioniert?</li><li>Netzwerk und Streamingweg prüfen</li><li>Einbettung auf der Homepage prüfen</li></ol></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupb-uebergabe"><h2>Übergabe und begründete Kameraeinstellungen</h2><span class="answer-label">Eine mögliche Antwort</span><p>Die Messwertanzeige benötigt Temperatur in °C, relative Feuchte in %RH, LDR-Rohwert oder erklärte Kategorie sowie Messzeit und Fehlerstatus. Als Ausgangsprofil verwenden wir 1280×720 bei 25 fps und 2 Mbit/s; das ergibt rechnerisch 15 MB pro Minute ohne Zusatzaufwand. Der Pi prüft Video zunächst lokal und sendet später ausgehend zum freigegebenen Verteilungsdienst. Dessen geschützter Player wird in die Homepage eingebettet. Bei Kameraausfall erscheint „Kamera offline“; gültige Sensordaten bleiben sichtbar. Als Fallback zeigen wir höchstens das letzte zulässige Bild mit Aufnahmezeit oder einen ausdrücklichen Ausfallhinweis. Das Bild erfasst nur den Hühnerbereich, Ton bleibt aus, Zugriff und Aufbewahrung sind schulisch festgelegt.</p><p>Muster für die Fehlersuchnotiz: Kamera ist mit <code>--list-cameras</code> erkannt, Foto wurde geöffnet, Video wurde abgespielt; dies sind am Gerät zu belegende Meilensteine. Funktioniert der externe Player, aber die Einbettung nicht, wird zunächst dessen Einbettungsfreigabe geprüft. Bei vollständiger Dunkelheit sind ohne sichtbare oder nahe IR-Beleuchtung keine Motivdetails zu erwarten.</p></article></section>
+</div>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="debroglie.html">
+<meta name="musterloesung-source-sha256" content="458a13170b7c6c8f07bc673c2d0ba9d85c4696015ecc910f5645aaf377cb9655">
+<title>Quantenphysik: De-Broglie-Wellen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .formula-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .formula-card {
+      border: 1px solid rgba(24, 63, 92, 0.14);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, #fbfdff 0%, #eef6ff 100%);
+      box-shadow: 0 12px 24px rgba(26, 68, 96, 0.08);
+    }
+
+    .formula-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .equation-line {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+
+    .timeline-step {
+      padding: 14px 16px;
+      border-left: 4px solid #2f6da1;
+      background: #f6fbff;
+      border-radius: 0 14px 14px 0;
+      margin-bottom: 12px;
+    }
+    .timeline-step { color: #172033; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"De-Broglie-Wellen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="solution-kicker">Musterlösung</div>
+<h1>De-Broglie-Wellen: Haben auch Elektronen einen Wellencharakter?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_reveal_start"><h3>Einstieg</h3><p>Wenn Licht sowohl Wellen- als auch Teilcheneigenschaften zeigt, dann sollte man bei Teilchen wie Elektronen umgekehrt ebenfalls nicht vorschnell nur das Teilchenbild zulassen.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Idee">
+<h1>Die Grundidee von de Broglie</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_verify_idee"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Nach de Broglie gilt eine Wellenbeschreibung nur für Photonen, nicht aber für Elektronen.</p><p>Gerade das Gegenteil ist die neue Idee: Auch Elektronen und andere Teilchen sollen Welleneigenschaften besitzen.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Rechnen">
+<h1>Wie du mit <span class="solution-math">λ<sub>B</sub> = <span class="math-frac"><span>h</span><span>p</span></span></span> arbeitest</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_order_rechnen"><h3>Rechenschritte sortieren</h3><ol><li>Geschwindigkeit oder Impuls des Elektrons bestimmen.</li><li>Mit <span class="solution-math">p = m · v</span> den Impuls berechnen.</li><li>Die Gleichung <span class="solution-math">λ<sub>B</sub> = h/p</span> anwenden.</li><li>Die Größe der Wellenlänge fachlich deuten.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_cloze_rechnen"><h3>Sicherung: Begriffe einsetzen</h3><p>Die De-Broglie-Wellenlänge hängt vom <b>Impuls</b> ab. Je größer dieser ist, desto <b>kleiner</b> wird die Wellenlänge, denn es gilt <span class="solution-math">λ<sub>B</sub> = </span> <b>h/p</b> . Kleine Impulse führen also zu <b>größer</b> en Materiewellen.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Photonen">
+<h1>Brücke zu Photonen: Masse, Energie und Impuls</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie-analogie"><h3>Analogie erkennen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td><span class="solution-math">E<sub>ph</sub> = hf</span></td><td>Photonenenergie hängt von der Frequenz ab</td></tr><tr><td><span class="solution-math">p<sub>ph</sub> = <span class="math-frac"><span>h</span><span>λ</span></span></span></td><td>Photonen besitzen Impuls</td></tr><tr><td><span class="solution-math">λ<sub>B</sub> = <span class="math-frac"><span>h</span><span>p</span></span></span></td><td>Teilchen mit Impuls erhalten eine Materiewellenlänge</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_cat_vergleich"><h3>Sortiere die Aussagen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>passt direkt zu Photonen</td><td>hat keine Ruhemasse</td></tr><tr><td>passt direkt zu Elektronen/Materiewellen</td><td>zeigt Beugung trotz Teilchencharakter</td></tr><tr><td>passt direkt zu Photonen</td><td>trägt Impuls <span class="solution-math">h/λ</span></td></tr><tr><td>passt direkt zu Elektronen/Materiewellen</td><td>besitzt De-Broglie-Wellenlänge <span class="solution-math">λ<sub>B</sub></span></td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-photonen-ruhemassse"><h3>Photonenmasse und Impuls richtig deuten</h3><p>Photonen haben die Ruhemasse m₀ = 0. Sie tragen trotzdem Energie E = hf und Impuls p = E/c = h/λ. Der Ausdruck E/c² ist ein Energieäquivalent und keine Ruhemasse des Photons. Für langsame Elektronen gilt näherungsweise p = mv und damit λ = h/(mv); bei relativistischen Geschwindigkeiten ist p = γmv einzusetzen.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Nachweis">
+<h1>Warum de Broglies Idee experimentell wichtig wurde</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_mcq_nachweis"><h3>Mini-Check</h3><h4>1. Welche Aussagen passen zur De-Broglie-Idee?</h4><ul><li><b>a</b>: Elektronen können Interferenz zeigen.</li><li><b>c</b>: Die De-Broglie-Gleichung lautet <span class="solution-math">λ<sub>B</sub> = h/p</span>.</li><li><b>d</b>: Materiewellen wurden interessant, weil sie eine Symmetrie zum Licht herstellen.</li></ul><p>Richtig sind a, c und d. Falsch sind b und e: Mit größerem Impuls wird die Wellenlänge kleiner, und Materiewellen sind gerade für bewegte Teilchen relevant.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Transfer">
+<h1>Transfer: Wann merkt man den Wellencharakter?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_essay_transfer"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Die De-Broglie-Wellenlänge ist λ = h/p. Ein Fußball besitzt wegen seiner großen Masse bei typischen Geschwindigkeiten einen viel größeren Impuls als ein Elektron. Als Beispiel erhältst du für m = 0,43 kg und v = 20 m/s den Impuls p = 8,6 kg·m/s und λ ≈ 7,7 · 10<sup>−35</sup> m. Ein Elektron mit v = 10<sup>6</sup> m/s hat dagegen p ≈ 9,11 · 10<sup>−25</sup> kg·m/s und λ ≈ 0,73 nm. Diese Größenordnung passt zu atomaren Abständen und erlaubt messbare Beugung und Interferenz. Für den Fußball gibt es keine experimentell passende Spaltstruktur; zudem zerstört seine Wechselwirkung mit der Umgebung die nötige Kohärenz. Deshalb sind Materiewellen für Elektronen nachweisbar, im Alltag bei Fußbällen aber unsichtbar.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="debroglie_reveal_transfer"><h3>Denkhilfe</h3><p>Ein Fußball hat wegen seiner großen Masse schon bei kleiner Geschwindigkeit einen riesigen Impuls. Dadurch wird <span class="solution-math">λ<sub>B</sub> = h/p</span> extrem klein und praktisch unmessbar. Bei Elektronen ist der Impuls viel kleiner, deshalb kann ihre Wellenlänge in einen experimentell zugänglichen Bereich fallen.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Zusammenfassung">
+<h1>Zusammenfassung und Quellen</h1>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="photoeffekt.html">
+<meta name="musterloesung-source-sha256" content="52e88ee0fb09b15d50e1309f89cd37044747f466fe7607f6aaefa9c6452a2011">
+<title>Quantenphysik: Der Photoeffekt – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/photoeffekt-simulation.css">
+<style>
+    .wave-figure {
+      margin: 0;
+    }
+
+    section[data-wb-page="2"] .grid2 {
+      align-items: center !important;
+    }
+
+    section[data-wb-page="2"] .grid2 > .wave-figure {
+      align-self: center;
+    }
+
+    .wave-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .wave-figure.photo3-center {
+      justify-self: center;
+      text-align: center;
+    }
+
+    .wave-figure.photo3-center img {
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    section[data-wb-page="1"] .wave-figure.photo3-center img {
+      max-width: 78%;
+    }
+
+    .wave-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #4a5b6a;
+    }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wave-figure figcaption { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Der Photoeffekt · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Photoeffekt: Warum Licht mehr sein muss als nur eine Welle</h1>
+<h2>So benutzt du diese Seite</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_start_reveal"><h3>Was ist die eigentliche Überraschung?</h3><p>Er zeigt ein Verhalten des Lichts, das mit der klassischen Wellentheorie nicht erklärt werden kann: Nicht die Helligkeit entscheidet über die Energie einzelner Elektronen, sondern die Frequenz des Lichts. Genau dieser Widerspruch führte zur Lichtquantenhypothese und damit in die Quantenphysik.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Äußerer Photoeffekt">
+<h1>Äußerer Photoeffekt</h1>
+<h2>Beobachtung in kleinen Schritten</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_verify_hallwachs"><h3>Stopp &amp; check: Beobachtungen richtig deuten</h3><p><b>Wahr:</b> Wenn die negativ geladene Zinkplatte entladen wird, spricht das dafür, dass Elektronen das Metall verlassen.</p><p>Genau. Die negative Ladung nimmt ab, weil negative Ladungsträger aus der Platte herausgelöst werden.</p><p><b>Wahr:</b> Dass die Glasplatte den Effekt verhindert, obwohl sichtbares Licht weiter durchkommt, zeigt die Bedeutung der Frequenz.</p><p>Richtig. Die Glasplatte blockiert den UV-Anteil. Sichtbares Licht allein reicht bei Zink nicht aus.</p><p><b>Falsch:</b> Eine hellere Glühbirne müsste bei genügend großer Intensität jede Zinkplatte entladen.</p><p>Falsch. Genau das passiert nicht. Unterhalb der Grenzfrequenz hilft auch höhere Intensität nicht.</p><p><b>Wahr:</b> Bei positiver Ladung der Platte tritt keine Entladung auf, weil herausgelöste Elektronen dann nicht einfach das Metall verlassen können.</p><p>Richtig. Die positive Ladung wirkt der Emission entgegen und bestätigt so die Deutung mit Elektronen.</p></article>
+<h2>Wie hängen Energie und Frequenz zusammen?</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_cloze_grundbegriffe"><h3>Sicherung: Setze die Fachbegriffe passend ein</h3><p>In der Gegenfeldmethode wird die <b>Gegenspannung</b> so weit erhöht, bis der <b>Photostrom</b> verschwindet. Dann gilt für die schnellsten Elektronen <span class="solution-math">E<sub>kin</sub> = e · U<sub>g</sub></span>. Die maximale kinetische Energie steigt mit der <b>Frequenz</b> des eingestrahlten Lichts. Unterhalb einer stoffabhängigen <b>Grenzfrequenz</b> tritt der Effekt gar nicht auf. Die <b>Austrittsenergie</b> muss zuerst überwunden werden. Eine größere <b>Intensität</b> erhöht dagegen vor allem die Zahl der ausgelösten Elektronen.</p></article>
+<h2>Drei harte Widersprüche</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_mcq_wellentheorie"><h3>Mini-Check: Wo scheitert das klassische Modell?</h3><h4>1. Welche Beobachtungen sprechen direkt gegen eine rein klassische Wellentheorie des Lichts?</h4><ul><li><b>a</b>: Höhere Intensität führt zu mehr Elektronen, aber nicht zu größerer Maximalenergie einzelner Elektronen.</li><li><b>b</b>: Es gibt eine Grenzfrequenz, unterhalb der kein Photoeffekt einsetzt.</li><li><b>c</b>: Elektronen erscheinen oberhalb der Grenzfrequenz sofort, ohne messbare Aufladezeit.</li><li><b>e</b>: Die maximale Elektronenenergie wächst mit der Frequenz des Lichts.</li></ul><p>Genau diese vier Punkte kollidieren mit der Vorstellung, dass Lichtenergie kontinuierlich über die Wellenamplitude verteilt und nach Belichtungsdauer aufgesammelt wird.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-hallwachs-varianten"><h3>Hallwachs: vier Versuchsvarianten</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Variante</th><th scope="col">Beobachtung</th><th scope="col">Deutung</th></tr></thead><tbody><tr><td>Negative Zinkplatte, UV-haltiges Licht</td><td>Elektroskopausschlag geht zurück</td><td>Elektronen werden herausgelöst; negative Ladung nimmt ab</td></tr><tr><td>Positive Zinkplatte, gleiche Beleuchtung</td><td>Keine entsprechende Entladung</td><td>Ausgelöste Elektronen werden zurückgezogen; die Platte erhält durch den Photoeffekt keine zusätzlichen Elektronen</td></tr><tr><td>Glas zwischen UV-Lampe und Platte</td><td>Entladung bleibt aus</td><td>Der wirksame kurzwellige UV-Anteil wird vom Glas absorbiert</td></tr><tr><td>Sichtbares Glühlampenlicht</td><td>Keine Entladung</td><td>Photonenenergie reicht für die Austrittsenergie des Zinks nicht aus</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Einstein">
+<h1>Einstein und die Lichtquantenhypothese</h1>
+<h2>Begriffe sinnvoll zuordnen</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_0"><h3>Begriffspaare</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Photon</td><td>Ein einzelnes Lichtquant mit der Energie
+                <span class="solution-math">E<sub>ph</sub> = hf</span></td></tr><tr><td>Planck-Konstante <span class="solution-math">h</span></td><td>Naturkonstante, die Frequenz in Energie pro
+                Photon umrechnet</td></tr><tr><td>Austrittsenergie <span class="solution-math">E<sub>A</sub></span></td><td>Minimale Energie, die nötig ist, um ein
+                Elektron aus dem Metall zu lösen</td></tr><tr><td>Grenzfrequenz <span class="solution-math">f<sub>gr</sub></span></td><td>Frequenz, bei der <span class="solution-math">hf</span> gerade ausreicht,
+                damit <span class="solution-math">E<sub>kin</sub> = 0</span> wird</td></tr></tbody></table></div></article>
+<h2>Wie man <span class="solution-math">h</span> aus den Daten erhält</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_order_h"><h3>Anwendung: Bringe die Auswertung zu <span class="solution-math">h</span> in die richtige Reihenfolge</h3><ol><li>Lies für zwei Lichtfarben Frequenz <span class="solution-math">f</span> und maximale kinetische Energie <span class="solution-math">E<sub>kin</sub></span> aus den Daten ab.</li><li>Berechne die Differenzen <span class="solution-math">Δ E<sub>kin</sub></span> und <span class="solution-math">Δ f</span>.</li><li>Setze die Werte in die Steigungsformel <span class="solution-math">h = <span class="math-frac"><span>Δ E<sub>kin</sub></span><span>Δ f</span></span></span> ein.</li><li>Wandle das Ergebnis von <span class="solution-math">eV·s</span> in <span class="solution-math">J·s</span> um.</li><li>Vergleiche dein Ergebnis mit dem Literaturwert der Planck-Konstante.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-planck-messwerte"><h3>Planck-Konstante aus den Materialmesswerten</h3><p>Aus dem Bild: gelb f = 5,19 · 10<sup>14</sup> Hz, E<sub>kin</sub> = 0,13 eV; violett f = 7,41 · 10<sup>14</sup> Hz, E<sub>kin</sub> = 1,02 eV. Die Steigung beträgt h ≈ (1,02 − 0,13) eV / [(7,41 − 5,19) · 10<sup>14</sup> Hz] = 4,01 · 10<sup>−15</sup> eV·s = 6,42 · 10<sup>−34</sup> J·s. Die relative Abweichung vom SI-Wert 6,62607015 · 10<sup>−34</sup> J·s beträgt etwa −3,1 %. Aus E<sub>A</sub> = hf − E<sub>kin</sub> folgt mit diesen gerundeten Bilddaten E<sub>A</sub> ≈ 1,95 eV und f<sub>gr</sub> ≈ 4,87 · 10<sup>14</sup> Hz. Der y-Achsenabschnitt ist −E<sub>A</sub>, nicht +E<sub>A</sub>. Es handelt sich um eine Auswertung der gegebenen Daten, nicht um neue Messungen.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Simulation">
+<h1>Simulation: Äußerer Photoeffekt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-wellenlaenge"><h3>Wellenlänge und Frequenz variieren</h3><p>Bei Natrium gilt E<sub>A</sub> = 2,28 eV. Mit E<sub>ph</sub> = hc/λ ≈ 1240 eV·nm/λ erhältst du bei 420 nm eine Photonenenergie von 2,95 eV und E<sub>kin,max</sub> ≈ 0,67 eV. Bei 350 nm sind es 3,54 eV und 1,26 eV. Kürzere Wellenlänge bedeutet höhere Frequenz und größere maximale Elektronenenergie. Bei 600 nm ist E<sub>ph</sub> ≈ 2,07 eV &lt; E<sub>A</sub>; es werden keine Elektronen ausgelöst. Die Grenzwellenlänge liegt bei etwa 544 nm, die Grenzfrequenz bei 5,51 · 10<sup>14</sup> Hz.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-material"><h3>Material bei gleicher Wellenlänge vergleichen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Material im Simulationsmodell</th><th scope="col">Austrittsenergie</th><th scope="col">Grenzwellenlänge</th><th scope="col">Ergebnis bei 420 nm</th></tr></thead><tbody><tr><td>Natrium</td><td>2,28 eV</td><td>544 nm</td><td>Emission; E<sub>kin,max</sub> ≈ 0,67 eV</td></tr><tr><td>Zink</td><td>4,27 eV</td><td>290 nm</td><td>Keine Emission</td></tr><tr><td>Kupfer</td><td>4,70 eV</td><td>264 nm</td><td>Keine Emission</td></tr><tr><td>Platin</td><td>5,36 eV</td><td>231 nm</td><td>Keine Emission</td></tr><tr><td>Calcium</td><td>2,90 eV</td><td>428 nm</td><td>Emission; E<sub>kin,max</sub> ≈ 0,05 eV</td></tr></tbody></table></div><p>Die Austrittsenergien stammen aus dem verwendeten Simulationsmodell. Bei gleicher Frequenz haben alle Photonen dieselbe Energie; ein Material mit größerer Austrittsenergie liefert kleinere maximale Elektronenenergien oder gar keine Emission. Platin lässt sich im angebotenen Bereich ab 280 nm nicht zur Emission bringen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-intensitaet"><h3>Intensität bei unveränderter Frequenz vergleichen</h3><p>Bei Natrium und 420 nm erhöht eine größere Intensität die Zahl einfallender Photonen pro Zeit. Deshalb steigen im vereinfachten Modell Emissionsrate und Photostrom; E<sub>kin,max</sub> ≈ 0,67 eV und die Stoppspannung ≈ 0,67 V bleiben gleich. Bei 600 nm bleibt die Emission auch bei maximaler Intensität aus, weil jedes einzelne Photon zu wenig Energie besitzt. Bei Intensität null gibt es keine eingestrahlten Photonen und damit keinen Photostrom.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-simulation-gegenfeld"><h3>Gegenfeldspannung variieren</h3><p>Für Natrium bei 420 nm gilt eU<sub>stop</sub> = E<sub>kin,max</sub>, also U<sub>stop</sub> ≈ 0,67 V. Bei 0 V können Elektronen gesammelt werden; mit zunehmender Gegenspannung erreichen immer weniger die Anode. Ab etwa 0,67 V verschwindet der Photostrom. Die Photoemission an der Kathode kann dabei weiter stattfinden: Das Gegenfeld stoppt den Transport, nicht das Herauslösen. Nach Verkürzen auf 350 nm steigt die nötige Stoppspannung auf etwa 1,26 V.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Transfer">
+<h1>Transfer: Was ändert sich bei Frequenz und Intensität wirklich?</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_categorize_transfer"><h3>Sortiere die Folgen richtig ein</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>Änderung der Frequenz</td><td>Kann die maximale kinetische Energie der ausgelösten Elektronen erhöhen</td></tr><tr><td>Änderung der Frequenz</td><td>Kann den Photoeffekt überhaupt erst ermöglichen, wenn die Grenzfrequenz überschritten wird</td></tr><tr><td>Änderung der Intensität</td><td>Erhöht vor allem die Zahl der Photonen pro Zeit</td></tr><tr><td>Änderung der Intensität</td><td>Kann bei gleicher Frequenz zu größerem Photostrom führen</td></tr><tr><td>Änderung der Frequenz</td><td>Ändert die Energie eines einzelnen Photons</td></tr><tr><td>Änderung der Intensität</td><td>Macht Photonen nicht automatisch energiereicher</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_essay_transfer"><h3>Reflexion: Begründe eine Alltagssituation</h3><span class="solution-label">Eine mögliche Antwort</span><p>UV-Licht hat eine höhere Frequenz als sichtbares Licht, deshalb trägt ein einzelnes UV-Photon nach E = hf mehr Energie. Bei 300 nm sind es beispielsweise etwa 4,13 eV, bei 600 nm etwa 2,07 eV. UV-Photonen können passende elektronische Anregungen in Hautmolekülen auslösen und photochemische Schäden verursachen. Eine höhere Intensität sichtbaren Lichts liefert mehr Photonen, aber keine größere Energie pro Photon. Die Austrittsenergie bezeichnet dagegen die Energie, die ein Elektron zum Verlassen eines bestimmten Materials benötigt; Sonnenbrand ist kein einfacher Photoeffekt an einer Metallplatte. Die gemeinsame Idee ist die frequenzabhängige Energie einzelner Photonen. Sehr intensives sichtbares Licht kann trotzdem durch Erwärmung oder andere Prozesse schädigen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_verify_transfer_neu"><h3>Wahr oder falsch?</h3><p><b>Falsch:</b> Wenn die Frequenz unter der Grenzfrequenz liegt, kann man den Photoeffekt allein durch sehr hohe Intensität erzwingen.</p><p>Falsch. Unterhalb der Grenzfrequenz hat jedes Photon zu wenig Energie, unabhängig davon, wie viele Photonen pro Sekunde ankommen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_mcq_transfer_neu"><h3>Transfer-Check</h3><h4>1. Welche Aussagen sind mit dem Photonmodell vereinbar?</h4><ul><li><b>a</b>: Erhöhte Intensität erhöht bei gleicher Frequenz vor allem den Photostrom.</li><li><b>b</b>: Erhöhte Frequenz kann die maximale kinetische Energie der Elektronen erhöhen.</li><li><b>d</b>: Unterhalb der Grenzfrequenz bleibt der Photoeffekt aus.</li></ul><p>Richtig sind a, b und d. Die Austrittsenergie ist materialabhängig, und die Photonenenergie hängt von der Frequenz ab, nicht von der Intensität.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_cloze_transfer_neu"><h3>Lückentext: Modell anwenden</h3><p>Ob der Photoeffekt einsetzt, entscheidet zuerst die <b>Frequenz</b> im Vergleich zur <b>Grenzfrequenz</b> . Bei gleicher Frequenz erhöht größere <b>Intensität</b> hauptsächlich den <b>Photostrom</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_order_transfer_neu"><h3>Ablauf ordnen</h3><ol><li>Du wählst ein Metall mit gegebener Austrittsenergie.</li><li>Du stellst die Frequenz des einfallenden Lichts ein.</li><li>Du prüfst, ob <span class="solution-math">hf</span> die Austrittsenergie übertrifft.</li><li>Nur wenn ja, werden Elektronen ausgelöst.</li><li>Dann verändert höhere Intensität vor allem die Anzahl ausgelöster Elektronen.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_transfer_p2_v1"><h3>Paare finden</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Frequenz <span class="solution-math">f</span></td><td>bestimmt die Energie eines einzelnen Photons <span class="solution-math">E = hf</span></td></tr><tr><td>Intensität</td><td>bestimmt bei gleicher Frequenz vor allem die Anzahl der ausgelösten Elektronen</td></tr><tr><td>Austrittsenergie <span class="solution-math">E<sub>A</sub></span></td><td>materialabhängige Mindestenergie zum Lösen eines Elektrons</td></tr><tr><td>Gegenspannung <span class="solution-math">U<sub>g</sub></span></td><td>liefert über <span class="solution-math">E<sub>kin,max</sub> = eU<sub>g</sub></span> die maximale kinetische Energie</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Innerer Photoeffekt">
+<h1>Innerer Photoeffekt</h1>
+<h2>Wie der innere Photoeffekt in der Solarzelle wirkt</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_verify_innerer"><h3>Check: Innerer Photoeffekt verstehen</h3><p><b>Wahr:</b> Bei der n-Dotierung werden Fremdatome eingebaut, die ein Valenzelektron mehr als Silicium besitzen.</p><p>Richtig. Diese zusätzlichen Elektronen können leicht zu Leitungselektronen werden.</p><p><b>Wahr:</b> Im p-dotierten Halbleiter sind Löcher Plätze, an die benachbarte Elektronen springen können.</p><p>Richtig. Dadurch wird auch ohne frei bewegte Elektronen Ladungstransport möglich.</p><p><b>Falsch:</b> Beim inneren Photoeffekt verlassen die Elektronen den Halbleiter vollständig wie beim Hallwachs-Effekt.</p><p>Falsch. Die Elektronen bleiben im Halbleiter, werden aber zu beweglichen Leitungselektronen.</p><p><b>Wahr:</b> Die Raumladungen in der Grenzschicht helfen dabei, lichtgetrennte Elektronen und Löcher auf verschiedene Seiten der Solarzelle zu lenken.</p><p>Richtig. Das innere Feld des p-n-Übergangs trennt die Ladungsträger und macht eine Spannung nutzbar.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_mcq_innerer_neu"><h3>Check: Innerer Photoeffekt</h3><h4>1. Welche Aussagen sind fachlich korrekt?</h4><ul><li><b>b</b>: Dotierung erhöht die Leitfähigkeit des Halbleiters.</li><li><b>c</b>: Die Grenzschicht im p-n-Übergang trägt Raumladungen.</li><li><b>d</b>: Das innere Feld trennt Elektronen und Löcher räumlich.</li><li><b>e</b>: Auch beim inneren Photoeffekt ist die Photonenenergie frequenzabhängig.</li></ul><p>Richtig sind b, c, d und e. Beim inneren Photoeffekt bleiben die Elektronen im Halbleiter und werden dort zu Leitungselektronen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_order_innerer_neu"><h3>Ablauf in der Solarzelle</h3><ol><li>Licht trifft auf den p-n-Übergang.</li><li>Gebundene Elektronen erhalten Photonenenergie und werden beweglich.</li><li>Es entstehen Elektronen-Loch-Paare.</li><li>Das innere Feld trennt die Ladungsträger.</li><li>Zwischen den Kontakten der Solarzelle wird eine Spannung messbar.</li></ol></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Zusammenfassung">
+<h1>Jetzt hast du das gelernt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_mcq_abschluss"><h3>Abschluss-Check</h3><h4>1. Welche Aussagen zum Photoeffekt sind fachlich korrekt?</h4><ul><li><b>a</b>: Unterhalb der Grenzfrequenz kann auch sehr intensives Licht keinen Photoeffekt auslösen.</li><li><b>c</b>: Bei gleicher Frequenz erhöht stärkere Intensität vor allem den Photostrom.</li><li><b>d</b>: Die Energie eines Photons ist <span class="solution-math">E = hf</span>.</li><li><b>e</b>: Die maximale kinetische Energie der Photoelektronen wächst mit steigender Frequenz.</li></ul><p>Richtig sind a, c, d und e. Falsch ist b, weil die Austrittsenergie vom Material abhängt.</p></article>
+<h2>Quellen &amp; Weiterforschen</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="photoeffekt_reveal_weiterforschen"><h3>Weiterforschen</h3><p>Bei einer Solarzelle erzeugen ausreichend energiereiche Photonen Elektron-Loch-Paare im Halbleiter; das innere Feld des p-n-Übergangs trennt sie. Beim Materialvergleich bleibt die Steigung h der Geraden E<sub>kin,max</sub>(f) gleich, aber E<sub>A</sub> und f<sub>gr</sub> = E<sub>A</sub>/h ändern sich. Der Photoeffekt zeigt diskrete Energieübertragung, der Compton-Effekt zusätzlich den Photonenimpuls p = h/λ. Interferenz und Beugung zeigen daneben weiterhin Welleneigenschaften.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-weiterdenken-nachtsicht"><h3>Infrarot-Nachtsicht und Materialabhängigkeit</h3><p>Eine geeignete Photokathode kann wegen ihrer kleinen Austrittsenergie schon auf längere Wellenlängen reagieren als Zink. Halbleiterdetektoren nutzen stattdessen den inneren Photoeffekt und die Bandlücke; Wärmebildkameras können auch thermische Detektoren verwenden. Deshalb ist nicht jedes Infrarot-Nachtsichtgerät ein Beispiel des äußeren Photoeffekts.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="magnetische-felder.html">
+<meta name="musterloesung-source-sha256" content="1fc0f34aa19b52288f1083146f9879af1615c750eb72465eb04f2407364d332b">
+<title>Magnetische Felder 1: Grundlagen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+<style>
+    .mf-grid{display:grid;grid-template-columns:minmax(240px,520px) minmax(260px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .mf-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .mf-figure{margin:0 auto;max-width:520px}
+    .mf-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .mf-figure.wide{max-width:720px}
+    .mf-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .mf-basis{border-left:5px solid #1f8a4c;background:rgba(31,138,76,.09);padding:12px;border-radius:8px}
+    .mf-formula{font-size:1.15rem;font-weight:700}
+    .mf-task-list li{margin-bottom:10px}
+    .mf-mini{font-size:.92rem;color:#555}
+    .mf-route{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+    .mf-route div{border:1px solid rgba(49,95,157,.18);background:rgba(49,95,157,.06);border-radius:8px;padding:12px}
+    .mf-route strong{display:block;margin-bottom:4px;color:#1f3f6f}
+    .mf-stop{border-left:5px solid #b45309;background:#fff7ed;padding:12px;border-radius:8px;margin:14px 0}
+    .mf-strategy{border:1px solid rgba(31,138,76,.2);background:rgba(31,138,76,.06);border-radius:8px;padding:12px;margin:14px 0}
+    @media (max-width:760px){.mf-grid{grid-template-columns:1fr}.mf-figure{max-width:100%}}
+    .mf-stop { color: #172033; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .mf-route strong { color: #9fd7ff; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .mf-mini { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Magnetische Felder · Musterlösung","sectionTitle":"Grundlagen: Magnete, Feldlinien, Lorentzkraft und Spule · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="course-kicker">Musterlösung</div>
+<h1>Magnetische Felder: Kräfte auf Ströme und bewegte Ladungen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_start_reveal"><h3>Leitfrage</h3>
+<p>Ein elektrisches Feld wirkt auch auf ruhende Ladungen. Ein Magnetfeld wirkt auf geladene Teilchen nur dann, wenn sie sich bewegen und eine Geschwindigkeitskomponente senkrecht zum Magnetfeld besitzen.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Magnete">
+<h1>Magnete und ihre Eigenschaften</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_verify_dipol"><h3>Wahr oder falsch?</h3>
+<p><b>Falsch.</b> Wenn man einen Stabmagneten halbiert, erhält man einen einzelnen Nordpol und einen einzelnen Südpol.</p><p>Beim Teilen entstehen zwei kleinere Magnete. Jeder Teil besitzt wieder einen Nordpol und einen Südpol.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf-p2-stahlnadel-check"><h3>Stopp &amp; check: Stahlnadel magnetisieren</h3>
+<p>Beim Überstreichen ordnet das Magnetfeld die zuvor ungeordneten magnetischen Domänen in der Stahlnadel stärker in einer gemeinsamen Richtung. In Stahl bleibt ein Teil dieser Ausrichtung erhalten; dadurch besitzt die Nadel ein eigenes Magnetfeld mit Nord- und Südpol. Es wird keine magnetische Ladung vom Magneten auf die Nadel übertragen.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Feldlinien">
+<h1>Magnetfeld, Feldlinien und Stromfelder</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_cloze_feldlinien"><h3>Sicherung: Feldlinien</h3>
+<p>Die Richtung magnetischer Feldlinien wird so festgelegt, wie der <b>Nordpol</b> einer Kompassnadel zeigt. Außerhalb eines Stabmagneten zeigen Feldlinien vom Nordpol zum <b>Südpol</b>. Magnetische Feldlinien sind immer <b>geschlossen</b>. Im Inneren einer langen Spule ist das Feld näherungsweise <b>homogen</b>. Bei der linken Faustregel zeigt der Daumen in Richtung des <b>Elektronenstrom</b>s.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_feldlinien"><h3>Lösungsfeld: Magnete und Feldlinien</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Pole eines magnetisierten Eisenstücks</h4><p>a) Der bekannte Nordpol wird an beide Enden gehalten: Das Ende, das ihn abstößt, ist ebenfalls Nordpol; das anziehende Ende ist Südpol. Abstoßung ist der eindeutige Nachweis, weil auch unmagnetisiertes Eisen angezogen werden kann. b) Das Eisenstück wird frei drehbar aufgehängt und richtet sich im Erdmagnetfeld aus. Das nach geografisch Norden zeigende Ende ist sein Nordpol; lokale Deklination und störende Felder sind zu beachten.</p><h4>2. Feldlinien sichtbar machen</h4><p>Bei einem Magneten werden Eisenfeilspäne auf einer dünnen Unterlage ausgerichtet oder kleine Kompassnadeln entlang ihrer Nordpolrichtung angeordnet. Im elektrischen Feld können längliche Grießkörner in isolierendem Öl durch Polarisation ausgerichtet werden. Beide Verfahren machen das Feld indirekt durch Kräfte bzw. Drehmomente sichtbar. Magnetische Linien sind geschlossen; elektrostatische Linien beginnen an positiven und enden an negativen Ladungen bzw. im Unendlichen.</p><h4>3. Kreisförmige Windung</h4><p>Die Elektronen laufen von vorne gesehen gegen den Uhrzeigersinn, der technische Strom im Uhrzeigersinn. Das Feld im Windungszentrum zeigt nach hinten, also in die Zeichenebene. Die Vorderseite ist <b>Südpol</b>, die Rückseite Nordpol. Eine Skizze zeigt im Zentrum nach hinten gerichtete Linien und außen zurücklaufende geschlossene Bögen.</p><h4>4. Stabmagnet und Spule</h4><p>Gemeinsam: Beide besitzen Nord- und Südpol; außen verlaufen Linien von Nord nach Süd und innen zurück. Unterschiede: Die Spule braucht einen Strom und ihr Feld kann durch dessen Stärke und Richtung verändert werden; der Permanentmagnet behält sein Feld ohne äußeren Strom. Das Innere einer langen Spule ist näherungsweise homogen, während die genaue Feldverteilung eines kurzen Stabmagneten anders ausfällt.</p><h4>5. Kompass am Draht</h4><p>Die linke Faust umfasst den Draht, der Daumen zeigt mit den Elektronen. Die gekrümmten Finger geben die lokale Richtung des Drahtfeldes an. Der Nordpol der Nadel richtet sich entlang der Vektorsumme aus Drahtfeld und Erdmagnetfeld aus. Beispiel: Elektronen fließen senkrecht nach oben; von oben gesehen ist das Drahtfeld im Uhrzeigersinn. Eine östlich des Drahts liegende Nadel wird deshalb in Richtung Süden beeinflusst. Ohne Ort der Nadel und Stromrichtung ist keine absolute Drehung festgelegt.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Leiterkraft">
+<h1>Stromdurchflossene Leiter im Magnetfeld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_leiterkraft"><h3>Lösungsfeld: Leiterkraft</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Stromloser Leiter</h4><p>Ohne Strom fehlt die gerichtete Driftbewegung der Ladungsträger. Für den unmagnetischen Leiter gilt F = BIs = 0; thermische ungeordnete Bewegungen erzeugen keine resultierende Leiterkraft. Er wird deshalb im idealen statischen Feld nicht ausgelenkt.</p><h4>2. Doppelte Stromstärke</h4><p>Bei unverändertem B, Leiterlänge und Winkel verdoppelt sich die magnetische Kraft. Für eine kleine Auslenkung verdoppelt sich näherungsweise auch die Auslenkung. Allgemein verdoppelt sich bei einer aufgehängten Leiterschaukel tan α = F/(mg), der Winkel selbst muss also nicht exakt doppelt so groß werden.</p><h4>3. Fast paralleler Leiter</h4><p>F = BIl sin θ, mit θ zwischen technischer Stromrichtung und B⃗. Beim Annähern an die parallele Lage sinkt sin θ gegen null. Daher wird die Kraft kleiner und bei exakt paralleler Lage null.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Lorentzkraft">
+<h1>Die Lorentzkraft auf bewegte Ladungen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_mcq_lorentz"><h3>Check: Wann wirkt die Lorentzkraft?</h3>
+<h4>In welchen Fällen ist die magnetische Lorentzkraft auf ein geladenes Teilchen null?</h4><p>Das Teilchen ruht.; Das Teilchen bewegt sich parallel zu den Feldlinien.; Das Magnetfeld ist null.</p><p>Die Lorentzkraft hängt von der senkrechten Geschwindigkeitskomponente und von B ab. Bei Ruhe, Parallelbewegung oder B=0 ist sie null.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_lorentz"><h3>Lösungsfeld: Lorentzkraft</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Richtungen umkehren</h4><p>Wird nur die Stromrichtung umgekehrt, kehrt sich die Lorentzkraft um. Wird nur das Magnetfeld umgekehrt, kehrt sie sich ebenfalls um. Werden beide gleichzeitig umgekehrt, bleibt die Kraftrichtung erhalten. Das folgt aus F⃗ = I l⃗ × B⃗ bzw. qv⃗ × B⃗.</p><h4>2. Beweglicher Kohlestab</h4><p>Der Pluspol ist im Bild am rechten vorderen Schienenkontakt, der Minuspol am linken. Der technische Strom läuft im beweglichen Quer-Kohlestab von der rechten zur linken Schiene; die Elektronen laufen umgekehrt. Das Magnetfeld zeigt nach oben. Die linke Drei-Finger-Regel für Elektronen bzw. die rechte für den technischen Strom ergibt eine Kraft <b>entlang der Schienen von den vorderen Anschlüssen weg, nach hinten</b>. In der perspektivischen Zeichnung bewegt sich der Stab schräg nach rechts oben. Auf die Ladungsträger wirkt die Lorentzkraft; über ihre Kopplung an den Leiter bewegt sie den ganzen Stab.</p><h4>3. Röhrenbildschirm</h4><p>Eine geheizte Kathode emittiert Elektronen; Elektroden bündeln und beschleunigen sie im Vakuum. Ablenkspulen eines Fernseh- oder Computer-Röhrenbildschirms lenken den Strahl magnetisch zeilenweise über einen Leuchtschirm. Auftreffende Elektronen regen dessen Leuchtstoffe an; bei Farbröhren werden getrennte Farbkanäle angesteuert. Ein äußeres Magnetfeld verändert mit F⃗ = −ev⃗ × B⃗ die Strahlrichtung und kann Bildverschiebungen oder Farbfehler erzeugen. Oszilloskopröhren nutzen oft stattdessen elektrische Ablenkplatten. <a href="https://www.didaktik.physik.uni-muenchen.de/multimedia/elektronenablenkroehre/b_feld/index.html">LMU: Ablenkung von Elektronen im Magnetfeld</a>.</p><h4>4. Elektron parallel zum Feld</h4><p>Bei v⃗ parallel B⃗ ist v⊥ = 0 und F_L = e v⊥B = 0. Ohne weitere Kräfte fliegt das Elektron geradlinig mit konstantem Geschwindigkeitsbetrag.</p><h4>5. Proton und Elektron</h4><p>Bei gleichem v⃗ und B⃗ zeigen die Kräfte wegen q = +e bzw. −e in entgegengesetzte Richtungen und haben denselben Betrag e vB. Wegen der größeren Protonenmasse wird das Proton schwächer gekrümmt; die Kreisrichtungen sind entgegengesetzt.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Flussdichte">
+<h1>Die magnetische Flussdichte \(B\)</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="magnetfeld-symbole"><h3>Finde Paare</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>B</td><td>magnetische Flussdichte</td></tr><tr><td>I</td><td>Stromstärke im Leiter</td></tr><tr><td>s</td><td>wirksame Leiterlänge</td></tr><tr><td>F=BIs</td><td>Kraft bei senkrechter Leiterlage</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf-p6-einheitencheck"><h3>Stopp &amp; check: 5 cm in SI-Einheiten</h3>
+<p>5 cm entsprechen 0,05 m. Würde bei B = F/(Is) fälschlich s = 5 m eingesetzt, wäre die Länge um Faktor 100 zu groß und B um Faktor 100 zu klein: 0,0004 T statt 0,040 T. Bei F = BIs wäre die berechnete Kraft dagegen um Faktor 100 zu groß.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Rechnen">
+<h1>Lorentzkraft berechnen</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_rechnen"><h3>Lösungsfeld: Flussdichte</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–b. Leiterkraft</h4><p>F = 20 cN = 0,20 N, s = 0,040 m. <b>B = F/(Is) = 0,20/(5·0,040) T = 1,0 T</b>. Bei I = 2 A und unverändertem B und F ist s = F/(BI) = <b>0,10 m = 10 cm</b>, also 2,5-mal so lang.</p><h4>2a–b. Drahtrahmen mit Zusatzgewicht</h4><p>a) F = BIs = 0,4·2,5·0,020 N = <b>0,020 N</b>. b) Wirkt die Magnetkraft nach unten wie die Gewichtskraft, muss sie zur unveränderten Kraftmesseranzeige auf 0,010 N sinken: I = <b>1,25 A</b> bei s = 2 cm oder s = <b>1,0 cm</b> bei I = 2,5 A. Wirkt die Magnetkraft dagegen nach oben, muss ihr Betrag zur Kompensation des Zusatzgewichts um 0,010 N wachsen, also auf 0,030 N: I = <b>3,75 A</b> oder s = <b>3,0 cm</b>. Ohne angegebene Kraftrichtung sind beide Fälle möglich.</p><h4>3a–b. Spule mit 100 Windungen</h4><p>Jede der 100 gleich durchströmten wirksamen Leiterseiten erfährt dieselbe Kraft; die gleichgerichteten Beiträge addieren sich. Die gegenüberliegende parallele Seite liegt außerhalb des Feldes, die Kräfte auf die beiden seitlichen Teilstücke heben sich auf. F = nBIs = 100·0,040 T·0,80 A·0,060 m = <b>0,192 N</b>.</p><h4>4. Elektron</h4><p>F_L = evB = 1,602·10⁻¹⁹ C·3,0·10⁶ m/s·0,012 T = <b>5,77·10⁻¹⁵ N</b>.</p><h4>5. Schräger Eintritt</h4><p>Es ist v⊥ = <b>3,0·10⁶ m/s</b> einzusetzen, nicht der Gesamtbetrag 5,0·10⁶ m/s. Die parallele Komponente √(5²−3²)·10⁶ = 4,0·10⁶ m/s erzeugt keine magnetische Kraft. Zusammen führen die Komponenten zu einer Schraubenbahn.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Hall-Effekt">
+<h1>Hallsonden und Hall-Effekt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_hall"><h3>Lösungsfeld: Hall-Effekt</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–b. Kalibrierte Hallsonde</h4><p>Die Kalibrierung liefert U_H/B = 12 mV/0,1 T = 0,120 V/T. Bei unveränderter Sondenstromstärke gilt <b>U_H(B) = (0,120 V/T)B</b>. Für U_H = 0,20 mV ist <b>B = 1,67·10⁻³ T = 1,67 mT</b>.</p><h4>2a. Driftgeschwindigkeit</h4><p>Im Gleichgewicht eU_H/h = evB. Daher v = U_H/(Bh) = 0,51·10⁻⁶ V/(0,3 T·0,010 m) = <b>1,7·10⁻⁴ m/s = 0,17 mm/s</b>. Das ist die Driftgeschwindigkeit, nicht die ungeordnete mikroskopische Geschwindigkeit der Elektronen.</p><h4>2b–c. Hallspannung verändern</h4><p>Bei B = 0,01 T gilt U_H = 0,51 µV·0,01/0,3 = <b>0,017 µV = 17 nV</b>. Ein größerer Strom erhöht die Driftgeschwindigkeit und U_H, verursacht aber mehr Wärme. Eine dünnere Folie erhöht U_H ∝ 1/d bei gleichem Strom, ist jedoch empfindlich und erwärmt sich leichter. Ein Material mit kleinerer Ladungsträgerdichte, etwa ein geeigneter Halbleiter, liefert bei gleichem I und d größere Hallspannung und ist technisch besonders zweckmäßig.</p><h4>3. Homogenität prüfen</h4><p>Bei konstantem Spulenstrom wird die kalibrierte Hallsonde mit unveränderter Orientierung entlang der Achse und quer durch verschiedene Querschnitte verschoben. Aus U_H(B) werden die örtlichen Werte von B bestimmt. Im mittleren Bereich einer langen Spule erwartet man innerhalb der Messunsicherheit gleich große Werte und dieselbe Richtung. An den Enden und außerhalb fällt B ab. Eine Drehung der Sonde würde die gemessene Feldkomponente verändern und muss kontrolliert werden.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Spule und mu0">
+<h1>Die magnetische Feldkonstante und die schlanke Spule</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="mf_essay_spule_mu0"><h3>Lösungsfeld: schlanke Spule</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1a–b. Veränderliche Spulenlänge</h4><p>I = Bl/(µ₀n) = 0,020·10⁻³ T·0,30 m/(1,257·10⁻⁶·40) = <b>0,119 A</b>. Bei lneu = 0,20 m und gleichem I wächst B um 30/20: <b>Bneu = 0,030 mT</b>.</p><h4>2. Spulenende</h4><p>In der Mitte einer sehr langen Spule tragen Windungen auf beiden Seiten des Messpunkts symmetrisch zum Feld bei. Am Ende fehlt näherungsweise eine dieser beiden Windungshälften. Daher beträgt B am Ende auf der Achse ungefähr die Hälfte des zentralen Feldes; das ist eine Näherung für lange Spulen.</p><h4>3a–c. µ₀ aus allen Messwerten</h4><p>Die Punkte (I in A; B in mT) sind (2;0,7), (4;1,3), (5;1,7), (6;2,2), (8;2,8), (10;3,6). Eine physikalisch begründete Ausgleichsgerade durch den Ursprung hat die Steigung a = ΣIᵢBᵢ/ΣIᵢ² = 86,7/245 mT/A = <b>0,3539 mT/A</b>. Aus B = µ₀(n/l)I folgt µ₀ = a·l/n = 0,3539·10⁻³·0,42/120 = <b>1,239·10⁻⁶ T·m/A</b>. Gegenüber 1,257·10⁻⁶ ist die Abweichung |1,239−1,257|/1,257 ≈ <b>1,5 %</b>. Die Ursprungsgerade setzt einen korrigierten Sondenoffset voraus.</p><h4>4a–b. Starke Felder</h4><p>I = Bl/(µ₀n) = 0,1·0,30/(1,257·10⁻⁶·1200) A = <b>19,9 A</b>. Für B &gt; 1 T wäre I &gt; 199 A nötig. Ohne besondere Stromversorgung und Kühlung ist das im normalen Physiksaal wegen Drahtwiderstand, Erwärmung und Stromversorgung nicht praktikabel.</p><h4>5. Spule und Rahmen in Reihe</h4><p>Beide führen denselben Strom. B = µ₀(n/l)I und F = BIs ergeben F = µ₀(n/l)sI². Daher I = √[Fl/(µ₀ns)] = √[0,002·0,60/(1,257·10⁻⁶·1200·0,050)] A = <b>3,99 A</b>.</p><h4>6. Je-desto-Sätze</h4><p>Je größer I bei festem n und l, desto größer B. Je größer n bei festem I und l, desto größer B. Je größer l bei festem I und n, desto kleiner B. Das Medium bleibt dabei unverändert; für die verwendete Luftspule ist µᵣ ≈ 1.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"magnetische-felder-teetasse46.html__"});</script>
+</body>
+</html>

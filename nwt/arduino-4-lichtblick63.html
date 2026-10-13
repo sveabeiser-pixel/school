@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="arduino-4.html">
+<meta name="musterloesung-source-sha256" content="19d2d142e58ebd8d7e26d9d1dc8c7c0a240523e35583661a27305bd707f65dad">
+<title>Arduino Lernbaustein - Seiten 18-22 – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 800px){ .grid2{grid-template-columns:1fr} }
+
+    .pdfpage{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0,0,0,.04);
+      margin: 12px 0;
+    }
+    .pdfpage img{width:100%; display:block}
+    .pdfcaption{
+      font-size: 12px;
+      color: var(--wb-muted, #6b7280);
+      padding: 6px 10px;
+      border-top: 1px solid var(--wb-line, #e5e7eb);
+    }
+
+    .wb-soft-callout{
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-radius: 12px;
+      padding:12px 12px;
+      background: transparent;
+      margin: 12px 0;
+    }
+    .wb-soft-callout strong{display:block; margin-bottom:6px}
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border:1px solid var(--wb-line, #e5e7eb);
+      border-bottom-width:2px;
+      border-radius:8px;
+      background: rgba(0,0,0,.03);
+      color: var(--wb-text, #111827);
+    }
+    .code-card{
+      background:#0f172a;
+      color:#e8f0ff;
+      border-radius:10px;
+      padding:12px 14px;
+      overflow-x:auto;
+      margin:10px 0;
+    }
+    .trace-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:10px 0;
+      font-size:14px;
+    }
+    .trace-table th,.trace-table td{
+      border:1px solid var(--wb-line, #e5e7eb);
+      padding:8px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .trace-table th{background:rgba(30,102,200,.08)}
+    .source-list{margin:0; padding-left:20px}
+    .source-list li + li{margin-top:6px}
+
+    .pudding-flow{
+      border: 1px solid var(--wb-line, #e5e7eb);
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px;
+    }
+    .pudding-flow .wb-title{margin-bottom:4px}
+    .pudding-flow-bank{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      padding:8px;
+      border:1px dashed var(--wb-bank-border, #c7d2fe);
+      border-radius:8px;
+      background: var(--wb-bank-bg, #eef2ff);
+      margin-bottom:10px;
+      min-height:46px;
+    }
+    .pudding-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:5px 8px;
+      min-height:28px;
+      background:#fff;
+      border:1px solid #c7d2fe;
+      border-radius:6px;
+      cursor:grab;
+      font-size:11px;
+      line-height:1.2;
+      text-align:center;
+      max-width:100%;
+    }
+    .pudding-chip.selected{outline:2px solid #2563eb}
+    .pudding-flow-chart{
+      max-width:600px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:5px;
+    }
+    .pudding-oval{
+      width:96px;
+      min-height:30px;
+      border:2px solid #b9c7e8;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3px 7px;
+      background:#fff;
+    }
+    .pudding-step{
+      width:min(100%, 290px);
+      min-height:34px;
+      border:2px solid #b9c7e8;
+      border-radius:4px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3px 7px;
+      text-align:center;
+      font-size:12px;
+    }
+    .pudding-arrow{
+      color:#6b7280;
+      font-weight:700;
+      line-height:1;
+    }
+    .pudding-diamond-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      margin-top:2px;
+    }
+    .pudding-diamond{
+      width:104px;
+      height:104px;
+      transform: rotate(45deg);
+      border:2px solid #b9c7e8;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      border-radius:4px;
+      overflow:hidden;
+    }
+    .pudding-diamond .pudding-chip{
+      transform: rotate(-45deg);
+      width:126px;
+      max-width:none;
+      min-height:34px;
+      padding:3px 5px;
+      font-size:11px;
+      line-height:1.15;
+    }
+    .pudding-branch-row{
+      width:min(100%, 560px);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      align-items:start;
+      margin-top:2px;
+    }
+    .pudding-branch{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .pudding-branch-label{
+      font-size:12px;
+      color:#6b7280;
+      font-weight:700;
+    }
+    .pudding-loop-note{
+      font-size:12px;
+      color:#6b7280;
+      font-weight:700;
+      text-align:center;
+    }
+    .pudding-drop{
+      position:relative;
+      overflow:hidden;
+    }
+    .pudding-drop.filled{
+      border-color:#93c5fd;
+      background:#eff6ff;
+    }
+    .pudding-drop.ok{
+      border-color:#16a34a;
+      box-shadow:0 0 0 3px rgba(22,163,74,.12);
+    }
+    .pudding-drop.bad{
+      border-color:#dc2626;
+      box-shadow:0 0 0 3px rgba(220,38,38,.10);
+    }
+    .pudding-drop .pudding-chip{
+      width:100%;
+      max-width:none;
+      height:100%;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+    }
+    .pudding-flow-controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+    .pudding-score{
+      font-weight:700;
+      color:var(--wb-text, #111827);
+    }
+    @media (max-width: 700px){
+      .pudding-branch-row{grid-template-columns:1fr}
+      .pudding-diamond{width:96px; height:96px}
+      .pudding-diamond .pudding-chip{width:116px}
+      .pudding-step{width:min(100%, 270px)}
+    }
+    .pudding-flow { color: #172033; --wb-muted: #4b5563; }
+    .pudding-flow .wb-head { background: #f8fafc; }
+  </style>
+<link rel="stylesheet" href="arduino-kurs.css">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Arduino 4 · Musterlösung","sectionTitle":"Eingaben, Planung und Anzeige · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="11. Eingabe mit Tastern"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>11. Eingaben mit Tastern - Der Arduino reagiert</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino4_pullup_trace"><h3>Ablaufspur: INPUT_PULLUP richtig herum denken</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Taster</th><th scope="col">Verbindung</th><th scope="col">digitalRead(BTN)</th><th scope="col">== LOW</th></tr></thead><tbody><tr><td>nicht gedrückt</td><td>intern mit HIGH verbunden</td><td>HIGH</td><td>falsch</td></tr><tr><td>gedrückt</td><td>mit GND verbunden</td><td>LOW</td><td>wahr</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino4_pullup_verify"><h3>Wahr oder falsch?</h3><p><b>Wahr.</b> Bei INPUT_PULLUP bedeutet gedrückt meistens LOW.</p><p>Richtig. Der Taster verbindet den Eingang beim Drücken mit GND. Deshalb liest der Arduino LOW.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s18_vf"><h3>Verständnisfragen - Taster</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Ein Taster kehrt beim Loslassen in seine Ausgangsstellung zurück. Ein Schalter bleibt normalerweise in seiner gewählten Stellung.</li><li>Ein offener Eingang braucht einen definierten Ruhepegel. Ein Pullup verbindet ihn über einen Widerstand mit der Versorgung, ein Pulldown mit GND. Dadurch wird ein undefinierter, störanfälliger Eingang verhindert.</li><li>Bei INPUT_PULLUP liest der Arduino ohne Druck HIGH. Ein gedrückter Taster verbindet den Eingang mit GND: Er wird als LOW gelesen.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_s18"><h3>Multiple Choice - Eingaben (mehrere Antworten möglich)</h3><h4>1) Was trifft auf digitale Eingänge zu?</h4><p>Sie kennen nur LOW oder HIGH; Man liest sie mit digitalRead()</p><p>Digitale Eingänge kennen LOW/HIGH und werden mit digitalRead() gelesen.</p><h4>2) Wozu dient INPUT_PULLUP?</h4><p>Der Eingang bekommt einen definierten Grundzustand; Man spart oft einen externen Widerstand</p><p>INPUT_PULLUP setzt einen Grundzustand und spart oft den externen Widerstand.</p><h4>3) Welche Aussage ist bei INPUT_PULLUP richtig?</h4><p>Nicht gedrückt = HIGH; Gedrückt = LOW</p><p>Bei INPUT_PULLUP ist nicht gedrückt = HIGH und gedrückt = LOW.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_11_1"><h3>11.1 Tasterwerte</h3><p>Mit INPUT_PULLUP liegt der freie Eingang auf HIGH; digitalRead(4) liefert 1. Verbindet der gedrückte Taster Pin 4 mit GND, liefert die Abfrage LOW beziehungsweise 0. Die Schaltung arbeitet damit aktiv-low.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_11_2"><h3>11.2 LED mit Taster schalten</h3><pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  pinMode(9, OUTPUT);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    digitalWrite(9, HIGH);
+  } else {
+    digitalWrite(9, LOW);
+  }
+}</code></pre><p>Der Taster liegt zwischen Pin 4 und GND; die LED an Pin 9 besitzt einen Vorwiderstand.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_11_3"><h3>11.3 Zwei Taster für zwei Tonhöhen</h3><pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    tone(11, 220);
+  } else if (digitalRead(5) == LOW) {
+    tone(11, 880);
+  } else {
+    noTone(11);
+  }
+}</code></pre><p>Beide Taster verbinden ihren Eingang mit GND. Sind beide gedrückt, hat in dieser Lösung Taster 4 Vorrang. Ohne Tastendruck ist der Piezo stumm.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_11_4"><h3>11.4 Tastendrücke zählen</h3><pre><code>unsigned long anzahl = 0;
+void setup() {
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    delay(20);
+    if (digitalRead(4) == LOW) {
+      anzahl++;
+      Serial.println(anzahl);
+      while (digitalRead(4) == LOW) {}
+      delay(20);
+    }
+  }
+}</code></pre><p>Eine einfache, blockierende Lösung: Ein bestätigter Druck erhöht den Zähler einmal. Danach wartet das Programm auf das Loslassen. Die Wartezeiten mindern Kontaktprellen. Ein bloßes if (Taste gedrückt) mit anzahl++ würde bei gehaltenem Taster viele Durchläufe zählen. Für besonders stark prellende Taster ist eine Prüfung durchgehend stabiler Zustände zuverlässiger.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_11_5"><h3>11.5 Übertragungszeit serieller Zeichen</h3><p>Bei 9600 Baud und dem üblichen Format 8N1 werden pro Zeichen 10 Bits übertragen: 10 / 9600 s ≈ 1,04 ms. Eine mehrstellige Zahl sowie die beiden Zeilenendezeichen brauchen entsprechend länger. Wiederholte Ausgaben von millis() messen nicht direkt die Zeit eines einzelnen Zeichens: millis() hat Millisekundenauflösung und Serial puffert Ausgaben. Für eine Messung vieler Zeichen wird der Puffer vorher geleert, vor der Ausgabe micros() erfasst und nach Serial.flush() erneut gemessen. Die Gesamtzeit geteilt durch die Zeichenanzahl nähert die Zeit pro Zeichen an.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="12. Wiederholung mit while"><h2>12. Wiederholungen mit while - Solange bis ...</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino4_while_trace"><h3>Ablaufspur: while prüft vor jedem Durchgang</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">x vorher</th><th scope="col">Ausgabe</th><th scope="col">x nachher</th></tr></thead><tbody><tr><td>0 &lt; 20</td><td>0</td><td>0</td><td>5</td></tr><tr><td>5 &lt; 20</td><td>5</td><td>5</td><td>10</td></tr><tr><td>10 &lt; 20</td><td>10</td><td>10</td><td>15</td></tr><tr><td>15 &lt; 20</td><td>15</td><td>15</td><td>20</td></tr><tr><td>20 &lt; 20</td><td>20</td><td>keine</td><td>20</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino4_while_cloze"><h3>Sicherung: while</h3><p>Eine while-Schleife läuft, solange ihre <b>Bedingung</b> <b>wahr</b> ist. Damit sie enden kann, muss sich etwas im Ablauf <b>verändert</b>, sodass die Bedingung irgendwann <b>falsch</b> wird.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s19_vf"><h3>Verständnisfragen - while</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>for bündelt Initialisierung, Bedingung und Zählschritt in einer Schleifenkopfzeile. while prüft eine Bedingung; eine nötige Zustandsänderung oder neue Messung steht ausdrücklich im Rumpf.</li><li>while eignet sich, wenn die Wiederholungszahl von einer Bedingung abhängt, etwa solange ein Taster nicht gedrückt ist. Während der Schleife muss der Zustand neu geprüft werden.</li><li>Eine Endlosschleife endet nicht, weil ihre Bedingung dauerhaft wahr bleibt. Sie entsteht zum Beispiel, wenn der Zähler nicht erhöht oder der Sensorwert im Rumpf nicht neu gelesen wird.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_s19"><h3>Multiple Choice - while (mehrere Antworten möglich)</h3><h4>1) Eine while-Schleife läuft ...</h4><p>so lange, wie die Bedingung wahr ist; bis die Bedingung falsch wird</p><p>while läuft, solange die Bedingung wahr ist, und endet, wenn sie falsch wird.</p><h4>2) Welche Situationen passen gut zu while?</h4><p>Warten, bis ein Taster gedrückt wird; Wiederholen, bis ein Grenzwert erreicht ist</p><p>while nutzt man, wenn nicht vorher feststeht, wie oft etwas passiert.</p><h4>3) Wie vermeidet man Endlosschleifen?</h4><p>Die Bedingung muss irgendwann falsch werden können; In der Schleife muss sich etwas ändern (z. B. Variable); Man sollte prüfen, ob die Bedingung erreichbar ist</p><p>Die Bedingung muss erreichbar sein und sich in der Schleife ändern können.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_12_1"><h3>12.1 Zwei while-Schleifen</h3><p>Die erste Schleife gibt 1, 2, 3, …, 99 aus; danach gilt x = 100. Die Bedingung 2 &lt; 5 der zweiten Schleife ist immer wahr. Deshalb werden ständig Ausrufezeichen ausgegeben und setup() endet nie; loop() wird nicht erreicht. Für eine tatsächliche lesbare Ausgabe muss zusätzlich Serial.begin(9600) in setup() stehen und der Monitor dieselbe Baudrate verwenden.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_12_2"><h3>12.2 Gedrückt und losgelassen</h3><p>Bei INPUT_PULLUP wartet while (digitalRead(4) == HIGH) {} auf das Drücken. Dann erscheint von jetzt. Die nächste Schleife wartet bei LOW auf das Loslassen; danach erscheint bis jetzt. Dieser Ablauf wiederholt sich. Serial.print() fügt keinen Zeilenumbruch an; die Texte stehen ohne zusätzliche Formatierung direkt hintereinander. Eine Zeitdauer wird noch nicht berechnet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_12_3"><h3>12.3 Tonhöhe schrittweise verändern</h3><pre><code>int frequenz = 440;
+void setup() {
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    delay(20);
+    if (digitalRead(4) == LOW) {
+      if (frequenz &lt; 2000) frequenz++;
+      while (digitalRead(4) == LOW) {}
+      delay(20);
+    }
+  } else if (digitalRead(5) == LOW) {
+    delay(20);
+    if (digitalRead(5) == LOW) {
+      if (frequenz &gt; 100) frequenz--;
+      while (digitalRead(5) == LOW) {}
+      delay(20);
+    }
+  }
+  tone(11, frequenz);
+}</code></pre><p>Pro bestätigtem Druck steigt oder sinkt die Frequenz um 1 Hz. Die Grenzprüfungen verhindern unzulässige Werte; das Warten auf das Loslassen verhindert mehrfaches Zählen eines gehaltenen Tasters.</p></article></section>
+<section data-wb-page="3" data-wb-page-title="13. Programme planen - Denken vor dem Programmieren"><h2>13. Programme planen - Denken vor dem Programmieren</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino4_flow_symbols"><h3>Verbinde Symbol und Bedeutung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Start/Ende</td><td>Beginn oder Abschluss eines Ablaufs</td></tr><tr><td>Rechteck</td><td>konkreter Prozessschritt, zum Beispiel LED einschalten</td></tr><tr><td>Raute</td><td>Entscheidung mit Ja-/Nein-Weg</td></tr><tr><td>Pfeil</td><td>zeigt die Reihenfolge und Leserichtung</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s20_vf"><h3>Verständnisfragen - Flussdiagramme</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Vor dem Codieren kann ich klären, welche Eingaben, Entscheidungen und Ausgaben nötig sind. Lücken und falsche Abläufe sind im Plan oft leichter zu erkennen.</li><li>Start/Ende wird meist als Oval dargestellt, eine Verarbeitung als Rechteck, eine Entscheidung als Raute und eine Ein-/Ausgabe als Parallelogramm.</li><li>Pfeile zeigen die Ausführungsrichtung und Rücksprünge. Die beschrifteten Zweige einer Entscheidung zeigen, was bei wahr beziehungsweise falsch passiert.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_13_1"><h3>13.1 Flussdiagramm als Sketch</h3><pre><code>void setup() {
+  Serial.begin(9600);
+  int x = 10;
+  while (x &lt; 100) {
+    Serial.println(x);
+    x = x + 2;
+  }
+}
+void loop() {}</code></pre><p>Die Ausgabe lautet 10, 12, 14, …, 98: insgesamt 45 Zahlen. Anschließend ist x = 100, die Bedingung ist falsch und die Schleife endet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_13_2"><h3>13.2 Tastendruck und Zeitstempel</h3><pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  while (digitalRead(4) == HIGH) {}
+  Serial.println(millis());
+  while (digitalRead(4) == LOW) {}
+}</code></pre><p>Das Programm wartet auf einen Tastendruck, gibt einmal die seit dem Start verstrichenen Millisekunden aus und wartet auf das Loslassen. Dann beginnt der nächste Durchlauf. Das bildet das gezeigte Diagramm ab; für reale Taster sollte zusätzlich entprellt werden.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_13_3"><h3>13.3 Abläufe als Flussdiagramme</h3><h4>Aufgabe 12.2</h4><pre>Start → Pin 4: INPUT_PULLUP; Serial starten
+  ↓
+Taste frei? ─ ja → zur selben Abfrage zurück
+  │ nein
+  ↓
+Ausgabe: von jetzt
+  ↓
+Taste gedrückt? ─ ja → zur selben Abfrage zurück
+  │ nein
+  ↓
+Ausgabe: bis jetzt → zurück zu „Taste frei?“</pre><h4>Aufgabe 9.7</h4><pre>Start → RGB-Pins als Ausgänge setzen
+  ↓
+r = 0
+  ↓
+r &lt; 256? ─ nein → r = 0 (nächster loop-Durchlauf)
+  │ ja
+  ↓
+g = 0
+  ↓
+g &lt; 256? ─ nein → r++ → zurück zur r-Prüfung
+  │ ja
+  ↓
+b = 0
+  ↓
+b &lt; 256? ─ nein → g++ → zurück zur g-Prüfung
+  │ ja
+  ↓
+RGB-Werte ausgeben; 1 ms warten
+  ↓
+b++ → zurück zur b-Prüfung</pre><p>Die innere Schleife wird für jeden neuen Wert der äußeren Schleife neu initialisiert. So wird keine Kombination übersprungen.</p></article></section>
+<section data-wb-page="4" data-wb-page-title="Vom Flussdiagramm zum Arduino-Code"><h2>Vom Flussdiagramm zum Arduino-Code</h2>
+
+</section>
+<section data-wb-page="5" data-wb-page-title="14. LCD Displays - Texte anzeigen"><h2>14. LCD-Displays - Texte anzeigen</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s21_vf"><h3>Verständnisfragen - Displays</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Ein Zeichen-LCD zeigt Zeichen in festen Positionen; ein Grafik-OLED kann einzelne Bildpunkte und damit auch Grafiken darstellen. Die konkreten Möglichkeiten hängen vom Modell ab.</li><li>16×2 bedeutet zwei Zeilen mit jeweils 16 Zeichenpositionen.</li><li>Der Kontrast kann falsch eingestellt sein. Außerdem können Initialisierung, Versorgung oder Anschlussbelegung unpassend sein; bei I²C ist auch eine falsche Adresse möglich. Ich prüfe zuerst ein bekanntes Testprogramm und die passenden Einstellungen.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_s21"><h3>Multiple Choice - LCD (mehrere Antworten möglich)</h3><h4>1) Welche Display-Typen gibt es häufig?</h4><p>Zeichen-LCD (16x2 / 20x4); OLED; TFT</p><p>Zeichen-LCD, OLED und TFT sind typische Display-Typen.</p><h4>2) Was stimmt zu I2C-LCDs?</h4><p>Man braucht meist weniger Kabel als bei Parallel; Typisch sind SDA und SCL; Die I2C-Adresse kann je nach Modul unterschiedlich sein</p><p>I2C nutzt SDA/SCL, braucht weniger Kabel und die Adresse kann variieren.</p><h4>3) Warum sieht man manchmal nichts auf dem LCD?</h4><p>Kontrast ist falsch eingestellt; Hintergrundbeleuchtung/Power fehlt; falsche I2C-Adresse / falsche Pins</p><p>Kontrast, Backlight/Power oder die Adresse/Pins sind häufige Ursachen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_14_1_2"><h3>14.1–14.2 LCD-Bibliothek und Anschlüsse</h3><p>Eine zum Beispielcode passende LiquidCrystal_I2C-Bibliothek stellt das Objekt sowie init(), setCursor() und print() bereit. Bei einem üblichen 5-V-I²C-LCD am Uno: GND an GND, VCC an 5 V, SDA an SDA beziehungsweise A4 und SCL an SCL beziehungsweise A5. Andere Boards und Module können andere Pins oder Versorgungsspannungen benötigen. Die I²C-Adresse muss zur tatsächlichen Hardware passen; 0x27 ist die Annahme des Beispiels.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_14_3"><h3>14.3 LCD-Ausgabe und Hintergrundlicht</h3><pre><code>#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+}
+void loop() {
+  lcd.clear();
+  lcd.setCursor(3, 0);
+  lcd.print("Zeit: ");
+  lcd.print(millis());
+  delay(100);
+}</code></pre><p>Für eine Bibliothek mit dieser API: Die erste Zeile beginnt ab der vierten Spalte mit Zeit: und der Zahl der Millisekunden seit dem Programmstart. Die Ausgabe wird ungefähr alle 100 ms erneuert; clear() kann sichtbares Flackern erzeugen. backlight() schaltet das Hintergrundlicht an, noBacklight() aus. Der gespeicherte Text wird dadurch nicht gelöscht. Eine geänderte Position lässt sich etwa durch setCursor(0, 1) auf den Anfang der zweiten Zeile setzen.</p></article></section>
+<section data-wb-page="6" data-wb-page-title="15. Motoren steuern"><h2>15. Motoren steuern</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s22_vf"><h3>Verständnisfragen - Motoren</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Der Motor benötigt mehr Strom, als ein Arduino-Pin liefern darf, und kann induktive Spannungsspitzen erzeugen. Er wird deshalb über einen geeigneten Treiber angeschlossen.</li><li>Ein Gleichstrommotor dreht kontinuierlich, ein Servo fährt typischerweise einen vorgegebenen Winkel an. Ein Schrittmotor bewegt sich dagegen in diskreten Schritten.</li><li>Beim Abschalten eines induktiven Verbrauchers bietet die Freilaufdiode einen Pfad für den weiterfließenden Strom und begrenzt die Spannungsspitze. Bei Motorbrücken muss die Schutzbeschaltung zur Treiberschaltung passen.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_s22"><h3>Multiple Choice - Motoren (mehrere Antworten möglich)</h3><h4>1) Welche Aussagen zu Motoren sind richtig?</h4><p>Motoren erzeugen Bewegung; Motoren benötigen oft mehr Strom; Motoren brauchen Schutzbeschaltung</p><p>Motoren erzeugen Bewegung, brauchen Strom und Schutzbeschaltung.</p><h4>2) Wozu dient PWM bei Motoren?</h4><p>Steuerung der Geschwindigkeit; Strombegrenzung</p><p>PWM steuert die Geschwindigkeit und kann den effektiven Strom beeinflussen.</p><h4>3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?</h4><p>Transistor; Motortreiber-Modul; Freilaufdiode</p><p>Transistor, Motortreiber und Freilaufdiode sind typische Bauteile.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_15_1"><h3>15.1 Motor einschalten und bremsen</h3><pre><code>void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+}
+void loop() {
+  digitalWrite(3, HIGH);
+  digitalWrite(4, LOW);
+  delay(2000);
+  digitalWrite(3, HIGH);
+  digitalWrite(4, HIGH);
+  delay(2000);
+}</code></pre><p>Bei der gezeigten H-Brücke mit aktiviertem Enable-Eingang dreht der Motor zunächst zwei Sekunden in einer Richtung. Beide Steuereingänge auf HIGH bremsen anschließend zwei Sekunden; das ist kein Freilauf. Motoren werden über den Treiber und eine geeignete Motorversorgung betrieben, nicht direkt aus GPIOs. Arduino und Treiber benötigen eine gemeinsame Masse.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_15_2"><h3>15.2 Zwei Motoren und Bewegungsfunktionen</h3><pre><code>// Rechter Motor: 3/4; linker Motor: 5/6
+void setzen(int a, int b, int c, int d) {
+  digitalWrite(3, a); digitalWrite(4, b);
+  digitalWrite(5, c); digitalWrite(6, d);
+}
+void vor() { setzen(HIGH, LOW, HIGH, LOW); }
+void rueck() { setzen(LOW, HIGH, LOW, HIGH); }
+void links() { setzen(HIGH, LOW, HIGH, HIGH); }
+void rechts() { setzen(HIGH, HIGH, HIGH, LOW); }
+void stopp() { setzen(HIGH, HIGH, HIGH, HIGH); }
+void setup() {
+  for (int pin = 3; pin &lt;= 6; pin++) {
+    pinMode(pin, OUTPUT);
+  }
+}
+void loop() {
+  vor(); delay(2000);
+  stopp(); delay(500);
+  rueck(); delay(2000);
+  stopp(); delay(500);
+  links(); delay(1000);
+  stopp(); delay(500);
+  rechts(); delay(1000);
+  stopp(); delay(1000);
+}</code></pre><p>Annahme: HIGH/LOW entspricht bei beiden eingebauten Motoren der Fahrtrichtung vorwärts und die Enable-Eingänge sind aktiviert. Falls ein Motor andersherum eingebaut oder angeschlossen ist, muss dessen Zuordnung umgekehrt werden. links() treibt nur rechts vorwärts und bremst links; rechts() macht es umgekehrt. stopp() bremst beide Motoren.</p></article></section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"arduino-4-lichtblick63.html__"});</script>
+</body>
+</html>

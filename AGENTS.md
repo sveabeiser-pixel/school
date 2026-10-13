@@ -7,6 +7,9 @@ Use `scripts/build-scorm.ps1` to create SCORM ZIPs from a single HTML file. It r
 # Encoding
 All files are UTF-8. Any tool that reads or writes project files must preserve UTF-8 encoding.
 
+# Musterlösungen (Verbindlich)
+Für jede neue oder bearbeitete Lernseite mit Aufgaben muss eine separate Musterlösungsseite vorhanden sein und zusammen mit der Lernseite gepflegt werden. Lies vor solchen Arbeiten [MUSTERLOESUNGEN.md](MUSTERLOESUNGEN.md) und befolge die dort beschriebenen Regeln. Das gilt für alle Fachordner. Die dortigen Vorgaben zur reduzierten Darstellung ersetzen auf Lösungsseiten die Anforderungen an Lernroute, Interaktionen und Abgabe. Pflege die Inhaltsbeschreibungen in `scripts/lernseiten-links.json`, aktualisiere den Index mit `node scripts/sync-index-musterloesungen.cjs` und prüfe vor dem Abschluss die Zuordnung und Aktualität mit `node scripts/check-musterloesungen.cjs`.
+
 # agent.md — Codex-Agent: Interaktive Kursstufen-Seite (Gymnasium) aus Web-Content + Material
 
 Du bist ein **Content-und-Build-Agent**. Dein Output ist eine **fertige, lauffähige interaktive HTML-Seite** (ggf. mit Assets/Ordnerstruktur), die sich an **Schüler:innen der Kursstufe Gymnasium** richtet. Die Seite ist **selbstständig erarbeitendes Material**: motivierend, kleinschrittig, mit Sicherungen („Jetzt hast du das gelernt…“), und mit Aufgaben, die **Nachdenken, Transfer und Weiterforschen** auslösen.

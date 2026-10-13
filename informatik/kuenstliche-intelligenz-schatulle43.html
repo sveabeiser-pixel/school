@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="kuenstliche-intelligenz.html">
+<meta name="musterloesung-source-sha256" content="492e2ec43a00e303fc9ce9764b62337da60df4f50f81e26f7484f1f338aed7a2">
+<title>Künstliche Intelligenz verstehen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    .ki-hero{
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);
+      gap:22px;
+      align-items:center;
+      margin:10px 0 18px;
+    }
+    .ki-kicker{font-weight:850;color:#0f766e;text-transform:uppercase;font-size:.82rem;letter-spacing:0}
+    .ki-lead{font-size:1.08rem;line-height:1.65;color:#243244}
+    .ki-figure{margin:16px 0 20px;text-align:center}
+    .ki-figure img{
+      display:block;
+      width:100%;
+      max-height:520px;
+      object-fit:contain;
+      margin:0 auto;
+      border:1px solid var(--wb-line,#d8dee8);
+      border-radius:8px;
+      background:#fff;
+    }
+    .ki-figure.compact img{max-height:350px}
+    .ki-figure.wide img{max-height:610px}
+    .ki-figure figcaption{margin-top:8px;color:var(--wb-muted,#5b6472);font-size:.94rem;line-height:1.45;text-align:left}
+    .ki-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+    .ki-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ki-panel{
+      border:1px solid var(--wb-line,#d8dee8);
+      border-radius:8px;
+      padding:14px 15px;
+      background:#fff;
+      min-height:100%;
+    }
+    .ki-panel h3{margin-top:0;margin-bottom:8px;font-size:1rem}
+    .ki-panel p:last-child,.ki-panel ul:last-child{margin-bottom:0}
+    .ki-tagline{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+    .ki-tag{
+      display:inline-flex;
+      align-items:center;
+      border:1px solid #b6d9d2;
+      background:#edfdf8;
+      color:#115e59;
+      border-radius:999px;
+      padding:5px 9px;
+      font-weight:750;
+      font-size:.9rem;
+    }
+    .ki-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+    .ki-step{
+      border:1px solid #d7dee8;
+      border-left:5px solid #2563eb;
+      border-radius:8px;
+      padding:12px;
+      background:#fbfdff;
+    }
+    .ki-step strong{display:block;margin-bottom:5px}
+    .ki-mini-table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff}
+    .ki-mini-table th,.ki-mini-table td{border:1px solid var(--wb-line,#d8dee8);padding:10px 12px;vertical-align:top}
+    .ki-mini-table th{background:#f8fafc;text-align:left}
+    .ki-code{
+      font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+      background:#0f172a;
+      color:#e5f0ff;
+      border-radius:8px;
+      padding:12px 14px;
+      line-height:1.6;
+      overflow:auto;
+      white-space:pre;
+    }
+    .ki-note-green{border-left:6px solid #0f766e;background:#ecfdf5;padding:12px 14px;border-radius:8px;margin:14px 0;color:#113f36}
+    .ki-note-amber{border-left:6px solid #d97706;background:#fff7ed;padding:12px 14px;border-radius:8px;margin:14px 0;color:#4a2a0a}
+    .ki-source-list li{margin-bottom:8px}
+    @media(max-width:860px){
+      .ki-hero,.ki-grid,.ki-grid.three,.ki-flow{grid-template-columns:1fr}
+      .ki-figure img{max-height:none}
+    }
+    .ki-panel, .ki-step, .ki-mini-table { color: #243244; }
+    .ki-panel, .ki-step, .ki-mini-table, .ki-note-green, .ki-note-amber { --wb-muted: #526270; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ki-kicker { color: #67e8d5; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"KI-Grundlagen · Musterlösung","sectionTitle":"Künstliche Intelligenz · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Was ist eigentlich Künstliche Intelligenz?</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_start_reveal"><h3>Was kannst du danach?</h3><p>Eine gute Definition grenzt Systeme nachvollziehbar ab, bleibt möglichst zeitlich stabil und passt zum Zweck: In der Informatik interessiert oft die technische Problemlösung, in der Politik zusätzlich das Risiko für Menschen und Gesellschaft.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="KI-Effekt"><h1>Der KI-Effekt</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_effekt_mcq"><h3>Check: Welche Aussage passt zum KI-Effekt?</h3><h4>Welche Aussage bezieht sich auf den sogenannten KI-Effekt?</h4><p>Als KI wird häufig nur neuartige oder noch nicht selbstverständlich gewordene Informationstechnik bezeichnet.</p><p>Der KI-Effekt meint, dass erfolgreiche und alltägliche Lösungen oft aus der KI-Schublade herausfallen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_effekt_verify"><h3>Wahr oder falsch?</h3><p><b>Wahr.</b> Ein System kann früher als KI gegolten haben und später als gewöhnliche Software wahrgenommen werden.</p><p>Genau das ist der KI-Effekt: Die Kategorie wandert, sobald eine Fähigkeit technisch beherrscht und alltäglich wird.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Perspektiven"><h1>Vier Perspektiven auf KI</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_perspektiven_cat"><h3>Sortiere die Perspektiven</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Menschlich orientiert</td><td>Ein Chatbot soll im Gespräch nicht von einem Menschen unterscheidbar sein.</td></tr><tr><td>Menschlich orientiert</td><td>Ein Modell soll menschliche Wahrnehmung möglichst realistisch nachbilden.</td></tr><tr><td>Rational orientiert</td><td>Ein System leitet Aussagen aus Regeln und Fakten logisch ab.</td></tr><tr><td>Rational orientiert</td><td>Ein Agent wählt die Handlung mit der besten erwarteten Zielerreichung.</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_perspektiven_cloze"><h3>Sicherung: Perspektiven einsetzen</h3><p>Die <b>rational</b> orientierte Perspektive fragt weniger danach, ob ein System <b>menschlich</b> wirkt. Beim rationalen Denken steht im Mittelpunkt, ob Schlüsse <b>logisch</b> nachvollziehbar sind. Beim rationalen Handeln zählt, ob das Verhalten <b>zweckmäßig</b> ist.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="KI-Systeme"><h1>Was ist ein KI-System?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="p2_0"><h3>Zuordnung: KI-Typen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Ein Schachprogramm schlägt Weltmeister, kann aber keine E-Mails schreiben.</td><td>Schwache KI (ANI)</td></tr><tr><td>Das KI-System schreibt E-Mails, fasst Texte zusammen und hilft beim Programmieren. Es versteht die Welt allerdings nicht wie ein Mensch.</td><td>Allzweck-KI (GPAI)</td></tr><tr><td>Eine KI erlernt neue Berufe, überträgt Wissen zwischen Domänen und löst unbekannte Aufgaben wie ein Mensch.</td><td>Starke KI (AGI)</td></tr><tr><td>Eine KI optimiert weltweit Verkehr, Energie und Forschung und findet Lösungen, die Menschen nicht mehr nachvollziehen können.</td><td>Künstliche Superintelligenz (ASI)</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Problemlösen"><h1>KI-Systeme als Problemlöser</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_ml_order"><h3>Bring den ML-Ablauf in die richtige Reihenfolge</h3><ol><li>Trainingsbeispiele sammeln und vorbereiten.</li><li>Ein zunächst unvollkommenes Modell mit einem Lernalgorithmus anpassen.</li><li>Fehler oder Rückmeldungen nutzen, um das Modell iterativ zu verbessern.</li><li>Das trainierte Modell an neuen Eingaben anwenden.</li><li>Die Ausgabe kritisch anhand von Qualitätskriterien bewerten.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_ansatz_cat"><h3>Programmiert, wissensbasiert oder gelernt?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Keine KI</td><td>Taschenrechner</td></tr><tr><td>Keine KI</td><td>Industrieroboter mit festen Abläufen</td></tr><tr><td>Wissensbasierte KI</td><td>Theorembeweiser</td></tr><tr><td>Wissensbasierte KI</td><td>Fahrplanauskunft mit Regeln und Verbindungen</td></tr><tr><td>Wissensbasierte KI</td><td>Regelbasiertes Schachprogramm</td></tr><tr><td>Maschinelles Lernen</td><td>Übersetzer wie DeepL oder Google Translate</td></tr><tr><td>Maschinelles Lernen</td><td>System zur Erkennung von Katzen- und Hundebildern</td></tr><tr><td>Maschinelles Lernen</td><td>Musikempfehlung aus Nutzungsdaten</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Maschinelles Lernen"><h1>Warum Maschinelles Lernen?</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_ml_reveal"><h3>Fehler finden</h3><p>Ein ML-System verarbeitet Muster in Daten und erzeugt eine Ausgabe mit bestimmter statistischer Qualität. Daraus folgt nicht automatisch, dass es den Begriff Katze wie ein Mensch versteht, Erfahrungen hat oder die Welt kausal erklären kann.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_ml_essay"><h3>Reflexion: Wann ist ML sinnvoll?</h3><span class="solution-label">Eine mögliche Antwort</span><p>Für eine Berechnung mit eindeutig bekannten Regeln, etwa die Fläche eines Rechtecks, bevorzuge ich handprogrammierten Code. Die Regel ist nachvollziehbar und das Ergebnis lässt sich direkt prüfen. Für die Klassifikation abwechslungsreicher Fotos sind vollständige Wenn-Dann-Regeln dagegen schwer zu formulieren. Dort kann ein ML-Modell aus beschrifteten Trainingsdaten Muster lernen. Seine Qualität muss ich mit unabhängigen Testdaten und einem passenden Fehlermaß untersuchen. Ein kleiner Fehlerwert allein genügt nicht, wenn bestimmte Gruppen systematisch schlechter erkannt werden. Bei hohen Anforderungen an Transparenz kann eine regelbasierte Lösung trotz geringerer Flexibilität vorteilhaft sein.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Wissensbasierte KI"><h1>Wissensbasierte KI und Prolog</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_prolog_trace"><h3>Ablaufspur: Prolog-Anfrage verfolgen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Schritt</th><th scope="col">Was prüft Prolog?</th><th scope="col">Belegung / Ergebnis</th><th scope="col">Begründung</th></tr></thead><tbody><tr><td>1</td><td>mutter(X, apollo) passt zum Regelkopf mutter(PERSON, KIND).</td><td>PERSON=X, KIND=apollo</td><td>Regelkopf</td></tr><tr><td>2</td><td>Prüfe kind(apollo, X).</td><td>X=zeus oder X=leto</td><td>Fakten</td></tr><tr><td>3</td><td>Prüfe weiblich(X).</td><td>X=leto</td><td>weiblich(leto)</td></tr><tr><td>4</td><td>Antwort auf die Anfrage.</td><td>X=leto</td><td>leto ist weiblich</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Prolog anwenden"><h1>Eine Wissensbasis befragen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_prolog_cloze"><h3>Sicherung: Prolog-Grammatik</h3><p>Ein <b>Fakt</b> beschreibt eine Aussage, die als wahr angenommen wird. Eine <b>Regel</b> leitet neues Wissen aus Bedingungen ab. Eine <b>Variable</b> beginnt in Prolog groß, eine <b>Konstante</b> beginnt klein. Fakten und Regeln enden mit einem <b>Punkt</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="p2_1"><h3>Zuordnung: Frage und Prolog-Anfrage</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Ist Athene das Kind von Zeus?</td><td>?- kind(athene, zeus).</td></tr><tr><td>Wer ist das Kind von Hades?</td><td>?- kind(X, hades).</td></tr><tr><td>Wer ist die Mutter von Apollo?</td><td>?- mutter(X, apollo).</td></tr><tr><td>Wer sind die Enkel von Cronus?</td><td>?- opa(cronus, X).</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_prolog_essay"><h3>Interpretation: Warum antwortet Prolog falsch?</h3><span class="solution-label">Eine mögliche Antwort</span><p>kind(alexiares, heracles) kann als Fakt gespeichert sein. Die Vaterregel verlangt zusätzlich, dass heracles als männlich bekannt ist. Fehlt maennlich(heracles), kann Prolog diese Teilbedingung nicht beweisen; vater(heracles, alexiares) ist aus dieser Wissensbasis nicht ableitbar. Die Ausgabe false bedeutet hier einen gescheiterten Beweis und keine unabhängig geprüfte Aussage über die reale Person.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Grenzen und Zusammenfassung"><h1>Grenzen, Überblick und Transfer</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_abschluss_mcq"><h3>Abschlusscheck</h3><h4>Welche Aussagen passen zu einer informatischen Sicht auf KI-Systeme?</h4><p>Rationales Handeln bewertet, ob ein System seine Ziele unter Bedingungen zweckmäßig erreicht.; Maschinelles Lernen erzeugt oder verbessert ein Modell mithilfe von Daten.; Wissensbasierte KI kann aus expliziten Fakten und Regeln neue Aussagen ableiten.</p><p>KI-Systeme müssen nicht menschlich sein. Entscheidend sind je nach Perspektive nachvollziehbares Schließen, zweckmäßiges Handeln oder datengetriebene Modellbildung.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_abschluss_verify"><h3>Letzte Selbstkontrolle</h3><p><b>Falsch.</b> Nur Systeme mit maschinellem Lernen sind KI-Systeme.</p><p>Auch wissensbasierte, regel- und logikbasierte Systeme können KI-Systeme sein. Maschinelles Lernen ist aktuell sehr wichtig, aber nicht der einzige KI-Ansatz.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_transfer_essay"><h3>Transfer: Entscheide begründet</h3><span class="solution-label">Eine mögliche Antwort</span><p>Beispiel: Ein Schulassistent soll aus einem Stundenplan anzeigen, welches Fach als Nächstes beginnt. Ich bevorzuge eine regelbasierte Lösung: Datum und Uhrzeit werden mit den gespeicherten Unterrichtszeiten verglichen. Die Regeln sind nachvollziehbar, und Grenzfälle wie Ferien oder Vertretungen lassen sich ausdrücklich modellieren. Ein ML-Modell wäre dafür unnötig und könnte vermeidbare statistische Fehler erzeugen. Als Qualitätskriterien prüfe ich korrekte Zeitgrenzen, Aktualität der Daten und Datenschutz. Für frei formulierte Nachfragen könnte ein Sprachmodell ergänzen, aber die Stundenplandaten müssten weiterhin aus einer verlässlichen Quelle stammen.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Quellen"><h1>Quellen &amp; Weiterforschen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ki_quellen_reveal"><h3>Abgabe-Hinweis</h3><p>Klicke in der Seitenleiste auf Zusammenfassung &amp; abgeben. Die Seite erstellt dann eine Ergebnisseite mit deinen Checks, Zuordnungen und Freitextantworten.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"kuenstliche-intelligenz-schatulle43.html__"});</script>
+</body>
+</html>

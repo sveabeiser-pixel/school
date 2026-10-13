@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="elektrische-felder.html">
+<meta name="musterloesung-source-sha256" content="d8a96eddf5cebc1449d689468759dc3ac78d77d4d2e796537dfb85c6d28e8eca">
+<title>Elektrische Felder und Ladungen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+<style>
+    .ef-figure{margin:0 auto;max-width:520px}
+    .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
+    .ef-caption{font-size:.92rem;color:#555;margin-top:6px}
+    .ef-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+    .ef-img-grid{display:grid;grid-template-columns:minmax(220px,520px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .ef-img-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
+    .ef-formula{font-size:1.15rem;font-weight:700}
+    .ef-observation-scroll{width:100%;max-width:100%;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .ef-observation-table{width:100%;min-width:660px;border-collapse:collapse;margin:12px 0}
+    .ef-observation-table th,.ef-observation-table td{padding:10px 12px;border:1px solid rgba(0,0,0,.18);text-align:left;vertical-align:top}
+    .ef-observation-table th{background:rgba(49,95,157,.1)}
+    .ef-influence-chain{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;margin:14px 0}
+    .ef-influence-step{border:1px solid rgba(0,0,0,.16);border-radius:6px;padding:12px;background:#fff}
+    .ef-influence-step strong{display:block;margin-bottom:5px;color:#214f87}
+    @media (max-width:760px){
+      .ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}
+      .ef-influence-chain{grid-template-columns:1fr 1fr}
+      .ef-observation-table{font-size:.94rem}
+    }
+    @media (max-width:600px){.ef-influence-chain{grid-template-columns:1fr}}
+    .ef-influence-step { color: #172033; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;overflow-wrap:anywhere}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 8px}
+.solution-block h4{font-size:16px;line-height:1.45;margin:18px 0 8px}
+.course-kicker,.solution-label{display:block;font-weight:700;color:var(--wb-muted);margin-bottom:8px}
+.course-kicker{font-size:20px;color:var(--wb-text)}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:420px;border-collapse:collapse;color:var(--wb-text);font-size:14px}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+@media(max-width:600px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Elektrische Felder · Musterlösung","sectionTitle":"Ladung, Feldstärke, Feldlinien · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default"}</script>
+<section data-wb-page="1" data-wb-page-title="Start">
+<div class="course-kicker">Musterlösung</div>
+<h1>Elektrische Felder: Warum Ladungen Kräfte ausüben</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_start_reveal"><h3>Leitfrage</h3>
+<p>Ladungen wirken aufeinander durch Kräfte. Um diese Wirkung an jedem Ort beschreiben zu können, benutzt man das Modell des elektrischen Feldes.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Ladungen">
+<h1>Ladungen: positiv, negativ, neutral</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_verify_coulomb_abstand"><h3>Stopp &amp; check: Abstandsgesetz</h3>
+<p><b>Falsch.</b> Wird der Abstand zweier unveränderter Punktladungen verdoppelt, halbiert sich der Betrag der elektrischen Kraft.</p><p>Falsch. Wegen F ∝ 1/r² führt der doppelte Abstand zum Faktor 1/2² = 1/4. Der Kraftbetrag sinkt also auf ein Viertel.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_cloze_ladungen"><h3>Sicherung: Ladungsbegriffe</h3>
+<p>Ein Körper mit mehr Elektronen als Protonen besitzt einen <b>Elektronenüberschuss</b>. Fehlen Elektronen, spricht man von <b>Elektronenmangel</b>. Wenn sich positive und negative Ladungen nach außen ausgleichen, ist der Körper <b>neutral</b>. Anziehung oder Abstoßung zwischen Ladungen ist eine <b>Wechselwirkung</b>. Die Einheit der Ladungsmenge ist <b>Coulomb</b>.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Nachweis">
+<h1>Ladungen nachweisen: Elektroskop und Ladungserhaltung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_order_elektroskop"><h3>Ablauf: Elektroskop lädt sich auf</h3>
+<ol><li>Ein geladener Körper berührt oder beeinflusst das Elektroskop.</li><li>Ladung wird auf leitende Teile des Elektroskops übertragen oder verschoben.</li><li>Zeiger und Halterung tragen gleichnamige Ladung.</li><li>Gleichnamige Ladungen stoßen sich ab.</li><li>Der Zeiger schlägt aus.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_essay_elektroskop"><h3>Aufgabe: Elektroskop erklären</h3>
+<span class="solution-label">Eine mögliche Antwort</span><p>Das Elektroskop besitzt eine leitende Metallplatte, eine leitende Halterung und einen beweglichen Zeiger, die gegenüber dem Gehäuse isoliert sind. Bei Berührung mit einem geladenen Körper wird Ladung übertragen und auf diese Metallteile verteilt. Zeiger und Halterung tragen dadurch gleichnamige Ladungen. Ihre Abstoßung lässt den Zeiger ausschlagen. Bei bloßer Annäherung eines geladenen Körpers erfolgt stattdessen Influenz: Die Ladungen im Elektroskop verschieben sich, ohne dass dessen Gesamtladung geändert werden muss.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Trennung">
+<h1>Ladungstrennung und elektrische Energie</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_verify_energie"><h3>Wahr oder falsch?</h3>
+<p><b>Wahr.</b> Wenn ungleichnamige Ladungen voneinander getrennt werden, muss Energie aufgebracht werden.</p><p>Richtig. Die Ladungen ziehen sich an. Trennen bedeutet daher: Du arbeitest gegen die elektrische Kraft und erhöhst die elektrische Energie des Systems.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_batterie"><h3>Alltagsbezug</h3>
+<p>In der Batterie sind Ladungen getrennt. Zwischen Plus- und Minuspol steht elektrische Energie zur Verfügung. Wenn du die Pole über eine Lampe verbindest, wird diese Energie in Licht und Wärme umgewandelt.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Influenz">
+<h1>Influenz: Ladungen reagieren ohne Berührung</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_trace_metallring"><h3>Ablaufspur: Was geschieht im Metallring?</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Schritt</th><th scope="col">Nahe Ringseite</th><th scope="col">Ferne Ringseite</th><th scope="col">Gesamtladung</th></tr></thead><tbody><tr><td>Platte weit entfernt</td><td>neutral</td><td>neutral</td><td>0</td></tr><tr><td>Positive Platte nahe</td><td>negativ</td><td>positiv</td><td>0</td></tr><tr><td>Platte wieder entfernt</td><td>neutral</td><td>neutral</td><td>0</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_homogenes_feld"><h3>Stopp &amp; check: Wird ein neutraler Ring immer angezogen?</h3>
+<p>Influenz bedeutet zunächst nur Ladungstrennung. In einem ideal homogenen Feld können sich die Kräfte auf die getrennten Ladungsbereiche gegenseitig aufheben. Eine resultierende Anziehung entsteht im inhomogenen Feld, weil auf die nähere Seite eine stärkere Kraft wirkt als auf die weiter entfernte Seite. Das ist bei einer realen endlichen Platte besonders am Rand der Fall.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_mcq_ring_schirm"><h3>Prognose: Ring, Glas und Metallgitter</h3>
+<h4>Eine positiv geladene Platte wird einem neutralen Metallring genähert. Welche Aussagen stimmen?</h4><p>Elektronen sammeln sich bevorzugt auf der nahen Ringseite.; Die ferne Ringseite besitzt Elektronenmangel.; Nach Entfernen der Platte verteilt sich die Ladung wieder gleichmäßig.</p><p>Die Platte trennt Ladungen im Ring, überträgt aber ohne Kontakt und Erdung keine Nettoladung auf ihn.</p><h4>Was erwartest du beim Einschieben einer Glasplatte zwischen geladene Platte und Metallring?</h4><p>Das Feld und damit die Ladungsverteilung im Ring verändern sich, aber Glas schirmt nicht wie ein Metall ab.</p><p>In Glas sind die Ladungen gebunden. Ein elektrisches Feld kann deshalb durch die Platte wirken, wird aber durch das Material verändert.</p><h4>Welche Veränderungen verbessern die elektrostatische Abschirmung durch ein Metallgitter?</h4><p>Das Gitter erden.; Die Maschen kleiner machen.; Die leitende Abschirmung möglichst geschlossen ausführen.</p><p>Eine geerdete, möglichst geschlossene leitende Hülle bietet die deutlichste Abschirmung. Große Öffnungen lassen stärkere Restfelder zu.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_0"><h3>Finde Paare: Versuch und Erklärung</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Neutraler Metallring an positiver Platte</td><td>Elektronenüberschuss auf der nahen Ringseite</td></tr><tr><td>Glasplatte zwischen Platte und Ring</td><td>Feld wird verändert, aber nicht leitend abgeschirmt</td></tr><tr><td>Geerdetes Metallgitter</td><td>Feldwirkung hinter dem Gitter wird stark reduziert</td></tr><tr><td>Geladene Metallspitze</td><td>Starkes Feld kann Luft ionisieren</td></tr><tr><td>Elektrostatischer Propeller</td><td>Rückstoß des Ionenwinds erzeugt ein Drehmoment</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_essay_influenz_transfer"><h3>Transfer: Beobachtung vorhersagen und begründen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Negative Platte und neutraler Ring</h4><p>Elektronen werden von der nahen Ringseite auf die ferne Seite verdrängt. Nahe Seite: Elektronenmangel, positiv; ferne Seite: Elektronenüberschuss, negativ. Die Gesamtladung bleibt null. Im inhomogenen Feld einer endlichen Platte ist die Anziehung der nahen positiven Seite stärker als die Abstoßung der fernen negativen Seite: Der Ring wird zur Platte gezogen. Im ideal homogenen Feld ist die resultierende Kraft auf den neutralen Ring dagegen null.</p><h4>2. Glas und geerdetes Metallgitter</h4><p>Glas wird polarisiert und verändert das Feld, schirmt es aber nicht leitend ab; der Ring zeigt weiterhin Influenz. Im geerdeten Metallgitter können Elektronen umverteilt werden und mit der Erde ausgetauscht werden. Dadurch sinkt die Feldstärke dahinter stark und die Wirkung auf den Ring nimmt ab. Große Maschen lassen Restfelder hindurch, kleinere Maschen verbessern die Abschirmung.</p><h4>3. Flamme und Propeller</h4><p>Erstens wirkt die elektrische Kraft direkt auf die Elektronen und Ionen der heißen Flamme. Wenn die sichtbare Bewegung von positiven Ionen dominiert wird, wird die Flamme von einem negativen Stab angezogen und von einem positiven abgestoßen. Zweitens kann eine hohe Feldstärke an einer Metallspitze Luft ionisieren; beschleunigte Ionen nehmen durch Stöße neutrale Luft mit. Dieser Ionenwind kann die Flamme seitlich drücken, unabhängig davon, ob reine Ladungsanziehung sie zum Stab ziehen würde. Bei gleichsinnig gebogenen Propellerspitzen erzeugt der Rückstoß des Ionenwinds ein Drehmoment: Der Propeller dreht sich entgegen der Ausströmrichtung.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_influenz_sicherung"><h3>Jetzt hast du das gelernt</h3>
+<p>Elektrische Felder üben Kräfte auf bewegliche Ladungen aus. Im Metall führt das zur Influenz, im ionisierten Gas zur Bewegung von Ionen und Elektronen. An scharfen Spitzen kann die Feldstärke so groß werden, dass Luft ionisiert wird. Der daraus entstehende Ionenwind kann eine Flamme bewegen und über Rückstoß einen Propeller antreiben.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-p5-abschirm-simulation"><h3>Simulation: Metallgitter oder geschlossene Hülle</h3>
+<p>Bei größeren Gitteröffnungen erreicht ein stärkeres Restfeld die Probe hinter dem Gitter; kleinere Öffnungen schwächen es stärker. Eine geschlossene leitende Hülle hat bei elektrostatischem Gleichgewicht und ohne innere Ladung E = 0 in der Höhlung. Erdung legt das Potenzial fest und erlaubt Ladungsaustausch; sie ist für diese Feldfreiheit einer geschlossenen Hülle nicht zwingend nötig.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Kraft">
+<h1>Elektrische Kraft und Feldstärke</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_mcq_rechnen"><h3>Rechencheck: Kraft und Ladung</h3>
+<h4>Ein Ladungslöffel trägt q = 10 nC und befindet sich in einem Feld mit E = 10 kN/C. Wie groß ist der Betrag der Kraft?</h4><p>100 µN</p><p>10 nC = 1,0 · 10⁻⁸ C und 10 kN/C = 1,0 · 10⁴ N/C. Also F = 1,0 · 10⁻⁴ N = 100 µN.</p><h4>Welche Ladung erfährt im gleichen Feld E = 10 kN/C eine Kraft von 10 µN?</h4><p>1 nC</p><p>q = F / E = 10 · 10⁻⁶ N / 10⁴ N/C = 1,0 · 10⁻⁹ C = 1 nC.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Feld">
+<h1>Das elektrische Feld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_feldlabor"><h3>Stopp &amp; check: Linien vergleichen</h3>
+<p>Beim Dipol verlaufen gekrümmte Feldlinien von der positiven zur negativen Ladung; die Äquipotenziallinien schneiden sie rechtwinklig. Zwischen zwei langen, entgegengesetzt geladenen Platten verlaufen die Feldlinien im mittleren Bereich nahezu parallel. Dort sind auch die Äquipotenziallinien nahezu parallel zu den Platten. An den Plattenenden treten Randfelder auf.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_1"><h3>Paare: Feldlinien verstehen</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Feldlinien liegen dicht.</td><td>Das Feld ist dort stärker.</td></tr><tr><td>Feldlinien zeigen nach außen.</td><td>Das passt zu einer positiven Ladung.</td></tr><tr><td>Eine negative Probeladung wird eingesetzt.</td><td>Die Kraft zeigt entgegen der Feldrichtung.</td></tr><tr><td>Feldlinien sind parallel.</td><td>Parallelität allein genügt nicht: Bei zusätzlich gleicher Feldliniendichte ist das Feld in diesem Bereich homogen.</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-p7-feldlabor"><h3>Feldlabor: Anordnungen und Linien</h3>
+<p>Eine positive Einzelquelle erzeugt nach außen, eine negative nach innen gerichtete radiale Feldlinien. Bei +Q und −Q verbinden gekrümmte Linien beide Quellen. Zwischen langen entgegengesetzt geladenen Platten sind Feldlinien nahezu parallel und gleich dicht; Randfelder weichen davon ab. Äquipotenziallinien stehen überall, wo E ≠ 0 ist, senkrecht zu Feldlinien. Beim Verschieben einer Ladung ändert sich durch Superposition das gesamte Feldbild.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Feldlinienbilder">
+<h1>Feldlinienbilder: Radialfeld, Dipolfeld und homogenes Feld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_cat_felder"><h3>Sortiere Feldtypen</h3>
+<div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Radialfeld</td><td>Feld einer einzelnen Punktladung</td></tr><tr><td>Dipolfeld</td><td>Feldlinien zeigen von einer positiven zu einer negativen Ladung</td></tr><tr><td>homogenes Feld</td><td>Feldlinien sind im Inneren parallel und gleich dicht</td></tr><tr><td>homogenes Feld</td><td>Typisches Modell für den Plattenkondensator</td></tr><tr><td>Radialfeld</td><td>Feldlinien gehen bei positiver Ladung radial nach außen</td></tr><tr><td>Dipolfeld</td><td>Zwei entgegengesetzte Ladungen bestimmen das Feldbild</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Faraday">
+<h1>Faradayscher Käfig: Warum Metall abschirmt</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_order_faraday_ausgleich"><h3>Bringe den Ladungsausgleich in die richtige Reihenfolge</h3>
+<ol><li>Ein äußeres elektrisches Feld wirkt auf die beweglichen Elektronen des Metalls.</li><li>Elektronen verschieben sich und erzeugen Influenzladungen auf der Außenfläche.</li><li>Das Feld der Influenzladungen wirkt dem äußeren Feld im Leiter entgegen.</li><li>Im elektrostatischen Gleichgewicht gilt im Metall und in der ladungsfreien geschlossenen Höhlung E = 0.</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_mcq_faraday"><h3>Check: Faraday-Käfig</h3>
+<h4>Warum schützt ein geschlossenes Auto aus Metall bei einem Gewitter?</h4><p>Weil Metall elektrische Felder im Inneren abschirmen kann.</p><p>Die leitende Außenhaut führt den Strom außen herum und schirmt den Innenraum ab. Die Gummireifen sind nicht die entscheidende Ursache.</p><h4>Welche Aussagen gelten für eine geschlossene leitende Hülle in einem äußeren statischen Feld?</h4><p>Ohne Ladung in der Höhlung ist das elektrische Feld dort null.; Influenzladungen befinden sich auf der äußeren Oberfläche.; Im Metall der Hülle gilt im elektrostatischen Gleichgewicht E = 0.</p><p>Die Erdung ist für die Feldfreiheit der ladungsfreien Höhlung nicht erforderlich. Sie legt das Potenzial fest und erlaubt Ladungsaustausch.</p><h4>Wann ist das Innere nicht vollständig feldfrei?</h4><p>Wenn sich eine Ladung in der Höhlung befindet.; In unmittelbarer Nähe einer großen Öffnung im Käfig.; Wenn statt einer geschlossenen Hülle ein grobes Gitter verwendet wird.</p><p>Innere Ladungen erzeugen ein Feld in der Höhlung. Öffnungen und grobe Gitter ermöglichen Restfelder. Eine fehlende Erdung allein hebt die elektrostatische Abschirmung einer geschlossenen Hülle nicht auf.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_metall"><h3>Fehler finden</h3>
+<p>Die Ladungen verschwinden nicht. Sie verschieben sich auf der Metalloberfläche so, dass ihr Feld das äußere Feld im Inneren aufhebt. Das ist ein Beispiel für Influenz und Ladungserhaltung. Befindet sich jedoch eine Ladung in der Höhlung, ist diese Höhlung nicht feldfrei.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-p9-faraday-simulation"><h3>Simulation: Gitter, Hülle und Erdung</h3>
+<p>Die geschlossene Hülle schirmt die ladungsfreie Höhlung vollständig gegen ein äußeres statisches Feld ab. Beim Gitter wächst das Restfeld nahe den Öffnungen, wenn die Öffnungen größer werden. Ein geerdeter Leiter besitzt das festgelegte Erdpotenzial; ein isolierter Leiter kann ein anderes konstantes Potenzial besitzen. Unterschiedliches Potenzial bedeutet nicht automatisch ein Feld in der geschlossenen Höhlung.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Rechnen">
+<h1>Rechenaufgaben: Kraft, Ladung und Feldstärke</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_mcq_rechnen_2"><h3>Rechencheck: Feldstärken vergleichen</h3>
+<h4>Kondensator 1: q₁ = 1,0 nC, F₁ = 0,10 mN. Kondensator 2: q₂ = 3,0 nC, F₂ = 0,20 mN. Welche Feldstärke ist größer?</h4><p>Kondensator 1 hat die größere Feldstärke.</p><p>E1 = 0,10 mN / 1,0 nC = 1,0 · 10^5 N/C. E2 = 0,20 mN / 3,0 nC ≈ 6,7 · 10^4 N/C. Kondensator 1 hat also die größere Feldstärke.</p><h4>Ein Wassertropfen mit q = 10 nC befindet sich in einem Gewitterfeld mit E = 3,2 MN/C. Wie groß ist die Kraft?</h4><p>0,032 N</p><p>F = q · E = 10 · 10⁻⁹ C · 3,2 · 10⁶ N/C = 3,2 · 10⁻² N = 0,032 N.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_essay_rechnen"><h3>Rechenaufgaben mit vollständigem Weg</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Proportionalitätsnachweis</h4><p>Die Quotienten F/q sind 1,80·10⁵; 1,71·10⁵; 1,92·10⁵ und 1,96·10⁵ N/C. Sie sind annähernd, aber nicht exakt gleich. Die Messpunkte (5 nC; 0,9 mN), (7 nC; 1,2 mN), (13 nC; 2,5 mN), (25 nC; 4,9 mN) liegen näherungsweise auf einer Ursprungsgeraden. Damit sind Quotientenvergleich und F-q-Diagramm zwei Nachweise einer näherungsweisen Proportionalität; ohne Fehlerangaben lässt sich die statistische Vereinbarkeit nicht weiter beurteilen. Eine Ausgleichsgerade durch den Ursprung liefert E = Σ(qᵢFᵢ)/Σqᵢ² ≈ <b>1,93·10⁵ N/C</b>.</p><h4>2. Ping-Pong-Ball</h4><p>m = 0,005 kg, |q| = 3,0·10⁻¹⁰ C. Zum Schweben gilt |q|E = mg, also <b>E = 1,64·10⁸ V/m</b>. Bei negativer Ladung muss das Feld nach unten zeigen, damit die Kraft nach oben wirkt. Mit der tatsächlichen Plattengeometrie wäre U = Ed erforderlich, bei d = 1 cm beispielsweise 1,64 MV. Diese Feldstärke liegt weit über der typischen Durchschlagsfeldstärke von Luft von etwa 3·10⁶ V/m. Im gewöhnlichen luftgefüllten Schul-Kondensator ist Schweben mit diesen Angaben daher nicht erreichbar.</p><h4>3. Senkrechte Kraftvektoren</h4><p>Fres = √(F₁²+F₂²) = √(50²+100²) µN = <b>111,8 µN</b>. Eres = Fres/q = 111,8·10⁻⁶ N/(5·10⁻⁹ C) = <b>2,24·10⁴ N/C</b>. Die Richtung ist um arctan(100/50) = 63,4° gegen F₁ in Richtung F₂ geneigt. Da q positiv ist, zeigt E⃗ in dieselbe Richtung.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_pingpong"><h3>Hinweis: Schweben im Kondensator</h3>
+<p>Zum Schweben müssen Gewichtskraft und elektrische Kraft entgegengesetzt gleich groß sein: |q|E = mg. Mit m = 5 g und q = −0,3 nC folgt E = 1,64·10⁸ V/m nach unten. Dieser Wert ist in einem normalen Luftkondensator wegen des elektrischen Durchschlags nicht erreichbar.</p></article>
+</section>
+<section data-wb-page="11" data-wb-page-title="Zeichnen">
+<h1>Zeichen- und Analyseaufgaben zu Feldlinien</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_mcq_aufgaben"><h3>Aufgabencheck</h3>
+<h4>Im Bild liegen die Feldlinien bei Punkt A dichter als bei Punkt B. Was folgt daraus?</h4><p>Das elektrische Feld ist bei A stärker.</p><p>Feldliniendichte ist ein Hinweis auf Feldstärke: dichter bedeutet stärker.</p><h4>Ein Elektron wird in ein Feld gesetzt. Wie verhält sich seine Kraft im Vergleich zur Feldrichtung?</h4><p>Die Kraft zeigt entgegen der Feldrichtung.</p><p>Das elektrische Feld ist über die Kraft auf eine positive Probeladung definiert. Ein Elektron ist negativ geladen, daher wirkt die Kraft entgegengesetzt.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_essay_zeichen"><h3>Zeichenaufgaben und Begründungen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Negative Punktladung</h4><p>Alle Feldlinien verlaufen radial zur Ladung hin; eine Skizze hat ringsum gleichmäßig verteilte, nach innen gerichtete Pfeile. Bei −2Q bleibt die Form unverändert. Bei gleichem Abstand verdoppelt sich E = k|Q|/r²; bei gleicher zeichnerischer Skalierung zeichnest du doppelt so viele Feldlinien.</p><h4>2. Dreieck und Quadrupol</h4><p>Drei gleiche positive Ladungen an den Ecken eines gleichseitigen Dreiecks erzeugen ein Feld mit dreizähliger Drehsymmetrie (120°) und drei Spiegelachsen. Linien beginnen an allen drei Ladungen, weichen voneinander aus und laufen ins Unendliche. Im Schwerpunkt gilt E⃗ = 0. Bei drei negativen Ladungen kehren sich die Pfeile um. Ein möglicher Quadrupol besteht aus +Q links oben und rechts unten sowie −Q rechts oben und links unten an einem Quadrat. Die Linien verbinden benachbarte Plus- und Minusladungen. Es gibt 180°-Drehsymmetrie und Spiegelachsen entlang der Diagonalen; im Mittelpunkt ist E⃗ = 0. Eine 90°-Drehung vertauscht Plus und Minus, ist also keine Symmetrie der gerichteten Feldlinien.</p><h4>3. Metalloberfläche</h4><p>Für eine positive Punktladung vor einer geerdeten ebenen Metallfläche entspricht das Feld außerhalb dem einer zweiten, spiegelbildlich angeordneten negativen Bildladung. Feldlinien gehen von +Q aus und enden senkrecht auf der Metallfläche; im Metall ist E = 0. Eine tangentiale Feldkomponente würde Elektronen entlang der Oberfläche bewegen und dem elektrostatischen Gleichgewicht widersprechen. Bei ungeerdetem Metall muss zusätzlich die vorgegebene Gesamtladung berücksichtigt werden.</p><h4>4. Ungleiche Ladungen</h4><p>Bei +3Q und −Q beginnen dreimal so viele Linien an der positiven wie an der negativen Ladung enden. Ein Drittel verbindet die Ladungen, zwei Drittel laufen ins Unendliche. Bei gleichem sehr kleinem Abstand zur jeweiligen Ladung ist das Feld nahe +3Q ungefähr dreimal stärker. Das Bild ist asymmetrisch; die gesamte Feldstärke entsteht durch Vektoraddition beider Beiträge. Streng genommen ist dies wegen der Nettoladung +2Q kein reines Dipolfeld.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_essay_feldbild_ab"><h3>Aufgabe: Feldlinienbild mit A und B auswerten</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>a. Ladungen und Pfeile</h4><p>Die linke Kugel ist positiv: Pfeile zeigen von ihr weg. Die rechte Kugel ist negativ: Feldlinien von links enden an ihr. Die schwarzen Pfeile zeigen die lokale elektrische Feldrichtung, also die Kraftrichtung für eine positive Probeladung.</p><h4>b. Ladungsbeträge</h4><p>Die linke Kugel trägt die größere Ladung, weil sehr viel mehr Linien von ihr ausgehen, als an der rechten Kugel enden. Die überschüssigen Linien laufen nach außen. Die rechte Kugel besitzt betragsmäßig die kleinere negative Ladung; insgesamt ist die Anordnung positiv geladen.</p><h4>c. Punkte A und B</h4><p>In A liegen die Linien wesentlich dichter, daher ist |E(A)| größer als |E(B)|. Die Feldrichtung ist jeweils tangential zur örtlichen Linie: in A nach links und leicht nach oben, in B annähernd nach rechts und leicht nach unten. Die genaue Richtung ergibt sich aus der Krümmung, nicht aus einer geraden Verbindung zur nächstliegenden Kugel.</p><h4>d. Elektron in B</h4><p>Ein anfänglich ruhendes Elektron wird entgegen E⃗ beschleunigt, im Bild zunächst nach links und leicht nach oben. Die weitere Bahn folgt nicht notwendig einer Feldlinie, da das Elektron Trägheit besitzt und Feldlinien die momentane Kraftrichtung anzeigen.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef_reveal_rechnen"><h3>Hinweis zur Proportionalitätsaufgabe</h3>
+<p>Du hast zwei Wege: Zeichne ein F-q-Diagramm und prüfe, ob eine Ursprungsgerade zu den Messpunkten passt. Oder berechne für jedes Wertepaar den Quotienten F/q. Sind die Quotienten annähernd gleich, ist das ein Hinweis auf Proportionalität.</p></article>
+</section>
+<section data-wb-page="12" data-wb-page-title="Fortsetzung">
+<h1>Weiter zu Potenzial und Kondensator</h1>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"elektrische-felder-briefkasten73.html__"});</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "source":"nwt/arduino-schleifen-ifelse.html","output":"nwt/arduino-schleifen-ifelse-blattgold83.html","bookTitle":"Schleifen · Musterlösung",
+  "answers":{
+    "li-essay-transfer":"<p>Vor jedem Durchlauf prüft die while-Schleife, ob der gespeicherte Wert temperatur kleiner als 30 ist. Bei wahr wird der Rumpf betreten und ein neuer Sensorwert gelesen. Danach entscheidet temperatur >= 26, ob der if-Block den Lüfter einschaltet oder der else-Block ihn ausschaltet. Nach dem Zweig folgt der Rücksprung zur while-Bedingung. Ist diese falsch, wird die Schleife verlassen und der Alarm eingeschaltet. Bei einem gespeicherten Startwert von 26 wird der Rumpf betreten; über den Lüfter entscheidet dann der neu gelesene Wert. Bei einem gespeicherten Startwert von 30 wird der Rumpf gar nicht betreten und der Alarm sofort eingeschaltet. Wird 30 erst innerhalb des Rumpfes gemessen, läuft der if-Block noch einmal, bevor die nächste while-Prüfung die Schleife beendet.</p>"
+  }
+}

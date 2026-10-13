@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="arduino-einstieg.html">
+<meta name="musterloesung-source-sha256" content="9275e1efdd6fbf8b45febe5e995f176848c6b8e4ad8d46ea50f42c09c8a2eedb">
+<title>Algorithmisch denken – Einstieg vor dem Arduino – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    :root {
+      --ae-ink: #172033;
+      --ae-muted: #536274;
+      --ae-teal: #087f7a;
+      --ae-blue: #2468a9;
+      --ae-yellow: #f4b942;
+      --ae-red: #c2414f;
+      --ae-green: #27855c;
+      --ae-line: #cbd7df;
+      --ae-soft: #f3f7f8;
+      --ae-paper: #ffffff;
+    }
+
+    .wb-book section[data-wb-page] { min-width: 0; padding-top: 24px; }
+    .wb-book .wb-content { min-width: 0; }
+    .wb-book .wb-paper { width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; }
+    .ae-kicker {
+      color: var(--ae-teal);
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .ae-lead { max-width: 850px; color: var(--ae-muted); font-size: 1.12rem; }
+    .ae-hero {
+      border-bottom: 4px solid var(--ae-teal);
+      padding: 6px 0 20px;
+    }
+    .ae-hero h1 { max-width: 900px; margin: 8px 0 12px; font-size: 2.35rem; line-height: 1.12; letter-spacing: 0; }
+    .ae-question-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--ae-line);
+      border-bottom: 1px solid var(--ae-line);
+      margin: 18px 0;
+    }
+    .ae-question-band > div { padding: 15px; }
+    .ae-question-band > div + div { border-left: 1px solid var(--ae-line); }
+    .ae-question-band strong { display: block; color: var(--ae-blue); margin-bottom: 4px; }
+
+    .ae-lab {
+      border: 1px solid var(--ae-line);
+      border-radius: 8px;
+      background: var(--ae-paper);
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .ae-lab-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ae-line);
+      background: #f6f9fa;
+    }
+    .ae-lab-title { font-weight: 900; color: var(--ae-ink); }
+    .ae-lab-actions, .ae-table-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .ae-btn {
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid #9eb1bc;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ae-ink);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .ae-btn.primary { border-color: var(--ae-teal); background: var(--ae-teal); color: #fff; }
+    .ae-btn:disabled { opacity: .55; cursor: not-allowed; }
+    .ae-lab-body {
+      display: grid;
+      grid-template-columns: minmax(330px, .9fr) minmax(380px, 1.1fr);
+      min-width: 0;
+    }
+    .ae-stage { padding: 18px; background: #eef5f5; border-right: 1px solid var(--ae-line); }
+    .ae-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      width: min(100%, 620px);
+      aspect-ratio: 6 / 4;
+      margin: 0 auto;
+    }
+    .ae-cell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      border: 1px solid #b9cbd2;
+      background: #fff;
+    }
+    .ae-cell.is-path { background: #e3f2ee; }
+    .ae-cell.is-wall { background: repeating-linear-gradient(45deg, #788892, #788892 7px, #667680 7px, #667680 14px); }
+    .ae-cell.is-target::after {
+      content: "ZIEL";
+      font-size: clamp(.55rem, 1.4vw, .82rem);
+      font-weight: 900;
+      color: #7c4a00;
+      border: 2px solid var(--ae-yellow);
+      background: #fff5d6;
+      padding: 3px 5px;
+    }
+    .ae-bot {
+      position: absolute;
+      inset: 17%;
+      z-index: 2;
+      border: 3px solid #113b66;
+      border-radius: 7px;
+      background: #2b78bd;
+      box-shadow: 0 5px 0 rgba(17,59,102,.18);
+      transition: transform .32s ease;
+    }
+    .ae-bot::before {
+      content: "";
+      position: absolute;
+      left: 22%; right: 22%; top: 24%;
+      height: 19%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fff 0 34%, transparent 34% 66%, #fff 66% 100%);
+    }
+    .ae-bot::after {
+      content: "";
+      position: absolute;
+      left: 29%; right: 29%; bottom: 23%;
+      height: 3px;
+      background: #fff;
+    }
+    .ae-lab-code { min-width: 0; padding: 18px; }
+    .ae-pseudo {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid var(--ae-line);
+      background: #fbfcfd;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    .ae-pseudo li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      padding: 8px 10px;
+      line-height: 1.45;
+      border-bottom: 1px solid #e3e9ed;
+    }
+    .ae-pseudo li:last-child { border-bottom: 0; }
+    .ae-pseudo li::before { content: attr(data-line); color: #82909a; text-align: right; }
+    .ae-pseudo li.is-active { background: #fff1bd; box-shadow: inset 4px 0 0 #d89200; }
+    .ae-keyword { color: #075f5b; font-weight: 900; }
+    .ae-live-state {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .ae-live-state > div { border: 1px solid var(--ae-line); padding: 9px; background: #fff; }
+    .ae-live-state span { display: block; color: var(--ae-muted); font-size: .78rem; }
+    .ae-live-state strong { display: block; margin-top: 3px; font-size: 1.05rem; }
+    .ae-live-state.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .ae-round-track { display: grid; grid-template-columns: repeat(4, 48px); gap: 10px; justify-content: center; }
+    .ae-round-dot { display: grid; place-items: center; width: 48px; aspect-ratio: 1; border: 3px solid #607481; border-radius: 50%; background: #fff; color: var(--ae-ink); font-weight: 900; transition: background-color .2s, border-color .2s; }
+    .ae-round-dot.is-done { border-color: var(--ae-teal); background: #bfe7dc; }
+    .ae-round-dot.is-current { border-color: #d89200; background: #fff1bd; box-shadow: 0 0 0 4px rgba(216,146,0,.18); }
+    .ae-score-output { min-height: 50px; max-width: 330px; margin: 16px auto 0; color: var(--ae-ink); font-weight: 850; text-align: center; }
+
+    .ae-concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .ae-concept { border-top: 4px solid var(--ae-blue); background: var(--ae-soft); padding: 15px; }
+    .ae-concept:nth-child(2) { border-color: var(--ae-yellow); }
+    .ae-concept:nth-child(3) { border-color: var(--ae-red); }
+    .ae-concept h3 { margin: 0 0 8px; font-size: 1.05rem; }
+
+    .ae-pseudocode {
+      overflow-x: auto;
+      margin: 14px 0;
+      border-left: 5px solid var(--ae-teal);
+      background: #f4f7f8;
+      color: #172033;
+      padding: 15px 18px;
+      font: 700 .98rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+    }
+    .ae-note { border-left: 4px solid var(--ae-yellow); background: #fff8e8; padding: 12px 14px; }
+    .ae-error { border-left: 4px solid var(--ae-red); background: #fff1f1; padding: 12px 14px; }
+    .ae-success { border-left: 4px solid var(--ae-green); background: #edf8f2; padding: 12px 14px; }
+
+    .ae-flow-key { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .ae-flow-key > div { min-width: 0; text-align: center; }
+    .ae-flow-symbol {
+      display: grid;
+      place-items: center;
+      width: min(100%, 180px);
+      min-height: 70px;
+      margin: 0 auto 8px;
+      border: 2px solid #245d86;
+      background: #fff;
+      color: var(--ae-ink);
+      font-weight: 900;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .ae-flow-symbol.start { border-radius: 999px; background: #e8f4f3; }
+    .ae-flow-symbol.process { border-radius: 2px; }
+    .ae-flow-symbol.decision { width: 112px; min-height: 112px; transform: rotate(45deg); background: #fff5d6; }
+    .ae-flow-symbol.decision span { max-width: 82px; transform: rotate(-45deg); font-size: .83rem; }
+    .ae-flow-symbol.io { transform: skew(-12deg); background: #edf3fb; }
+    .ae-flow-symbol.io span { transform: skew(12deg); }
+    .ae-flow-demo {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      margin: 18px auto;
+      padding: 18px;
+      max-width: 620px;
+      border: 1px solid var(--ae-line);
+      background: #f8fafb;
+    }
+    .ae-flow-demo .ae-flow-symbol { width: 230px; }
+    .ae-flow-demo .ae-flow-symbol.decision { width: 125px; }
+    .ae-arrow { color: var(--ae-blue); font-size: 1.6rem; line-height: 1; font-weight: 900; }
+    .ae-branch-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; width: 100%; align-items: start; }
+    .ae-branch { display: grid; justify-items: center; gap: 5px; }
+    .ae-branch-label { font-weight: 900; color: var(--ae-teal); }
+
+    [data-p2-id="ae-flow-pairs"] .p2-solved {
+      width: 100%;
+      gap: 8px;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-joined {
+      display: grid;
+      grid-template-columns: minmax(130px, .8fr) 2px minmax(220px, 1.2fr);
+      width: 100%;
+      max-width: 100%;
+      align-items: stretch;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-piece {
+      display: flex;
+      align-items: center;
+      width: auto;
+      min-width: 0;
+      max-width: none;
+      padding: 12px 14px;
+      overflow-wrap: anywhere;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-left {
+      justify-content: center;
+      text-align: center;
+      background: #e8f4f3;
+      color: #174f55;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-right {
+      justify-content: flex-start;
+      background: #f7f9fc;
+    }
+    [data-p2-id="ae-flow-pairs"] .p2-solved .p2-seam {
+      width: 2px;
+      min-height: 100%;
+      background: #9fb1bd;
+    }
+
+    .ae-table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      margin: 14px 0;
+      border: 1px solid var(--ae-line);
+      border-radius: 7px;
+      background: #fff;
+    }
+    .ae-trace-table { width: 100%; min-width: 760px; border-collapse: collapse; table-layout: fixed; }
+    .ae-trace-table th, .ae-trace-table td { border-right: 1px solid var(--ae-line); border-bottom: 1px solid var(--ae-line); padding: 9px; vertical-align: top; }
+    .ae-trace-table th:last-child, .ae-trace-table td:last-child { border-right: 0; }
+    .ae-trace-table tbody tr:last-child td { border-bottom: 0; }
+    .ae-trace-table th { background: #e8f0f4; text-align: left; color: #20313f; }
+    .ae-trace-table td.is-given { background: #f7f9fa; font-weight: 700; }
+    .ae-trace-table input, .ae-trace-table textarea {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #9db0bc;
+      border-radius: 4px;
+      padding: 7px 8px;
+      box-sizing: border-box;
+      font: inherit;
+      color: var(--ae-ink);
+      background: #fff;
+    }
+    .ae-trace-table textarea { min-height: 66px; resize: vertical; }
+    .ae-trace-table input.is-correct, .ae-trace-table textarea.is-correct { border-color: var(--ae-green); background: #ecf8f1; }
+    .ae-trace-table input.is-wrong, .ae-trace-table textarea.is-wrong { border-color: var(--ae-red); background: #fff0f1; }
+    .ae-table-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 12px; border-top: 1px solid var(--ae-line); background: #f8fafb; }
+    .ae-table-status { color: var(--ae-muted); font-weight: 800; }
+
+    .ae-route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 18px 0; }
+    .ae-route > div { border-top: 4px solid var(--ae-teal); background: #f3f7f8; padding: 12px; }
+    .ae-route strong { display: block; color: var(--ae-blue); margin-bottom: 4px; }
+    .ae-checklist { list-style: none; padding: 0; margin: 14px 0; }
+    .ae-checklist li { position: relative; padding: 9px 10px 9px 38px; border-bottom: 1px solid var(--ae-line); }
+    .ae-checklist li::before { content: "✓"; position: absolute; left: 10px; color: var(--ae-green); font-weight: 900; }
+    .ae-source-list li + li { margin-top: 8px; }
+
+    .wb-book[data-theme="dark"] .ae-lab,
+    .wb-book[data-theme="dark-blue"] .ae-lab,
+    .wb-book[data-theme="dark"] .ae-table-wrap,
+    .wb-book[data-theme="dark-blue"] .ae-table-wrap { color: #172033; }
+
+    @media (max-width: 940px) {
+      .ae-lab-body { grid-template-columns: 1fr; }
+      .ae-stage { border-right: 0; border-bottom: 1px solid var(--ae-line); }
+      .ae-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ae-flow-key { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 700px) {
+      .wb-book .wb-content { padding-inline: 10px; }
+      .wb-book .wb-paper { padding-inline: 18px; }
+      .ae-hero h1 { font-size: 2rem; }
+      .ae-question-band, .ae-concepts, .ae-route, .ae-flow-key { grid-template-columns: 1fr; }
+      .ae-question-band > div + div { border-left: 0; border-top: 1px solid var(--ae-line); }
+      .ae-lab-toolbar, .ae-table-footer { align-items: stretch; flex-direction: column; }
+      .ae-lab-body { display: block; }
+      .ae-stage, .ae-lab-code { padding: 12px; }
+      .ae-live-state { grid-template-columns: 1fr; }
+      .ae-live-state.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ae-round-track { grid-template-columns: repeat(4, 40px); }
+      .ae-round-dot { width: 40px; }
+      .ae-branch-row { grid-template-columns: 1fr; }
+      .ae-branch-row > .ae-arrow { transform: rotate(90deg); justify-self: center; }
+      [data-p2-id="ae-flow-pairs"] .p2-solved .p2-joined {
+        grid-template-columns: minmax(95px, .7fr) 2px minmax(150px, 1.3fr);
+      }
+      [data-p2-id="ae-flow-pairs"] .p2-solved .p2-piece {
+        padding: 10px;
+        font-size: .9rem;
+      }
+    }
+    @media (max-width: 430px) {
+      .wb-book .wb-brand,
+      .wb-book .wb-theme-wrap,
+      .wb-book .wb-present-btn,
+      .wb-book [data-wb-fs] { display: none; }
+      .wb-book .wb-top-left { min-width: 0; }
+      .wb-book .wb-top-right { gap: 4px; }
+      .wb-book .wb-page-ind { min-width: 50px; font-size: 15px; }
+      .wb-book .wb-icon-btn { width: 40px; height: 40px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ae-bot { transition: none; }
+    }
+    .ae-concept, .ae-note, .ae-error, .ae-success, .ae-route > div { color: var(--ae-ink); }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ae-question-band strong { color: #9fd7ff; }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ae-kicker { color: #67e8d5; }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}</style>
+</head>
+<body>
+<div data-wb-book>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Einstieg · Musterlösung","sectionTitle":"Einstieg vor dem Arduino · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Du steuerst den Ablauf"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Ein Computer errät nichts. Er führt aus, was du eindeutig beschreibst.</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-reveal-computer"><h3>Denkpause: Warum braucht der Roboter die Schrittzahl?</h3><p>Die Schrittzahl beschreibt den inneren Zustand des Ablaufs. Mit ihr kann der Algorithmus feststellen, wie viele Wiederholungen bereits ausgeführt wurden. Sichtbare Bewegung und gespeicherter Zustand müssen zusammenpassen. Genau das prüfst du später mit Ablaufverfolgungstabellen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-mcq-start"><h3>Erster Check</h3><h4>Was ist beim Planen eines Algorithmus am wichtigsten?</h4><p>Jeder Schritt ist eindeutig und in seiner Wirkung prüfbar.</p><p>Ein Algorithmus muss so eindeutig sein, dass jeder zulässige Fall nachvollziehbar bearbeitet werden kann. Technische Wörter allein machen einen Ablauf nicht präzise.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="Vom Problem zum Algorithmus"><h1>Vom Problem zum eindeutigen Ablauf</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-order-problem"><h3>Vom Problem zum überprüften Ablauf</h3><ol><li>Ziel und zulässige Eingaben klären</li><li>Problem in kleine ausführbare Schritte zerlegen</li><li>Entscheidungen und Wiederholungen kennzeichnen</li><li>Ablauf mit konkreten Startwerten Schritt für Schritt testen</li><li>Fehlerstelle verändern und erneut prüfen</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-cloze-algorithmus"><h3>Sicherung: Algorithmus oder Programm?</h3><p>Die sprachunabhängige Lösungsidee heißt <b>Algorithmus</b>. Ihre konkrete Umsetzung in einer Programmiersprache heißt <b>Programm</b>. Ein brauchbarer Ablauf muss ausführbar und <b>eindeutig</b> sein. Er verarbeitet eine <b>Eingabe</b> zu einer <b>Ausgabe</b>.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Pseudocode und Flussdiagramme"><h1>Zwei Darstellungen für dieselbe Idee</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-flow-pairs"><h3>Flussdiagramm-Symbole zuordnen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Oval</td><td>Start oder Ende</td></tr><tr><td>Rechteck</td><td>Handlung oder Verarbeitung</td></tr><tr><td>Raute</td><td>Ja-Nein-Entscheidung</td></tr><tr><td>Pfeil</td><td>Reihenfolge und Flussrichtung</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Zustände und Werte verfolgen"><h1>Ein Ablauf verändert Zustände</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-cat-eva"><h3>Eingabe, Verarbeitung oder Ausgabe?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Eingabe</td><td>Temperatur messen</td></tr><tr><td>Eingabe</td><td>Tasterzustand erfassen</td></tr><tr><td>Verarbeitung</td><td>Punktzahl um 3 erhöhen</td></tr><tr><td>Verarbeitung</td><td>Messwerte vergleichen</td></tr><tr><td>Ausgabe</td><td>Warnlicht einschalten</td></tr><tr><td>Ausgabe</td><td>Ergebnis anzeigen</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Abfragen und Bedingungen"><h1>Eine Abfrage liefert wahr oder falsch</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-verify-condition"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Eine Bedingung verändert beim Prüfen automatisch den gemessenen Wert.</p><p>Eine Bedingung bewertet nur den aktuellen Zustand als wahr oder falsch. Eine Veränderung entsteht erst durch eine anschließend ausgeführte Anweisung.</p></article>
+</section>
+<section data-wb-page="6" data-wb-page-title="Verzweigungen"><h1>Verzweigungen wählen einen Weg</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-mcq-branch"><h3>Verzweigungen sicher unterscheiden</h3><h4>Was gilt für eine vollständige WENN-DANN-SONST-Verzweigung?</h4><p>Genau einer der beiden Zweige wird ausgeführt.</p><p>Das Ergebnis der Bedingung wählt genau einen Weg: bei wahr den Dann-Zweig, bei falsch den Sonst-Zweig.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Zählschleifen"><h1>Eine Zählschleife wiederholt genau festgelegt</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-order-count-loop"><h3>Bausteine einer Zählschleife</h3><ol><li>Startwerte festlegen</li><li>prüfen, ob noch ein Durchlauf vorgesehen ist</li><li>Anweisungen im Schleifenrumpf ausführen</li><li>Zählvariable aktualisieren</li><li>zum nächsten Prüfschritt zurückkehren oder Schleife verlassen</li></ol></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Bedingte Schleifen"><h1>Eine bedingte Schleife wiederholt bis zur Grenze</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-cloze-while"><h3>Sicherung: Bedingte Schleife</h3><p>Bei einer Solange-Schleife wird die Bedingung <b>vor</b> jedem Durchlauf geprüft. Der Rumpf läuft bei <b>wahr</b> und wird bei <b>falsch</b> verlassen. Mindestens eine Anweisung muss den Zustand so <b>verändern</b>, dass die Bedingung später falsch werden kann; sonst droht eine <b>Endlosschleife</b>.</p></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Kombinieren und debuggen"><h1>Ein echter Ablauf kombiniert Bausteine</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-essay-own-algorithm"><h3>Entwirf einen sprachunabhängigen Algorithmus</h3><span class="solution-label">Eine mögliche Antwort</span><p>Situation: Eine Raumlüftung soll bei mehr als 26 °C laufen und sonst ausgeschaltet bleiben. Eingabe ist die gemessene Temperatur, Zustand ist der gespeicherte Messwert, Ausgabe ist der Lüfterzustand.</p><pre><code>START
+WIEDERHOLE, SOLANGE die Steuerung aktiv ist
+  LIES Temperatur
+  WENN Temperatur &gt; 26
+    DANN schalte Lüfter AN
+    SONST schalte Lüfter AUS
+  ENDE WENN
+  WARTE kurz
+ENDE WIEDERHOLUNG
+ENDE</code></pre><p>Testfall 1: 25 °C → Vergleich falsch, Lüfter aus. Testfall 2: 28 °C → Vergleich wahr, Lüfter an. Am Grenzwert 26 °C bleibt der Lüfter wegen des strengen Größer-Vergleichs aus.</p></article>
+</section>
+<section data-wb-page="10" data-wb-page-title="Werkzeugkasten und Abschluss"><h1>Dein Werkzeugkasten für die ersten Programme</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ae-mcq-final"><h3>Abschlusscheck</h3><h4>Welche Vorgehensweisen helfen beim algorithmischen Denken?</h4><p>Startwerte und Zustandsänderungen notieren; Randfälle an den Grenzwerten prüfen; Schleifen mit einer Ablaufverfolgungstabelle untersuchen; Ungenaue Bedingungen durch eindeutige Fragen ersetzen</p><p>Systematisches Tracing, Randfälle und eindeutige Bedingungen machen Abläufe nachvollziehbar. Mehrere gleichzeitige Änderungen erschweren dagegen die Fehlersuche.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll({storagePrefix:"arduino-einstieg-windrad82.html__"});</script>
+</body>
+</html>

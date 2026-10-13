@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="musterloesung-source" content="Einheiten_Formeln.html">
+<meta name="musterloesung-source-sha256" content="a9b54dea69e00ee9c9c640d242ae459ba5d4ca8a899788d593f22f2c1a2a2e28">
+<title>Physik Oberstufe: Einheiten, Formeln, Konstanten und Formelzeichen – Musterlösung</title>
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+    :root {
+      --ef-accent: #0e5a61;
+      --ef-accent-soft: #dff3f4;
+      --ef-ink: #172033;
+      --ef-panel: #f9fcfc;
+      --ef-border: #cfe1e3;
+      --ef-grid: rgba(14, 90, 97, 0.08);
+    }
+    .ef-hero {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(223, 243, 244, 0.95)),
+        linear-gradient(var(--ef-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ef-grid) 1px, transparent 1px);
+      background-size: auto, 26px 26px, 26px 26px;
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(23, 32, 51, 0.08);
+    }
+    .ef-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--ef-accent-soft);
+      color: var(--ef-accent);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .ef-grid,
+    .ef-grid-3 {
+      display: grid;
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .ef-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .ef-grid-3 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .ef-card {
+      background: var(--ef-panel);
+      border: 1px solid var(--ef-border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .ef-card h3,
+    .ef-card h4 { margin-top: 0; }
+    .ef-table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+    .ef-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--ef-border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .ef-table th,
+    .ef-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ef-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .ef-table th {
+      background: #eef8f8;
+      color: var(--ef-ink);
+      font-weight: 700;
+    }
+    .ef-table tr:last-child td { border-bottom: none; }
+    .ef-formula {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--ef-accent);
+      border-radius: 14px;
+      background: #f3fbfb;
+    }
+    .ef-placeholder {
+      color: #536077;
+      font-style: italic;
+    }
+    .ef-chip {
+      display: inline-block;
+      margin: 4px 6px 0 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef8f8;
+      border: 1px solid var(--ef-border);
+      font-size: 0.92rem;
+    }
+    .ef-checklist {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .ef-checklist li + li { margin-top: 8px; }
+    .wb-book[data-theme="dark"] .ef-card,
+    .wb-book[data-theme="dark-blue"] .ef-card,
+    .wb-book[data-theme="dark"] .ef-hero,
+    .wb-book[data-theme="dark-blue"] .ef-hero,
+    .wb-book[data-theme="dark"] .ef-table,
+    .wb-book[data-theme="dark-blue"] .ef-table,
+    .wb-book[data-theme="dark"] .ef-table th,
+    .wb-book[data-theme="dark-blue"] .ef-table th {
+      color: #111;
+    }
+    @media (max-width: 760px) {
+      .ef-hero { padding: 18px; }
+    }
+    .ef-card, .ef-hero { --wb-muted: #536077; }
+    .ef-card { color: var(--ef-ink); }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<style>
+.wb-book .wb-side-footer{display:none}
+.solution-block{min-width:0;color:var(--wb-text)}
+.solution-block h3{font-size:18px;line-height:1.45;margin:0 0 10px}
+.solution-block h4{font-size:16px;line-height:1.5;margin:14px 0 8px}
+.solution-label{display:block;font-size:13px;font-weight:700;color:var(--wb-muted);margin:0 0 8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{width:100%;min-width:480px;border-collapse:collapse;table-layout:auto;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top;background:transparent;color:var(--wb-text);overflow-wrap:normal}
+.solution-table th{background:var(--wb-head-bg)}
+.solution-table td{min-width:100px}
+.solution-kicker{font-weight:700;color:var(--wb-accent);font-size:18px;margin-bottom:8px}
+.solution-math{white-space:normal;font-family:Georgia,serif}
+.math-frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;line-height:1.3;margin:0 .15em}
+.math-frac>span:first-child{border-bottom:1px solid currentColor}
+.math-vector{text-decoration:overline;text-decoration-style:solid}
+@media(max-width:980px){
+.wb-book:not(.wb-present-mode){--wb-topH:112px}
+.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
+.wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
+.wb-book:not(.wb-present-mode) .wb-hamburger{width:44px;height:44px;flex-shrink:0}
+.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;line-height:1.25}
+.wb-book:not(.wb-present-mode) .wb-top-right{width:100%;justify-content:space-between;gap:4px}
+.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px;gap:0}
+.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px;padding:6px 4px}
+.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px;font-size:14px}
+.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
+}
+</style>
+</head>
+<body>
+<div data-wb-book>
+<script class="wb-book-config" type="application/json">{"bookTitle":"Physik · Musterlösung","sectionTitle":"Einheiten, Formeln, Konstanten und Formelzeichen · Musterlösung","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"themeDefault":"default","themeStorageKey":"musterloesung-theme","studentNameStorageKey":"musterloesung-unused-name"}</script>
+<section data-wb-page="1" data-wb-page-title="Start &amp; Leitfrage">
+<div class="solution-kicker">Musterlösung</div>
+<h1>Deine Formelsammlung für die Kursstufe</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-start-reveal"><h3>Was kannst du danach?</h3><p>Eine Größe ist erst mit Bedeutung, Formelzeichen und Einheit eindeutig, etwa Geschwindigkeit v in m/s. Umrechnung: 1 km = 1000 m und 1 h = 3600 s, daher 36 km/h = 10 m/s. Bei Formeln prüfst du die Dimension, beispielsweise [F] = kg·m/s² = N. Eine vollständige Konstante enthält Symbol, Wert und Einheit, etwa h = 6,62607015 · 10<sup>−34</sup> J·s.</p></article>
+</section>
+<section data-wb-page="2" data-wb-page-title="SI-Grundlagen/Umrechnungen">
+<h1>SI-Grundlagen und Umrechnungen von Einheiten</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-mcq-prefix-convert"><h3>Umrechnungsaufgaben: Vorsätze anwenden</h3><h4>1. Welche Umrechnung ist richtig?</h4><ul><li><b>b</b>: 3,5 km = 3500 m</li></ul><p>Kilo bedeutet Faktor 1000. Deshalb werden Kilometer mit 1000 in Meter umgerechnet.</p><h4>2. Welche Aussage zu Mikro und Milli stimmt?</h4><ul><li><b>a</b>: 1 ms = 0,001 s</li><li><b>b</b>: 1 µs = 0,000001 s</li></ul><p>Milli steht für 10 hoch minus 3, Mikro für 10 hoch minus 6.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-cloze-prefix-convert"><h3>Sicherung: Einheiten umrechnen</h3><p>2,5 km sind <b>2500</b> m. 3 mm sind <b>0,003</b> m. Der Vorsatz <b>Milli</b> steht für <span class="solution-math">10<sup>-3</sup></span>, der Vorsatz <b>Mikro</b> für <span class="solution-math">10<sup>-6</sup></span> und Mega für <b>10^6</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-cloze-si"><h3>Sicherung: SI-System</h3><p>Das SI ist das <b>internationale</b> Einheitensystem. Einheiten wie Meter, Kilogramm und <b>Sekunde</b> gehören zu den <b>Basiseinheiten</b>. Newton oder Hertz sind dagegen <b>abgeleitete</b> Einheiten. Die Einheit <b>Hz</b> bedeutet 1 pro Sekunde.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-verify-angle"><h3>Stopp &amp; check</h3><p><b>Falsch:</b> Grad ist die offizielle SI-Einheit für Winkel.</p><p>Im SI wird für den ebenen Winkel das Bogenmaß mit der Einheit Radiant verwendet. Grad ist gebräuchlich, aber nicht die SI-Einheit.</p></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Formelzeichen &amp; Einheiten">
+<h1>Formelzeichen und Einheiten</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-categorize-units"><h3>Sortiere die Größen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>Größe mit Basiseinheit</td><td>Masse - kg</td></tr><tr><td>Größe mit Basiseinheit</td><td>Zeit - s</td></tr><tr><td>Größe mit abgeleiteter Einheit</td><td>Kraft - N</td></tr><tr><td>Größe mit abgeleiteter Einheit</td><td>Geschwindigkeit - m/s</td></tr><tr><td>Größe mit abgeleiteter Einheit</td><td>Frequenz - Hz</td></tr><tr><td>Größe mit Basiseinheit</td><td>Weg - m</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-reveal-symbols"><h3>Typische Stolperfalle</h3><p>Weil dieselbe Einheit zu verschiedenen Größen gehören kann. Meter gehört zum Beispiel zu Abstand, Weg, Wellenlänge oder Radius. Erst Formelzeichen, Bedeutung und Kontext zusammen machen eine Größe eindeutig.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Formeln">
+<h1>Formeln</h1>
+<h2>Elektrik</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-order-workflow"><h3>Bring die Arbeit mit einer neuen Formel in eine sinnvolle Reihenfolge</h3><ol><li>Größen und Formelzeichen klären</li><li>Einheiten notieren und prüfen</li><li>Bedeutung der Formel am Beispiel verstehen</li><li>Formel umstellen und anwenden</li></ol></article>
+<h2>Zuordnung: Größe und Einheit</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_0"><h3>Ordne Formelzeichen und Einheit passend zu</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Frequenz <span class="solution-math">f</span></td><td><span class="solution-math">Hz</span></td></tr><tr><td>Beschleunigung <span class="solution-math">a</span></td><td><span class="solution-math">m/s<sup>2</sup></span></td></tr><tr><td>Volumen <span class="solution-math">V</span></td><td><span class="solution-math">m<sup>3</sup></span></td></tr><tr><td>Winkelgeschwindigkeit <span class="solution-math">ω</span></td><td><span class="solution-math">rad/s</span></td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="text-eigene-formelsammlung"><h3>Eigene Formelsammlung: ausgefüllte Beispiele</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Thema</th><th scope="col">Formeln und Bedeutung</th><th scope="col">Beispiel / Umstellung</th></tr></thead><tbody><tr><td>Bewegung</td><td>v = Δs/Δt; a = Δv/Δt</td><td>Δs = vΔt; 36 km/h = 10 m/s → in 5 s: 50 m</td></tr><tr><td>Schwingung</td><td>T = 1/f; ω = 2πf</td><td>f = 5 Hz → T = 0,20 s, ω ≈ 31,4 rad/s</td></tr><tr><td>Federpendel</td><td>T = 2π√(m/D); harmonische Feder</td><td>m = 0,10 kg, D = 10 N/m → T ≈ 0,628 s</td></tr><tr><td>Fadenpendel</td><td>T = 2π√(l/g); kleine Auslenkungen</td><td>l = 1,00 m → T ≈ 2,01 s; g = 4π²l/T²</td></tr><tr><td>Energie</td><td>E<sub>pot</sub> = mgh; E<sub>kin</sub> = ½mv²; E<sub>Spann</sub> = ½Dy²</td><td>Lage relativ zum Bezug; Bewegung; elastisch gespannte Feder</td></tr><tr><td>Elektrizität</td><td>U = RI; I = U/R; R = U/I</td><td>U in V, I in A, R in Ω; 12 V / 100 Ω = 0,12 A</td></tr><tr><td>Quantenphysik</td><td>E = hf = hc/λ</td><td>h = 6,62607015 · 10<sup>−34</sup> J·s; λ = 500 nm → E ≈ 3,97 · 10<sup>−19</sup> J ≈ 2,48 eV</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Konstanten">
+<h1>Physikalische Konstanten</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-mcq-errors"><h3>Mini-Check: Einheitenfehler erkennen</h3><h4>1. Welche Aussage passt zur Frequenz <span class="solution-math">f</span>?</h4><ul><li><b>b</b>: Die SI-Einheit ist Hertz.</li></ul><p>Frequenz gibt an, wie oft etwas pro Sekunde passiert. Deshalb ist Hertz = 1/s richtig.</p><h4>2. Welche Einträge solltest du bei einer Konstanten möglichst immer notieren?</h4><ul><li><b>a</b>: Symbol</li><li><b>b</b>: Wert</li><li><b>c</b>: Einheit</li></ul><p>Nur mit Symbol, Zahlenwert und Einheit ist eine Konstante in der Formelsammlung wirklich brauchbar.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-reveal-rad"><h3>Weiterdenken</h3><p>Weil die Schreibweise den physikalischen Inhalt klarer macht. Rein formal ist der Radiant dimensionslos, praktisch zeigt rad/s aber sofort, dass es um eine Winkeländerung pro Zeit geht und nicht einfach nur um irgendein s^-1.</p></article>
+</section>
+<section data-wb-page="7" data-wb-page-title="Aufgaben">
+<h1>Aufgaben zu Einheiten, Formeln und Formelzeichen</h1>
+<h2>Umrechnungen</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-mcq-convert"><h3>Umrechnungen prüfen</h3><h4>1. Welche Umrechnungen sind richtig?</h4><ul><li><b>a</b>: <span class="solution-math">0,25 m = 25 cm</span></li><li><b>b</b>: <span class="solution-math">4,2 ms = 0,0042 s</span></li><li><b>d</b>: <span class="solution-math">3 µF = 0,000003 F</span></li></ul><p>Zenti bedeutet <span class="solution-math">10<sup>-</sup>2</span>, Milli <span class="solution-math">10<sup>-</sup>3</span>, Mikro <span class="solution-math">10<sup>-</sup>6</span>. Kilo steht für <span class="solution-math">10<sup>3</sup></span>, daher ist c falsch.</p><h4>2. Welche Umrechnung ist richtig?</h4><ul><li><b>b</b>: <span class="solution-math">2,4 GHz = 2,4 · 10<sup>9</sup> Hz</span></li></ul><p>Giga steht für <span class="solution-math">10<sup>9</sup></span>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-cloze-convert"><h3>Setze die richtigen Umrechnungen ein</h3><p><span class="solution-math">3,5 mm</span> sind <b><span class="solution-math">0,0035</span></b> <span class="solution-math">m</span>. <span class="solution-math">1,2 km</span> sind <b><span class="solution-math">1200</span></b> <span class="solution-math">m</span>. <span class="solution-math">0,8 µ s</span> sind <b><span class="solution-math">0,0000008</span></b> <span class="solution-math">s</span>. <span class="solution-math">800 kHz</span> entsprechen <b><span class="solution-math">8 · 10<sup>5</sup></span></b> <span class="solution-math">Hz</span>. Der Vorsatz <b><span class="solution-math">Milli</span></b> steht für 10⁻³.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-mcq-convert-2"><h3>Noch mehr Umrechnungen</h3><h4>1. Welche Umrechnungen sind richtig?</h4><ul><li><b>a</b>: <span class="solution-math">0,0045 kg = 4,5 g</span></li><li><b>b</b>: <span class="solution-math">36 km/h = 10 m/s</span></li><li><b>c</b>: <span class="solution-math">250 mA = 0,25 A</span></li></ul><p>Kilo zu Gramm ergibt <span class="solution-math">1000, km/h</span> zu <span class="solution-math">m/s</span> bedeutet durch <span class="solution-math">3,6</span> teilen, Milli steht für <span class="solution-math">10<sup>-</sup>3</span>. Nano steht für <span class="solution-math">10<sup>-</sup>9</span>, daher ist d falsch.</p><h4>2. Welche Umrechnung ist richtig?</h4><ul><li><b>a</b>: <span class="solution-math">0,75 MPa = 7,5 · 10<sup>5</sup> Pa</span></li></ul><p>Mega steht für <span class="solution-math">10<sup>6</sup></span>. Also gilt <span class="solution-math">0,75 MPa = 0,75 · 10<sup>6</sup> Pa = 7,5 · 10<sup>5</sup> Pa</span>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-cloze-convert-2"><h3>Umrechnen ohne Taschenrechner</h3><p><span class="solution-math">4,5</span> km sind <b><span class="solution-math">4500</span></b><span class="solution-math"> m</span>. <span class="solution-math">250 mA</span> sind <b><span class="solution-math">0,25</span></b><span class="solution-math"> A</span>. <span class="solution-math">120 µA</span> sind <b><span class="solution-math">0,00012</span></b><span class="solution-math"> A</span>. <span class="solution-math">0,75 MPa</span> sind <b><span class="solution-math">750000</span></b><span class="solution-math"> Pa</span>. <span class="solution-math">20 m/s</span> sind <b><span class="solution-math">72</span></b> <span class="solution-math">km/h</span>.</p></article>
+<h2>Formelzeichen und Einheiten</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-categorize"><h3>Sortiere die Karten</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Zuordnung</th></tr></thead><tbody><tr><td>Formelzeichen</td><td><span class="solution-math">v⃗</span></td></tr><tr><td>Einheiten</td><td><span class="solution-math">Pa</span></td></tr><tr><td>Größen</td><td>Druck</td></tr><tr><td>Formelzeichen</td><td><span class="solution-math">ρ</span></td></tr><tr><td>Einheiten</td><td><span class="solution-math">Wb</span></td></tr><tr><td>Größen</td><td>Magnetischer Fluss</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="p2_1"><h3>Ordne Größe, Formelzeichen und Einheit zu</h3><div class="solution-table" tabindex="0" role="region" aria-label="Ausgefüllte Lösungstabelle"><table><thead><tr><th scope="col">Begriff</th><th scope="col">Bedeutung</th></tr></thead><tbody><tr><td>Dichte</td><td><span class="solution-math">(ρ), (kg/m<sup>3</sup>)</span></td></tr><tr><td>Impuls</td><td><span class="solution-math">(p⃗), (kg m/s)</span></td></tr><tr><td>Magnetische Feldstärke</td><td><span class="solution-math">(H), (A/m)</span></td></tr><tr><td>Kapazität</td><td><span class="solution-math">(C), (F)</span></td></tr></tbody></table></div></article>
+<h2>Formeln ergänzen</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-cloze-formulas"><h3>Ergänze die fehlenden Teile</h3><p>Ohmsches Gesetz: U = <b>R</b> · <b>I</b>; Kondensator: Q = <b>C</b> · <b>U</b>; Wellengleichung: c = <b>λ</b> · <b>f</b>; Spannenergie: W_spann = <b>1/2</b> · <b>D</b> · <b>s²</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-order-solution"><h3>In welcher Reihenfolge prüfst du eine Formel sinnvoll?</h3><ol><li>Größen und Formelzeichen identifizieren</li><li>Einheiten kontrollieren</li><li>Werte passend umrechnen</li><li>Formel einsetzen und Ergebnis prüfen</li></ol></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-verify"><h3>Wahr oder falsch?</h3><p><b>Falsch:</b> Die Einheit Pascal passt zur Größe Dichte.</p><p>Pascal gehört zum Druck. Die Dichte hat die SI-Einheit Kilogramm pro Kubikmeter.</p></article>
+<h2>Kurze Begründung</h2>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef-task-essay"><h3>Erkläre deinen Rechenweg</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich lese zuerst den Vorsatz und schreibe seinen Zehnerpotenzfaktor auf, etwa 250 mA = 250 · 10<sup>−3</sup> A = 0,250 A. Für die elektrische Leistung verwende ich P = UI und setze bei U = 12 V den umgerechneten Strom ein. Daraus folgt P = 12 V · 0,250 A = 3,00 W. Die Einheit stimmt, weil V·A = W gilt. Bei einer unbekannten Größe stelle ich die Formel zuerst um und prüfe danach Einheit und Größenordnung.</p></article>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>SBLibrary.autoMountAll();document.querySelectorAll('.wb-side-footer').forEach(function(footer){footer.remove();});</script>
+</body>
+</html>
