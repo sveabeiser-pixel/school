@@ -66,6 +66,68 @@
     .trace-table th{background:rgba(30,102,200,.08)}
     .source-list{margin:0; padding-left:20px}
     .source-list li + li{margin-top:6px}
+    .ide-transition{
+      display:grid;
+      grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr);
+      gap:18px;
+      align-items:center;
+      border-top:4px solid var(--ak-teal, #087f7a);
+      border-bottom:1px solid var(--ak-line, #cbd7df);
+      padding:16px 0;
+      margin:18px 0;
+    }
+    .ide-transition h2{
+      margin:0 0 8px;
+      letter-spacing:0;
+    }
+    .ide-transition p{
+      margin:0 0 9px;
+      line-height:1.55;
+    }
+    .ide-transition ul{
+      margin:8px 0 0;
+      padding-left:20px;
+    }
+    .ide-shot-grid{
+      display:grid;
+      grid-template-columns:minmax(120px, .42fr) minmax(0, 1fr);
+      gap:12px;
+      align-items:stretch;
+    }
+    .ide-shot-grid .pdfpage{margin:0}
+    .ide-logo-card img{
+      height:100%;
+      min-height:170px;
+      object-fit:contain;
+      padding:20px;
+      box-sizing:border-box;
+    }
+    .ide-checklist{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+      margin:12px 0;
+    }
+    .ide-checklist div{
+      border-left:4px solid var(--ak-blue, #2468a9);
+      background:var(--ak-soft, #f3f7f8);
+      padding:10px 12px;
+      min-width:0;
+    }
+    .ide-checklist strong{display:block; margin-bottom:4px}
+    .error-title{color:#b83a4b}
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ide-checklist > div{
+      background:var(--wb-block-bg);
+      color:var(--wb-text);
+      border-left-color:#9fd7ff;
+    }
+    .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .error-title{color:#ff9b9b}
+    @media (max-width: 900px){
+      .ide-transition,
+      .ide-shot-grid,
+      .ide-checklist{grid-template-columns:1fr}
+      .ide-logo-card img{min-height:130px}
+    }
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
 </head>
@@ -111,24 +173,65 @@
         <div><strong>Untersuchen</strong>Abweichungen einer Ursache zuordnen.</div>
       </div>
 
-      <div class="wb-soft-callout">
-        <strong>Entwicklungsumgebung (IDE)</strong>
+      <div class="ide-transition">
         <div>
-          Programme für Mikrocontroller werden nicht direkt „einfach so“
-          geschrieben, sondern in einer <b>Entwicklungsumgebung</b> (IDE).
-          Sie hilft beim Schreiben, Prüfen und Übertragen der Programme.
+          <h2>Ab jetzt programmierst du selbst</h2>
+          <p>
+            Im ersten Modul stand die Hardware im Mittelpunkt: Pins, LED, Widerstand und Stromkreis.
+            Jetzt kommt die zweite Hälfte dazu: Du gibst dem Arduino mit einem Programm genaue Anweisungen.
+          </p>
+          <p>
+            Dafür arbeitest du nicht in OneNote und nicht im Browser, sondern in einem neuen Programm:
+            der <b>Arduino-IDE</b>. IDE bedeutet Entwicklungsumgebung. Das ist dein Arbeitsplatz zum
+            Schreiben, Prüfen und Übertragen von Code.
+          </p>
+          <ul>
+            <li>Du schreibst den Sketch im Texteditor der Arduino-IDE.</li>
+            <li>Du prüfst den Sketch mit <b>Verify</b>, bevor du ihn hochlädst.</li>
+            <li>Du überträgst ihn mit <b>Upload</b> auf das angeschlossene Board.</li>
+          </ul>
+        </div>
+        <div class="ide-shot-grid" aria-label="Arduino-IDE Orientierung">
+          <div class="pdfpage ide-logo-card">
+            <img src="pdf-bilder/arduino-ide1.png" alt="Arduino-Logo">
+            <div class="pdfcaption">Neues Arbeitsprogramm: Arduino</div>
+          </div>
+          <div class="pdfpage">
+            <img src="pdf-bilder/arduino-ide2.png" alt="Arduino-IDE mit Verify, Upload, Texteditor, Ausgabe und Board-Port-Anzeige">
+            <div class="pdfcaption">Oberfläche der Arduino-IDE: schreiben, prüfen, hochladen, Rückmeldungen lesen</div>
+          </div>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
-        <strong>Arduino-IDE</strong>
+        <strong>Was ist jetzt anders?</strong>
         <div>
-          Die Arduino-IDE ist speziell für Arduino-Boards entwickelt.
-          Sie unterstützt verschiedene Board-Typen und Betriebssysteme
-          (Windows, macOS, Linux).
+          Bisher hast du vor allem Bauteile richtig verbunden. Ab jetzt planst du zusätzlich ein Verhalten:
+          Wann soll ein Pin Strom liefern? Wie lange soll eine LED leuchten? Was soll sich wiederholen?
+          Genau diese Entscheidungen formulierst du als Code in der Arduino-IDE.
         </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-soft-callout">
+        <strong>Dein Arbeitsplatz in der Arduino-IDE</strong>
+        <div>
+          Die Arduino-IDE ist speziell für Arduino-Boards entwickelt. Sie verbindet drei Aufgaben:
+          Code schreiben, Code prüfen und Code auf den Arduino übertragen. Wichtig ist dabei:
+          Der Arduino führt nach dem Upload nicht diese Webseite aus, sondern den Sketch, den du
+          in der IDE geschrieben und hochgeladen hast.
+        </div>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="ide-checklist" aria-label="Die drei wichtigsten Bereiche der Arduino-IDE">
+        <div><strong>Texteditor</strong>Hier steht dein Programm. Jede Zeile ist eine Anweisung.</div>
+        <div><strong>Verify und Upload</strong>Der Haken prüft den Code. Der Pfeil überträgt ihn auf das Board.</div>
+        <div><strong>Ausgabe und Port</strong>Unten liest du Fehlermeldungen und kontrollierst Board sowie Anschluss.</div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -194,13 +297,16 @@
         <script type="application/json" class="wb-config">
           {
             "id":"s6_vf_1",
-            "title":"Warum braucht man eine spezielle Entwicklungsumgebung für den Arduino?",
+            "title":"Warum arbeitest du ab jetzt in der Arduino-IDE?",
+            "hint":"Erkläre den Unterschied zwischen Webseite lesen, Code schreiben, Code prüfen und Code auf das Board übertragen.",
             "fields":[
-              {"label":"Antwort","key":"s6_vf_1","kind":"textarea","placeholder":"Schreibe hier deine Antwort hin."}
+              {"label":"Antwort","key":"s6_vf_1","kind":"textarea","placeholder":"Schreibe in 3–5 Sätzen: Was machst du in der IDE, was vorher noch nicht nötig war?"}
             ]
           }
         </script>
       </div>
+
+      <div class="wb-section-break"></div>
 
       <div class="media-grid">
         <div class="pdfpage">
@@ -213,6 +319,8 @@
           <p><b>Prüffrage:</b> Wo gehört eine Pin-Konfiguration hin, wo das wiederholte Schalten?</p>
         </div>
       </div>
+
+      <div class="wb-section-break"></div>
 
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
@@ -247,8 +355,9 @@
       <div class="wb-soft-callout">
         <strong>Worum geht es hier?</strong>
         <div>
-          Du hast gesehen, wie ein Arduino-Programm auf das Board übertragen wird.
-          Jetzt sollst du die Schritte nachvollziehen und verstehen.
+          Du arbeitest jetzt in der Arduino-IDE. Damit dein Programm wirklich auf dem richtigen
+          Board landet, musst du vor dem Upload drei Dinge kontrollieren: USB-Verbindung,
+          Board-Typ und Port. Erst danach ist der Upload ein sinnvoller Test.
         </div>
       </div>
 
@@ -356,13 +465,16 @@
       <div class="wb-soft-callout">
         <strong>Jetzt geht's los, du schreibst dein erstes Programm! Folge den Anweisungen:</strong>
         <div>
-          Du hast gesehen, wie ein Arduino-Programm auf das Board übertragen wird.
-          Jetzt sollst du die Schritte nachvollziehen und verstehen.<br>
-          Stecke zuerst das Kabel, das an dem Pin 5V hing an den Pin 13. Dann öffnest du auf dem Desktop das Programm Arduino und übernimmst
-          die Einstellungen, die du gerade im letzten Kapitel gelernt hast. <br>
-          Schreibe jetzt den Code ab, der im unteren Bild gezeigt wird und lese dir alle Begründungen genau durch.<br>
-          Übertrage zum Schluss das
-          Programm auf den Arduino, wie im letzten Kapitel erklärt.
+          Ab hier bist du nicht mehr nur beim Anschließen, sondern beim Programmieren.
+          Stecke zuerst das Kabel, das an dem Pin 5V hing, an Pin 13.
+          Öffne dann auf dem Desktop das Programm <b>Arduino</b>. Das ist die Arduino-IDE,
+          also die Umgebung, in der du deinen Sketch schreibst und hochlädst.<br>
+          Stelle Board und Port ein, wie du es im letzten Kapitel gelernt hast.
+          Schreibe anschließend den Code aus dem unteren Bild in den Texteditor der IDE ab
+          und lies dir alle Begründungen genau durch.<br>
+          Klicke zuerst auf <b>Verify</b>, damit die IDE deinen Code prüft.
+          Wenn keine Fehlermeldung erscheint, klickst du auf <b>Upload</b> und überträgst
+          das Programm auf den Arduino.
         </div>
       </div>
 
@@ -516,7 +628,7 @@ void loop() {
 
       <div class="grid2">
         <div class="wb-soft-callout">
-          <strong style="color:#ff6b6b">Problem beim Hochladen</strong>
+          <strong class="error-title">Problem beim Hochladen</strong>
           <div>
             Meistens hast du nicht die richtige Schnittstelle oder das
             richtige Board ausgewählt.
@@ -526,7 +638,7 @@ void loop() {
         </div>
 
         <div class="wb-soft-callout">
-          <strong style="color:#ff6b6b">expected “;” before …</strong>
+          <strong class="error-title">expected “;” before …</strong>
           <div>
             Auf Deutsch: <i>„Ich erwarte einen Strichpunkt“</i>.
             <br>
@@ -536,7 +648,7 @@ void loop() {
         </div>
 
         <div class="wb-soft-callout">
-          <strong style="color:#ff6b6b">expected “)” before …</strong>
+          <strong class="error-title">expected “)” before …</strong>
           <div>
             Es fehlt eine runde Klammer
             <code>(</code> oder <code>)</code>,
@@ -546,7 +658,7 @@ void loop() {
         </div>
 
         <div class="wb-soft-callout">
-          <strong style="color:#ff6b6b">a function-definition is not allowed here</strong>
+          <strong class="error-title">a function-definition is not allowed here</strong>
           <div>
             Prüfe die <b>geschweiften Klammern</b> <code>{ }</code>.
             <br>
@@ -555,7 +667,7 @@ void loop() {
         </div>
 
         <div class="wb-soft-callout">
-          <strong style="color:#ff6b6b">… was not declared in this scope</strong>
+          <strong class="error-title">… was not declared in this scope</strong>
           <div>
             Der Compiler kennt etwas nicht.
             <br>
