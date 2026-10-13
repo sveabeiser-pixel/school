@@ -15,6 +15,8 @@
   const qs  = (sel, el=document) => el.querySelector(sel);
   const qsa = (sel, el=document) => Array.from(el.querySelectorAll(sel));
   const NAME_MAX_LENGTH = 30;
+  const assetsBase = new URL('.', document.currentScript && document.currentScript.src || new URL('assets/allgemeines_format.js', document.baseURI)).href;
+  let resultsPdfLoader = null;
 
   function limitName(value){
     return String(value || "").slice(0, NAME_MAX_LENGTH);
@@ -300,7 +302,7 @@ function el(tag, attrs = {}, children = []) {
     return { node: wrapBlock("mcq", cfg, el("div", {}, [container, controls])), check, reset };
   }
 
-  function createVerify(cfg){
+  function verifyConfig(cfg){
     const rawItems = Array.isArray(cfg.questions) ? cfg.questions : [];
     const derivedItems = rawItems.length ? rawItems : (cfg.statement || cfg.text ? [{
       text: cfg.statement || cfg.text || "",
@@ -309,7 +311,7 @@ function el(tag, attrs = {}, children = []) {
     }] : []);
     if(!derivedItems.length) throw new Error("Verify: cfg.questions or cfg.statement is required");
 
-    const verifyCfg = Object.assign({}, cfg, {
+    return Object.assign({}, cfg, {
       shuffleChoices: false,
       questions: derivedItems.map(item => ({
         text: item.text || item.statement || "",
@@ -323,6 +325,10 @@ function el(tag, attrs = {}, children = []) {
       }))
     });
 
+  }
+
+  function createVerify(cfg){
+    const verifyCfg = verifyConfig(cfg);
     const inst = createMCQ(verifyCfg);
     inst.node.setAttribute("data-wb-type", "verify");
     return {
@@ -1287,23 +1293,25 @@ function el(tag, attrs = {}, children = []) {
     return { node: wrapBlock("categorize", cfg, host), check, reset };
   }
 
+  function essayFields(cfg){
+    const fields = Array.isArray(cfg.fields) ? cfg.fields : [
+      {label:"Antwort", key:"text", kind:"textarea", placeholder:"Schreibe hier..."}
+    ];
+    return fields.filter(f => String(f.key || "").trim().toLowerCase() !== "name");
+  }
+
   function createEssay(cfg){
     const storagePrefix = (cfg.storagePrefix != null ? String(cfg.storagePrefix) : "wb_");
     const id = String(cfg.id || "essay");
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const fields = Array.isArray(cfg.fields) ? cfg.fields : [
-      {label:"Name", key:"name", kind:"text", placeholder:"Vorname Nachname"},
-      {label:"Antwort", key:"text", kind:"textarea", placeholder:"Schreibe hier..."}
-    ];
+    const fields = essayFields(cfg);
     const status = el("div", {class:"wb-score", "aria-live":"polite"});
     const inputs = fields.map(f => {
-      const isName = String(f.key || "").trim().toLowerCase() === "name";
       const label = el("label", {class:"wb-label"}, [String(f.label || f.key || "")]);
       const input = (f.kind === "textarea")
         ? el("textarea", {class:"wb-textarea", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")})
         : el("input", {class:"wb-input", type:"text", placeholder: String(f.placeholder || ""), "data-wb-key": String(f.key || "")});
-      if(isName) input.maxLength = NAME_MAX_LENGTH;
-      return {label, input, key: String(f.key || ""), isName};
+      return {label, input, key: String(f.key || "")};
     });
 
     const body = el("div", {});
@@ -1316,11 +1324,10 @@ function el(tag, attrs = {}, children = []) {
     const storageKey = (k) => `${storagePrefix}${pageKey}_${id}__${k}`;
     const load = () => inputs.forEach(fi => {
       const v = localStorage.getItem(storageKey(fi.key));
-      if(v != null) fi.input.value = fi.isName ? limitName(v) : v;
+      if(v != null) fi.input.value = v;
     });
     const save = () => {
       inputs.forEach(fi => {
-        if(fi.isName) fi.input.value = limitName(fi.input.value);
         localStorage.setItem(storageKey(fi.key), fi.input.value || "");
       });
       status.textContent = "Gespeichert.";
@@ -1516,17 +1523,107 @@ ${fi.input.value || ""}
 
 
 
-  function downloadText(filename, text){
-    const blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename || "ergebnisse.txt";
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      URL.revokeObjectURL(a.href);
-      a.remove();
-    }, 0);
+  function downloadResultsPdf(report, filename){
+    if(!resultsPdfLoader){
+      resultsPdfLoader = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = new URL('wb-results-pdf.js', assetsBase).href;
+        script.onload = () => global.WBResultsPDF ? resolve(global.WBResultsPDF) : reject(new Error('PDF-Modul fehlt.'));
+        script.onerror = () => { script.remove(); reject(new Error('PDF-Modul konnte nicht geladen werden.')); };
+        document.head.appendChild(script);
+      }).catch(error => { resultsPdfLoader = null; throw error; });
+    }
+    return resultsPdfLoader.then(module => module.save(report, filename));
+  }
+
+  function resultIsCompleted(r){
+    if(r.type === 'essay') return r.fields.some(f => String(f.value || '').trim() !== '');
+    if(r.type === 'text') return String(r.value || '').trim() !== '';
+    if(r.type === 'puzzle') return r.res.total > 0 && r.res.items.length === r.res.total;
+    if(!r.res || !r.res.items.length) return false;
+    return r.res.items.every(item => Array.isArray(item.selected) ? item.selected.length > 0 : String(item.got || '').trim() !== '');
+  }
+
+  function buildResultsReport(cfg, pages, results, studentName, submittedAt, totalCorrect, totalPossible){
+    const sourceText = (value, trim=true) => {
+      const text = String(value == null ? '' : value);
+      return trim ? text.trim() : text;
+    };
+    const elementText = node => {
+      if(!node) return '';
+      const clone = node.cloneNode(true);
+      clone.querySelectorAll('img').forEach(img => img.replaceWith(document.createTextNode(img.alt || 'Bild')));
+      clone.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode('\n')));
+      return clone.textContent.trim();
+    };
+    const types = {mcq:'Multiple Choice', verify:'Wahr oder falsch', cloze:'Lückentext', order:'Reihenfolge', categorize:'Kategorisieren', trace:'Ablaufspur', puzzle:'Zuordnung', essay:'Freitext', text:'Freitext'};
+    const ordered = results.slice().sort((a, b) => {
+      if(a.page !== b.page) return a.page - b.page;
+      if(!a.mount || !b.mount) return 0;
+      const position = a.mount.compareDocumentPosition(b.mount);
+      return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : position & Node.DOCUMENT_POSITION_PRECEDING ? 1 : 0;
+    });
+    const tasks = ordered.map(r => {
+      const rawConfig = r.mount && r.mount.__wbConfig || {};
+      const config = r.type === 'verify' ? verifyConfig(rawConfig) : rawConfig;
+      const task = {title:r.mount && r.mount.getAttribute('data-p2-title') || r.title, type:types[r.type] || 'Aufgabe', page:r.page, completed:resultIsCompleted(r), items:[]};
+      if(r.res) task.score = {correct:r.res.correctCount, total:r.res.total};
+      if(r.type === 'essay'){
+        task.items = r.fields.map(f => ({label:sourceText(essayFields(config).find(field => field.key === f.key)?.label || f.key || 'Deine Antwort'), answer:f.value, status:String(f.value || '').trim() ? 'open' : 'empty'}));
+      }else if(r.type === 'text'){
+        task.items = [{label:'Deine Antwort', answer:r.value, status:String(r.value || '').trim() ? 'open' : 'empty'}];
+      }else if(r.type === 'mcq' || r.type === 'verify'){
+        task.items = r.res.items.map((item, index) => {
+          const question = (config.questions || [])[index] || {};
+          const labels = ids => ids.map(id => sourceText((question.choices || []).find(choice => choice.id === id)?.label || id)).join('; ');
+          return {label:sourceText(item.text), answer:labels(item.selected), expected:labels(item.expected), status:item.selected.length ? (item.ok ? 'correct' : 'wrong') : 'empty', explanation:sourceText(question.explain || '')};
+        });
+      }else if(r.type === 'puzzle'){
+        const lefts = qsa('[data-side="L"][data-pair]', r.mount);
+        const rights = qsa('[data-side="R"][data-pair]', r.mount);
+        task.items = lefts.map(left => {
+          const joined = left.closest('.p2-joined');
+          const chosen = joined && qs('.p2-piece[data-side="R"]', joined);
+          const expected = rights.find(right => right.getAttribute('data-pair') === left.getAttribute('data-pair'));
+          return {label:elementText(left), answer:elementText(chosen), expected:elementText(expected), status:chosen ? (joined.dataset.correct === '1' ? 'correct' : 'wrong') : 'empty'};
+        });
+      }else{
+        const category = id => sourceText((config.categories || []).find(c => c.id === id)?.title || id);
+        task.items = r.res.items.map((item, index) => {
+          let label = item.label || `Position ${index + 1}`;
+          if(r.type === 'cloze') label = `Lücke ${index + 1}`;
+          if(r.type === 'trace'){
+            const column = (config.columns || [])[item.column - 1];
+            label = `Zeile ${item.row} · ${sourceText(typeof column === 'object' ? column.label || column.title : column) || 'Spalte ' + item.column}`;
+            const given = (config.rows || [])[item.row - 1]?.cells.filter(cell => Object.hasOwn(cell, 'given')).map(cell => cell.given).join(' · ');
+            if(given) label += '\n' + given;
+          }
+          return {label:sourceText(label), answer:r.type === 'categorize' ? category(item.got) : item.got, expected:r.type === 'categorize' ? category(item.expected) : item.expected, status:String(item.got || '').trim() ? (item.ok ? 'correct' : 'wrong') : 'empty'};
+        });
+        if(r.type === 'cloze'){
+          const textRuns = corrected => {
+            let gap = 0;
+            return (config.segments || []).map(segment => {
+              if(segment.t !== 'gap') return {text:sourceText(segment.v, false), bold:false};
+              const item = r.res.items[gap++];
+              const entered = item && String(item.got || '').trim();
+              const expected = Array.isArray(segment.a) ? segment.a[0] : segment.a;
+              return {text:entered ? (corrected && !item.ok ? sourceText(expected) : item.got) : '[offen]', bold:true};
+            });
+          };
+          task.cloze = {answer:textRuns(false), correction:textRuns(true), hasWrong:task.items.some(item => item.status === 'wrong')};
+        }
+      }
+      return task;
+    });
+    const learningPages = pages.filter(p => !p.node.hasAttribute('data-wb-results'));
+    const completed = results.filter(resultIsCompleted);
+    return {
+      title:cfg.sectionTitle || cfg.bookTitle || document.title || 'Ergebnisse',
+      name:studentName, submittedAt,
+      summary:{correct:totalCorrect, total:totalPossible, taskDone:completed.length, taskTotal:results.length, pageDone:new Set(completed.map(r => r.page)).size, pageTotal:learningPages.length},
+      chapters:learningPages.map(p => ({number:p.page, title:p.node.getAttribute('data-wb-page-title') || elementText(qs('h1,h2', p.node)), tasks:tasks.filter(task => task.page === p.page)})).filter(p => p.tasks.length)
+    };
   }
 
  
@@ -1650,8 +1747,8 @@ ${fi.input.value || ""}
     }).join("");
   }
 
-  function collectMCQ(mountEl){
-    const cfg = mountEl.__wbConfig || {};
+  function collectMCQ(mountEl, config){
+    const cfg = config || mountEl.__wbConfig || {};
     const questions = Array.isArray(cfg.questions) ? cfg.questions : [];
     const qEls = qsa(".wb-q", mountEl);
     let correctCount = 0;
@@ -1674,7 +1771,7 @@ ${fi.input.value || ""}
   }
 
   function collectVerify(mountEl){
-    return collectMCQ(mountEl);
+    return collectMCQ(mountEl, verifyConfig(mountEl.__wbConfig || {}));
   }
 
   function collectCloze(mountEl){
@@ -1777,7 +1874,8 @@ ${fi.input.value || ""}
 
   function collectEssay(mountEl){
     const inputs = qsa("[data-wb-key]", mountEl);
-    return inputs.map(inp => ({ key: inp.getAttribute("data-wb-key") || "", value: inp.value || "" }));
+    return inputs.filter(inp => String(inp.getAttribute("data-wb-key") || "").trim().toLowerCase() !== "name")
+      .map(inp => ({ key: inp.getAttribute("data-wb-key") || "", value: inp.value || "" }));
   }
 
   function collectPuzzle(mountEl){
@@ -1979,7 +2077,7 @@ ${fi.input.value || ""}
       getBlockMounts(pageRoot, "mcq").forEach((m, idx) => {
         const res = collectMCQ(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Multiple Choice " + (idx+1));
-        results.push({type:"mcq", title, res, page: pageNum});
+        results.push({type:"mcq", title, res, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -1998,7 +2096,7 @@ ${fi.input.value || ""}
       getBlockMounts(pageRoot, "verify").forEach((m, idx) => {
         const res = collectVerify(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Wahr oder Falsch " + (idx+1));
-        results.push({type:"verify", title, res, page: pageNum});
+        results.push({type:"verify", title, res, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2018,7 +2116,7 @@ ${fi.input.value || ""}
         const res = collectCloze(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Lueckentext " + (idx+1));
         const prompt = buildClozePrompt(m.__wbConfig);
-        results.push({type:"cloze", title, res, prompt, page: pageNum});
+        results.push({type:"cloze", title, res, prompt, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2035,7 +2133,7 @@ ${fi.input.value || ""}
       getBlockMounts(pageRoot, "order").forEach((m, idx) => {
         const res = collectOrder(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Reihenfolge " + (idx+1));
-        results.push({type:"order", title, res, page: pageNum});
+        results.push({type:"order", title, res, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2051,7 +2149,7 @@ ${fi.input.value || ""}
       getBlockMounts(pageRoot, "categorize").forEach((m, idx) => {
         const res = collectCategorize(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Kategorisieren " + (idx+1));
-        results.push({type:"categorize", title, res, page: pageNum});
+        results.push({type:"categorize", title, res, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2068,7 +2166,7 @@ ${fi.input.value || ""}
         const res = collectTrace(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Ablaufspur " + (idx+1));
         const columns = (m.__wbConfig && Array.isArray(m.__wbConfig.columns)) ? m.__wbConfig.columns : [];
-        results.push({type:"trace", title, res, page:pageNum});
+        results.push({type:"trace", title, res, page:pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2086,7 +2184,7 @@ ${fi.input.value || ""}
       getBlockMounts(pageRoot, "essay").forEach((m, idx) => {
         const fields = collectEssay(m);
         const title = (m.__wbConfig && m.__wbConfig.title) ? m.__wbConfig.title : ("Text " + (idx+1));
-        results.push({type:"essay", title, fields, page: pageNum});
+        results.push({type:"essay", title, fields, page: pageNum, mount:m});
         textLines.push("## Seite " + pageNum + ": " + title);
         fields.forEach(f => {
           textLines.push((f.key || "") + ":");
@@ -2098,7 +2196,7 @@ ${fi.input.value || ""}
       qsa('[data-p2]', pageRoot).forEach((m, idx) => {
         const res = collectPuzzle(m);
         const title = "Puzzle " + (idx+1);
-        results.push({type:"puzzle", title, res, page: pageNum});
+        results.push({type:"puzzle", title, res, page: pageNum, mount:m});
         totalCorrect += res.correctCount;
         totalPossible += res.total;
         pageCorrect += res.correctCount;
@@ -2114,7 +2212,7 @@ ${fi.input.value || ""}
       qsa("[data-wb-export]", pageRoot).forEach((ta, idx) => {
         const title = (ta.getAttribute("data-wb-label") || "Text " + (idx+1)).trim();
         const value = String(ta.value || "");
-        results.push({type:"text", title, page: pageNum, value});
+        results.push({type:"text", title, page: pageNum, value, mount:ta});
         textLines.push("## Seite " + pageNum + ": " + title);
         textLines.push(value || "-");
         textLines.push("");
@@ -2129,6 +2227,21 @@ ${fi.input.value || ""}
       }
     });
 
+    const report = buildResultsReport(cfg, pages, results, studentName, submittedAt, totalCorrect, totalPossible);
+    const pdfStatus = el('div', {class:'wb-results-pdf-status', role:'status', 'aria-live':'polite'}, []);
+    const pdfButton = el('button', {class:'wb-btn', type:'button', 'data-wb-pdf-download':'1'}, ['PDF herunterladen']);
+    const fileName = String(cfg && cfg.exportName || 'ergebnisse').replace(/\.(txt|pdf)$/i, '') + '.pdf';
+    const savePdf = () => {
+      pdfButton.disabled = true;
+      pdfStatus.textContent = 'Dein PDF wird erstellt ...';
+      return downloadResultsPdf(report, fileName).then(() => {
+        pdfStatus.textContent = 'Dein Ergebnis-PDF wurde zum Download bereitgestellt.';
+      }).catch(error => {
+        try{ console.error('[PDF] Export fehlgeschlagen:', error); }catch(_){}
+        pdfStatus.textContent = 'Das PDF konnte nicht erstellt werden. Deine Ergebnisse bleiben auf dieser Seite erhalten. Versuche den PDF-Download erneut.';
+      }).finally(() => { pdfButton.disabled = false; });
+    };
+    pdfButton.addEventListener('click', savePdf);
     const resultsPage = qs('[data-wb-results="1"]', root);
     if(resultsPage){
       resultsPage.innerHTML = "";
@@ -2137,42 +2250,16 @@ ${fi.input.value || ""}
       const typeLabel = {
         mcq: "Multiple Choice",
         verify: "Wahr oder Falsch",
-        cloze: "Lueckentext",
+        cloze: "Lückentext",
         order: "Reihenfolge",
         categorize: "Kategorisieren",
         trace: "Ablaufspur",
         puzzle: "Zuordnung",
-        essay: "Essay",
+        essay: "Freitext",
         text: "Text"
       };
 
-      function isCompleted(r){
-        if(r.type === "mcq" || r.type === "verify"){
-          return r.res.items.every(it => Array.isArray(it.selected) && it.selected.length);
-        }
-        if(r.type === "cloze"){
-          return r.res.items.every(it => String(it.got || "").trim() !== "");
-        }
-        if(r.type === "categorize"){
-          return r.res.items.every(it => String(it.got || "").trim() !== "");
-        }
-        if(r.type === "trace"){
-          return r.res.items.every(it => String(it.got || "").trim() !== "");
-        }
-        if(r.type === "essay"){
-          return r.fields.some(f => String(f.value || "").trim() !== "");
-        }
-        if(r.type === "text"){
-          return String(r.value || "").trim() !== "";
-        }
-        return true;
-      }
-
-      const allInteractions = results.length;
-      const doneInteractions = results.filter(isCompleted).length;
-      const allPages = pages.length;
-      const pagesWithDone = new Set(results.filter(isCompleted).map(r => r.page));
-      const donePages = pagesWithDone.size;
+      const {taskTotal:allInteractions, taskDone:doneInteractions, pageTotal:allPages, pageDone:donePages} = report.summary;
 
       const scorePct = totalPossible ? Math.round((totalCorrect / totalPossible) * 100) : 0;
       const bookPct = allPages ? Math.round((donePages / allPages) * 100) : 0;
@@ -2181,38 +2268,38 @@ ${fi.input.value || ""}
       const topGrid = el("div", {class:"wb-results-topgrid"}, [
         el("div", {class:"wb-results-card"}, [
           el("div", {class:"wb-results-card-text"}, [
-            el("h3", {}, ["Total score"]),
+            el("h3", {}, ["Gesamtpunkte"]),
             el("p", {class:"wb-results-big"}, [String(totalCorrect), " / ", String(totalPossible)]),
-            el("p", {class:"wb-results-small"}, [String(doneInteractions), " of ", String(allInteractions), " interactions"])
+            el("p", {class:"wb-results-small"}, [String(doneInteractions), " von ", String(allInteractions), " Aufgaben"])
           ]),
           el("div", {class:"wb-results-ring", style:`--p:${scorePct};--ring-color:var(--wb-ok)`}, [])
         ]),
         el("div", {class:"wb-results-card"}, [
           el("div", {class:"wb-results-card-text"}, [
-            el("h3", {}, ["Book progress"]),
+            el("h3", {}, ["Seiten"]),
             el("p", {class:"wb-results-big wb-results-blue"}, [String(bookPct), "%"]),
-            el("p", {class:"wb-results-small"}, [String(donePages), " of ", String(allPages), " pages"])
+            el("p", {class:"wb-results-small"}, [String(donePages), " von ", String(allPages), " Seiten mit bearbeiteten Aufgaben"])
           ]),
           el("div", {class:"wb-results-ring", style:`--p:${bookPct};--ring-color:var(--wb-blue)`}, [])
         ]),
         el("div", {class:"wb-results-card"}, [
           el("div", {class:"wb-results-card-text"}, [
-            el("h3", {}, ["Interactions progress"]),
+            el("h3", {}, ["Aufgaben"]),
             el("p", {class:"wb-results-big wb-results-blue"}, [String(intPct), "%"]),
-            el("p", {class:"wb-results-small"}, [String(doneInteractions), " of ", String(allInteractions), " interactions"])
+            el("p", {class:"wb-results-small"}, [String(doneInteractions), " von ", String(allInteractions), " Aufgaben ausgefüllt"])
           ]),
           el("div", {class:"wb-results-ring", style:`--p:${intPct};--ring-color:var(--wb-blue)`}, [])
         ])
       ]);
 
       const summaryHead = el("div", {class:"wb-results-summary-head"}, [
-        el("div", {class:"wb-results-heading"}, ["Summary"])
+        el("div", {class:"wb-results-heading"}, ["Deine Ergebnisse"])
       ]);
 
       const panelTitle = cfg.bookTitle || cfg.sectionTitle || "Ergebnisse";
       const panelTopChildren = [
         el("div", {class:"wb-results-panel-title"}, [panelTitle]),
-        el("p", {class:"wb-results-panel-sub"}, [String(doneInteractions), " of ", String(allInteractions), " interactions completed"])
+        el("p", {class:"wb-results-panel-sub"}, [String(doneInteractions), " von ", String(allInteractions), " Aufgaben ausgefüllt"])
       ];
       if(studentName){
         panelTopChildren.push(el("p", {class:"wb-results-name"}, ["Name: " + studentName]));
@@ -2220,7 +2307,7 @@ ${fi.input.value || ""}
       panelTopChildren.push(el("p", {class:"wb-results-name"}, ["Abgabe: " + submittedAt.local]));
 
       const tableRows = results.map(r => {
-        const scoreText = (r.type === "mcq" || r.type === "verify" || r.type === "cloze" || r.type === "order" || r.type === "puzzle" || r.type === "trace")
+        const scoreText = r.res
           ? `${r.res.correctCount} / ${r.res.total}`
           : "-";
         const meta = typeLabel[r.type] || "Interaktion";
@@ -2240,7 +2327,7 @@ ${fi.input.value || ""}
           el("div", {class:"wb-results-thead"}, [
             el("div", {}, []),
             el("div", {}, []),
-            el("div", {class:"wb-results-score-head"}, ["Score"])
+            el("div", {class:"wb-results-score-head"}, ["Punkte"])
           ]),
           ...tableRows
         ])
@@ -2276,9 +2363,9 @@ ${fi.input.value || ""}
         });
 
       const essaysSection = el("div", {class:"wb-results-essays"}, [
-        el("div", {class:"wb-results-essays-head"}, ["Essay-Texte"]),
+        el("div", {class:"wb-results-essays-head"}, ["Freitextantworten"]),
         essayItems.length ? el("div", {class:"wb-results-essays-list"}, essayItems)
-          : el("div", {class:"wb-results-muted"}, ["Keine Essays gefunden."])
+          : el("div", {class:"wb-results-muted"}, ["Keine Freitextantworten vorhanden."])
       ]);
 
       if(cfg && cfg.webhookUrl){
@@ -2290,6 +2377,7 @@ ${fi.input.value || ""}
       }
 
       wrap.appendChild(topGrid);
+      wrap.appendChild(el('div', {class:'wb-results-pdf-actions'}, [pdfButton, pdfStatus]));
       wrap.appendChild(summaryHead);
       wrap.appendChild(panel);
       wrap.appendChild(progressBar);
@@ -2306,10 +2394,7 @@ ${fi.input.value || ""}
       webhookStatus.remove();
       webhookStatus = null;
     }
-    const fileName = (cfg && cfg.exportName) ? cfg.exportName : "ergebnisse.txt";
-    if(!scormSent){
-      downloadText(fileName, textLines.join("\n"));
-    }
+    savePdf();
     if(!scormSent && cfg && cfg.webhookUrl){
       const url = String(cfg.webhookUrl).trim();
       const email = (cfg.webhookEmail != null) ? String(cfg.webhookEmail) : "";
@@ -2335,13 +2420,13 @@ ${fi.input.value || ""}
             if(error && error.code === "WEBHOOK_COOLDOWN"){
               if(!webhookStatus) return;
               webhookStatus.className = "wb-results-webhook-status is-cooldown";
-              webhookStatus.textContent = "Diese Seite wurde bereits übermittelt. Ein weiterer Webhook ist erst in " + formatCooldownTime(error.remainingMs) + " möglich. Die Ergebnisdatei wurde trotzdem lokal gespeichert.";
+              webhookStatus.textContent = "Diese Seite wurde bereits übermittelt. Ein weiterer Webhook ist erst in " + formatCooldownTime(error.remainingMs) + " möglich. Den PDF-Download kannst du unabhängig davon nutzen.";
               return;
             }
             try{ console.error("[Webhook] Übermittlung fehlgeschlagen:", error); }catch(_e){}
             if(!webhookStatus) return;
             webhookStatus.className = "wb-results-webhook-status is-error";
-            webhookStatus.textContent = "Die Online-Übermittlung ist fehlgeschlagen. Die Ergebnisdatei wurde trotzdem gespeichert. Informiere deine Lehrkraft.";
+            webhookStatus.textContent = "Die Online-Übermittlung ist fehlgeschlagen. Den PDF-Download kannst du unabhängig davon nutzen. Informiere deine Lehrkraft.";
           });
       }
     }

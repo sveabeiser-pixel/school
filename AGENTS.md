@@ -256,6 +256,8 @@ Für längere Begründungen kann eine Eingabezelle zusätzlich `"kind":"textarea
 
 #### Essay
 
+Frage den Namen nicht in einzelnen Freitextaufgaben ab. Nutze ausschließlich die zentrale Namenseingabe der Book-Abgabe; `fields` enthält nur die fachlichen Antworten.
+
 <div data-wb-type="essay">
   <script class="wb-config" type="application/json">
   {
@@ -263,7 +265,6 @@ Für längere Begründungen kann eine Eingabezelle zusätzlich `"kind":"textarea
     "title":"Reflexion",
     "hint":"Antworte in 4–8 Sätzen. Nutze mindestens ein Fachwort korrekt.",
     "fields":[
-      {"label":"Dein Name","key":"name","kind":"text","placeholder":"Vorname Nachname"},
       {"label":"Deine Antwort","key":"text","kind":"textarea","placeholder":"Schreibe hier…"}
     ]
   }
