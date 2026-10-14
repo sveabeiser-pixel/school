@@ -392,10 +392,32 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           "title":"Ablaufspur: Zwei Eingänge bestimmen die Motorwirkung",
           "hint":"Gehe die vier Eingangskombinationen durch. Die konkrete Drehrichtung hängt von der Motorverkabelung ab; entscheidend sind Stopp, Richtung 1 und Gegenrichtung.",
           "columns":[
-            {"label":"IN1","width":"20%"},
-            {"label":"IN2","width":"20%"},
-            {"label":"Spannung am Motor","width":"30%"},
-            {"label":"Wirkung","width":"30%"}
+            {
+              "label": "IN1",
+              "width": "20%"
+            },
+            {
+              "label": "IN2",
+              "width": "20%"
+            },
+            {
+              "label": "Spannung am Motor",
+              "width": "30%",
+              "hint": "Bei Stillstand: „0 V“. Sonst die Polarität angeben.",
+              "answerOptions": [
+                "negativ",
+                "positiv"
+              ]
+            },
+            {
+              "label": "Wirkung",
+              "width": "30%",
+              "answerOptions": [
+                "Gegenrichtung",
+                "Richtung 1",
+                "Stopp"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"LOW","code":true},{"given":"LOW","code":true},{"answers":["0 V","keine"]},{"answers":["Stopp","Motor steht"]}]},

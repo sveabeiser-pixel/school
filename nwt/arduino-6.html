@@ -330,10 +330,25 @@ Serial.println(spannung);</div>
           "title":"Ablaufspur: Spannung, Rohwert und Variable",
           "hint":"Nutze die Vergleichswerte aus der Abbildung. Kleine Rundungsabweichungen sind berücksichtigt.",
           "columns":[
-            {"label":"Spannung an A0","width":"22%"},
-            {"label":"analogRead(A0)","width":"22%"},
-            {"label":"messwert danach","width":"24%"},
-            {"label":"Ausgabe ungefähr","width":"32%"}
+            {
+              "label": "Spannung an A0",
+              "width": "22%"
+            },
+            {
+              "label": "analogRead(A0)",
+              "width": "22%",
+              "hint": "ADC-Rohwert als ganze Zahl; bei 1,25 V und 2,50 V ist jeweils auch der benachbarte höhere Ganzzahlwert zulässig."
+            },
+            {
+              "label": "messwert danach",
+              "width": "24%",
+              "hint": "Gespeicherter ADC-Rohwert als ganze Zahl."
+            },
+            {
+              "label": "Ausgabe ungefähr",
+              "width": "32%",
+              "hint": "Spannung mit V, zum Beispiel 3,75 V. Komma oder Punkt erlaubt; unnötige Nachkommastellen weglassen."
+            }
           ],
           "rows":[
             {"cells":[{"given":"0 V"},{"answers":["0"]},{"answers":["0"]},{"answers":["0 V","0,0 V","0.0 V"]}]},
@@ -450,11 +465,35 @@ Serial.println(spannung);</div>
           "title":"Ablaufspur: Messwert und LED verfolgen",
           "hint":"Die Messfolge lautet 320, 610, 500 und 720. Achte genau auf den Grenzwert.",
           "columns":[
-            {"label":"Durchlauf","width":"14%"},
-            {"label":"analogRead liefert","width":"21%"},
-            {"label":"helligkeit danach","width":"22%"},
-            {"label":"helligkeit > 500","width":"23%"},
-            {"label":"LED danach","width":"20%"}
+            {
+              "label": "Durchlauf",
+              "width": "14%"
+            },
+            {
+              "label": "analogRead liefert",
+              "width": "21%"
+            },
+            {
+              "label": "helligkeit danach",
+              "width": "22%",
+              "hint": "Gemessener Wert als ganze Zahl."
+            },
+            {
+              "label": "helligkeit > 500",
+              "width": "23%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "LED danach",
+              "width": "20%",
+              "answerOptions": [
+                "AN",
+                "AUS"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"1"},{"given":"320"},{"answers":["320"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]},

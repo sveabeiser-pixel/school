@@ -421,9 +421,28 @@
           "title":"Ablaufspur: Drei Hardwarefehler vorhersagen",
           "hint":"Stelle dir jeden Aufbau einzeln vor. Trage Beobachtung und Ursache ein, bevor du etwas umsteckst.",
           "columns":[
-            {"label":"Veränderung","width":"38%"},
-            {"label":"Beobachtung","width":"27%"},
-            {"label":"Begründung","width":"35%"}
+            {
+              "label": "Veränderung",
+              "width": "38%"
+            },
+            {
+              "label": "Beobachtung",
+              "width": "27%",
+              "answerOptions": [
+                "LED an",
+                "LED aus",
+                "LED kann kaputtgehen"
+              ]
+            },
+            {
+              "label": "Begründung",
+              "width": "35%",
+              "answerOptions": [
+                "falsche Polung",
+                "kein Stromkreis",
+                "Strom ist zu groß"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"LED wird umgedreht"},{"answers":["LED aus","aus"]},{"answers":["kein Stromkreis","falsche Polung","kein Strom"]}]},

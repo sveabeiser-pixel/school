@@ -597,10 +597,12 @@ function el(tag, attrs = {}, children = []) {
       if(column && typeof column === "object"){
         return {
           label: String(column.label || column.title || `Spalte ${index + 1}`),
-          width: column.width ? String(column.width) : ""
+          width: column.width ? String(column.width) : "",
+          hint: String(column.hint || ""),
+          answerOptions: Array.isArray(column.answerOptions) ? column.answerOptions.map(String) : []
         };
       }
-      return {label: String(column), width: ""};
+      return {label: String(column), width: "", hint:"", answerOptions:[]};
     });
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const storageKey = (cfg.storagePrefix || "wb_") + "trace_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "trace");
@@ -611,9 +613,20 @@ function el(tag, attrs = {}, children = []) {
       colgroup.appendChild(el("col", column.width ? {style:`width:${column.width}`} : {}));
     });
     table.appendChild(colgroup);
-    table.appendChild(el("thead", {}, [
-      el("tr", {}, columns.map(column => el("th", {scope:"col"}, [column.label])))
-    ]));
+    const columnHints = columns.map((column, index) => {
+      const text = [column.hint, column.answerOptions.length ? "Mögliche Einträge: " + column.answerOptions.map(option => `„${option}“`).join(" · ") : ""].filter(Boolean).join("\n");
+      if(!text) return null;
+      const hint = el("div", {class:"wb-trace-column-hint"}, [text]);
+      ensureId(hint, `${cfg.id || "trace"}-spalte-${index + 1}-antwortvorgabe`);
+      return hint;
+    });
+    const headerRow = el("tr");
+    columns.forEach((column, index) => {
+      const heading = el("th", {scope:"col"}, [column.label]);
+      if(columnHints[index]) heading.appendChild(columnHints[index]);
+      headerRow.appendChild(heading);
+    });
+    table.appendChild(el("thead", {}, [headerRow]));
     const tbody = el("tbody");
 
     function answerList(cell){
@@ -658,6 +671,7 @@ function el(tag, attrs = {}, children = []) {
             "aria-label":cell.ariaLabel || `${columns[columnIndex].label}, Zeile ${rowIndex + 1}`,
             placeholder:cell.placeholder || ""
           };
+          if(columnHints[columnIndex]) attrs["aria-describedby"] = columnHints[columnIndex].id;
           if(tag === "input") attrs.type = "text";
           const input = el(tag, attrs);
           td.appendChild(input);

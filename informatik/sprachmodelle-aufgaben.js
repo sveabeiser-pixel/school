@@ -38,6 +38,7 @@ window.SprachmodellAufgaben = (() => {
       const select = document.createElement('select');
       select.className = 'wb-trace-input sm-table-select';
       select.setAttribute('aria-label', input.getAttribute('aria-label'));
+      if (input.hasAttribute('aria-describedby')) select.setAttribute('aria-describedby', input.getAttribute('aria-describedby'));
       for (const name of ['', ...names]) {
         const option = document.createElement('option');
         option.value = name; option.textContent = name || 'Problem auswählen'; select.append(option);

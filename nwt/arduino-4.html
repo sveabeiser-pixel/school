@@ -367,10 +367,34 @@
           "title":"Ablaufspur: INPUT_PULLUP richtig herum denken",
           "hint":"Leite den gelesenen Wert zuerst aus der elektrischen Verbindung ab. Bewerte danach die Bedingung.",
           "columns":[
-            {"label":"Taster","width":"22%"},
-            {"label":"Verbindung","width":"30%"},
-            {"label":"digitalRead(BTN)","width":"23%"},
-            {"label":"== LOW","width":"25%"}
+            {
+              "label": "Taster",
+              "width": "22%"
+            },
+            {
+              "label": "Verbindung",
+              "width": "30%",
+              "answerOptions": [
+                "GND",
+                "Pull-up"
+              ]
+            },
+            {
+              "label": "digitalRead(BTN)",
+              "width": "23%",
+              "answerOptions": [
+                "HIGH",
+                "LOW"
+              ]
+            },
+            {
+              "label": "== LOW",
+              "width": "25%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"nicht gedrückt"},{"answers":["intern mit HIGH verbunden","auf HIGH gezogen","Pull-up"]},{"answers":["HIGH"]},{"answers":["falsch"]}]},
@@ -647,10 +671,25 @@ void loop() {
           "title":"Ablaufspur: while prüft vor jedem Durchgang",
           "hint":"Notiere erst den Wert vor dem Block. Bei einer falschen Prüfung werden Ausgabe und Änderung nicht mehr ausgeführt.",
           "columns":[
-            {"label":"Prüfung","width":"27%"},
-            {"label":"x vorher","width":"20%"},
-            {"label":"Ausgabe","width":"25%"},
-            {"label":"x nachher","width":"28%"}
+            {
+              "label": "Prüfung",
+              "width": "27%"
+            },
+            {
+              "label": "x vorher",
+              "width": "20%",
+              "hint": "Zahl ohne Einheit."
+            },
+            {
+              "label": "Ausgabe",
+              "width": "25%",
+              "hint": "Ausgegebene Zahl; wenn der Rumpf nicht läuft: „keine Ausgabe“."
+            },
+            {
+              "label": "x nachher",
+              "width": "28%",
+              "hint": "Zahl ohne Einheit; beim Verlassen den letzten Wert eintragen."
+            }
           ],
           "rows":[
             {"cells":[{"given":"0 < 20","code":true},{"answers":["0"]},{"answers":["0"]},{"answers":["5"]}]},

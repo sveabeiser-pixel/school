@@ -521,9 +521,33 @@ void loop() {
           "title":"Ablaufspur: Blink wirklich ausführen",
           "hint":"Gehe Zeile für Zeile vor. Notiere den Pinzustand nach der Zeile und die sichtbare Wirkung. Groß- und Kleinschreibung spielt bei der Kontrolle keine Rolle.",
           "columns":[
-            {"label":"Ausgeführte Zeile","width":"38%"},
-            {"label":"Pin 13 danach","width":"24%"},
-            {"label":"Sichtbare Wirkung","width":"38%"}
+            {
+              "label": "Ausgeführte Zeile",
+              "width": "38%"
+            },
+            {
+              "label": "Pin 13 danach",
+              "width": "24%",
+              "hint": "OUTPUT: als Ausgang eingerichtet. HIGH/LOW: Pegel nach der Zeile.",
+              "answerOptions": [
+                "HIGH",
+                "LOW",
+                "OUTPUT"
+              ]
+            },
+            {
+              "label": "Sichtbare Wirkung",
+              "width": "38%",
+              "hint": "Wähle einen passenden Ausdruck, keine freie Umschreibung.",
+              "answerOptions": [
+                "Ablauf wiederholt sich",
+                "LED an",
+                "LED aus",
+                "LED bleibt 1 Sekunde an",
+                "LED bleibt 1 Sekunde aus",
+                "noch keine Änderung"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"pinMode(13, OUTPUT);","code":true},{"answers":["vorbereitet","Ausgang","OUTPUT"]},{"answers":["noch keine Änderung","LED unverändert","nichts"]}]},
@@ -531,7 +555,7 @@ void loop() {
             {"cells":[{"given":"delay(1000);","code":true},{"answers":["HIGH"]},{"answers":["LED bleibt 1 Sekunde an","1 Sekunde an","bleibt an"]}]},
             {"cells":[{"given":"digitalWrite(13, LOW);","code":true},{"answers":["LOW"]},{"answers":["LED aus","aus"]}]},
             {"cells":[{"given":"delay(1000);","code":true},{"answers":["LOW"]},{"answers":["LED bleibt 1 Sekunde aus","1 Sekunde aus","bleibt aus"]}]},
-            {"cells":[{"given":"loop() beginnt erneut","code":true},{"answers":["HIGH","wieder HIGH"]},{"answers":["Ablauf wiederholt sich","LED geht wieder an","Wiederholung"]}]}
+            {"cells":[{"given":"digitalWrite(13, HIGH); (nächster loop-Durchlauf)","code":true},{"answers":["HIGH","wieder HIGH"]},{"answers":["Ablauf wiederholt sich","LED geht wieder an","Wiederholung"]}]}
           ]
         }
         </script>

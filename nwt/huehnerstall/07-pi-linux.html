@@ -86,7 +86,27 @@
       <div class="wb-callout"><strong>Folgerung für die Fehlersuche:</strong><p>Wenn SSH nicht funktioniert, muss der Fehler nicht bei SSH liegen. Vielleicht bootet die Karte nicht, die Stromversorgung ist instabil, das Netzwerk fehlt oder der SSH-Dienst wurde nicht aktiviert.</p></div>
       <div class="wb-section-break"></div>
       <div data-wb-type="trace"><script type="application/json" class="wb-config">
-      {"id":"pi_boot_trace","title":"Ablaufspur: Der Pi startet","hint":"Trage ein, was nach der jeweiligen Stufe als Nächstes verfügbar ist.","columns":[{"label":"Stufe","width":"16%"},{"label":"Aktiver Teil","width":"30%"},{"label":"Ergebnis danach","width":"54%"}],"rows":[{"cells":[{"given":"1"},{"given":"Spannungsversorgung"},{"answers":["stabile betriebsspannungen","betriebsspannungen stabil","stabile spannungen"],"ariaLabel":"Ergebnis nach der Spannungsversorgung"}]},{"cells":[{"given":"2"},{"given":"Bootloader"},{"answers":["startmedium gefunden","microSD gefunden","startmedium wird gefunden"],"ariaLabel":"Ergebnis nach dem Bootloader"}]},{"cells":[{"given":"3"},{"given":"Linux-Kernel"},{"answers":["treiber und speicherverwaltung aktiv","speicherverwaltung und treiber aktiv","treiber aktiv"],"ariaLabel":"Ergebnis nach dem Kernel"}]},{"cells":[{"given":"4"},{"given":"systemd"},{"answers":["dienste gestartet","netzwerk und ssh gestartet","systemdienste gestartet"],"ariaLabel":"Ergebnis nach systemd"}]},{"cells":[{"given":"5"},{"given":"Anwendung"},{"answers":["kamera und stream laufen","kameradienst läuft","streamingdienst läuft"],"ariaLabel":"Ergebnis der Anwendung"}]}]}
+      {"id":"pi_boot_trace","title":"Ablaufspur: Der Pi startet","hint":"Trage ein, was nach der jeweiligen Stufe als Nächstes verfügbar ist.","columns":[
+        {
+          "label": "Stufe",
+          "width": "16%"
+        },
+        {
+          "label": "Aktiver Teil",
+          "width": "30%"
+        },
+        {
+          "label": "Ergebnis danach",
+          "width": "54%",
+          "answerOptions": [
+            "dienste gestartet",
+            "kamera und stream laufen",
+            "startmedium gefunden",
+            "stabile betriebsspannungen",
+            "treiber und speicherverwaltung aktiv"
+          ]
+        }
+      ],"rows":[{"cells":[{"given":"1"},{"given":"Spannungsversorgung"},{"answers":["stabile betriebsspannungen","betriebsspannungen stabil","stabile spannungen"],"ariaLabel":"Ergebnis nach der Spannungsversorgung"}]},{"cells":[{"given":"2"},{"given":"Bootloader"},{"answers":["startmedium gefunden","microSD gefunden","startmedium wird gefunden"],"ariaLabel":"Ergebnis nach dem Bootloader"}]},{"cells":[{"given":"3"},{"given":"Linux-Kernel"},{"answers":["treiber und speicherverwaltung aktiv","speicherverwaltung und treiber aktiv","treiber aktiv"],"ariaLabel":"Ergebnis nach dem Kernel"}]},{"cells":[{"given":"4"},{"given":"systemd"},{"answers":["dienste gestartet","netzwerk und ssh gestartet","systemdienste gestartet"],"ariaLabel":"Ergebnis nach systemd"}]},{"cells":[{"given":"5"},{"given":"Anwendung"},{"answers":["kamera und stream laufen","kameradienst läuft","streamingdienst läuft"],"ariaLabel":"Ergebnis der Anwendung"}]}]}
       </script></div>
     </section>
 

@@ -519,10 +519,35 @@ vater(PERSON, KIND) :- kind(KIND, PERSON), maennlich(PERSON).</pre>
         "title":"Ablaufspur: Prolog-Anfrage verfolgen",
         "hint":"Verfolge, wie die Anfrage mutter(X, apollo) geprüft wird.",
         "columns":[
-          {"label":"Schritt","width":"12%"},
-          {"label":"Was prüft Prolog?","width":"38%"},
-          {"label":"Belegung / Ergebnis","width":"25%"},
-          {"label":"Begründung","width":"25%"}
+          {
+            "label": "Schritt",
+            "width": "12%"
+          },
+          {
+            "label": "Was prüft Prolog?",
+            "width": "38%"
+          },
+          {
+            "label": "Belegung / Ergebnis",
+            "width": "25%",
+            "hint": "Wähle eine dieser Belegungen; Leerzeichen an = sind erlaubt.",
+            "answerOptions": [
+              "X=leto",
+              "PERSON=X, KIND=apollo",
+              "X=zeus oder X=leto"
+            ]
+          },
+          {
+            "label": "Begründung",
+            "width": "25%",
+            "hint": "Ein passendes Stichwort genügt.",
+            "answerOptions": [
+              "Fakten",
+              "leto ist weiblich",
+              "Regelkopf",
+              "weiblich(leto)"
+            ]
+          }
         ],
         "rows":[
           {"cells":[

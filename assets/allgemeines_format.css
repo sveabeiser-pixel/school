@@ -1221,6 +1221,14 @@ body.wb-global-fs{
   color:#172033;
   font-weight:750;
 }
+.wb-trace-column-hint{
+  margin-top:6px;
+  font-size:13px;
+  line-height:1.5;
+  font-weight:400;
+  color:var(--wb-text-color, var(--wb-text, #20313f));
+  white-space:pre-line;
+}
 .wb-trace-input{
   width:100%;
   min-height:42px;

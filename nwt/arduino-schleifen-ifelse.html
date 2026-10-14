@@ -407,11 +407,38 @@ ENDE WIEDERHOLUNG</div>
           "title":"Ablaufspur: Welcher Zweig läuft?",
           "hint":"Trage ein, ob die Bedingung wahr oder falsch ist und welcher Block ausgeführt wird.",
           "columns":[
-            {"label":"Fall","width":"12%"},
-            {"label":"helligkeit","width":"18%"},
-            {"label":"Bedingung helligkeit < 400","width":"24%"},
-            {"label":"Ausgeführter Block (if/else)","width":"24%"},
-            {"label":"led danach (aus/an)","width":"22%"}
+            {
+              "label": "Fall",
+              "width": "12%"
+            },
+            {
+              "label": "helligkeit",
+              "width": "18%"
+            },
+            {
+              "label": "Bedingung helligkeit < 400",
+              "width": "24%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Ausgeführter Block (if/else)",
+              "width": "24%",
+              "answerOptions": [
+                "else",
+                "if"
+              ]
+            },
+            {
+              "label": "led danach (aus/an)",
+              "width": "22%",
+              "answerOptions": [
+                "an",
+                "aus"
+              ]
+            }
           ],
           "rows":[
             {"cells":[
@@ -605,11 +632,36 @@ status = FERTIG;</div>
           "title":"Ablaufspur: In welchem Schleifendurchlauf bist du?",
           "hint":"Trage pro Prüfung ein, ob die Schleife betreten wird und welcher Wert danach gilt.",
           "columns":[
-            {"label":"Prüfung","width":"13%"},
-            {"label":"zaehler vor Prüfung","width":"20%"},
-            {"label":"zaehler < 3?","width":"18%"},
-            {"label":"Wo steckt das Programm? (while-Schleife/fertig)","width":"27%"},
-            {"label":"zaehler danach","width":"22%"}
+            {
+              "label": "Prüfung",
+              "width": "13%"
+            },
+            {
+              "label": "zaehler vor Prüfung",
+              "width": "20%",
+              "hint": "Zahl ohne Einheit."
+            },
+            {
+              "label": "zaehler < 3?",
+              "width": "18%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Wo steckt das Programm? (while-Schleife/fertig)",
+              "width": "27%",
+              "answerOptions": [
+                "fertig",
+                "while-Schleife"
+              ]
+            },
+            {
+              "label": "zaehler danach",
+              "width": "22%",
+              "hint": "Zahl ohne Einheit; beim Verlassen den letzten Wert eintragen."
+            }
           ],
           "rows":[
             {"cells":[
@@ -674,11 +726,36 @@ motorStopp();</div>
           "title":"Ablaufspur: Warum endet die Schleife nicht?",
           "hint":"Verfolge den Wert. Bleibt er gleich, bleibt auch die Bedingung gleich.",
           "columns":[
-            {"label":"Prüfung","width":"12%"},
-            {"label":"abstand vorher","width":"18%"},
-            {"label":"abstand > 10?","width":"18%"},
-            {"label":"Aktion im Rumpf (piep/ nichts)","width":"26%"},
-            {"label":"abstand nachher","width":"26%"}
+            {
+              "label": "Prüfung",
+              "width": "12%"
+            },
+            {
+              "label": "abstand vorher",
+              "width": "18%",
+              "hint": "Zahl ohne Einheit."
+            },
+            {
+              "label": "abstand > 10?",
+              "width": "18%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Aktion im Rumpf (piep/ nichts)",
+              "width": "26%",
+              "answerOptions": [
+                "nichts",
+                "piep"
+              ]
+            },
+            {
+              "label": "abstand nachher",
+              "width": "26%",
+              "hint": "Zahl ohne Einheit; auch bei unverändertem Wert die Zahl eintragen."
+            }
           ],
           "rows":[
             {"cells":[
@@ -808,12 +885,45 @@ summer = AUS;</div>
           "title":"Ablaufspur: Schleife mit if/else",
           "hint":"Trage pro Durchlauf ein: Schleifenbedingung, Messwert, if/else-Entscheidung und neuen Zeitwert.",
           "columns":[
-            {"label":"Prüfung","width":"12%"},
-            {"label":"zeit vor Prüfung","width":"17%"},
-            {"label":"zeit < 4?","width":"15%"},
-            {"label":"helligkeit","width":"16%"},
-            {"label":"if helligkeit < 400","width":"20%"},
-            {"label":"Block / led(if oder else / an oder aus)","width":"20%"}
+            {
+              "label": "Prüfung",
+              "width": "12%"
+            },
+            {
+              "label": "zeit vor Prüfung",
+              "width": "17%",
+              "hint": "Zahl ohne Einheit."
+            },
+            {
+              "label": "zeit < 4?",
+              "width": "15%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "helligkeit",
+              "width": "16%",
+              "hint": "Gemessener Wert als ganze Zahl."
+            },
+            {
+              "label": "if helligkeit < 400",
+              "width": "20%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Block / led(if oder else / an oder aus)",
+              "width": "20%",
+              "answerOptions": [
+                "else / aus",
+                "hinter der Schleife",
+                "if / an"
+              ]
+            }
           ],
           "rows":[
             {"cells":[
@@ -973,11 +1083,38 @@ alarm = AN;</div>
           "title":"Mini-Check: Temperaturfolge verfolgen",
           "hint":"Messwerte nacheinander: 24, 27, 29, 30.",
           "columns":[
-            {"label":"Durchlauf / Prüfung","width":"17%"},
-            {"label":"temperatur nach liesSensor()","width":"22%"},
-            {"label":"if temperatur >= 26","width":"20%"},
-            {"label":"luefter danach","width":"18%"},
-            {"label":"while für nächsten Durchlauf?","width":"23%"}
+            {
+              "label": "Durchlauf / Prüfung",
+              "width": "17%"
+            },
+            {
+              "label": "temperatur nach liesSensor()",
+              "width": "22%"
+            },
+            {
+              "label": "if temperatur >= 26",
+              "width": "20%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "luefter danach",
+              "width": "18%",
+              "answerOptions": [
+                "AN",
+                "AUS"
+              ]
+            },
+            {
+              "label": "while für nächsten Durchlauf?",
+              "width": "23%",
+              "answerOptions": [
+                "ja",
+                "nein"
+              ]
+            }
           ],
           "rows":[
             {"cells":[
@@ -1131,11 +1268,36 @@ ENDE WIEDERHOLUNG</div>
           "title":"Ablaufspur: Die for-Schleife vollständig verfolgen",
           "hint":"Fülle zuerst alle Felder aus. Denke auch an die letzte Prüfung, bei der keine Aktion mehr ausgeführt wird.",
           "columns":[
-            {"label":"Prüfung","width":"12%"},
-            {"label":"zaehler vor Bedingung","width":"21%"},
-            {"label":"zaehler < 3?","width":"17%"},
-            {"label":"Aktion / Ort","width":"28%"},
-            {"label":"zaehler nach Veränderung","width":"22%"}
+            {
+              "label": "Prüfung",
+              "width": "12%"
+            },
+            {
+              "label": "zaehler vor Bedingung",
+              "width": "21%",
+              "hint": "Zahl ohne Einheit."
+            },
+            {
+              "label": "zaehler < 3?",
+              "width": "17%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Aktion / Ort",
+              "width": "28%",
+              "answerOptions": [
+                "hinter der Schleife",
+                "LED blinkt"
+              ]
+            },
+            {
+              "label": "zaehler nach Veränderung",
+              "width": "22%",
+              "hint": "Zahl ohne Einheit; beim Verlassen den letzten Wert eintragen."
+            }
           ],
           "rows":[
             {"cells":[

@@ -181,9 +181,24 @@
           "title":"Ablaufspur: Eine Variable verändert sich",
           "hint":"Werte erst die rechte Seite einer Zuweisung aus. Trage dann ein, was im Speicherplatz a steht.",
           "columns":[
-            {"label":"Codezeile","width":"30%"},
-            {"label":"Operation","width":"45%"},
-            {"label":"a danach","width":"25%"}
+            {
+              "label": "Codezeile",
+              "width": "30%"
+            },
+            {
+              "label": "Operation",
+              "width": "45%",
+              "answerOptions": [
+                "10 wird gespeichert",
+                "10 + 5 berechnen und 15 speichern",
+                "Speicherplatz wird angelegt"
+              ]
+            },
+            {
+              "label": "a danach",
+              "width": "25%",
+              "hint": "Zahl ohne Einheit; ohne Initialisierung: „unbestimmt“."
+            }
           ],
           "rows":[
             {"cells":[{"given":"int a;","code":true},{"answers":["Speicherplatz wird angelegt","Variable wird angelegt","Deklaration"]},{"answers":["kein sinnvoller Wert","unbestimmt","nicht initialisiert"]}]},
@@ -884,10 +899,31 @@ void loop() {
           "title":"Ablaufspur: for-Schleife mit fünf Prüfungen",
           "hint":"Entscheide zuerst wahr oder falsch. Nur bei wahr läuft der Block; danach wird i erhöht.",
           "columns":[
-            {"label":"Prüfung","width":"23%"},
-            {"label":"Ergebnis","width":"20%"},
-            {"label":"Block läuft?","width":"32%"},
-            {"label":"i danach","width":"25%"}
+            {
+              "label": "Prüfung",
+              "width": "23%"
+            },
+            {
+              "label": "Ergebnis",
+              "width": "20%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Block läuft?",
+              "width": "32%",
+              "answerOptions": [
+                "ja",
+                "nein"
+              ]
+            },
+            {
+              "label": "i danach",
+              "width": "25%",
+              "hint": "Zahl ohne Einheit; beim Verlassen den letzten Wert eintragen."
+            }
           ],
           "rows":[
             {"cells":[{"given":"0 < 5","code":true},{"answers":["wahr"]},{"answers":["ja","ja, erstes Blinken"]},{"answers":["1"]}]},
@@ -1053,9 +1089,20 @@ void loop() {
           "title":"Ablaufspur: verschachtelte Schleifen",
           "hint":"Für jeden Wert von i startet j wieder bei 0 und durchläuft alle fünf Werte. Trage die j-Folge und die Anzahl ein.",
           "columns":[
-            {"label":"i","width":"20%"},
-            {"label":"j-Werte in dieser Runde","width":"50%"},
-            {"label":"Ausführungen","width":"30%"}
+            {
+              "label": "i",
+              "width": "20%"
+            },
+            {
+              "label": "j-Werte in dieser Runde",
+              "width": "50%",
+              "hint": "j-Werte durch Leerzeichen trennen. In der Gesamtzeile: Anzahl äußerer Runden * Anzahl innerer Runden."
+            },
+            {
+              "label": "Ausführungen",
+              "width": "30%",
+              "hint": "Anzahl als ganze Zahl, ohne -mal."
+            }
           ],
           "rows":[
             {"cells":[{"given":"0","code":true},{"answers":["0, 1, 2, 3, 4","0 1 2 3 4"]},{"answers":["5","5-mal"]}]},
@@ -1609,10 +1656,34 @@ void loop() {
           "title":"Ablaufspur: Welcher Zweig wird gewählt?",
           "hint":"Beachte die Grenze genau: 100 ist nicht größer als 100.",
           "columns":[
-            {"label":"hell","width":"18%"},
-            {"label":"hell > 100","width":"28%"},
-            {"label":"Zweig","width":"25%"},
-            {"label":"LED","width":"29%"}
+            {
+              "label": "hell",
+              "width": "18%"
+            },
+            {
+              "label": "hell > 100",
+              "width": "28%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "Zweig",
+              "width": "25%",
+              "answerOptions": [
+                "else",
+                "if"
+              ]
+            },
+            {
+              "label": "LED",
+              "width": "29%",
+              "answerOptions": [
+                "an",
+                "aus"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"80","code":true},{"answers":["falsch"]},{"answers":["else"]},{"answers":["aus"]}]},

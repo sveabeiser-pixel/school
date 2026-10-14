@@ -276,11 +276,30 @@ for (int i = 0; i &lt; 6; i = i + 1) {
           "title":"Ablaufspur: Sechs Schleifendurchgänge",
           "hint":"Berechne zuerst i. Lies dann an derselben Stelle in beiden Arrays und bestimme tonDauer = 1000 / notenWert[i].",
           "columns":[
-            {"label":"Durchgang","width":"110px"},
-            {"label":"i","width":"90px"},
-            {"label":"Melodie[i]","width":"150px"},
-            {"label":"notenWert[i]","width":"160px"},
-            {"label":"tonDauer in ms","width":"180px"}
+            {
+              "label": "Durchgang",
+              "width": "110px"
+            },
+            {
+              "label": "i",
+              "width": "90px",
+              "hint": "Index als ganze Zahl."
+            },
+            {
+              "label": "Melodie[i]",
+              "width": "150px",
+              "hint": "Zahlenwert ohne Einheit."
+            },
+            {
+              "label": "notenWert[i]",
+              "width": "160px",
+              "hint": "Zahlenwert ohne Einheit."
+            },
+            {
+              "label": "tonDauer in ms",
+              "width": "180px",
+              "hint": "Dauer in ms, ohne Einheitenzeichen."
+            }
           ],
           "rows":[
             {"cells":[{"given":"1"},{"answers":["0"]},{"answers":["175"]},{"answers":["8"]},{"answers":["125"]}]},
@@ -599,10 +618,33 @@ int notenWert[] = {
           "title":"Ablaufspur: Vom Tastendruck zur Reaktion",
           "hint":"Trage ein, welcher Programmteil aktiv ist, welchen Wert der Merker zustand hat und was als Nächstes geschieht.",
           "columns":[
-            {"label":"Ereignis","width":"220px"},
-            {"label":"aktiver Bereich","width":"170px"},
-            {"label":"zustand","width":"120px"},
-            {"label":"nächster Schritt","width":"260px"}
+            {
+              "label": "Ereignis",
+              "width": "220px"
+            },
+            {
+              "label": "aktiver Bereich",
+              "width": "170px",
+              "answerOptions": [
+                "ISR",
+                "loop()"
+              ]
+            },
+            {
+              "label": "zustand",
+              "width": "120px",
+              "hint": "Wert der Variable als Zahl (0 oder 1), nicht als Änderungspfeil."
+            },
+            {
+              "label": "nächster Schritt",
+              "width": "260px",
+              "answerOptions": [
+                "Aktion ausführen",
+                "Hauptprogramm fortsetzen",
+                "Hauptprogramm läuft weiter",
+                "ISR wird beendet"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"Normalbetrieb"},{"answers":["loop()","loop"]},{"answers":["0"]},{"answers":["Hauptprogramm läuft weiter","loop läuft weiter"]}]},
@@ -806,9 +848,30 @@ if (sensorWert &gt; 500) {
           "title":"Ablaufspur: In welcher Fehlerebene suchst du?",
           "hint":"Ordne jede Beobachtung einer Ebene zu. Nenne dann den ersten sinnvollen Prüfschritt.",
           "columns":[
-            {"label":"Beobachtung","width":"250px"},
-            {"label":"Fehlerebene","width":"160px"},
-            {"label":"erster Prüfschritt","width":"310px"}
+            {
+              "label": "Beobachtung",
+              "width": "250px"
+            },
+            {
+              "label": "Fehlerebene",
+              "width": "160px",
+              "answerOptions": [
+                "Code",
+                "Hardware",
+                "Logik",
+                "Upload"
+              ]
+            },
+            {
+              "label": "erster Prüfschritt",
+              "width": "310px",
+              "answerOptions": [
+                "Bedingung und Vergleichsoperator prüfen",
+                "Board, Port und USB-Verbindung prüfen",
+                "Fehlermeldung und vorherige Zeile prüfen",
+                "GND und Spannungsversorgung prüfen"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"Der Sketch kompiliert nicht; eine Zeile ist rot markiert."},{"answers":["Code","Compiler","Compilerfehler"]},{"answers":["Fehlermeldung und vorherige Zeile prüfen","Fehlermeldung lesen","Syntax prüfen"]}]},

@@ -50,7 +50,19 @@
     <p>Verwende die Reihenfolge <strong>(Kelchblattbreite, Kelchblattlänge)</strong>. Probe B hat (3,4; 6,5) cm, der hier betrachtete grüne Versicolor-Nachbar (3,3; 6,7) cm und der blaue Virginica-Nachbar (3,2; 7,0) cm. Welcher dieser beiden Nachbarn liegt näher?</p>
     <div class="wb-section-break"></div>
     <div data-wb-type="trace"><script class="wb-config" type="application/json">
-    {"id":"ki3_distance_trace","title":"Ablaufspur: Zwei Abstände vergleichen","hint":"Trage Zahlen ohne Einheit ein. Runde den Abstand auf drei Nachkommastellen.","columns":[{"label":"Nachbar"},{"label":"Quadratsumme"},{"label":"Abstand in cm"}],"rows":[{"cells":[{"given":"Versicolor: √(0,1² + (−0,2)²)"},{"answers":["0,05","0.05"],"ariaLabel":"Quadratsumme Versicolor"},{"answers":["0,224","0.224"],"ariaLabel":"Abstand Versicolor"}]},{"cells":[{"given":"Virginica: √(0,2² + (−0,5)²)"},{"answers":["0,29","0.29"],"ariaLabel":"Quadratsumme Virginica"},{"answers":["0,539","0.539"],"ariaLabel":"Abstand Virginica"}]}]}
+    {"id":"ki3_distance_trace","title":"Ablaufspur: Zwei Abstände vergleichen","hint":"Trage Zahlen ohne Einheit ein. Runde den Abstand auf drei Nachkommastellen.","columns":[
+      {
+        "label": "Nachbar"
+      },
+      {
+        "label": "Quadratsumme",
+        "hint": "Zahl ohne Einheit; zwei Nachkommastellen."
+      },
+      {
+        "label": "Abstand in cm",
+        "hint": "Zahl ohne Einheit; auf drei Nachkommastellen runden."
+      }
+    ],"rows":[{"cells":[{"given":"Versicolor: √(0,1² + (−0,2)²)"},{"answers":["0,05","0.05"],"ariaLabel":"Quadratsumme Versicolor"},{"answers":["0,224","0.224"],"ariaLabel":"Abstand Versicolor"}]},{"cells":[{"given":"Virginica: √(0,2² + (−0,5)²)"},{"answers":["0,29","0.29"],"ariaLabel":"Quadratsumme Virginica"},{"answers":["0,539","0.539"],"ariaLabel":"Abstand Virginica"}]}]}
     </script></div>
     <div class="wb-section-break"></div>
     <div class="ki-note-amber"><strong>Fehler gefunden:</strong> Für diese Zahlen ist Versicolor näher: 0,224 cm &lt; 0,539 cm. Die Zuordnung zu Virginica aus dem ursprünglichen Lösungstext folgt nicht aus den angegebenen Messwerten. Rechnen ist hier verlässlicher als eine grobe Bildvermutung. Ein nächster Nachbar ist außerdem noch kein sicherer biologischer Nachweis.</div>
@@ -133,7 +145,25 @@
     <p>Verfolge die Probe: <code>sepal-length = 5,9</code>, <code>sepal-width = 3,0</code>, <code>petal-length = 5,1</code>, <code>petal-width = 1,8</code>. Verwende die tatsächlich im Bild stehenden Tests, insbesondere <strong>petal-length ≤ 4,85</strong> im rechten Ast.</p>
     <div class="wb-section-break"></div>
     <div data-wb-type="trace"><script class="wb-config" type="application/json">
-    {"id":"ki3_tree_trace","title":"Ablaufspur: Die Blüte durch den Baum schicken","hint":"Trage bei den Tests ja oder nein ein, zuletzt das Artenlabel.","columns":[{"label":"Schritt"},{"label":"Test / Ausgabe"},{"label":"Dein Ergebnis"}],"rows":[{"cells":[{"given":"1 · Wurzel"},{"given":"petal-length ≤ 2,60","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis erster Test"}]},{"cells":[{"given":"2 · rechter Ast"},{"given":"petal-width ≤ 1,75","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis zweiter Test"}]},{"cells":[{"given":"3 · rechter Ast"},{"given":"petal-length ≤ 4,85","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis dritter Test"}]},{"cells":[{"given":"4 · Blatt"},{"given":"Label ausgeben"},{"answers":["Iris-virginica","virginica","Iris virginica"],"ariaLabel":"Erreichtes Label"}]}]}
+    {"id":"ki3_tree_trace","title":"Ablaufspur: Die Blüte durch den Baum schicken","hint":"Trage bei den Tests ja oder nein ein, zuletzt das Artenlabel.","columns":[
+      {
+        "label": "Schritt"
+      },
+      {
+        "label": "Test / Ausgabe"
+      },
+      {
+        "label": "Dein Ergebnis",
+        "hint": "Bei Tests: ja/nein. Bei der Ausgabe: Artenname.",
+        "answerOptions": [
+          "ja",
+          "nein",
+          "Iris-setosa",
+          "Iris-versicolor",
+          "Iris-virginica"
+        ]
+      }
+    ],"rows":[{"cells":[{"given":"1 · Wurzel"},{"given":"petal-length ≤ 2,60","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis erster Test"}]},{"cells":[{"given":"2 · rechter Ast"},{"given":"petal-width ≤ 1,75","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis zweiter Test"}]},{"cells":[{"given":"3 · rechter Ast"},{"given":"petal-length ≤ 4,85","code":true},{"answers":["nein","falsch"],"ariaLabel":"Ergebnis dritter Test"}]},{"cells":[{"given":"4 · Blatt"},{"given":"Label ausgeben"},{"answers":["Iris-virginica","virginica","Iris virginica"],"ariaLabel":"Erreichtes Label"}]}]}
     </script></div>
     <div class="wb-section-break"></div>
     <div data-wb-type="reveal"><script class="wb-config" type="application/json">
@@ -217,7 +247,18 @@
     <p>k-Means verringert die <strong>Summe der quadrierten Abstände</strong>, nicht einfach nur die Summe der Abstände. Das macht die Wahl des arithmetischen Mittelwerts als Zentrum sinnvoll. Das Ergebnis kann von den Startzentren abhängen und muss nicht das global beste sein. Weniger Kosten bei größerem k bedeuten nicht automatisch sinnvollere Gruppen.</p>
     <div class="wb-section-break"></div>
     <div data-wb-type="trace"><script class="wb-config" type="application/json">
-    {"id":"ki3_centroid_trace","title":"Ablaufspur: Ein Zentrum verschieben","hint":"Die drei Fundorte gehören bereits zu derselben Gruppe. Rechne getrennt für x und y.","columns":[{"label":"Schritt"},{"label":"Rechnung"},{"label":"Ergebnis"}],"rows":[{"cells":[{"given":"Fundorte"},{"given":"(2; 2), (4; 2), (3; 5)"},{"given":"3 Punkte"}]},{"cells":[{"given":"Mittelwert x"},{"given":"(2 + 4 + 3) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere x-Koordinate"}]},{"cells":[{"given":"Mittelwert y"},{"given":"(2 + 2 + 5) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere y-Koordinate"}]},{"cells":[{"given":"Kosten am neuen Zentrum"},{"given":"2 + 2 + 4"},{"answers":["8"],"ariaLabel":"Summe der quadrierten Abstände"}]}]}
+    {"id":"ki3_centroid_trace","title":"Ablaufspur: Ein Zentrum verschieben","hint":"Die drei Fundorte gehören bereits zu derselben Gruppe. Rechne getrennt für x und y.","columns":[
+      {
+        "label": "Schritt"
+      },
+      {
+        "label": "Rechnung"
+      },
+      {
+        "label": "Ergebnis",
+        "hint": "Zahl ohne Einheit."
+      }
+    ],"rows":[{"cells":[{"given":"Fundorte"},{"given":"(2; 2), (4; 2), (3; 5)"},{"given":"3 Punkte"}]},{"cells":[{"given":"Mittelwert x"},{"given":"(2 + 4 + 3) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere x-Koordinate"}]},{"cells":[{"given":"Mittelwert y"},{"given":"(2 + 2 + 5) / 3"},{"answers":["3","3,0","3.0"],"ariaLabel":"Mittlere y-Koordinate"}]},{"cells":[{"given":"Kosten am neuen Zentrum"},{"given":"2 + 2 + 4"},{"answers":["8"],"ariaLabel":"Summe der quadrierten Abstände"}]}]}
     </script></div>
     <div class="wb-section-break"></div>
     <div data-wb-type="order"><script class="wb-config" type="application/json">
@@ -283,7 +324,18 @@
     <p><strong>α</strong> bestimmt die Stärke des Updates; <strong>γ</strong> gewichtet künftige Belohnungen. In einem echten Endzustand entfällt der Zukunftsterm. Das Lernziel ist eine hohe erwartete Belohnungssumme, nicht nur eine große unmittelbare Belohnung. Bei einer Zeitbegrenzung ist die Episode abgebrochen; die Zukunftserwartung des erreichten Zustands kann trotzdem zum Update beitragen.</p>
     <div class="wb-section-break"></div>
     <div data-wb-type="trace"><script class="wb-config" type="application/json">
-    {"id":"ki3_q_trace","title":"Ablaufspur: Ein Q-Wert wird aktualisiert","hint":"Gegeben: Q alt = 2, α = 0,5, γ = 0,9, r = 1, bester Q-Wert im Folgezustand = 4.","columns":[{"label":"Schritt"},{"label":"Rechnung"},{"label":"Ergebnis"}],"rows":[{"cells":[{"given":"Zielwert"},{"given":"1 + 0,9 · 4"},{"answers":["4,6","4.6"],"ariaLabel":"Q-Zielwert"}]},{"cells":[{"given":"Korrektur"},{"given":"0,5 · (4,6 − 2)"},{"answers":["1,3","1.3"],"ariaLabel":"Q-Korrektur"}]},{"cells":[{"given":"Neuer Q-Wert"},{"given":"2 + 1,3"},{"answers":["3,3","3.3"],"ariaLabel":"Neuer Q-Wert"}]},{"cells":[{"given":"Alternativ: Ziel erreicht"},{"given":"Q alt = 2, α = 0,5, r = 10, Zukunftsterm = 0"},{"answers":["6","6,0","6.0"],"ariaLabel":"Q-Wert bei terminaler Belohnung"}]}]}
+    {"id":"ki3_q_trace","title":"Ablaufspur: Ein Q-Wert wird aktualisiert","hint":"Gegeben: Q alt = 2, α = 0,5, γ = 0,9, r = 1, bester Q-Wert im Folgezustand = 4.","columns":[
+      {
+        "label": "Schritt"
+      },
+      {
+        "label": "Rechnung"
+      },
+      {
+        "label": "Ergebnis",
+        "hint": "Zahl ohne Einheit; höchstens eine Nachkommastelle."
+      }
+    ],"rows":[{"cells":[{"given":"Zielwert"},{"given":"1 + 0,9 · 4"},{"answers":["4,6","4.6"],"ariaLabel":"Q-Zielwert"}]},{"cells":[{"given":"Korrektur"},{"given":"0,5 · (4,6 − 2)"},{"answers":["1,3","1.3"],"ariaLabel":"Q-Korrektur"}]},{"cells":[{"given":"Neuer Q-Wert"},{"given":"2 + 1,3"},{"answers":["3,3","3.3"],"ariaLabel":"Neuer Q-Wert"}]},{"cells":[{"given":"Alternativ: Ziel erreicht"},{"given":"Q alt = 2, α = 0,5, r = 10, Zukunftsterm = 0"},{"answers":["6","6,0","6.0"],"ariaLabel":"Q-Wert bei terminaler Belohnung"}]}]}
     </script></div>
     <div class="wb-section-break"></div>
     <h2>Exploration oder bekannte gute Aktion?</h2>

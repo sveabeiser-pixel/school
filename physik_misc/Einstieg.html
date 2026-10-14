@@ -999,7 +999,13 @@
           "id":"ep-motion-st-trace",
           "title":"Ablaufspur: Werte aus der Geraden lesen",
           "hint":"Trage nur die Zahlenwerte in Metern ein. Nutze ein Dezimalkomma oder einen Dezimalpunkt.",
-          "columns":["Zeit t in s","Ort s in m"],
+          "columns":[
+            "Zeit t in s",
+            {
+              "label": "Ort s in m",
+              "hint": "Zahl in m, ohne Einheitenzeichen. Dezimalkomma oder Dezimalpunkt erlaubt."
+            }
+          ],
           "rows":[
             {"cells":[{"given":"1,0"},{"answers":["2","2,0","2.0"]}]},
             {"cells":[{"given":"3,0"},{"answers":["6","6,0","6.0"]}]},

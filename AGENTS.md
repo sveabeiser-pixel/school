@@ -224,6 +224,7 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
 #### Ablaufspur (`trace`)
 
 Nutze die Ablaufspur regelmäßig, wenn Schüler:innen einen Algorithmus, eine Schleife, eine Messreihe oder einen physikalischen Prozess Schritt für Schritt nachvollziehen sollen. Vorgegebene Zellen enthalten `given`; Eingabezellen enthalten eine oder mehrere zulässige `answers`. Mit `code: true` wird eine vorgegebene Zelle als Code formatiert. Der Block speichert Eingaben lokal, prüft sie und übernimmt sie in die Ergebnisseite.
+Gib für jede Eingabespalte eine dauerhafte Antwortvorgabe im Tabellenkopf an: `hint` für Format, Einheit oder Rundung und bei sprachlichen Antworten `answerOptions` als ungeordneten Wortvorrat. Für jede geprüfte Textzelle muss mindestens eine angekündigte Formulierung akzeptiert werden. Nutze bei Wahr/Falsch-Spalten beispielsweise `answerOptions: ["wahr", "falsch"]`. Verrate keine Zahlenlösungen oder Zuordnungen zu einzelnen Zeilen. Frei formulierte Begründungen gehören in Freitextaufgaben; sie dürfen nicht an einer versteckten Liste weniger Synonyme scheitern.
 
 ```html
 <div data-wb-type="trace">
@@ -235,8 +236,8 @@ Nutze die Ablaufspur regelmäßig, wenn Schüler:innen einen Algorithmus, eine S
     "columns":[
       {"label":"Schritt","width":"15%"},
       {"label":"Anweisung","width":"35%"},
-      {"label":"Wert danach","width":"25%"},
-      {"label":"Bedingung","width":"25%"}
+      {"label":"Wert danach","width":"25%","hint":"Zahl ohne Einheit."},
+      {"label":"Bedingung","width":"25%","answerOptions":["wahr","falsch"]}
     ],
     "rows":[
       {"cells":[

@@ -392,11 +392,37 @@ void loop() {
           "title":"Ablaufspur: Was passiert wann?",
           "hint":"Arbeite Zeile für Zeile. Verändere gedanklich nur den Zustand, den die aktuelle Anweisung tatsächlich beeinflusst.",
           "columns":[
-            {"label":"Phase","width":"13%"},
-            {"label":"Anweisung","width":"25%"},
-            {"label":"LED danach","width":"19%"},
-            {"label":"vergangene Zeit seit Beginn","width":"20%"},
-            {"label":"Wird erneut ausgeführt?","width":"23%"}
+            {
+              "label": "Phase",
+              "width": "13%"
+            },
+            {
+              "label": "Anweisung",
+              "width": "25%"
+            },
+            {
+              "label": "LED danach",
+              "width": "19%",
+              "answerOptions": [
+                "an",
+                "aus",
+                "unverändert"
+              ]
+            },
+            {
+              "label": "vergangene Zeit seit Beginn",
+              "width": "20%",
+              "hint": "Vergangene Zeit in ms als Zahl, ohne Einheitenzeichen."
+            },
+            {
+              "label": "Wird erneut ausgeführt?",
+              "width": "23%",
+              "hint": "Bezogen auf weitere loop-Durchläufe, ohne Reset.",
+              "answerOptions": [
+                "ja",
+                "nein"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"Start"},{"given":"pinMode(LED, OUTPUT)","code":true},{"answers":["unverändert","aus"],"ariaLabel":"LED nach pinMode"},{"answers":["0","0 ms"],"ariaLabel":"Zeit nach pinMode"},{"answers":["nein","nur nach Reset"],"ariaLabel":"Wiederholung von setup"}]},
@@ -617,12 +643,46 @@ void loop() {
           "title":"Ablaufspur: Schalterstellung, Variable und if/else",
           "hint":"INPUT_PULLUP kehrt die erwartete Zuordnung um. Trage pro loop-Durchlauf alle Zustände ein.",
           "columns":[
-            {"label":"Durchlauf","width":"12%"},
-            {"label":"Taster","width":"19%"},
-            {"label":"digitalRead()","width":"18%"},
-            {"label":"schalterZustand","width":"20%"},
-            {"label":"Bedingung == LOW","width":"18%"},
-            {"label":"LED","width":"13%"}
+            {
+              "label": "Durchlauf",
+              "width": "12%"
+            },
+            {
+              "label": "Taster",
+              "width": "19%"
+            },
+            {
+              "label": "digitalRead()",
+              "width": "18%",
+              "answerOptions": [
+                "HIGH",
+                "LOW"
+              ]
+            },
+            {
+              "label": "schalterZustand",
+              "width": "20%",
+              "answerOptions": [
+                "HIGH",
+                "LOW"
+              ]
+            },
+            {
+              "label": "Bedingung == LOW",
+              "width": "18%",
+              "answerOptions": [
+                "falsch",
+                "wahr"
+              ]
+            },
+            {
+              "label": "LED",
+              "width": "13%",
+              "answerOptions": [
+                "AN",
+                "AUS"
+              ]
+            }
           ],
           "rows":[
             {"cells":[{"given":"1"},{"given":"nicht gedrückt"},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["HIGH","1","HIGH / 1"]},{"answers":["falsch","nein"]},{"answers":["AUS","aus","LOW"]}]},
