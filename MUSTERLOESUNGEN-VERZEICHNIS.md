@@ -4,6 +4,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 
 | Lernseite | Musterlösung |
 | --- | --- |
+| [Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html) | [Musterlösung](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Spannung und Kondensator](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
 | [Elektrische Felder 3: Energie, Laden und Entladen](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |

@@ -54,6 +54,7 @@
         <a class="index-section-link" href="#page-2"><span><strong>Medienbildung</strong>Scratch, Quellenkritik, Fake News und Bildanalyse</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-3"><span><strong>NWT und Informatik</strong>Arduino, Technikprojekte und Künstliche Intelligenz</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-4"><span><strong>Physik: Kursstufe</strong>Felder, Induktion, Wellen, Quantenphysik und Planung</span><b aria-hidden="true">→</b></a>
+        <a class="index-section-link" href="#page-9"><span><strong>Reine Übungsaufgaben</strong>Aufgaben zum Üben und Wiederholen des Unterrichtsstoffs</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-5"><span><strong>Physik: Akustik</strong>Versuche und Materialien zu Schall und Akustik</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-6"><span><strong>Simulationen</strong>Interaktive Modelle für Wellen und elektrische Felder</span><b aria-hidden="true">→</b></a>
         <a class="index-section-link" href="#page-7"><span><strong>Alle Links</strong>Lernseiten und zugehörige Musterlösungen im Überblick</span><b aria-hidden="true">→</b></a>
@@ -206,6 +207,18 @@
       </div>
     </section>
 
+    <section data-wb-page="9" data-wb-page-title="Reine Übungsaufgaben">
+      <h1>Reine Übungsaufgaben</h1>
+      <p>Hier findest du Aufgaben zum Üben und Wiederholen bereits behandelter Unterrichtsinhalte.</p>
+
+      <div class="wb-soft-callout">
+        <strong>Physik: Elektrische Felder</strong>
+        <ul class="index-material-list">
+          <li class="index-material-item"><a class="index-material-link" href="felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html">Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)</a><span class="index-solution-line"><a class="index-solution-link" href="felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html">Musterlösung: Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)</a></span></li>
+        </ul>
+      </div>
+    </section>
+
     <section data-wb-page="5" data-wb-page-title="Physik: Akustik">
       <h1>Physik: Akustik</h1>
       <p>Akustik ist in dieser Übersicht ein eigener Teilbereich der Physik.</p>
@@ -316,6 +329,7 @@
       <h2>Physik: Felder und Induktion</h2>
       <ul class="index-material-list">
         <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder.html">Elektrische Felder 1: Ladung, Kraft und Feldlinien</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder-briefkasten73.html">Musterlösung: Elektrische Felder 1: Ladung, Kraft und Feldlinien</a></span></li>
+        <li class="index-material-item"><a class="index-material-link" href="felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html">Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)</a><span class="index-solution-line"><a class="index-solution-link" href="felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html">Musterlösung: Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)</a></span></li>
         <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder2.html">Elektrische Felder 2: Potenzial, Spannung und Kondensator</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder2-regenschirm28.html">Musterlösung: Elektrische Felder 2: Potenzial, Spannung und Kondensator</a></span></li>
         <li class="index-material-item"><a class="index-material-link" href="felder/elektrische-felder3.html">Elektrische Felder 3: Energie, Laden und Entladen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/elektrische-felder3-kieselstein91.html">Musterlösung: Elektrische Felder 3: Energie, Laden und Entladen</a></span></li>
         <li class="index-material-item"><a class="index-material-link" href="felder/felder-simulationen.html">Felder-Simulationen: Kondensator und Teilchenbahnen</a><span class="index-solution-line"><a class="index-solution-link" href="felder/felder-simulationen-hausschuh19.html">Musterlösung: Felder-Simulationen: Kondensator und Teilchenbahnen</a></span></li>
@@ -387,9 +401,20 @@
   <script src="assets/wb-webhook-loader.js"></script>
   <script src="assets/allgemeines_format.js"></script>
   <script>
-    SBBook.autoMount();
+    const overviewBook = SBBook.autoMount()[0];
     SBBlocks.autoMount();
     SBLibrary.autoMountAll();
+    document.querySelector('.index-section-nav').addEventListener('click', (event) => {
+      const link = event.target.closest('a.index-section-link');
+      if (!link || !overviewBook || event.defaultPrevented || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const target = link.getAttribute('href');
+      const match = /^#page-(\d+)$/.exec(target);
+      if (!match) return;
+      event.preventDefault();
+      overviewBook.showPage(Number(match[1]));
+      try { history.replaceState(null, '', target); } catch (_) {}
+    });
   </script>
 </body>
 </html>
