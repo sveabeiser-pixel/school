@@ -13,7 +13,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Induktion 2: Anwendungen, Selbstinduktion und Maxwell](felder/induktion2.html) | [Musterlösung](felder/induktion2-garderobe84.html) |
 | [Magnetische Felder 1: Feldlinien, Flussdichte und Spule](felder/magnetische-felder.html) | [Musterlösung](felder/magnetische-felder-teetasse46.html) |
 | [Magnetische Felder 2: Lorentzkraft und Anwendungen](felder/magnetische-felder2.html) | [Musterlösung](felder/magnetische-felder2-wolldecke62.html) |
-| [Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog-Wissensbasis](informatik/kuenstliche-intelligenz.html) | [Musterlösung](informatik/kuenstliche-intelligenz-schatulle43.html) |
+| [Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog-Labor](informatik/kuenstliche-intelligenz.html) | [Musterlösung](informatik/kuenstliche-intelligenz-schatulle43.html) |
 | [Künstliche Intelligenz 2: Lernvarianten, Teachable Machine und Modellbewertung](informatik/kuenstliche-intelligenz2.html) | [Musterlösung](informatik/kuenstliche-intelligenz2-pergament87.html) |
 | [Künstliche Intelligenz 3: k-NN, Entscheidungsbäume, k-Means und lernende Agenten](informatik/kuenstliche-intelligenz3.htm) | [Musterlösung](informatik/kuenstliche-intelligenz3-brosche62.html) |
 | [Sprachmodelle: N-Gramme, Transformer, Token-Auswahl und KI-Assistenten](informatik/sprachmodelle.html) | [Musterlösung](informatik/sprachmodelle-kaleidoskop29.html) |

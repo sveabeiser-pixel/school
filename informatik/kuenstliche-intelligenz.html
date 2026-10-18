@@ -751,19 +751,54 @@ grieche(platon).</pre>
     </div>
     <div class="wb-section-break"></div>
 
+    <h2>Teste deine Anfragen in Prolog</h2>
+    <p>Öffne die Wissensbasis über den SWISH-Link oben. Formuliere für jede Aufgabe eine Anfrage und notiere zuerst deine Vermutung. Führe die Anfrage rechts unten mit <strong>Run!</strong> aus und vergleiche die Ausgabe mit deiner Vermutung. Trage Anfrage, Ausgabe und eine kurze Erklärung hier ein.</p>
+    <div class="wb-section-break"></div>
+
+    <p><strong>Stopp &amp; check:</strong> Beende jede Anfrage mit einem Punkt. Das Zeichen <code>?-</code> kennzeichnet in Beispielen eine Anfrage; im SWISH-Anfragefeld gibst du nur den Teil dahinter ein. Lass dir bei Anfragen mit Variablen alle weiteren Lösungen anzeigen. Zähle dabei ausgegebene Antworten und unterschiedliche Personen getrennt.</p>
+    <div class="wb-section-break"></div>
+
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {
-        "id":"ki_prolog_essay",
-        "title":"Interpretation: Warum antwortet Prolog falsch?",
-        "hint":"Antworte in 3 bis 6 Sätzen. Nutze die Begriffe Fakt, Regel und ableitbar.",
+        "id":"ki_prolog_praxis",
+        "title":"Prolog-Labor: Anfragen formulieren und testen",
+        "hint":"Arbeite mit der unveränderten Wissensbasis. Notiere zu jeder Aufgabe Vermutung, Anfrage, tatsächliche Ausgabe und Erklärung.",
         "storagePrefix":"ki_",
         "fields":[
-          {"label":"Deine Erklärung","key":"erklaerung","kind":"textarea","placeholder":"Erkläre, warum kind(alexiares, heracles) wahr sein kann, vater(heracles, alexiares) aber falsch ausgegeben wird, wenn maennlich(heracles) fehlt."}
+          {"label":"1. Wer ist die Mutter von Apollo?","key":"mutter_apollo","kind":"textarea","prompt":"Formuliere eine Anfrage mit einer Variablen für die gesuchte Mutter und teste sie. Welche Belegung erhältst du? Zeige mit den passenden Fakten und der Mutterregel, wie das Ergebnis zustande kommt.","placeholder":"Vermutung, Anfrage, Ausgabe und Erklärung …"},
+          {"label":"2. Wer sind die Enkel von Cronus?","key":"enkel_cronus","kind":"textarea","prompt":"Nutze die Regel opa, um alle Enkelkinder von Cronus zu finden, unabhängig vom Geschlecht. Notiere alle ausgegebenen Belegungen in ihrer Reihenfolge und zähle sie. Wie viele unterschiedliche Personen kommen vor? Erkläre mit den Kind-Fakten, warum manche Namen mehrfach erscheinen.","placeholder":"Vermutung, Anfrage, alle Ausgaben und Erklärung …"},
+          {"label":"3. Welche Söhne von Zeus sind bekannt?","key":"soehne_zeus","kind":"textarea","prompt":"Formuliere und teste eine Anfrage mit der Regel sohn. Notiere alle gefundenen Personen. Vergleiche das Ergebnis mit den Kind-Fakten zu Zeus und erkläre, warum hebe nicht ausgegeben wird. Beschreibe eine Grenze dieser Wissensbasis, ohne daraus eine Aussage über die wirkliche Götterfamilie abzuleiten.","placeholder":"Vermutung, Anfrage, Ausgabe und Erklärung …"},
+          {"label":"4. Ist Sokrates sterblich?","key":"sokrates","kind":"textarea","prompt":"Teste zuerst, ob Sokrates sterblich ist. Frage danach mit einer Variablen nach allen Personen, deren Sterblichkeit ableitbar ist. Notiere beide Anfragen und ihre Ausgaben. Erkläre die Schlusskette für Sokrates anhand der Regeln und des passenden Fakts.","placeholder":"Vermutung, beide Anfragen, Ausgaben und Schlusskette …"}
         ]
       }
       </script>
     </div>
+    <div class="wb-section-break"></div>
+
+    <h2>5. Ein Kind-Fakt, aber keine Vaterbeziehung?</h2>
+    <p>Teste diese beiden Anfragen nacheinander mit der unveränderten Wissensbasis:</p>
+    <div class="wb-section-break"></div>
+    <pre class="ki-code">kind(alexiares, heracles).
+vater(heracles, alexiares).</pre>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ki_prolog_essay",
+        "title":"Interpretation: Warum antwortet Prolog true und false?",
+        "hint":"Notiere beide Ausgaben. Erkläre den Unterschied in 3 bis 6 Sätzen mit den Begriffen Fakt, Regel und ableitbar. Teste anschließend deine Ergänzung.",
+        "storagePrefix":"ki_",
+        "fields":[
+          {"label":"Deine Erklärung und dein Test","key":"erklaerung","kind":"textarea","prompt":"Warum ergibt kind(alexiares, heracles). die Ausgabe true, während vater(heracles, alexiares). die Ausgabe false ergibt? Prüfe jede Bedingung der Vaterregel und finde den fehlenden Fakt. Ergänze ihn im SWISH-Programm und führe beide Anfragen erneut aus. Notiere den ergänzten Fakt und die neuen Ausgaben. Erkläre auch, was false hier über die Ableitbarkeit aussagt.","placeholder":"Ausgaben, Erklärung, ergänzter Fakt und erneuter Test …"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-section-break-text">Jetzt hast du gelernt, dass du mit Variablen nach unbekannten Personen fragen kannst. Mehrere Beweiswege können dieselbe Person mehrfach liefern. Ob eine Beziehung ableitbar ist, hängt von den vorhandenen Fakten und Regeln ab.</p>
   </section>
 
   <section data-wb-page="9" data-wb-page-title="Grenzen und Zusammenfassung">
