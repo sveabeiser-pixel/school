@@ -595,7 +595,95 @@ vater(PERSON, KIND) :- kind(KIND, PERSON), maennlich(PERSON).</pre>
     <div class="wb-section-break"></div>
 
     <h2>SWISH ausprobieren</h2>
-    <p>Eine browserbasierte Prolog-Umgebung findest du unter <a href="https://swish.swi-prolog.org/" target="_blank" rel="noopener">swish.swi-prolog.org</a>. Dort kannst du ein Programm anlegen und rechts unten Anfragen ausführen.</p>
+    <p><a id="ki-swish-programm" href="https://swish.swi-prolog.org/" target="_blank" rel="noopener">Öffne die Wissensbasis in SWISH.</a> Der vollständige Code wird dabei in den Editor übernommen. Rechts unten kannst du Anfragen wie <code>mutter(X, apollo).</code> oder <code>sterblich(sokrates).</code> ausführen.</p>
+    <div class="wb-section-break"></div>
+
+    <details>
+      <summary>Vollständigen Prolog-Code anzeigen</summary>
+      <p>Du kannst diesen Code auch kopieren und selbst in den SWISH-Editor einsetzen.</p>
+      <pre class="ki-code" id="ki-prolog-programm">maennlich(cronus).
+maennlich(zeus).
+maennlich(poseidon).
+maennlich(hades).
+maennlich(ares).
+maennlich(hephaistos).
+maennlich(apollo).
+maennlich(hermes).
+maennlich(dionysos).
+
+weiblich(rhea).
+weiblich(hera).
+weiblich(demeter).
+weiblich(athena).
+weiblich(hestia).
+weiblich(artemis).
+weiblich(aphrodite).
+weiblich(metis).
+weiblich(leto).
+weiblich(maia).
+weiblich(dione).
+weiblich(semele).
+
+kind(hera,cronus).
+kind(hera,rhea).
+kind(zeus,cronus).
+kind(zeus,rhea).
+kind(poseidon,cronus).
+kind(poseidon,rhea).
+kind(hades,cronus).
+kind(hades,rhea).
+kind(demeter,cronus).
+kind(demeter,rhea).
+kind(hestia,cronus).
+kind(hestia,rhea).
+
+kind(ares,zeus).
+kind(ares,hera).
+kind(hephaistos,zeus).
+kind(hephaistos,hera).
+kind(hebe,zeus).
+kind(hebe,hera).
+kind(eileithyia,zeus).
+kind(eileithyia,hera).
+
+kind(athena,zeus).
+kind(athena,metis).
+
+kind(apollo,zeus).
+kind(apollo,leto).
+kind(artemis,zeus).
+kind(artemis,leto).
+
+kind(hermes,zeus).
+kind(hermes,maia).
+
+kind(aphrodite,zeus).
+kind(aphrodite,dione).
+
+kind(dionysos,zeus).
+kind(dionysos,semele).
+
+kind(alexiares, heracles).
+kind(aniketos, heracles).
+
+vater(VATER,X):- maennlich(VATER), kind(X,VATER).
+mutter(MUTTER,X):- weiblich(MUTTER), kind(X,MUTTER).
+sohn(SOHN,X):- kind(SOHN, X), maennlich(SOHN).
+tochter(TOCHTER,X):- kind(TOCHTER, X), weiblich(TOCHTER).
+oma(OMA,X):- mutter(OMA, Y), kind(X,Y).
+opa(OPA,X):- vater(OPA,Y), kind(X,Y).
+elternteil(ELTERNTEIL,X):- mutter(ELTERNTEIL, X); vater(ELTERNTEIL,X).
+geschwister(GESCHWISTER, Y):- elternteil(X,GESCHWISTER), elternteil(X,Y).
+
+% Ist Sokrates sterblich?
+sterblich(X) :- mensch(X).
+mensch(X)   :- grieche(X).
+
+grieche(sokrates).
+grieche(platon).</pre>
+    </details>
+    <div class="wb-section-break"></div>
+
     <figure class="ki-figure">
       <img src="bilder/swich.png" alt="SWISH-Oberfläche mit Prolog-Fakten und Anfragen">
       <figcaption>Beispiel: Die Anfrage <code>mutter(X, apollo)</code> liefert <code>X = leto</code>, wenn die passenden Fakten und Regeln vorhanden sind.</figcaption>
@@ -643,7 +731,7 @@ vater(PERSON, KIND) :- kind(KIND, PERSON), maennlich(PERSON).</pre>
         <div>
           <div class="p2-col-title">Anfrage</div>
           <div class="p2-bank" data-right-bank>
-            <div class="p2-piece p2-right" data-side="R" data-pair="1">?- kind(athene, zeus).</div>
+            <div class="p2-piece p2-right" data-side="R" data-pair="1">?- kind(athena, zeus).</div>
             <div class="p2-piece p2-right" data-side="R" data-pair="2">?- kind(X, hades).</div>
             <div class="p2-piece p2-right" data-side="R" data-pair="3">?- mutter(X, apollo).</div>
             <div class="p2-piece p2-right" data-side="R" data-pair="4">?- opa(cronus, X).</div>
@@ -799,6 +887,9 @@ vater(PERSON, KIND) :- kind(KIND, PERSON), maennlich(PERSON).</pre>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
 <script>
+  const swishUrl = new URL('https://swish.swi-prolog.org/');
+  swishUrl.searchParams.set('code', document.getElementById('ki-prolog-programm').textContent);
+  document.getElementById('ki-swish-programm').href = swishUrl.href;
   SBBook.autoMount();
   SBBlocks.autoMount();
   SBLibrary.autoMountAll();
