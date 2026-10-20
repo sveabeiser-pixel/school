@@ -244,8 +244,6 @@
     .lab-task li + li{margin-top:8px}
     .material-detail{margin:16px 0;max-width:340px}
     .material-detail figcaption{font-size:13px;color:var(--wb-muted);margin-top:8px}
-    .material-window{position:relative;overflow:hidden;background:#fff;aspect-ratio:var(--crop-ratio)}
-    .material-window img{position:absolute;display:block;width:var(--crop-width);max-width:none;height:auto;left:var(--crop-left);top:var(--crop-top)}
     .pudding-flow{border-radius:8px}
     .pudding-step{min-height:60px;font-size:13px}
     .pudding-chip{font-size:13px;overflow-wrap:anywhere}
@@ -611,10 +609,8 @@ void loop() {
 
       <h2>Werkstatt 11: Taster selbst untersuchen</h2>
       <figure class="material-detail" style="max-width:140px">
-        <div class="material-window" style="--crop-ratio:210/280;--crop-width:748%;--crop-left:-650%;--crop-top:0%">
-          <img src="pdf-bilder/seite18.png" alt="Schaltsymbol: Der Taster schließt die Verbindung von D4 nach GND.">
-        </div>
-        <figcaption>Ausschnitt aus Materialseite 18: Taster zwischen D4 und GND.</figcaption>
+        <img src="pdf-bilder/taster-d4-gnd.svg" width="160" height="260" alt="Schaltsymbol: Der Taster schließt beim Drücken die Verbindung von D4 nach GND.">
+        <figcaption>Taster zwischen D4 und GND, neu gezeichnet nach Materialseite 18.</figcaption>
       </figure>
       <article class="lab-task" id="material_11_1">
         <h3>11.1 Den Eingang im seriellen Monitor lesen</h3>
@@ -1337,7 +1333,7 @@ void loop() {
       <article class="lab-task" id="material_13_1">
         <h3>13.1 Ein Flussdiagramm übersetzen</h3>
         <figure class="material-detail" style="max-width:220px">
-          <div class="material-window" style="--crop-ratio:330/430;--crop-width:326%;--crop-left:-38%;--crop-top:-205%">
+          <div class="arduino-crop" data-crop="while-plan" style="--image-w:1076;--crop-x:128;--crop-y:876;--crop-w:308;--crop-h:434">
             <img src="pdf-bilder/seite20.png" alt="Ablaufplan: x auf 10 setzen, solange x kleiner als 100 ausgeben und um 2 erhöhen.">
           </div>
           <figcaption>Ausschnitt aus Materialseite 20: Zahlenfolge mit while.</figcaption>
@@ -1877,7 +1873,7 @@ void loop() {
           <li>Lade das vollständige I²C-Beispiel oben hoch. Erwartet ist <code>I2C LCD ready</code> in der ersten Zeile. Drehe den kleinen Kontrastregler vorsichtig, falls nur Licht oder Blöcke sichtbar sind. Bei <code>init</code>-Kompilierfehlern prüfst du die Bibliothek; bei erfolgreichem Upload, aber leerem LCD zuerst Adresse, Anschluss und Kontrast.</li>
         </ol>
         <figure class="material-detail">
-          <div class="material-window" style="--crop-ratio:390/160;--crop-width:372%;--crop-left:-165%;--crop-top:-335%">
+          <div class="arduino-crop" data-crop="lcd" style="--image-w:1452;--crop-x:650;--crop-y:556;--crop-w:380;--crop-h:140">
             <img src="pdf-bilder/seite21.png" alt="Rückseite eines LCD-I²C-Adapters mit blauem Kontrastpotentiometer und Anschlussstiften.">
           </div>
           <figcaption>Ausschnitt aus Materialseite 21: Kontrastregler am I²C-Adapter.</figcaption>
@@ -2166,7 +2162,7 @@ digitalWrite(ENA, LOW);  // Bruecke abschalten</code></pre>
       <h2>Werkstatt 15: Mit einer L298N-H-Brücke steuern</h2>
       <p>Diese beiden Materialaufgaben gehören weiter zu diesem Modul. Du brauchst eine beschriftete <b>L298N-Treiberplatine mit Schutzdioden</b>, kleine dazu passende DC-Motoren und eine dafür ausgelegte externe Motorversorgung. Lies die Anleitung deiner Platine: Die mit „12 V“ oder „VS“ markierte Motorklemme bekommt die für <b>Motor und Modul</b> zulässige Spannung, nicht automatisch 12 V. Der L298 hat einen Spannungsabfall; Motorspannung und Netzteilspannung sind deshalb nicht gleich. Der Motor wird weder aus einem GPIO noch aus dem Uno-5-V-Anschluss gespeist.</p>
       <figure class="material-detail" style="max-width:290px">
-        <div class="material-window" style="--crop-ratio:540/490;--crop-width:275%;--crop-left:0%;--crop-top:0%">
+        <div class="arduino-crop" data-crop="l298n" style="--image-w:1486;--crop-x:0;--crop-y:0;--crop-w:1450;--crop-h:810">
           <img src="pdf-bilder/seite22.png" alt="L298N-Treiberplatine mit Motorklemmen, Versorgungsklemmen und Steueranschlüssen.">
         </div>
         <figcaption>Ausschnitt aus Materialseite 22. Entscheidend sind die Beschriftungen deiner Platine, nicht „rechts“ oder „links“ im Bild.</figcaption>

@@ -5,6 +5,24 @@
 .wb-book section[data-wb-page] p code {
   overflow-wrap: anywhere;
 }
+.wb-book .arduino-crop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--crop-w) / var(--crop-h);
+  overflow: hidden;
+  background: #fff;
+}
+.wb-book .arduino-crop img {
+  position: absolute;
+  display: block;
+  width: calc(100% * var(--image-w) / var(--crop-w)) !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  left: calc(-100% * var(--crop-x) / var(--crop-w));
+  top: calc(-100% * var(--crop-y) / var(--crop-h));
+  object-fit: fill;
+}
 .wb-book :is(.grid2x, .grid3x, .a6-grid2, .a6-grid3, .media-grid) > * {
   min-width: 0;
 }

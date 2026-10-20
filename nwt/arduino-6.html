@@ -46,8 +46,7 @@
     .a6-figure { max-width: 460px; }
     .a6-figure.compact { max-width: 260px; }
     .a6-figure.compact img { max-height: 250px; }
-    .a6-analog-crop { width: 225px; max-width: 100%; aspect-ratio: 225 / 380; overflow: hidden; margin: auto; }
-    .a6-analog-crop img { width: 192.889%; max-width: none; max-height: none; height: auto; }
+    .wb-book .a6-analog-crop { width: 225px; max-width: 100%; margin: auto; }
     .a6-table { max-width: 100%; overflow-x: auto; margin: 14px 0; }
     .a6-table table { width: 100%; border-collapse: collapse; }
     .a6-table th, .a6-table td { border: 1px solid var(--a6-line); padding: 9px; text-align: left; vertical-align: top; }
@@ -162,7 +161,7 @@
 
       <div class="a6-grid2">
         <figure class="a6-figure">
-          <div class="a6-analog-crop"><img src="pdf-bilder/analog-vs-digital.png" alt="Analoge Skala: 0 V ergibt 0; etwa 1,25 V ergibt 255 oder 256; etwa 2,5 V ergibt 511 oder 512; 5 V ergibt 1023." /></div>
+          <div class="arduino-crop a6-analog-crop" data-crop="analog" style="--image-w:434;--crop-x:3;--crop-y:15;--crop-w:223;--crop-h:340"><img src="pdf-bilder/analog-vs-digital.png" alt="Vollständige analoge Skala einschließlich Überschrift, Grenzwerten und analogRead-Beschriftung." /></div>
           <figcaption>Analoger Ausschnitt des Materials: 1024 mögliche Zahlenwerte bei nominell 5 V Referenz. Die Zwischenwerte sind Näherungen.</figcaption>
         </figure>
         <div>

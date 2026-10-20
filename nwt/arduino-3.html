@@ -73,21 +73,13 @@
   <link rel="stylesheet" href="arduino-selbstlernen.css" />
   <style>
     .wb-soft-callout{border:0;border-left:3px solid var(--wb-line);border-radius:0!important;padding:6px 14px}
-    .material-crop{position:relative;overflow:hidden;background:#fff;aspect-ratio:var(--crop-ratio);width:100%}
-    .pdfpage .material-crop img{position:absolute;left:var(--crop-left);top:var(--crop-top);width:var(--crop-width)!important;height:auto!important;max-height:none;object-fit:initial}
-    .crop-variable{--crop-ratio:2.7;--crop-width:105%;--crop-left:-1%;--crop-top:-72%}
-    .crop-serial{--crop-ratio:1.48;--crop-width:194%;--crop-left:-7%;--crop-top:-29%}
-    .crop-for{--crop-ratio:1.85;--crop-width:217%;--crop-left:-21%;--crop-top:-90%}
-    .crop-pwm{--crop-ratio:1.8;--crop-width:105%;--crop-left:-2%;--crop-top:-22%}
-    .crop-rgb{--crop-ratio:0.72;--crop-width:431%;--crop-left:-330%;--crop-top:0%}
-    .crop-if{--crop-ratio:1.8;--crop-width:110%;--crop-left:-2%;--crop-top:-25%}
     .wb-book pre{max-width:100%;overflow-x:auto;box-sizing:border-box;padding:12px;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
     .lab-task{padding:12px 0;border-top:1px solid var(--wb-line);min-width:0}
     .lab-task h3{font-size:19px}
     .lab-task li+li{margin-top:7px}
     .lab-task p,.wb-soft-callout p{overflow-wrap:anywhere}
     .media-grid .pdfpage{max-width:400px}
-    .media-grid .pdfpage:has(.crop-rgb){max-width:240px;justify-self:center}
+    .media-grid .pdfpage:has([data-crop="rgb"]){max-width:240px;justify-self:center}
     .material-log{margin:12px 0}
     .material-log summary{cursor:pointer;font-weight:700}
     .material-log label{display:block;margin:12px 0 6px}
@@ -306,7 +298,7 @@
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-variable"><img src="pdf-bilder/seite12.png" alt="Materialausschnitt: Zuweisungen werden berechnet und ersetzen den alten Wert"></div>
+          <div class="arduino-crop" data-crop="variables" style="--image-w:1092;--crop-x:30;--crop-y:250;--crop-w:1000;--crop-h:685"><img src="pdf-bilder/seite12.png" alt="Vollständiger Materialblock zu Variablen mit Deklarationen, setup, loop und den zugehörigen Erklärkästen"></div>
           <div class="pdfcaption">Ausschnitt aus Seite 12 · Der lauffähige Sketch steht unten.</div>
         </div>
         <div class="image-guide">
@@ -658,7 +650,7 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-serial"><img src="pdf-bilder/seite13.png" alt="Materialausschnitt: Serial.begin in setup und println in loop"></div>
+          <div class="arduino-crop" data-crop="serial" style="--image-w:1086;--crop-x:40;--crop-y:60;--crop-w:1000;--crop-h:580"><img src="pdf-bilder/seite13.png" alt="Vollständiges IDE-Beispiel mit den zugehörigen Erklärkästen zu Serial.begin, println und print"></div>
           <div class="pdfcaption">Ausschnitt aus Seite 13 · Die Texte und Sketche stehen unten.</div>
         </div>
         <div class="image-guide">
@@ -1011,7 +1003,7 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-for"><img src="pdf-bilder/seite14.png" alt="Materialausschnitt: for-Schleife in setup mit Start, Bedingung und Schritt"></div>
+          <div class="arduino-crop" data-crop="for" style="--image-w:1122;--crop-x:45;--crop-y:100;--crop-w:1010;--crop-h:725"><img src="pdf-bilder/seite14.png" alt="Vollständige for-Schleifen-Abbildung mit setup, loop und allen Erklärungen zu Start, Bedingung und Schritt"></div>
           <div class="pdfcaption">Ausschnitt aus Seite 14 · Den Ablauf bearbeitest du im Sketch und in der Spur.</div>
         </div>
         <div class="image-guide">
@@ -1551,7 +1543,7 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-pwm"><img src="pdf-bilder/seite15.png" alt="Materialausschnitt: digitalWrite und analogWrite im Vergleich"></div>
+          <div class="arduino-crop" data-crop="pwm" style="--image-w:1042;--crop-x:96;--crop-y:110;--crop-w:930;--crop-h:425"><img src="pdf-bilder/seite15.png" alt="Vollständiges PWM-Codebeispiel mit beiden zugehörigen Erklärkästen"></div>
           <div class="pdfcaption">Ausschnitt aus Seite 15 · „Halb an“ bezeichnet den Zeitanteil.</div>
         </div>
         <div class="image-guide">
@@ -1703,7 +1695,7 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-rgb"><img src="pdf-bilder/seite16.png" alt="Schaltbildausschnitt: drei Farbzweige mit je einem Widerstand und gemeinsamer Kathode"></div>
+          <div class="arduino-crop" data-crop="rgb" style="--image-w:1456;--crop-x:1110;--crop-y:4;--crop-w:320;--crop-h:450"><img src="pdf-bilder/seite16.png" alt="Vollständiges RGB-Schaltbild von den drei Pinanschlüssen über Widerstände und LEDs bis GND"></div>
           <div class="pdfcaption">Materialschaltung mit D9/D10/D11. Hier nutzt du D3/D5/D6 und je 330 Ω; den 110-Ω-Wert aus dem Bild übernimmst du nicht.</div>
         </div>
         <div class="image-guide">
@@ -1951,7 +1943,7 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <div class="material-crop crop-if"><img src="pdf-bilder/seite17.png" alt="Materialausschnitt: if prüft eine Bedingung und wählt einen Anweisungsblock"></div>
+          <div class="arduino-crop" data-crop="if" style="--image-w:1090;--crop-x:55;--crop-y:134;--crop-w:1010;--crop-h:456"><img src="pdf-bilder/seite17.png" alt="Vollständiges Materialbeispiel zu if mit geschlossenen Codeblöcken und beiden Erklärkästen"></div>
           <div class="pdfcaption">Ausschnitt aus Seite 17 · Die Aufgaben stehen unten als HTML.</div>
         </div>
         <div class="image-guide">

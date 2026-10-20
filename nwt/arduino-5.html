@@ -128,18 +128,8 @@
     .lab-table table { border-collapse: collapse; width: 100%; color: var(--wb-text); }
     .lab-table th, .lab-table td { padding: 8px; border: 1px solid var(--wb-line); text-align: left; vertical-align: top; }
     .lab-table th { background: var(--wb-head-bg); }
-    .material-crop { overflow: hidden; position: relative; background: #fff; }
-    .material-crop img { position: absolute; width: 100% !important; max-height: none !important; height: auto !important; }
-    .crop-keyboard { aspect-ratio: 392 / 335; }
-    .crop-keyboard img { top: -210%; }
-    .crop-interrupt { aspect-ratio: 1270 / 150; }
-    .crop-interrupt img { top: -195%; }
-    .crop-flag { aspect-ratio: 1090 / 135; }
-    .crop-flag img { top: -58%; }
-    .crop-trouble { aspect-ratio: 1114 / 252; }
-    .crop-trouble img { top: 0; }
     .wb-book .topic-figure { width: min(100%, 480px); align-self: start; box-shadow: none; }
-    .wb-book .topic-figure.keyboard { max-width: 260px; }
+    .wb-book .topic-figure.keyboard { max-width: 160px; }
     .wb-book .lab-task .topic-figure { margin: 12px 0; }
     .wb-book .lab-task code { overflow-wrap: anywhere; }
     .wb-book .lab-task pre code { overflow-wrap: normal; }
@@ -279,7 +269,7 @@
           <p>Wenn du einer Variablen zum ersten Mal einen Wert zuweist, nennt man das <b>Initialisieren</b>. Genau so arbeitest du auch bei Arrays: Du legst zuerst fest, was gespeichert werden soll, und füllst die Liste dann mit Werten. Hier wird eine Melodie mit sechs Frequenzen gezeigt. Zusätzlich gibt es ein zweites Array mit Notenwerten wie Achtel, Viertel oder Halbe. So legst du nicht nur fest, <b>welcher</b> Ton gespielt wird, sondern auch <b>wie lange</b>.</p>
         </div>
         <figure class="topic-figure keyboard">
-          <div class="material-crop crop-keyboard"><img src="pdf-bilder/array_klavier.png" alt="Ausschnitt der Klaviatur: Frequenzen von etwa 175 bis 262 Hertz" /></div>
+          <div class="arduino-crop" data-crop="keyboard" style="--image-w:384;--crop-x:0;--crop-y:0;--crop-w:384;--crop-h:1194"><img src="pdf-bilder/array_klavier.png" alt="Vollständige Klaviaturabbildung mit Frequenzangaben in Hertz" /></div>
           <figcaption>Frequenzen in Hertz: 175 Hz klingt tiefer als 262 Hz. Die Zahlen legen die Tonhöhe fest.</figcaption>
         </figure>
       </div>
@@ -727,7 +717,7 @@ void loop() {
           </div>
         </div>
         <figure class="topic-figure">
-          <div class="material-crop crop-interrupt"><img src="pdf-bilder/interrupt_aufgabe.png" alt="Materialausschnitt: attachInterrupt mit Pinumsetzung, ISR roteLed und FALLING" /></div>
+          <div class="arduino-crop" data-crop="interrupt" style="--image-w:1270;--crop-x:14;--crop-y:340;--crop-w:1215;--crop-h:52"><img src="pdf-bilder/interrupt_aufgabe.png" alt="Vollständige attachInterrupt-Anweisung mit Pinumsetzung, ISR roteLed und FALLING" /></div>
           <figcaption>Die drei Argumente verbinden Pin, Reaktionsfunktion und Auslösesignal. Den vollständigen Sketch findest du darunter.</figcaption>
         </figure>
       </div>
@@ -783,7 +773,7 @@ void loop() {
 
       <div class="grid2x" style="margin-top:16px;">
         <figure class="topic-figure">
-          <div class="material-crop crop-flag"><img src="pdf-bilder/interrupt_aufgabe2.png" alt="Materialausschnitt: Tasterpin und volatile Ereignisvariable zustand" /></div>
+          <div class="arduino-crop" data-crop="flag" style="--image-w:1090;--crop-x:10;--crop-y:88;--crop-w:412;--crop-h:82"><img src="pdf-bilder/interrupt_aufgabe2.png" alt="Zwei vollständige Deklarationen: Tasterpin und volatile Ereignisvariable zustand" /></div>
           <figcaption>Der gemeinsame Ereignismerker ist <code>volatile</code>. Das gilt für zwischen ISR und Hauptprogramm geteilte Variablen.</figcaption>
         </figure>
         <div>
@@ -1029,7 +1019,7 @@ void loop() {
 
       <div class="grid2x" style="margin-top:16px;">
         <figure class="topic-figure">
-          <div class="material-crop crop-trouble"><img src="pdf-bilder/troubleshooting.png" alt="Materialausschnitt: zuerst Kompilierung und konkrete Fehlermeldung prüfen" /></div>
+          <div class="arduino-crop" data-crop="troubleshooting" style="--image-w:1114;--crop-x:0;--crop-y:10;--crop-w:1114;--crop-h:230"><img src="pdf-bilder/troubleshooting.png" alt="Vollständige erste Entscheidung des Fehlersuchplans mit dem zugehörigen Hinweisfeld" /></div>
           <figcaption>Der erste Entscheidungsschritt. Den vollständigen Prüfpfad und korrigierte Hinweise findest du als Text daneben und darunter.</figcaption>
         </figure>
         <div>

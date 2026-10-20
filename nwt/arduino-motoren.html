@@ -74,8 +74,6 @@
     .motor-table-wrap{max-width:100%; overflow-x:auto}
     .motor-table-wrap table{min-width:430px}
     .motor-material{width:100%; max-width:300px; margin:14px 0; border:1px solid var(--wb-line); border-radius:6px; overflow:hidden; box-sizing:border-box}
-    .motor-material-window{position:relative; overflow:hidden; aspect-ratio:var(--crop-width) / var(--crop-height); background:#fff}
-    .motor-material-window img{position:absolute; display:block; width:calc(100% * var(--source-width) / var(--crop-width)); max-width:none; height:auto; left:calc(-100% * var(--crop-left) / var(--crop-width)); top:calc(-100% * var(--crop-top) / var(--crop-height))}
     .motor-material figcaption{padding:8px 10px; font-size:13px; line-height:1.45; color:var(--wb-text); background:var(--wb-block-bg)}
     .wb-book .figure-card{max-width:320px; box-sizing:border-box}
     .wb-book .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
@@ -352,8 +350,8 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
       <div class="wb-section-break"></div>
 
       <div class="media-grid">
-        <figure class="motor-material" style="--source-width:1486; --crop-left:15; --crop-top:10; --crop-width:525; --crop-height:485">
-          <div class="motor-material-window"><img src="pdf-bilder/seite22.png" alt="Ausschnitt des L298N-Moduls mit Kühlkörper und Schraubklemmen"></div>
+        <figure class="motor-material">
+          <div class="arduino-crop" data-crop="l298n" style="--image-w:1486;--crop-x:0;--crop-y:0;--crop-w:1450;--crop-h:810"><img src="pdf-bilder/seite22.png" alt="Zusammengehörige L298N-Abbildung mit vollständigem Modul, Anschlussleitungen und Beschriftungskästen"></div>
           <figcaption>Beispielmodul aus dem Material. Nutze Anschlussnamen, nicht „links“ oder „rechts“ aus einer bestimmten Blickrichtung.</figcaption>
         </figure>
         <div class="image-guide">
