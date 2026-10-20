@@ -27,7 +27,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Technik verstehen: Hardware, Software, Eingabe und Ausgabe](medien/technik.html) | [Musterlösung](medien/technik-bleistift97.html) |
 | [Scratch-Übungen: Koordinaten, Malstift und Kostümwechsel](misc/Scratch.html) | [Musterlösung](misc/Scratch-zeichendreieck59.html) |
 | [Arduino 1: Board, Pins und LED-Schaltung](nwt/arduino-1.html) | [Musterlösung](nwt/arduino-1-fensterglas34.html) |
-| [Arduino 2: Selber programmieren, Blink-Aufgaben, Fehlersuche und Funktionen](nwt/arduino-2.html) | [Musterlösung](nwt/arduino-2-kupferband71.html) |
+| [Arduino 2: IDE, Blink-Programme, Fehlersuche, Töne und Funktionen](nwt/arduino-2.html) | [Musterlösung](nwt/arduino-2-kupferband71.html) |
 | [Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM](nwt/arduino-3.html) | [Musterlösung](nwt/arduino-3-tintenfass28.html) |
 | [Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren](nwt/arduino-4.html) | [Musterlösung](nwt/arduino-4-lichtblick63.html) |
 | [Arduino 5: Arrays, Interrupts und systematische Fehlersuche](nwt/arduino-5.html) | [Musterlösung](nwt/arduino-5-mosaik94.html) |

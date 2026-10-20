@@ -17,7 +17,7 @@
   "nwt/arduino-einstieg.html":"Arduino-Einstieg: Algorithmen, Bedingungen und Wiederholungen",
   "nwt/arduino-schleifen-ifelse.html":"Arduino: if/else, while-Schleifen und Ablaufspuren",
   "nwt/arduino-1.html":"Arduino 1: Board, Pins und LED-Schaltung",
-  "nwt/arduino-2.html":"Arduino 2: Selber programmieren, Blink-Aufgaben, Fehlersuche und Funktionen",
+  "nwt/arduino-2.html":"Arduino 2: IDE, Blink-Programme, Fehlersuche, Töne und Funktionen",
   "nwt/arduino-3.html":"Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM",
   "nwt/arduino-4.html":"Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren",
   "nwt/arduino-5.html":"Arduino 5: Arrays, Interrupts und systematische Fehlersuche",

@@ -133,6 +133,96 @@
     .programming-task h3,
     .error-example h3{font-size:1.1rem; overflow-wrap:anywhere}
     .programming-steps li + li{margin-top:8px}
+    .task-excerpt{
+      width:100%;
+      max-width:640px;
+      margin:14px 0 18px;
+      border:1px solid var(--wb-line, #cbd7df);
+      border-radius:6px;
+      overflow:hidden;
+      background:transparent;
+    }
+    .task-excerpt-window{
+      position:relative;
+      overflow:hidden;
+      aspect-ratio:var(--crop-width) / var(--crop-height);
+      background:#fff;
+    }
+    .wb-book section[data-wb-page="5"] .task-excerpt{
+      max-width:320px;
+      box-sizing:border-box;
+    }
+    .task-excerpt-window img{
+      position:absolute;
+      display:block;
+      width:calc(100% * var(--source-width, 1188) / var(--crop-width));
+      max-width:none;
+      height:auto;
+      left:calc(-100% * var(--crop-left) / var(--crop-width));
+      top:calc(-100% * var(--crop-top) / var(--crop-height));
+    }
+    .task-excerpt figcaption,
+    .speaker-schematic figcaption{
+      padding:8px 10px;
+      background:var(--wb-block-bg, #f3f7f8);
+      color:var(--wb-text, #17242b);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .sound-layout{
+      display:grid;
+      grid-template-columns:minmax(0, 220px) minmax(0, 1fr);
+      gap:22px;
+      align-items:start;
+      margin:16px 0;
+    }
+    .sound-layout > div{min-width:0}
+    .sound-layout .task-excerpt{margin-top:0}
+    .speaker-excerpt{max-width:140px}
+    .keyboard-excerpt{max-width:220px}
+    .function-excerpt{max-width:220px}
+    .melody-excerpt{max-width:500px}
+    .material-figures{display:flex; flex-wrap:wrap; gap:18px; align-items:start}
+    .transistor-excerpt{max-width:110px}
+    .circuit-excerpt{max-width:180px}
+    .speaker-schematic{
+      width:100%;
+      max-width:320px;
+      box-sizing:border-box;
+      margin:14px 0 18px;
+      border:1px solid var(--wb-line, #cbd7df);
+      border-radius:6px;
+      overflow:hidden;
+    }
+    .speaker-schematic img{display:block; width:100%; height:auto; background:#fff}
+    .wire-path{
+      display:block;
+      padding:12px 0;
+      border-top:2px solid var(--ak-teal, #087f7a);
+      border-bottom:1px solid var(--wb-line, #cbd7df);
+      overflow-wrap:anywhere;
+      line-height:1.8;
+      white-space:normal;
+    }
+    .note-table{width:100%; border-collapse:collapse; margin:12px 0}
+    .note-table th,.note-table td{
+      text-align:left;
+      padding:7px 10px;
+      border-bottom:1px solid var(--wb-line, #cbd7df);
+    }
+    .wb-book .p2 .p2-banks{grid-template-columns:repeat(2, minmax(0, 1fr))}
+    .wb-book .p2 .p2-banks > div{min-width:0}
+    .wb-book .p2 .p2-piece,
+    .wb-book .p2 .p2-joined .p2-piece{
+      min-width:0;
+      max-width:100%;
+      width:100%;
+      box-sizing:border-box;
+      overflow-wrap:anywhere;
+      border-radius:6px;
+    }
+    .wb-book .p2 .p2-piece code{white-space:normal; overflow-wrap:anywhere}
+    .wb-book .p2 .p2-joined{max-width:100%}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ide-checklist > div{
       background:var(--wb-block-bg);
       color:var(--wb-text);
@@ -145,6 +235,14 @@
       .ide-checklist,
       .error-code-pair{grid-template-columns:1fr}
       .ide-logo-card img{min-height:130px}
+      .wb-book .p2 .p2-banks{grid-template-columns:minmax(0, 1fr)}
+    }
+    @media (max-width: 600px){
+      .sound-layout{grid-template-columns:minmax(0, 1fr)}
+      .keyboard-excerpt{margin-left:auto; margin-right:auto}
+      .wb-book .p2 .p2-banks{grid-template-columns:minmax(0, 1fr)}
+      .wb-book .p2 .p2-joined{display:flex; flex-direction:column; width:100%}
+      .wb-book .p2 .p2-seam{width:100%; height:2px}
     }
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
@@ -369,6 +467,33 @@
 
     <section data-wb-page="2" data-wb-page-title="Programm übertragen">
       <h2>Programm übertragen</h2>
+
+      <h3 id="ide-orientierung">Aufgabe: IDE öffnen, Arduino anschließen und erkunden</h3>
+      <p><b>Arbeite jetzt selbst am Computer.</b> Öffne das Programm <b>Arduino IDE</b>,
+        nicht nur diese Webseite, und lege deinen Arduino bereit.</p>
+      <ol class="programming-steps">
+        <li><b>Verbinden:</b> Schließe den Arduino mit einem USB-Datenkabel an den Computer an.
+          Eine leuchtende LED zeigt die Versorgung, aber noch keine funktionierende Datenverbindung.</li>
+        <li><b>Board auswählen:</b> Öffne die Board-Auswahl oben in der IDE und wähle das tatsächlich
+          angeschlossene Modell, bei einem Uno R3 also <b>Arduino Uno</b>.
+          Du findest die Einstellungen auch unter <b>Werkzeuge → Board</b>.</li>
+        <li><b>Port zuordnen:</b> Wähle den Anschluss deines Boards, zum Beispiel <code>COM3</code>
+          unter Windows. Falls du unsicher bist, trenne kurz das USB-Kabel und verbinde es erneut:
+          Der zugehörige Port verschwindet und erscheint wieder. Schaue auch unter
+          <b>Werkzeuge → Port</b>; die konkrete Portnummer ist nicht bei allen gleich.</li>
+        <li><b>Oberfläche erkunden:</b> Suche den Texteditor mit <code>setup()</code> und
+          <code>loop()</code>, den Haken für <b>Verify/Überprüfen</b>, den Pfeil für
+          <b>Upload/Hochladen</b> und den Ausgabebereich für Meldungen unter dem Editor.
+          Schaue dir außerdem den seriellen Monitor an; du brauchst ihn später zum Lesen von Daten.</li>
+        <li><b>Festhalten:</b> Notiere in OneNote dein Board-Modell und den gewählten Port.
+          Erkläre deinem Nachbarn, wo du Code eingibst und wo Fehlermeldungen erscheinen.
+          Einen eigenen Sketch schreibst und überträgst du auf Seite 3.</li>
+      </ol>
+      <p>Wird das Board als <b>Unknown/Unbekannt</b> angezeigt, wähle über
+        <b>Anderes Board und anderen Port auswählen</b> das passende Modell selbst.
+        Fehlt der Port ganz, prüfe das Datenkabel und die USB-Verbindung und hole dir bei Bedarf Hilfe.</p>
+
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Worum geht es hier?</strong>
@@ -808,22 +933,16 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite09.png" alt="Übungsaufgaben zum Blink-Programm und zur Fehlersuche">
-          <div class="pdfcaption">Materialbild: Blink-Variationen und Fehlerdiagnose</div>
-        </div>
-        <div class="image-guide">
-          <h3>Dein Arbeitsauftrag</h3>
-          <p>Programmiere zunächst den Blinkrhythmus aus 4.3. Sage bei 4.4 und 4.5 das Verhalten
-            voraus und teste die Programme anschließend. Baue zum Schluss die Ampel aus 4.6.</p>
-          <p>Das Bild ergänzt die folgenden Aufgaben. Alle Zeiten, Codevorlagen und Arbeitsschritte
-            stehen auch im Text darunter.</p>
-        </div>
-      </div>
+      <p>Programmiere zunächst den Blinkrhythmus aus 4.3. Sage bei 4.4 und 4.5 das Verhalten
+        voraus und teste die Programme anschließend. Baue zum Schluss die Ampel aus 4.6.</p>
 
       <div class="programming-task" id="material-4-3">
         <h3>4.3 Programmiere einen Windrad-Blinkrhythmus</h3>
+        <figure class="task-excerpt" style="--crop-left:0; --crop-top:18; --crop-width:625; --crop-height:490">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite09.png" width="1188" height="1336" alt="Materialausschnitt 4.3: Windrad und Vorgabe für den Blinkrhythmus">
+          </div>
+        </figure>
         <p>Deine LED soll einen vorgegebenen Warnrhythmus nachbilden:
           <b>1 s an, 0,5 s aus, 1 s an, 1,5 s aus</b>. Danach beginnt die Folge von vorn.</p>
         <ol>
@@ -836,6 +955,11 @@ void loop() {
 
       <div class="programming-task" id="material-4-4">
         <h3>4.4 Sage die Leucht- und Ausschaltzeiten voraus</h3>
+        <figure class="task-excerpt" style="--crop-left:640; --crop-top:18; --crop-width:540; --crop-height:535">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite09.png" width="1188" height="1336" alt="Materialausschnitt 4.4: Sketch mit den Wartezeiten 400, 200 und 300 Millisekunden">
+          </div>
+        </figure>
         <p>Verfolge den folgenden Sketch zuerst auf Papier. Wie lange leuchtet die LED direkt
           nach dem Start? Wie lange ist sie aus? Was ändert sich bei den weiteren Durchläufen
           von loop()? Achte auf den Übergang vom Ende zum Anfang der Schleife.</p>
@@ -857,6 +981,11 @@ void loop() {
 
       <div class="programming-task" id="material-4-5">
         <h3>4.5 Vergleiche einmaliges und wiederholtes Schalten</h3>
+        <figure class="task-excerpt" style="--crop-left:130; --crop-top:544; --crop-width:505; --crop-height:784">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite09.png" width="1188" height="1336" alt="Materialausschnitt 4.5: Die beiden Programme zum Vergleich von setup und loop">
+          </div>
+        </figure>
         <p>Welches Programm lässt die LED nur einmal aufleuchten? Bei welchem wirkt sie danach
           fast dauerhaft eingeschaltet? Begründe vor dem Test, was nach der letzten LOW-Anweisung passiert.</p>
         <div class="error-code-pair">
@@ -885,6 +1014,11 @@ void loop() {
 
       <div class="programming-task" id="material-4-6">
         <h3>4.6 Programmiere eine Ampel</h3>
+        <figure class="task-excerpt" style="--crop-left:640; --crop-top:590; --crop-width:540; --crop-height:478">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite09.png" width="1188" height="1336" alt="Materialausschnitt 4.6: Ampel-Aufgabe mit dem vollständigen Ablaufdiagramm">
+          </div>
+        </figure>
         <p>Baue eine grüne, eine gelbe und eine rote LED auf. Jede LED braucht einen eigenen
           Vorwiderstand. Trenne die Stromversorgung vor dem Umbauen und verwende drei verschiedene
           Digitalpins, zum Beispiel Grün an 8, Gelb an 9 und Rot an 10.</p>
@@ -903,10 +1037,58 @@ void loop() {
 
       <div class="programming-task" id="material-4-7">
         <h3>4.7 Ergänze deinen Befehls-Spickzettel</h3>
+        <figure class="task-excerpt" style="--crop-left:640; --crop-top:1098; --crop-width:540; --crop-height:232">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite09.png" width="1188" height="1336" alt="Materialausschnitt 4.7: Auftrag für den Arduino-Befehls-Spickzettel">
+          </div>
+        </figure>
         <p>Lege in OneNote eine Übersicht mit den Spalten <b>Schreibweise, Bedeutung und Beispiel</b> an.
           Beginne mit <code>setup()</code>, <code>loop()</code>, <code>pinMode()</code>,
           <code>digitalWrite()</code> und <code>delay()</code>. Erkläre daneben
           <code>OUTPUT</code>, <code>HIGH</code> und <code>LOW</code>. Ergänze später neu gelernte Befehle.</p>
+
+        <div class="wb-section-break"></div>
+        <div data-p2 class="p2" data-p2-id="arduino2_command_pairs" data-p2-title="4.7 Ordne Befehle und Erklärungen zu" data-p2-hint="Unterscheide Vorbereitung, Wiederholung, Schalten und Warten.">
+          <div class="p2-hint">Verbinde jeden Befehl mit seiner Erklärung. HIGH und LOW beziehen sich hier auf deine LED mit Vorwiderstand zwischen Ausgang und GND.</div>
+          <div class="p2-banks">
+            <div>
+              <div class="p2-col-title">Befehl oder Funktion</div>
+              <div class="p2-bank" data-left-bank>
+                <div class="p2-piece p2-left" data-side="L" data-pair="1"><code>void setup() { ... }</code></div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="2"><code>void loop() { ... }</code></div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="3"><code>pinMode(Pin, OUTPUT);</code></div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="4"><code>digitalWrite(Pin, HIGH);</code></div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="5"><code>digitalWrite(Pin, LOW);</code></div>
+                <div class="p2-piece p2-left" data-side="L" data-pair="6"><code>delay(Millisekunden);</code></div>
+              </div>
+            </div>
+            <div>
+              <div class="p2-col-title">Bedeutung</div>
+              <div class="p2-bank" data-right-bank>
+                <div class="p2-piece p2-right" data-side="R" data-pair="1">Wird nach dem Start oder Reset einmal ausgeführt: Hier bereitest du dein Programm vor.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="2">Wird anschließend immer wieder ausgeführt, solange das Programm läuft.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="3">Konfiguriert den angegebenen Pin als Ausgang, den du danach ansteuern kannst.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="4">Setzt den Ausgang beim Uno R3 auf etwa 5 V: Durch LED und Vorwiderstand kann Strom fließen, die LED leuchtet.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="5">Setzt den Ausgang auf etwa 0 V: In dieser LED-Schaltung fließt kein nennenswerter Strom mehr, die LED ist aus.</div>
+                <div class="p2-piece p2-right" data-side="R" data-pair="6">Wartet die angegebene Zeit in Millisekunden. 1000 ms entsprechen einer Sekunde.</div>
+              </div>
+            </div>
+          </div>
+          <div class="p2-row" style="margin-top:12px">
+            <button class="wb-btn" type="button" data-shuffle>Mischen</button>
+            <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
+            <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
+            <div class="p2-score" data-score></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="p2-col-title">Verbundene Paare</div>
+            <div class="p2-solved" data-solved></div>
+          </div>
+        </div>
+        <div class="wb-section-break"></div>
+        <p><b>Merke:</b> <code>pinMode()</code> legt die Betriebsart eines Pins fest;
+          der Befehl deklariert keine Variable. <code>OUTPUT</code> bedeutet Ausgang.
+          Ob bei HIGH oder LOW Strom durch ein Bauteil fließt, hängt auch von dessen Anschluss ab.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -937,74 +1119,111 @@ void loop() {
     <section data-wb-page="6" data-wb-page-title="5 Töne erzeugen - Musik verstehen">
       <h2>5. Töne erzeugen - Musik verstehen</h2>
 
-      <div class="wb-soft-callout">
-        <strong>Wie entstehen Töne?</strong>
+      <h3>Eine schwingende Membran macht Luft hörbar</h3>
+      <div class="sound-layout">
+        <figure class="task-excerpt speaker-excerpt" style="--source-width:1492; --crop-left:438; --crop-top:116; --crop-width:172; --crop-height:334">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite10.png" width="1492" height="1316" alt="Lautsprecher im Schnitt: blaue Membran mit Markierung 1, rote Schwingspule mit Markierung 2">
+          </div>
+          <figcaption>1: Membran · 2: Schwingspule</figcaption>
+        </figure>
         <div>
-          Ein Ton entsteht durch <b>Schwingungen</b>.
-          Je schneller etwas schwingt, desto <b>höher</b> klingt der Ton.
-          Beim Arduino werden diese Schwingungen elektronisch erzeugt,
-          z. B. mit einem Lautsprecher oder Summer.
+          <p>Ein Lautsprecher besitzt eine bewegliche <b>Membran</b> und eine <b>Schwingspule</b>
+            in einem Magnetfeld. Ändert sich der Strom durch die Spule, bewegt sich die Membran
+            und versetzt die Luft in Schwingung. Eine unveränderte Gleichspannung erzeugt
+            keinen anhaltenden Ton: Dafür muss sich die Membran immer wieder bewegen.</p>
+          <p>Die <b>Frequenz</b> gibt an, wie viele Schwingungen pro Sekunde stattfinden.
+            Die Einheit ist <b>Hertz (Hz)</b>. Im hörbaren Bereich gilt: Je höher die Frequenz,
+            desto höher klingt der Ton. <code>tone()</code> erzeugt dafür am Arduino ein
+            regelmäßig zwischen HIGH und LOW wechselndes Signal.</p>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Tonhöhe und Frequenz</strong>
+      <h3>Klaviatur: Von der Taste zur Frequenz</h3>
+      <div class="sound-layout">
+        <figure class="task-excerpt keyboard-excerpt" style="--source-width:1492; --crop-left:18; --crop-top:410; --crop-width:305; --crop-height:888">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite10.png" width="1492" height="1316" alt="Klaviatur mit Frequenzangaben von 65 bis 988 Hertz; höhere Töne stehen im Ausschnitt weiter unten">
+          </div>
+          <figcaption>Nur die Klaviatur mit den zugehörigen Frequenzen aus dem Material.</figcaption>
+        </figure>
         <div>
-          Die Tonhöhe hängt von der <b>Frequenz</b> ab:
-          <ul style="margin:6px 0 0; padding-left:18px">
-            <li>niedrige Frequenz -> tiefer Ton</li>
-            <li>hohe Frequenz -> hoher Ton</li>
-          </ul>
-          Beim Arduino wird die Frequenz in <b>Hertz (Hz)</b> angegeben.
+          <p>Auf der Klaviatur wechseln sich <b>Zweier- und Dreiergruppen schwarzer Tasten</b> ab.
+            Das <b>C</b> ist die weiße Taste unmittelbar links von einer Zweiergruppe.
+            Von dort heißen die weißen Tasten C, D, E, F, G, A, H, dann wieder C.
+            Schwarze Tasten liefern die dazwischenliegenden Halbtöne.</p>
+          <p>Jede Note hat eine Frequenz. Damit kannst du dieselbe Tonfolge programmieren,
+            auch wenn dein Lautsprecher anders klingt als ein Klavier.
+            Diese gerundeten Werte gehören zu einer mittleren Oktave:</p>
+          <table class="note-table">
+            <thead><tr><th scope="col">Ton</th><th scope="col">Frequenz</th></tr></thead>
+            <tbody>
+              <tr><td>C</td><td>262 Hz</td></tr><tr><td>D</td><td>294 Hz</td></tr>
+              <tr><td>E</td><td>330 Hz</td></tr><tr><td>F</td><td>349 Hz</td></tr>
+              <tr><td>G</td><td>392 Hz</td></tr><tr><td>A</td><td>440 Hz</td></tr>
+              <tr><td>H</td><td>494 Hz</td></tr><tr><td>C, eine Oktave höher</td><td>523 Hz</td></tr>
+            </tbody>
+          </table>
+          <p>Verdoppelst du die Frequenz, klingt der Ton eine <b>Oktave höher</b>,
+            zum Beispiel A mit 440 Hz und A mit 880 Hz. Die Tonhöhe ist nicht dasselbe wie die Lautstärke.</p>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Wie liest man Noten auf dem Klavier?</strong>
-        <div>
-          Auf dem Klavier sind die Tasten in einem festen Muster angeordnet:
-          <br><br>
-          <b>Weiße Tasten</b> stehen für die Grundtöne:
-          C – D – E – F – G – A – H
-          <br><br>
-          <b>Schwarze Tasten</b> liegen dazwischen und gehören immer zu
-          einer weißen Taste links oder rechts davon.
-        </div>
-      </div>
+      <h3 id="lautsprecher-anschliessen">Lautsprecher anschließen: mit Widerstand und leisen Tönen</h3>
+      <p>Die folgende Anleitung gilt für einen <b>Arduino Uno R3 mit 5 V</b> und einen kleinen
+        <b>passiven Lautsprecher mit zwei Anschlüssen</b>, nicht für ein aktives Verstärkermodul.
+        Eure Lautsprecher sind unterschiedlich und teils unbeschriftet. Lass die Lehrkraft das
+        Bauteil prüfen, wenn du nicht sicher bist, was du vor dir hast.
+        Bei anderen Boards muss auch die zulässige Pinbelastung geprüft werden.</p>
+      <p><b>Trenne zuerst das USB-Kabel und jede weitere Stromversorgung.</b> Baue dann diesen Stromweg auf:</p>
+      <figure class="speaker-schematic">
+        <img src="pdf-bilder/lautsprecher-mit-vorwiderstand.svg" width="440" height="270" alt="Schaltbild: D11 am Arduino Uno R3 führt über einen 330-Ohm-Widerstand zum Lautsprecher; dessen zweiter Anschluss führt zurück zu GND am Arduino.">
+        <figcaption>Schaltbild mit Vorwiderstand: D11 → 330 Ω → Lautsprecher → GND.</figcaption>
+      </figure>
+      <code class="wire-path">Digitalpin 11 → 330-Ω-Widerstand → Lautsprecher → GND</code>
+      <ol class="programming-steps">
+        <li>Verbinde <b>D11</b> mit einem Ende eines <b>330-Ω-Widerstands</b> (mindestens 0,25 W).
+          Die Einbaurichtung des Widerstands ist egal.</li>
+        <li>Verbinde das andere Widerstandsende mit einem Lautsprecheranschluss,
+          bei vorhandener Kennzeichnung mit <b>+</b>.</li>
+        <li>Verbinde den zweiten Lautsprecheranschluss mit <b>GND</b> am Arduino.
+          Beide Bauteile liegen in Reihe, der Widerstand darf nicht überbrückt sein.</li>
+        <li>Lass den Aufbau kontrollieren. Verbinde erst danach wieder USB und teste kurz.
+          Halte den Lautsprecher nicht ans Ohr.</li>
+      </ol>
+      <p><b>Der Widerstand bleibt immer in der Schaltung:</b> Er begrenzt den Strom und hält den Ton
+        leiser, damit nicht die ganze Klasse mithört. Bei 5 V begrenzen 330 Ω den Strom rechnerisch
+        auf höchstens etwa 15 mA, noch ohne den Lautsprecherwiderstand zu berücksichtigen.
+        Für einen noch leiseren Versuch kannst du <b>1 kΩ statt 330 Ω</b> verwenden.
+        Schließe einen unbekannten Lautsprecher nicht ohne Vorwiderstand direkt an den Pin an.</p>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Orientierung auf der Klaviatur</strong>
-        <div>
-          Man erkennt das <b>C</b> daran, dass es links von einer
-          <b>Zweiergruppe schwarzer Tasten</b> liegt.
-          Von dort aus zählt man die weißen Tasten nach rechts:
-          C – D – E – F – G – A – H – C …
-        </div>
-      </div>
+      <h3 id="ton-test">Aufgabe: Selber programmieren – ein Ton, dann Ruhe</h3>
+      <p>Lege in der Arduino-IDE den Sketch <code>Ton_Test</code> an. Tippe den Code ab,
+        prüfe Board und Port und übertrage ihn nach erfolgreichem Verify.</p>
+      <div class="code-card"><pre><code>void setup() {
+}
 
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Noten und Arduino</strong>
-        <div>
-          Jede Klaviernote entspricht einer bestimmten Frequenz.
-          Beispiel:
-          <ul style="margin:6px 0 0; padding-left:18px">
-            <li>C -> 262 Hz</li>
-            <li>D -> 294 Hz</li>
-            <li>E -> 330 Hz</li>
-            <li>G -> 392 Hz</li>
-          </ul>
-          Diese Frequenzen kannst du direkt im Arduino-Programm verwenden,
-          um Melodien zu spielen.
-        </div>
-      </div>
+void loop() {
+  tone(11, 440);
+  delay(1000);
+  noTone(11);
+  delay(3000);
+}</code></pre></div>
+      <p><code>tone(11, 440)</code> erzeugt am Pin 11 einen Ton mit 440 Hz und richtet den Pin
+        selbst als Ausgang ein. Während <code>delay(1000)</code> wartet der Programmablauf eine
+        Sekunde; <b>der Ton läuft dabei weiter</b>. Erst <code>noTone(11)</code> beendet ihn.
+        Danach wartet das Programm drei Sekunden in Ruhe, bevor <code>loop()</code> neu beginnt.</p>
+      <p>Optional kannst du die Dauer direkt angeben: <code>tone(11, 440, 1000)</code> bedeutet
+        Pin 11, Frequenz 440 Hz, Tondauer 1000 ms. Der Aufruf selbst wartet nicht so lange;
+        die nächste Codezeile wird direkt bearbeitet.</p>
+      <p><b>Vergleiche:</b> Ändere nur 440 zu 880, lade erneut hoch und höre kurz hin.
+        Notiere in OneNote, was sich an Tonhöhe, Tondauer und Pause ändert.</p>
 
       <div class="wb-section-break"></div>
 
@@ -1013,25 +1232,14 @@ void loop() {
           {
             "id":"s10_vf",
             "title":"Verständnisfragen",
+            "hint":"Beziehe dich auf Klaviatur, Frequenzen und deinen Ton-Test.",
             "fields":[
-              {"label":"1","key":"s10_q1","kind":"textarea","placeholder":"1) Warum klingt ein Ton höher, wenn die Frequenz größer ist?"},
-              {"label":"2","key":"s10_q2","kind":"textarea","placeholder":"2) Wie findest du auf einem Klavier die Taste C?"},
-              {"label":"3","key":"s10_q3","kind":"textarea","placeholder":"3) Warum kann man Klaviernoten gut mit dem Arduino nachspielen?"}
+              {"label":"1","key":"s10_q1","kind":"textarea","prompt":"Warum klingt ein Ton höher, wenn die Frequenz größer ist?","placeholder":"Schreibe hier..."},
+              {"label":"2","key":"s10_q2","kind":"textarea","prompt":"Wie findest du auf einem Klavier die Taste C?","placeholder":"Schreibe hier..."},
+              {"label":"3","key":"s10_q3","kind":"textarea","prompt":"Warum kann man Klaviernoten gut mit dem Arduino nachspielen?","placeholder":"Schreibe hier..."}
             ]
           }
         </script>
-      </div>
-
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite10.png" alt="Arduino-Schaltung und Programm zum Erzeugen von Tönen">
-          <div class="pdfcaption">Materialbild: Frequenz wird als Ton hörbar</div>
-        </div>
-        <div class="image-guide">
-          <h3>Vom Zahlenwert zum Höreindruck</h3>
-          <p>Ordne den Argumenten von <code>tone()</code> Pin, Frequenz und Dauer zu. Sage voraus, welcher Zahlenwert die Tonhöhe verändert und welcher nur die Tondauer.</p>
-          <p><b>Experiment:</b> Verdopple nur die Frequenz und beschreibe den Unterschied.</p>
-        </div>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1072,33 +1280,55 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Bearbeite nun die Aufgabe 5.1 auf dem Bild oberhalb</strong>
-        <div>
-          Schreibe auch immer alle neuen Befehle, die du lernst bei OneNote in deinen Spickzettel mit den Befehlen und Erklärungen,
-          damit du sie nicht vergisst und immer schnell nachschauen kannst.
-        </div>
+      <div class="programming-task" id="material-5-1">
+        <h3>5.1 Aufgabe: Selber programmieren – deine Melodie</h3>
+        <p>Nutze die gerade aufgebaute Schaltung <b>mit Vorwiderstand</b>. Programmiere eine eigene
+          kleine Melodie mit mindestens vier Tönen. Wenn dir keine einfällt, nimm
+          „Alle meine Entchen“ aus dem Notenbeispiel. Speichere den Sketch als <code>Meine_Melodie</code>.</p>
+        <figure class="task-excerpt melody-excerpt" style="--source-width:1492; --crop-left:494; --crop-top:1145; --crop-width:925; --crop-height:85">
+          <div class="task-excerpt-window">
+            <img src="pdf-bilder/seite10.png" width="1492" height="1316" alt="Notenbeispiel für Alle meine Entchen aus Aufgabe 5.1">
+          </div>
+          <figcaption>Aufgabe 5.1: das Notenbeispiel ohne den übrigen Materialtext.</figcaption>
+        </figure>
+        <ol class="programming-steps">
+          <li>Wähle Frequenzen aus der Tabelle und lege fest, wie lange jeder Ton klingen soll.</li>
+          <li>Schreibe für jeden Ton <code>tone(11, Frequenz);</code> und danach
+            <code>delay(Dauer);</code>. Ein neuer <code>tone()</code>-Aufruf am selben Pin ändert
+            die Tonhöhe. Zwischen direkt aufeinanderfolgenden Tönen ist <code>noTone()</code> nicht nötig.</li>
+          <li>Für eine echte Pause schreibst du <code>noTone(11);</code> und dann
+            <code>delay(Pausendauer);</code>. Beende die Melodie mit einer solchen Pause.</li>
+          <li>Prüfe und übertrage deinen Sketch. Vergleiche die gehörte Folge mit deinem Plan
+            und halte Frequenzen, Dauern und eine Verbesserung in OneNote fest. Teste nur kurz und leise.</li>
+        </ol>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Die Frequenz bestimmt die Tonhöhe, Wartezeiten und noTone() strukturieren Töne und Pausen.
+          Ergänze tone(Pin, Frequenz), die optionale Dauer und noTone(Pin) mit je einem Beispiel
+          auf deinem Befehls-Spickzettel in OneNote. Der Vorwiderstand bleibt beim Testen eingebaut.</p>
       </div>
     </section>
 
     <section data-wb-page="7" data-wb-page-title="Unterprogramme">
       <h2>6. Unterprogramme (Funktionen)</h2>
 
-      <div class="wb-soft-callout">
-        <strong>Warum Unterprogramme?</strong>
-        <div>
-          Wiederkehrende Abläufe können in Funktionen ausgelagert werden.
-          Das macht Programme übersichtlicher und leichter veränderbar.
-        </div>
-      </div>
+      <p>Kommt in deiner Melodie derselbe Teil mehrfach vor? Statt die Befehle immer wieder zu
+        kopieren, gibst du diesem Teil einen Namen, zum Beispiel <code>refrain()</code>.
+        Ein solches <b>Unterprogramm</b> heißt auch <b>Funktion</b>. Du definierst es einmal
+        und rufst es überall dort auf, wo du diesen Ablauf brauchst.</p>
+
+      <div class="wb-section-break"></div>
 
       <div data-wb-type="essay">
         <script type="application/json" class="wb-config">
           {
             "id":"s11_denken",
             "title":"Denken wie ein Programmierer",
+            "hint":"Suche einen Ablauf mit mehreren Schritten, der wiederholt gebraucht wird.",
             "fields":[
-              {"label":"Antwort","key":"s11_denken","kind":"textarea","placeholder":"Nenne ein Beispiel aus dem Alltag, das man als 'Unterprogramm' sehen kann."}
+              {"label":"Antwort","key":"s11_denken","kind":"textarea","prompt":"Nenne ein Beispiel aus dem Alltag, das man als Unterprogramm sehen kann.","placeholder":"Schreibe hier..."}
             ]
           }
         </script>
@@ -1106,112 +1336,63 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Was sind Unterprogramme?</strong>
-        <div>
-          Unterprogramme (auch <b>Funktionen</b> genannt) sind Programmteile,
-          die man auslagert und später immer wieder aufrufen kann.
-          Sie verhindern, dass man denselben Code mehrfach schreiben muss.
+      <div class="programming-task" id="material-5-2">
+        <h3>5.2 Aufgabe: Selber programmieren – ein Refrain als Funktion</h3>
+        <div class="sound-layout">
+          <figure class="task-excerpt function-excerpt" style="--source-width:1062; --crop-left:104; --crop-top:213; --crop-width:280; --crop-height:531">
+            <div class="task-excerpt-window">
+              <img src="pdf-bilder/seite11.png" width="1062" height="1318" alt="Codeausschnitt zu Aufgabe 5.2: zwei Aufrufe von refrain in loop und die Funktionsdefinition darunter">
+            </div>
+            <figcaption>Materialausschnitt zu 5.2. Die Punkte stehen für ausgelassenen Code;
+              das vollständige Beispiel findest du darunter.</figcaption>
+          </figure>
+          <div>
+            <p>In einem Lied kehrt der Refrain wieder. In deinem Sketch funktioniert das genauso:
+              <code>refrain();</code> ist ein <b>Aufruf</b>. Der Arduino führt die Anweisungen
+              dieser Funktion aus und arbeitet dann an der nächsten Zeile nach dem Aufruf weiter.</p>
+            <p><code>void refrain() { ... }</code> ist die <b>Definition</b>: Hier stehen die
+              eigentlichen Befehle. Sie steht <b>außerhalb von setup() und loop()</b>,
+              nicht in deren geschweiften Klammern. <code>void</code> bedeutet hier,
+              dass die Funktion keinen Wert zurückgibt.</p>
+            <p>Ein sprechender Name zeigt, wofür der Codeabschnitt da ist.
+              Willst du den Refrain ändern, bearbeitest du nur die Definition,
+              statt jede kopierte Stelle einzeln zu ändern.</p>
+          </div>
         </div>
-      </div>
+        <p>Dieses vollständige Beispiel spielt einen kurzen Zweiton-Refrain zweimal.
+          Die Lautsprecher-Schaltung von Seite 6 mit Vorwiderstand bleibt bestehen.</p>
+        <div class="code-card"><pre><code>void setup() {
+}
 
-      <div class="wb-section-break"></div>
+void loop() {
+  refrain();
+  delay(500);
+  refrain();
+  delay(1000);
+}
 
-      <div class="wb-soft-callout">
-        <strong>Warum sind Unterprogramme sinnvoll?</strong>
-        <div>
-          Unterprogramme machen Programme:
-          <ul style="margin:6px 0 0; padding-left:18px">
-            <li>übersichtlicher</li>
-            <li>kürzer</li>
-            <li>leichter veränderbar</li>
-          </ul>
-          Ändert man das Unterprogramm, ändert sich automatisch jeder
-          Aufruf im Hauptprogramm.
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Beispiel: Refrain in der Musik</strong>
-        <div>
-          In der Musik wiederholt sich ein <b>Refrain</b> mehrfach.
-          Statt ihn jedes Mal neu zu schreiben, definiert man ihn einmal
-          als Unterprogramm und ruft ihn dann bei Bedarf auf.
-          <br><br>
-          Genau so funktioniert es auch im Arduino-Programm.
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Wie wird ein Unterprogramm aufgerufen?</strong>
-        <div>
-          Ein Unterprogramm wird durch seinen Namen aufgerufen,
-          z. B. <code>refrain();</code>.
-          <br>
-          Der Arduino springt dann zu diesem Unterprogramm,
-          führt es aus und kehrt danach zurück.
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Wichtiger Hinweis</strong>
-        <div>
-          Unterprogramme müssen <b>außerhalb</b> von <code>loop()</code>
-          und <code>setup()</code> stehen.
-          Sonst erkennt der Compiler sie nicht korrekt.
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Lese dir nun den untenstehenden Infokasten durch und bearbeite die Aufgaben</strong>
-        <div>
-          Halte wieder alle neuen Befehle auf OneNote mit Erklärungen auf deinem Spickzettel fest.
-        </div>
-      </div>
-
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite11.png" alt="Arduino-Unterprogramme mit Funktionsaufruf und Funktionsdefinition">
-          <div class="pdfcaption">Materialbild: Wiederverwendbare Funktionen</div>
-        </div>
-        <div class="image-guide">
-          <h3>Finde Aufruf und Definition</h3>
-          <p>Markiere im Bild, wo eine Funktion definiert und wo sie aufgerufen wird. Erkläre anschließend, weshalb ein sprechender Funktionsname den Ablauf verständlicher macht.</p>
-          <p><b>Transfer:</b> Welche Befehle würdest du in eine Funktion <code>signalTon()</code> auslagern?</p>
-        </div>
-      </div>
-
-      <div class="wb-soft-callout">
-        <strong>Warum braucht man einen Transistor?</strong>
-        <div>
-          Die Pins des Arduino können nur sehr wenig Strom liefern.
-          Ein <b>Transistor</b> wirkt wie ein elektronischer Schalter:
-          Ein kleines Signal vom Arduino steuert einen größeren Strom,
-          z. B. für einen Lautsprecher oder Motor.
-        </div>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="wb-soft-callout">
-        <strong>Aufbau eines Transistors</strong>
-        <div>
-          Ein Transistor besitzt drei Anschlüsse:
-          <ul style="margin:6px 0 0; padding-left:18px">
-            <li><b>Basis (B)</b> – Steuereingang</li>
-            <li><b>Kollektor (C)</b> – Stromzufuhr</li>
-            <li><b>Emitter (E)</b> – Stromabfluss</li>
-          </ul>
-          Der Arduino steuert die Basis – der Transistor schaltet den Rest.
-        </div>
+void refrain() {
+  tone(11, 220);
+  delay(300);
+  noTone(11);
+  delay(100);
+  tone(11, 262);
+  delay(300);
+  noTone(11);
+}</code></pre></div>
+        <ol class="programming-steps">
+          <li>Öffne deinen Melodie-Sketch aus 5.1 und speichere eine Kopie als
+            <code>Melodie_Funktionen</code>. Suche einen Teil, der sich wiederholen soll.</li>
+          <li>Verschiebe seine Befehle in eine eigene Funktion <code>void refrain() { ... }</code>.
+            Ersetze die wiederholten Stellen in <code>loop()</code> durch <code>refrain();</code>.
+            Das Beispiel oben zeigt dir das Prinzip; die Punkte aus dem Material tippst du nicht ab.</li>
+          <li>Prüfe und übertrage den Sketch. Ändere danach eine Note in der Definition und teste,
+            ob die Änderung bei jedem Aufruf hörbar ist.</li>
+          <li>Vergleiche kopierten Code mit deiner Funktionslösung: Wie viele Anweisungszeilen sparst du?
+            Zähle jeden Befehl mit Semikolon als eine Zeile, aber keine Funktionsköpfe und Klammern.
+            Notiere Rechnung und Beobachtung in OneNote.</li>
+        </ol>
+        <p>Ergänze auf deinem Spickzettel den Unterschied zwischen <b>Definition</b> und <b>Aufruf</b>.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1236,9 +1417,88 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
+      <div class="programming-task" id="material-5-3">
+        <h3>5.3 Aufgabe: Lautsprecher mit Transistor – Bauteile vergleichen</h3>
+        <p>Der Arduino-Pin ist kein Lautsprecherverstärker. Ein <b>Transistor</b> kann als
+          elektronischer Schalter arbeiten: Der Pin liefert das Steuersignal, während der
+          Lautsprecherstrom aus einem eigenen Lastzweig kommt. Hier verwenden wir denselben
+          Uno R3 und dessen <b>5-V-Anschluss</b>, keine zusätzliche Spannungsquelle.</p>
+        <div class="material-figures">
+          <figure class="task-excerpt transistor-excerpt" style="--source-width:1062; --crop-left:100; --crop-top:968; --crop-width:130; --crop-height:342">
+            <div class="task-excerpt-window">
+              <img src="pdf-bilder/seite11.png" width="1062" height="1318" alt="Im Material gezeigter Transistor BD437 mit seinen drei Anschlüssen">
+            </div>
+            <figcaption>Beispiel BD437; Belegung am eigenen Bauteil prüfen.</figcaption>
+          </figure>
+          <figure class="task-excerpt circuit-excerpt" style="--source-width:1062; --crop-left:802; --crop-top:967; --crop-width:230; --crop-height:345">
+            <div class="task-excerpt-window">
+              <img src="pdf-bilder/seite11.png" width="1062" height="1318" alt="Vereinfachte Materialskizze: 5 V, Lautsprecher und NPN-Transistor; Widerstände und Schutzdiode fehlen">
+            </div>
+            <figcaption>Vereinfachte Skizze aus 5.3: Widerstände und Schutzdiode fehlen.
+              Nicht unverändert nachbauen; nutze die Anschlussliste darunter.</figcaption>
+          </figure>
+        </div>
+        <p>Für diese Schaltung brauchst du einen <b>geeigneten NPN-Bipolartransistor</b>.
+          Seine <b>Basis (B)</b> ist der Steuereingang; der geschaltete Laststrom fließt hier
+          vom <b>Kollektor (C)</b> zum <b>Emitter (E)</b> und weiter zu GND.
+          Ein kleiner Basisstrom steuert also den Strom im Lautsprecherzweig.</p>
+        <p><b>Erst bestimmen, dann ausprobieren:</b> Lies die Typbezeichnung und ermittle B, C und E
+          im Datenblatt des jeweiligen Herstellers. Die Reihenfolge der Beinchen ist nicht
+          bei allen Transistoren gleich. Selbst eine ähnliche Bauform oder der Name BD437 reicht
+          nicht aus, um die gezeigte Belegung ungeprüft zu übernehmen.
+          Lass dir bei unbekannten oder unleserlich beschrifteten Teilen von der Lehrkraft helfen.
+          PNP-Transistoren und MOSFETs sind in dieser Anleitung kein direkter Ersatz.</p>
+
+        <h4>So schließt du die NPN-Schaltstufe an</h4>
+        <p><b>Trenne vor dem Umbau die gesamte Stromversorgung.</b> Entferne die direkte Verbindung
+          von D11 zum Lautsprecher. Behalte den Serienwiderstand zum Leisehalten bei.</p>
+        <code class="wire-path">Steuerzweig: D11 → 1-kΩ-Basiswiderstand → B<br>
+          Lastzweig: 5 V → 330-Ω-Serienwiderstand → Lautsprecher → C → E → GND</code>
+        <ol class="programming-steps">
+          <li>Verbinde den <b>Emitter E mit GND</b> am Arduino.</li>
+          <li>Verbinde <b>D11 über einen 1-kΩ-Widerstand mit der Basis B</b>.
+            Schließe die Basis nicht direkt an den Pin an.</li>
+          <li>Verbinde den <b>5-V-Anschluss über 330 Ω</b> mit dem ersten Lautsprecheranschluss
+            (bei Kennzeichnung mit +). Verbinde den anderen Lautsprecheranschluss mit <b>C</b>.
+            Beide Widerstände dürfen mindestens 0,25 W vertragen.</li>
+          <li>Bei einem Lautsprecher mit Schwingspule ergänzt du eine <b>Schutzdiode</b>
+            parallel zum Lautsprecher, zum Beispiel eine von der Lehrkraft bereitgestellte 1N400x:
+            <b>Kathode mit Ring</b> an dessen oberen Anschluss <b>hinter dem Serienwiderstand</b>,
+            <b>Anode ohne Ring</b> an dessen unteren Anschluss bei C. Sie begrenzt Spannungsspitzen
+            beim Abschalten; bei normal eingeschaltetem Lastzweig sperrt sie.</li>
+          <li>Lass Typ, Pinbelegung, Widerstände und Diodenrichtung kontrollieren.
+            Verbinde dann USB. Arduino und Schaltstufe haben über E denselben GND-Bezug.</li>
+        </ol>
+        <p><b>Nicht Vin verwenden:</b> Vin ist nicht dasselbe wie der geregelte 5-V-Anschluss.
+          Der Lastzweig bleibt mit 330 Ω bei 5 V auf höchstens etwa 15 mA begrenzt.
+          In diesem leisen Versuch geht es um das Schaltprinzip, nicht um möglichst viel Lautstärke.
+          Eine höhere Lautstärke ist gegenüber Seite 6 nicht garantiert.</p>
+
+        <h4>Vergleichsversuch mit euren verschiedenen Transistoren</h4>
+        <ol class="programming-steps">
+          <li>Wähle mit der Lehrkraft zwei passende NPN-Typen aus. Notiere für jeden Typ die
+            Herstellerbezeichnung und die ermittelte Zuordnung der Beinchen zu B, C und E.</li>
+          <li>Teste den Sketch <code>Ton_Test</code> von Seite 6 kurz bei 440 Hz.
+            Halte Lautsprecher, beide Widerstände, Spannung und Programm unverändert.</li>
+          <li>Trenne USB und jede weitere Versorgung, bevor du den Transistor tauschst.
+            Passe die Steckverbindungen an die tatsächliche Anschlussbelegung an.
+            Probiere keine unbekannten Belegungen unter Spannung durch.</li>
+          <li>Vergleiche Ton, hörbare Lautstärke und Funktion. Wird ein Bauteil warm,
+            trenne sofort die Versorgung und lass den Aufbau prüfen.
+            Notiere auch, wenn du keinen Unterschied hörst; erfinde kein eindeutiges Ergebnis.</li>
+        </ol>
+        <p>Halte deine Ergebnisse in OneNote fest: <b>Typ · B/C/E-Belegung · Beobachtung · Erklärung</b>.
+          Begründe, welcher Strom vom Signalpin kommt und welcher über den 5-V-Lastzweig fließt.
+          Ob der Ton lauter wird, hängt vom Lautsprecher, dem Widerstand und dem Transistor ab.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p>Eine Funktion ist kein zweites Programm. Sie ist ein benannter Codeabschnitt, den du gezielt aufrufst. Dadurch wird dein Programm kürzer, lesbarer und leichter zu ändern.</p>
+        <p>Eine Funktion ist ein benannter Codeabschnitt, den du gezielt aufrufst.
+          Die Definition steht außerhalb von setup() und loop(). Ein Transistor trennt
+          Steuer- und Lastzweig; passende Widerstände und die richtige Pinbelegung gehören zum Aufbau.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1248,11 +1508,12 @@ void loop() {
           {
             "id":"s11_vf",
             "title":"Verständnisfragen",
+            "hint":"Erkläre mit Bezug auf deinen Sketch und die NPN-Schaltstufe.",
             "fields":[
-              {"label":"1","key":"s11_q1","kind":"textarea","placeholder":"1) Warum sind Unterprogramme mit einem Refrain in der Musik vergleichbar?"},
-              {"label":"2","key":"s11_q2","kind":"textarea","placeholder":"2) Welche Vorteile haben Unterprogramme beim Programmieren?"},
-              {"label":"3","key":"s11_q3","kind":"textarea","placeholder":"3) Warum darf man große Verbraucher (z. B. Lautsprecher) nicht direkt an einen Arduino-Pin anschließen?"},
-              {"label":"4","key":"s11_q4","kind":"textarea","placeholder":"4) Welche Aufgabe übernimmt der Transistor im Stromkreis?"}
+              {"label":"1","key":"s11_q1","kind":"textarea","prompt":"Warum sind Unterprogramme mit einem Refrain in der Musik vergleichbar?","placeholder":"Schreibe hier..."},
+              {"label":"2","key":"s11_q2","kind":"textarea","prompt":"Welche Vorteile haben Unterprogramme beim Programmieren?","placeholder":"Schreibe hier..."},
+              {"label":"3","key":"s11_q3","kind":"textarea","prompt":"Warum darf man einen Verbraucher mit zu hohem Strombedarf nicht direkt an einen Arduino-Pin anschließen?","placeholder":"Schreibe hier..."},
+              {"label":"4","key":"s11_q4","kind":"textarea","prompt":"Welche Aufgabe übernimmt der Transistor in deiner Schaltung, und warum gibt es einen Basiswiderstand?","placeholder":"Schreibe hier..."}
             ]
           }
         </script>
@@ -1358,10 +1619,17 @@ void loop() {
 
       <h3>Quellen & Weiterforschen</h3>
       <ul class="source-list">
+        <li><a href="https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE" target="_blank" rel="noopener">Arduino: Board und Port in der IDE auswählen</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/sketch/setup/" target="_blank" rel="noopener">Arduino Reference: setup()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/sketch/loop/" target="_blank" rel="noopener">Arduino Reference: loop()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/" target="_blank" rel="noopener">Arduino Reference: digitalWrite()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/pinMode/" target="_blank" rel="noopener">Arduino Reference: pinMode()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/" target="_blank" rel="noopener">Arduino Reference: tone()</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/advanced-io/noTone/" target="_blank" rel="noopener">Arduino Reference: noTone()</a></li>
+        <li><a href="https://content.arduino.cc/assets/Pinout-UNOrev3_latest.pdf" target="_blank" rel="noopener">Arduino Uno R3: Pinbelegung und maximale Pinbelastung (20 mA)</a></li>
+        <li><a href="https://docs.arduino.cc/learn/electronics/transistor-motor-control/" target="_blank" rel="noopener">Arduino: NPN-Schaltstufe, Basiswiderstand und Schutzdiode bei einer induktiven Last</a></li>
+        <li><a href="https://www.st.com/resource/en/datasheet/bd437.pdf" target="_blank" rel="noopener">ST: BD437-Datenblatt – Anschlüsse immer beim tatsächlichen Hersteller nachschlagen</a></li>
+        <li><a href="https://www.onsemi.com/pdf/datasheet/bd437-d.pdf" target="_blank" rel="noopener">onsemi: BD437-Datenblatt zum Vergleich der Anschlussbelegung</a></li>
         <li><a href="https://support.arduino.cc/hc/en-us/articles/4402764401554-If-your-sketch-doesn-t-compile" target="_blank" rel="noopener">Arduino: Compilerfehler verstehen</a></li>
         <li><a href="https://support.arduino.cc/hc/en-us/articles/4403365313810-If-your-sketch-doesn-t-upload" target="_blank" rel="noopener">Arduino: Uploadfehler beheben</a></li>
       </ul>
