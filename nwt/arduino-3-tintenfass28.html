@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-3.html">
-<meta name="musterloesung-source-sha256" content="537656797d6ec39f6fd34929e8a29140990a81f58aea76b19d5baf6339d0ab5d">
+<meta name="musterloesung-source-sha256" content="c4857e52dc614976b07befdacd90c510bcee2f0f7207641421f05b841b7a9323">
 <title>Arduino Lernbaustein – Seiten 12–17 – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
@@ -71,6 +71,31 @@
   </style>
 <link rel="stylesheet" href="arduino-kurs.css">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
+<link rel="stylesheet" href="arduino-selbstlernen.css">
+<style>
+    .wb-soft-callout{border:0;border-left:3px solid var(--wb-line);border-radius:0!important;padding:6px 14px}
+    .material-crop{position:relative;overflow:hidden;background:#fff;aspect-ratio:var(--crop-ratio);width:100%}
+    .pdfpage .material-crop img{position:absolute;left:var(--crop-left);top:var(--crop-top);width:var(--crop-width)!important;height:auto!important;max-height:none;object-fit:initial}
+    .crop-variable{--crop-ratio:2.7;--crop-width:105%;--crop-left:-1%;--crop-top:-72%}
+    .crop-serial{--crop-ratio:1.48;--crop-width:194%;--crop-left:-7%;--crop-top:-29%}
+    .crop-for{--crop-ratio:1.85;--crop-width:217%;--crop-left:-21%;--crop-top:-90%}
+    .crop-pwm{--crop-ratio:1.8;--crop-width:105%;--crop-left:-2%;--crop-top:-22%}
+    .crop-rgb{--crop-ratio:0.72;--crop-width:431%;--crop-left:-330%;--crop-top:0%}
+    .crop-if{--crop-ratio:1.8;--crop-width:110%;--crop-left:-2%;--crop-top:-25%}
+    .wb-book pre{max-width:100%;overflow-x:auto;box-sizing:border-box;padding:12px;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+    .lab-task{padding:12px 0;border-top:1px solid var(--wb-line);min-width:0}
+    .lab-task h3{font-size:19px}
+    .lab-task li+li{margin-top:7px}
+    .lab-task p,.wb-soft-callout p{overflow-wrap:anywhere}
+    .media-grid .pdfpage{max-width:400px}
+    .media-grid .pdfpage:has(.crop-rgb){max-width:240px;justify-self:center}
+    .material-log{margin:12px 0}
+    .material-log summary{cursor:pointer;font-weight:700}
+    .material-log label{display:block;margin:12px 0 6px}
+    .wb-book :is([data-wb-page="7"],[data-wb-page="8"]) .pdfcaption{color:#465469!important}
+    @media(max-width:560px){.lab-task h3{font-size:18px}.grid2{grid-template-columns:minmax(0,1fr)}}
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
 .solution-block{min-width:0}
@@ -103,12 +128,12 @@
 <section data-wb-page="1" data-wb-page-title="Variablen"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>6. Variablen – Speicherplätze für Werte</h1></div>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_variable_trace"><h3>Ablaufspur: Eine Variable verändert sich</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Codezeile</th><th scope="col">Operation</th><th scope="col">a danach</th></tr></thead><tbody><tr><td>int a;</td><td>Speicherplatz wird angelegt</td><td>kein sinnvoller Wert</td></tr><tr><td>a = 10;</td><td>10 wird gespeichert</td><td>10</td></tr><tr><td>a = a + 5;</td><td>10 + 5 berechnen und 15 speichern</td><td>15</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_variable_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Nach der Zeile a = a + 5; enthält a weiterhin den alten Wert 10.</p><p>Falsch. Rechts wird zuerst mit dem alten Wert gerechnet, danach wird das Ergebnis wieder in a gespeichert. Aus 10 wird 15.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_vars"><h3>Multiple Choice – Variablen (mehrere Antworten möglich)</h3><h4>1) Was ist eine Variable?</h4><p>Ein Speicherplatz für Werte; Ein Wert, der sich ändern kann</p><p>Richtig sind Speicherplatz für Werte und veränderlicher Wert.</p><h4>2) Welche Aussagen zu Variablen sind richtig?</h4><p>Variablen haben einen Namen; Variablen können ihren Wert ändern; Variablen machen Programme flexibler</p><p>Variablen haben Namen, ändern Werte und machen Programme flexibler.</p><h4>3) Welche Datentypen gibt es laut Heft?</h4><p>int; long; float</p><p>int, long und float sind Datentypen.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_1"><h3>6.1 Variablenwerte und Tonausgabe</h3><p>Nach setup(): a = 220, n = 92, m = 32. Bei der Berechnung von m gilt noch a = 10; die spätere Änderung von a verändert m nicht rückwirkend. Die Schleife erzeugt jeweils 92 ms lang einen Ton mit 220 Hz, anschließend folgen 32 ms Pause. Die im Bild gezeigte Zeile noTone() muss noTone(11) heißen.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_2"><h3>6.2 Notenlängen mit Variablen</h3><pre><code>const int a = 125; // Achtelnote
-const int v = 250; // Viertelnote
-const int h = 500; // Halbe Note
-
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_vars"><h3>Multiple Choice – Variablen (mehrere Antworten möglich)</h3><h4>1) Was ist eine Variable?</h4><p>Ein Speicherplatz für Werte; Ihr gespeicherter Wert kann sich ändern</p><p>Richtig sind Speicherplatz für Werte und veränderlicher Wert.</p><h4>2) Welche Aussagen zu Variablen sind richtig?</h4><p>Variablen haben einen Namen; Variablen können ihren Wert ändern; Variablen machen Programme flexibler</p><p>Variablen haben Namen, ändern Werte und machen Programme flexibler.</p><h4>3) Welche Datentypen gibt es laut Heft?</h4><p>int; long; float</p><p>int, long und float sind Datentypen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="tonaufbau"><h3>Tonaufbau an D11</h3><p>Für die Tonaufgaben gilt nach Prüfung des konkreten Bauteils: D11 → 330-Ω-Serienwiderstand → kleiner passiver Lautsprecher oder passiver Piezo; zweiter Anschluss → GND. Bei gepoltem Piezo liegt + auf der Pinseite. Ein 1-kΩ-Widerstand kann für leisere Ausgabe verwendet werden. Eine unbekannte Last wird nicht direkt an den Pin angeschlossen; ein aktiver Summer eignet sich nicht für gezielt veränderliche Tonhöhen. Alle folgenden Frequenz- und Zeitangaben setzen diesen geprüften Tonaufbau voraus.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_1"><h3>6.1 Variablenwerte und Tonausgabe</h3><p>Die globalen Variablen sind vor setup() mit 0 initialisiert. Nach a = 10 gilt (a,n,m) = (10,0,0); nach n = 100 − 8: (10,92,0); nach m = 2*a + 15 − 3: (10,92,32); nach a = 200 + 20: (220,92,32). Die spätere Änderung von a berechnet m nicht neu.</p><p>Jeder loop()-Durchlauf erzeugt einen Ton mit 220 Hz für 92 ms und anschließend 32 ms Pause. Die reine Wartezeit beträgt 124 ms. Wird n auf 184 verdoppelt, verlängert sich nur die Tonphase; Frequenz und 32-ms-Pause bleiben gleich. Die reine Periodendauer wird 216 ms und verdoppelt sich daher nicht. Die korrigierte Vorlage verwendet noTone(11).</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_2"><h3>6.2 Notenlängen mit Variablen</h3><pre><code>int a = 125;
+int v = 250;
+int h = 500;
 void note(int f, int dauer) {
   tone(11, f);
   delay(dauer);
@@ -123,19 +148,36 @@ void loop() {
   note(262, h);
   note(330, a); note(349, a); note(392, h);
   delay(1000);
-}</code></pre><p>Eine mögliche Tonfolge. Durch Ändern der drei Längenvariablen ändert sich das Tempo, während das Verhältnis der Notenlängen erhalten bleibt.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_3"><h3>6.3 Steigende Frequenz</h3><p>f beginnt bei 100. Die ausgegebenen Frequenzen sind 100, 101, 102, … Hz. Nach jeweils 100 ms wird f um 1 erhöht; der Ton steigt also schrittweise an. Das Programm läuft nicht unbegrenzt mit immer höheren gültigen Frequenzen: Ein int auf dem üblichen Uno hat nur einen begrenzten Wertebereich. Eine robuste Variante setzt f bei einer oberen Grenze wieder auf 100.</p></article></section>
+}</code></pre><p>Eine mögliche Tonfolge an D11. Mit a = 250, v = 500 und h = 1000 dauern die Noten doppelt so lange; ihre Verhältnisse und die Frequenzen bleiben gleich. Weil die 30-ms-Trennpausen und die 1000-ms-Schlusspause unverändert sind, verdoppelt sich die gesamte Stückdauer nicht exakt. Für eine insgesamt halbierte Geschwindigkeit müssen auch diese Pausen verdoppelt werden. Beim Ersatzbeispiel sind die Tonphasen 125, 250 und 500 ms lang und werden zu 250, 500 und 1000 ms.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_6_3"><h3>6.3 Steigende Frequenz</h3><p>Die ersten fünf Frequenzen sind 100, 101, 102, 103 und 104 Hz. Nach jeweils 100 ms erhöht f = f + 1 die Frequenz für den nächsten Durchlauf. Weil noTone(11) fehlt, erklingt ein durchgehender, schrittweise ansteigender Ton. Das ist eine erwartete Beobachtung; ein individueller Hörbericht kann abweichen. Für dauerhaften Betrieb begrenze ich nach der Erhöhung:</p><pre><code>int f = 100;
+void setup() {}
+void loop() {
+  tone(11, f);
+  delay(100);
+  f = f + 1;
+  if (f &gt; 1000) { f = 100; }
+}</code></pre><p>So bleiben Frequenzen und int-Werte im vorgegebenen Bereich.</p></article></section>
 <section data-wb-page="2" data-wb-page-title="Variablen - Challenge"><h2>Challenge – Variablen richtig einsetzen</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="c_reflex"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Eine Variable speichert einen Wert unter einem verständlichen Namen, zum Beispiel pause = 500. Wenn mehrere Befehle diesen Wert verwenden, kann ich ihn an einer Stelle ändern. Variablen können außerdem Messwerte und veränderliche Zustände aufnehmen. Eine feste Zahl direkt im Befehl kann dagegen nicht als gemeinsam gespeicherter, veränderlicher Zustand dienen.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="c_reflex"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Eine Variable speichert einen Wert unter einem verständlichen Namen. In Challenge 1 verwenden beide delay()-Befehle t: Mit t = 250 statt 500 halbiert sich die rechnerische Periodendauer von 1000 auf 500 ms. Ich ändere dazu nur eine Stelle. Variablen können außerdem Messwerte und veränderliche Zustände aufnehmen. Eine feste Zahl genügt etwa bei einem einmaligen delay(1000), wenn diese Wartezeit bewusst unveränderlich ist; ein benannter const-Wert kann ihre Bedeutung trotzdem verdeutlichen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="challenge_tempo"><h3>Challenge 1 – Tempo ändern</h3><p>Mit int t = 250 statt 500 wird die reine Periodendauer 250 + 250 = 500 ms statt 1000 ms. Fünf Zyklen benötigen rechnerisch 2,5 statt 5 s. Die Blinkfrequenz verdoppelt sich. Befehlslaufzeiten kommen geringfügig hinzu.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="challenge_ton"><h3>Challenge 2 – Ton verändern</h3><pre><code>int ton = 262;
+void setup() {}
+void loop() {
+  tone(11, ton);
+  delay(300);
+  noTone(11);
+  delay(300);
+  ton = ton + 20;
+}</code></pre><p>Die ersten vier Tonhöhen sind 262, 282, 302 und 322 Hz. Die Zuweisung steht nach der Pause; der neue Wert gilt beim nächsten Durchlauf. Diese Kurztestfassung wird nach höchstens zehn Sekunden beendet. Für Dauerbetrieb wäre eine Grenzprüfung erforderlich.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="challenge_rhythmus"><h3>Challenge 3 – Rhythmus bauen</h3><p>kurz = 100 und lang = 500 ergeben eine reine Periodendauer von 600 ms, davon 100 ms Ton. kurz = 200 und lang = 200 ergeben 400 ms mit gleich langer Ton- und Pausenphase. Bei kurz = 50 und lang = 300 entsteht ein kurzer Akzent alle 350 ms. Die Tonhöhe bleibt bei 330 Hz. Das sind rechnerische Erwartungen; eigene Beobachtungen werden getrennt protokolliert.</p></article></section>
 <section data-wb-page="3" data-wb-page-title="7. Serielle Ausgabe"><h2>7. Serielle Ausgabe – Mit dem Arduino kommunizieren</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="s13_vf"><h3>Verständnisfragen – Serielle Ausgabe</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Mit der seriellen Ausgabe sehe ich Werte und erreichte Programmschritte. So kann ich prüfen, ob die Berechnung oder die Entscheidung zum erwarteten Ergebnis führt.</li><li>Ohne Serial.begin() wird die serielle Schnittstelle beim üblichen Arduino Uno nicht passend initialisiert; die erwartete Ausgabe funktioniert dann nicht zuverlässig.</li><li>Ich kann eine Variable bei jedem Durchlauf ausgeben und ihre Änderungen verfolgen, auch wenn diese an der LED nicht sichtbar sind.</li><li>Sender und Empfänger müssen dieselbe Übertragungsgeschwindigkeit benutzen. Andernfalls werden Zeichen falsch interpretiert oder unlesbar ausgegeben.</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="s13_vf"><h3>Verständnisfragen – Serielle Ausgabe</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Mit der seriellen Ausgabe sehe ich Werte und erreichte Programmschritte. In Challenge 1 zeigt beispielsweise eine Ausgabe vor digitalWrite(13, HIGH), dass der Einschaltpunkt erreicht wurde; ich kann sie mit der LED vergleichen.</li><li>Ohne Serial.begin() fehlt beim Uno R3 die Initialisierung der seriellen Schnittstelle; ich kann die erwartete Ausgabe nicht voraussetzen.</li><li>Ich kann eine Variable bei jedem Durchlauf ausgeben und ihre Änderungen verfolgen, auch wenn diese an der LED nicht sichtbar sind.</li><li>Sender und Empfänger müssen dieselbe Übertragungsgeschwindigkeit benutzen. Andernfalls werden Zeichen falsch interpretiert oder unlesbar ausgegeben.</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_7_1"><h3>7.1 Ausgabe im seriellen Monitor</h3><pre>Dieses kurze Gedicht
 endet
 nicht
 nicht
 nicht
-…</pre><p>Die ersten beiden Zeilen kommen einmal aus setup(). Die Zeile nicht wird in loop() immer wieder ausgegeben. Der Monitor muss auf dieselbe Baudrate eingestellt sein wie Serial.begin(9600).</p></article>
+nicht</pre><p>Das sind die ersten sechs Zeilen nach Reset. setup() gibt die ersten beiden Zeilen einmal aus. loop() ergänzt alle 500 ms eine weitere Zeile nicht. Mit Serial.print("nicht") steht nach den beiden Anfangszeilen stattdessen nichtnichtnicht… in derselben Zeile. Monitor und Serial.begin() verwenden 9600 Baud.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_7_2"><h3>7.2 Gesichter und Unterprogramme</h3><pre><code>void traurig() {
   Serial.println("  o   o");
   Serial.println("    |");
@@ -154,17 +196,47 @@ void setup() {
   Serial.println();
   lachend();
 }
-void loop() {}</code></pre><p>Eine mögliche Gestaltung. Die Funktionen fassen jeweils die Ausgabe eines Gesichtes zusammen und können erneut aufgerufen werden.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_7_3"><h3>7.3 Zahlenfolge im seriellen Monitor</h3><p>Die Folge beginnt mit 0, 5, 10, 15, 20, …, weil zuerst x ausgegeben und dann um 5 erhöht wird. Beim üblichen Uno ist int 16 Bit groß; 32765 ist der letzte noch darstellbare Wert dieser positiven Folge. Ein Überlauf ist keine verlässliche Fortsetzung der Zahlenfolge. Mit long lässt sich der Bereich vergrößern; eine Grenzprüfung vermeidet den Überlauf.</p></article></section>
+void loop() {}</code></pre><p>Eine mögliche Gestaltung. Nach Reset erscheint zuerst einmal das traurige Gesicht, eine Leerzeile und einmal das lachende Gesicht. Ein zweiter Aufruf lachend() in setup() führt dieselben Ausgabezeilen erneut aus; der Funktionsrumpf wird wiederverwendet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_7_3"><h3>7.3 Zahlenfolge im seriellen Monitor</h3><p>Die ersten sechs Ausgaben sind 0, 5, 10, 15, 20 und 25. println(x) liest den gespeicherten Wert; println("x") gibt immer den Buchstaben x aus. Beim Startwert 32750 sind auf dem Uno R3 zunächst 32750, 32755, 32760 und 32765 gültig. Die nächste Addition würde 32770 ergeben, außerhalb des int-Bereichs. Häufig beobachtet man danach negative Zahlen; das ist kein verlässlich vorgeschriebenes Verhalten eines vorzeichenbehafteten Überlaufs. Die eigene tatsächliche Ausgabe und der Boardtyp müssen ins Protokoll.</p><pre><code>int x = 0;
+void setup() { Serial.begin(9600); }
+void loop() {
+  Serial.println(x);
+  if (x &lt;= 32762) { x = x + 5; }
+  else { x = 0; }
+  delay(100);
+}</code></pre><p>Die Grenzprüfung erfolgt vor der Addition. long vergrößert nur den Wertebereich.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="serial_led_debug"><h3>Debug-Ausgaben im LED-Sketch</h3><pre><code>int t = 500;
+void setup() {
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Start");
+}
+void loop() {
+  Serial.println("LED an");
+  digitalWrite(13, HIGH);
+  delay(t);
+  Serial.println("LED aus");
+  digitalWrite(13, LOW);
+  delay(t);
+}</code></pre><p>Start erscheint einmal nach Reset; LED an und LED aus wechseln sich ungefähr alle 500 ms passend zum Zustand der LED L ab.</p></article></section>
 <section data-wb-page="4" data-wb-page-title="Debugging - Challenge"><h2>Debugging – Wenn das Programm nicht so läuft wie gedacht</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="dbg_reflex"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein Programm kann kompilieren und dennoch etwas anderes tun als geplant. Beim Debugging vergleiche ich Soll- und Istverhalten, beobachte Zwischenwerte und grenze die Ursache ein. Ich ändere jeweils nur eine Sache und teste erneut. So lerne ich, ob ein Fehler in der Hardware, im Ablauf oder in einer Berechnung liegt.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_debug_order"><h3>Fehlersuche in sinnvoller Reihenfolge</h3><ol><li>Erwartetes Verhalten festlegen</li><li>Tatsächliches Verhalten beobachten</li><li>Eine mögliche Ursache im Aufbau oder Code benennen</li><li>Genau eine passende Änderung vornehmen</li><li>Erneut testen und Soll und Ist vergleichen</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="dbg_reflex"><h3>Reflexion</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein Programm kann kompilieren und dennoch etwas anderes tun als geplant. In Debug-Challenge 2 soll LED L an Pin 13 leuchten, aber der Sketch schaltet Pin 12. Ich ändere ausschließlich digitalWrite(12, HIGH) zu digitalWrite(13, HIGH) und lade erneut hoch. Die erwartete Beobachtung ist nun eine dauerhaft leuchtende LED L. Beim Debugging vergleiche ich Soll und Ist, grenze eine Ursache ein und teste eine gezielte Änderung. Das unterscheidet einen logischen Fehler von einem Syntax- oder Uploadfehler.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="debug_challenge1"><h3>Debug-Challenge 1</h3><p>x wird nur auf 0 gesetzt und nie aktualisiert. Eine mögliche Korrektur steht nach der Ausgabe:</p><pre><code>int x = 0;
+void setup() { Serial.begin(9600); }
+void loop() {
+  Serial.println(x);
+  x = x + 1;
+  delay(500);
+}</code></pre><p>Im begrenzten Zehn-Sekunden-Test sind 0, 1, 2, … im Abstand von etwa 500 ms zu erwarten.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="debug_challenge2"><h3>Debug-Challenge 2</h3><pre><code>void setup() { pinMode(13, OUTPUT); }
+void loop() { digitalWrite(13, HIGH); }</code></pre><p>Der fehlerhafte Sketch konfiguriert Pin 13, schreibt aber HIGH auf Pin 12. Beide Befehle müssen dieselbe LED-Adresse verwenden. Die korrigierte Fassung lässt LED L dauerhaft leuchten. Der Compiler kann die unpassenden Pinangaben nicht als Fehler der beabsichtigten Funktion erkennen.</p></article></section>
 <section data-wb-page="5" data-wb-page-title="8. for-Schleifen"><h2>8. for-Schleifen – Wiederholungen elegant lösen</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_for_trace"><h3>Ablaufspur: for-Schleife mit fünf Prüfungen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">Ergebnis</th><th scope="col">Block läuft?</th><th scope="col">i danach</th></tr></thead><tbody><tr><td>0 &lt; 5</td><td>wahr</td><td>ja</td><td>1</td></tr><tr><td>1 &lt; 5</td><td>wahr</td><td>ja</td><td>2</td></tr><tr><td>2 &lt; 5</td><td>wahr</td><td>ja</td><td>3</td></tr><tr><td>3 &lt; 5</td><td>wahr</td><td>ja</td><td>4</td></tr><tr><td>4 &lt; 5</td><td>wahr</td><td>ja</td><td>5</td></tr><tr><td>5 &lt; 5</td><td>falsch</td><td>nein</td><td>5</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_for_trace"><h3>Ablaufspur: fünf Durchläufe und die Abschlussprüfung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Prüfung</th><th scope="col">Ergebnis</th><th scope="col">Block läuft?</th><th scope="col">i danach</th></tr></thead><tbody><tr><td>0 &lt; 5</td><td>wahr</td><td>ja</td><td>1</td></tr><tr><td>1 &lt; 5</td><td>wahr</td><td>ja</td><td>2</td></tr><tr><td>2 &lt; 5</td><td>wahr</td><td>ja</td><td>3</td></tr><tr><td>3 &lt; 5</td><td>wahr</td><td>ja</td><td>4</td></tr><tr><td>4 &lt; 5</td><td>wahr</td><td>ja</td><td>5</td></tr><tr><td>5 &lt; 5</td><td>falsch</td><td>nein</td><td>5</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_for_cloze"><h3>Sicherung: for-Schleife</h3><p>In einer for-Schleife legt der <b>Startwert</b> fest, wo gezählt wird. Die <b>Bedingung</b> entscheidet vor jedem Durchgang, ob der <b>Block</b> ausgeführt wird. Der <b>Schritt</b> verändert danach die Zählvariable.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s14_vf"><h3>Verständnisfragen – for-Schleifen</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Eine for-Schleife fasst einen wiederkehrenden Ablauf zusammen. Änderungen müssen nur im Schleifenrumpf vorgenommen werden, statt in fünf Kopien.</li><li>i ist die Zählvariable. Sie wird initialisiert, in der Bedingung geprüft und nach jedem Durchlauf verändert; sie kann auch Werte für den jeweiligen Durchlauf liefern.</li><li>Bei i = 0; i &lt; 3; i++ läuft der Rumpf dreimal, für i = 0, 1 und 2. Bei i = 3 ist die Bedingung falsch.</li></ol></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_1"><h3>8.1 Schleifengrenzen verändern</h3><ul><li>n = 0; n &lt; 30; n++: 30 Durchläufe, n = 0 bis 29.</li><li>Startwert 5 bei Grenze 30: 25 Durchläufe, n = 5 bis 29.</li><li>Startwert 5 bei Grenze 50: 45 Durchläufe, n = 5 bis 49.</li><li>Startwert 5, Grenze 50 und n = n + 3: 15 Durchläufe, n = 5, 8, 11, …, 47.</li></ul><p>Bei jedem Durchlauf werden Hallo und der aktuelle Zähler ausgegeben. Die Grenze selbst gehört bei &lt; nicht dazu.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_2"><h3>8.2 Tonfolge einer for-Schleife</h3><p>Die Frequenzen sind 100, 103, 106, …, 1000 Hz. Das sind (1000 − 100) / 3 + 1 = 301 Durchläufe. Die Wartezeiten ergeben insgesamt 301 · 60 ms = 18,06 s; Befehlslaufzeiten kommen hinzu. Ohne noTone(11) bleibt der letzte Ton nach der Schleife eingeschaltet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_1"><h3>8.1 Schleifengrenzen verändern</h3><ul><li>n = 0; n &lt; 30; n++: 30 Durchläufe, n = 0 bis 29.</li><li>Startwert 5 bei Grenze 30: 25 Durchläufe, n = 5 bis 29.</li><li>Startwert 5 bei Grenze 50: 45 Durchläufe, n = 5 bis 49.</li><li>Startwert 5, Grenze 50 und n = n + 3: 15 Durchläufe, n = 5, 8, 11, …, 47.</li></ul><p>Bei jedem Durchlauf werden Hallo und der aktuelle Zähler auf getrennten Zeilen ausgegeben. Die Grenze selbst gehört bei &lt; nicht dazu. In der letzten Variante folgt nach 47 bereits 50; deshalb ist 47 der letzte ausgegebene Wert. Die Folge startet nur bei Reset erneut, weil sie in setup() steht.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_2"><h3>8.2 Tonfolge einer for-Schleife</h3><p>Die Frequenzen sind 100, 103, 106, …, 1000 Hz, mit Schrittweite 3 Hz. Das sind (1000 − 100) / 3 + 1 = 301 Durchläufe. Die Wartezeiten ergeben insgesamt 301 · 60 ms = 18,06 s; Befehlslaufzeiten kommen hinzu. Ohne noTone(11) bleibt der letzte Ton nach der Schleife eingeschaltet, auch bei leerem loop(). Wird noTone(11) unmittelbar nach der Schleife in setup() ergänzt, verstummt der Ton nach den 301 Stufen.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_3"><h3>8.3 Auf- und abschwellende Sirene</h3><pre><code>void setup() {}
 void loop() {
   for (int f = 100; f &lt;= 1000; f += 3) {
@@ -175,7 +247,7 @@ void loop() {
     tone(11, f);
     delay(5);
   }
-}</code></pre><p>Die erste Schleife erhöht, die zweite senkt die Tonhöhe. Größere Wartezeiten machen die Änderung langsamer.</p></article>
+}</code></pre><p>Die erste Schleife erhöht, die zweite senkt die Tonhöhe. Ein Auf-und-Ab-Zyklus hat 602 Stufen und 3,01 s reine Wartezeit. Mit 10 statt 5 ms werden daraus 6,02 s; die Grenzen 100 und 1000 Hz bleiben gleich. Beide Endwerte werden an den Übergängen jeweils zweimal ausgegeben. Der Ton bleibt zwischen den Stufen eingeschaltet.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_8_4"><h3>8.4 Lauflicht</h3><pre><code>void setup() {
   for (int pin = 9; pin &lt;= 13; pin++) {
     pinMode(pin, OUTPUT);
@@ -187,16 +259,19 @@ void loop() {
     delay(200);
     digitalWrite(pin, LOW);
   }
-}</code></pre><p>Jede LED bekommt einen eigenen Vorwiderstand. Immer nur eine LED leuchtet; die Pinreihenfolge legt die Laufrichtung fest.</p></article></section>
+}</code></pre><p>Für jeden Pin D9 bis D13: Pin → eigener 330-Ω-Widerstand → LED-Anode, LED-Kathode → gemeinsame, mit GND verbundene Schiene. Der Tonaufbau ist entfernt. Jeweils eine externe LED leuchtet für etwa 200 ms, danach die nächste. LED L kann bei Pin 13 mit leuchten. Für die Gegenrichtung wird ausschließlich der Kopf der Schleife in loop() zu for (int pin = 13; pin &gt;= 9; pin--) geändert; der Rumpf bleibt gleich. Die Reihenfolge ist dann 13, 12, 11, 10, 9.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="loop_blink_test"><h3>Fünfmal blinken und Reset</h3><p>LED L blinkt nach Upload beziehungsweise Reset genau fünfmal: i = 0, 1, 2, 3, 4. Danach ist sie aus. Die reine Wartezeit ist 5 · (300 + 300) ms = 3 s. Steht dieselbe Schleife in loop(), werden Fünfergruppen dauerhaft wiederholt.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini_schleife"><h3>Mini-Challenge – Denken in Schleifen</h3><p>Nach Reset erklingen genau drei Töne mit 262 Hz, jeweils 200 ms Ton und 200 ms Pause. Das sind 1,2 s reine Wartezeit. Danach bleibt der Ton aus, weil loop() leer ist.</p></article></section>
 <section data-wb-page="6" data-wb-page-title="Geschachtelte Schleifen"><h2>Geschachtelte for-Schleifen – Schleifen in Schleifen</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_nested_trace"><h3>Ablaufspur: verschachtelte Schleifen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">i</th><th scope="col">j-Werte in dieser Runde</th><th scope="col">Ausführungen</th></tr></thead><tbody><tr><td>0</td><td>0, 1, 2, 3, 4</td><td>5</td></tr><tr><td>1</td><td>0, 1, 2, 3, 4</td><td>5</td></tr><tr><td>2</td><td>0, 1, 2, 3, 4</td><td>5</td></tr><tr><td>gesamt</td><td>3 mal 5</td><td>15</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_nested_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Bei außen 3 Durchgängen und innen 5 Durchgängen läuft der innere Code insgesamt 8-mal.</p><p>Falsch. Die Durchgänge werden multipliziert: 3 mal 5 ergibt 15.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="schachtel_vf"><h3>Verständnisfragen – geschachtelte Schleifen</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Bei einer geschachtelten Schleife wird die innere Schleife innerhalb des Rumpfes der äußeren Schleife ausgeführt. Sie startet normalerweise bei jedem äußeren Durchlauf neu.</li><li>Der innere Code läuft 2 · 5 = 10-mal.</li><li>Mit der äußeren Schleife kann ich Zeilen oder Runden durchlaufen, mit der inneren Spalten oder Einzelschritte. So lassen sich regelmäßige Muster mit wenig Code beschreiben.</li></ol></article>
-</section>
-<section data-wb-page="7" data-wb-page-title="9. LEDs dimmen"><h2>9. LEDs dimmen – Helligkeit stufenlos steuern</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_pwm_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> analogWrite(3, 127) erzeugt beim Arduino Uno eine echte, dauerhaft halbe Spannung am Pin.</p><p>Falsch. Der Arduino nutzt PWM: Der Pin wird sehr schnell ein- und ausgeschaltet. Für das Auge wirkt die LED dadurch ungefähr halb hell.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="nested_led_test"><h3>Geschachtelte Blinkgruppen testen</h3><p>Nach Reset gibt es drei Gruppen mit je vier Blinkimpulsen, insgesamt zwölf. Jeder Impuls enthält 200 ms Licht und 200 ms Dunkelheit. Nach jeder Gruppe folgen zusätzlich 1000 ms Pause, also 1200 ms Dunkelheit zwischen Gruppen. Wird nur r &lt; 3 zu r &lt; 2 geändert, gibt es acht Impulse in zwei Gruppen. Die innere Schleife beginnt für jede Gruppe wieder bei 0.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini_geschachtelt"><h3>Mini-Challenge – Denkaufgabe</h3><p>Nach Reset erklingen zwei Gruppen mit je drei 440-Hz-Tönen, insgesamt sechs Töne. Jeder dauert 100 ms, die kurzen Pausen dauern 100 ms. Zwischen den Gruppen liegen 100 ms letzte Innenpause plus 800 ms Außenpause, zusammen 900 ms Stille. Auch nach der letzten Gruppe folgen diese 900 ms, dann bleibt es still. Reine Gesamtwartezeit: 2 · (3 · 200 + 800) ms = 2,8 s.</p></article></section>
+<section data-wb-page="7" data-wb-page-title="9. LEDs dimmen"><h2>9. LEDs dimmen – Helligkeit in feinen Stufen steuern</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_pwm_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> analogWrite(3, 127) erzeugt beim Arduino Uno eine echte, dauerhaft halbe Spannung am Pin.</p><p>Falsch. Beim Uno R3 schaltet PWM zwischen LOW und HIGH. 127 bedeutet ungefähr halbe Einschaltdauer; daraus folgt keine konstante halbe Spannung und auch nicht zwingend subjektiv halbe Helligkeit.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s15_vf"><h3>Verständnisfragen – LEDs dimmen</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Digitales Schalten setzt einen Ausgang auf HIGH oder LOW. Beim Dimmen verändert PWM den zeitlichen Anteil der HIGH-Phasen, sodass sich die mittlere Helligkeit der LED ändert.</li><li>Der zweite Wert von analogWrite(pin, wert) bestimmt beim Uno das Tastverhältnis mit Werten von 0 bis 255: 0 ist aus, 255 dauerhaft an, 128 ungefähr die Hälfte der Zeit an.</li><li>Die Schaltfolge ist schnell, sodass ihre Einzelphasen unter üblichen Beobachtungsbedingungen verschmelzen. Ein größeres Tastverhältnis liefert der LED im Mittel mehr Strom und lässt sie heller erscheinen.</li></ol></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_1"><h3>9.1 Drei Helligkeitszustände</h3><p>Die LED an Pin 3 ist eine Sekunde voll an, eine Sekunde aus und eine Sekunde per PWM gedimmt. Danach beginnt die Folge erneut. analogWrite(3, 127) entspricht ungefähr 49,8 % Tastverhältnis, nicht einer konstanten halben Ausgangsspannung.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_1"><h3>9.1 Drei Helligkeitszustände</h3><p>Die LED an Pin 3 ist eine Sekunde voll an, eine Sekunde aus und eine Sekunde per PWM gedimmt. Danach beginnt die Folge erneut. analogWrite(3, 127) entspricht ungefähr 49,8 % Tastverhältnis, nicht einer konstanten halben Ausgangsspannung. In der Skizze ist LOW eine dauerhaft niedrige und HIGH eine dauerhaft hohe Linie. Bei PWM 64 sind etwa 25 %, bei 128 etwa 50 % jeder Periode HIGH, der Rest LOW. Bei 255 bleibt der Ausgang HIGH. Die HIGH-Pegel sind jeweils gleich hoch; verändert wird die Pulsbreite.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_2"><h3>9.2 Sanftes Auf- und Abblenden</h3><pre><code>void setup() { pinMode(3, OUTPUT); }
 void loop() {
   for (int hell = 0; hell &lt;= 255; hell++) {
@@ -207,19 +282,24 @@ void loop() {
     analogWrite(3, hell);
     delay(10);
   }
-}</code></pre><p>Die Wartezeiten eines gesamten Zyklus betragen 512 · 10 ms = 5,12 s. Die Extremwerte werden bei dieser Variante jeweils zweimal ausgegeben.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_3"><h3>9.3 Wahrgenommene halbe Helligkeit</h3><p>Für die wahrgenommene halbe Helligkeit gibt es keinen universellen PWM-Wert. 128 bedeutet etwa halbe Einschaltdauer, nicht zwangsläufig halbe subjektive Helligkeit. Die gesuchte Einstellung wird durch Vergleich mit 255 unter gleichen Lichtbedingungen bestimmt. Als reine Modellrechnung: Bei angenommener Wahrnehmung L = (PWM / 255)<sup>1/2,2</sup> ergibt L = 0,5 etwa PWM = 55. Das ist kein gemessener Wert dieser LED.</p></article>
+}</code></pre><p>Die LED wird heller und wieder dunkler. Die Wartezeiten eines gesamten Zyklus betragen 512 · 10 ms = 5,12 s. Werden beide Pausen auf 20 ms gesetzt, verdoppelt sich die reine Wartezeit auf 10,24 s; die Helligkeitsgrenzen bleiben gleich. Die Extremwerte werden jeweils zweimal ausgegeben.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_3"><h3>9.3 Wahrgenommene halbe Helligkeit</h3><p>Für die wahrgenommene halbe Helligkeit gibt es keinen universellen PWM-Wert. 128 bedeutet etwa halbe Einschaltdauer, nicht zwangsläufig halbe subjektive Helligkeit. Der eigene Vergleichswert muss mit derselben LED, demselben Widerstand, gleichen Lichtbedingungen und gleichem Blickwinkel gegenüber 255 bestimmt werden. Typischerweise erscheint die Einstellung 128 noch heller als subjektiv halb hell; das ist eine qualitative Erwartung, kein vorgegebener Messwert. Unterschiede zwischen Personen sind zulässig. Ein vollständiges Protokoll enthält den wirklich erprobten Wert und die tatsächlichen Bedingungen.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_4"><h3>9.4 Flackernde Kerze</h3><pre><code>void setup() {
   pinMode(3, OUTPUT);
+  Serial.begin(9600);
   randomSeed(analogRead(A1));
 }
 void loop() {
-  analogWrite(3, random(40, 220));
+  int s = random(40, 220);
+  Serial.println(s);
+  analogWrite(3, s);
   delay(random(30, 150));
-}</code></pre><p>A1 bleibt für diesen Zufallsstart unbeschaltet. Die Obergrenzen von random() sind ausgeschlossen. Helligkeit und Dauer ändern sich unregelmäßig.</p></article></section>
+}</code></pre><p>Die ursprüngliche Zahlenwahl random(1,7) liefert 1 bis 6. Im Kerzencode werden PWM-Werte 40 bis 219 und Pausen von 30 bis 149 ms verwendet. Die Obergrenzen sind ausgeschlossen. Gegenüber gleichmäßigem Blinken ändern sich Helligkeit und Haltedauer unregelmäßig; beide Variationen vermeiden einen festen Rhythmus. A1 bleibt unbeschaltet. Der Startwert kann variieren, ist aber kein Garant für unabhängige Zufallswerte.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini_helligkeit"><h3>Mini-Challenge – Helligkeit steuern</h3><p>Bei gleicher LED, gleichem Aufbau und PWM-Werten im Bereich 0 bis 255 bedeutet ein größerer Wert im Allgemeinen einen größeren mittleren Strom und mehr Licht. hell = 0 schaltet aus, 255 dauerhaft ein. 50 ist eine geringe Einschaltdauer; eine Verdopplung des Zahlenwerts verdoppelt nicht zwingend den subjektiven Helligkeitseindruck.</p></article></section>
 <section data-wb-page="8" data-wb-page-title="10. RGB-LEDs"><h2>10. RGB-LEDs – Farben mischen mit Licht</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s16_vf"><h3>Verständnisfragen – RGB-LEDs</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Eine RGB-LED enthält drei getrennt steuerbare Farbanteile: Rot, Grün und Blau. Dafür werden drei Steueranschlüsse und ein gemeinsamer Anschluss benötigt; je Farbzweig gehört ein Vorwiderstand dazu.</li><li>Gelb entsteht durch additive Mischung von rotem und grünem Licht. Blau bleibt dabei aus.</li><li>analogWrite() verändert auf PWM-Pins die Helligkeit jedes Farbanteils. Bei einer gemeinsamen Anode muss die Ansteuerlogik gegenüber einer gemeinsamen Kathode passend invertiert werden.</li></ol></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_5"><h3>9.5 RGB-Farbmischungen</h3><p>Bei einer RGB-LED mit gemeinsamer Kathode: Rot + Grün ergibt Gelb, Rot + Blau Magenta, Grün + Blau Cyan. Alle drei Farbanteile zusammen können Weiß ergeben, müssen dafür aber passend ausbalanciert sein. Jeder Farbzweig benötigt einen eigenen Vorwiderstand. Bei gemeinsamer Anode wird die Ansteuerung invertiert.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_rgb_pairs"><h3>Farbanteile und Mischfarben</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Rot + Grün</td><td>Gelb</td></tr><tr><td>Rot + Blau</td><td>Magenta</td></tr><tr><td>Grün + Blau</td><td>Cyan</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_5"><h3>9.5 RGB-Farbmischungen</h3><p>Beim hier verwendeten Kathoden-Aufbau gilt: D3 → 330 Ω → Rot, D5 → 330 Ω → Grün, D6 → 330 Ω → Blau und gemeinsame Kathode → GND. Die genaue Beinbelegung wird aus dem Datenblatt des konkreten Bauteils entnommen; sie lässt sich nicht universell aus der Beinlänge ableiten. Die Einzeltests (255,0,0), (0,255,0), (0,0,255) sollen entsprechend Rot, Grün und Blau ergeben.</p><p>Erwartete Mischfarben: (255,255,0) Gelb, (255,0,255) Magenta, (0,255,255) Cyan, (255,255,255) näherungsweise Weiß. Reales Weiß erfordert gegebenenfalls einen Abgleich unterschiedlich heller Farbzweige. Ein gemeinsamer Widerstand würde den Gesamtstrom begrenzen und die Farbströme gegenseitig beeinflussen; deshalb hat jeder Zweig einen eigenen. Bei gemeinsamer Anode kommt der gemeinsame Anschluss an 5 V und jeder PWM-Wert wird zu 255 − farbwert invertiert.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_6"><h3>9.6 Fehler im Sketch korrigieren</h3><pre><code>void setup() {
   Serial.begin(9600);
 }
@@ -232,24 +312,28 @@ void loop() {
       Serial.println(u);
     }
   }
-}</code></pre><p>Korrigiert sind das Semikolon hinter setup(), der Name Serial.begin, die Klammern hinter loop, Serial.print statt pint sowie Deklaration und Semikolons der inneren for-Schleife. Die Baudrate von Sketch und Monitor muss übereinstimmen. Pro loop()-Durchlauf entstehen 10 · 100 = 1000 Zahlenpaar-Zeilen. Vor dem ersten Zahlenpaar jeder äußeren Runde steht Huhu.</p></article>
+}</code></pre><p>Korrigiert sind das unzulässige Semikolon hinter setup(), Schreibweise und Punkt bei Serial.begin, die runden Klammern hinter loop, Serial.print statt pint sowie die Deklaration von u und das erste Semikolon der inneren for-Schleife. Die Angabe 6900 ist kein Syntaxfehler; für diesen Versuch werden Sketch und Monitor auf 9600 Baud vereinheitlicht. println(u) ergänzt für jedes Zahlenpaar den gewünschten Zeilenumbruch.</p><pre>Huhu0,0
+0,1
+0,2
+…</pre><p>Pro vollständigem loop()-Durchlauf entstehen 10 · 100 = 1000 Zahlenpaar-Zeilen für i = 0 bis 9 und u = 0 bis 99. Vor dem ersten Paar jeder äußeren Runde steht Huhu in derselben Zeile, zum Beispiel Huhu1,0. Danach startet loop() die gesamte Ausgabe erneut.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_9_7"><h3>9.7 Alle RGB-Einstellungen durchlaufen</h3><pre><code>void setup() {
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
 }
 void loop() {
   for (int r = 0; r &lt;= 255; r++) {
     for (int g = 0; g &lt;= 255; g++) {
       for (int b = 0; b &lt;= 255; b++) {
-        analogWrite(9, r);
-        analogWrite(10, g);
-        analogWrite(11, b);
+        analogWrite(3, r);
+        analogWrite(5, g);
+        analogWrite(6, b);
         delay(1);
       }
     }
   }
-}</code></pre><p>Mit gemeinsamer Kathode und je einem Vorwiderstand sind das 256³ = 16.777.216 PWM-Kombinationen. Allein die Wartezeiten dauern ungefähr 4,66 Stunden. Die Kombinationen sind nicht sämtlich als unterschiedliche Farben wahrnehmbar.</p></article></section>
+}</code></pre><p>Die innere Schleife verändert Blau am schnellsten; bei jeder neuen Grünstufe beginnt Blau wieder bei 0. Für den Kurztest werden in allen drei Schleifenköpfen r++, g++, b++ durch r += 85, g += 85, b += 85 ersetzt und delay(1) durch delay(100). Die Kanalwerte sind dann jeweils 0, 85, 170, 255: 4³ = 64 Kombinationen mit 64 · 100 ms = 6,4 s reiner Wartezeit.</p><p>Die vollständige Fassung erzeugt 256³ = 16.777.216 PWM-Einstellungen. Allein die Pausen betragen 16.777.216 ms = 16.777,216 s, ungefähr 4,66 Stunden; die Befehlsausführung kommt hinzu. Unterschiedliche elektrische Einstellungen müssen keine für das Auge unterscheidbaren Farben ergeben; außerdem begrenzen die LED-Farbanteile den darstellbaren Farbbereich.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini_farbe"><h3>Mini-Challenge – Farbe einstellen</h3><p>r = 255, g = 0, b = 0 ergibt beim Kathoden-Aufbau Rot. r = 200, g = 0, b = 200 mischt Rot und Blau, idealisiert Magenta. Für einen eher violetten Farbeindruck kann beispielsweise ein kleinerer Rotanteil gegenüber Blau erprobt werden. Der genaue Eindruck hängt von der konkreten LED ab; ein universell richtiger Violettwert wird deshalb nicht vorgegeben.</p></article></section>
 <section data-wb-page="9" data-wb-page-title="11. if / else"><h2>11. if / else – Entscheidungen im Programm</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_if_trace"><h3>Ablaufspur: Welcher Zweig wird gewählt?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">hell</th><th scope="col">hell &gt; 100</th><th scope="col">Zweig</th><th scope="col">LED</th></tr></thead><tbody><tr><td>80</td><td>falsch</td><td>else</td><td>aus</td></tr><tr><td>150</td><td>wahr</td><td>if</td><td>an</td></tr><tr><td>100</td><td>falsch</td><td>else</td><td>aus</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_if_categories"><h3>Sortiere: Vergleich oder Zuweisung?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Vergleich</td><td>x == 5</td></tr><tr><td>Zuweisung</td><td>x = 5</td></tr><tr><td>Vergleich</td><td>hell &gt;= 100</td></tr><tr><td>Zuweisung</td><td>hell = 150</td></tr></tbody></table></div></article>
@@ -262,11 +346,66 @@ void loop() {
   else if (wahl == 2) Serial.println("Stein");
   else Serial.println("Papier");
 }
-void loop() {}</code></pre><p>A1 ist unbeschaltet. Bei jedem Reset wird einmal eine der drei Möglichkeiten ausgegeben; random(1, 4) kann 1, 2 oder 3 liefern.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_10_2"><h3>10.2 Helligkeitswechsel nach Zählschritten</h3><p>Für i = 1 bis 99999 wird PWM-Wert 100 ausgegeben. Ab i = 100000 wird PWM-Wert 255 ausgegeben. Die ersten 99.999 Durchläufe sind also gedimmt, danach leuchtet die LED voll. Die Zahl zählt Schleifendurchläufe, keine Millisekunden; ohne delay() hängt die Zeit von der Laufgeschwindigkeit ab. Für dauerhaften Betrieb sollte der Zähler nach Erreichen der Grenze nicht weiter erhöht werden, damit kein Überlauf entsteht.</p></article></section>
+void loop() {}</code></pre><p>A1 bleibt unbeschaltet. Bei jedem Reset erscheint einmal eines der drei Wörter; random(1,4) liefert 1, 2 oder 3. Es ist keine bestimmte Reihenfolge und kein Wechsel bei jedem Reset vorgeschrieben. Ein unbeschalteter Analogeingang garantiert keinen neuen Startwert. Für reproduzierbare Zweigtests wird int wahl = random(1,4) nacheinander durch int wahl = 1, = 2 und = 3 ersetzt; erwartet werden Schere, Stein und Papier.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_10_2"><h3>10.2 Helligkeitswechsel nach Zählschritten</h3><p>Bei i = 1 und 99999 gilt PWM 100, bei i = 100000 PWM 255. Die ersten 99.999 Durchläufe sind gedimmt. i zählt Durchläufe, keine Millisekunden; ohne delay() hängt die Dauer von Board und Befehlslaufzeiten ab. Die vollständige Kurztestfassung hält den Zähler an der Grenze an:</p><pre><code>long i = 1;
+void setup() { pinMode(9, OUTPUT); }
+void loop() {
+  if (i &lt; 10) {
+    analogWrite(9, 100);
+  } else {
+    analogWrite(9, 255);
+  }
+  if (i &lt; 10) { i = i + 1; }
+  delay(500);
+}</code></pre><p>Die Werte 1 bis 9 ergeben neun gedimmte Durchläufe mit 9 · 500 ms = 4,5 s reiner Wartezeit. Beim nächsten Durchlauf wird der Ausgang dauerhaft voll eingeschaltet. i bleibt bei 10 und kann daher später nicht überlaufen. Aufbau: D9 → 330 Ω → Anode, Kathode → GND.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="if_led_test"><h3>LED-Grenzfälle am Uno R3</h3><p>Bei hell &gt; 100 ist LED L für 80 aus, für 100 ebenfalls aus und für 150 an. hell ist ein gesetzter Testwert. Eine Änderung zu hell &gt;= 100 würde die LED auch bei 100 einschalten.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini_entscheidung"><h3>Mini-Challenge – Entscheidung treffen</h3><p>Bei wert = 80 bleibt der geprüfte passive Schallwandler an D11 mit 330 Ω in Reihe still. Bei 100 und 120 ist wert &gt;= 100 wahr und tone(11,440) erzeugt einen durchgehenden 440-Hz-Ton. Mit &gt; statt &gt;= wäre bei genau 100 noch Stille. Zum Beenden USB trennen.</p></article></section>
 <section data-wb-page="10" data-wb-page-title="Abschluss"><h2>Abschluss – Wiederholen, Anwenden, Projekt - Abgabe</h2>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_final"><h3>Multiple Choice – Alles im Überblick</h3><h4>1) Was kann eine Variable?</h4><p>Werte speichern; sich während des Programms ändern; Programme flexibler machen</p><p>Variablen speichern Werte, ändern sich und machen Programme flexibler.</p><h4>2) Wozu dient die serielle Ausgabe?</h4><p>Programme debuggen; Werte anzeigen</p><p>Serielle Ausgabe dient zum Debuggen und Anzeigen von Werten.</p><h4>3) Welche Aussagen zu for-Schleifen sind richtig?</h4><p>Sie wiederholen Code; Sie machen Programme kürzer; Sie benutzen eine Zählvariable</p><p>for-Schleifen wiederholen Code, verkürzen Programme und nutzen eine Zählvariable.</p><h4>4) Wofür braucht man if / else?</h4><p>um Bedingungen zu prüfen; um Entscheidungen zu treffen; um auf Werte zu reagieren</p><p>if/else prüft Bedingungen, trifft Entscheidungen und reagiert auf Werte.</p><h4>5) Was ist bei RGB-LEDs wichtig?</h4><p>drei Pins (R, G, B); analogWrite() für Helligkeit; Farben entstehen durch Mischen</p><p>RGB-LEDs brauchen drei Pins, nutzen analogWrite und mischen Farben.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino3_transfer_reveal"><h3>Weiterdenken: Der Sketch stimmt, die Farbe nicht</h3><p>Ich teste jeden Kanal einzeln. Wenn r=255, g=0, b=0 Grün erzeugt, prüfe ich bei getrenntem USB die Zuordnung von D3 zum roten Anschluss laut Datenblatt. Wenn bei 0 Licht und bei 255 Dunkelheit entsteht, prüfe ich zusätzlich gemeinsame Anode statt Kathode und invertiere bei Bedarf alle drei Werte. Ich ändere jeweils nur eine Ursache und teste erneut.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mc_final"><h3>Multiple Choice – Alles im Überblick</h3><h4>1) Was kann eine Variable?</h4><p>Werte speichern; sich während des Programms ändern; Programme flexibler machen</p><p>Variablen speichern Werte, ändern sich und machen Programme flexibler.</p><h4>2) Wozu dient die serielle Ausgabe?</h4><p>Programme debuggen; Werte anzeigen</p><p>Serielle Ausgabe dient zum Debuggen und Anzeigen von Werten.</p><h4>3) Welche Aussagen zu for-Schleifen sind richtig?</h4><p>Sie wiederholen Code; Sie können mehrfach kopierte Befehlsfolgen zusammenfassen; In unseren Beispielen benutzen sie eine Zählvariable</p><p>Die gezeigten for-Schleifen wiederholen Befehle mit einer Zählvariable. Ist die Bedingung schon anfangs falsch, läuft der Rumpf kein einziges Mal.</p><h4>4) Wofür braucht man if / else?</h4><p>um Bedingungen zu prüfen; um Entscheidungen zu treffen; um auf Werte zu reagieren</p><p>if/else prüft Bedingungen, trifft Entscheidungen und reagiert auf Werte.</p><h4>5) Was ist bei RGB-LEDs wichtig?</h4><p>drei Steuerpins (R, G, B) und ein gemeinsamer Anschluss; analogWrite() für Helligkeit; Farben entstehen durch Mischen</p><p>Die vierbeinige RGB-LED hat drei Farbanschlüsse und einen gemeinsamen Anschluss. Jeder Farbzweig erhält einen eigenen Vorwiderstand; PWM regelt die Farbanteile.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="ampel"><h3>Zusatzaufgabe – Ampelschaltung</h3><pre><code>int zeit = 2000;
+void farbe(int r, int g, int b) {
+  analogWrite(3, r);
+  analogWrite(5, g);
+  analogWrite(6, b);
+  delay(zeit);
+}
+void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+}
+void loop() {
+  farbe(255, 0, 0);
+  farbe(255, 255, 0);
+  farbe(0, 255, 0);
+  farbe(255, 255, 0);
+}</code></pre><p>Am Kathoden-Aufbau mit D3/D5/D6 und je 330 Ω ist die erwartete Folge Rot, Gelb, Grün, Gelb und wieder Rot. Jede Phase dauert ungefähr zwei Sekunden, ein Zyklus etwa acht Sekunden. Beim Übergang Gelb → Grün wird Rot ausdrücklich auf 0 gesetzt; sonst könnte Gelb stehen bleiben. Das ist eine vereinfachte Übungsfolge, nicht die vollständige deutsche Fahrzeugampel mit Rot-Gelb vor Grün.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="projekt"><h3>Zusatzaufgabe – Eigenes Projekt</h3><p>Eine mögliche Antwort: Ich plane eine Statusleuchte mit dem geprüften Kathoden-Aufbau, D3 für Rot, D5 für Grün, D6 für Blau und je 330 Ω. Sie blinkt zunächst zweimal grün und meldet die dritte Runde rot. Die Rundenzahl ist eine Variable; for begrenzt die Wiederholung und if wählt die Farbe.</p><pre><code>int runden = 3;
+void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  for (int i = 1; i &lt;= runden; i++) {
+    Serial.println(i);
+    if (i &lt; runden) {
+      analogWrite(3, 0);
+      analogWrite(5, 128);
+    } else {
+      analogWrite(3, 128);
+      analogWrite(5, 0);
+    }
+    analogWrite(6, 0);
+    delay(500);
+    analogWrite(3, 0);
+    analogWrite(5, 0);
+    delay(500);
+  }
+  delay(1500);
+}</code></pre><p>Testfall 1 mit runden = 3: erwartet werden Grün, Grün, Rot und die seriellen Werte 1, 2, 3. Testfall 2 mit runden = 1: erwartet wird sofort ein roter Blinkimpuls und die Ausgabe 1. Eigene tatsächliche Beobachtungen müssen nach dem Hardwaretest ergänzt werden; diese Erwartungen sind keine gemessenen Ergebnisse. Alle Farbkanäle werden bewusst gesetzt, damit kein vorheriger Anteil eingeschaltet bleibt.</p><p>Weiterforschen: Während delay() läuft, erreicht der normale Programmablauf keine neue Tasterabfrage. Eine Vermutung für den Umbau ist daher, Zeitpunkte mit millis() zu vergleichen und die Abfrage bei jedem loop()-Durchlauf auszuführen.</p></article></section>
 </div>
 <script src="../assets/allgemeines_format.js"></script>
 <script>SBLibrary.autoMountAll({storagePrefix:"arduino-3-tintenfass28.html__"});</script>

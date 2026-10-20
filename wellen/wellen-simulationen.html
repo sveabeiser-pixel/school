@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wellen-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
-  <link rel="stylesheet" href="../assets/wellen-simulations.css" />
+  <link rel="stylesheet" href="../assets/wellen-simulations.css?v=20261020-1" />
   <script>
     window.MathJax = {
       tex: {
@@ -24,7 +24,7 @@
   </style>
 </head>
 
-<body>
+<body class="wave-lab-book">
   <div data-wb-book>
     <script type="application/json" class="wb-book-config">
     {
@@ -420,6 +420,7 @@
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
 <div class="sw-sim-card" data-wave-sim="double-slit-particles">
+        <h2>Einzeltreffer am Doppelspalt</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="dspMode">Modus</label>
@@ -448,23 +449,24 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="single-slit">
+        <h2>Einzelspalt: Beugungsbild und Intensität</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
-            <label for="esLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <label for="esLamNm">Wellenlänge λ (nm)</label>
             <input id="esLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="esLamNmVal" data-role="lam-nm-value">633</span> nm</div>
+            <div class="sw-sim-mono">λ = <span id="esLamNmVal" data-role="lam-nm-value">633</span> nm</div>
 
-            <label for="esLMm">Spaltbreite \(d\) (mm)</label>
+            <label for="esLMm">Spaltbreite d (mm)</label>
             <input id="esLMm" data-role="screen-distance-mm" type="range" min="0.001" max="0.030" value="0.020" step="0.001" />
-            <div class="sw-sim-mono">\(l\) = <span id="esLMmVal" data-role="screen-distance-mm-value">0.020</span> mm</div>
+            <div class="sw-sim-mono">d = <span id="esLMmVal" data-role="screen-distance-mm-value">0.020</span> mm</div>
 
-            <label for="esAM">Abstand \(e\) (m)</label>
+            <label for="esAM">Abstand e (m)</label>
             <input id="esAM" data-role="slit-width-mm" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="esAMVal" data-role="slit-width-mm-value">2.5</span> m</div>
+            <div class="sw-sim-mono">e = <span id="esAMVal" data-role="slit-width-mm-value">2.5</span> m</div>
 
-            <label for="esThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <label for="esThetaDeg">Markierter Winkel α (°)</label>
             <input id="esThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="2" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="esThetaDegVal" data-role="theta-deg-value">2.0</span> °</div>
+            <div class="sw-sim-mono">α = <span id="esThetaDegVal" data-role="theta-deg-value">2.0</span> °</div>
           </div>
           <div>
             <canvas id="singleSlitCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Einzelspalt"></canvas>
@@ -474,27 +476,28 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="double-slit-envelope">
+        <h2>Doppelspalt mit Einzelspalt-Hüllkurve</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
-            <label for="dsLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <label for="dsLamNm">Wellenlänge λ (nm)</label>
             <input id="dsLamNm" data-role="lam-nm" type="range" min="380" max="700" value="633" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="dsLamNmVal" data-role="lam-nm-value">633</span> nm</div>
+            <div class="sw-sim-mono">λ = <span id="dsLamNmVal" data-role="lam-nm-value">633</span> nm</div>
 
-            <label for="dsbMm">Spaltbreite \(b\) (mm)</label>
+            <label for="dsbMm">Spaltbreite b (mm)</label>
             <input id="dsbMm" data-role="slit-width-mm" type="range" min="0.001" max="0.020" value="0.020" step="0.001" />
-            <div class="sw-sim-mono">\(b\) = <span id="dsbMmVal" data-role="slit-width-mm-value">0.020</span> mm</div>
+            <div class="sw-sim-mono">b = <span id="dsbMmVal" data-role="slit-width-mm-value">0.020</span> mm</div>
 
-            <label for="dsgMm">Spaltabstand \(g\) (mm) (Mitte-Mitte)</label>
+            <label for="dsgMm">Spaltabstand g (mm) (Mitte-Mitte)</label>
             <input id="dsgMm" data-role="slit-distance-mm" type="range" min="0.001" max="0.050" value="0.100" step="0.001" />
-            <div class="sw-sim-mono">\(g\) = <span id="dsgMmVal" data-role="slit-distance-mm-value">0.100</span> mm</div>
+            <div class="sw-sim-mono">g = <span id="dsgMmVal" data-role="slit-distance-mm-value">0.100</span> mm</div>
 
-            <label for="dsAM">Abstand \(e\) (m) (nur für \(y\approx a\cdot\tan\alpha\))</label>
+            <label for="dsAM">Abstand e (m) (nur für y ≈ e · tan(α))</label>
             <input id="dsAM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.5" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="dsAMVal" data-role="screen-distance-m-value">2.5</span> m</div>
+            <div class="sw-sim-mono">e = <span id="dsAMVal" data-role="screen-distance-m-value">2.5</span> m</div>
 
-            <label for="dsThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <label for="dsThetaDeg">Markierter Winkel α (°)</label>
             <input id="dsThetaDeg" data-role="theta-deg" type="range" min="-12" max="12" value="1.5" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="dsThetaDegVal" data-role="theta-deg-value">1.5</span> °</div>
+            <div class="sw-sim-mono">α = <span id="dsThetaDegVal" data-role="theta-deg-value">1.5</span> °</div>
           </div>
           <div>
             <canvas id="dsCanvas" data-role="canvas" width="900" height="520" aria-label="Doppelspalt-Intensität"></canvas>
@@ -504,15 +507,16 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="grating-phasor">
+        <h2>Spaltgitter: Zeiger addieren</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
-            <label for="phN">Spaltzahl \(N\)</label>
+            <label for="phN">Spaltzahl N</label>
             <input id="phN" data-role="n" type="range" min="2" max="10" value="3" step="1" />
-            <div class="sw-sim-mono">\(N\) = <span id="phNVal" data-role="n-value">3</span></div>
+            <div class="sw-sim-mono">N = <span id="phNVal" data-role="n-value">3</span></div>
 
-            <label for="phU">Ort \(u=\dfrac{g\sin(\alpha)}{\lambda}\)</label>
+            <label for="phU">Ort u = g · sin(α) / λ</label>
             <input id="phU" data-role="u" type="range" min="-1.5" max="1.5" value="0.18" step="0.001" />
-            <div class="sw-sim-mono">\(u\) = <span id="phUVal" data-role="u-value">0.180</span></div>
+            <div class="sw-sim-mono">u = <span id="phUVal" data-role="u-value">0.180</span></div>
 
             <label for="phScale">Darstellung (Zeiger-L&auml;nge)</label>
             <input id="phScale" data-role="scale" type="range" min="0.6" max="1.6" value="1.0" step="0.05" />
@@ -528,31 +532,32 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="grating">
+        <h2>Vielfachspalt: scharfe Hauptmaxima</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
-            <label for="gtLamNm">Wellenlänge \(\lambda\) (nm)</label>
+            <label for="gtLamNm">Wellenlänge λ (nm)</label>
             <input id="gtLamNm" data-role="lam-nm" type="range" min="380" max="700" value="550" />
-            <div class="sw-sim-mono">\(\lambda\) = <span id="gtLamNmVal" data-role="lam-nm-value">550</span> nm</div>
+            <div class="sw-sim-mono">λ = <span id="gtLamNmVal" data-role="lam-nm-value">550</span> nm</div>
 
-            <label for="gtGUm">Gitterkonstante \(g\) (\(\mu\)m)</label>
+            <label for="gtGUm">Gitterkonstante g (µm)</label>
             <input id="gtGUm" data-role="g-um" type="range" min="1.0" max="20.0" value="4.0" step="0.1" />
-            <div class="sw-sim-mono">\(g\) = <span id="gtGUmVal" data-role="g-um-value">4.0</span> \(\mu\)m</div>
+            <div class="sw-sim-mono">g = <span id="gtGUmVal" data-role="g-um-value">4.0</span> µm</div>
 
-            <label for="gtBUm">Spaltbreite \(b\) (\(\mu\)m)</label>
+            <label for="gtBUm">Spaltbreite b (µm)</label>
             <input id="gtBUm" data-role="b-um" type="range" min="0.2" max="5.0" value="0.8" step="0.1" />
-            <div class="sw-sim-mono">\(b\) = <span id="gtBUmVal" data-role="b-um-value">0.8</span> \(\mu\)m</div>
+            <div class="sw-sim-mono">b = <span id="gtBUmVal" data-role="b-um-value">0.8</span> µm</div>
 
-            <label for="gtN">Spaltzahl \(N\)</label>
+            <label for="gtN">Spaltzahl N</label>
             <input id="gtN" data-role="n" type="range" min="2" max="14" value="6" step="1" />
-            <div class="sw-sim-mono">\(N\) = <span id="gtNVal" data-role="n-value">6</span></div>
+            <div class="sw-sim-mono">N = <span id="gtNVal" data-role="n-value">6</span></div>
 
-            <label for="gtEM">Schirmabstand \(e\) (m)</label>
+            <label for="gtEM">Schirmabstand e (m)</label>
             <input id="gtEM" data-role="screen-distance-m" type="range" min="0.5" max="5.0" value="2.0" step="0.1" />
-            <div class="sw-sim-mono">\(e\) = <span id="gtEMVal" data-role="screen-distance-m-value">2.0</span> m</div>
+            <div class="sw-sim-mono">e = <span id="gtEMVal" data-role="screen-distance-m-value">2.0</span> m</div>
 
-            <label for="gtThetaDeg">Markierter Winkel \(\alpha\) (°)</label>
+            <label for="gtThetaDeg">Markierter Winkel α (°)</label>
             <input id="gtThetaDeg" data-role="theta-deg" type="range" min="-25" max="25" value="3" step="0.1" />
-            <div class="sw-sim-mono">\(\alpha\) = <span id="gtThetaDegVal" data-role="theta-deg-value">3.0</span> °</div>
+            <div class="sw-sim-mono">α = <span id="gtThetaDegVal" data-role="theta-deg-value">3.0</span> °</div>
           </div>
           <div>
             <canvas id="gratingCanvas" data-role="canvas" width="900" height="520" aria-label="Intensitätsdiagramm Vielfachspalt"></canvas>
@@ -567,6 +572,7 @@
       <p class="wb-muted">Diese Seite bündelt die ausgelagerten Simulationen aus den verschiedenen Wellen-Kapiteln.</p>
 
 <div class="sw-sim-card" data-wave-sim="fixed-pulse-reflection">
+        <h2>Puls am festen Ende</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="fpSpeed">Animationsgeschwindigkeit</label>
@@ -585,6 +591,7 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="loose-pulse-reflection">
+        <h2>Puls am losen Ende</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="lpSpeed">Animationsgeschwindigkeit</label>
@@ -603,6 +610,7 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="thin-dense-transition">
+        <h2>Vom dünnen zum dichten Seil</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="tdSpeed">Animationsgeschwindigkeit</label>
@@ -621,6 +629,7 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="dense-thin-transition">
+        <h2>Vom dichten zum dünnen Seil</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="dtSpeed">Animationsgeschwindigkeit</label>
@@ -639,6 +648,7 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="build-standing">
+        <h2>Eine stehende Welle entsteht</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="bsMode">Startmodus der beiden Quellen</label>
@@ -672,6 +682,7 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="standing-modes">
+        <h2>Grundschwingung und Oberschwingungen</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="standingBoundary">Randbedingungen</label>
@@ -705,15 +716,16 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="loose-reflection">
+        <h2>Welle am losen Ende</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="lrAmp">Amplitude A</label>
             <input id="lrAmp" data-role="amp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
             <div class="sw-sim-mono">A = <span id="lrAmpVal" data-role="amp-value">0.80</span></div>
 
-            <label for="lrLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <label for="lrLam">Wellenlänge λ (in L-Einheiten)</label>
             <input id="lrLam" data-role="lam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
-            <div class="sw-sim-mono">lambda = <span id="lrLamVal" data-role="lam-value">1.20</span></div>
+            <div class="sw-sim-mono">λ = <span id="lrLamVal" data-role="lam-value">1.20</span></div>
 
             <label for="lrSpeed">Animationsgeschwindigkeit</label>
             <input id="lrSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
@@ -730,15 +742,16 @@
       </div>
 
 <div class="sw-sim-card" data-wave-sim="fixed-reflection">
+        <h2>Welle am festen Ende</h2>
         <div class="sw-sim-grid">
           <div class="sw-sim-controls">
             <label for="frAmp">Amplitude A</label>
             <input id="frAmp" data-role="amp" type="range" min="0.2" max="1.2" value="0.8" step="0.05" />
             <div class="sw-sim-mono">A = <span id="frAmpVal" data-role="amp-value">0.80</span></div>
 
-            <label for="frLam">Wellenlaenge lambda (in L-Einheiten)</label>
+            <label for="frLam">Wellenlänge λ (in L-Einheiten)</label>
             <input id="frLam" data-role="lam" type="range" min="0.5" max="2.0" value="1.2" step="0.05" />
-            <div class="sw-sim-mono">lambda = <span id="frLamVal" data-role="lam-value">1.20</span></div>
+            <div class="sw-sim-mono">λ = <span id="frLamVal" data-role="lam-value">1.20</span></div>
 
             <label for="frSpeed">Animationsgeschwindigkeit</label>
             <input id="frSpeed" data-role="speed" type="range" min="0.2" max="2.0" value="1.0" step="0.1" />
@@ -885,7 +898,7 @@
 
   <script src="../assets/wb-webhook-loader.js"></script>
   <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/wellen-simulations.js"></script>
+  <script src="../assets/wellen-simulations.js?v=20261020-2"></script>
   <script>
     SBBook.autoMount();
     SBBlocks.autoMount();

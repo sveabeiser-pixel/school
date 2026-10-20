@@ -4,10 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-6.html">
-<meta name="musterloesung-source-sha256" content="e62fcfc490c2e721686682019f0c8a4417afb8a7f4f8f30b20d93bd9c0d704fb">
+<meta name="musterloesung-source-sha256" content="a53a50206d4f3107375633b7b7fc58f90da026583ed74a56b73ceaea85208808">
 <title>Arduino 6: Analoge Eingänge und Sensoren – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <link rel="stylesheet" href="arduino-kurs.css">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<link rel="stylesheet" href="arduino-selbstlernen.css">
 <style>
     :root {
       --a6-ink: #172033;
@@ -43,6 +45,16 @@
     .a6-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; }
     .a6-figure.compact img { max-height: 330px; }
     .a6-figure figcaption { padding: 9px 12px; color: var(--a6-muted); font-size: .91rem; }
+    .a6-figure { max-width: 460px; }
+    .a6-figure.compact { max-width: 260px; }
+    .a6-figure.compact img { max-height: 250px; }
+    .a6-analog-crop { width: 225px; max-width: 100%; aspect-ratio: 225 / 380; overflow: hidden; margin: auto; }
+    .a6-analog-crop img { width: 192.889%; max-width: none; max-height: none; height: auto; }
+    .a6-table { max-width: 100%; overflow-x: auto; margin: 14px 0; }
+    .a6-table table { width: 100%; border-collapse: collapse; }
+    .a6-table th, .a6-table td { border: 1px solid var(--a6-line); padding: 9px; text-align: left; vertical-align: top; }
+    .a6-table th { background: var(--wb-head-bg); }
+    .a6-steps li + li { margin-top: 9px; }
     .a6-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 18px 0; }
     .a6-flow > div { position: relative; min-width: 0; padding: 13px 12px; border: 1px solid var(--a6-line); background: #fff; text-align: center; }
     .a6-flow > div + div { border-left: 0; }
@@ -133,33 +145,136 @@
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-reveal-1024"><h3>Denkpause: Warum endet die Skala bei 1023?</h3><p>Die Zählung beginnt bei 0. Damit sind die 1024 Werte 0, 1, 2, ... bis 1023. Der Wandler des Arduino Uno arbeitet dafür mit 10 Bit, denn 2 hoch 10 ergibt 1024 Möglichkeiten.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-mcq-start"><h3>Erster Check: Eingang richtig einordnen</h3><h4>Welche Aussage zu analogRead(A0) ist richtig?</h4><p>Der Befehl liefert beim Arduino Uno einen ganzzahligen Wert von 0 bis 1023.</p><p>analogRead(A0) liefert zunächst den ADC-Rohwert. Eine Spannung in Volt musst du anschließend aus diesem Wert berechnen.</p></article>
 </section>
-<section data-wb-page="2" data-wb-page-title="Warum eine Variable?"><h1>Ein Messwert muss gespeichert werden, bevor du ihn weiterverwendest</h1>
+<section data-wb-page="2" data-wb-page-title="Warum eine Variable?"><h1>Einmal messen und denselben Wert weiterverwenden</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-cloze-variable"><h3>Sicherung: Vom Eingang zur Variable</h3><p>Die Variable sensor verweist auf den Pin <b>A0</b>. Der Aufruf <b>analogRead</b> führt eine Messung durch. Die Zuweisung an <b>messwert</b> <b>speichert</b> das Ergebnis. Danach kannst du es mit <b>Serial.println</b> ausgeben oder mit einem Grenzwert <b>vergleichen</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-start"><h3>Protokoll: Dein erster Sensorwert</h3><span class="solution-label">Eine mögliche Antwort</span><p>Die äußeren Anschlüsse des 10-kΩ-Potentiometers liegen an 5V und GND, der Schleifer an A0. Alle drei Anschlüsse stecken in getrennten Kontaktreihen. In der IDE wähle ich Arduino Uno aus dem Paket Arduino AVR Boards und den Port, der beim Verbinden meines Boards erscheint. Eine allgemeingültige COM-Nummer gibt es nicht. Der Haken kompiliert nur; der Upload-Pfeil überträgt das Programm. Der serielle Monitor steht auf 9600 Baud.</p><p><strong>Erwartung, keine aufgezeichnete Messung:</strong> An den Endstellungen liegen die Rohwerte nahe 0 und 1023, dazwischen liegen Zwischenwerte. Kleine Schwankungen bei unverändertem Knopf sind möglich. Ein konstanter Endwert trotz Drehens spricht etwa für einen falsch angeschlossenen Schleifer. Fehlt der Port, prüfe ich das USB-Datenkabel. Tatsächlicher Port und gemessene Werte hängen vom Arbeitsplatz ab.</p><pre><code>const int sensor = A0;
+int messwert;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  messwert = analogRead(sensor);
+  Serial.println(messwert);
+  delay(250);
+}</code></pre></article>
 </section>
 <section data-wb-page="3" data-wb-page-title="Code-Simulation"><h1>Simulation: Beobachte, wann der Messwert wirklich gespeichert wird</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-simulation"><h3>Protokoll: Spannung ändern, Wert behalten</h3><span class="solution-label">Eine mögliche Antwort</span><p>Bei 1,00 V speichert die Simulation den gerundeten Modellwert 205. Nach dem Reglerwechsel auf 4,00 V bleibt messwert zunächst 205. Der nächste Ausgabeschritt zeigt daher 205. Die Bedingung 205 &gt; 500 ist falsch, also wird die LED in diesem Durchlauf ausgeschaltet. Erst die nächste Messzeile speichert 818; beim folgenden Ausgabeschritt erscheint 818 und die spätere Bedingung schaltet die LED ein. Die Variable hält eine Momentaufnahme fest und folgt dem Eingang nicht automatisch.</p><p>Bei 0 V wird 0 gespeichert und die LED ausgeschaltet, bei 5 V wird 1023 gespeichert und die LED eingeschaltet, jeweils nach Ausführung der entsprechenden Schritte. Im automatischen Ablauf gilt dieselbe Reihenfolge. Vor der ersten Messung hat die globale C++-Variable bereits den Startwert 0, aber noch keinen gemessenen Sensorwert.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-verify-variable"><h3>Stopp &amp; check: Gespeicherter Zustand</h3><p><b>Falsch.</b> Wenn sich die Spannung nach analogRead(sensor) ändert, ändert sich die Variable messwert automatisch mit.</p><p>Die Variable enthält eine Kopie des Ergebnisses vom letzten analogRead-Aufruf. Erst ein neuer Aufruf überschreibt sie mit einem neuen Messwert.</p></article>
 </section>
 <section data-wb-page="4" data-wb-page-title="Rohwert und Spannung"><h1>Vom ADC-Rohwert zur Spannung</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-trace-conversion"><h3>Ablaufspur: Spannung, Rohwert und Variable</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Spannung an A0</th><th scope="col">analogRead(A0)</th><th scope="col">messwert danach</th><th scope="col">Ausgabe ungefähr</th></tr></thead><tbody><tr><td>0 V</td><td>0</td><td>0</td><td>0 V</td></tr><tr><td>1,25 V</td><td>255</td><td>255</td><td>1,25 V</td></tr><tr><td>2,50 V</td><td>511</td><td>511</td><td>2,5 V</td></tr><tr><td>5 V</td><td>1023</td><td>1023</td><td>5 V</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-verify-integer"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Für eine Spannung mit Nachkommastellen genügt immer int spannung = messwert / 1023 * 5;.</p><p>int speichert keine Nachkommastellen. Außerdem kann eine Ganzzahldivision den Anteil vorzeitig auf 0 kürzen. Verwende float und Dezimalzahlen, zum Beispiel messwert * (5.0 / 1023.0).</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-voltage"><h3>Protokoll: Rohwert ist nicht Volt</h3><span class="solution-label">Eine mögliche Antwort</span><p><strong>Rechenbeispiele, keine realen Messpaare:</strong> Im 5-V-Modell entsprechen 0 → 0,000 V, 512 → 2,502 V und 1023 → 5,000 V. Für das mittlere Beispiel rechne ich 512 · 5,0 V / 1023 ≈ 2,50244 V. Eine reale mittlere Potistellung muss nicht genau 512 liefern; die eigenen Werte müssen zur eigenen Anzeige passen.</p><p>Eine Multimeter-Vergleichsmessung ist hier nicht durchgeführt. Dafür läge die Plusmessleitung am Schleifer und die Minusmessleitung an GND. Die Standardreferenz ist die tatsächliche Versorgungsspannung, die von 5,000 V abweichen kann. Hinzu kommen Quantisierung, Rauschen und Messgeräteabweichungen. Rund 4,9 mV pro ADC-Stufe begrenzen bereits die Auflösung; drei gedruckte Nachkommastellen belegen keine Genauigkeit von 1 mV.</p><pre><code>const int sensor = A0;
+const float referenz = 5.0;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int messwert = analogRead(sensor);
+  float spannung = messwert * (referenz / 1023.0);
+  Serial.print(messwert);
+  Serial.print("; ");
+  Serial.print(spannung, 3);
+  Serial.println(" V");
+  delay(250);
+}</code></pre></article>
 </section>
 <section data-wb-page="5" data-wb-page-title="Sensor und Spannungsteiler"><h1>Der Arduino misst Spannung, nicht direkt Licht oder Temperatur</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-ldr"><h3>Protokoll: Licht wird zum Rohwert</h3><span class="solution-label">Eine mögliche Antwort</span><p>Der Festwiderstand liegt zwischen 5V und Messknoten, der LDR zwischen Messknoten und GND. A0 liegt am gemeinsamen Knoten. Der Rohwert wird mit dem Auslesesketch von Versuch 1 bei 9600 Baud angezeigt.</p><p><strong>Erwartete Reihenfolge ohne erfundene Messbereiche:</strong> Stärkeres Licht liefert niedrigere Werte als Raumlicht, Abschatten höhere Werte, sofern die Beleuchtung entsprechend verschieden ist. Mehr Licht verringert R(LDR). Dadurch wird R(LDR) / (10 kΩ + R(LDR)) kleiner und die Knotenspannung sinkt. Beim Abdunkeln steigt sie. Die Skalenenden müssen nicht erreicht werden; tatsächliche Bereiche hängen vom LDR, der Beleuchtung und dem Aufbau ab.</p><p>Vertausche ich LDR und Festwiderstand, gilt am Knoten U = U(5V) · 10 kΩ / (R(LDR) + 10 kΩ). Dann steigt die Spannung bei mehr Licht. Eine unveränderte Anzeige prüfe ich durch Kontrolle des gemeinsamen Knotens, der getrennten Bauteilreihen und der GND-Verbindung. Ohne Kalibrierung sind die Rohwerte keine Luxangaben.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-sensor-pairs"><h3>Zuordnung: Bauteil, Code und Wirkung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>LDR</td><td>verändert seinen Widerstand bei anderer Beleuchtung</td></tr><tr><td>Spannungsteiler</td><td>wandelt eine Widerstandsänderung in eine veränderte Teilspannung um</td></tr><tr><td>A0</td><td>ist der Anschluss für die zu messende Spannung</td></tr><tr><td>analogRead(A0)</td><td>startet die Wandlung und liefert einen ADC-Wert</td></tr><tr><td>messwert</td><td>speichert das Ergebnis für Ausgabe, Rechnung und Entscheidung</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-cat-signals"><h3>Sortiere: analog oder digital?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Analoger Eingang</td><td>liefert beim Uno Werte von 0 bis 1023</td></tr><tr><td>Analoger Eingang</td><td>wird mit analogRead() gelesen</td></tr><tr><td>Analoger Eingang</td><td>kann Zwischenwerte einer Spannung unterscheiden</td></tr><tr><td>Digitaler Eingang</td><td>liefert LOW oder HIGH</td></tr><tr><td>Digitaler Eingang</td><td>wird mit digitalRead() gelesen</td></tr><tr><td>Digitaler Eingang</td><td>eignet sich direkt für einen Tasterzustand</td></tr></tbody></table></div></article>
 </section>
 <section data-wb-page="6" data-wb-page-title="Dämmerungsschalter"><h1>Aus dem gespeicherten Messwert wird eine Entscheidung</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-trace-dusk"><h3>Ablaufspur: Messwert und LED verfolgen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Durchlauf</th><th scope="col">analogRead liefert</th><th scope="col">helligkeit danach</th><th scope="col">helligkeit &gt; 500</th><th scope="col">LED danach</th></tr></thead><tbody><tr><td>1</td><td>320</td><td>320</td><td>falsch</td><td>AUS</td></tr><tr><td>2</td><td>610</td><td>610</td><td>wahr</td><td>AN</td></tr><tr><td>3</td><td>500</td><td>500</td><td>falsch</td><td>AUS</td></tr><tr><td>4</td><td>720</td><td>720</td><td>wahr</td><td>AN</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-dusk"><h3>Protokoll: Deine Schaltschwelle</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein geeigneter Grenzwert liegt oberhalb des hellen und unterhalb des dunklen Messbereichs. Überlappen die Bereiche, reicht eine einzelne Schwelle unter diesen Bedingungen nicht zuverlässig aus. Ohne eigene Messwerte gibt es keinen begründeten optimalen Zahlenwert. 500 bleibt im folgenden Beispiel lediglich der vorgegebene Startwert.</p><p><strong>Erwartung nach passender Anpassung und erneutem Upload:</strong> Im Hellen ist LED L aus, beim Abschatten an. Vor der Anpassung kann sie ständig an oder aus gewesen sein, wenn beide Bereiche auf derselben Seite von 500 lagen. Bei helligkeit == grenze ist die Bedingung mit &gt; falsch und die LED aus. Flackern ist möglich, aber nicht zwingend: Schwankungen um die einzige Schwelle führen zu wechselnden Entscheidungen.</p><p>Bei der Erweiterung mit Hysterese schalte ich oberhalb einer höheren Dunkelschwelle ein und unterhalb einer niedrigeren Schwelle aus. Dazwischen einschließlich der Schwellen bleibt der vorherige Zustand erhalten. Die Einschaltschwelle muss über der Ausschaltschwelle liegen.</p><pre><code>const int ldr = A0;
+const int grenze = 500;
+int helligkeit;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  helligkeit = analogRead(ldr);
+  Serial.println(helligkeit);
+  if (helligkeit &gt; grenze) {
+    digitalWrite(13, HIGH);
+  } else {
+    digitalWrite(13, LOW);
+  }
+  delay(250);
+}</code></pre></article>
 </section>
 <section data-wb-page="7" data-wb-page-title="Potentiometer steuert Zeit"><h1>Ein Potentiometer ist ein einstellbarer Spannungsteiler</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-strobe"><h3>Protokoll: Messwert steuert Blinkzeit</h3><span class="solution-label">Eine mögliche Antwort</span><p><strong>Modellbeispiele, keine Messwerte:</strong> Bei pause = 100 dauert eine volle AN-AUS-Periode ungefähr 200 ms = 0,200 s; bei pause = 500 ungefähr 1000 ms = 1,000 s und bei pause = 1000 ungefähr 2000 ms = 2,000 s, jeweils zuzüglich Ausführungszeit. Nahe 0 ist kein langsames Blinken erkennbar; der Sketch läuft trotzdem weiter. Ein eigener Zeitvergleich über mehrere Perioden sollte ungefähr zu 2 · pause passen. Reaktionszeit beim Stoppen und Ausführungszeit erklären Abweichungen.</p><p>Wird während einer langen AN-Pause gedreht, bleibt die folgende AUS-Pause beim gespeicherten Wert genauso lang wie die AN-Pause. Erst am Beginn des nächsten loop-Durchlaufs wird neu gemessen. Beim Vergleichsfragment wird vor der AUS-Pause erneut gemessen. Eine Drehung kann deshalb schon diese AUS-Pause verändern. Während einer bereits laufenden delay-Pause wird deren Dauer nicht rückwirkend verändert. Nach dem Vergleich wird die Variante mit einer Messung wieder hochgeladen.</p><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int pause = analogRead(A0);
+  Serial.println(pause);
+  digitalWrite(13, HIGH);
+  delay(pause);
+  digitalWrite(13, LOW);
+  delay(pause);
+}</code></pre></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-order-strobe"><h3>Bring einen Blinkdurchlauf in die richtige Reihenfolge</h3><ol><li>Potentiometer an A0 einmal auslesen und in pause speichern</li><li>LED einschalten</li><li>für pause Millisekunden warten</li><li>LED ausschalten</li><li>noch einmal für pause Millisekunden warten</li><li>zum Beginn von loop() zurückkehren</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-reveal-two-reads"><h3>Fehler finden: Zwei Messungen in einem Blinkdurchlauf</h3><p>Wird das Potentiometer zwischen beiden Aufrufen bewegt oder schwankt der Messwert, können AN- und AUS-Zeit unterschiedlich lang werden. Eine Variable hält für den gesamten Blinkdurchlauf einen gemeinsamen Wert fest.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-strobe-two-reads-code"><h3>Vergleichsvariante: Zwei Messungen pro Blinkdurchlauf</h3><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(analogRead(A0));
+  digitalWrite(13, LOW);
+  delay(analogRead(A0));
+}</code></pre><p>Diese Variante zeigt keine Rohwerte im Monitor, weil sie keine print-Anweisung enthält. setup bleibt beim Ersetzen von loop erhalten. Das sichtbare Blinkverhalten reagiert weiter auf das Potentiometer. Die beiden Pausendauern können sich bei veränderter Eingangsspannung unterscheiden.</p></article></section>
 <section data-wb-page="8" data-wb-page-title="Transfer: Batterietester"><h1>Transfer: Aus einer Messung werden drei Spannungsbereiche</h1>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-battery"><h3>Erkläre und prüfe den Batterietester</h3><span class="solution-label">Eine mögliche Antwort</span><p>analogRead(A0) liefert beim Uno einen ADC-Rohwert von 0 bis 1023, den ich als int in messwert speichere. Mit spannung = messwert * (5.0 / 1023.0) rechne ich bei angenommener 5-V-Referenz näherungsweise in Volt um. float erhält dabei Nachkommastellen. Danach vergleicht die if/else-if-Kette denselben gespeicherten Spannungswert mit den Grenzwerten. Bei 1,19 V sind beide Vergleiche falsch, sodass die rote LED gewählt wird. Bei 1,20 V ist spannung >= 1.2 wahr: Gelb leuchtet. Bei 1,40 V ist schon spannung >= 1.4 wahr: Grün leuchtet und die späteren Zweige werden übersprungen. Bei echten Messungen können ADC-Auflösung, Referenzabweichung und Rundung eine Entscheidung unmittelbar an einem Grenzwert beeinflussen.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-essay-battery"><h3>Erkläre und prüfe den Batterietester</h3><span class="solution-label">Eine mögliche Antwort</span><p><strong>Erklärung:</strong> analogRead(A0) liefert beim Uno R3 einen ADC-Rohwert von 0 bis 1023, für den int ausreicht. messwert hält diese Messung für die Rechnung fest. Mit spannung = messwert * (5.0 / 1023.0) rechne ich bei angenommener 5-V-Referenz näherungsweise in Volt um. float bewahrt die dabei auftretenden Nachkommastellen. Vor der Auswahl setze ich alle drei LED-Ausgänge auf LOW, damit kein Zustand des vorherigen Durchlaufs stehen bleibt. Die if/else-if-Kette wählt dann genau einen Ausgang, weil nach dem ersten passenden Zweig die weiteren übersprungen werden. Bei Poti-Testwerten deutlich unter 1,2 V, zwischen 1,2 V und 1,4 V sowie über 1,4 V erwarte ich Rot, Gelb und Grün; diese Erwartung ersetzt kein aufgenommenes Protokoll.</p><p><strong>Exakte vorgegebene Testdaten:</strong> Bei 1,19 V sind beide Vergleiche falsch: Rot. Bei 1,20 V ist spannung &gt;= 1.2 wahr: Gelb. Bei 1,40 V ist bereits spannung &gt;= 1.4 wahr: Grün. Das prüfe ich durch vorübergehende Zuweisung direkt nach der Berechnung, nicht durch eine echte Spannungsmessung. Nach Entfernen dieser Testzeile und erneutem Upload muss die Anzeige wieder auf das Potentiometer reagieren.</p><p>Eine reale Messung kann wegen ADC-Stufen, Referenzabweichung und Rauschen anders eingeordnet werden als eine angenommene exakte Grenzspannung. Der Monitor zeigt zudem gerundete Zahlen, während der Vergleich den internen Wert verwendet. Diese Übungsgrenzen bestimmen keine Batteriekapazität und gelten nicht allgemein für alle Batteriechemien.</p><pre><code>const int rot = 8;
+const int gelb = 9;
+const int gruen = 10;
+const float referenz = 5.0;
+
+void setup() {
+  pinMode(rot, OUTPUT);
+  pinMode(gelb, OUTPUT);
+  pinMode(gruen, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int messwert = analogRead(A0);
+  float spannung = messwert * (referenz / 1023.0);
+  Serial.print(messwert);
+  Serial.print("; ");
+  Serial.print(spannung, 3);
+  Serial.println(" V");
+  digitalWrite(rot, LOW);
+  digitalWrite(gelb, LOW);
+  digitalWrite(gruen, LOW);
+  if (spannung &gt;= 1.4) {
+    digitalWrite(gruen, HIGH);
+  } else if (spannung &gt;= 1.2) {
+    digitalWrite(gelb, HIGH);
+  } else {
+    digitalWrite(rot, HIGH);
+  }
+  delay(250);
+}</code></pre></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-battery-real"><h3>Optionale reale Zellenmessung</h3><p>Das Potentiometer wird vollständig entfernt. Bei eingeschaltetem Uno liegt Minus des Halters an GND und Plus der bekannten 1,5-V-Alkaline-Zelle an A0. Plus wird vor dem Ausschalten wieder getrennt. Die LED-Verbindungen bleiben D8 → 330 Ω → Rot, D9 → 330 Ω → Gelb und D10 → 330 Ω → Grün mit jeweils zu GND gerichteter Kathode.</p><p>Für eine tatsächliche Spannung deutlich über 1,4 V ist Grün zu erwarten, zwischen 1,2 V und unter 1,4 V Gelb, unter 1,2 V Rot, soweit Messabweichungen die Grenzentscheidung nicht verschieben. Welche Spannung die vorhandene Zelle wirklich liefert, ist hier nicht gemessen. Die Zelle versorgt das Board nicht; ein offener Eingang liefert keinen verlässlichen Batteriezustand.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6-battery-transfer"><h3>Transfer: Zwei gleichartige Zellen in Reihe</h3><p>Für zwei Zellen verdopple ich die Übungsgrenzen der Gesamtspannung: Grün ab 2,8 V, Gelb ab 2,4 V bis unter 2,8 V und Rot unter 2,4 V. Im vollständigen Batterietester ersetze ich 1.4 durch 2.8 und 1.2 durch 2.4. Die Bereiche lassen sich weiterhin mit dem Potentiometer am eingeschalteten Uno zwischen GND und 5V prüfen. Gleiche Gesamtspannung bedeutet nicht gleichen Einzelzellzustand: Unterschiedliche Einzelspannungen können sich zur gleichen Summe addieren. Eine schwache Einzelzelle lässt sich aus der Summe allein nicht erkennen.</p></article></section>
 <section data-wb-page="9" data-wb-page-title="Sicherung und Quellen"><h1>Werkzeugkasten: Analoge Sensorwerte sicher verarbeiten</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="a6-mcq-final"><h3>Abschlusscheck</h3><h4>Welche Aussagen beschreiben einen zuverlässigen Sensorablauf?</h4><p>Der Messwert wird einmal gelesen und in einer Variable gespeichert.; Ausgabe und Entscheidung können anschließend dieselbe Variable verwenden.; Für eine Spannungsberechnung mit Nachkommastellen eignet sich float.; Die Richtung eines Sensorwerts sollte mit Extremwerten praktisch geprüft werden.</p><p>analogRead() liefert einen Rohwert. Speichern, geeigneter Datentyp und ein Test der realen Schaltung machen die Verarbeitung nachvollziehbar.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="a6_sensor_richtung"><h3>Weiterdenken: Umgekehrte Sensorwert-Richtung</h3><p>Vertausche ich LDR und Festwiderstand im Spannungsteiler, kehrt sich die Richtung der Spannungsänderung am Mittelabgriff um. Alternativ passe ich das Vergleichszeichen im Code an und ermittle einen passenden Grenzwert aus hellen und dunklen Testwerten. Ein bisheriges helligkeit > 500 darf ich bei fallenden Helligkeitswerten nicht unverändert als gleiche physikalische Aussage übernehmen.</p></article></section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="a6_sensor_richtung"><h3>Weiterdenken: Umgekehrte Sensorwert-Richtung</h3><p>Vertausche ich LDR und Festwiderstand im Spannungsteiler, kehrt sich die Richtung der Spannungsänderung am Mittelabgriff um. Beim LDR auf der 5-V-Seite sinkt der Rohwert beim Abdunkeln. Für eine weiterhin im Dunkeln leuchtende LED passe ich die Entscheidung zu helligkeit &lt; grenze an und ermittle einen passenden Grenzwert aus den neuen Hell- und Dunkelbereichen. Der bisherige numerische Grenzwert muss nicht passen. Ein unverändertes helligkeit &gt; 500 hätte nach dem Umbau nicht dieselbe physikalische Bedeutung.</p></article></section>
 </div>
 <script src="../assets/allgemeines_format.js"></script>
 <script>SBLibrary.autoMountAll({storagePrefix:"arduino-6-kompass57.html__"});</script>

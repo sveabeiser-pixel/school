@@ -68,8 +68,28 @@
       .grid3x { grid-template-columns: 1fr; }
     }
     .compare-table th { color: #172033; }
+    .motor-task{border-top:1px solid var(--wb-line); margin-top:22px; padding-top:16px; min-width:0}
+    .motor-task h2,.motor-task h3{font-size:1.15rem; overflow-wrap:anywhere}
+    .motor-wire{display:block; white-space:normal; overflow-wrap:anywhere; line-height:1.8; border-left:3px solid var(--ak-teal); padding:8px 12px; margin:12px 0}
+    .motor-table-wrap{max-width:100%; overflow-x:auto}
+    .motor-table-wrap table{min-width:430px}
+    .motor-material{width:100%; max-width:300px; margin:14px 0; border:1px solid var(--wb-line); border-radius:6px; overflow:hidden; box-sizing:border-box}
+    .motor-material-window{position:relative; overflow:hidden; aspect-ratio:var(--crop-width) / var(--crop-height); background:#fff}
+    .motor-material-window img{position:absolute; display:block; width:calc(100% * var(--source-width) / var(--crop-width)); max-width:none; height:auto; left:calc(-100% * var(--crop-left) / var(--crop-width)); top:calc(-100% * var(--crop-top) / var(--crop-height))}
+    .motor-material figcaption{padding:8px 10px; font-size:13px; line-height:1.45; color:var(--wb-text); background:var(--wb-block-bg)}
+    .wb-book .figure-card{max-width:320px; box-sizing:border-box}
+    .wb-book .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+    .wb-book :is(.grid2,.grid2x,.grid3x) > *{min-width:0}
+    .wb-book .p2 .p2-banks{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .wb-book .p2 .p2-banks > div{min-width:0}
+    .wb-book .p2 .p2-piece,.wb-book .p2 .p2-joined .p2-piece{min-width:0; max-width:100%; overflow-wrap:anywhere; box-sizing:border-box}
+    .wb-book .p2 .p2-joined{max-width:100%}
+    @media(max-width:900px){.wb-book .grid2,.wb-book .p2 .p2-banks{grid-template-columns:minmax(0,1fr)}}
+    @media(max-width:600px){.wb-book .p2 .p2-joined{display:flex; flex-direction:column; width:100%}.wb-book .p2 .p2-seam{width:100%; height:2px}}
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
+  <link rel="stylesheet" href="../assets/musterloesungen.css" />
+  <link rel="stylesheet" href="arduino-selbstlernen.css" />
 </head>
 <body>
   <div data-wb-book>
@@ -113,6 +133,23 @@
         <div><strong>Signal verfolgen</strong>Pinzustände und Treiberwirkung verbinden.</div>
         <div><strong>Bewegung prüfen</strong>Richtung, Geschwindigkeit oder Winkel erklären.</div>
       </div>
+
+      <h2>Bevor du etwas anschließt</h2>
+      <p>Du arbeitest mit einem <b>Arduino Uno R3</b> und jeweils <b>nur einem Motoraufbau</b>:
+        DC-Motor mit L298N-Modul, 5-V-Schrittmotor mit passendem ULN2003-Treiber oder Positionsservo.
+        Lege USB-Datenkabel, Steckleitungen und die von der Lehrkraft geprüfte Motorversorgung bereit.
+        Typ, Nennspannung und Strombedarf müssen zum Treiber passen; unbekannte Motoren werden nicht auf Verdacht eingeschaltet.</p>
+      <ol class="step-list">
+        <li>Trenne USB und Motorversorgung vor jedem Umbau. Halte Wellen und Räder frei und befestige den Motor.
+          Fasse nicht in die Bewegung und blockiere die Welle nicht.</li>
+        <li>Öffne die <b>Arduino-IDE</b>. Speichere für jeden Versuch einen eigenen Sketch,
+          zum Beispiel <code>Motor_15_1</code>. Wähle das tatsächliche Board und seinen Port.</li>
+        <li>Lass den stromlosen Aufbau kontrollieren. Lade den Sketch mit zunächst abgeschalteter
+          Motorversorgung über <b>Verify → Upload</b> hoch. Schalte die Motorversorgung erst nach Freigabe ein.</li>
+        <li>Teste kurz. Notiere in OneNote <b>Pinbelegung, Vorhersage, Beobachtung und eine gezielte Fehlerprüfung</b>.
+          Bei Wärme, Geruch, blockierter Welle oder wiederholten Board-Neustarts sofort beide Versorgungen trennen.</li>
+      </ol>
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Was ist ein Motor?</strong>
@@ -198,7 +235,8 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           <div>
             Die Drehzahl eines DC-Motors kann mit <b>Pulsweitenmodulation (PWM)</b> verändert werden:
             <pre><code>analogWrite(MOTOR, 120);</code></pre>
-            Je größer der Wert (0-255), desto schneller dreht sich der Motor.
+            Ein größerer Wert (0-255) kann unter gleichen Bedingungen die Drehzahl erhöhen.
+            Der Zusammenhang ist nicht exakt proportional: Bei kleinen Werten läuft der Motor unter Umständen noch nicht an.
           </div>
         </div>
       </div>
@@ -252,7 +290,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-block">
+      <div class="wb-block" id="mini-challenge-ventilator">
         <div class="wb-head">
           <div>
             <div class="wb-title">Mini-Challenge - Ventilator steuern</div>
@@ -266,7 +304,11 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
               <li>per Taster ein- und ausgeschaltet werden</li>
               <li>bei eingeschaltetem Zustand langsam starten</li>
             </ul>
-            Nutze <code>if</code>, <code>analogWrite()</code> und eine Variable für die Geschwindigkeit.
+            Plane zunächst, ohne etwas aufzubauen. Verwende den geprüften L298N-Aufbau von Seite 2:
+            IN1 an D3, IN2 an D4, ENA an D5 ohne ENA-Jumper. Ergänze später einen Taster zwischen D2 und GND
+            mit <code>INPUT_PULLUP</code>. Hier bedeutet „eingeschaltet“: <b>solange der Taster gedrückt bleibt</b>,
+            nicht bei jedem Tastendruck umschalten. Bei Loslassen wird ENA auf 0 gesetzt und der Motor läuft aus.
+            Nutze <code>if</code>, <code>analogWrite()</code> und eine begrenzte Geschwindigkeitsvariable (0 bis 200).
           </div>
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Ventilator steuern" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
           <details>
@@ -283,7 +325,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
     </section>
 
     <section data-wb-page="2" data-wb-page-title="L298N richtig anschließen">
-      <h1>L298N: Der wirklich richtige Anschluss ohne Überhitzung</h1>
+      <h1>L298N: Steuerung und Motorversorgung trennen</h1>
       <p class="wb-muted">Wenn du einen DC-Motor sauber und belastbar steuern willst, reicht ein einzelner Ausgang nicht mehr. Dafür nutzt du ein DC-Motorsteuerungsmodul auf Basis des <code>L298N</code>-Chips.</p>
 
       <div class="wb-section-break"></div>
@@ -298,17 +340,22 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         <div class="warn-box">
           <strong>Wichtige Spannungen</strong>
           <p>Die Stromversorgung kommt über einen 3-poligen Schraubverbinder mit den Anschlüssen <b>VS</b>, <b>GND</b> und <b>VSS</b>.</p>
-          <p><b>VS</b> ist die Versorgung für den Motor und darf hier bis zu <b>12 V</b> betragen. <b>VSS</b> versorgt den Logikteil der Platine und liegt im Bereich von <b>5 bis 7 V</b>. <b>GND</b> ist die gemeinsame Masse.</p>
+          <p><b>VS</b> versorgt den Motorzweig. Die Spannung legt die Lehrkraft passend zu Motor und
+            konkretem Modul fest, nicht pauschal auf 12 V. <b>VSS</b> ist die Logikversorgung,
+            hier nominal <b>5 V</b>. Eine Chip-Grenzangabe ist keine Erlaubnis, beliebige Spannungen an die Modulplatine anzulegen.</p>
+          <p>Einige Module erzeugen 5 V mit einem eigenen Regler. Dann kann die 5-V-Klemme ein <b>Ausgang</b>
+            sein. Bei anderen Jumperstellungen ist sie ein <b>Eingang</b>. Lass diese Einstellung anhand
+            der konkreten Modulanleitung prüfen, bevor du 5 V anschließt. Verbinde keine zwei 5-V-Ausgänge miteinander.</p>
         </div>
       </div>
 
       <div class="wb-section-break"></div>
 
       <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite22.png" alt="L298N-Motortreiber mit beschrifteten Anschlüssen">
-          <div class="pdfcaption">Materialbild: Leistungsversorgung, Logik und Motorausgänge</div>
-        </div>
+        <figure class="motor-material" style="--source-width:1486; --crop-left:15; --crop-top:10; --crop-width:525; --crop-height:485">
+          <div class="motor-material-window"><img src="pdf-bilder/seite22.png" alt="Ausschnitt des L298N-Moduls mit Kühlkörper und Schraubklemmen"></div>
+          <figcaption>Beispielmodul aus dem Material. Nutze Anschlussnamen, nicht „links“ oder „rechts“ aus einer bestimmten Blickrichtung.</figcaption>
+        </figure>
         <div class="image-guide">
           <h3>Teile die Schaltung in drei Bereiche</h3>
           <ol><li>Markiere die Motorversorgung.</li><li>Markiere die Steuereingänge vom Arduino.</li><li>Finde Motoranschlüsse und gemeinsame Masse.</li></ol>
@@ -323,12 +370,12 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           <h2>Die Anschlüsse im Überblick</h2>
           <ul class="step-list">
             <li><b>Doppelklemmen für Motoren:</b> An jede Doppelklemme kann ein Motor angeschlossen werden.</li>
-            <li><b>Input-Pins:</b> Über die rechten beiden Input-Pins wird der rechts angeschlossene Motor gesteuert. Eine Kombination aus <code>HIGH</code> und <code>LOW</code> legt die Drehrichtung fest. Sind beide gleich, steht der Motor still. Die linken beiden Pins gehören zum linken Motoranschluss.</li>
+            <li><b>IN1/IN2:</b> Steuern OUT1/OUT2, wenn ENA freigegeben ist. Unterschiedliche Pegel treiben den Motor in zwei Richtungen; gleiche Pegel bremsen elektrisch. IN3/IN4 und ENB gehören zum zweiten Motorzweig.</li>
             <li><b>GND-Stecker:</b> Dieser Stecker muss mit einer GND-Buchse des Arduino verbunden werden.</li>
-            <li><b>Motorversorgung:</b> Hier wird die Versorgung für den Motor angeschlossen, also z. B. ein Netzgerät oder ein Batteriepack mit 5 bis 12 V.</li>
+            <li><b>ENA/ENB:</b> Geben den jeweiligen Motorzweig frei. LOW lässt den Motor auslaufen, HIGH aktiviert den Zweig. PWM am Enable-Eingang beeinflusst die Drehzahl.</li>
             <li><b>VS:</b> Versorgungsspannung für die Motoren.</li>
             <li><b>GND:</b> Gemeinsame Masse für Arduino, Treiber und externe Stromquelle.</li>
-            <li><b>VSS:</b> Versorgung des Logikteils der Platine mit 5 bis 7 V.</li>
+            <li><b>VSS:</b> Logikversorgung, hier 5 V nach Prüfung von Regler und Jumpern. Nicht mit VS oder Vin am Arduino verwechseln.</li>
           </ul>
         </div>
         <div class="wb-callout">
@@ -341,15 +388,63 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>AUFGABEN</strong>
-        <div>
-          Schließe an die rechte Doppelklemme einen Motor an und verbinde die rechten beiden Input-Pins mit den Pins 3 und 4 deines Arduino.
-          <br><br>
-          Schreibe nun ein Programm, das immer wieder Pin 3 auf <code>HIGH</code> und Pin 4 auf <code>LOW</code> schaltet, zwei Sekunden wartet, danach beide Pins auf <code>HIGH</code> setzt und wieder zwei Sekunden wartet.
-          <br><br>
-          Wenn du jetzt ein Netzteil bzw. Batteriepack anschließt, sollte der Motor laufen, stehen, laufen, stehen.
-        </div>
+      <div class="motor-task" id="motoren-15-1">
+        <h2>15.1 Aufgabe: Selber aufbauen und programmieren</h2>
+        <p>Verwende ein vollständiges L298N-Modul <b>mit passender Schutzdiodenbeschaltung</b>,
+          nicht den nackten Chip. Die folgende Belegung gilt für den Motorzweig A:</p>
+        <div class="motor-table-wrap"><table class="compare-table">
+          <thead><tr><th>Verbindung</th><th>Wohin?</th></tr></thead>
+          <tbody><tr><td>Arduino D3 / D4</td><td>IN1 / IN2 am Modul</td></tr>
+            <tr><td>Arduino D5</td><td>ENA; nur den ENA-Jumper für diesen Signaleingang entfernen</td></tr>
+            <tr><td>Motor</td><td>OUT1 und OUT2, nicht direkt an Arduino-Pins</td></tr>
+            <tr><td>Motorversorgung + / −</td><td>VS / GND am Modul, Spannung und Stromfreigabe durch Lehrkraft</td></tr>
+            <tr><td>Arduino GND</td><td>Modul-GND und Minus der Motorversorgung</td></tr>
+            <tr><td>Logikversorgung</td><td>5 V über den nach Modulanleitung geprüften Versorgungsweg</td></tr></tbody>
+        </table></div>
+        <p><b>ENA-Jumper und 5-V-Regler-Jumper sind nicht dasselbe.</b> Entferne keinen Jumper auf Verdacht.
+          Der Motorstrom darf nicht aus einem Digitalpin oder aus dem 5-V-Anschluss des Arduino kommen.</p>
+        <p>Öffne <code>Motor_15_1</code> in der IDE und übernimm diese Vorlage.
+          Sie treibt zwei Sekunden in Richtung 1 und bremst dann zwei Sekunden.
+          Teste nur einen kleinen, frei laufenden Motor, dessen Anlauf- und Bremsstrom zum Treiber passen.</p>
+        <div class="code-card"><pre><code>const int IN1 = 3;
+const int IN2 = 4;
+const int ENA = 5;
+
+void setup() {
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  digitalWrite(ENA, LOW);
+}
+
+void loop() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(ENA, HIGH);
+  delay(2000);
+  digitalWrite(IN2, HIGH);
+  delay(2000);
+  digitalWrite(ENA, LOW);
+}</code></pre></div>
+        <ol class="step-list"><li>Sage voraus, was der Motor in jedem Zwei-Sekunden-Abschnitt macht.</li>
+          <li>Prüfe, lade hoch und teste kurz. Vertausche für eine andere Richtung nur die Pegel von IN1 und IN2,
+            nicht die Versorgung. Änderungen am Aufbau erfolgen immer stromlos.</li>
+          <li>Bleibt der Motor aus, prüfe zuerst ENA, GND und die getrennte Motorversorgung.
+            Ein Kühlkörper garantiert keinen sicheren Betrieb bei falscher Last. Halte Beobachtung und Prüfung fest.</li></ol>
+      </div>
+
+      <div class="wb-section-break"></div>
+      <div class="motor-task" id="motoren-15-2">
+        <h2>15.2 Aufgabe: Zwei Motoren mit Funktionen steuern</h2>
+        <p>Ergänze einen zweiten passenden Motor an OUT3/OUT4. Nutze D7 für IN3, D8 für IN4 und D6
+          für ENB ohne ENB-Signaljumper. Versorgung und Treiber müssen den gemeinsamen Anlaufstrom beider Motoren vertragen.</p>
+        <p>Schreibe Funktionen <code>beideVorwaerts()</code>, <code>beideRueckwaerts()</code>,
+          <code>linksVorwaerts()</code>, <code>rechtsVorwaerts()</code> und <code>stopp()</code>.
+          Bei „links vorwärts“ läuft hier nur der linke Motor, der rechte ist freigegeben zum Auslaufen;
+          bei „rechts vorwärts“ umgekehrt. Lege fest, welcher Motor links ist und welche Pegel ihn am Modell vorwärts drehen.</p>
+        <p><code>stopp()</code> setzt ENA und ENB auf LOW. Rufe vor jedem Richtungswechsel stopp() auf
+          und warte, bis die Räder stillstehen. Prüfe das Modell zunächst aufgebockt, ohne Bodenkontakt.
+          Notiere Pinbelegung, Testfolge und tatsächliche Drehrichtungen.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -359,7 +454,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           {
             "id":"l298n_vf",
             "title":"Verständnisfragen - L298N",
-            "hint":"Text wird gespeichert",
+            "hint":"Beziehe dich auf die Anschlussliste und den geprüften Aufbau.",
             "fields":[
               {"label":"1","key":"l298n_q1","kind":"textarea","placeholder":"1) Welche Aufgabe hat die H-Brücke im L298N-Modul?"},
               {"label":"2","key":"l298n_q2","kind":"textarea","placeholder":"2) Wofür stehen VS, GND und VSS?"},
@@ -443,7 +538,8 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         </div>
         <figure class="figure-card">
           <img src="pdf-bilder/stepper1.png" alt="Schrittmotor mit Treiberplatine, Verkabelung und Beispielcode">
-          <figcaption>Die Abbildung zeigt die typische Verkabelung mit Treiberplatine und den ersten Beispielcode für einen Arduino-Schrittmotor.</figcaption>
+          <figcaption>Beispiel eines kleinen Getriebeschrittmotors mit ULN2003-Platine.
+            Für diesen Versuch gelten die Pinliste und die separate Versorgung darunter, nicht die Kabelfarben des Fotos.</figcaption>
         </figure>
       </div>
 
@@ -453,14 +549,20 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         <div class="motor-box">
           <span class="tag">Schritt 1</span>
           <h2>Schaltung einrichten</h2>
-          <p>Stecke zuerst den Motorstecker in die passende Buchse der Treiberplatine. Achte auf die Form des Steckers, damit er nicht verdreht eingesteckt wird.</p>
-          <p>Verbinde danach <code>GND</code> und <code>VCC</code> der Treiberplatine mit <code>GND</code> und <code>5V</code> des Arduino. Die Signalleitungen <code>IN1</code>, <code>IN2</code>, <code>IN3</code> und <code>IN4</code> kommen an die Arduino-Pins <code>6</code>, <code>5</code>, <code>4</code> und <code>3</code>.</p>
+          <p>Dieses Beispiel gilt für einen <b>5-V-Getriebeschrittmotor 28BYJ-48 mit passender ULN2003-Platine</b>.
+            Andere Motortypen oder Spannungsvarianten benötigen einen anderen Aufbau. Trenne zuerst beide Versorgungen.</p>
+          <p>Stecke den Motorstecker in die passende Treiberbuchse. Verbinde <b>IN1 → D3,
+            IN2 → D4, IN3 → D5, IN4 → D6</b>. Die Platine erhält VCC/+ von einer geprüften,
+            separaten geregelten 5-V-Motorversorgung. Verbinde deren Minus mit Treiber-GND und Arduino-GND.
+            Verbinde den externen Pluspol nicht zusätzlich mit Arduino-5V.</p>
         </div>
         <div class="motor-box">
           <span class="tag">Schritt 2</span>
-          <h2>Micro-Board anschließen</h2>
+          <h2>Board und Port auswählen</h2>
           <p>Verbinde den Arduino mit dem Rechner und starte die Arduino-IDE. Unter <b>Werkzeuge &gt; Port</b> wählst du den richtigen Anschluss aus.</p>
-          <p>Über <b>Werkzeuge &gt; Boardinformationen holen</b> kannst du prüfen, ob die Verbindung klappt. Erst wenn Board und Port stimmen, lohnt sich das Hochladen eines Sketches.</p>
+          <p>Wähle bei einem Uno R3 <b>Arduino Uno</b>. Der Port muss zu genau diesem Board gehören.
+            Bleibt die Boardinformation bei einem kompatiblen Nachbau leer, beweist das allein noch keinen Defekt.
+            Prüfe zuerst Datenkabel, Board und Port.</p>
         </div>
         <div class="motor-box">
           <span class="tag">Schritt 3</span>
@@ -493,11 +595,11 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           "title":"Bring den Ablauf in die richtige Reihenfolge",
           "hint":"Ordne die Schritte von der Vorbereitung bis zum ersten Test.",
           "items":[
-            "Motor an die Treiberplatine stecken",
-            "Treiberplatine mit 5V und GND des Arduino verbinden",
-            "IN1 bis IN4 mit den Pins 6, 5, 4 und 3 verbinden",
+            "Bei getrennten Versorgungen den Motor an die Treiberplatine stecken",
+            "IN1 bis IN4 mit den Pins 3, 4, 5 und 6 verbinden",
+            "Separate 5-V-Motorversorgung stromlos verdrahten und ihre Masse mit Treiber und Arduino verbinden",
             "Arduino per USB anschließen und Port wählen",
-            "Sketch hochladen und den Motor testen"
+            "Sketch prüfen und hochladen; nach Aufbaukontrolle Motorversorgung einschalten und kurz testen"
           ]
         }
         </script>
@@ -521,9 +623,9 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
             {"t":"gap","a":"setup()"},
             {"t":"text","v":" läuft nur einmal beim Start, der Code in "},
             {"t":"gap","a":"loop()"},
-            {"t":"text","v":" wiederholt sich ständig. Im Beispiel entspricht eine volle Umdrehung "},
+            {"t":"text","v":" wiederholt sich ständig. Im Beispiel wird eine volle Umdrehung näherungsweise mit "},
             {"t":"gap","a":"2048"},
-            {"t":"text","v":" Schritten."}
+            {"t":"text","v":" Schritten angesetzt."}
           ]
         }
         </script>
@@ -542,6 +644,13 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
       <p class="wb-muted">Jetzt zerlegst du den ersten Sketch in seine Bausteine. Ziel ist nicht nur, dass der Code läuft, sondern dass du erklären kannst, warum er funktioniert.</p>
 
       <div class="wb-section-break"></div>
+
+      <h3 id="motoren-stepper-test">Aufgabe: Selber programmieren – eine Umdrehung hin und zurück</h3>
+      <p>Lege <code>Stepper_Test</code> in der Arduino-IDE an. Prüfe unter <b>Bibliotheken verwalten</b>,
+        ob <b>Stepper von Arduino</b> installiert ist. Übernimm den vollständigen Sketch darunter und
+        übertrage ihn zunächst bei ausgeschalteter Motorversorgung. Die ungewöhnliche Pinreihenfolge
+        <code>3, 5, 4, 6</code> im Konstruktor bedeutet <b>IN1, IN3, IN2, IN4</b> und passt zur obigen Anschlussliste.
+        Vertausche diese Reihenfolge nicht mit der numerischen Reihenfolge der Anschlüsse.</p>
 
       <div class="code-card"><pre><code>#include &lt;Stepper.h&gt;
 int steps = 2048;
@@ -563,15 +672,27 @@ void loop() {
       <div class="grid2x">
         <div class="motor-box">
           <h2>Was passiert im oberen Teil?</h2>
-          <p>Mit <code>#include &lt;Stepper.h&gt;</code> bindest du die Bibliothek ein. Danach legst du mit <code>steps = 2048</code> fest, wie viele Einzelschritte für eine volle Umdrehung nötig sind.</p>
+          <p>Mit <code>#include &lt;Stepper.h&gt;</code> bindest du die Bibliothek ein.
+            <code>steps = 2048</code> ist hier ein <b>Näherungswert für diesen Motortyp im verwendeten Schrittbetrieb</b>.
+            Getriebeübersetzung und Schrittverfahren können abweichen; 2048 ist keine allgemeine Eigenschaft aller Schrittmotoren.</p>
           <p>Die Zeile <code>Stepper Schrittmotor(steps, 3, 5, 4, 6);</code> baut ein Motor-Objekt. Es merkt sich die Schrittzahl und die verwendeten Pins.</p>
         </div>
         <div class="motor-box">
           <h2>Was passiert in setup() und loop()?</h2>
           <p>In <code>setup()</code> wird mit <code>setSpeed(5)</code> die Drehgeschwindigkeit eingestellt. Dieser Wert gibt Umdrehungen pro Minute an.</p>
-          <p>In <code>loop()</code> dreht der Motor erst eine Umdrehung vorwärts, wartet kurz und läuft dann eine Umdrehung rückwärts. Negative Schrittzahlen bedeuten die Gegenrichtung.</p>
+          <p>In <code>loop()</code> dreht der Motor näherungsweise einmal vorwärts, wartet eine Sekunde und
+            dreht zurück. Bei 5 Umdrehungen pro Minute dauert eine volle Umdrehung ungefähr <b>12 Sekunden</b>,
+            nicht eine Sekunde. <code>step()</code> wartet bis zum Ende seiner Schrittfolge; erst dann beginnt delay().</p>
         </div>
       </div>
+
+      <div class="wb-section-break"></div>
+
+      <p>Markiere die Startstellung mit einem Papierstreifen und beobachte einen vollständigen Zyklus.
+        Prüfe, ob der Motor ungefähr zur Startstellung zurückkehrt. Brummt er nur, trenne die Motorversorgung
+        und kontrolliere Pinreihenfolge und Steckverbindungen. Erhöhe nicht einfach die Spannung.
+        Die Bibliothek kann Spulen auch im Stillstand bestromen: Beende den kurzen Versuch durch Abschalten
+        der Motorversorgung. Halte Drehrichtung, Dauer und Rückkehr zur Markierung fest.</p>
 
       <div class="wb-section-break"></div>
 
@@ -663,12 +784,32 @@ void loop() {
           <p>Typisch sind drei Leitungen: <b>5V</b>, <b>GND</b> und <b>Signal</b>. Das Signal wird als Pulsfolge übertragen. Die Servo-Bibliothek nimmt dir dabei viel Arbeit ab.</p>
         </div>
         <figure class="figure-card">
-          <img src="pdf-bilder/servo1.png" alt="Servomotor mit Anschlussbild und Beispielcode">
-          <figcaption>Der Servo wird mit drei Leitungen angeschlossen und im Programm über die Bibliothek <code>Servo.h</code> angesteuert.</figcaption>
+          <img src="pdf-bilder/servo1.png" alt="Materialausschnitt mit Servo-Code und Erklärung von attach und write">
+          <figcaption>Code aus dem Material. Anschluss und vollständigen Sketch findest du lesbar darunter.</figcaption>
         </figure>
       </div>
 
       <div class="wb-section-break"></div>
+
+      <div class="motor-task" id="motoren-servo-test">
+        <h2>Aufgabe: Selber programmieren – zwei Winkel anfahren</h2>
+        <p>Verwende einen <b>Positionsservo</b>, keinen Dauerrotationsservo. Entferne zunächst Hebel und Last
+          oder halte den ganzen Bewegungsbereich frei. Beim Einschalten kann sich der Servo sofort bewegen.</p>
+        <ol class="step-list"><li>Trenne alle Versorgungen. Ermittle Versorgung, Masse und Signal am konkreten Servo.
+          Häufig ist Rot die Versorgung, Braun/Schwarz GND und Orange/Gelb/Weiß Signal; die Herstellerangabe entscheidet.</li>
+          <li>Verbinde das Signal mit <b>D9</b>, Servo-GND mit dem Minus der externen Versorgung
+            und mit Arduino-GND. Die Servo-Versorgung kommt aus einer passend belastbaren,
+            geregelten Versorgung, bei einem dafür freigegebenen 5-V-Servo also 5 V.
+            Sie kommt weder aus D9 noch aus einem anderen Digitalpin. Externes Plus nicht mit Arduino-5V verbinden.</li>
+          <li>Öffne <code>Servo_Test</code> in der IDE und installiere bei Bedarf <b>Servo von Arduino</b>
+            über die Bibliotheksverwaltung. Übernimm den Sketch, prüfe und lade ihn hoch.</li>
+          <li>Lass den Aufbau kontrollieren und schalte die Servo-Versorgung ein. Erwarte abwechselnd
+            ungefähr 30° und 90° mit einer Sekunde Wartezeit zwischen den Befehlen.
+            Brummt der Servo am Anschlag oder wird er warm, schalte sofort aus und prüfe Winkelbereich und Mechanik.</li></ol>
+        <p><code>Servo S1;</code> erzeugt das Servo-Objekt. <code>attach(9)</code> ordnet ihm den Signalpin zu;
+          es verbindet nicht die Stromversorgung. <code>write(30)</code> gibt eine Zielstellung vor,
+          bestätigt aber nicht, dass sie schon erreicht wurde. Verändere danach nur 30 zu 60 und vergleiche.</p>
+      </div>
 
       <div class="code-card"><pre><code>#include &lt;Servo.h&gt;
 Servo S1;
@@ -754,7 +895,7 @@ void loop() {
           "title":"Fehler finden",
           "hint":"Korrigiere die Aussage gedanklich.",
           "question":"\"Ein Servo kann immer ohne zusätzliche Stromquelle an jedem Arduino-Pin betrieben werden.\" Was ist daran problematisch?",
-          "answer":"Das ist zu allgemein. Kleine Servos funktionieren oft direkt am Board, unter Last kann der Strombedarf aber zu hoch sein. Dann braucht der Servo eine eigene 5V-Versorgung, die Masse muss trotzdem mit GND des Arduino verbunden bleiben."
+          "answer":"Ein Digitalpin liefert nur das Steuersignal, nicht den Motorstrom. Wir verwenden eine zum Servo passende externe Versorgung und verbinden deren Minus mit Servo-GND und Arduino-GND. Nennspannung, Anlaufstrom und mechanischer Winkelbereich müssen zum konkreten Servo passen."
         }
         </script>
       </div>
@@ -787,7 +928,7 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <table class="compare-table">
+      <div class="motor-table-wrap"><table class="compare-table">
         <thead>
           <tr>
             <th>Motortyp</th>
@@ -816,80 +957,40 @@ void loop() {
             <td>Positionierung, Drehteller, Dosierung</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="wb-section-break"></div>
 
-      <div class="grid2x">
-        <figure class="figure-card">
-          <img src="pdf-bilder/stepper2.png" alt="Einfaches Schaltbild für einen DC-Motor mit Diode am Arduino">
-          <figcaption>Minimaler Aufbau für einen einfachen Motor-Test: Der Motor wird nicht direkt ohne Schutz betrieben, die Diode hilft gegen Spannungsspitzen.</figcaption>
-        </figure>
-        <div>
-          <div class="tip-box">
-            <strong>Einfacher Motor-Test</strong>
-            <p>Das erste Beispiel zeigt den einfachsten Fall, wie ein Motor an das Arduino angeschlossen werden kann. Die Diode schützt das Arduino-Board vor Induktionsströmen.</p>
-            <p>Der Motor kann sich dabei nur in <b>eine Richtung</b> und mit <b>einer Geschwindigkeit</b> drehen. Zum Testen lässt sich der bekannte Blink-Code verwenden, weil der Ausgangspin einfach abwechselnd auf <code>HIGH</code> und <code>LOW</code> gesetzt wird.</p>
-            <p>Wichtig ist dabei der Blick auf die Schaltung: Stromversorgung, Masse und Schutzbauteil müssen sauber verbunden sein.</p>
-          </div>
-
-          <div class="wb-section-break"></div>
-
-          <div class="code-card"><pre><code>void setup() {
-  pinMode(13, OUTPUT);
-}
-
-void loop() {
-  digitalWrite(13, HIGH);
-  delay(1000);
-  digitalWrite(13, LOW);
-  delay(1000);
-}</code></pre></div>
-        </div>
+      <div class="motor-task" id="motoren-dc-test">
+        <h2>Aufgabe: Selber programmieren – Richtung und Drehzahl getrennt steuern</h2>
+        <p>Verwende wieder <b>genau den geprüften L298N-Aufbau aus 15.1</b>:
+          D3 → IN1, D4 → IN2, D5 → ENA ohne ENA-Jumper, Motor an OUT1/OUT2 und gemeinsame Masse.
+          Der Motor bleibt am Treiber, nicht an den Arduino-Ausgängen.</p>
+        <p><b>Eine Diode allein macht einen direkten Motoranschluss am Digitalpin nicht zulässig.</b>
+          Sie begrenzt Abschaltspitzen, aber nicht den Anlauf- oder Blockierstrom. Für beide Richtungen
+          brauchst du die H-Brücke und ihre passende Schutzbeschaltung, nicht bloß zwei Arduino-Pins.</p>
+        <code class="motor-wire">IN1 und IN2: Richtung · ENA an D5: Freigabe/PWM · VS und GND: Motorleistung</code>
+        <p>Speichere <code>DC_Richtung_PWM</code> und übernimm den vollständigen Sketch darunter.
+          Die Funktion <code>motorStop()</code> deaktiviert ENA. Der Motor läuft aus;
+          die Pause ist keine Garantie, dass eine schwere Last bereits stillsteht.</p>
       </div>
 
       <div class="wb-section-break"></div>
 
-      <div class="tip-box">
-        <strong>Beispiel 2: Motor in beide Richtungen drehen</strong>
-        <p>Im zweiten Beispiel ist der Motor an <b>zwei Outputs</b> angeschlossen. Damit lässt sich der Motor in <b>beide Richtungen</b> drehen.</p>
-        <p>Die Geschwindigkeit lässt sich über die <b>PWM-Kanäle</b> regulieren. Bei dieser Schaltung sind <b>vier Dioden</b> nötig. In der Tabelle sind die möglichen Schaltzustände aufgeführt. <code>LOW</code> bedeutet <b>GND</b>, <code>HIGH</code> bedeutet <b>5V+</b>.</p>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="grid2x">
-        <figure class="figure-card">
-          <img src="pdf-bilder/stepper4.png" alt="Schaltung eines Motors mit zwei Ausgängen und vier Dioden">
-          <figcaption>Mit zwei Ausgängen kann der Motor je nach Schaltzustand links oder rechts drehen. Die vier Dioden schützen die Schaltung.</figcaption>
-        </figure>
-        <figure class="figure-card">
-          <img src="pdf-bilder/stepper5.png" alt="Tabelle mit Schaltzuständen für Digital 2, Digital 3 und Motorrichtung">
-          <figcaption>Die Tabelle zeigt, welche Kombination aus <code>LOW</code>, <code>HIGH</code> und PWM zu Stopp, links, rechts oder langsamer Drehung führt.</figcaption>
-        </figure>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="tip-box">
-        <strong>Ein Beispielcode</strong>
-        <p>Der folgende Sketch zeigt einen möglichen Ablauf für diese Schaltung: erst Stopp, dann Vorwärtslauf, danach Rückwärtslauf und zum Schluss eine langsame Beschleunigung über PWM.</p>
-      </div>
-
-      <div class="wb-section-break"></div>
-
-      <div class="code-card"><pre><code>int motorPin1 = 2;
-int motorPin2 = 3;  // PWM
+      <div class="code-card"><pre><code>const int motorPin1 = 3;  // IN1
+const int motorPin2 = 4;  // IN2
+const int enablePin = 5;  // ENA, PWM
 
 void setup() {
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
+  pinMode(enablePin, OUTPUT);
+  digitalWrite(enablePin, LOW);
 }
 
 void motorStop() {
-  digitalWrite(motorPin1, LOW);
-  digitalWrite(motorPin2, LOW);
-  delay(500);
+  analogWrite(enablePin, 0);
+  delay(1000);
 }
 
 void loop() {
@@ -897,23 +998,35 @@ void loop() {
 
   digitalWrite(motorPin1, HIGH);  // Motor vor
   digitalWrite(motorPin2, LOW);
+  analogWrite(enablePin, 180);
   delay(1000);
 
   motorStop();
 
   digitalWrite(motorPin1, LOW);   // Motor zurück
   digitalWrite(motorPin2, HIGH);
+  analogWrite(enablePin, 180);
   delay(1000);
 
   motorStop();
 
   digitalWrite(motorPin1, LOW);   // Motor langsam zu schnell
-  for (int i = 0; i < 255; i++) {
-    analogWrite(motorPin2, i);
+  digitalWrite(motorPin2, HIGH);
+  for (int i = 0; i &lt;= 200; i++) {
+    analogWrite(enablePin, i);
     delay(20);
   }
   motorStop();
 }</code></pre></div>
+
+      <ol class="step-list"><li>Zeichne vor dem Test eine Zeitlinie: Pausen, Richtung 1, Gegenrichtung und PWM-Rampe.
+          Prüfe, dass dein kleiner, frei laufender Motor vor jedem Richtungswechsel stillsteht; verlängere sonst die Pause.</li>
+        <li>Lade den Sketch nach Verify hoch, schalte die geprüfte Motorversorgung ein und teste kurz.
+          Ein hoher PWM-Wert ist keine gemessene Drehzahl. Bei kleinen Werten kann der Motor noch stehen.</li>
+        <li>Ändere nur den PWM-Wert 180 auf 140 und vergleiche unter gleicher Last.
+          Ändere danach nur die Rampen-Wartezeit 20 auf 40 ms: Was wird länger, was bleibt gleich?</li>
+        <li>Halte die wirkliche Beobachtung, eine begründete Änderung und eine Fehlerprüfung in OneNote fest.
+          Wechsle nicht gleichzeitig Versorgung, Motor und Code.</li></ol>
 
       <div class="wb-section-break"></div>
 
@@ -1043,7 +1156,12 @@ void loop() {
       <div class="motor-box">
         <h2>Quellen & Weiterforschen</h2>
         <ul class="source-list">
-          <li>Lokales Material aus diesem Projekt: Seite 6 von <code>nwt/arduino-4.html</code> und die Bilder <code>nwt/pdf-bilder/stepper1.png</code> und <code>nwt/pdf-bilder/servo1.png</code>.</li>
+          <li>Lokales Ausgangsmaterial: L298N-Abbildung, Schrittmotor-Foto und Servo-Code aus <code>pdf-bilder/</code>.
+            Maßgeblich für den Aufbau sind die geprüften Anschlusslisten auf dieser Lernseite.</li>
+          <li><a href="https://www.st.com/resource/en/datasheet/l298.pdf" target="_blank" rel="noreferrer">ST: L298-Datenblatt – Enable-Eingänge, Bremsen, Auslaufen und Schutzbeschaltung</a></li>
+          <li><a href="https://www.ti.com/lit/ds/symlink/uln2003a.pdf" target="_blank" rel="noreferrer">Texas Instruments: ULN2003A-Treiber und Schutzdioden</a></li>
+          <li><a href="https://docs.arduino.cc/learn/electronics/servo-motors/" target="_blank" rel="noreferrer">Arduino: Servos anschließen und separat versorgen</a></li>
+          <li><a href="https://docs.arduino.cc/libraries/stepper/" target="_blank" rel="noreferrer">Arduino: Stepper-Bibliothek</a></li>
           <li>Arduino-Dokumentation zur Programmiersprache und zu Bibliotheken: <a href="https://docs.arduino.cc/language-reference/" target="_blank" rel="noreferrer">docs.arduino.cc/language-reference</a></li>
           <li>Arduino-Dokumentationsübersicht mit Servo-, Stepper- und Motor-Grundlagen: <a href="https://docs.arduino.cc/learn/" target="_blank" rel="noreferrer">docs.arduino.cc/learn</a></li>
           <li>Arduino-Programmierübersicht mit Bibliotheken wie <code>Servo</code> und <code>Stepper</code>: <a href="https://docs.arduino.cc/programming" target="_blank" rel="noreferrer">docs.arduino.cc/programming</a></li>
@@ -1054,7 +1172,9 @@ void loop() {
 
       <div class="warn-box">
         <strong>Abgabe</strong>
-        <p>Nutze in der Sidebar den Button <b>Ergebnisse anzeigen</b>. Dort kannst du deine Antworten gesammelt prüfen und als Text exportieren.</p>
+        <p>Trenne zum Abschluss die Motorversorgung. Prüfe die gespeicherten Antworten und ergänze deinen Namen
+          in der zentralen Abgabe. Mit <b>Ergebnisse anzeigen</b> erhältst du die Übersicht und kannst deine Ergebnisse
+          als PDF herunterladen. Deine eigenen Sketches und Aufbau-Protokolle bleiben zusätzlich in der IDE und in OneNote.</p>
       </div>
 
       <div class="wb-section-break"></div>

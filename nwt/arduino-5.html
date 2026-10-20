@@ -116,6 +116,38 @@
     }
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
+  <link rel="stylesheet" href="../assets/musterloesungen.css" />
+  <link rel="stylesheet" href="arduino-selbstlernen.css" />
+  <style>
+    .lab-task { padding: 14px 0; border-top: 1px solid var(--wb-line); min-width: 0; }
+    .lab-task h3 { margin-top: 0; }
+    .lab-task li + li { margin-top: 8px; }
+    .lab-task pre { margin: 12px 0; padding: 14px; overflow-x: auto; background: var(--wb-block-bg); color: var(--wb-text); border: 1px solid var(--wb-line); border-radius: 6px; font-size: .9rem; line-height: 1.5; }
+    .lab-task pre code { white-space: pre; overflow-wrap: normal; }
+    .lab-table { max-width: 100%; overflow-x: auto; margin: 12px 0; }
+    .lab-table table { border-collapse: collapse; width: 100%; color: var(--wb-text); }
+    .lab-table th, .lab-table td { padding: 8px; border: 1px solid var(--wb-line); text-align: left; vertical-align: top; }
+    .lab-table th { background: var(--wb-head-bg); }
+    .material-crop { overflow: hidden; position: relative; background: #fff; }
+    .material-crop img { position: absolute; width: 100% !important; max-height: none !important; height: auto !important; }
+    .crop-keyboard { aspect-ratio: 392 / 335; }
+    .crop-keyboard img { top: -210%; }
+    .crop-interrupt { aspect-ratio: 1270 / 150; }
+    .crop-interrupt img { top: -195%; }
+    .crop-flag { aspect-ratio: 1090 / 135; }
+    .crop-flag img { top: -58%; }
+    .crop-trouble { aspect-ratio: 1114 / 252; }
+    .crop-trouble img { top: 0; }
+    .wb-book .topic-figure { width: min(100%, 480px); align-self: start; box-shadow: none; }
+    .wb-book .topic-figure.keyboard { max-width: 260px; }
+    .wb-book .lab-task .topic-figure { margin: 12px 0; }
+    .wb-book .lab-task code { overflow-wrap: anywhere; }
+    .wb-book .lab-task pre code { overflow-wrap: normal; }
+    @media (max-width: 600px) {
+      .lab-table { font-size: .9rem; }
+      .lab-task pre { padding: 10px; }
+    }
+  </style>
 </head>
 <body>
   <div data-wb-book>
@@ -174,9 +206,9 @@
         <div class="warn-box">
           <strong>So arbeitest du hier</strong>
           <ul class="check-list" style="margin-top:10px;">
-            <li>Lies die Erklärungen aufmerksam und schau dir die Bilder genau an.</li>
-            <li>Bearbeite die Aufgaben direkt nach jedem Abschnitt.</li>
-            <li>Nutze die Bilder als Nachschlagehilfe, wenn du einen Begriff oder einen Codeausschnitt noch einmal sehen willst.</li>
+            <li>Notiere vor jedem Versuch deine Erwartung. Baue auf, lade den Sketch hoch und vergleiche dann deine Beobachtung.</li>
+            <li>Speichere jeden Versuch als eigenen Sketch. Verändere beim Testen jeweils nur eine Sache.</li>
+            <li>Halte Codeänderung, Beobachtung und Erklärung in den Versuchsprotokollen fest. Die Bilder ergänzen die Arbeitsaufträge.</li>
           </ul>
         </div>
       </div>
@@ -198,6 +230,20 @@
         </div>
       </div>
 
+      <div class="wb-section-break"></div>
+      <div class="lab-task" id="arbeitsplatz_start">
+        <h2>Dein Arbeitsplatz: Board, Port und erster Upload</h2>
+        <p>Die Anschlusslisten und Sketches gelten für den <strong>Arduino Uno R3 mit 5-V-Logik</strong>. Bei einem anderen Board prüfst du zuerst dessen Pinbelegung und Interrupt-Pins. Alle Programme hier kommen ohne zusätzliche Bibliotheken aus.</p>
+        <ol>
+          <li>Lege Uno R3, USB-Datenkabel, Breadboard und Steckleitungen bereit. Für die Melodie brauchst du einen kleinen passiven Lautsprecher mit 330-Ω-Serienwiderstand oder einen passiven Piezo-Schallwandler. Für das Lauflicht brauchst du acht LEDs plus eine rote LED, neun weitere Widerstände zu je 330 Ω und einen Taster.</li>
+          <li>Starte die Arduino IDE. Wähle unter <strong>Datei → Neu</strong> einen Sketch und speichere ihn zum Beispiel als <code>modul5_start</code>. Ein Sketch enthält genau ein <code>setup()</code> und ein <code>loop()</code>; ersetze beim Einfügen die gesamte Vorlage.</li>
+          <li>Verbinde zunächst nur das Board per USB. Wähle in der Boardauswahl oder unter <strong>Werkzeuge → Board → Arduino AVR Boards → Arduino Uno</strong> den Uno R3. Fehlt das Paket, installiere <strong>Arduino AVR Boards</strong> über den Boardverwalter.</li>
+          <li>Wähle unter <strong>Werkzeuge → Port</strong> den Anschluss deines Boards. Unter Windows heißt er etwa <code>COM…</code>. Vergleiche bei Unsicherheit die Liste vor und nach dem Einstecken; übernimm keine fremde Portnummer.</li>
+          <li>Öffne <strong>Datei → Beispiele → 01.Basics → Blink</strong>. Klicke auf den Haken zum Überprüfen und danach auf den Pfeil zum Hochladen. Die eingebaute LED <code>L</code> soll blinken. „Kompiliert“ allein bedeutet noch nicht „hochgeladen“.</li>
+          <li>Ziehe vor jedem Umbau USB ab und trenne gegebenenfalls eine zusätzliche Versorgung. Verbinde erst nach der Anschlusskontrolle wieder USB. Für Textausgaben öffnest du nach dem Upload <strong>Werkzeuge → Serieller Monitor</strong> und stellst <strong>9600 Baud</strong> ein. Öffne den Monitor vor dem Test und drücke dann kurz RESET, um eine Ausgabe aus <code>setup()</code> erneut zu sehen.</li>
+        </ol>
+        <p><strong>Erfolgskontrolle:</strong> Du kannst Blink hochladen und findest den tatsächlich verwendeten Port. Scheitert das, nutze das Kapitel „Troubleshooting“, bevor du die größeren Schaltungen aufbaust.</p>
+      </div>
       <div class="wb-section-break"></div>
       <div data-wb-type="reveal">
         <script type="application/json" class="wb-config">
@@ -232,35 +278,51 @@
           </div>
           <p>Wenn du einer Variablen zum ersten Mal einen Wert zuweist, nennt man das <b>Initialisieren</b>. Genau so arbeitest du auch bei Arrays: Du legst zuerst fest, was gespeichert werden soll, und füllst die Liste dann mit Werten. Hier wird eine Melodie mit sechs Frequenzen gezeigt. Zusätzlich gibt es ein zweites Array mit Notenwerten wie Achtel, Viertel oder Halbe. So legst du nicht nur fest, <b>welcher</b> Ton gespielt wird, sondern auch <b>wie lange</b>.</p>
         </div>
-        <figure class="topic-figure">
-          <img src="pdf-bilder/array_klavier.png" alt="Klaviatur mit Frequenzen als Hilfe für Tonhöhen" />
-          <figcaption>Auf dem Bild siehst du die Zuordnung von Tönen zu Frequenzen in Hertz. So kannst du die Zahlen aus dem Programm einer Tonhöhe zuordnen.</figcaption>
+        <figure class="topic-figure keyboard">
+          <div class="material-crop crop-keyboard"><img src="pdf-bilder/array_klavier.png" alt="Ausschnitt der Klaviatur: Frequenzen von etwa 175 bis 262 Hertz" /></div>
+          <figcaption>Frequenzen in Hertz: 175 Hz klingt tiefer als 262 Hz. Die Zahlen legen die Tonhöhe fest.</figcaption>
         </figure>
       </div>
       <div class="wb-section-break"></div>
 
-      <div class="grid2x" style="margin-top:16px;">
-        <figure class="topic-figure">
-          <img src="pdf-bilder/array_code.png" alt="Codeausschnitt zu Arrays mit Melodie und Indexen" />
-          <figcaption>Die Melodie liegt in einem Array. Das erste Element hat Index 0, das dritte hier Index 2.</figcaption>
-        </figure>
-        <div>
-          <div class="code-card"><pre>int Melodie[] = {175,175,196,175,262,247};
-int notenWert[] = {8,8,4,4,4,2};
-int tonDauer;
-int pauseZwischenNoten;
+      <div class="lab-task" id="arrays-start">
+        <h2>Erster Versuch: Sechs Töne aus zwei Listen</h2>
+        <p id="arduino5-lautsprecher"><strong>Aufbau ohne USB:</strong> Verwende wie in Modul 2 einen geprüften kleinen passiven Lautsprecher:
+          <code>D8 → 330 Ω → Lautsprecher → GND</code>, bei Kennzeichnung „+“ auf der Widerstandsseite.
+          Der Widerstand begrenzt beim Uno R3 den Strom und hält den Ton leiser; 1 kΩ macht den Versuch noch leiser.
+          Ein passiver Piezo ist eine Alternative und kann ebenfalls mit dem Serienwiderstand angeschlossen werden.
+          Prüfe unbeschriftete Bauteile mit der Lehrkraft. Ein aktiver Summer mit festem Ton eignet sich nicht zum Vergleichen der Tonhöhen;
+          einen unbekannten Lautsprecher schließt du nicht ohne Vorwiderstand direkt an einen Pin an.</p>
+        <p>Speichere einen neuen Sketch als <code>modul5_melodie</code> und füge diesen vollständigen Code ein. Er spielt einmal nach Start oder RESET. Groß- und Kleinschreibung zählen: Verwende überall <code>Melodie</code>.</p>
+        <pre data-arduino-sketch="melodie"><code>const byte lautsprecher = 8;
+const int Melodie[] = {175,175,196,175,262,247};
+const int notenWert[] = {8,8,4,4,4,2};
+const int anzahlToene = sizeof(Melodie) / sizeof(Melodie[0]);
+static_assert(anzahlToene == sizeof(notenWert) / sizeof(notenWert[0]),
+              "Die beiden Listen muessen gleich lang sein.");
 
-for (int i = 0; i &lt; 6; i = i + 1) {
-  tone(8, Melodie[i]);
-  tonDauer = 1000 / notenWert[i];
-  delay(tonDauer);
-  noTone(8);
-  pauseZwischenNoten = tonDauer * 0.30;
-  delay(pauseZwischenNoten);
-}</pre></div>
-          <p>Die Schleife läuft hier von <code>i = 0</code> bis <code>i &lt; 6</code>. So werden alle sechs Listenplätze nacheinander verarbeitet. Die Tondauer wird aus dem Notenwert berechnet. Eine Achtel dauert dadurch kürzer als eine Viertel oder Halbe.</p>
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i &lt; anzahlToene; i++) {
+    int tonDauer = 1000 / notenWert[i];
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(Melodie[i]);
+    tone(lautsprecher, Melodie[i]);
+    delay(tonDauer);
+    noTone(lautsprecher);
+    int pauseZwischenNoten = tonDauer * 0.30;
+    delay(pauseZwischenNoten);
+  }
+}
 
-        </div>
+void loop() {}</code></pre>
+        <ol>
+          <li><strong>Erwarte:</strong> Welche beiden Töne klingen gleich hoch? Welcher Ton dauert am längsten? Fülle zuerst die Ablaufspur unten aus.</li>
+          <li><strong>Teste:</strong> Überprüfe und lade hoch. Öffne den seriellen Monitor mit 9600 Baud und drücke RESET. Vergleiche die sechs ausgegebenen Indizes und Frequenzen mit der Tabelle und höre die Melodie.</li>
+          <li><strong>Verändere:</strong> Ersetze nur <code>0.30</code> durch <code>0.60</code>, lade erneut hoch und vergleiche. Ändere danach nur <code>1000</code> zu <code>2000</code>. Halte fest, ob sich Tonhöhe, Tonlänge oder Pause verändern. Stelle für die folgenden Aufgaben die Ausgangswerte wieder her.</li>
+        </ol>
+        <p><strong>Merke:</strong> Hier ist die Dauer einer ganzen Note auf 1000 ms festgelegt. Achtel, Viertel und Halbe dauern dadurch 125, 250 und 500 ms. Das ist eine gewählte Tempo-Vorgabe, keine allgemeingültige Notendauer. Die Pause kommt zusätzlich dazu; beim Speichern als <code>int</code> entfallen Nachkommastellen.</p>
       </div>
       <div class="wb-section-break"></div>
 
@@ -325,7 +387,7 @@ for (int i = 0; i &lt; 6; i = i + 1) {
 for (int i = 0; i &lt; anzahlToene; i++) {
   // Melodie[i] und notenWert[i] verarbeiten
 }</pre></div>
-      <p>Mit <code>sizeof</code> lässt du die Zahl der Arrayelemente berechnen. Erweiterst du später die Melodie, passt sich die Schleifengrenze automatisch an. Prüfen musst du trotzdem, ob das zweite Array genauso viele Einträge besitzt.</p>
+      <p>Mit <code>sizeof</code> berechnest du hier direkt am Array die Zahl seiner Elemente. Die Schleifengrenze passt sich beim Erweitern an. <code>static_assert</code> prüft bereits beim Kompilieren, ob das zweite Array genauso lang ist. Der Ausdruck gilt nicht unverändert für einen Zeiger, der an eine Funktion übergeben wurde.</p>
 
       <div class="wb-section-break"></div>
       <div data-wb-type="cloze">
@@ -356,11 +418,11 @@ for (int i = 0; i &lt; anzahlToene; i++) {
       <div class="media-grid" style="margin-top:16px;">
         <figure class="topic-figure">
           <img src="pdf-bilder/array_code2.png" alt="Zweiter Codeausschnitt mit Arrays" />
-          <figcaption>Auf dem Bild siehst du, wie die Melodie später erweitert wird und warum die Schleife zur Anzahl der Einträge passen muss.</figcaption>
+          <figcaption>Einzelne Tonbefehle aus dem Material: Immer wieder stehen ähnliche Anweisungen hintereinander.</figcaption>
         </figure>
         <div class="image-guide">
-          <strong>Prüfe Länge und Schleifengrenze</strong>
-          <p>Zähle die Einträge im Array. Der letzte gültige Index ist immer um eins kleiner als die Anzahl der Einträge. Vergleiche das Ergebnis mit der Abbruchbedingung der Schleife.</p>
+          <strong>Vom Einzelbefehl zur Schleife</strong>
+          <p>Vergleiche die wiederholten Befehle im Bild mit dem vollständigen Array-Sketch. Dort steht der Ablauf nur einmal; der Index wählt die Werte aus. Prüfe bei jeder Erweiterung Länge und Schleifengrenze.</p>
           <p><b>Fehlerprobe:</b> Was würde bei 25 Einträgen und der Bedingung <code>i &lt;= 25</code> passieren?</p>
         </div>
       </div>
@@ -383,15 +445,15 @@ for (int i = 0; i &lt; anzahlToene; i++) {
       <div class="grid2x">
         <div>
           <p>In Arrays müssen nicht nur Zahlen stehen. Mit <code>char</code> kannst du auch einzelne Zeichen speichern. Ein Beispiel ist <code>char zeichen[] = {'P','f','e','r','d','1'};</code>. Mit <code>zeichen[3]</code> würdest du das <code>r</code> ausgeben.</p>
-          <p>Ein einzelnes Zeichen wird im Speicher als Zahl abgelegt. Dafür gibt es eine feste Tabelle, die <b>ASCII-Tabelle</b>. Die Ziffer <code>1</code> als Zeichen hat deshalb einen anderen Sinn als die Zahl 1, mit der du rechnest. Genau darum ist es wichtig, ob du etwas als <code>char</code> oder als Zahl speicherst.</p>
-          <p>Willst du mehrere ganze Wörter speichern, verwendest du ein Array aus Zeigern auf Zeichenketten, zum Beispiel <code>const char* mitSchueler[] = {"Martin","Volker","Frank",...};</code>. Die Zeichenketten stehen in doppelten Anführungszeichen. <code>const</code> zeigt an, dass diese Texte nicht verändert werden sollen.</p>
+          <p>Ein <code>char</code> speichert beim Uno R3 ein Byte. Für einfache Zeichen wie <code>'1'</code> gilt die ASCII-Codierung: Das Zeichen hat den Code 49, während die Zahl <code>1</code> den Wert 1 hat. Umlaute können in UTF-8 mehrere Bytes benötigen.</p>
+          <p>Auch ein ganzes Wort kann in einem <code>char</code>-Array stehen: <code>char wort[] = "Pferd";</code> enthält fünf Buchstaben plus das Abschlusszeichen <code>'\0'</code>. Das obige Array aus sechs einzelnen Zeichen besitzt dieses Abschlusszeichen nicht und darf nicht als ganze Zeichenkette ausgegeben werden. Für <em>mehrere Wörter</em> nutzen wir hier ein Array aus Zeigern: <code>const char* woerter[] = {"Nacht", "Wind"};</code>. Jeder Zeiger verweist auf eine Zeichenkette; die Zeichen hinter <code>const char*</code> werden über diesen Zeiger nicht verändert.</p>
         </div>
         <div class="info-box">
           <strong>Wichtige Hinweise aus dem blauen Kasten</strong>
           <ul class="check-list">
             <li>Speicherst du eine Ziffer als <code>char</code>, wird sie als Text behandelt.</li>
             <li>In einem <code>char</code>-Array stehen einzelne Zeichen in einfachen Anführungszeichen.</li>
-            <li>Mit einem Pointer <code>*</code> kannst du ganze Wörter speichern.</li>
+            <li>Ein Pointer <code>*</code> speichert eine Adresse; der Text steht in der Zeichenkette, auf die er zeigt.</li>
             <li>Werte in Arrays können später auch verändert werden, zum Beispiel <code>werte[3] = analogRead(A0);</code>.</li>
             <li>Daten im RAM gehen beim Neustart des Arduino wieder verloren.</li>
           </ul>
@@ -416,44 +478,121 @@ for (int i = 0; i &lt; anzahlToene; i++) {
       <div class="wb-section-break"></div>
 
       <h2>Vier Anwendungsaufgaben</h2>
-      <div class="grid2x">
-        <div class="task-card">
-          <h3>1. Melodie erweitern</h3>
-          <p>Tippe den Code ab, schließe einen Lautsprecher an und lass die Melodie spielen. Ergänze die restlichen Frequenzen und Notenwerte. Achte darauf: Die For-Schleife muss bis <code>i &lt; 25</code> laufen, sonst werden nur 6 Töne gespielt.</p>
-          <p>Diese zusätzlichen Werte brauchst du:</p>
-          <div class="code-card"><pre>int melodie[] = {
+      <div class="lab-task" id="arrays_melodie">
+          <h3>6.1 · Melodie erweitern</h3>
+          <p>Behalte die Ton-Schaltung mit Vorwiderstand an D8 und speichere eine Kopie als <code>modul5_melodie25</code>. Ersetze im vollständigen Sketch <strong>beide Arraydeklarationen vollständig</strong> durch diese Listen; hänge sie nicht an die sechs Startwerte an. Alle anderen Zeilen bleiben stehen.</p>
+          <pre><code>const int Melodie[] = {
 196,196,220,196,262,247,196,196,220,196,
 294,262,196,196,392,330,262,247,220,349,
 349,330,262,294,262
 };
 
-int notenWert[] = {
+const int notenWert[] = {
 8,8,4,4,4,2,8,8,4,4,
 4,2,8,8,4,4,4,4,8,8,
 4,4,4,4,2
-};</pre></div>
-        </div>
-        <div class="task-card">
-          <h3>2. Tafeldienst auslosen</h3>
-          <p>Fertige ein Array mit Namen deiner Klassenkameraden an. Schreibe dann ein Programm, das mit einer Zufallsfunktion über den Index einen Namen auswählt.</p>
-          <div class="code-card"><pre>const char* mitSchueler[] = {
+};</code></pre>
+          <ol>
+            <li>Zähle die Werte beider Listen und bestimme den letzten gültigen Index. Bei einer festen Grenze müsste die Schleife jetzt <code>i &lt; 25</code> verwenden; im Sketch berechnet <code>anzahlToene</code> die Grenze.</li>
+            <li>Lade hoch, öffne den Monitor und starte mit RESET. Prüfe, ob 25 Zeilen mit den Indizes 0 bis 24 erscheinen und die Melodie einmal durchläuft.</li>
+            <li>Erkläre, warum <code>i &lt;= 25</code> ungültige Zugriffe erzeugen würde. Teste absichtlich ungültige Indizes nicht am Board.</li>
+          </ol>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="lab-task" id="arrays_tafeldienst">
+          <h3>6.2 · Tafeldienst auslosen</h3>
+          <p>Für die nächsten drei Aufgaben brauchst du nur Board und USB. Trenne vor dem Umbau USB und entferne die Ton-Schaltung. Lass A0 unbeschaltet. Speichere diesen vollständigen Sketch als <code>modul5_tafeldienst</code> und ersetze die Beispielnamen durch eine kurze eigene Liste.</p>
+          <pre data-arduino-sketch="tafeldienst"><code>const char* mitSchueler[] = {
 "Martin","Volker","Frank","Kolja",
 "Alexander","Mario","Peter","Rainer"
-};</pre></div>
-        </div>
+};
+const int anzahl = sizeof(mitSchueler) / sizeof(mitSchueler[0]);
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  int index = random(anzahl);
+  Serial.print(index);
+  Serial.print(": ");
+  Serial.println(mitSchueler[index]);
+  delay(2000);
+}</code></pre>
+          <ol>
+            <li><strong>Erwarte:</strong> Bestimme den möglichen Indexbereich für deine Liste. <code>random(anzahl)</code> schließt die obere Grenze aus.</li>
+            <li><strong>Teste:</strong> Überprüfe, lade hoch und öffne den Monitor mit 9600 Baud. Notiere zehn Ziehungen mit Index und Name. Jeder Index muss zur richtigen Person gehören; Wiederholungen sind erlaubt.</li>
+            <li><strong>Verändere:</strong> Füge genau einen Namen hinzu und prüfe, ob er einen gültigen neuen Index bekommt. Erkläre, weshalb zehn Ziehungen weder gleich häufige Namen noch eine faire Verteilung über die Schulwochen garantieren.</li>
+          </ol>
+          <p><strong>Merke:</strong> <code>random()</code> erzeugt Pseudozufallszahlen. Ein freier A0-Eingang kann einen veränderlichen Startwert liefern, aber wiederkehrende Startwerte und wiederholte Namen sind möglich. Für eine feste Testfolge kannst du stattdessen <code>randomSeed(12345);</code> verwenden.</p>
       </div>
-
       <div class="wb-section-break"></div>
+      <div class="lab-task" id="arrays_literatur">
+          <h3>6.3 · Literaturautomat</h3>
+          <p>Lege einen eigenen Sketch <code>modul5_literatur</code> an. Board und Monitor bleiben wie bei 6.2. Der vollständige Startcode bildet „Wer reitet so spät durch x und y?“ aus zwei Wortlisten.</p>
+          <pre data-arduino-sketch="literatur"><code>const char* x[] = {"Nacht", "Regen", "Nebel"};
+const char* y[] = {"Wind", "Sturm", "Schnee"};
+const int anzahlX = sizeof(x) / sizeof(x[0]);
+const int anzahlY = sizeof(y) / sizeof(y[0]);
 
-      <div class="grid2x" style="margin-top:16px;">
-        <div class="task-card">
-          <h3>3. Literaturautomat</h3>
-          <p>Nutze den Satzanfang „Wer reitet so spät durch x und y?“. Lege Arrays mit möglichen Wörtern an und lasse per Zufall zwei Begriffe auswählen. Erfinde dann deinen eigenen Literaturautomaten.</p>
-        </div>
-        <div class="task-card">
-          <h3>4. Hausarbeiten verteilen</h3>
-          <p>Programmiere eine Maschine, die Hausdienste auf Familienmitglieder verteilt. Niemand darf doppelt eingesetzt werden. Auf dem Monitor könnte zum Beispiel stehen: „Papa darf abwaschen.“</p>
-        </div>
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  Serial.print("Wer reitet so spät durch ");
+  Serial.print(x[random(anzahlX)]);
+  Serial.print(" und ");
+  Serial.print(y[random(anzahlY)]);
+  Serial.println("?");
+  delay(2000);
+}</code></pre>
+          <ol>
+            <li>Notiere vor dem Upload zwei mögliche Sätze und berechne, wie viele Wortkombinationen mit den Startlisten möglich sind.</li>
+            <li>Lade hoch und prüfe fünf Ausgaben: Jeder Satz braucht genau einen Begriff aus jeder Liste, Leerzeichen und ein Fragezeichen. Einzelne Kombinationen dürfen mehrfach erscheinen.</li>
+            <li>Erfinde einen eigenen Satzbau mit zwei Wortlisten, etwa „Heute trifft … auf …“. Passe Satzteile und Listen an. Erweitere nur eine Liste auf vier Wörter und prüfe, ob beide Zufallsgrenzen weiterhin stimmen. Dokumentiere deine Listen und zwei tatsächlich beobachtete Ausgaben.</li>
+          </ol>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="lab-task" id="arrays_hausarbeiten">
+          <h3>6.4 · Hausarbeiten ohne Doppelbelegung verteilen</h3>
+          <p>Du verteilst drei unterschiedliche Dienste auf drei Personen; jede Person soll genau einen Dienst bekommen. Unabhängiges Ziehen eines Namens für jeden Dienst könnte denselben Namen mehrfach liefern. Dieser vollständige Sketch mischt deshalb eine Liste mit allen Personenindizes. Speichere ihn als <code>modul5_hausdienste</code>.</p>
+          <pre data-arduino-sketch="hausdienste"><code>const char* namen[] = {"Alex", "Robin", "Sam"};
+const char* dienste[] = {"abwaschen", "aufräumen", "Staub wischen"};
+const int anzahl = sizeof(namen) / sizeof(namen[0]);
+static_assert(anzahl == sizeof(dienste) / sizeof(dienste[0]),
+              "Gleich viele Personen und Dienste erforderlich.");
+int reihenfolge[anzahl];
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  for (int i = 0; i &lt; anzahl; i++) reihenfolge[i] = i;
+  for (int i = anzahl - 1; i &gt; 0; i--) {
+    int j = random(i + 1);
+    int temp = reihenfolge[i];
+    reihenfolge[i] = reihenfolge[j];
+    reihenfolge[j] = temp;
+  }
+  Serial.println("Neue Verteilung:");
+  for (int i = 0; i &lt; anzahl; i++) {
+    Serial.print(namen[reihenfolge[i]]);
+    Serial.print(" darf ");
+    Serial.println(dienste[i]);
+  }
+  Serial.println();
+  delay(5000);
+}</code></pre>
+          <ol>
+            <li><strong>Verfolge:</strong> Beginne auf Papier mit <code>{0,1,2}</code>. Nimm als mögliche Zufallswerte zuerst <code>j = 0</code> bei <code>i = 2</code> und dann <code>j = 1</code> bei <code>i = 1</code>. Schreibe die Indexliste nach jedem Tausch auf.</li>
+            <li><strong>Teste:</strong> Lade hoch und prüfe drei Verteilungen im Monitor. Pro Verteilung müssen alle Personen und alle Dienste genau einmal vorkommen. Die nächste Verteilung darf zufällig gleich ausfallen.</li>
+            <li><strong>Erweitere:</strong> Ergänze eine vierte Person und einen vierten Dienst. Lade erneut hoch und prüfe die Bedingung wieder. Erkläre, wieso Tauschen keine Person verschwinden oder doppelt vorkommen lässt und wieso dies noch keinen gerechten Wochenplan garantiert.</li>
+          </ol>
       </div>
 
       <div class="wb-section-break"></div>
@@ -478,15 +617,15 @@ int notenWert[] = {
               "explain":"Die erweiterte Melodie enthält deutlich mehr Töne. Deshalb muss auch die Schleife mehr Elemente durchlaufen."
             },
             {
-              "text":"Was ist der entscheidende Unterschied zwischen einem char-Array und einem Array mit Wörtern?",
+              "text":"Was unterscheidet char zeichen[] = {'P','f'} von const char* woerter[] = {\"Nacht\",\"Wind\"}?",
               "choices":[
-                {"id":"a","label":"Ein char-Array speichert einzelne Zeichen, für Wörter braucht man Zeichenketten mit Pointer."},
+                {"id":"a","label":"zeichen enthält zwei Zeichen; woerter enthält zwei Zeiger auf vollständige Zeichenketten."},
                 {"id":"b","label":"Ein char-Array ist nur für Zahlen erlaubt."},
                 {"id":"c","label":"Wörter kann man nur in int-Arrays speichern."},
                 {"id":"d","label":"Es gibt keinen Unterschied."}
               ],
               "correct":["a"],
-              "explain":"Genau das gilt hier: einzelne Zeichen mit char, ganze Wörter als Zeichenketten mit Pointer."
+              "explain":"Ein char-Array kann auch eine ganze Zeichenkette mit Abschlusszeichen enthalten. In woerter verweist dagegen jedes Arrayelement auf eine eigene Zeichenkette. Zeiger sind nicht die einzige Möglichkeit, mehrere Wörter zu speichern."
             }
           ]
         }
@@ -535,7 +674,7 @@ int notenWert[] = {
           "title":"Transfer: Entwickle deinen eigenen Array-Einsatz",
           "hint":"Antworte in 4 bis 7 Sätzen. Nenne auch, welche Werte in deiner Liste stehen würden.",
           "fields":[
-            {"label":"Deine Idee","key":"arrays_transfer","kind":"textarea","placeholder":"Beschreibe ein eigenes Arduino-Projekt, in dem Arrays sinnvoll wären, zum Beispiel für Namen, Messwerte, Töne oder Abläufe."}
+            {"label":"Deine Idee","key":"arrays_transfer","kind":"textarea","prompt":"Beschreibe ein eigenes Arduino-Projekt mit Arrays, zum Beispiel für Namen, Messwerte, Töne oder Abläufe. Welche Werte und Datentypen nutzt du? Wie hältst du Indizes innerhalb der gültigen Grenzen? Begründe den Vorteil gegenüber einzelnen Variablen.","placeholder":"Deine Projektidee …"}
           ]
         }
         </script>
@@ -549,12 +688,27 @@ int notenWert[] = {
       </div>
 
       <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_arrays_labor",
+          "title":"Versuchsprotokoll: Array-Aufgaben",
+          "hint":"Notiere deine echten Beobachtungen. Kennzeichne einen nicht durchgeführten Versuch und begründe stattdessen deine Code-Vorhersage.",
+          "fields":[
+            {"key":"melodie_test","label":"Melodie und Indexgrenzen","kind":"textarea","prompt":"Dokumentiere Erwartung und Beobachtung bei 0.30 → 0.60 sowie 1000 → 2000. Wie viele Ausgaben erhältst du in 6.1? Erkläre i <= 25 bei 25 Einträgen und die Folgen eines mitten im Notenwert-Array gelöschten Eintrags."},
+            {"key":"zufall_test","label":"Tafeldienst und Literaturautomat","kind":"textarea","prompt":"Notiere die zehn Ziehungen aus 6.2 mit Index und Namen sowie deine Folgerung zu Wiederholungen. Nenne für 6.3 die Anzahl möglicher Startkombinationen, deine eigenen Wortlisten und zwei echte Ausgaben. Wie passt du die Grenzen beim Erweitern an?"},
+            {"key":"verteilung_test","label":"Hausdienste","kind":"textarea","prompt":"Zeige die zwei Tauschergebnisse der Papierprobe aus 6.4. Dokumentiere einen Test mit vier Personen und vier Diensten. Warum entstehen keine Doppelbelegungen? Warum kann eine Person trotzdem in mehreren Wochen denselben Dienst erhalten?"}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
 
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Interrupt">
-      <h1>Interrupt: Auf Ereignisse sofort reagieren</h1>
-      <p class="wb-muted">Jetzt lernst du, wie du Taster sicher abfragst und wie ein Interrupt dem Arduino hilft, auf ein Ereignis sofort zu reagieren. Dazu gehören Pull-Up, Pull-Down, Polling, <code>attachInterrupt()</code>, ISR und <code>volatile</code>.</p>
+      <h1>Interrupt: Auf Ereignisse reagieren</h1>
+      <p class="wb-muted">Du vergleichst die schnelle Erfassung einer Tasterflanke mit der späteren Verarbeitung in <code>loop()</code>. Dazu gehören Pull-Up, Pull-Down, Polling, <code>attachInterrupt()</code>, ISR und <code>volatile</code>.</p>
 
       <div class="info-box">
         <strong>Leitfrage</strong>
@@ -565,42 +719,82 @@ int notenWert[] = {
 
       <div class="grid2x" style="margin-top:16px;">
         <div>
-          <p>Auf dem Bild lernst du zuerst, wie du Taster elektrisch sauber abfragst. Dafür braucht man im Prinzip einen <b>Spannungsteiler</b>. Es gibt zwei Grundschaltungen: <b>Pull-Up</b> und <b>Pull-Down</b>.</p>
-          <p>Bei offenem Schalter liegt beim Pull-Up am Pin 5V an. Beim Pull-Down liegt am Pin 0V an. Vertauschst du GND und 5V, invertierst du also das Verhalten. Sehr praktisch ist <code>INPUT_PULLUP</code>: Dann nutzt der Arduino einen internen Pull-Up-Widerstand, und du brauchst nur Taster, Pin und GND. Einen internen Pull-Down gibt es hier nicht.</p>
+          <p>Ein offener Taster darf einen Eingang nicht elektrisch unbestimmt lassen. Ein <b>Pull-Up</b>-Widerstand zieht ihn zur Versorgung, ein <b>Pull-Down</b>-Widerstand zu GND. Der jeweils geschlossene Taster verbindet den Eingang mit dem gegenüberliegenden Pegel. Vertausche dabei keine Versorgungsleitungen einer bestehenden Schaltung.</p>
+          <p>Hier nutzt du <code>INPUT_PULLUP</code> und einen Taster zwischen D2 und GND. Am Uno R3 ist der Eingang offen HIGH (nahe 5 V) und gedrückt LOW (nahe 0 V). Beim Drücken entsteht eine fallende Flanke, beim Loslassen eine steigende. Der Uno R3 bietet keinen per <code>pinMode()</code> zuschaltbaren internen Pull-Down.</p>
           <div class="warn-box">
             <strong>Polling und sein Problem</strong>
             <p>Wenn ein Programm Taster nur an bestimmten Stellen prüft, nennt man das <b>Polling</b>. In langen Schleifen oder bei <code>delay()</code> kann ein kurzer Tastendruck dann leicht verpasst werden.</p>
           </div>
         </div>
         <figure class="topic-figure">
-          <img src="pdf-bilder/interrupt_aufgabe.png" alt="Bild mit Lauflicht, Taster und Interrupt-Erklärung" />
-          <figcaption>Auf dem Bild siehst du die Idee direkt an einem Lauflicht mit Taster: Der Interrupt reagiert auf die Signaländerung.</figcaption>
+          <div class="material-crop crop-interrupt"><img src="pdf-bilder/interrupt_aufgabe.png" alt="Materialausschnitt: attachInterrupt mit Pinumsetzung, ISR roteLed und FALLING" /></div>
+          <figcaption>Die drei Argumente verbinden Pin, Reaktionsfunktion und Auslösesignal. Den vollständigen Sketch findest du darunter.</figcaption>
         </figure>
       </div>
 
        <div class="wb-section-break"></div>
 
-       <div class="task-card">
+       <div class="lab-task" id="interrupt_lauflicht">
           <h3><strong>Aufgabe:</strong> Lauflicht mit Interrupt</h3>
-          <p>Tippe das Programm von oben ab und baue ein Lauflicht mit acht LEDs und einem Taster. Der Interrupt reagiert auf den Tastendruck und schaltet eine rote LED ein. Dabei verstehst du, welche Funktion beim Interrupt aufgerufen wird und welches Signal ihn auslöst.</p>
+          <p>Baue zuerst ohne USB. Du brauchst acht Lauflicht-LEDs und zusätzlich eine rote Melde-LED, <strong>jede mit eigenem 330-Ω-Vorwiderstand</strong>. Die rote LED gehört nicht zu den acht Lauflichtschritten.</p>
+          <div class="lab-table"><table>
+            <thead><tr><th>Bauteil</th><th>Verbindung am Uno R3</th></tr></thead>
+            <tbody>
+              <tr><td>Lauflicht-LEDs 1 bis 8</td><td>Je D4, D5, D6, D7, D8, D9, D10, D11 → eigener 330-Ω-Widerstand → Anode der LED; Kathode → GND.</td></tr>
+              <tr><td>Rote Melde-LED</td><td>D12 → 330 Ω → Anode; Kathode → GND.</td></tr>
+              <tr><td>Taster</td><td>D2 → Tasterkontakt → gegenüberliegender Schaltkontakt → GND. Kein Anschluss an 5 V und kein externer Pull-Up nötig.</td></tr>
+              <tr><td>Breadboard</td><td>GND des Boards an die verwendete Masseleiste. Prüfe Unterbrechungen der Leiste und intern verbundene Reihen.</td></tr>
+            </tbody>
+          </table></div>
+          <p>Die Anode einer ungekürzten LED hat meist das längere Bein; die abgeflachte Gehäuseseite markiert üblicherweise die Kathode. Prüfe bei Unsicherheit das Bauteil. Bei vierbeinigen Tastern sind je zwei Beine schon intern verbunden. Wähle zwei Kontakte, die erst beim Drücken verbunden werden; prüfe das stromlos mit dem Durchgangsprüfer.</p>
+          <p>Speichere diesen vollständigen Sketch als <code>modul5_interrupt_direkt</code>, überprüfe ihn und lade ihn nach der Anschlusskontrolle hoch.</p>
+          <pre data-arduino-sketch="interrupt-direkt"><code>const byte leds[] = {4,5,6,7,8,9,10,11};
+const byte rot = 12;
+const byte taster = 2;
+
+void roteLed() {
+  digitalWrite(rot, HIGH);
+}
+
+void setup() {
+  for (byte i = 0; i &lt; 8; i++) pinMode(leds[i], OUTPUT);
+  pinMode(rot, OUTPUT);
+  pinMode(taster, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(taster), roteLed, FALLING);
+}
+
+void loop() {
+  for (byte i = 0; i &lt; 8; i++) {
+    digitalWrite(leds[i], HIGH);
+    delay(500);
+    digitalWrite(leds[i], LOW);
+  }
+  digitalWrite(rot, LOW);
+}</code></pre>
+          <ol>
+            <li><strong>Erwarte:</strong> Wie lange dauert ungefähr ein Umlauf? Was sollte bei einem kurzen Tastendruck mitten in einem 500-ms-Schritt passieren?</li>
+            <li><strong>Teste:</strong> Ohne Tastendruck wandert das Licht über acht LEDs. Drücke kurz und lasse wieder los. Die rote LED soll schon während eines Lauflichtschritts angehen und am Ende des Umlaufs wieder ausgehen. Teste nicht nur direkt am Umlaufende, dort ist die rote Leuchtphase sehr kurz.</li>
+            <li><strong>Vergleiche mit Polling:</strong> Speichere eine Kopie. Entferne nur die <code>attachInterrupt(...);</code>-Zeile und füge ganz am Anfang von <code>loop()</code> <code>if (digitalRead(taster) == LOW) roteLed();</code> ein. Vergleiche kurze Tastendrücke und langes Gedrückthalten. Stelle danach die Interrupt-Version wieder her.</li>
+          </ol>
+          <p><strong>Erklärung:</strong> Die ISR setzt hier nur einen Ausgang und ist sehr kurz. Beim Uno R3 können Interrupts auch während <code>delay()</code> eintreffen. Das Lauflicht wird nach der ISR fortgesetzt. Die Polling-Kopie liest D2 dagegen nur einmal pro Umlauf und kann einen kurzen Tastendruck dazwischen verpassen.</p>
         </div>
 
         <div class="wb-section-break"></div>
 
       <div class="grid2x" style="margin-top:16px;">
         <figure class="topic-figure">
-          <img src="pdf-bilder/interrupt_aufgabe2.png" alt="Bild mit zweitem Interrupt-Beispiel" />
-          <figcaption>Auf dem Bild wird die Interrupt-Idee weitergeführt: Ereignis merken und später im Hauptprogramm verarbeiten.</figcaption>
+          <div class="material-crop crop-flag"><img src="pdf-bilder/interrupt_aufgabe2.png" alt="Materialausschnitt: Tasterpin und volatile Ereignisvariable zustand" /></div>
+          <figcaption>Der gemeinsame Ereignismerker ist <code>volatile</code>. Das gilt für zwischen ISR und Hauptprogramm geteilte Variablen.</figcaption>
         </figure>
         <div>
           <div class="info-box">
             <strong>Zweck eines Interrupts</strong>
-            <p>Ein Interrupt unterbricht das laufende Programm kurzzeitig, damit eine hinterlegte Funktion ausgeführt werden kann. So reagiert der Arduino sofort auf ein äußeres Ereignis, ein Zeitsignal oder eintreffende Daten.</p>
+            <p>Ein Interrupt unterbricht das Hauptprogramm kurz, um eine <b>Interrupt Service Routine (ISR)</b> auszuführen. Die Erfassung kann schnell erfolgen; wann die eigentliche Aktion folgt, hängt vom Programm ab. Bereits gesperrte Interrupts oder eine laufende ISR können die Bearbeitung verzögern.</p>
           </div>
           <div class="code-card"><pre>attachInterrupt(digitalPinToInterrupt(taster),
-                roteLed,
+                meineISR,
                 FALLING);</pre></div>
-          <p><code>attachInterrupt()</code> hat hier drei Teile: den Interrupt-Pin, den Namen der ISR und das Signal, auf das reagiert werden soll. Du siehst auf dem Bild die Varianten <code>FALLING</code>, <code>RISING</code>, <code>LOW</code> und <code>CHANGE</code>. Beim Arduino Uno stehen dafür die Pins 2 und 3 zur Verfügung. Mit <code>digitalPinToInterrupt(taster)</code> bleibt im Code sichtbar, welcher Pin verwendet wird.</p>
+          <p><code>attachInterrupt()</code> bekommt die mit <code>digitalPinToInterrupt(taster)</code> ermittelte Interruptnummer, den ISR-Namen ohne Aufrufklammern und den Auslösemodus. Am <strong>Uno R3</strong> unterstützen D2 und D3 diese externen Interrupts. <code>FALLING</code> reagiert auf HIGH → LOW, <code>RISING</code> auf LOW → HIGH, <code>CHANGE</code> auf beide Flanken. <code>LOW</code> ist pegelgesteuert und kann bei gehaltenem Taster wiederholt auslösen.</p>
         </div>
       </div>
 
@@ -608,7 +802,7 @@ int notenWert[] = {
 
       <div class="warn-box">
         <strong>Ablaufspur: Was passiert beim Tastendruck?</strong>
-        <p>Der Interrupt erledigt nicht die ganze Arbeit. Er merkt nur schnell, dass etwas passiert ist. Die längere Reaktion gehört danach in <code>loop()</code>.</p>
+        <p>Für eine längere Reaktion merkt die ISR nur das Ereignis. In <code>loop()</code> übernimmst du den Merker und löschst ihn <em>vor</em> der Aktion. Beide Zugriffe gehören zusammen: Trifft die ISR dazwischen ein, könnte ein neues Ereignis sonst beim Löschen verloren gehen. <code>volatile</code> allein verhindert das nicht.</p>
       </div>
 
       <div data-wb-type="trace">
@@ -616,7 +810,7 @@ int notenWert[] = {
         {
           "id":"arduino5_interrupt_trace",
           "title":"Ablaufspur: Vom Tastendruck zur Reaktion",
-          "hint":"Trage ein, welcher Programmteil aktiv ist, welchen Wert der Merker zustand hat und was als Nächstes geschieht.",
+          "hint":"Verfolge den folgenden Merker-Sketch für genau eine FALLING-Flanke ohne Prellen. Vor der Aktion übernimmt und löscht loop() das Flag geschützt. Trage den Zustand an der jeweils angegebenen Stelle ein.",
           "columns":[
             {
               "label": "Ereignis",
@@ -649,7 +843,7 @@ int notenWert[] = {
           "rows":[
             {"cells":[{"given":"Normalbetrieb"},{"answers":["loop()","loop"]},{"answers":["0"]},{"answers":["Hauptprogramm läuft weiter","loop läuft weiter"]}]},
             {"cells":[{"given":"Signal wechselt von HIGH zu LOW"},{"answers":["ISR","Interrupt Service Routine"]},{"answers":["1","0 → 1","0->1"]},{"answers":["ISR wird beendet","zurück zu loop()","zurück zu loop"]}]},
-            {"cells":[{"given":"ISR ist beendet"},{"answers":["loop()","loop"]},{"answers":["1"]},{"answers":["Aktion ausführen","machIrgendwas() ausführen","machIrgendwas ausführen"]}]},
+            {"cells":[{"given":"ISR ist beendet; vor der Flag-Übernahme"},{"answers":["loop()","loop"]},{"answers":["1"]},{"answers":["Aktion ausführen","machIrgendwas() ausführen","machIrgendwas ausführen"]}]},
             {"cells":[{"given":"Aktion ist abgeschlossen"},{"answers":["loop()","loop"]},{"answers":["0"]},{"answers":["Hauptprogramm fortsetzen","loop läuft weiter"]}]}
           ]
         }
@@ -658,9 +852,56 @@ int notenWert[] = {
 
       <div class="wb-section-break"></div>
 
-<div class="task-card">
+      <div class="lab-task" id="interrupt_ereignis">
           <h3><strong>Aufgabe:</strong> Ereignis merken</h3>
-          <p>Tippe auch den oberen Code ab und ergänze die leere Funktion <code>machIrgendwas()</code>. Die ISR setzt nur <code>zustand = 1;</code>. Erst in <code>loop()</code> wird geprüft, ob der Zustand gesetzt wurde, dann wird die eigentliche Funktion gestartet und der Zustand wieder auf 0 zurückgesetzt.</p>
+          <p>Behalte denselben Aufbau und speichere einen neuen Sketch <code>modul5_interrupt_merker</code>. Dieser vollständige Startcode lässt die rote LED als Beispielaktion einmal 200 ms leuchten. Ergänze anschließend deine eigene Idee in <code>machIrgendwas()</code>.</p>
+          <pre data-arduino-sketch="interrupt-merker"><code>const byte leds[] = {4,5,6,7,8,9,10,11};
+const byte rot = 12;
+const byte taster = 2;
+volatile byte zustand = 0;
+
+void meineISR() {
+  zustand = 1;
+}
+
+byte holeEreignis() {
+  // Nur aus loop() mit zuvor aktiven Interrupts aufrufen.
+  noInterrupts();
+  byte gemerkt = zustand;
+  zustand = 0;
+  interrupts();
+  return gemerkt;
+}
+
+void machIrgendwas() {
+  digitalWrite(rot, HIGH);
+  delay(200);
+  digitalWrite(rot, LOW);
+}
+
+void setup() {
+  for (byte i = 0; i &lt; 8; i++) pinMode(leds[i], OUTPUT);
+  pinMode(rot, OUTPUT);
+  pinMode(taster, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(taster), meineISR, FALLING);
+}
+
+void loop() {
+  for (byte i = 0; i &lt; 8; i++) {
+    digitalWrite(leds[i], HIGH);
+    delay(500);
+    digitalWrite(leds[i], LOW);
+    byte ausloesen = holeEreignis();
+    if (ausloesen == 1) machIrgendwas();
+  }
+}</code></pre>
+          <ol>
+            <li><strong>Erwarte:</strong> Sage voraus, wann die rote LED nach einer Flanke während <code>delay(500)</code> reagiert. Vergleiche das mit der direkten ISR-Version.</li>
+            <li><strong>Teste:</strong> Überprüfe und lade hoch. Drücke kurz während eines Lauflichtschritts. Die ISR merkt die Flanke; die Beispielaktion beginnt erst nach dem laufenden 500-ms-Schritt. Anders als bei der direkten Version unterbricht das Blinken dann den weiteren Lauflichtablauf.</li>
+            <li><strong>Entwickle:</strong> Ersetze den Inhalt von <code>machIrgendwas()</code> durch drei rote Blinkimpulse mit jeweils 100 ms an und 100 ms aus. Prüfe erst diese Vorgabe, entwickle dann eine eigene kurze Aktion und beschreibe ihre erwartete Ausgabe. Wartezeiten und serielle Ausgaben gehören in die Aktion in <code>loop()</code>, niemals in <code>meineISR()</code>.</li>
+            <li><strong>Beobachte die Grenze:</strong> Drücke während deiner Aktion erneut. Mehrere Flanken können zu einem einzigen gesetzten Flag zusammenfallen. Ein mechanischer Taster kann außerdem prellen und weitere Flanken erzeugen. Dieses Beispiel ist weder ein zuverlässiger Tastendruckzähler noch eine Entprellung.</li>
+          </ol>
+          <p><strong>Merke:</strong> Nur die beiden Speicherzugriffe in <code>holeEreignis()</code> sperren kurz Interrupts. Die längere Aktion läuft mit eingeschalteten Interrupts. Nach der Übernahme eingetroffene Flanken bleiben im Flag für den nächsten Prüfpunkt erhalten; mehrere Flanken vor dem nächsten Übernehmen werden nicht gezählt.</p>
         </div>
       <div class="wb-section-break"></div>
 
@@ -688,7 +929,7 @@ int notenWert[] = {
         {
           "id":"arduino5_interrupt_categorize",
           "title":"Was gehört in eine ISR, was nicht?",
-          "hint":"Nutze die Regeln aus dem Bild und aus dem Text.",
+          "hint":"Halte die ISR kurz. Ordne längere Aktionen dem Hauptprogramm zu.",
           "categories":[
             {"id":"ok","title":"In einer ISR sinnvoll"},
             {"id":"nein","title":"In einer ISR vermeiden"}
@@ -713,8 +954,8 @@ int notenWert[] = {
           "id":"arduino5_interrupt_reveal",
           "title":"Warum volatile?",
           "hint":"Überlege erst selbst, dann klappe auf.",
-          "question":"Warum muss eine Variable, die in der ISR verändert wird, als volatile markiert werden?",
-          "answer":"Weil sich ihr Wert außerhalb des normalen Programmflusses ändern kann. Variablen im Interrupt müssen als volatile deklariert werden, damit der Compiler sie nicht falsch optimiert."
+          "question":"Warum ist der gemeinsame Merker zustand als volatile deklariert, die lokale Variable gemerkt aber nicht?",
+          "answer":"zustand wird von der ISR geändert und von loop() gelesen und gelöscht. volatile sorgt dafür, dass der Compiler die vorgesehenen Speicherzugriffe beibehält und Änderungen durch die ISR sichtbar bleiben. gemerkt ist nur eine lokale Kopie im Hauptprogramm. volatile macht die Folge aus Lesen und Löschen nicht unteilbar; dafür sperrt holeEreignis() kurz die Interrupts."
         }
         </script>
       </div>
@@ -747,7 +988,7 @@ int notenWert[] = {
           "title":"Transfer: Interrupt sinnvoll beschreiben",
           "hint":"Antworte in 4 bis 6 Sätzen. Nutze die Begriffe Polling, ISR und volatile korrekt.",
           "fields":[
-            {"label":"Deine Antwort","key":"interrupt_transfer","kind":"textarea","placeholder":"Erkläre, warum ein Interrupt bei kurzen Tastensignalen nützlich ist und wie man das Ereignis sicher im Programm weiterverarbeitet."}
+            {"label":"Deine Antwort","key":"interrupt_transfer","kind":"textarea","prompt":"Erkläre, weshalb Polling kurze Signale verpassen kann. Wie erfassen ISR und volatile-Merker das Ereignis, und warum werden Lesen und Löschen gemeinsam geschützt? Unterscheide Erfassungszeitpunkt und Aktionsbeginn. Welche Grenze hat ein einzelnes Flag?","placeholder":"Deine Erklärung …"}
           ]
         }
         </script>
@@ -757,8 +998,23 @@ int notenWert[] = {
 
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt</strong>
-        <p>Interrupts lösen das Polling-Problem bei kurzen Signalen. Die ISR bleibt kurz, merkt sich nur das Ereignis, und Variablen aus der ISR müssen als <code>volatile</code> markiert werden.</p>
+        <p>Eine kurze ISR kann Flanken während eines <code>delay()</code> erfassen. Für längere Aktionen nutzt du einen mit <code>loop()</code> geteilten <code>volatile</code>-Merker, übernimmst und löschst ihn geschützt und verarbeitest ihn im Hauptprogramm. Ein Flag zählt keine Ereignisse und entprellt keinen Taster.</p>
       </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_interrupt_labor",
+          "title":"Versuchsprotokoll: Drei Arten der Tasterabfrage",
+          "hint":"Trenne Erwartung, echte Beobachtung und Erklärung; ungeprüfte Vorhersagen kennzeichnest du.",
+          "fields":[
+            {"key":"lauflicht_test","label":"Direkte ISR und Polling","kind":"textarea","prompt":"Nenne Tasterpin, acht Lauflichtpins und Pin der roten LED. Dokumentiere einen kurzen und einen langen Tastendruck mit direkter ISR und mit der Polling-Kopie. Wann reagiert die rote LED, wann geht sie aus? Erkläre Unterschiede und die ungefähre Umlaufdauer."},
+            {"key":"merker_test","label":"Merker und eigene Aktion","kind":"textarea","prompt":"Füge den Code für drei rote Blinkimpulse und danach deine eigene Idee für machIrgendwas() ein. Beschreibe den Test: Wann wird eine Flanke erfasst, wann beginnt die Aktion und was macht das Lauflicht währenddessen? Erkläre die Grenzen durch Flag und Tasterprellen."}
+          ]
+        }
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
 
     </section>
 
@@ -773,13 +1029,13 @@ int notenWert[] = {
 
       <div class="grid2x" style="margin-top:16px;">
         <figure class="topic-figure">
-          <img src="pdf-bilder/troubleshooting.png" alt="Troubleshooting-Übersicht mit Prüfpfad" />
-          <figcaption>Die Übersicht auf dem Bild verbindet Compilerfehler, Übertragungsprobleme, Hardwarefehler und Programmfehler.</figcaption>
+          <div class="material-crop crop-trouble"><img src="pdf-bilder/troubleshooting.png" alt="Materialausschnitt: zuerst Kompilierung und konkrete Fehlermeldung prüfen" /></div>
+          <figcaption>Der erste Entscheidungsschritt. Den vollständigen Prüfpfad und korrigierte Hinweise findest du als Text daneben und darunter.</figcaption>
         </figure>
         <div>
           <div class="info-box">
             <strong>1. Kompilieren erfolgreich?</strong>
-            <p>Wenn nicht, musst du zuerst die Fehlermeldung verstehen. Achte dabei auf <code>EXIT STATUS</code>, fehlendes <code>setup()</code>, fehlendes <code>loop()</code> oder eine fehlende Programmbibliothek.</p>
+            <p>Klicke zunächst nur auf den Haken „Überprüfen“. Lies die erste konkrete Fehlermeldung oberhalb von <code>exit status 1</code>; dieser Status meldet nur, dass der Vorgang gescheitert ist. Prüfe die genannte und die vorherige Zeile: Semikolon, Klammern, Schreibweise, <code>setup()</code>, <code>loop()</code> und gegebenenfalls Bibliotheken. Auch beim reinen Überprüfen muss das passende Board gewählt sein.</p>
           </div>
           <div class="warn-box">
             <strong>2. Übertragung erfolgreich?</strong>
@@ -792,7 +1048,7 @@ int notenWert[] = {
         <div class="panel">
           <strong>3. Hardwareprobleme?</strong>
           <ul class="check-list" style="margin-top:10px;">
-            <li>Status-LED am Arduino aus: sofort USB abziehen, Kurzschluss suchen und beseitigen.</li>
+            <li>Die Betriebs-LED <code>ON</code> bleibt aus oder erlischt nach dem Anschließen: USB abziehen und den Aufbau stromlos auf Kurzschluss prüfen. Eine ausgeschaltete <code>L</code>-LED allein beweist keinen Kurzschluss. Bleibt <code>ON</code> am nackten Board aus, prüfe Kabel und USB-Versorgung.</li>
             <li>Kein angeschlossenes Gerät geht: zuerst Ground prüfen.</li>
             <li>LED richtig herum einbauen und <code>pinMode()</code> definieren.</li>
             <li>Kabel auf Kabelbruch prüfen, auch wenn das eher selten ist.</li>
@@ -824,12 +1080,13 @@ int notenWert[] = {
             <ul class="check-list">
               <li>Eine Bibliothek muss nicht nur im Sketch stehen, sondern auch in der IDE vorhanden sein.</li>
               <li>In einer <code>while</code>-Schleife kannst du zum Testen zum Beispiel <code>Serial.print("Jetzt bin ich in der While-Schleife");</code> einsetzen.</li>
-              <li>Setzt man nach der runden Klammer einer Schleife oder Verzweigung ein Semikolon, wird der Block in den geschweiften Klammern übersprungen.</li>
+              <li><code>if (bedingung);</code> besitzt eine leere Anweisung. Ein folgender eigenständiger Block läuft dann unabhängig von der Bedingung. Bei <code>for (...);</code> läuft erst eine leere Schleife und danach der Block einmal; <code>while (bedingung);</code> wartet leer und kann dauerhaft hängen. Der Block wird also nicht pauschal übersprungen.</li>
             </ul>
           </div>
         </div>
         <div>
-          <div class="code-card"><pre>// typischer Debug-Helfer
+          <div class="code-card"><pre>// Ausschnitt innerhalb von loop():
+// sensorWert muss zuvor bestimmt worden sein.
 if (sensorWert &gt; 500) {
   Serial.println("Zweig A");
 } else {
@@ -839,6 +1096,31 @@ if (sensorWert &gt; 500) {
         </div>
       </div>
 
+      <div class="wb-section-break"></div>
+      <div class="lab-task" id="trouble_fehlerlabor">
+        <h2>Fehlerlabor: Erst vorhersagen, dann gezielt prüfen</h2>
+        <p>Trenne USB vor dem Entfernen der Lauflichtschaltung. Nutze für dieses Labor nur Board und USB. Speichere einen neuen Sketch <code>modul5_fehlerlabor</code>. Der folgende Sketch ist vollständig und kompilierbar, enthält aber <strong>absichtlich einen Logikfehler</strong>. <code>sensorWert</code> ist ein vorgegebener Testwert, kein gemessener Sensorwert.</p>
+        <pre data-arduino-sketch="fehlerlabor"><code>void setup() {
+  Serial.begin(9600);
+  int sensorWert = 400;
+  Serial.print("Testwert: ");
+  Serial.println(sensorWert);
+  if (sensorWert &gt; 500);
+  {
+    Serial.println("Zweig A: Wert ist groesser als 500");
+  }
+  Serial.println("Testende");
+}
+
+void loop() {}</code></pre>
+        <ol>
+          <li><strong>Logikfehler:</strong> Sage die Ausgabe für 400 voraus. Überprüfe, lade hoch, öffne den Monitor mit 9600 Baud und drücke RESET. Vergleiche erwartete und echte Ausgabe. Ändere nur 400 zu 600 und wiederhole. Entferne dann das zusätzliche Semikolon direkt hinter <code>if (...)</code> und prüfe erneut beide Werte. Erkläre, warum ein erfolgreicher Upload die Logik nicht bestätigt.</li>
+          <li><strong>Compilerfehler:</strong> Entferne in der reparierten Version nur das Semikolon hinter <code>int sensorWert = 400;</code>. Klicke auf „Überprüfen“. Notiere die erste konkrete Meldung und vergleiche markierte und vorherige Zeile. Stelle das Semikolon wieder her und überprüfe erneut. Die genaue Meldung darf je nach IDE-Version anders aussehen.</li>
+          <li><strong>Grenzwert:</strong> Setze im reparierten Sketch den Testwert auf 500. Sage voraus, ob Zweig A erscheint. Vergleiche danach <code>&gt; 500</code> mit <code>&gt;= 500</code>. Notiere, wann der Grenzwert selbst dazugehört.</li>
+          <li><strong>Hardware eingrenzen:</strong> Lade danach <strong>Datei → Beispiele → 01.Basics → Blink</strong> auf das nackte Board. Funktioniert das, ist der Uploadpfad grundsätzlich funktionsfähig. Wenn später nur eine externe LED dunkel bleibt, kontrollierst du stromlos genau deren Pin, Vorwiderstand, Polung und GND-Verbindung und testest diesen Ausgang mit einer angepassten Blink-Kopie. Erzeuge keinen absichtlichen Kurzschluss.</li>
+        </ol>
+        <p><strong>Stopp & check:</strong> <code>=</code> weist zu, <code>==</code> vergleicht. Eine lokale Variable, die du bei jedem Schleifendurchgang erneut mit 0 initialisierst, zählt nicht über mehrere Durchgänge weiter. Solche Fehler können trotz erfolgreicher Kompilierung auftreten.</p>
+      </div>
       <div class="wb-section-break"></div>
 
       <div data-wb-type="trace">
@@ -904,15 +1186,15 @@ if (sensorWert &gt; 500) {
               "explain":"Das ist der erste Schritt: Compilerfehler lesen und die eigentliche Ursache finden."
             },
             {
-              "text":"Welcher Fehler führt oft dazu, dass ein Block gar nicht ausgeführt wird?",
+              "text":"Warum wird bei if (sensorWert > 500); { Serial.println(\"A\"); } auch für sensorWert = 400 ein A ausgegeben?",
               "choices":[
-                {"id":"a","label":"Ein zusätzliches Semikolon direkt nach if(), while() oder for()."},
+                {"id":"a","label":"Das Semikolon ist die leere if-Anweisung; der nachfolgende Block läuft unabhängig von der Bedingung."},
                 {"id":"b","label":"Ein zu kurzes USB-Kabel."},
                 {"id":"c","label":"Ein richtiger COM-Port."},
                 {"id":"d","label":"Ein korrektes == in Bedingungen."}
               ],
               "correct":["a"],
-              "explain":"Genau dieser Fehler ist besonders tückisch: Dann wird der Block in den geschweiften Klammern übersprungen."
+              "explain":"Die Bedingung steuert nur die leere Anweisung vor dem Semikolon. Der folgende Block gehört nicht mehr zum if und wird ausgeführt, auch wenn die Bedingung falsch ist."
             }
           ]
         }
@@ -928,7 +1210,7 @@ if (sensorWert &gt; 500) {
           "title":"Fehlermeldung einordnen",
           "hint":"Denk erst nach, dann klappe auf.",
           "question":"Was bedeutet es oft, wenn der Upload nicht klappt, aber der Sketch ohne Fehler kompiliert wurde?",
-          "answer":"Dann liegt das Problem häufig nicht mehr im Quelltext, sondern bei den Einstellungen oder der Verbindung: falsches Board, falscher COM-Port, Treiberproblem oder ein verstellter Programmer."
+          "answer":"Prüfe nun die Upload-Meldung, die passende Boardauswahl, den tatsächlich angeschlossenen Port und das USB-Datenkabel. Schließe andere Programme, die den Port belegen könnten, und prüfe bei Bedarf den zum Board gehörenden Treiber. Beim normalen USB-Upload des Uno R3 ist die Programmer-Auswahl nicht der übliche Ansatz; sie gehört zum ausdrücklich gewählten Hochladen mit Programmer oder zum Bootloader-Schreiben."
         }
         </script>
       </div>
@@ -940,14 +1222,28 @@ if (sensorWert &gt; 500) {
         {
           "id":"arduino5_trouble_essay",
           "title":"Dein Fehlersuchplan",
-          "hint":"Antworte in 5 bis 8 Sätzen. Nutze die Reihenfolge aus dem Bild.",
+          "hint":"Antworte in 5 bis 8 Sätzen. Nutze den Prüfpfad aus dem Text.",
           "fields":[
-            {"label":"Deine Antwort","key":"trouble_plan","kind":"textarea","placeholder":"Beschreibe Schritt für Schritt, wie du künftig vorgehst, wenn ein Arduino-Projekt nicht funktioniert."}
+            {"label":"Deine Antwort","key":"trouble_plan","kind":"textarea","prompt":"Beschreibe deinen Fehlersuchplan: Was prüfst du beim Kompilieren, beim Upload, an der Hardware und an der Programmlogik? Erkläre, wie ein kleiner Test und eine serielle Markierung eine Vermutung prüfen. Nenne auch, wann du USB abziehst.","placeholder":"Dein Fehlersuchplan …"}
           ]
         }
         </script>
       </div>
 
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {
+          "id":"arduino5_trouble_labor",
+          "title":"Versuchsprotokoll: Fehler gezielt eingrenzen",
+          "hint":"Belege jede Korrektur durch denselben Test vor und nach der Änderung.",
+          "fields":[
+            {"key":"debug_test","label":"Logik- und Compilerfehler","kind":"textarea","prompt":"Dokumentiere Vorhersage und echte Ausgabe für die Testwerte 400 und 600 mit und ohne zusätzliches if-Semikolon. Wie verhält sich 500 bei > und >=? Notiere deine echte Compilermeldung nach dem entfernten Deklarations-Semikolon und die Korrektur. Was bedeutet exit status 1?"},
+            {"key":"hardware_plan","label":"Hardware und Weiterdenken","kind":"textarea","prompt":"Halte den Blink-Test fest. Wie prüfst du eine einzelne dunkle externe LED? Ordne einen eigenen bisherigen Fehler einer Fehlerebene zu oder nenne ein mögliches Beispiel. Wann hilft Serial.print() beim Eingrenzen mehr als bloßes Raten?"}
+          ]
+        }
+        </script>
+      </div>
       <div class="wb-section-break"></div>
 
       <div class="wb-callout">
@@ -984,6 +1280,12 @@ if (sensorWert &gt; 500) {
           <li><a href="https://docs.arduino.cc/language-reference/en/functions/external-interrupts/attachInterrupt/" target="_blank" rel="noopener noreferrer">Arduino Language Reference: attachInterrupt()</a></li>
           <li><a href="https://docs.arduino.cc/language-reference/en/variables/variable-scope-qualifiers/volatile/" target="_blank" rel="noopener noreferrer">Arduino Language Reference: volatile</a></li>
           <li><a href="https://docs.arduino.cc/language-reference/en/functions/communication/serial/print/" target="_blank" rel="noopener noreferrer">Arduino Language Reference: Serial.print()</a></li>
+          <li><a href="https://docs.arduino.cc/language-reference/en/functions/random-numbers/random/" target="_blank" rel="noopener noreferrer">Arduino: random() und die ausgeschlossene obere Grenze</a></li>
+          <li><a href="https://docs.arduino.cc/language-reference/en/variables/data-types/string/" target="_blank" rel="noopener noreferrer">Arduino: Zeichenketten als char-Arrays und Abschlusszeichen</a></li>
+          <li><a href="https://docs.arduino.cc/language-reference/en/structure/further-syntax/semicolon/" target="_blank" rel="noopener noreferrer">Arduino: Semikolon und leere Anweisungen</a></li>
+          <li><a href="https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE" target="_blank" rel="noopener noreferrer">Arduino Help Center: Board und Port auswählen</a></li>
+          <li><a href="https://support.arduino.cc/hc/en-us/articles/4402764401554-If-your-sketch-doesn-t-compile" target="_blank" rel="noopener noreferrer">Arduino Help Center: Compilerfehler untersuchen</a></li>
+          <li><a href="https://support.arduino.cc/hc/en-us/articles/4401874331410--Error-avrdude-when-uploading" target="_blank" rel="noopener noreferrer">Arduino Help Center: Uploadprobleme am Uno eingrenzen</a></li>
         </ul>
       </div>
 

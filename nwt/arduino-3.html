@@ -69,6 +69,31 @@
     .source-list li + li{margin-top:6px}
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
+  <link rel="stylesheet" href="../assets/musterloesungen.css" />
+  <link rel="stylesheet" href="arduino-selbstlernen.css" />
+  <style>
+    .wb-soft-callout{border:0;border-left:3px solid var(--wb-line);border-radius:0!important;padding:6px 14px}
+    .material-crop{position:relative;overflow:hidden;background:#fff;aspect-ratio:var(--crop-ratio);width:100%}
+    .pdfpage .material-crop img{position:absolute;left:var(--crop-left);top:var(--crop-top);width:var(--crop-width)!important;height:auto!important;max-height:none;object-fit:initial}
+    .crop-variable{--crop-ratio:2.7;--crop-width:105%;--crop-left:-1%;--crop-top:-72%}
+    .crop-serial{--crop-ratio:1.48;--crop-width:194%;--crop-left:-7%;--crop-top:-29%}
+    .crop-for{--crop-ratio:1.85;--crop-width:217%;--crop-left:-21%;--crop-top:-90%}
+    .crop-pwm{--crop-ratio:1.8;--crop-width:105%;--crop-left:-2%;--crop-top:-22%}
+    .crop-rgb{--crop-ratio:0.72;--crop-width:431%;--crop-left:-330%;--crop-top:0%}
+    .crop-if{--crop-ratio:1.8;--crop-width:110%;--crop-left:-2%;--crop-top:-25%}
+    .wb-book pre{max-width:100%;overflow-x:auto;box-sizing:border-box;padding:12px;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+    .lab-task{padding:12px 0;border-top:1px solid var(--wb-line);min-width:0}
+    .lab-task h3{font-size:19px}
+    .lab-task li+li{margin-top:7px}
+    .lab-task p,.wb-soft-callout p{overflow-wrap:anywhere}
+    .media-grid .pdfpage{max-width:400px}
+    .media-grid .pdfpage:has(.crop-rgb){max-width:240px;justify-self:center}
+    .material-log{margin:12px 0}
+    .material-log summary{cursor:pointer;font-weight:700}
+    .material-log label{display:block;margin:12px 0 6px}
+    .wb-book :is([data-wb-page="7"],[data-wb-page="8"]) .pdfcaption{color:#465469!important}
+    @media(max-width:560px){.lab-task h3{font-size:18px}.grid2{grid-template-columns:minmax(0,1fr)}}
+  </style>
 </head>
 
 <body>
@@ -112,6 +137,23 @@
         <div><strong>Verallgemeinern</strong>Das Muster auf neue Aufgaben übertragen.</div>
       </div>
 
+      <h2>Dein Start am Arbeitsplatz</h2>
+      <p><b>Leitfrage:</b> Wie steuerst du mit gespeicherten Werten, Wiederholungen und Entscheidungen gezielt Licht und Ton? Du sagst zuerst das Verhalten voraus, lädst den Sketch hoch und vergleichst deine Beobachtung mit der Vorhersage.</p>
+      <div class="wb-section-break"></div>
+      <ol>
+        <li>Arbeite mit einem <b>Arduino Uno R3 / ATmega328P</b>, USB-Datenkabel, Breadboard und Steckleitungen. Die Zahlenbereiche und Pinangaben dieser Seite beziehen sich auf dieses Board.</li>
+        <li>Öffne die Arduino-IDE. Wähle im Boardwähler bzw. unter <b>Werkzeuge → Board</b> den Uno und den zugehörigen <b>Port</b>. Ziehe bei unklarer Zuordnung USB kurz ab: Der verschwindende Port gehört zum Board.</li>
+        <li>Lege für jede Aufgabe einen eigenen Sketch an und speichere ihn unter der Aufgabennummer. Ersetze den Inhalt vollständig durch die jeweilige Vorlage: Ein Sketch enthält genau ein <code>setup()</code> und ein <code>loop()</code>.</li>
+        <li>Klicke zuerst <b>Überprüfen</b> (Haken), dann <b>Hochladen</b> (Pfeil). Warte auf die Erfolgsmeldung. Das Prüfen allein überträgt keinen Code. Prüfe bei Uploadfehlern Board, Port und Datenkabel.</li>
+        <li>Trenne USB vor jedem Umbau. Schließe anschließend wieder an und lade den passenden Sketch hoch. Für reine LED13-Aufgaben reicht die eingebaute LED <b>L</b>; du brauchst dafür keine externe LED.</li>
+      </ol>
+      <div class="wb-section-break"></div>
+      <h3>Tonaufbau für alle Aufgaben mit Pin 11</h3>
+      <p>Verwende wie in Modul 2 einen <b>kleinen passiven Lautsprecher oder einen passiven Piezo-Schallwandler</b>. Prüfe das Bauteil vor dem Anschluss anhand der Set-Unterlagen, des Datenblatts oder gemeinsam mit deiner Lehrkraft. Ein unbeschriftetes Teil wird nicht probeweise direkt am Pin angeschlossen; ein aktiver Summer mit eigener Tonerzeugung eignet sich nicht für die Tonhöhenversuche.</p>
+      <div class="wb-section-break"></div>
+      <p>Trenne USB und verbinde <b>D11 → 330-Ω-Serienwiderstand → Lautsprecheranschluss 1; Anschluss 2 → GND</b>. Bei einem gepolten Piezo liegt + auf der Pinseite und − an GND. Auch ein niederohmiger kleiner passiver Lautsprecher wird hier <b>nur mit diesem Serienwiderstand</b> leise betrieben; der Widerstand begrenzt den Pin-Strom. Mit <b>1 kΩ</b> in Reihe wird er noch leiser. Für höhere Lautstärke brauchst du eine geeignete Treiberstufe. Halte den Schallwandler beim Test vom Ohr fern und entferne den Tonaufbau später vor Lauflicht und LED-Versuchen.</p>
+      <div class="wb-section-break"></div>
+
       <div class="wb-soft-callout">
         <strong>Was ist eine Variable?</strong>
         <div>
@@ -144,8 +186,8 @@
           Variablen haben unterschiedliche <b>Datentypen</b>,
           je nachdem, was gespeichert wird:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><code>int</code> – ganze Zahlen (z. B. 10, 200)</li>
-            <li><code>long</code> – sehr große ganze Zahlen</li>
+            <li><code>int</code> – beim Uno R3 ganze Zahlen von −32768 bis 32767</li>
+            <li><code>long</code> – ganze Zahlen von −2147483648 bis 2147483647</li>
             <li><code>float</code> – Kommazahlen (z. B. 2.5)</li>
           </ul>
         </div>
@@ -171,6 +213,7 @@
         <strong>Ablaufspur: Was steht wann in der Variable?</strong>
         <div>
           Eine Zuweisung wird immer von rechts nach links verstanden: Erst wird rechts gerechnet, dann wird das Ergebnis links gespeichert.
+          Die folgenden drei Zeilen stehen <b>innerhalb einer Funktion</b>. Die lokale Variable <code>int a;</code> hat dort ohne Initialisierung keinen bestimmten Anfangswert. Eine globale Variable außerhalb der Funktionen würde dagegen vor <code>setup()</code> mit 0 initialisiert. Setze beim Programmieren den gewünschten Startwert ausdrücklich.
         </div>
       </div>
 
@@ -263,8 +306,8 @@
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite12.png" alt="Variablen in einem Arduino-Programm">
-          <div class="pdfcaption">Materialbild: Variablen anlegen, zuweisen und verändern</div>
+          <div class="material-crop crop-variable"><img src="pdf-bilder/seite12.png" alt="Materialausschnitt: Zuweisungen werden berechnet und ersetzen den alten Wert"></div>
+          <div class="pdfcaption">Ausschnitt aus Seite 12 · Der lauffähige Sketch steht unten.</div>
         </div>
         <div class="image-guide">
           <h3>Beobachte den Speicher</h3>
@@ -273,11 +316,63 @@
         </div>
       </div>
 
+      <div class="lab-task" id="material_6_1">
+        <h3>6.1 Werte verfolgen und hören</h3>
+        <p>Nutze den Tonaufbau an D11. Berechne nach jeder Zeile in <code>setup()</code> die aktuellen Werte von <code>a</code>, <code>n</code> und <code>m</code>. Notiere dann Tonhöhe, Tondauer und Pause eines Durchlaufs. Erkläre, ob die letzte Änderung von <code>a</code> auch <code>m</code> verändert.</p>
+        <pre><code>int a;
+long n, m;
+void setup() {
+  a = 10;
+  n = 100 - 8;
+  m = 2 * a + 15 - 3;
+  a = 200 + 20;
+}
+void loop() {
+  tone(11, a);
+  delay(n);
+  noTone(11);
+  delay(m);
+}</code></pre>
+        <p><b>Teste:</b> Lade hoch und höre kurz zu. Verdopple anschließend nur <code>n</code>. Sage vor dem Upload voraus, was sich zeitlich ändert und was gleich bleibt. Im Material fehlt bei <code>noTone()</code> der Pin; die Vorlage korrigiert das.</p>
+      </div>
+      <div class="lab-task" id="material_6_2">
+        <h3>6.2 Dein Musikstück mit Notenlängen</h3>
+        <p>Öffne eine Kopie deines Musikstücks aus Aufgabe 5.2. Lege vor <code>setup()</code> drei Variablen <code>int a = 125;</code>, <code>int v = 250;</code>, <code>int h = 500;</code> für Achtel-, Viertel- und halbe Noten an. Ersetze die passenden Zahlen in den <code>delay()</code>-Befehlen durch diese Namen. Wenn du den Sketch nicht zur Hand hast, beginne mit dieser spielbaren Kurzfolge und erweitere sie um weitere Noten:</p>
+        <pre><code>int a = 125;
+int v = 250;
+int h = 500;
+void setup() {}
+void loop() {
+  tone(11, 262); delay(a); noTone(11); delay(30);
+  tone(11, 294); delay(v); noTone(11); delay(30);
+  tone(11, 330); delay(h); noTone(11); delay(1000);
+}</code></pre>
+        <p><b>Teste:</b> Verdopple alle drei Notenlängen und lade erneut hoch. Vergleiche Tempo und Tonhöhe. Begründe, weshalb du für ein einheitlich schnelleres Stück auch die fest eingetragenen Pausen proportional ändern müsstest.</p>
+      </div>
+      <div class="lab-task" id="material_6_3">
+        <h3>6.3 Ein Ton wird höher</h3>
+        <pre><code>int f;
+void setup() { f = 100; }
+void loop() {
+  tone(11, f);
+  delay(100);
+  f = f + 1;
+}</code></pre>
+        <p>Notiere die ersten fünf Frequenzwerte. Lade den Sketch am Tonaufbau hoch, höre etwa zehn Sekunden zu und trenne dann USB. Erkläre, welche Zeile die Frequenz ändert und weshalb der Ton zwischen den Änderungen nicht verstummt. <b>Stopp &amp; check:</b> Ein <code>int</code> wächst nicht unbegrenzt. Beschreibe für einen späteren Umbau mit <code>if</code>, wie du oberhalb von 1000 Hz wieder bei 100 Hz beginnen würdest.</p>
+      </div>
+      <details class="material-log"><summary>Protokoll zu 6.1–6.3</summary>
+        <label for="a3_material6">Notiere Werte und Zeitverhalten (6.1), deine Notenlängen und den Tempovergleich (6.2) sowie Frequenzfolge, Beobachtung und Begrenzungsidee (6.3). Trenne Vorhersage und echte Beobachtung.</label>
+        <textarea id="a3_material6" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 6.1–6.3" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <p><b>Jetzt hast du das gelernt:</b> Eine Zuweisung speichert das gerade berechnete Ergebnis. Spätere Änderungen anderer Variablen berechnen alte Ergebnisse nicht automatisch neu.</p>
+      <div class="wb-section-break"></div>
+
       <div data-wb-type="mcq">
         <script type="application/json" class="wb-config">
           {
             "id":"mc_vars",
             "title":"Multiple Choice – Variablen (mehrere Antworten möglich)",
+            "hint":"Wähle jeweils alle richtigen Aussagen.",
             "questions":[
               {
                 "text":"1) Was ist eine Variable?",
@@ -285,7 +380,7 @@
                 "choices":[
                   {"id":"a","label":"Ein Speicherplatz für Werte"},
                   {"id":"b","label":"Ein fester Text im Programm"},
-                  {"id":"c","label":"Ein Wert, der sich ändern kann"},
+                  {"id":"c","label":"Ihr gespeicherter Wert kann sich ändern"},
                   {"id":"d","label":"Ein elektrisches Bauteil"}
                 ],
                 "correct":["a","c"],
@@ -326,7 +421,7 @@
       <div class="wb-soft-callout">
         <strong>Regel der Challenge</strong>
         <div>
-          Du darfst <b>nur Variablen ändern oder hinzufügen</b>.
+          Lade jede Vorlage zunächst unverändert in einen eigenen Sketch. Nutze für Challenge 1 die eingebaute LED L, für Challenge 2 und 3 den Tonaufbau an D11. Sage vor jeder Änderung das Ergebnis voraus und lade danach erneut hoch. Du darfst <b>Variablenwerte ändern oder eine Zuweisung ergänzen</b>.
           <br>
           Die Struktur des Programms (setup, loop, Reihenfolge)
           bleibt unverändert.
@@ -345,6 +440,7 @@
         <div class="wb-body">
           <pre><code>int t = 500;
 
+void setup() { pinMode(13, OUTPUT); }
 void loop() {
   digitalWrite(13, HIGH);
   delay(t);
@@ -357,6 +453,7 @@ void loop() {
             <br>
             Aufgabe: Ändere das Programm so, dass die LED <b>doppelt so schnell</b> blinkt,
             ohne die <code>delay()</code>-Zeilen zu verändern.
+            Vergleiche jeweils fünf vollständige Hell-Dunkel-Zyklen. Notiere die rechnerische Dauer eines Zyklus vor und nach der Änderung.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 1 – Tempo ändern" placeholder="Was musst du an der Variable ändern? Begründe kurz."></textarea>
@@ -387,6 +484,7 @@ void loop() {
         <div class="wb-body">
           <pre><code>int ton = 262;
 
+void setup() {}
 void loop() {
   tone(11, ton);
   delay(300);
@@ -397,9 +495,10 @@ void loop() {
           <div class="wb-muted">
             Der Ton ist aktuell immer gleich.
             <br>
-            Aufgabe: Sorge dafür, dass der Ton <b>bei jedem Durchlauf höher</b> wird.
+            Aufgabe: Sorge mit einer zusätzlichen Zuweisung am Ende von <code>loop()</code> dafür, dass der Ton <b>bei jedem Durchlauf um 20 Hz höher</b> wird.
             <br>
             Tipp: Der Wert der Variable darf sich ändern.
+            Notiere die ersten vier Frequenzen, teste höchstens zehn Sekunden und trenne USB. Dauerhaftes Erhöhen würde später den Wertebereich überschreiten.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 2 – Ton verändern" placeholder="Welche zusätzliche Zeile brauchst du? Erkläre, was sie bewirkt."></textarea>
@@ -431,6 +530,7 @@ void loop() {
           <pre><code>int kurz = 150;
 int lang = 400;
 
+void setup() {}
 void loop() {
   tone(11, 330);
   delay(kurz);
@@ -443,6 +543,7 @@ void loop() {
             <br>
             Aufgabe: Erkläre, wie du mit <b>nur zwei Variablen</b> verschiedene Rhythmen
             erzeugen kannst, ohne neue <code>delay()</code>-Zeilen hinzuzufügen.
+            Teste mindestens zwei Wertepaare. Unterscheide dabei die gesamte Periodendauer <code>kurz + lang</code> und den Anteil, während dessen der Ton erklingt.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Challenge 3 – Rhythmus bauen" placeholder="Beschreibe deine Idee in Worten (kein kompletter Code nötig)."></textarea>
@@ -474,7 +575,7 @@ void loop() {
             "title":"Reflexion",
             "hint":"Denken über Code",
             "fields":[
-              {"label":"Antwort","key":"c_reflex","kind":"textarea","placeholder":"Warum sind Variablen besser, als feste Zahlen direkt in den Code zu schreiben?"}
+              {"label":"Antwort","key":"c_reflex","kind":"textarea","prompt":"Warum sind benannte Variablen für veränderliche Werte hilfreich? Beziehe dich auf ein getestetes Beispiel und nenne auch einen Fall, in dem eine feste Zahl genügt.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -550,37 +651,78 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>AUFGABEN</strong>
         <div>
-          Lies dir nochaml alles ganz genau durch, schreibe die neuen Befehle in OneNote
+          Lies dir nochmal alles ganz genau durch, schreibe die neuen Befehle in OneNote
           auf deinen Spickzettel und bearbeite anschließend die Aufgaben.
         </div>
       </div>
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite13.png" alt="Serieller Monitor und serielle Ausgabe im Arduino-Sketch">
-          <div class="pdfcaption">Materialbild: Innere Zustände im seriellen Monitor sichtbar machen</div>
+          <div class="material-crop crop-serial"><img src="pdf-bilder/seite13.png" alt="Materialausschnitt: Serial.begin in setup und println in loop"></div>
+          <div class="pdfcaption">Ausschnitt aus Seite 13 · Die Texte und Sketche stehen unten.</div>
         </div>
         <div class="image-guide">
           <h3>Nutze Ausgaben als Messinstrument</h3>
           <p>Finde Initialisierung und Ausgabe. Prüfe, ob die Baudrate im Sketch und im seriellen Monitor übereinstimmt.</p>
-          <p><b>Debugging-Auftrag:</b> Ergänze gedanklich drei Ausgaben, mit denen du Start, Messwert und gewählten Zweig unterscheiden kannst.</p>
+          <p><b>Debugging-Auftrag:</b> Ergänze in deinem LED-Sketch aus Challenge 1 eine Ausgabe beim Start und je eine vor HIGH und LOW. Nutze <code>Serial.begin(9600)</code> in <code>setup()</code>. Vergleiche die Zeitpunkte im Monitor mit der LED.</p>
         </div>
       </div>
 
+      <div class="lab-task" id="material_7_1">
+        <h3>7.1 Ein Gedicht im seriellen Monitor</h3>
+        <p>Für diese Aufgabe reicht das Board am USB-Kabel. Lade den folgenden Sketch hoch. Öffne in der IDE <b>Werkzeuge → Serieller Monitor</b> und stelle <b>9600 Baud</b> ein. Drücke danach kurz <b>Reset</b>, damit du die einmaligen Startzeilen sicher siehst. Notiere zuerst deine erwarteten ersten sechs Zeilen, dann die tatsächliche Ausgabe.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  Serial.println("Dieses kurze Gedicht");
+  Serial.println("endet");
+}
+void loop() {
+  Serial.println("nicht");
+  delay(500);
+}</code></pre>
+        <p>Ersetze nur das letzte <code>println</code> durch <code>print</code>. Lade erneut hoch und erkläre den Unterschied. Die zusätzliche Wartezeit macht die Wiederholung lesbar; im Material läuft sie ohne Pause.</p>
+      </div>
+      <div class="lab-task" id="material_7_2">
+        <h3>7.2 Gesichter als Unterprogramme</h3>
+        <p>Schreibe zwei Funktionen <code>traurig()</code> und <code>lachend()</code>, die jeweils ein mehrzeiliges Gesicht mit <code>Serial.println("...");</code> ausgeben. Ergänze die Vorlage, lade hoch und drücke bei geöffnetem Monitor Reset. Beide Gesichter sollen genau einmal erscheinen; <code>loop()</code> bleibt leer. Rufe danach eine Funktion zweimal auf: Warum musst du dafür die einzelnen Ausgabezeilen nicht kopieren?</p>
+        <pre><code>void traurig() {
+  Serial.println(":(");
+}
+void lachend() {
+  Serial.println(":)");
+}
+void setup() {
+  Serial.begin(9600);
+  traurig();
+  Serial.println();
+  lachend();
+}
+void loop() {}</code></pre>
+      </div>
+
       <div class="wb-soft-callout">
-        <strong>Beispiel aus dem Bild</strong>
+        <strong id="material_7_3">7.3 Zahlenfolge und Wertebereich</strong>
         <div>
           Im Beispiel auf Seite 13 wird eine Variable immer wieder erhöht
           und ihr Wert im seriellen Monitor ausgegeben:
           <pre><code>int x = 0;
 
+void setup() { Serial.begin(9600); }
 void loop() {
   Serial.println(x);
   x = x + 5;
+  delay(100);
 }</code></pre>
-          Dadurch sieht man, wie sich der Wert Schritt für Schritt verändert.
+          Sage die ersten sechs Ausgaben voraus und teste sie bei 9600 Baud. Vergleiche anschließend <code>Serial.println(x)</code> mit <code>Serial.println("x")</code>. Für den Überlaufversuch setzt du den Startwert auf <code>32750</code> und die Pause auf <code>1000</code> ms. Notiere die letzten gültigen positiven Werte und, was dein konkretes Board danach tatsächlich ausgibt. <b>Ein vorzeichenbehafteter Überlauf ist keine verlässliche Rechenregel.</b> Stelle den Startwert anschließend wieder auf 0 und ergänze nach dem Kapitel zu <code>if</code> eine Grenzprüfung vor der Addition. Nur <code>long</code> zu wählen vergrößert den Bereich, verhindert aber keinen späteren Überlauf.
         </div>
       </div>
+
+      <details class="material-log"><summary>Protokoll zu 7.1–7.3 und Debug-Ausgaben</summary>
+        <label for="a3_material7">Notiere Gedichtausgabe und print-Vergleich, deine Gesichtsfunktionen, Zahlenfolge und tatsächliche Überlaufbeobachtung mit Boardtyp. Halte die Ausgaben beim LED-Start und beim Umschalten fest.</label>
+        <textarea id="a3_material7" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 7.1–7.3 und Debug-Ausgaben" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <p><b>Jetzt hast du das gelernt:</b> <code>print()</code> setzt die Ausgabe in derselben Zeile fort, <code>println()</code> hängt einen Zeilenumbruch an. Der Monitor zeigt dir gespeicherte Werte, wenn du den Variablennamen ohne Anführungszeichen ausgibst.</p>
+      <div class="wb-section-break"></div>
 
       <div class="wb-section-break"></div>
 
@@ -603,10 +745,10 @@ void loop() {
             "title":"Verständnisfragen – Serielle Ausgabe",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s13_q1","kind":"textarea","placeholder":"1) Warum ist die serielle Ausgabe beim Programmieren hilfreich?"},
-              {"label":"2","key":"s13_q2","kind":"textarea","placeholder":"2) Was passiert, wenn man Serial.begin() vergisst?"},
-              {"label":"3","key":"s13_q3","kind":"textarea","placeholder":"3) Warum eignet sich der serielle Monitor gut, um Variablen zu beobachten?"},
-              {"label":"4","key":"s13_q4","kind":"textarea","placeholder":"4) Warum muss die Baudrate im Programm und im seriellen Monitor gleich sein?"}
+              {"label":"1","key":"s13_q1","kind":"textarea","prompt":"1) Warum ist die serielle Ausgabe beim Programmieren hilfreich? Nenne eine konkrete Prüfstelle in deinem LED-Sketch.","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s13_q2","kind":"textarea","prompt":"2) Was fehlt beim Uno R3, wenn du Serial.begin() vergisst?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s13_q3","kind":"textarea","prompt":"3) Warum eignet sich der serielle Monitor gut, um Variablen zu beobachten?","placeholder":"Deine Antwort"},
+              {"label":"4","key":"s13_q4","kind":"textarea","prompt":"4) Warum muss die Baudrate im Programm und im seriellen Monitor gleich sein?","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -711,6 +853,12 @@ void loop() {
 
       <h3>Mini-Debug-Challenges</h3>
 
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order"><script type="application/json" class="wb-config">
+        {"id":"arduino3_debug_order","title":"Fehlersuche in sinnvoller Reihenfolge","hint":"Ordne die Schritte für einen kontrollierten Test.","items":["Erwartetes Verhalten festlegen","Tatsächliches Verhalten beobachten","Eine mögliche Ursache im Aufbau oder Code benennen","Genau eine passende Änderung vornehmen","Erneut testen und Soll und Ist vergleichen"]}
+      </script></div>
+      <div class="wb-section-break"></div>
+
       <div class="wb-block">
         <div class="wb-head">
           <div>
@@ -721,14 +869,17 @@ void loop() {
         <div class="wb-body">
           <pre><code>int x = 0;
 
+void setup() { Serial.begin(9600); }
 void loop() {
   Serial.println(x);
+  delay(500);
 }</code></pre>
 
           <div class="wb-muted">
             Im seriellen Monitor erscheint immer nur <code>0</code>.
             <br>
             Frage: Warum ändert sich der Wert nicht?
+            Lade den vollständigen Sketch hoch und öffne den Monitor mit 9600 Baud. Ergänze eine Wertänderung und teste erneut. Beschränke den Versuch auf zehn Sekunden. Notiere Ursache, Änderung und beobachtete Ausgabe.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 1" placeholder="Beschreibe die Ursache des Problems."></textarea>
@@ -754,7 +905,9 @@ void loop() {
           </div>
         </div>
         <div class="wb-body">
-          <pre><code>pinMode(13, OUTPUT);
+          <pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
 
 void loop() {
   digitalWrite(12, HIGH);
@@ -764,6 +917,7 @@ void loop() {
             Die LED an Pin 13 leuchtet nicht.
             <br>
             Frage: Wo liegt der Fehler?
+            Nutze die eingebaute LED L an D13. Korrigiere den eingeschalteten Pin, überprüfe den Sketch und lade ihn hoch. Halte fest, warum ein erfolgreiches Kompilieren den logischen Fehler noch nicht beweist oder behebt.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Debug-Challenge 2" placeholder="Beschreibe, was nicht zusammenpasst."></textarea>
@@ -788,7 +942,7 @@ void loop() {
             "title":"Reflexion",
             "hint":"wichtig!",
             "fields":[
-              {"label":"Antwort","key":"dbg_reflex","kind":"textarea","placeholder":"Warum ist Debugging ein wichtiger Teil des Programmierens?"}
+              {"label":"Antwort","key":"dbg_reflex","kind":"textarea","prompt":"Warum ist Debugging ein wichtiger Teil des Programmierens? Beschreibe an einer Challenge Ursache, einzelne Änderung und anschließenden Test.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -857,8 +1011,8 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite14.png" alt="Aufbau und Ablauf einer for-Schleife">
-          <div class="pdfcaption">Materialbild: Startwert, Bedingung und Veränderung einer for-Schleife</div>
+          <div class="material-crop crop-for"><img src="pdf-bilder/seite14.png" alt="Materialausschnitt: for-Schleife in setup mit Start, Bedingung und Schritt"></div>
+          <div class="pdfcaption">Ausschnitt aus Seite 14 · Den Ablauf bearbeitest du im Sketch und in der Spur.</div>
         </div>
         <div class="image-guide">
           <h3>Lies die Schleife in vier Schritten</h3>
@@ -871,13 +1025,17 @@ void loop() {
         <strong>Beispiel aus dem Heft</strong>
         <div>
           Eine LED soll fünfmal blinken:
-          <pre><code>for (int i = 0; i &lt; 5; i++) {
-  digitalWrite(13, HIGH);
-  delay(300);
-  digitalWrite(13, LOW);
-  delay(300);
-}</code></pre>
-          Der Code im Block wird genau <b>5-mal</b> ausgeführt.
+          <pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  for (int i = 0; i &lt; 5; i++) {
+    digitalWrite(13, HIGH);
+    delay(300);
+    digitalWrite(13, LOW);
+    delay(300);
+  }
+}
+void loop() {}</code></pre>
+          Lade den Sketch hoch und zähle an LED L mit. Drücke Reset: Der Code im Block wird erneut genau <b>5-mal</b> ausgeführt. Die Schleife steht bewusst in <code>setup()</code>; innerhalb von <code>loop()</code> würden die Fünfergruppen immer wieder starten.
         </div>
       </div>
 
@@ -896,7 +1054,7 @@ void loop() {
         <script type="application/json" class="wb-config">
         {
           "id":"arduino3_for_trace",
-          "title":"Ablaufspur: for-Schleife mit fünf Prüfungen",
+          "title":"Ablaufspur: fünf Durchläufe und die Abschlussprüfung",
           "hint":"Entscheide zuerst wahr oder falsch. Nur bei wahr läuft der Block; danach wird i erhöht.",
           "columns":[
             {
@@ -937,6 +1095,7 @@ void loop() {
         </script>
       </div>
 
+      <div class="wb-section-break"></div>
       <div data-wb-type="cloze">
         <script type="application/json" class="wb-config">
           {
@@ -981,9 +1140,9 @@ void loop() {
             "title":"Verständnisfragen – for-Schleifen",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s14_q1","kind":"textarea","placeholder":"1) Warum ist eine for-Schleife besser als denselben Code fünfmal zu schreiben?"},
-              {"label":"2","key":"s14_q2","kind":"textarea","placeholder":"2) Welche Aufgabe hat die Variable i in einer for-Schleife?"},
-              {"label":"3","key":"s14_q3","kind":"textarea","placeholder":"3) Wie oft wird der Code ausgeführt, wenn i von 0 bis kleiner 3 läuft?"}
+              {"label":"1","key":"s14_q1","kind":"textarea","prompt":"1) Warum ist eine for-Schleife hilfreich, wenn derselbe Ablauf fünfmal ausgeführt werden soll?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s14_q2","kind":"textarea","prompt":"2) Welche Aufgabe hat die Variable i in einer for-Schleife?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s14_q3","kind":"textarea","prompt":"3) Wie oft wird der Code bei i = 0; i < 3; i++ ausgeführt? Nenne die ausgeführten Zählwerte.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -999,16 +1158,20 @@ void loop() {
           </div>
         </div>
         <div class="wb-body">
-          <pre><code>for (int i = 0; i &lt; 3; i++) {
-  tone(11, 262);
-  delay(200);
-  noTone(11);
-  delay(200);
-}</code></pre>
+          <pre><code>void setup() {
+  for (int i = 0; i &lt; 3; i++) {
+    tone(11, 262);
+    delay(200);
+    noTone(11);
+    delay(200);
+  }
+}
+void loop() {}</code></pre>
 
           <div class="wb-muted">
             Aufgabe: Beschreibe, was dieses Programm macht,
             ohne den Code umzuschreiben.
+            Prüfe deine Vorhersage am Tonaufbau an D11 nach einem Reset. Gib Anzahl, Frequenz, Ton- und Pausendauer an.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Denken in Schleifen" placeholder="Erklärung in eigenen Worten"></textarea>
@@ -1023,6 +1186,67 @@ void loop() {
           </details>
         </div>
       </div>
+      <div class="lab-task" id="material_8_1">
+        <h3>8.1 Start, Grenze und Schritt verändern</h3>
+        <p>Nutze nur das USB-Board und den Monitor mit 9600 Baud. Bestimme vor jedem Upload ersten Wert, letzten Wert und Anzahl der Durchläufe. Drücke bei geöffnetem Monitor Reset und prüfe deine Vorhersage. Ändere nacheinander: Start 0 → 5; dann Grenze 30 → 50; schließlich Schritt <code>n = n + 1</code> → <code>n = n + 3</code>. Behalte jeweils die vorigen Änderungen bei.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  for (int n = 0; n &lt; 30; n = n + 1) {
+    Serial.println("Hallo");
+    Serial.println(n);
+  }
+}
+void loop() {}</code></pre>
+        <p>Erkläre, weshalb bei <code>n &lt; 50</code> die Zahl 50 nicht ausgegeben wird und warum der letzte Wert bei Schritten von 3 trotzdem nicht 49 sein muss.</p>
+      </div>
+      <div class="lab-task" id="material_8_2">
+        <h3>8.2 Eine Tonfolge vorhersagen</h3>
+        <p>Baue den Tonaufbau an D11 auf. Bestimme erste und letzte Frequenz, Schrittweite und Anzahl der Tonstufen. Berechne die Summe der Wartezeiten. Lade hoch und höre zu: Was passiert nach dem letzten Schleifendurchlauf?</p>
+        <pre><code>void setup() {
+  for (int f = 100; f &lt; 1001; f = f + 3) {
+    tone(11, f);
+    delay(60);
+  }
+}
+void loop() {}</code></pre>
+        <p>Ergänze anschließend <code>noTone(11);</code> direkt <b>nach</b> der Schleife in <code>setup()</code>. Teste erneut und erkläre den Unterschied. Trenne USB nach dem Versuch.</p>
+      </div>
+      <div class="lab-task" id="material_8_3">
+        <h3>8.3 Auf- und abschwellende Sirene</h3>
+        <p>Programmiere am selben Tonaufbau eine wiederholte Folge von 100 bis 1000 Hz und zurück. Übernimm die Schleife aus 8.2 in <code>loop()</code>, ändere die Wartezeit auf 5 ms und ergänze danach eine zweite Schleife mit Start 1000, Bedingung <code>f &gt;= 100</code> und Schritt <code>f = f - 3</code>. <code>setup()</code> bleibt leer. Du kannst dieses lauffähige Grundgerüst erweitern:</p>
+        <pre><code>void setup() {}
+void loop() {
+  for (int f = 100; f &lt;= 1000; f += 3) {
+    tone(11, f);
+    delay(5);
+  }
+  // Fuege hier die absteigende Schleife ein.
+}</code></pre>
+        <p><b>Teste:</b> Höre nur wenige Zyklen. Vergleiche danach 5 ms und 10 ms je Stufe. Begründe, ob sich die Frequenzgrenzen oder nur die Geschwindigkeit des Auf- und Abschwellens ändern.</p>
+      </div>
+      <div class="lab-task" id="material_8_4">
+        <h3>8.4 Fünf LEDs als Lauflicht</h3>
+        <p>Trenne USB und entferne den Tonaufbau. Du brauchst fünf LEDs und <b>fünf Widerstände mit je 330 Ω</b>. Verbinde für jeden Pin D9, D10, D11, D12 und D13 einen eigenen Zweig: <b>Pin → Widerstand → LED-Anode; LED-Kathode → GND</b>. Die Kathode ist bei ungekürzten LEDs meist das kürzere Bein; beachte auch die flache Gehäuseseite. Stecke Anode und Kathode in getrennte Kontaktreihen. Verbinde die benutzte GND-Schiene mit GND des Boards.</p>
+        <pre><code>void setup() {
+  for (int pin = 9; pin &lt;= 13; pin++) {
+    pinMode(pin, OUTPUT);
+  }
+}
+void loop() {
+  for (int pin = 9; pin &lt;= 13; pin++) {
+    digitalWrite(pin, HIGH);
+    delay(200);
+    digitalWrite(pin, LOW);
+  }
+}</code></pre>
+        <p><b>Prüfe:</b> Nach dem Upload leuchtet jeweils nur eine externe LED, von D9 bis D13, dann wieder D9. Die eingebaute LED L kann bei D13 mit aufleuchten. Verändere die zweite Schleife so, dass das Licht zurückläuft. Notiere Start, Bedingung und Schritt und teste. Falls eine LED fehlt: Trenne USB, kontrolliere Polung, Kontaktreihe und den zugehörigen Pin.</p>
+      </div>
+      <details class="material-log"><summary>Protokoll zu 8.1–8.4</summary>
+        <label for="a3_material8">Notiere die vier Zahlenfolgen samt Anzahl, Tonstufen und Wartezeitsumme, deinen Sirenencode mit Vergleich der Wartezeiten sowie Anschlussliste und Code für beide Laufrichtungen.</label>
+        <textarea id="a3_material8" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 8.1–8.4" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <p><b>Jetzt hast du das gelernt:</b> Startwert, Bedingung und Schritt bestimmen die Wertefolge. Ob eine abgeschlossene Folge erneut startet, hängt davon ab, ob sie in <code>setup()</code> oder <code>loop()</code> steht.</p>
+      <div class="wb-section-break"></div>
     </section>
     <section data-wb-page="6" data-wb-page-title="Geschachtelte Schleifen">
       <h2>Geschachtelte for-Schleifen – Schleifen in Schleifen</h2>
@@ -1114,6 +1338,7 @@ void loop() {
         </script>
       </div>
 
+      <div class="wb-section-break"></div>
       <div data-wb-type="verify">
         <script type="application/json" class="wb-config">
           {
@@ -1133,16 +1358,20 @@ void loop() {
         <strong>Beispiel mit LED</strong>
         <div>
           Die LED soll in mehreren Durchgängen blinken:
-          <pre><code>for (int r = 0; r &lt; 3; r++) {
-  for (int i = 0; i &lt; 4; i++) {
-    digitalWrite(13, HIGH);
-    delay(200);
-    digitalWrite(13, LOW);
-    delay(200);
+          <pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  for (int r = 0; r &lt; 3; r++) {
+    for (int i = 0; i &lt; 4; i++) {
+      digitalWrite(13, HIGH);
+      delay(200);
+      digitalWrite(13, LOW);
+      delay(200);
+    }
+    delay(1000);
   }
-  delay(1000);
-}</code></pre>
-          Ergebnis: 3 Runden, in jeder Runde blinkt die LED 4-mal.
+}
+void loop() {}</code></pre>
+          Lade hoch und zähle an LED L mit: 3 Runden mit jeweils 4 Blinkimpulsen. Nach jeder Runde folgt zusätzlich eine Sekunde Pause. Ändere nur die äußere Grenze auf 2 und prüfe deine neue Vorhersage nach einem Upload.
         </div>
       </div>
 
@@ -1168,9 +1397,9 @@ void loop() {
             "title":"Verständnisfragen – geschachtelte Schleifen",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"schachtel_q1","kind":"textarea","placeholder":"1) Was bedeutet es, dass eine Schleife in einer anderen Schleife liegt?"},
-              {"label":"2","key":"schachtel_q2","kind":"textarea","placeholder":"2) Wie oft läuft der innere Code, wenn außen 2-mal und innen 5-mal gezählt wird?"},
-              {"label":"3","key":"schachtel_q3","kind":"textarea","placeholder":"3) Warum eignen sich geschachtelte Schleifen gut für Muster?"}
+              {"label":"1","key":"schachtel_q1","kind":"textarea","prompt":"1) Was bedeutet es, dass eine Schleife in einer anderen Schleife liegt?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"schachtel_q2","kind":"textarea","prompt":"2) Wie oft läuft der innere Code, wenn außen 2-mal und innen 5-mal gezählt wird?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"schachtel_q3","kind":"textarea","prompt":"3) Warum eignen sich geschachtelte Schleifen gut für Muster? Beziehe dich auf ein Licht- oder Tonbeispiel.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1186,19 +1415,23 @@ void loop() {
           </div>
         </div>
         <div class="wb-body">
-          <pre><code>for (int a = 0; a &lt; 2; a++) {
-  for (int b = 0; b &lt; 3; b++) {
-    tone(11, 440);
-    delay(100);
-    noTone(11);
-    delay(100);
+          <pre><code>void setup() {
+  for (int a = 0; a &lt; 2; a++) {
+    for (int b = 0; b &lt; 3; b++) {
+      tone(11, 440);
+      delay(100);
+      noTone(11);
+      delay(100);
+    }
+    delay(800);
   }
-  delay(800);
-}</code></pre>
+}
+void loop() {}</code></pre>
 
           <div class="wb-muted">
             Aufgabe: Beschreibe genau, was du hörst,
             wenn dieses Programm läuft.
+            Notiere erst deine Vorhersage und teste dann am Tonaufbau an D11 mit Reset. Zähle die Töne und berücksichtige zwischen den Gruppen auch die letzte Pause der inneren Schleife.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Denkaufgabe" placeholder="Beschreibung in eigenen Worten"></textarea>
@@ -1215,7 +1448,11 @@ void loop() {
       </div>
     </section>
     <section data-wb-page="7" data-wb-page-title="9. LEDs dimmen">
-      <h2>9. LEDs dimmen – Helligkeit stufenlos steuern</h2>
+      <h2>9. LEDs dimmen – Helligkeit in feinen Stufen steuern</h2>
+
+      <h3>Aufbau: eine externe LED an D3</h3>
+      <p>Trenne USB und entferne Lauflicht und Tonaufbau. Verbinde <b>D3 → 330 Ω → LED-Anode; LED-Kathode → GND</b>. Die eingebaute LED an D13 eignet sich beim Uno R3 nicht für diesen PWM-Versuch. Lade für jeden Versuch einen eigenen LED-Sketch hoch: <code>tone()</code> benutzt beim Uno R3 denselben Timer wie PWM an D3/D11 und darf in diesen Versuchen nicht gleichzeitig laufen.</p>
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Digital vs. Analog</strong>
@@ -1225,7 +1462,7 @@ void loop() {
           Merke: <code>HIGH</code> = an, <code>LOW</code> = aus.
           <br><br>
           Beim <b>Dimmen</b> geht es darum,
-          die Helligkeit <b>stufenlos</b> zu verändern –
+          die Helligkeit in <b>256 feinen Stufen</b> zu verändern –
           nicht nur an oder aus.
         </div>
       </div>
@@ -1240,7 +1477,7 @@ void loop() {
           Der <b>Wert</b> bestimmt die Helligkeit:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>0 -> LED aus</li>
-            <li>127 -> halbe Helligkeit</li>
+            <li>127 -> ungefähr halbe Einschaltdauer, nicht zwingend subjektiv halb hell</li>
             <li>255 -> volle Helligkeit</li>
           </ul>
         </div>
@@ -1273,7 +1510,7 @@ void loop() {
   analogWrite(3, 127);
   delay(1000);
 }</code></pre>
-          Die LED an Pin 3 leuchtet mit halber Helligkeit.
+          Die LED an Pin 3 erhält ungefähr halbe Einschaltdauer. Lade hoch und vergleiche mit den Werten 0 und 255. Eine subjektiv halb so helle LED musst du durch Vergleich bestimmen.
         </div>
       </div>
 
@@ -1297,7 +1534,7 @@ void loop() {
             "hint":"Denke an PWM.",
             "statement":"analogWrite(3, 127) erzeugt beim Arduino Uno eine echte, dauerhaft halbe Spannung am Pin.",
             "answer": false,
-            "explain":"Falsch. Der Arduino nutzt PWM: Der Pin wird sehr schnell ein- und ausgeschaltet. Für das Auge wirkt die LED dadurch ungefähr halb hell."
+            "explain":"Falsch. Beim Uno R3 schaltet PWM zwischen LOW und HIGH. 127 bedeutet ungefähr halbe Einschaltdauer; daraus folgt keine konstante halbe Spannung und auch nicht zwingend subjektiv halbe Helligkeit."
           }
         </script>
       </div>
@@ -1314,8 +1551,8 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite15.png" alt="PWM-Signal und Helligkeitssteuerung einer LED">
-          <div class="pdfcaption">Materialbild: PWM verändert den zeitlichen HIGH-Anteil</div>
+          <div class="material-crop crop-pwm"><img src="pdf-bilder/seite15.png" alt="Materialausschnitt: digitalWrite und analogWrite im Vergleich"></div>
+          <div class="pdfcaption">Ausschnitt aus Seite 15 · „Halb an“ bezeichnet den Zeitanteil.</div>
         </div>
         <div class="image-guide">
           <h3>Denke in Zeitanteilen</h3>
@@ -1331,9 +1568,9 @@ void loop() {
             "title":"Verständnisfragen – LEDs dimmen",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s15_q1","kind":"textarea","placeholder":"1) Was ist der Unterschied zwischen digitalem Schalten und Dimmen?"},
-              {"label":"2","key":"s15_q2","kind":"textarea","placeholder":"2) Welche Aufgabe hat der zweite Wert bei analogWrite()?"},
-              {"label":"3","key":"s15_q3","kind":"textarea","placeholder":"3) Warum kann das Auge PWM als unterschiedliche Helligkeit wahrnehmen?"}
+              {"label":"1","key":"s15_q1","kind":"textarea","prompt":"1) Was ist der Unterschied zwischen digitalem Schalten und Dimmen per PWM?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s15_q2","kind":"textarea","prompt":"2) Welche Aufgabe hat der zweite Wert bei analogWrite()? Unterscheide Zeitanteil und subjektive Helligkeit.","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s15_q3","kind":"textarea","prompt":"3) Warum kann das Auge PWM als unterschiedliche Helligkeit wahrnehmen?","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1377,6 +1614,53 @@ void loop() {
           </details>
         </div>
       </div>
+      <div class="lab-task" id="material_9_1">
+        <h3>9.1 An, aus und gedimmt vergleichen</h3>
+        <p>Nutze die externe LED mit 330 Ω an D3. Sage die drei Zustände in ihrer Reihenfolge voraus, lade hoch und beobachte mindestens zwei vollständige Durchläufe.</p>
+        <pre><code>void setup() { pinMode(3, OUTPUT); }
+void loop() {
+  digitalWrite(3, HIGH); delay(1000);
+  digitalWrite(3, LOW); delay(1000);
+  analogWrite(3, 127); delay(1000);
+}</code></pre>
+        <p>Skizziere LOW und HIGH und daneben PWM mit den Werten 64, 128 und 255 über denselben Zeitraum. Markiere die unterschiedlichen Einschaltanteile; stelle PWM nicht als kleinere konstante Spannung dar.</p>
+      </div>
+      <div class="lab-task" id="material_9_2">
+        <h3>9.2 Langsam auf- und abblenden</h3>
+        <p>Erweitere diese lauffähige Vorlage nach der steigenden Schleife um eine fallende Schleife: Startwert 255, Bedingung <code>hell &gt;= 0</code>, Schritt <code>hell--</code>. Übernimm die beiden Zeilen des Schleifenrumpfs. Lade hoch: Die LED soll heller und anschließend dunkler werden. Vergleiche danach 10 ms und 20 ms Wartezeit; erkläre die Wirkung auf den gesamten Zyklus.</p>
+        <pre><code>void setup() { pinMode(3, OUTPUT); }
+void loop() {
+  for (int hell = 0; hell &lt;= 255; hell++) {
+    analogWrite(3, hell);
+    delay(10);
+  }
+  // Fuege hier die fallende Schleife ein.
+}</code></pre>
+      </div>
+      <div class="lab-task" id="material_9_3">
+        <h3>9.3 Was erscheint dir halb so hell?</h3>
+        <p>Verwende den Sketch der Mini-Challenge mit <code>int hell = 50;</code>. Teste zuerst <code>hell = 255</code> als Referenz. Suche danach durch erneute Uploads einen Wert, der dir unter <b>gleichen Lichtbedingungen und aus gleichem Blickwinkel</b> ungefähr halb so hell erscheint. Vergleiche auch ausdrücklich mit 128. Notiere deinen eigenen Wert, die Bedingungen und Unterschiede zu einer anderen Person. Es gibt keinen universellen richtigen Messwert: Halbe Einschaltdauer und halber subjektiver Helligkeitseindruck sind unterschiedliche Aussagen.</p>
+      </div>
+      <div class="lab-task" id="material_9_4">
+        <h3>9.4 Zufallszahlen zur flackernden Kerze umbauen</h3>
+        <p>Lade zunächst diesen Zahlen-Sketch hoch und öffne den Monitor bei 9600 Baud. A1 bleibt unbeschaltet; sein gelesener Wert dient als Startwert für eine Pseudozufallsfolge. Notiere die möglichen Ausgaben von <code>random(1, 7)</code>. Die obere Grenze wird nicht erreicht.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A1));
+}
+void loop() {
+  int s = random(1, 7);
+  Serial.println(s);
+  delay(1000);
+}</code></pre>
+        <p>Ergänze <code>pinMode(3, OUTPUT);</code> in <code>setup()</code>. Ersetze die Zahlenwahl durch <code>int s = random(40, 220);</code>, ergänze <code>analogWrite(3, s);</code> und ersetze die feste Pause durch <code>delay(random(30, 150));</code>. Lade hoch und vergleiche mit gleichmäßigem Blinken. Begründe, warum sowohl Helligkeit als auch Dauer variiert werden.</p>
+      </div>
+      <details class="material-log"><summary>Protokoll zu 9.1–9.4</summary>
+        <label for="a3_material9">Notiere Reihenfolge und PWM-Skizzen, Auf-/Abblendcode mit Wartezeitvergleich, deinen subjektiven Vergleichswert mit Bedingungen sowie Kerzencode, Zufallsbereiche und Beobachtung.</label>
+        <textarea id="a3_material9" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 9.1–9.4" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <p><b>Jetzt hast du das gelernt:</b> PWM verändert die Einschaltdauer. Dein Auge reagiert nicht proportional auf den Zahlenwert; unterscheide elektrische Einstellung und beobachteten Helligkeitseindruck.</p>
+      <div class="wb-section-break"></div>
     </section>
     <section data-wb-page="8" data-wb-page-title="10. RGB-LEDs">
       <h2>10. RGB-LEDs – Farben mischen mit Licht</h2>
@@ -1402,7 +1686,7 @@ void loop() {
             <li>Rot + Grün -> Gelb</li>
             <li>Rot + Blau -> Magenta</li>
             <li>Grün + Blau -> Cyan</li>
-            <li>Rot + Grün + Blau -> Weiß</li>
+            <li>Rot + Grün + Blau -> bei passender Abstimmung ungefähr Weiß</li>
           </ul>
         </div>
       </div>
@@ -1419,15 +1703,21 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite16.png" alt="RGB-LED mit drei Farbkanälen und Arduino-Anschluss">
-          <div class="pdfcaption">Materialbild: Rot, Grün und Blau getrennt ansteuern</div>
+          <div class="material-crop crop-rgb"><img src="pdf-bilder/seite16.png" alt="Schaltbildausschnitt: drei Farbzweige mit je einem Widerstand und gemeinsamer Kathode"></div>
+          <div class="pdfcaption">Materialschaltung mit D9/D10/D11. Hier nutzt du D3/D5/D6 und je 330 Ω; den 110-Ω-Wert aus dem Bild übernimmst du nicht.</div>
         </div>
         <div class="image-guide">
-          <h3>Eine Farbe ist ein Wertepaar aus drei Kanälen</h3>
+          <h3>Ein Farbrezept besteht aus drei Werten</h3>
           <p>Ordne jedem Anschluss einen Farbkanal zu und lies die drei PWM-Werte als Farbrezept.</p>
           <p><b>Vorhersage:</b> Welche Mischfarbe erwartest du bei viel Rot und Grün, aber keinem Blau?</p>
         </div>
       </div>
+
+      <h3>Aufbau und Farbkanaltest</h3>
+      <p>Du brauchst eine gewöhnliche <b>vierbeinige RGB-LED mit gemeinsamer Kathode</b> und drei 330-Ω-Widerstände. Trenne USB. Prüfe Typ und Anschlussbelegung anhand der Bauteilbeschriftung oder des Datenblatts aus deinem Set; die Beinlänge allein ist kein sicherer Nachweis. Verbinde <b>gemeinsame Kathode → GND, D3 → 330 Ω → Rot, D5 → 330 Ω → Grün, D6 → 330 Ω → Blau</b>. Jeder Farbzweig bekommt einen eigenen Widerstand. Verwende keine adressierbare LED wie WS2812 mit dieser Schaltung.</p>
+      <div class="wb-section-break"></div>
+      <p>Die Mini-Challenge unten ist zugleich dein vollständiger Testsketch. Lade erst <code>r=255, g=0, b=0</code> hoch, danach nur Grün und nur Blau. Notiere die tatsächliche Farbe und korrigiere bei vertauschten Kanälen die Verkabelung bei abgezogenem USB. Dieser Kurs verwendet D3/D5/D6 einheitlich; bei Übernahme des Materialplans müsstest du <b>alle</b> Pinangaben auf D9/D10/D11 umstellen. Lass <code>tone()</code> in diesen RGB-Sketchen weg.</p>
+      <div class="wb-section-break"></div>
 
       <div class="wb-section-break"></div>
 
@@ -1449,7 +1739,7 @@ analogWrite(blauPin, 0);</code></pre>
       <div class="wb-soft-callout">
         <strong>Wertebereich</strong>
         <div>
-          Für jede Farbe gilt:
+          Für jede Farbe gilt bei <b>gemeinsamer Kathode</b>:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>0 -> Farbe aus</li>
             <li>255 -> maximale Helligkeit</li>
@@ -1468,8 +1758,7 @@ analogWrite(blauPin, 0);</code></pre>
             <li><b>Gemeinsame Kathode</b>: gemeinsamer Minuspol</li>
             <li><b>Gemeinsame Anode</b>: gemeinsamer Pluspol</li>
           </ul>
-          Je nach Typ kann die Logik von <code>0</code> und <code>255</code>
-          vertauscht sein.
+          Die Vorlagen hier gelten für die gemeinsame Kathode. Bei gemeinsamer Anode kommt der gemeinsame Anschluss beim Uno R3 an 5 V und jeder Ausgabewert wird zu <code>255 - farbwert</code> invertiert. Kläre den Typ vor dem Anschluss und passe alle drei Kanäle einschließlich des Ausschaltzustands an.
         </div>
       </div>
 
@@ -1482,9 +1771,9 @@ analogWrite(blauPin, 0);</code></pre>
             "title":"Verständnisfragen – RGB-LEDs",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s16_q1","kind":"textarea","placeholder":"1) Warum braucht eine RGB-LED drei Pins?"},
-              {"label":"2","key":"s16_q2","kind":"textarea","placeholder":"2) Wie entsteht die Farbe Gelb bei einer RGB-LED?"},
-              {"label":"3","key":"s16_q3","kind":"textarea","placeholder":"3) Welche Rolle spielt analogWrite() bei RGB-LEDs?"}
+              {"label":"1","key":"s16_q1","kind":"textarea","prompt":"1) Warum braucht eine vierbeinige RGB-LED drei Steuerpins und zusätzlich einen gemeinsamen Anschluss? Welche Widerstände gehören dazu?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s16_q2","kind":"textarea","prompt":"2) Wie entsteht die Farbe Gelb bei einer RGB-LED?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s16_q3","kind":"textarea","prompt":"3) Welche Rolle spielt analogWrite() bei RGB-LEDs?","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1519,6 +1808,7 @@ void loop() {
             Aufgabe: Erkläre, welche Farbe du siehst und
             was du an den Variablen ändern musst,
             um z. B. <b>Violett</b> zu erzeugen.
+            Lade deine Einstellung hoch und vergleiche Rot+Blau bei gleichen sowie ungleichen Werten. Beschreibe den beobachteten Farbeindruck; der genaue Farbton hängt auch von deiner LED ab.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Farbe einstellen" placeholder="Erklärung in eigenen Worten"></textarea>
@@ -1529,15 +1819,66 @@ void loop() {
               Mit <code>r = 255</code>, <code>g = 0</code>, <code>b = 0</code>
               leuchtet die LED rot.
               <br><br>
-              Für Violett werden Rot und Blau kombiniert,
+              Rot und Blau ergeben idealisiert Magenta. Eine eher violett wirkende Mischung kannst du mit kleinerem Rotanteil erproben,
               z. B.:
-              <code>r = 200;</code>
+              <code>r = 100;</code>
               <code>b = 200;</code>
               <code>g = 0;</code>
             </div>
           </details>
         </div>
       </div>
+      <div class="lab-task" id="material_9_5">
+        <h3>9.5 Farbkanäle und Mischfarben</h3>
+        <p>Führe den einzelnen Rot-, Grün- und Blautest des Aufbaus durch. Stelle mit dem Sketch der Mini-Challenge danach nacheinander <b>(255,255,0), (255,0,255), (0,255,255), (255,255,255)</b> ein. Sage die Mischfarben voraus, lade jeweils hoch und vergleiche. Notiere deine Pin-Farb-Zuordnung. Erkläre, weshalb ein gemeinsamer Vorwiderstand für alle drei Zweige die unabhängige Farbmischung beeinträchtigen würde.</p>
+      </div>
+      <div class="wb-section-break"></div>
+      <h3>Sicherung: additive Farbmischung</h3>
+      <p>Ordne die idealisierten Farbpaare zu; gleiche elektrische Werte können bei deiner konkreten LED unterschiedlich starke Farbanteile erzeugen.</p>
+      <div data-p2 data-p2-id="arduino3_rgb_pairs" data-p2-title="Farbanteile und Mischfarben">
+        <div data-side="L" data-pair="1">Rot + Grün</div><div data-side="R" data-pair="1">Gelb</div>
+        <div data-side="L" data-pair="2">Rot + Blau</div><div data-side="R" data-pair="2">Magenta</div>
+        <div data-side="L" data-pair="3">Grün + Blau</div><div data-side="R" data-pair="3">Cyan</div>
+      </div>
+      <div class="wb-section-break"></div>
+      <div class="lab-task" id="material_9_6">
+        <h3>9.6 Einen fehlerhaften Sketch reparieren</h3>
+        <p>Hier ist ein absichtlich fehlerhaftes Programm aus dem Material. Es soll je äußerer Runde „Huhu“ und danach die Zahlenpaare <code>i,u</code> für zehn äußere und hundert innere Durchläufe ausgeben. Übertrage es in einen eigenen Sketch und klicke <b>Überprüfen</b>. Korrigiere jeweils den ersten gemeldeten Fehler und prüfe erneut; ein Fehler kann Folgefehler auslösen.</p>
+        <pre><code>void setup(); {
+  serialBegin(6900);
+}
+void loop {
+  for (int i=0; i&lt;10; i=i+1) {
+    Serial.pint("Huhu");
+    for (u=0, u&lt;100; u=u+1) {
+      Serial.print(i);
+      Serial.print(",");
+      Serial.print(u);
+    }
+  }
+}</code></pre>
+        <p>Prüfe Semikolon hinter dem Funktionskopf, runde Klammern, Großschreibung und Punkt bei <code>Serial.begin</code>, <code>print</code> sowie Typ und Trennzeichen der inneren Schleife. Verwende 9600 Baud in Sketch und Monitor. <b>6900 ist nicht selbst ein Syntaxfehler</b>; hier vereinheitlichst du die Einstellung. Ändere die letzte Ausgabe in <code>println(u)</code>, damit jedes Paar eine eigene Zeile erhält. Lade erst die fehlerfreie Fassung hoch und halte die ersten drei Paare sowie die Anzahl pro vollständigem <code>loop()</code>-Durchlauf fest.</p>
+      </div>
+      <div class="lab-task" id="material_9_7">
+        <h3>9.7 Alle RGB-Einstellungen durchlaufen</h3>
+        <p>Schreibe drei geschachtelte Schleifen, jeweils von 0 bis einschließlich 255 mit Schritt 1. Die äußere verändert Rot, die mittlere Grün, die innere Blau. Setze im innersten Rumpf alle drei Ausgänge mit <code>analogWrite()</code> und warte 1 ms. Nutze D3/D5/D6 aus deinem geprüften Aufbau. Erweitere zunächst dieses lauffähige Gerüst:</p>
+        <pre><code>void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+}
+void loop() {
+  for (int r = 0; r &lt;= 255; r++) {
+    // Ergaenze hier die Schleifen fuer g und b.
+  }
+}</code></pre>
+        <p><b>Kurztest:</b> Verwende zuerst in allen drei Schleifen <code>+= 85</code> statt <code>++</code> und 100 ms je Kombination. Damit kannst du einen vollständigen Zyklus beobachten. Berechne dafür Anzahl und reine Wartezeit. Stelle danach auf Schritt 1 und 1 ms um, berechne auch hierfür Anzahl und Wartezeit, teste aber nur kurz. Erkläre, warum 256³ Einstellungen nicht 256³ für dich unterscheidbare Farben bedeuten.</p>
+      </div>
+      <details class="material-log"><summary>Protokoll zu 9.5–9.7</summary>
+        <label for="a3_materialrgb">Notiere Anschlussbelegung, vorhergesagte und beobachtete Mischfarben, korrigierten Fehlersketch mit Fehlerliste und Ausgabe sowie RGB-Schleifencode und beide Laufzeitberechnungen.</label>
+        <textarea id="a3_materialrgb" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 9.5–9.7" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <div class="wb-section-break"></div>
     </section>
     <section data-wb-page="9" data-wb-page-title="11. if / else">
       <h2>11. if / else – Entscheidungen im Programm</h2>
@@ -1610,8 +1951,8 @@ void loop() {
 
       <div class="media-grid">
         <div class="pdfpage">
-          <img src="pdf-bilder/seite17.png" alt="if-else-Verzweigung in einem Arduino-Programm">
-          <div class="pdfcaption">Materialbild: Eine Bedingung entscheidet zwischen zwei Zweigen</div>
+          <div class="material-crop crop-if"><img src="pdf-bilder/seite17.png" alt="Materialausschnitt: if prüft eine Bedingung und wählt einen Anweisungsblock"></div>
+          <div class="pdfcaption">Ausschnitt aus Seite 17 · Die Aufgaben stehen unten als HTML.</div>
         </div>
         <div class="image-guide">
           <h3>Prüfung vor Wirkung</h3>
@@ -1627,6 +1968,7 @@ void loop() {
         <div>
           <pre><code>int hell = 150;
 
+void setup() { pinMode(13, OUTPUT); }
 void loop() {
   if (hell &gt; 100) {
     digitalWrite(13, HIGH);
@@ -1636,6 +1978,7 @@ void loop() {
 }</code></pre>
           Ergebnis: Die LED leuchtet nur,
           wenn der Wert der Variable groß genug ist.
+          Nutze LED L und teste nacheinander <code>hell = 80</code>, <code>100</code> und <code>150</code> durch erneuten Upload. Vergleiche mit deiner Ablaufspur. Hier ist <code>hell</code> ein gesetzter Testwert, kein angeschlossener Helligkeitssensor.
         </div>
       </div>
 
@@ -1694,6 +2037,7 @@ void loop() {
         </script>
       </div>
 
+      <div class="wb-section-break"></div>
       <div data-wb-type="categorize">
         <script type="application/json" class="wb-config">
           {
@@ -1721,9 +2065,9 @@ void loop() {
         <div>
           Viele verwechseln:
           <br>
-          <code>if (x = 5)</code> ?
+          <code>if (x = 5)</code> weist 5 zu; der Wert 5 wird als wahr gewertet.
           <br>
-          <code>if (x == 5)</code> ?
+          <code>if (x == 5)</code> prüft, ob x gleich 5 ist.
           <br><br>
           Das erste setzt einen Wert,
           das zweite vergleicht ihn.
@@ -1739,9 +2083,9 @@ void loop() {
             "title":"Verständnisfragen – if / else",
             "hint":"Text wird gespeichert",
             "fields":[
-              {"label":"1","key":"s17_q1","kind":"textarea","placeholder":"1) Warum braucht ein Programm Bedingungen?"},
-              {"label":"2","key":"s17_q2","kind":"textarea","placeholder":"2) Was passiert, wenn die if-Bedingung falsch ist?"},
-              {"label":"3","key":"s17_q3","kind":"textarea","placeholder":"3) Erkläre den Unterschied zwischen = und ==."}
+              {"label":"1","key":"s17_q1","kind":"textarea","prompt":"1) Warum braucht ein Programm Bedingungen?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s17_q2","kind":"textarea","prompt":"2) Was passiert, wenn die if-Bedingung falsch ist?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s17_q3","kind":"textarea","prompt":"3) Erkläre den Unterschied zwischen = und ==.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1758,6 +2102,7 @@ void loop() {
         <div class="wb-body">
           <pre><code>int wert = 80;
 
+void setup() {}
 void loop() {
   if (wert &gt;= 100) {
     tone(11, 440);
@@ -1770,6 +2115,7 @@ void loop() {
             Aufgabe: Beschreibe, was passiert,
             und wie du den Wert ändern musst,
             damit der Ton erklingt.
+            Nutze nach Abziehen des USB-Kabels wieder den Tonaufbau an D11 und entferne den RGB-Aufbau. Teste die drei Werte 80, 100 und 120 durch je einen Upload. Erkläre den Unterschied zwischen <code>&gt;</code> und <code>&gt;=</code> am Grenzwert.
           </div>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge – Entscheidung treffen" placeholder="Erklärung in eigenen Worten"></textarea>
@@ -1788,9 +2134,48 @@ void loop() {
           </details>
         </div>
       </div>
+      <div class="lab-task" id="material_10_1">
+        <h3>10.1 Schere, Stein oder Papier nach Reset</h3>
+        <p>Nutze nur das USB-Board; A1 bleibt unbeschaltet. Erweitere den folgenden Sketch so, dass bei 1 „Schere“, bei 2 „Stein“ und bei 3 „Papier“ im Monitor erscheint. Verwende <code>if</code>, <code>else if</code> und <code>else</code> nach der Zahlenwahl.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A1));
+  int wahl = random(1, 4);
+  Serial.println(wahl);
+}
+void loop() {}</code></pre>
+        <p><b>Teste:</b> Öffne den Monitor mit 9600 Baud und drücke fünfmal Reset. Pro Reset soll genau ein Wort erscheinen; entferne dazu die reine Zahlenausgabe. Wiederholungen desselben Wortes sind möglich, ein unbeschalteter Eingang garantiert keinen neuen Startwert. Um alle Zweige sicher zu prüfen, ersetze die Zufallswahl vorübergehend nacheinander durch 1, 2 und 3 und lade jeweils hoch. Stelle danach die Zufallswahl wieder her.</p>
+      </div>
+      <div class="lab-task" id="material_10_2">
+        <h3>10.2 Helligkeitswechsel nach Zählschritten</h3>
+        <p>Trenne USB, entferne den Tonaufbau und baue <b>D9 → 330 Ω → LED-Anode; LED-Kathode → GND</b> auf. Verfolge den Sketch zuerst auf Papier: Welcher PWM-Wert gilt bei <code>i = 1</code>, <code>99999</code> und <code>100000</code>? Wie viele Durchläufe sind gedimmt?</p>
+        <pre><code>long i = 1;
+void setup() { pinMode(9, OUTPUT); }
+void loop() {
+  if (i &lt; 100000) {
+    analogWrite(9, 100);
+  } else {
+    analogWrite(9, 255);
+  }
+  i = i + 1;
+}</code></pre>
+        <p>Lade hoch und beobachte kurz nach Reset. Erkläre, warum der Umschaltzeitpunkt keine festgelegte Anzahl von Sekunden ist. Für einen gut sichtbaren Kurztest ändere die Grenze auf 10, ergänze am Ende <code>delay(500);</code> und ersetze die Erhöhung durch <code>if (i &lt; 10) { i = i + 1; }</code>. Sage die Zahl der gedimmten Durchläufe und deren reine Wartezeit voraus, teste erneut und begründe, wie das Anhalten bei 10 einen späteren Überlauf verhindert.</p>
+      </div>
+      <details class="material-log"><summary>Protokoll zu 10.1–10.2</summary>
+        <label for="a3_material10">Notiere deinen Schere-Stein-Papier-Code, Resetbeobachtungen und sichere Zweigtests sowie PWM-Zuordnung, Anzahl der gedimmten Durchläufe und Wartezeit im Kurztest.</label>
+        <textarea id="a3_material10" class="wb-textarea" data-wb-export="1" data-wb-label="Materialaufgaben 10.1–10.2" placeholder="Dein Protokoll"></textarea>
+      </details>
+      <div class="wb-section-break"></div>
     </section>
     <section data-wb-page="10" data-wb-page-title="Abschluss">
       <h2>Abschluss – Wiederholen, Anwenden, Projekt - Abgabe</h2>
+
+      <p><b>Jetzt hast du das gelernt:</b> Du speicherst Zustände in Variablen, beobachtest sie seriell, wiederholst Abläufe mit Schleifen und prüfst Grenzfälle mit <code>if / else</code>. Du unterscheidest PWM-Zahlenwerte von wahrgenommener Helligkeit und steuerst drei RGB-Farbzweige mit eigenen Widerständen.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal"><script type="application/json" class="wb-config">
+        {"id":"arduino3_transfer_reveal","title":"Weiterdenken: Der Sketch stimmt, die Farbe nicht","hint":"Formuliere zuerst zwei mögliche Ursachen und einen passenden Test.","question":"Alle RGB-Werte sind plausibel, aber statt Rot erscheint Grün. Was prüfst du?","answer":"Ich teste jeden Kanal einzeln. Wenn r=255, g=0, b=0 Grün erzeugt, prüfe ich bei getrenntem USB die Zuordnung von D3 zum roten Anschluss laut Datenblatt. Wenn bei 0 Licht und bei 255 Dunkelheit entsteht, prüfe ich zusätzlich gemeinsame Anode statt Kathode und invertiere bei Bedarf alle drei Werte. Ich ändere jeweils nur eine Ursache und teste erneut."}
+      </script></div>
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Abschluss-Check</strong>
@@ -1806,6 +2191,7 @@ void loop() {
           {
             "id":"mc_final",
             "title":"Multiple Choice – Alles im Überblick",
+            "hint":"Wähle je Frage alle passenden Aussagen für die hier verwendeten Beispiele.",
             "questions":[
               {
                 "text":"1) Was kann eine Variable?",
@@ -1836,12 +2222,12 @@ void loop() {
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"Sie wiederholen Code"},
-                  {"id":"b","label":"Sie machen Programme kürzer"},
-                  {"id":"c","label":"Sie treffen Entscheidungen"},
-                  {"id":"d","label":"Sie benutzen eine Zählvariable"}
+                  {"id":"b","label":"Sie können mehrfach kopierte Befehlsfolgen zusammenfassen"},
+                  {"id":"c","label":"Ihr Rumpf läuft immer mindestens einmal"},
+                  {"id":"d","label":"In unseren Beispielen benutzen sie eine Zählvariable"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"for-Schleifen wiederholen Code, verkürzen Programme und nutzen eine Zählvariable."
+                "explain":"Die gezeigten for-Schleifen wiederholen Befehle mit einer Zählvariable. Ist die Bedingung schon anfangs falsch, läuft der Rumpf kein einziges Mal."
               },
               {
                 "text":"4) Wofür braucht man if / else?",
@@ -1859,13 +2245,13 @@ void loop() {
                 "text":"5) Was ist bei RGB-LEDs wichtig?",
                 "multiple": true,
                 "choices":[
-                  {"id":"a","label":"drei Pins (R, G, B)"},
+                  {"id":"a","label":"drei Steuerpins (R, G, B) und ein gemeinsamer Anschluss"},
                   {"id":"b","label":"analogWrite() für Helligkeit"},
                   {"id":"c","label":"nur ein Widerstand für alle Farben"},
                   {"id":"d","label":"Farben entstehen durch Mischen"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"RGB-LEDs brauchen drei Pins, nutzen analogWrite und mischen Farben."
+                "explain":"Die vierbeinige RGB-LED hat drei Farbanschlüsse und einen gemeinsamen Anschluss. Jeder Farbzweig erhält einen eigenen Vorwiderstand; PWM regelt die Farbanteile."
               }
             ]
           }
@@ -1880,15 +2266,28 @@ void loop() {
         <div>
           Baue eine Ampel mit einer RGB-LED.
           <br>
-          Die Farben sollen in der richtigen Reihenfolge wechseln:
+          Verwende den geprüften Kathoden-Aufbau mit D3/D5/D6 und je 330 Ω. Entferne den Tonaufbau bei getrenntem USB. Die Farben sollen in dieser <b>vereinfachten</b> Reihenfolge wechseln:
           <b>Rot -> Gelb -> Grün -> Gelb -> Rot</b>.
+          Das ist ein Übungsmodell; eine deutsche Fahrzeugampel verwendet zusätzlich eine Rot-Gelb-Phase vor Grün.
         </div>
       </div>
 
       <div class="wb-block">
         <div class="wb-body">
-          <pre><code>// Tipp: benutze Variablen für die Farben
-// und if / else für die Logik</code></pre>
+          <p>Erweitere den vollständigen Rot-Test unten. Lege eine Variable für die Phasendauer an und setze für jede Phase <b>alle drei</b> Farbkanäle, damit keine alte Farbe eingeschaltet bleibt. Jede Phase soll zwei Sekunden dauern. Prüfe nach dem Upload mindestens zwei Zyklen und protokolliere eine Korrektur oder einen bestätigten Grenzfall.</p>
+          <pre><code>int zeit = 2000;
+void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+}
+void loop() {
+  analogWrite(3, 255);
+  analogWrite(5, 0);
+  analogWrite(6, 0);
+  delay(zeit);
+  // Ergaenze Gelb, Gruen und Gelb vor dem naechsten Rot.
+}</code></pre>
 
           <textarea class="wb-textarea" id="ampel" data-wb-export="1" data-wb-label="Zusatzaufgabe – Ampelschaltung" placeholder="Beschreibe dein Vorgehen oder notiere deinen Code."></textarea>
 
@@ -1924,6 +2323,7 @@ void loop() {
 
       <div class="wb-block">
         <div class="wb-body">
+          <p>Plane zuerst Bauteile und Anschlüsse. Schreibe dann einen vollständigen Sketch mit Variablen, einer begrenzten Schleife und einer Entscheidung. Eine mögliche Idee ist eine Statusleuchte, die mehrfach gedimmt blinkt und bei einer gewählten Rundengrenze ihre Farbe wechselt. Nutze einen bereits geprüften Aufbau. Halte mindestens zwei Testfälle mit erwarteter und tatsächlich beobachteter Ausgabe fest und begründe eine Entscheidung im Code. Wenn du Ton und Licht kombinierst, berücksichtige den Timerkonflikt an D3/D11 oder nutze PWM an D5/D6/D9/D10.</p>
           <textarea class="wb-textarea" id="projekt" data-wb-export="1" data-wb-label="Zusatzaufgabe – Projekt" placeholder="Beschreibe dein Projekt (Idee, Ablauf, verwendete Bauteile)."></textarea>
         </div>
       </div>
@@ -1940,7 +2340,12 @@ void loop() {
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/for/" target="_blank" rel="noopener">Arduino Reference: for</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/else/" target="_blank" rel="noopener">Arduino Reference: if / else</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
+        <li><a href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm/" target="_blank" rel="noopener">Arduino: PWM, Zeitanteile und Timer</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/" target="_blank" rel="noopener">Arduino Reference: tone() und PWM-Konflikte</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/random-numbers/random/" target="_blank" rel="noopener">Arduino Reference: random(), inklusive und exklusive Grenzen</a></li>
+        <li><a href="https://learn.adafruit.com/adafruit-arduino-lesson-3-rgb-leds" target="_blank" rel="noopener">Adafruit: RGB-LED, Anschlüsse, Widerstände und Anodenvarianten</a></li>
       </ul>
+      <p><b>Weiterforschen:</b> Wie müsstest du deine Ampel umgestalten, damit sie während einer Wartephase schon auf einen Taster reagieren kann? Stelle eine Vermutung auf, warum lange <code>delay()</code>-Aufrufe dabei stören. Halte deine Idee im Projektfeld fest.</p>
 
       <div class="wb-section-break"></div>
       <div class="next-module">
@@ -1955,6 +2360,16 @@ void loop() {
   <script src="../assets/allgemeines_format.js"></script>
   <script>
     SBLibrary.autoMountAll({ storagePrefix: "arduino_lernbaustein_s12-17__" });
+    document.querySelectorAll('textarea[data-wb-export]').forEach(field => {
+      const key = "arduino_lernbaustein_s12-17__manual_" + (field.id || field.dataset.wbLabel);
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved !== null) field.value = saved;
+      } catch (_) {}
+      field.addEventListener("input", () => {
+        try { localStorage.setItem(key, field.value); } catch (_) {}
+      });
+    });
   </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-motoren.html">
-<meta name="musterloesung-source-sha256" content="c90345add4aa3e731973d530fb907dce283457e3a8e06244cbacc2203d6afb7a">
+<meta name="musterloesung-source-sha256" content="4a5a6141e6d652f1cffc53bc09e06326093156e856c8b865e166b49111b6b79f">
 <title>Arduino: Motoren mit dem Mikrocontroller steuern – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
@@ -70,8 +70,28 @@
       .grid3x { grid-template-columns: 1fr; }
     }
     .compare-table th { color: #172033; }
+    .motor-task{border-top:1px solid var(--wb-line); margin-top:22px; padding-top:16px; min-width:0}
+    .motor-task h2,.motor-task h3{font-size:1.15rem; overflow-wrap:anywhere}
+    .motor-wire{display:block; white-space:normal; overflow-wrap:anywhere; line-height:1.8; border-left:3px solid var(--ak-teal); padding:8px 12px; margin:12px 0}
+    .motor-table-wrap{max-width:100%; overflow-x:auto}
+    .motor-table-wrap table{min-width:430px}
+    .motor-material{width:100%; max-width:300px; margin:14px 0; border:1px solid var(--wb-line); border-radius:6px; overflow:hidden; box-sizing:border-box}
+    .motor-material-window{position:relative; overflow:hidden; aspect-ratio:var(--crop-width) / var(--crop-height); background:#fff}
+    .motor-material-window img{position:absolute; display:block; width:calc(100% * var(--source-width) / var(--crop-width)); max-width:none; height:auto; left:calc(-100% * var(--crop-left) / var(--crop-width)); top:calc(-100% * var(--crop-top) / var(--crop-height))}
+    .motor-material figcaption{padding:8px 10px; font-size:13px; line-height:1.45; color:var(--wb-text); background:var(--wb-block-bg)}
+    .wb-book .figure-card{max-width:320px; box-sizing:border-box}
+    .wb-book .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+    .wb-book :is(.grid2,.grid2x,.grid3x) > *{min-width:0}
+    .wb-book .p2 .p2-banks{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .wb-book .p2 .p2-banks > div{min-width:0}
+    .wb-book .p2 .p2-piece,.wb-book .p2 .p2-joined .p2-piece{min-width:0; max-width:100%; overflow-wrap:anywhere; box-sizing:border-box}
+    .wb-book .p2 .p2-joined{max-width:100%}
+    @media(max-width:900px){.wb-book .grid2,.wb-book .p2 .p2-banks{grid-template-columns:minmax(0,1fr)}}
+    @media(max-width:600px){.wb-book .p2 .p2-joined{display:flex; flex-direction:column; width:100%}.wb-book .p2 .p2-seam{width:100%; height:2px}}
   </style>
 <link rel="stylesheet" href="arduino-kurs.css">
+<link rel="stylesheet" href="../assets/musterloesungen.css">
+<link rel="stylesheet" href="arduino-selbstlernen.css">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
@@ -104,16 +124,78 @@
 <script type="application/json" class="wb-book-config">{"bookTitle":"Motoren · Musterlösung","sectionTitle":"Motoren gezielt steuern · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
 <section data-wb-page="1" data-wb-page-title="15. Motoren steuern"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Motoren steuern</h1></div>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="mc_s22"><h3>Multiple Choice - Motoren (mehrere Antworten möglich)</h3><h4>1) Welche Aussagen zu Motoren sind richtig?</h4><p>Motoren erzeugen Bewegung; Motoren benötigen oft mehr Strom; Motoren brauchen Schutzbeschaltung</p><p>Motoren erzeugen Bewegung, brauchen Strom und oft Schutzbeschaltung.</p><h4>2) Wozu dient PWM bei Motoren?</h4><p>Steuerung der Geschwindigkeit; Veränderung der mittleren Leistung</p><p>PWM verändert die mittlere Leistung und damit oft die Geschwindigkeit des Motors.</p><h4>3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?</h4><p>Transistor; Motortreiber-Modul; Freilaufdiode</p><p>Transistor, Motortreiber und Freilaufdiode sind typische Bauteile in Motor-Schaltungen.</p></article>
-</section>
-<section data-wb-page="2" data-wb-page-title="L298N richtig anschließen"><h1>L298N: Der wirklich richtige Anschluss ohne Überhitzung</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="mini-challenge-ventilator"><h3>Mini-Challenge: Ventilator steuern</h3><p>Plan für den geprüften L298N-Aufbau: IN1 an D3, IN2 an D4, ENA an D5 ohne ENA-Jumper. Taster zwischen D2 und GND, INPUT_PULLUP: gedrückt bedeutet LOW. Die Geschwindigkeit steigt beim Gedrückthalten begrenzt an; Loslassen setzt ENA auf 0 und lässt den Motor auslaufen. Aufbaukontrolle, passende externe Motorversorgung und gemeinsame Masse gehören dazu.</p><pre><code>const int IN1 = 3, IN2 = 4, ENA = 5, TASTER = 2;
+int geschwindigkeit = 0;
+void setup() {
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT); pinMode(TASTER, INPUT_PULLUP);
+  digitalWrite(ENA, LOW);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+}
+void loop() {
+  if (digitalRead(TASTER) == LOW) {
+    geschwindigkeit = min(geschwindigkeit + 5, 200);
+  } else {
+    geschwindigkeit = 0;
+  }
+  analogWrite(ENA, geschwindigkeit);
+  delay(20);
+}</code></pre><p>Bei kleinen PWM-Werten kann der Motor noch stehen. Die Regelung legt keine exakte Drehzahl fest und ist kein Ein/Aus-Umschalter mit Zustandswechsel pro Tastendruck.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="L298N richtig anschließen"><h1>L298N: Steuerung und Motorversorgung trennen</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="l298n_vf"><h3>Verständnisfragen - L298N</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Die H-Brücke kehrt die Spannungspolung am Gleichstrommotor um und ermöglicht damit beide Drehrichtungen. Mit der passenden Ansteuerung sind auch Abschalten und Bremsen möglich.</li><li>VS ist die Motorversorgung, VSS die Logikversorgung und GND der gemeinsame Bezugspunkt. Die genaue Verdrahtung hängt vom Modul und seiner Jumper-/Reglerkonfiguration ab.</li><li>Der Treiber setzt wegen seiner Spannungsabfälle Leistung in Wärme um. Ein geeigneter Kühlkörper hilft, Überhitzung zu vermeiden; Motor- und Logikspannung müssen innerhalb der Modulgrenzen liegen und zum Motor passen.</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="l298n_reveal_1"><h3>Stopp &amp; check</h3><p>Weil die Motoren viel Leistung brauchen, während der Logikteil nur die Steuersignale verarbeitet. VS versorgt die Motorleistung, VSS die interne Logik. Beides muss zusammen mit GND sauber verdrahtet sein.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="l298n_signal_trace"><h3>Ablaufspur: Zwei Eingänge bestimmen die Motorwirkung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">IN1</th><th scope="col">IN2</th><th scope="col">Spannung am Motor</th><th scope="col">Wirkung</th></tr></thead><tbody><tr><td>LOW</td><td>LOW</td><td>0 V</td><td>Stopp</td></tr><tr><td>HIGH</td><td>LOW</td><td>positiv</td><td>Richtung 1</td></tr><tr><td>LOW</td><td>HIGH</td><td>negativ</td><td>Gegenrichtung</td></tr><tr><td>HIGH</td><td>HIGH</td><td>0 V</td><td>Stopp</td></tr></tbody></table></div></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="motoren-15-1"><h3>15.1 Ein Motor läuft und bremst</h3><p>D3 → IN1, D4 → IN2, D5 → ENA ohne ENA-Jumper; Motor an OUT1/OUT2. Arduino-GND, Modul-GND und Minus der geeigneten Motorversorgung sind verbunden. VS versorgt den Motorzweig, VSS die 5-V-Logik über den geprüften Regler-/Jumperweg. Die konkrete Modulplatine besitzt passende Schutzdioden. Kein Motorstrom fließt aus einem Digitalpin; 5-V-Ausgänge werden nicht gegeneinander verbunden.</p><pre><code>const int IN1 = 3, IN2 = 4, ENA = 5;
+void setup() {
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT); pinMode(ENA, OUTPUT);
+  digitalWrite(ENA, LOW);
+}
+void loop() {
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(ENA, HIGH); delay(2000);
+  digitalWrite(IN2, HIGH); delay(2000);
+  digitalWrite(ENA, LOW);
+}</code></pre><p>Zwei Sekunden Richtung 1, dann zwei Sekunden elektrisches Bremsen mit beiden Eingängen HIGH. Vertauschte IN1/IN2-Pegel kehren die Richtung um. ENA LOW bedeutet dagegen Auslaufen. Bleibt der Motor stehen, sind ENA-Freigabe, Versorgung und gemeinsame Masse erste Prüfpunkte; eine tatsächliche Beobachtung ist am eigenen Aufbau zu dokumentieren.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="motoren-15-2"><h3>15.2 Zwei Motoren mit Funktionen steuern</h3><p>Zusätzlich: IN3 an D7, IN4 an D8, ENB an D6 ohne ENB-Jumper; Motor B an OUT3/OUT4. Hier gilt Motor A = links, B = rechts. Bei der Montage wird vorher geprüft, welche Polung beide Räder am Modell tatsächlich vorwärts bewegt. Folgendes Beispiel nimmt HIGH/LOW für beide Vorwärtsrichtungen an.</p><pre><code>const int IN1 = 3, IN2 = 4, ENA = 5;
+const int IN3 = 7, IN4 = 8, ENB = 6;
+void setup() {
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT); pinMode(ENA, OUTPUT);
+  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT); pinMode(ENB, OUTPUT);
+  digitalWrite(ENA, LOW); digitalWrite(ENB, LOW);
+}
+void stopp() {
+  digitalWrite(ENA, LOW); digitalWrite(ENB, LOW);
+}
+void beideVorwaerts() {
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+  digitalWrite(ENA, HIGH); digitalWrite(ENB, HIGH);
+}
+void beideRueckwaerts() {
+  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
+  digitalWrite(ENA, HIGH); digitalWrite(ENB, HIGH);
+}
+void linksVorwaerts() {
+  stopp();
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(ENA, HIGH);
+}
+void rechtsVorwaerts() {
+  stopp();
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+  digitalWrite(ENB, HIGH);
+}
+void loop() {
+  beideVorwaerts(); delay(1000); stopp(); delay(2000);
+  beideRueckwaerts(); delay(1000); stopp(); delay(2000);
+  linksVorwaerts(); delay(1000); stopp(); delay(2000);
+  rechtsVorwaerts(); delay(1000); stopp(); delay(2000);
+}</code></pre><p>Die Pausen müssen lang genug sein, dass die frei drehenden Räder vor einem Richtungswechsel stillstehen. Bei spiegelverkehrter Montage ist gegebenenfalls eine Motorpolung beziehungsweise ihre Richtungszuordnung anzupassen, immer bei getrennten Versorgungen.</p></article></section>
 <section data-wb-page="3" data-wb-page-title="Schrittmotor"><h1>Schrittmotor: In 3 Schritten zum ersten Aufbau</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_reveal_1"><h3>Stopp &amp; check</h3><p>Weil die Spulen des Motors in einer festen Reihenfolge angesteuert werden müssen. Wenn die Reihenfolge nicht stimmt, ruckelt der Motor, läuft gar nicht oder dreht in einer unerwarteten Weise.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_order_1"><h3>Bring den Ablauf in die richtige Reihenfolge</h3><ol><li>Motor an die Treiberplatine stecken</li><li>Treiberplatine mit 5V und GND des Arduino verbinden</li><li>IN1 bis IN4 mit den Pins 6, 5, 4 und 3 verbinden</li><li>Arduino per USB anschließen und Port wählen</li><li>Sketch hochladen und den Motor testen</li></ol></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_cloze_1"><h3>Sicherung: Wichtige Begriffe einsetzen</h3><p>In der Arduino-IDE musst du zuerst den richtigen <b>Port</b> auswählen. Die Bibliothek <b>Stepper.h</b> stellt Funktionen für den Motor bereit. Der Code in <b>setup()</b> läuft nur einmal beim Start, der Code in <b>loop()</b> wiederholt sich ständig. Im Beispiel entspricht eine volle Umdrehung <b>2048</b> Schritten.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_order_1"><h3>Bring den Ablauf in die richtige Reihenfolge</h3><ol><li>Bei getrennten Versorgungen den Motor an die Treiberplatine stecken</li><li>IN1 bis IN4 mit den Pins 3, 4, 5 und 6 verbinden</li><li>Separate 5-V-Motorversorgung stromlos verdrahten und ihre Masse mit Treiber und Arduino verbinden</li><li>Arduino per USB anschließen und Port wählen</li><li>Sketch prüfen und hochladen; nach Aufbaukontrolle Motorversorgung einschalten und kurz testen</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_cloze_1"><h3>Sicherung: Wichtige Begriffe einsetzen</h3><p>In der Arduino-IDE musst du zuerst den richtigen <b>Port</b> auswählen. Die Bibliothek <b>Stepper.h</b> stellt Funktionen für den Motor bereit. Der Code in <b>setup()</b> läuft nur einmal beim Start, der Code in <b>loop()</b> wiederholt sich ständig. Im Beispiel wird eine volle Umdrehung näherungsweise mit <b>2048</b> Schritten angesetzt.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_verify_1"><h3>Wahr oder falsch?</h3><p><b>Wahr.</b> Wenn in step() eine negative Schrittzahl steht, bewegt sich der Schrittmotor in die andere Richtung.</p><p>Genau so ist es: Das Vorzeichen entscheidet über die Drehrichtung, die absolute Zahl über die Anzahl der Schritte.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="motoren_stepper_p2"><h3>Verbinde Code und Wirkung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>#include &lt;Stepper.h&gt;</td><td>Die Stepper-Bibliothek wird verfügbar gemacht.</td></tr><tr><td>int steps = 2048;</td><td>Die Zahl der Schritte pro voller Umdrehung wird festgelegt.</td></tr><tr><td>Schrittmotor.setSpeed(5);</td><td>Die Drehgeschwindigkeit wird eingestellt.</td></tr><tr><td>Schrittmotor.step(-2048);</td><td>Der Motor dreht eine Umdrehung in Gegenrichtung.</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="stepper_essay_1"><h3>Transfer: Verändere den Sketch gedanklich</h3><span class="solution-label">Eine mögliche Antwort</span><p>Im Beispiel entsprechen 2048 Schritte einer Umdrehung. Für eine halbe Umdrehung verwende ich daher 1024 Schritte vorwärts und -1024 Schritte zurück. Vor der Vorwärtsbewegung stelle ich setSpeed(5) ein. Vor der Rückbewegung kann ich beispielsweise setSpeed(10) verwenden, sofern der Motor diese Geschwindigkeit unter der Last zuverlässig erreicht. Anschließend muss ich vor der nächsten Vorwärtsbewegung wieder auf 5 Umdrehungen pro Minute zurückstellen. Die Schrittzahl des Motorobjekts bleibt 2048, weil sich seine Schritte pro voller Umdrehung nicht ändern.</p><pre><code>void loop() {
@@ -122,16 +204,48 @@
   Schrittmotor.setSpeed(10);
   Schrittmotor.step(-1024); delay(1000);
 }</code></pre></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="motoren-stepper-test"><h3>Schrittmotor: eine Umdrehung hin und zurück</h3><p>Für das Beispiel 5-V-28BYJ-48 mit passender ULN2003-Platine: IN1 → D3, IN2 → D4, IN3 → D5, IN4 → D6. Motorversorgung extern geregelt mit 5 V an der Treiberplatine; ihr Minus, Treiber-GND und Arduino-GND sind verbunden. Externes Plus bleibt vom Arduino-5V getrennt. Die Bibliotheksreihenfolge IN1, IN3, IN2, IN4 ergibt die Konstruktorpins 3, 5, 4, 6.</p><pre><code>#include &lt;Stepper.h&gt;
+int steps = 2048;
+Stepper Schrittmotor(steps, 3, 5, 4, 6);
+void setup() { Schrittmotor.setSpeed(5); }
+void loop() {
+  Schrittmotor.step(2048); delay(1000);
+  Schrittmotor.step(-2048); delay(1000);
+}</code></pre><p>Mit dem Näherungswert 2048 und 5 Umdrehungen pro Minute dauert jede Drehung ungefähr 12 s, danach folgt jeweils 1 s Pause. Der Zyklus dauert ungefähr 26 s. Ohne Schrittverluste kehrt die Welle ungefähr zur Markierung zurück; reale Getriebeübersetzung und Spiel begrenzen die Genauigkeit. Bei Brummen wird stromlos zuerst die Pinfolge geprüft. Spulen können im Stillstand bestromt bleiben; nach dem kurzen Versuch wird die Motorversorgung abgeschaltet.</p></article></section>
 <section data-wb-page="4" data-wb-page-title="Servomotoren"><h1>Servomotoren: Winkel gezielt anfahren</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="motoren_categorize_1"><h3>Sortiere die Eigenschaften</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Servomotor</td><td>Fährt gezielt einen Winkel an</td></tr><tr><td>Schrittmotor</td><td>Bewegt sich in vielen kleinen Einzelschritten</td></tr><tr><td>Servomotor</td><td>Typisch mit Servo.h und write()</td></tr><tr><td>Schrittmotor</td><td>Typisch mit Stepper.h und step()</td></tr><tr><td>Servomotor</td><td>Gut geeignet für Klappen oder Hebel</td></tr><tr><td>Schrittmotor</td><td>Gut geeignet für reproduzierbare Drehbewegungen</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="servo_mcq_1"><h3>Mini-Check: Servos</h3><h4>1) Welche Aussage trifft auf einen Standard-Servo zu?</h4><p>Er kann gezielt auf bestimmte Winkel eingestellt werden.</p><p>Ein Standard-Servo wird auf Winkelstellungen eingestellt und dreht sich nicht endlos weiter.</p><h4>2) Welche Leitungen gehören typisch zu einem Servo?</h4><p>5V; GND; Signal</p><p>Ein Servo hat typischerweise Versorgung, Masse und eine Signalleitung.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="servo_reveal_1"><h3>Fehler finden</h3><p>Das ist zu allgemein. Kleine Servos funktionieren oft direkt am Board, unter Last kann der Strombedarf aber zu hoch sein. Dann braucht der Servo eine eigene 5V-Versorgung, die Masse muss trotzdem mit GND des Arduino verbunden bleiben.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="servo_reveal_1"><h3>Fehler finden</h3><p>Ein Digitalpin liefert nur das Steuersignal, nicht den Motorstrom. Wir verwenden eine zum Servo passende externe Versorgung und verbinden deren Minus mit Servo-GND und Arduino-GND. Nennspannung, Anlaufstrom und mechanischer Winkelbereich müssen zum konkreten Servo passen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="motoren-servo-test"><h3>Servo: zwei Winkel anfahren</h3><p>Beim freigegebenen 5-V-Positionsservo führt das Signal zu D9. Eine passende externe Versorgung liefert den Motorstrom; ihr Minus, Servo-GND und Arduino-GND sind verbunden. Externes Plus wird nicht mit Arduino-5V verbunden. Belegung und Winkelbereich werden am konkreten Bauteil geprüft.</p><pre><code>#include &lt;Servo.h&gt;
+Servo S1;
+void setup() { S1.attach(9); }
+void loop() {
+  S1.write(30); delay(1000);
+  S1.write(90); delay(1000);
+}</code></pre><p>Das Objekt S1 wird an den Signalpin gebunden; write() übermittelt eine Zielstellung und keine Bestätigung der tatsächlichen Ankunft. Bei erfolgreichem Test wechselt der unbelastete Servo ungefähr zwischen 30° und 90°. Ändere ich 30 auf 60, verringert sich der angeforderte Winkelunterschied von 60° auf 30°; die Wartezeiten bleiben gleich. Die tatsächlichen Winkel können abweichen. Bei Anschlag, Wärme oder anhaltendem Brummen wird abgeschaltet.</p></article></section>
 <section data-wb-page="5" data-wb-page-title="DC-Motoren"><h1>DC-Motoren: schnell, einfach, aber weniger präzise</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="dc_verify_1"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Ein einfacher DC-Motor ist ohne zusätzliche Sensorik sofort die beste Wahl, wenn du einen Arm exakt auf 45° stellen willst.</p><p>Für eine exakte Winkelposition ist ein Standard-DC-Motor allein ungeeignet. Ein Servo oder ein Schrittmotor passt hier meist besser.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="motoren_essay_vergleich"><h3>Transfer: Wähle den passenden Motor</h3><span class="solution-label">Eine mögliche Antwort</span><p>Für die Schranke wähle ich einen Servo, weil ein definierter Öffnungswinkel benötigt wird. Seine Regelung hält die angeforderte Stellung innerhalb der mechanischen Möglichkeiten. Für den Lüfter wähle ich einen Gleichstrommotor, der sich gut für eine kontinuierliche Drehbewegung eignet; ein Treiber steuert gegebenenfalls die Drehzahl über PWM. Für den Drehteller wähle ich einen Schrittmotor, wenn reproduzierbare Drehschritte erforderlich sind. Ohne Rückmeldung kann er allerdings Schritte verlieren, wenn Last oder Geschwindigkeit zu groß werden. Versorgung und Treiber dimensioniere ich jeweils passend zum Motor.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="motoren-dc-test"><h3>DC-Motor: Richtung und Drehzahl getrennt steuern</h3><p>Der unveränderte L298N-Aufbau aus 15.1 bleibt bestehen. PWM liegt an ENA/D5, Richtung an IN1/D3 und IN2/D4; der Motor liegt an den Treiberausgängen. Eine Diode allein erlaubt keinen direkten Motorbetrieb an Arduino-Pins.</p><pre><code>const int motorPin1 = 3, motorPin2 = 4, enablePin = 5;
+void setup() {
+  pinMode(motorPin1, OUTPUT); pinMode(motorPin2, OUTPUT);
+  pinMode(enablePin, OUTPUT); digitalWrite(enablePin, LOW);
+}
+void motorStop() { analogWrite(enablePin, 0); delay(1000); }
+void loop() {
+  motorStop();
+  digitalWrite(motorPin1, HIGH); digitalWrite(motorPin2, LOW);
+  analogWrite(enablePin, 180); delay(1000);
+  motorStop();
+  digitalWrite(motorPin1, LOW); digitalWrite(motorPin2, HIGH);
+  analogWrite(enablePin, 180); delay(1000);
+  motorStop();
+  digitalWrite(motorPin1, LOW); digitalWrite(motorPin2, HIGH);
+  for (int i = 0; i &lt;= 200; i++) {
+    analogWrite(enablePin, i); delay(20);
+  }
+  motorStop();
+}</code></pre><p>Zeitlinie idealisiert: 0–1 s auslaufen, 1–2 s Richtung 1 mit PWM 180, 2–3 s auslaufen, 3–4 s Gegenrichtung mit 180, 4–5 s auslaufen, 5–9,02 s Rampe in Gegenrichtung, 9,02–10,02 s auslaufen. Danach folgt beim nächsten loop()-Start erneut motorStop(), also eine weitere Sekunde Pause. Die Rampe enthält 201 Werte von 0 bis 200. 20 auf 40 ms verdoppelt ihre Dauer von ungefähr 4,02 auf 8,04 s, nicht den Endwert. 180 auf 140 verringert das Tastverhältnis; eine niedrigere Drehzahl ist unter gleichen Bedingungen plausibel, aber keine exakt proportionale oder bei jeder Last garantierte Wirkung. Eigene Beobachtungen und eine gezielte Fehlerprüfung werden am realen Aufbau dokumentiert.</p></article></section>
 <section data-wb-page="6" data-wb-page-title="Zusammenfassung und Quellen"><h1>Zusammenfassung, Weiterforschen und Abgabe</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="motoren_abschluss_mcq"><h3>Abschluss-Check</h3><h4>1) Für welche Aufgabe ist ein Servo besonders passend?</h4><p>Eine Schranke soll zwischen 0° und 90° wechseln.</p><p>Ein Servo ist stark, wenn definierte Winkelpositionen angefahren werden sollen.</p><h4>2) Was passt typisch zum Schrittmotor?</h4><p>step(); Treiberplatine; 2048 Schritte pro Umdrehung im Beispiel</p><p>Der Beispiel-Schrittmotor arbeitet mit einer Treiberplatine und der Funktion step(); drei Leitungen sind typisch für Servos, nicht für Schrittmotoren.</p><h4>3) Welche Aussage zu DC-Motoren stimmt?</h4><p>Sie sind gut für kontinuierliche Drehbewegungen.</p><p>DC-Motoren sind gut für dauerhafte Drehbewegungen, aber nicht automatisch positionsgenau.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="motoren_reveal_abschluss"><h3>Was kannst du danach?</h3><p>Wenn du für eine konkrete Aufgabe begründen kannst, welcher Motortyp sinnvoll ist, wie er angeschlossen wird, welche Bibliothek oder Ansteuerung passt und welche Risiken bei Stromversorgung oder Verdrahtung beachtet werden müssen.</p></article>

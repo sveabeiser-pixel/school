@@ -4,6 +4,60 @@
   var global = window;
   var registry = Object.create(null);
 
+  const waveFrames = new Map();
+  const waveVisibility = new WeakMap();
+  let nextWaveFrameId = 0;
+  let browserWaveFrame = 0;
+
+  function scheduleWaveFrames() {
+    if (browserWaveFrame || document.hidden) return;
+    if (![...waveFrames.values()].some(job => job.state.visible)) return;
+    browserWaveFrame = window.requestAnimationFrame(timestamp => {
+      browserWaveFrame = 0;
+      // Keep hidden jobs queued; IntersectionObserver resumes them when visible.
+      const jobs = [...waveFrames.entries()];
+      for (const [id, job] of jobs) {
+        if (!waveFrames.has(id)) continue;
+        if (!job.root.isConnected) { waveFrames.delete(id); continue; }
+        if (!job.state.visible || !job.root.getClientRects().length) continue;
+        waveFrames.delete(id);
+        job.callback(timestamp);
+      }
+      scheduleWaveFrames();
+    });
+  }
+
+  function requestWaveFrame(root, callback) {
+    let state = waveVisibility.get(root);
+    if (!state) {
+      const scene = root.querySelector('canvas') || root;
+      const rect = scene.getBoundingClientRect();
+      state = { visible: !!scene.getClientRects().length && rect.bottom > 0 && rect.top < window.innerHeight };
+      const observer = new IntersectionObserver(entries => {
+        state.visible = entries[entries.length - 1].isIntersecting;
+        scheduleWaveFrames();
+      });
+      observer.observe(scene);
+      waveVisibility.set(root, state);
+      root.addEventListener('wb-destroy', () => {
+        observer.disconnect();
+        waveVisibility.delete(root);
+        for (const [id, job] of waveFrames) if (job.root === root) waveFrames.delete(id);
+        if (!waveFrames.size && browserWaveFrame) {
+          window.cancelAnimationFrame(browserWaveFrame);
+          browserWaveFrame = 0;
+        }
+      }, { once: true });
+    }
+    const id = ++nextWaveFrameId;
+    waveFrames.set(id, { root, callback, state });
+    scheduleWaveFrames();
+    return id;
+  }
+
+  function cancelWaveFrame(id) { waveFrames.delete(id); }
+  document.addEventListener('visibilitychange', scheduleWaveFrames);
+
   function createScopedIdGetter(root) {
     return function getById(id) {
       if (root && root.querySelector) {
@@ -16,12 +70,217 @@
 
   function register(key, initFn) { registry[key] = initFn; }
 
+  const wavePresentation = {
+    'huygens-diffraction': ['Beugung am Spalt', [['Ebene Welle', '#0891b2'], ['Elementarwellen', '#7c9bd1'], ['Neue Wellenfront', '#e15a36']]],
+    'fixed-pulse-reflection': ['Puls am festen Ende', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Summe', '#2563eb']]],
+    'loose-pulse-reflection': ['Puls am losen Ende', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Summe', '#2563eb']]],
+    'thin-dense-transition': ['Vom dünnen zum dichten Seil', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Übertragen', '#b45374'], ['Seil', '#2563eb']]],
+    'dense-thin-transition': ['Vom dichten zum dünnen Seil', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Übertragen', '#b45374'], ['Seil', '#2563eb']]],
+    'build-standing': ['Eine stehende Welle entsteht', [['Von links', '#c77712'], ['Von rechts', '#0d9488'], ['Summe', '#2563eb'], ['Knoten', '#dc2626']]],
+    'standing-modes': ['Grundschwingung und Oberschwingungen', [['Seil', '#2563eb'], ['Maximale Auslenkung', '#94a3b8'], ['Knoten', '#dc2626']]],
+    'loose-reflection': ['Welle am losen Ende', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Summe', '#2563eb']]],
+    'fixed-reflection': ['Welle am festen Ende', [['Einlaufend', '#c77712'], ['Reflektiert', '#0d9488'], ['Summe', '#2563eb']]],
+    'double-slit-particles': ['Einzeltreffer am Doppelspalt', [['Spalt A', '#0891b2'], ['Spalt B', '#c24168'], ['Gesamtverteilung', '#334155'], ['Theorie', '#d97706']]],
+    'single-slit': ['Einzelspalt: Beugungsbild und Intensität', [['Intensität', '#2563eb'], ['Markierter Winkel', '#e15a36']]],
+    'double-slit-envelope': ['Doppelspalt mit Einzelspalt-Hüllkurve', [['Intensität', '#2563eb'], ['Hüllkurve', '#0d9488'], ['Markierter Winkel', '#e15a36']]],
+    'grating-phasor': ['Spaltgitter: Zeiger addieren', [['Einzelzeiger', '#0d9488'], ['Resultierende', '#e15a36'], ['Intensität', '#2563eb']]],
+    'grating': ['Vielfachspalt: scharfe Hauptmaxima', [['Intensität', '#2563eb'], ['Markierter Winkel', '#e15a36']]]
+  };
+
+  function prepareWavePresentation(root, key) {
+    const spec = wavePresentation[key];
+    if (!spec || root.classList.contains('sw-sim-enhanced')) return;
+    root.classList.add('sw-sim-enhanced');
+    const controls = root.querySelector('.sw-sim-controls');
+    const heading = root.querySelector('h2');
+    const title = heading || document.createElement('h2');
+    if (!heading) title.textContent = spec[0];
+    root.insertBefore(title, root.firstChild);
+    if (key === 'huygens-diffraction') {
+      const intro = controls.querySelector(':scope > p');
+      if (intro) title.after(intro);
+      const observation = controls.querySelector('.wb-soft-callout');
+      if (observation) root.appendChild(observation);
+    }
+    const canvas = root.querySelector('canvas');
+    const stage = canvas.parentElement;
+    stage.classList.add('sw-sim-stage');
+    const legend = document.createElement('div');
+    legend.className = 'sw-sim-legend';
+    spec[1].forEach(([label, color]) => {
+      const item = document.createElement('span');
+      const swatch = document.createElement('i');
+      swatch.style.backgroundColor = color;
+      swatch.setAttribute('aria-hidden', 'true');
+      item.append(swatch, document.createTextNode(label));
+      legend.appendChild(item);
+    });
+    stage.insertBefore(legend, canvas);
+    stage.querySelectorAll('canvas').forEach(node => {
+      const scroll = document.createElement('div');
+      scroll.className = 'sw-canvas-scroll';
+      scroll.tabIndex = 0;
+      scroll.setAttribute('aria-label', node.getAttribute('aria-label'));
+      node.before(scroll);
+      scroll.appendChild(node);
+      const observer = new ResizeObserver(() => {
+        if (scroll.clientWidth && scroll.dataset.centeredWidth !== String(scroll.clientWidth)) {
+          scroll.scrollLeft = Math.max(0, (scroll.scrollWidth - scroll.clientWidth) / 2);
+          scroll.dataset.centeredWidth = String(scroll.clientWidth);
+        }
+      });
+      observer.observe(scroll);
+      node.addEventListener('wb-destroy', () => observer.disconnect(), { once: true });
+    });
+  }
+
+  function waveStage(ctx, W, H) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#fbfdff';
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.strokeStyle = '#e9eff5';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = 40; x < W - 16; x += 48) { ctx.moveTo(x, 50); ctx.lineTo(x, H - 36); }
+    for (let y = 72; y < H - 30; y += 48) { ctx.moveTo(24, y); ctx.lineTo(W - 16, y); }
+    ctx.stroke();
+    ctx.restore();
+    ctx.font = '20px system-ui, sans-serif';
+    ctx.fillStyle = '#475569';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+  }
+
+  function waveBoundary(ctx, x, y, H, fixed) {
+    ctx.save();
+    ctx.fillStyle = '#d9e3ef';
+    ctx.fillRect(x - 5, 58, 10, H - 108);
+    ctx.strokeStyle = '#64748b';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x, 58); ctx.lineTo(x, H - 50); ctx.stroke();
+    if (fixed) {
+      for (let yy = 64; yy < H - 58; yy += 17) {
+        ctx.beginPath(); ctx.moveTo(x + 2, yy); ctx.lineTo(x + 14, yy - 10); ctx.stroke();
+      }
+      ctx.fillStyle = '#2563eb';
+      ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 3;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  const wavePlotCache = new WeakMap();
+
+  function drawWavePlotMarker(ctx, H, options, plot) {
+    const { y0, y1, mapX, mapY } = plot;
+    const xm = mapX(options.mark), ym = mapY(options.intensity(options.mark));
+    ctx.strokeStyle = '#e15a36'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.moveTo(xm, y0); ctx.lineTo(xm, y1); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#e15a36'; ctx.beginPath(); ctx.arc(xm, ym, 6, 0, Math.PI * 2); ctx.fill();
+    if (options.screen) {
+      ctx.beginPath(); ctx.moveTo(xm, H - 82); ctx.lineTo(xm - 6, H - 91); ctx.lineTo(xm + 6, H - 91); ctx.fill();
+    }
+  }
+
+  function wavePlot(ctx, W, H, options) {
+    const x0 = 68, x1 = W - 28, y0 = 70, y1 = H - (options.screen ? 140 : 56);
+    const mapX = value => x0 + (value - options.min) / (options.max - options.min) * (x1 - x0);
+    const mapY = value => y1 - value * (y1 - y0);
+    const plot = { x0, x1, y0, y1, mapX, mapY };
+    const key = JSON.stringify([W, H, options.min, options.max, options.screen, options.xLabel, options.wavelength, options.cacheKey]);
+    const cached = wavePlotCache.get(ctx);
+    if (options.cacheKey !== undefined && cached && cached.key === key) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(cached.image, 0, 0);
+      drawWavePlotMarker(ctx, H, options, plot);
+      return plot;
+    }
+    waveStage(ctx, W, H);
+    ctx.fillStyle = '#fff'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    ctx.font = '20px system-ui, sans-serif';
+    ctx.fillStyle = '#334155'; ctx.fillText('Relative Intensität', x0, 34);
+    ctx.textAlign = 'right'; ctx.fillText(options.xLabel || 'Winkel α in °', x1, H - (options.screen ? 99 : 10));
+    ctx.textAlign = 'left';
+    [0, 0.5, 1].forEach(value => {
+      ctx.strokeStyle = '#dfe7ef'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x0, mapY(value)); ctx.lineTo(x1, mapY(value)); ctx.stroke();
+      ctx.fillStyle = '#64748b'; ctx.fillText(String(value).replace('.', ','), 18, mapY(value) + 6);
+    });
+    options.ticks.forEach(value => {
+      const x = mapX(value);
+      ctx.strokeStyle = '#e6edf4'; ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y1); ctx.stroke();
+      ctx.fillStyle = '#64748b'; ctx.textAlign = 'center';
+      ctx.fillText(String(value).replace('.', ','), x, y1 + 29);
+    });
+    ctx.textAlign = 'left';
+    const steps = options.steps || 1600;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x0, y0 - 3, x1 - x0, y1 - y0 + 6); ctx.clip();
+    ctx.beginPath(); ctx.moveTo(x0, y1);
+    for (let i = 0; i <= steps; i++) {
+      const value = options.min + (options.max - options.min) * i / steps;
+      ctx.lineTo(mapX(value), mapY(options.intensity(value)));
+    }
+    ctx.lineTo(x1, y1); ctx.closePath(); ctx.fillStyle = '#2563eb15'; ctx.fill();
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const value = options.min + (options.max - options.min) * i / steps;
+      if (!i) ctx.moveTo(mapX(value), mapY(options.intensity(value)));
+      else ctx.lineTo(mapX(value), mapY(options.intensity(value)));
+    }
+    ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 3; ctx.stroke();
+    if (options.envelope) {
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const value = options.min + (options.max - options.min) * i / steps;
+        if (!i) ctx.moveTo(mapX(value), mapY(options.envelope(value)));
+        else ctx.lineTo(mapX(value), mapY(options.envelope(value)));
+      }
+      ctx.setLineDash([9, 7]); ctx.strokeStyle = '#0d9488'; ctx.lineWidth = 2.5; ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.restore();
+    if (options.screen) {
+      const [red, green, blue] = waveLightColor(options.wavelength);
+      ctx.fillStyle = '#101b29'; ctx.fillRect(x0, H - 78, x1 - x0, 38);
+      for (let i = 0; i < x1 - x0; i++) {
+        const value = options.min + (options.max - options.min) * i / (x1 - x0);
+        const brightness = Math.pow(Math.max(0, options.intensity(value)), 0.45);
+        ctx.fillStyle = `rgb(${Math.round(red * brightness)},${Math.round(green * brightness)},${Math.round(blue * brightness)})`;
+        ctx.fillRect(x0 + i, H - 76, 1.5, 34);
+      }
+      ctx.fillStyle = '#475569'; ctx.font = '18px system-ui, sans-serif'; ctx.fillText('Schirmbild', x0, H - 13);
+    }
+    if (options.cacheKey !== undefined) {
+      const image = cached ? cached.image : document.createElement('canvas');
+      image.width = W; image.height = H;
+      image.getContext('2d').drawImage(ctx.canvas, 0, 0);
+      wavePlotCache.set(ctx, { key, image });
+    }
+    drawWavePlotMarker(ctx, H, options, plot);
+    return plot;
+  }
+
+  function waveLightColor(nm) {
+    if (nm < 440) return [Math.round(160 * (440 - nm) / 60), 60, 255];
+    if (nm < 490) return [40, Math.round(255 * (nm - 440) / 50), 255];
+    if (nm < 510) return [30, 255, Math.round(255 * (510 - nm) / 20)];
+    if (nm < 580) return [Math.round(255 * (nm - 510) / 70), 240, 35];
+    if (nm < 645) return [255, Math.round(240 * (645 - nm) / 65), 35];
+    return [255, 45, 45];
+  }
+
   function mount(root) {
     if (!root || !root.getAttribute) return;
     var key = root.getAttribute('data-wave-sim');
     var initFn = registry[key];
     if (!initFn) return;
     if (root.dataset && root.dataset.waveSimMounted === "1") return;
+    prepareWavePresentation(root, key);
     initFn(root);
     if (root.dataset) root.dataset.waveSimMounted = "1";
   }
@@ -156,7 +415,7 @@ function initTransversalSim(root) {
           "Teilchenbewegung: senkrecht zur Ausbreitungsrichtung\n" +
           "Momentaufnahme: Wellenberge und Wellentäler\n" +
           "Beobachte: Die Punkte schwingen auf und ab, während die Form nach rechts läuft.";
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       ampEl.addEventListener("input", syncLabels);
@@ -171,8 +430,8 @@ function initTransversalSim(root) {
         lastTs = 0;
       });
       syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initLongitudinalSim(root) {
@@ -268,7 +527,7 @@ function initLongitudinalSim(root) {
           "Momentaufnahme: Verdichtungen und Verdünnungen\n" +
           "Aktuelle Verdichtungsstärke: " + compressionHint;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       ampEl.addEventListener("input", syncLabels);
@@ -283,8 +542,8 @@ function initLongitudinalSim(root) {
         lastTs = 0;
       });
       syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initHuygensDiffractionSim(root) {
@@ -361,7 +620,7 @@ function initHuygensDiffractionSim(root) {
 
       function drawWavelets(sources, radius) {
         ctx.save();
-        ctx.strokeStyle = "rgba(59, 130, 246, 0.45)";
+        ctx.strokeStyle = "rgba(96, 139, 202, 0.38)";
         ctx.lineWidth = 1;
         sources.forEach((y) => {
           ctx.beginPath();
@@ -376,7 +635,7 @@ function initHuygensDiffractionSim(root) {
         const bottomY = centerY + slitHalf;
         const xLine = wallX + radius;
         ctx.save();
-        ctx.strokeStyle = "#dc2626";
+        ctx.strokeStyle = "#e15a36";
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(xLine, topY);
@@ -391,22 +650,17 @@ function initHuygensDiffractionSim(root) {
 
       function drawPropagatingFronts(step, slitHalf) {
         ctx.save();
-        ctx.strokeStyle = "rgba(220, 38, 38, 0.72)";
-        ctx.lineWidth = 2.2;
-        for (let n = 0; n < 5; n++) {
-          const radius = 36 + ((phase + step * n) % wavelength);
-          const topY = centerY - slitHalf;
-          const bottomY = centerY + slitHalf;
+        ctx.beginPath(); ctx.rect(wallX + 6, topPad, W - wallX - 28, bottomPad - topPad); ctx.clip();
+        ctx.strokeStyle = "rgba(225, 90, 54, 0.8)";
+        ctx.lineWidth = 2.6;
+        for (let radius = phase % wavelength; radius < W - wallX + H; radius += step) {
+          if (radius < 5) continue;
+          const topY = centerY - slitHalf, bottomY = centerY + slitHalf;
           const xLine = wallX + radius;
           ctx.beginPath();
-          if (xLine <= W - 18) {
-            ctx.moveTo(xLine, topY);
-            ctx.lineTo(xLine, bottomY);
-          }
-          ctx.moveTo(xLine, topY);
-          ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
-          ctx.moveTo(xLine, bottomY);
-          ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2, false);
+          ctx.moveTo(xLine, topY); ctx.lineTo(xLine, bottomY);
+          ctx.moveTo(xLine, topY); ctx.arc(wallX, topY, radius, 0, -Math.PI / 2, true);
+          ctx.moveTo(xLine, bottomY); ctx.arc(wallX, bottomY, radius, 0, Math.PI / 2);
           ctx.stroke();
         }
         ctx.restore();
@@ -414,14 +668,20 @@ function initHuygensDiffractionSim(root) {
 
       function drawLabels(slitHalf) {
         ctx.save();
-        ctx.fillStyle = "#334155";
-        ctx.font = "20px sans-serif";
-        ctx.fillText("Ebene Welle", 70, 36);
-        ctx.fillText("Spalt", wallX - 18, topPad - 14);
-        ctx.fillText("Elementarwellen", wallX + 120, topPad + 18);
-        ctx.fillStyle = "#475569";
-        ctx.font = "16px sans-serif";
-        ctx.fillText("neue Wellenfront", wallX + 150, centerY - slitHalf - 34);
+        ctx.fillStyle = "#334155"; ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("Ebene Welle", 56, 32);
+        ctx.fillText("Gebeugte Welle", wallX + 35, 32);
+        ctx.strokeStyle = "#64748b"; ctx.lineWidth = 1.5;
+        const bx = wallX - 24, yt = centerY - slitHalf, yb = centerY + slitHalf;
+        ctx.beginPath(); ctx.moveTo(bx, yt); ctx.lineTo(bx, yb);
+        ctx.moveTo(bx - 5, yt); ctx.lineTo(bx + 5, yt);
+        ctx.moveTo(bx - 5, yb); ctx.lineTo(bx + 5, yb); ctx.stroke();
+        ctx.textAlign = "right"; ctx.fillText("b", bx - 9, centerY + 6); ctx.textAlign = "left";
+        ctx.fillStyle = "#64748b"; ctx.font = "18px system-ui, sans-serif";
+        ctx.fillText("Ausbreitung", 56, H - 20);
+        ctx.strokeStyle = "#0891b2"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(168, H - 26); ctx.lineTo(245, H - 26);
+        ctx.lineTo(237, H - 32); ctx.moveTo(245, H - 26); ctx.lineTo(237, H - 20); ctx.stroke();
         ctx.restore();
       }
 
@@ -444,15 +704,18 @@ function initHuygensDiffractionSim(root) {
           sources.push(centerY - slitHalf + t * slitHalf * 2);
         }
 
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = "rgba(248, 250, 252, 0.96)";
+        waveStage(ctx, W, H);
+        ctx.fillStyle = "#fbfdff";
         ctx.fillRect(0, 0, W, H);
 
         drawIncomingFronts(phase);
         drawNormals(slitHalf);
         drawWavelets(sources, radius);
         drawPropagatingFronts(wavelength, slitHalf);
+        ctx.save();
+        ctx.beginPath(); ctx.rect(wallX + 6, topPad, W - wallX - 28, bottomPad - topPad); ctx.clip();
         drawEnvelopeCapsule(radius, slitHalf);
+        ctx.restore();
         drawWall(slitHalf);
 
         ctx.fillStyle = "#0f766e";
@@ -470,7 +733,7 @@ function initHuygensDiffractionSim(root) {
           "aktuelle Beugung: " + spread + "\n" +
           "Regel: Je schmaler der Spalt, desto deutlicher fächert sich die Welle auf.";
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       slitEl.addEventListener("input", syncLabels);
@@ -483,8 +746,8 @@ function initHuygensDiffractionSim(root) {
         lastTs = 0;
       });
       syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initCoherentScreenSim(root) {
@@ -554,7 +817,7 @@ function initCoherentScreenSim(root) {
 
       function draw(tNow) {
         if (!canvas.isConnected) {
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const speed = Number(speedEl.value);
@@ -773,7 +1036,7 @@ function initCoherentScreenSim(root) {
           "gruen/blau: Einzelwellen bis E und rechts weiterlaufend\n" +
           "rot: Ueberlagerung rechts von E";
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim() {
@@ -817,8 +1080,8 @@ function initCoherentScreenSim(root) {
         toggleDsBtn.textContent = showDs ? "Delta s ausblenden" : "Delta s einblenden";
       });
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initSingleSlitSim(root) {
@@ -866,59 +1129,15 @@ function initSingleSlitSim(root) {
         const thMin = -12 * Math.PI / 180;
         const thMax = 12 * Math.PI / 180;
 
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const N = 900;
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const I = intensity(th, l, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
         const IM = intensity(thMark, l, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
+        const { x0, x1, y0, y1 } = wavePlot(ctx, W, H, {
+          min: -12, max: 12, ticks: [-12, -8, -4, 0, 4, 8, 12],
+          cacheKey: [lam, l],
+          mark: thMark * 180 / Math.PI, wavelength: Number(lamNm.value), screen: true,
+          intensity: degrees => intensity(degrees * Math.PI / 180, l, lam)
+        });
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1.5;
 
         const kMax = Math.floor(l / lam);
         const kShow = Math.min(kMax, 8);
@@ -1015,74 +1234,17 @@ function initDoubleSlitWithEnvelopeSim(root) {
         const thMin = -12 * Math.PI / 180;
         const thMax = 12 * Math.PI / 180;
 
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-12, -8, -4, 0, 4, 8, 12].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const N = 1200;
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const I = intensity(th, b, g, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        ctx.save();
-        ctx.setLineDash([8, 6]);
-        ctx.beginPath();
-        for(let i = 0; i <= N; i++){
-          const th = thMin + (thMax - thMin) * i / N;
-          const E = envelope(th, b, lam);
-          const x = x0 + (i / N) * (x1 - x0);
-          const y = y1 - E * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-        ctx.restore();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
         const IM = intensity(thMark, b, g, lam);
         const EM = envelope(thMark, b, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
+        const { x0, x1, y0, y1 } = wavePlot(ctx, W, H, {
+          min: -12, max: 12, ticks: [-12, -8, -4, 0, 4, 8, 12],
+          cacheKey: [lam, b, g],
+          mark: thMark * 180 / Math.PI, wavelength: Number(lamNm.value), screen: true,
+          intensity: degrees => intensity(degrees * Math.PI / 180, b, g, lam),
+          envelope: degrees => envelope(degrees * Math.PI / 180, b, lam)
+        });
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1.5;
 
         const kMax = Math.floor(b / lam);
         const kShow = Math.min(kMax, 8);
@@ -1183,59 +1345,15 @@ function initGratingSim(root) {
         const thMin = -25 * Math.PI / 180;
         const thMax = 25 * Math.PI / 180;
 
-        ctx.clearRect(0, 0, W, H);
-
-        const padL = 56, padR = 18, padT = 18, padB = 44;
-        const x0 = padL, x1 = W - padR;
-        const y0 = padT, y1 = H - padB;
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, x1 - x0, y1 - y0);
-        ctx.stroke();
-
-        [0, 0.5, 1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          ctx.beginPath();
-          ctx.moveTo(x0, y);
-          ctx.lineTo(x1, y);
-          ctx.stroke();
-          ctx.fillText(String(v), 10, y + 4);
-        });
-
-        [-25, -15, -5, 0, 5, 15, 25].forEach(d => {
-          const th = d * Math.PI / 180;
-          const x = x0 + (th - thMin) / (thMax - thMin) * (x1 - x0);
-          ctx.beginPath();
-          ctx.moveTo(x, y0);
-          ctx.lineTo(x, y1);
-          ctx.stroke();
-          ctx.fillText(d + "°", x - 10, H - 16);
-        });
-
-        ctx.beginPath();
-        const steps = 1600;
-        for(let i = 0; i <= steps; i++){
-          const th = thMin + (thMax - thMin) * i / steps;
-          const I = intensity(th, N, b, g, lam);
-          const x = x0 + (i / steps) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        const xM = x0 + (thMark - thMin) / (thMax - thMin) * (x1 - x0);
         const IM = intensity(thMark, N, b, g, lam);
-        const yM = y1 - IM * (y1 - y0);
-
-        ctx.beginPath();
-        ctx.moveTo(xM, y0);
-        ctx.lineTo(xM, y1);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(xM, yM, 6, 0, Math.PI * 2);
-        ctx.fill();
+        const { x0, x1, y0, y1 } = wavePlot(ctx, W, H, {
+          min: -25, max: 25, ticks: [-25, -15, -5, 0, 5, 15, 25],
+          cacheKey: [lam, N, b, g],
+          mark: thMark * 180 / Math.PI, wavelength: Number(lamNm.value), screen: true,
+          intensity: degrees => intensity(degrees * Math.PI / 180, N, b, g, lam)
+        });
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1.5;
 
         const principal = [];
         const kMax = Math.floor(g / lam);
@@ -1342,92 +1460,47 @@ function initGratingPhasorSim(root) {
         uVal.textContent = Number(u).toFixed(3);
         scaleVal.textContent = Number(scl).toFixed(2);
 
-        ctx.clearRect(0, 0, W, H);
-        const cx = W * 0.45;
-        const cy = H * 0.50;
+        waveStage(ctx, W, H);
         const unit = Math.min(W, H) * 0.11 * scl;
-        const pts = [{x:0, y:0}];
-        for(let m = 0; m < N; m++){
-          const a = m * phi;
+        const pts = [{x: 0, y: 0}];
+        for (let m = 0; m < N; m++) {
           const last = pts[pts.length - 1];
-          pts.push({x: last.x + Math.cos(a), y: last.y + Math.sin(a)});
+          pts.push({x: last.x + Math.cos(m * phi), y: last.y + Math.sin(m * phi)});
         }
-        const ext = pts.reduce((o,p) => ({
-          minX: Math.min(o.minX, p.x), maxX: Math.max(o.maxX, p.x),
-          minY: Math.min(o.minY, p.y), maxY: Math.max(o.maxY, p.y)
-        }), {minX:0,maxX:0,minY:0,maxY:0});
-        const spanX = Math.max(2, ext.maxX - ext.minX);
-        const spanY = Math.max(2, ext.maxY - ext.minY);
-        const fit = Math.min((W * 0.75) / (spanX * unit), (H * 0.75) / (spanY * unit), 1.6);
-        const s = unit * fit;
-
-        ctx.strokeStyle = "rgba(110,120,140,0.45)";
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.moveTo(40, cy); ctx.lineTo(W - 20, cy);
-        ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20);
-        ctx.stroke();
-
-        ctx.fillStyle = "#111827";
-        ctx.strokeStyle = "#111827";
-        ctx.lineWidth = 2;
-        for(let i = 0; i < N; i++){
+        const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+        const minX = Math.min(...xs), maxX = Math.max(...xs);
+        const minY = Math.min(...ys), maxY = Math.max(...ys);
+        const s = Math.min(unit * 1.6, (W - 180) / Math.max(2, maxX - minX), (H - 180) / Math.max(2, maxY - minY));
+        const cx = W / 2 - (minX + maxX) * s / 2;
+        const cy = H / 2 + (minY + maxY) * s / 2;
+        ctx.strokeStyle = "#cbd5e1"; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(35, cy); ctx.lineTo(W - 35, cy);
+        ctx.moveTo(cx, 65); ctx.lineTo(cx, H - 55); ctx.stroke();
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillStyle = "#334155";
+        ctx.fillText("Zeigerpolygon", 30, 34);
+        ctx.textAlign = "right"; ctx.fillText("N = " + N, W - 30, 34); ctx.textAlign = "left";
+        for (let i = 0; i < N; i++) {
           const p1 = pts[i], p2 = pts[i + 1];
           const x1 = cx + p1.x * s, y1 = cy - p1.y * s;
           const x2 = cx + p2.x * s, y2 = cy - p2.y * s;
+          ctx.strokeStyle = "#0d9488"; ctx.fillStyle = "#0d9488"; ctx.lineWidth = 3;
           drawArrow(ctx, x1, y1, x2, y2);
-          ctx.fillText(String(i + 1), x1 + 4, y1 - 6);
+          ctx.fillStyle = "#475569"; ctx.fillText(String(i + 1), x1 + 7, y1 - 9);
         }
-
         const r = pts[pts.length - 1];
         const rx = cx + r.x * s, ry = cy - r.y * s;
-        ctx.strokeStyle = "#dc2626";
-        ctx.fillStyle = "#dc2626";
-        ctx.lineWidth = 3;
-        drawArrow(ctx, cx, cy, rx, ry);
-        ctx.fillText("Resultierende", rx + 8, ry - 6);
-
-        pctx.clearRect(0, 0, PW, PH);
-        const padL = 56, padR = 18, padT = 16, padB = 38;
-        const x0 = padL, x1 = PW - padR, y0 = padT, y1 = PH - padB;
-        const uMin = -1.5, uMax = 1.5;
-        pctx.strokeStyle = "#9ca3af";
-        pctx.lineWidth = 1;
-        pctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-        [0,0.25,0.5,0.75,1].forEach(v => {
-          const y = y1 - v * (y1 - y0);
-          pctx.beginPath(); pctx.moveTo(x0, y); pctx.lineTo(x1, y); pctx.stroke();
-          pctx.fillStyle = "#6b7280";
-          pctx.fillText(v.toFixed(2), 10, y + 4);
-        });
-        [-1.5,-1,-0.5,0,0.5,1,1.5].forEach(uv => {
-          const x = x0 + ((uv - uMin) / (uMax - uMin)) * (x1 - x0);
-          pctx.beginPath(); pctx.moveTo(x, y0); pctx.lineTo(x, y1); pctx.stroke();
-          pctx.fillStyle = "#6b7280";
-          pctx.fillText(String(uv), x - 10, PH - 14);
-        });
-
-        pctx.strokeStyle = "#1f2937";
-        pctx.lineWidth = 2;
-        pctx.beginPath();
-        const steps = 1200;
-        for(let i = 0; i <= steps; i++){
-          const uu = uMin + (uMax - uMin) * i / steps;
-          const I = factorI(uu, N);
-          const x = x0 + (i / steps) * (x1 - x0);
-          const y = y1 - I * (y1 - y0);
-          if(i === 0) pctx.moveTo(x, y); else pctx.lineTo(x, y);
-        }
-        pctx.stroke();
+        ctx.strokeStyle = "#e15a36"; ctx.fillStyle = "#e15a36"; ctx.lineWidth = 4;
+        if (Math.hypot(r.x, r.y) > 1e-8) drawArrow(ctx, cx, cy, rx, ry);
+        ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.textAlign = "right"; ctx.fillText("Resultierende", W - 30, H - 22); ctx.textAlign = "left";
 
         const Iu = factorI(u, N);
-        const xm = x0 + ((u - uMin) / (uMax - uMin)) * (x1 - x0);
-        const ym = y1 - Iu * (y1 - y0);
-        pctx.strokeStyle = "#dc2626";
-        pctx.fillStyle = "#dc2626";
-        pctx.lineWidth = 2;
-        pctx.beginPath(); pctx.moveTo(xm, y0); pctx.lineTo(xm, y1); pctx.stroke();
-        pctx.beginPath(); pctx.arc(xm, ym, 5, 0, Math.PI * 2); pctx.fill();
+        wavePlot(pctx, PW, PH, {
+          min: -1.5, max: 1.5, ticks: [-1.5, -1, -0.5, 0, 0.5, 1, 1.5],
+          cacheKey: N,
+          mark: u, xLabel: "Ort u", intensity: value => factorI(value, N)
+        });
 
         const amp = Math.hypot(r.x, r.y);
         const relAmp = amp / N;
@@ -1471,14 +1544,14 @@ function initDoubleSlitParticleSim(root) {
       const slitAY = H * 0.5 - slitGap * 0.5;
       const slitBY = H * 0.5 + slitGap * 0.5;
       const screenX = 742;
-      const yMin = 34;
-      const yMax = H - 34;
+      const yMin = 64;
+      const yMax = H - 52;
       const bins = 44;
       const binH = (yMax - yMin) / bins;
 
       const colorA = "#0891b2";
-      const colorB = "#c026d3";
-      const colorTotal = "#0f172a";
+      const colorB = "#c24168";
+      const colorTotal = "#334155";
 
       const countsA = new Array(bins).fill(0);
       const countsB = new Array(bins).fill(0);
@@ -1633,51 +1706,41 @@ function initDoubleSlitParticleSim(root) {
         displayScaleMax = 1;
       }
 
-      function drawColumn(x, title, color, data, maxCount){
-        const colW = 50;
-        ctx.fillStyle = "#111827";
-        ctx.font = "12px sans-serif";
-        ctx.fillText(title, x + 4, yMin - 12);
-
-        for(let i = 0; i < bins; i++){
-          const y = yMin + (i + 0.5) * binH;
-          ctx.strokeStyle = "rgba(107,114,128,0.35)";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + colW, y);
-          ctx.stroke();
-
-          const dots = Math.max(0, Math.round((data[i] / maxCount) * 5));
-          for(let d = 0; d < dots; d++){
-            ctx.beginPath();
-            ctx.fillStyle = color;
-            ctx.arc(x + 7 + d * 8, y, 3.2, 0, Math.PI * 2);
-            ctx.fill();
-          }
+      function drawColumn(x, title, color, data, maxCount) {
+        const colW = 46;
+        ctx.fillStyle = "#475569"; ctx.font = "19px system-ui, sans-serif";
+        ctx.textAlign = "center"; ctx.fillText(title, x + colW / 2, yMin - 12); ctx.textAlign = "left";
+        ctx.fillStyle = "#edf2f7"; ctx.fillRect(x, yMin, colW, yMax - yMin);
+        for (let i = 0; i < bins; i++) {
+          const y = yMin + i * binH;
+          const width = Math.min(colW, Math.max(0, data[i] / maxCount * colW));
+          ctx.fillStyle = color; ctx.globalAlpha = 0.83;
+          ctx.fillRect(x, y + 1, width, Math.max(2, binH - 2));
         }
+        ctx.globalAlpha = 1;
       }
 
       function drawScene(){
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = "#f5f5f5";
-        ctx.fillRect(0, 0, W, H);
+        waveStage(ctx, W, H);
+        ctx.fillStyle = "#f0f6fc"; ctx.fillRect(20, 50, barrierX - 38, H - 100);
+        ctx.fillStyle = "#f5faf9"; ctx.fillRect(barrierX + 14, 50, screenX - barrierX - 30, H - 100);
+        ctx.font = "18px system-ui, sans-serif"; ctx.fillStyle = "#334155";
+        ctx.fillText("Quelle", 48, H - 18);
+        ctx.fillText("Doppelspalt", barrierX - 48, H - 18);
+        ctx.fillText("Schirm", screenX - 40, H - 18);
+        ctx.fillText("Trefferverteilung", screenX + 52, H - 18);
 
+        ctx.fillStyle = "#64748b";
+        ctx.beginPath(); ctx.roundRect(sourceX - 36, sourceY - 22, 64, 44, 9); ctx.fill();
         ctx.strokeStyle = "#111827";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(18, 18, screenX - 2, H - 36);
-
-        ctx.fillStyle = "#9ca3af";
-        ctx.fillRect(sourceX - 36, sourceY - 18, 64, 36);
-        ctx.strokeStyle = "#111827";
-        ctx.strokeRect(sourceX - 36, sourceY - 18, 64, 36);
+        ctx.strokeStyle = "#475569"; ctx.stroke();
         ctx.beginPath();
         ctx.arc(sourceX + 28, sourceY, 9, 0, Math.PI * 2);
         ctx.fillStyle = "#e5e7eb";
         ctx.fill();
         ctx.stroke();
 
-        ctx.strokeStyle = "rgba(107,114,128,0.55)";
+        ctx.strokeStyle = "rgba(100,116,139,0.22)";
         ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(sourceX + 28, sourceY);
@@ -1689,19 +1752,29 @@ function initDoubleSlitParticleSim(root) {
         ctx.stroke();
         ctx.setLineDash([]);
 
-        ctx.fillStyle = "#0b0b0b";
-        ctx.fillRect(barrierX - 8, 20, 16, H - 40);
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(barrierX - 8, 50, 16, H - 100);
 
-        ctx.fillStyle = "#f5f5f5";
+        ctx.fillStyle = "#fbfdff";
         ctx.fillRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
         ctx.fillRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
         ctx.strokeStyle = "#111827";
         ctx.strokeRect(barrierX - 10, slitAY - slitOpen * 0.5, 20, slitOpen);
         ctx.strokeRect(barrierX - 10, slitBY - slitOpen * 0.5, 20, slitOpen);
 
+        ctx.font = "19px system-ui, sans-serif"; ctx.fillStyle = colorA;
+        ctx.fillText("A", barrierX + 20, slitAY + 6);
+        ctx.fillStyle = colorB; ctx.fillText("B", barrierX + 20, slitBY + 6);
+        const whichMode = modeEl.value;
+        if (whichMode === "slitA" || whichMode === "slitB") {
+          ctx.fillStyle = "#334155";
+          const blockedY = whichMode === "slitA" ? slitBY : slitAY;
+          ctx.fillRect(barrierX - 8, blockedY - slitOpen / 2, 16, slitOpen);
+        }
+
         for(let i = 0; i < bins; i++){
           const y = yMin + i * binH + 3;
-          ctx.strokeStyle = "#374151";
+          ctx.strokeStyle = "#94a3b8";
           ctx.lineWidth = 1;
           ctx.strokeRect(screenX - 10, y, 18, Math.max(6, binH - 6));
         }
@@ -1761,7 +1834,7 @@ function initDoubleSlitParticleSim(root) {
         for(const f of flashes){
           const alpha = Math.max(0, f.life / 0.45);
           ctx.beginPath();
-          ctx.fillStyle = f.slit === "A" ? `rgba(8,145,178,${alpha})` : `rgba(192,38,211,${alpha})`;
+          ctx.fillStyle = f.slit === "A" ? `rgba(8,145,178,${alpha})` : `rgba(194,65,104,${alpha})`;
           ctx.arc(screenX + 8, f.y, 4.8, 0, Math.PI * 2);
           ctx.fill();
         }
@@ -1776,9 +1849,9 @@ function initDoubleSlitParticleSim(root) {
         const rawMax = Math.max(1, ...dataA, ...dataB, ...total2);
         const smoothFac = Math.min(0.35, 0.06 + modeHits / 3200);
         displayScaleMax = Math.max(1, displayScaleMax * (1 - smoothFac) + rawMax * smoothFac);
-        drawColumn(xA, "a", colorA, dataA, displayScaleMax);
-        drawColumn(xB, "b", colorB, dataB, displayScaleMax);
-        drawColumn(xC, "c", colorTotal, total2, displayScaleMax);
+        drawColumn(xA, "A", colorA, dataA, displayScaleMax);
+        drawColumn(xB, "B", colorB, dataB, displayScaleMax);
+        drawColumn(xC, "Σ", colorTotal, total2, displayScaleMax);
       }
 
       function updateReadout(){
@@ -1789,18 +1862,19 @@ function initDoubleSlitParticleSim(root) {
           `${modeLabel(mode)}\n` +
           `Treffer gesamt: ${total}\n` +
           `Spalt A (cyan): ${countsA.reduce((s, v) => s + v, 0)}\n` +
-          `Spalt B (magenta): ${countsB.reduce((s, v) => s + v, 0)}\n\n` +
+          `Spalt B (rosé): ${countsB.reduce((s, v) => s + v, 0)}\n\n` +
           "Am Schirm:\n" +
           "dunkle Balken = gemessene Treffer\n" +
           "orange Linie = theoretische Kurve\n\n" +
           "Rechts:\n" +
-          "a = Einzelverteilung Spalt A\n" +
-          "b = Einzelverteilung Spalt B\n" +
-          "c = Gesamtverteilung auf dem Schirm";
+          "A = Einzelverteilung Spalt A\n" +
+          "B = Einzelverteilung Spalt B\n" +
+          "Σ = Gesamtverteilung auf dem Schirm";
         readout.textContent = txt;
       }
 
       function animate(ts){
+        rafId = 0;
         const dt = Math.min(0.05, (ts - lastTs) / 1000);
         lastTs = ts;
 
@@ -1834,7 +1908,11 @@ function initDoubleSlitParticleSim(root) {
 
         drawScene();
         updateReadout();
-        rafId = requestAnimationFrame(animate);
+        if (running || particles.length || flashes.length) requestDraw();
+      }
+
+      function requestDraw() {
+        if (!rafId) rafId = requestWaveFrame(root, animate);
       }
 
       function syncStartLabel(){
@@ -1847,19 +1925,23 @@ function initDoubleSlitParticleSim(root) {
       });
       modeEl.addEventListener("change", () => {
         resetAll();
+        requestDraw();
       });
       startBtn.addEventListener("click", () => {
         running = !running;
+        lastTs = performance.now();
         syncStartLabel();
+        requestDraw();
       });
       resetBtn.addEventListener("click", () => {
         resetAll();
+        requestDraw();
       });
 
       syncStartLabel();
       resetAll();
-      rafId = requestAnimationFrame(animate);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      requestDraw();
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initBuildStandingSim(root) {
@@ -1912,7 +1994,7 @@ function initBuildStandingSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
 
@@ -1927,8 +2009,8 @@ function initBuildStandingSim(root) {
         if(freqVal) freqVal.textContent = f.toFixed(2);
         if(cVal) cVal.textContent = c.toFixed(2);
 
-        const scaleY = H * 0.20;
-        ctx.clearRect(0, 0, W, H);
+        const scaleY = H * 0.15;
+        waveStage(ctx, W, H);
 
         ctx.strokeStyle = "rgba(120,130,150,0.65)";
         ctx.lineWidth = 1.2;
@@ -1938,13 +2020,13 @@ function initBuildStandingSim(root) {
         ctx.stroke();
 
         ctx.fillStyle = "#374151";
-        ctx.font = "15px sans-serif";
+        ctx.font = "20px system-ui, sans-serif";
         ctx.fillText("Quelle links", xL + 4, 20);
         ctx.fillText("Quelle rechts", xR - 100, 20);
 
         const steps = 700;
         // Welle von links
-        ctx.strokeStyle = "#8b5e3c";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -1956,7 +2038,7 @@ function initBuildStandingSim(root) {
         ctx.stroke();
 
         // Welle von rechts
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -1968,8 +2050,8 @@ function initBuildStandingSim(root) {
         ctx.stroke();
 
         // Überlagerung
-        ctx.strokeStyle = "#d946ef";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 4;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
           const xn = i / steps;
@@ -2014,13 +2096,13 @@ function initBuildStandingSim(root) {
         ctx.fillRect(xR - Lpx * filled, 24, Lpx * filled, H - 50);
 
         readout.textContent =
-          "braun = von links, gruen = von rechts, pink = Summe\n" +
+          "Ocker = von links, Türkis = von rechts, Blau = Summe\n" +
           "rote Punkte = Knoten der stehenden Welle\n" +
           `Modus: ${mode === "inphase" ? "im Takt (gleichphasig)" : "gegenlaeufig (gegenphasig)"}\n` +
           `t = ${t.toFixed(2)} s\n` +
           "Wenn beide Wellen den ganzen Bereich erreicht haben, bildet sich das stehende Muster.";
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -2051,7 +2133,7 @@ function initBuildStandingSim(root) {
       if(startBtn) startBtn.addEventListener("click", toggleAnim);
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
+      rafId = requestWaveFrame(root, draw);
     }
 
 function initFixedPulseReflectionSim(root) {
@@ -2114,7 +2196,7 @@ function initFixedPulseReflectionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const speed = speedEl ? Number(speedEl.value) : 1.0;
@@ -2122,7 +2204,7 @@ function initFixedPulseReflectionSim(root) {
         const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
         const scaleY = H * 0.28;
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         ctx.strokeStyle = "rgba(120,130,150,0.65)";
         ctx.lineWidth = 1.2;
@@ -2138,17 +2220,17 @@ function initFixedPulseReflectionSim(root) {
         ctx.lineTo(xR, H - 26);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "15px sans-serif";
+        ctx.font = "20px system-ui, sans-serif";
         ctx.fillText("festes Ende", xR - 78, 20);
         // Markierung des festen Endes: fester Punkt auf der Ruhelage
-        ctx.fillStyle = "#d946ef";
+        ctx.fillStyle = "#2563eb";
         ctx.beginPath();
         ctx.arc(xR, y0, 5.2, 0, Math.PI * 2);
         ctx.fill();
 
         const steps = 900;
 
-        ctx.strokeStyle = "#b45309";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2161,7 +2243,7 @@ function initFixedPulseReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2174,8 +2256,8 @@ function initFixedPulseReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#d946ef";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 4;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
           const xn = i / steps;
@@ -2187,15 +2269,16 @@ function initFixedPulseReflectionSim(root) {
         }
         ctx.stroke();
 
+        waveBoundary(ctx, xR, y0 - scaleY * (yIncident(L, tau) + yReflected(L, tau)), H, true);
         readout.textContent =
-          "braun = einlaufender Puls\n" +
-          "gruen = reflektierter Puls (Phasensprung)\n" +
-          "pink = Summation (Ueberlagerung)\n" +
+          "Ocker = einlaufender Puls\n" +
+          "Türkis = reflektierter Puls (Phasensprung)\n" +
+          "Blau = Summation (Ueberlagerung)\n" +
           "Reflexion am festen Ende: Spiegelung an y- und x-Achse\n" +
           `v = ${speed.toFixed(1)}\n` +
           `t = ${tau.toFixed(2)} s (zyklisch), erster Wandkontakt bei t = ${tReflect.toFixed(2)} s`;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -2229,8 +2312,8 @@ function initFixedPulseReflectionSim(root) {
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initLoosePulseReflectionSim(root) {
@@ -2292,7 +2375,7 @@ function initLoosePulseReflectionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const speed = speedEl ? Number(speedEl.value) : 1.0;
@@ -2300,7 +2383,7 @@ function initLoosePulseReflectionSim(root) {
         const tRaw = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
         const scaleY = H * 0.28;
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         ctx.strokeStyle = "rgba(120,130,150,0.65)";
         ctx.lineWidth = 1.2;
@@ -2316,12 +2399,12 @@ function initLoosePulseReflectionSim(root) {
         ctx.lineTo(xR, H - 26);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "15px sans-serif";
+        ctx.font = "20px system-ui, sans-serif";
         ctx.fillText("loses Ende", xR - 72, 20);
 
         const steps = 900;
 
-        ctx.strokeStyle = "#b45309";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2334,7 +2417,7 @@ function initLoosePulseReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2347,8 +2430,8 @@ function initLoosePulseReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#d946ef";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 4;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
           const xn = i / steps;
@@ -2361,20 +2444,21 @@ function initLoosePulseReflectionSim(root) {
         ctx.stroke();
 
         const yEnd = y0 - scaleY * (yIncident(L, tau) + yReflected(L, tau));
-        ctx.fillStyle = "#d946ef";
+        ctx.fillStyle = "#2563eb";
         ctx.beginPath();
         ctx.arc(xR, yEnd, 5.2, 0, Math.PI * 2);
         ctx.fill();
 
+        waveBoundary(ctx, xR, y0 - scaleY * (yIncident(L, tau) + yReflected(L, tau)), H, false);
         readout.textContent =
-          "braun = einlaufender Puls\n" +
-          "gruen = reflektierter Puls (kein Phasensprung)\n" +
-          "pink = Summation (Ueberlagerung)\n" +
+          "Ocker = einlaufender Puls\n" +
+          "Türkis = reflektierter Puls (kein Phasensprung)\n" +
+          "Blau = Summation (Ueberlagerung)\n" +
           "Reflexion am losen Ende: nur Spiegelung an der y-Achse\n" +
           `v = ${speed.toFixed(1)}\n` +
           `t = ${tau.toFixed(2)} s (zyklisch), erster Wandkontakt bei t = ${tReflect.toFixed(2)} s`;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -2408,8 +2492,8 @@ function initLoosePulseReflectionSim(root) {
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initThinDenseTransitionSim(root) {
@@ -2491,7 +2575,7 @@ function initThinDenseTransitionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const speed = speedEl ? Number(speedEl.value) : 0.6;
@@ -2500,7 +2584,7 @@ function initThinDenseTransitionSim(root) {
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
         const scaleY = H * 0.30;
 
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         const xBoundary = xL + xB * plotW;
         ctx.fillStyle = "rgba(59,130,246,0.08)";
@@ -2522,15 +2606,15 @@ function initThinDenseTransitionSim(root) {
         ctx.lineTo(xBoundary, H - 24);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "14px sans-serif";
-        ctx.fillText("duennes Seil (links)", xL + 8, 20);
-        ctx.fillText("dichteres Seil (rechts)", xBoundary + 8, 20);
-        ctx.fillText("Uebergang", xBoundary - 34, H - 10);
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("Dünnes Seil", xL + 8, 20);
+        ctx.fillText("Dichtes Seil", xBoundary + 8, 20);
+        ctx.fillText("Übergang", xBoundary - 34, H - 10);
 
         const steps = 1100;
 
         // Einlaufende Welle links
-        ctx.strokeStyle = "#b45309";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2544,7 +2628,7 @@ function initThinDenseTransitionSim(root) {
         ctx.stroke();
 
         // Reflektierte Welle links (mit Phasensprung)
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2558,7 +2642,7 @@ function initThinDenseTransitionSim(root) {
         ctx.stroke();
 
         // Transmittierte Welle rechts (kleiner)
-        ctx.strokeStyle = "#2563eb";
+        ctx.strokeStyle = "#b45374";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2572,7 +2656,7 @@ function initThinDenseTransitionSim(root) {
         ctx.stroke();
 
         // Summation als "schwingendes Seil": links duenn, rechts dicker
-        ctx.strokeStyle = "#d946ef";
+        ctx.strokeStyle = "#2563eb";
         const yJoin = yTransmitted(xB, tau);
         const yJoinPix = y0 - scaleY * yJoin;
         ctx.beginPath();
@@ -2601,14 +2685,14 @@ function initThinDenseTransitionSim(root) {
         ctx.stroke();
 
         readout.textContent =
-          "braun = einlaufender Puls (duennes Medium)\n" +
-          "gruen = reflektierter Puls (kleiner, Phasensprung)\n" +
-          "blau  = transmittierter Puls (kleiner und schmaler)\n" +
-          "pink  = Seil (Summation), links duenn / rechts dicker\n" +
+          "Ocker = einlaufender Puls (duennes Medium)\n" +
+          "Türkis = reflektierter Puls (kleiner, Phasensprung)\n" +
+          "Altrosa = transmittierter Puls (kleiner und schmaler)\n" +
+          "Blau  = Seil (Summation), links duenn / rechts dicker\n" +
           `v = ${speed.toFixed(1)}\n` +
           `t = ${tau.toFixed(2)} s (zyklisch), Beginn am Uebergang bei t = ${tFront.toFixed(2)} s`;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -2642,8 +2726,8 @@ function initThinDenseTransitionSim(root) {
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initDenseThinTransitionSim(root) {
@@ -2722,7 +2806,7 @@ function initDenseThinTransitionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const speed = speedEl ? Number(speedEl.value) : 0.6;
@@ -2731,7 +2815,7 @@ function initDenseThinTransitionSim(root) {
         const tau = ((tRaw % tCycle) + tCycle) % tCycle;
         const scaleY = H * 0.30;
 
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         const xBoundary = xL + xB * plotW;
         ctx.fillStyle = "rgba(16,185,129,0.10)";
@@ -2753,14 +2837,14 @@ function initDenseThinTransitionSim(root) {
         ctx.lineTo(xBoundary, H - 24);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "14px sans-serif";
-        ctx.fillText("dichteres Seil (links)", xL + 8, 20);
-        ctx.fillText("duennes Seil (rechts)", xBoundary + 8, 20);
-        ctx.fillText("Uebergang", xBoundary - 34, H - 10);
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("Dichtes Seil", xL + 8, 20);
+        ctx.fillText("Dünnes Seil", xBoundary + 8, 20);
+        ctx.fillText("Übergang", xBoundary - 34, H - 10);
 
         const steps = 1100;
 
-        ctx.strokeStyle = "#b45309";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2773,7 +2857,7 @@ function initDenseThinTransitionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2786,7 +2870,7 @@ function initDenseThinTransitionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#2563eb";
+        ctx.strokeStyle = "#b45374";
         ctx.lineWidth = 2.2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2799,7 +2883,7 @@ function initDenseThinTransitionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#d946ef";
+        ctx.strokeStyle = "#2563eb";
         // Gleicher Anschlusswert am Uebergang -> keine sichtbare Sprungstelle.
         const yJoin = yTransmitted(xB, tau);
         const yJoinPix = y0 - scaleY * yJoin;
@@ -2829,14 +2913,14 @@ function initDenseThinTransitionSim(root) {
         ctx.stroke();
 
         readout.textContent =
-          "braun = einlaufender Puls (dichteres Medium)\n" +
-          "gruen = reflektierter Puls (kleiner, kein Phasensprung)\n" +
-          "blau  = transmittierter Puls (groesser und breiter)\n" +
-          "pink  = Seil (Summation), links dicker / rechts duenn\n" +
+          "Ocker = einlaufender Puls (dichteres Medium)\n" +
+          "Türkis = reflektierter Puls (kleiner, kein Phasensprung)\n" +
+          "Altrosa = transmittierter Puls (groesser und breiter)\n" +
+          "Blau  = Seil (Summation), links dicker / rechts duenn\n" +
           `v = ${speed.toFixed(1)}\n` +
           `t = ${tau.toFixed(2)} s (zyklisch), erster Uebergangskontakt bei t = ${tReflect.toFixed(2)} s`;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -2870,8 +2954,8 @@ function initDenseThinTransitionSim(root) {
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       if(speedEl) speedEl.addEventListener("input", () => {});
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initLooseReflectionSim(root) {
@@ -2925,7 +3009,7 @@ function initLooseReflectionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
 
@@ -2941,9 +3025,9 @@ function initLooseReflectionSim(root) {
 
         const Lpx = xWall - xL;
         const lamPx = lamNorm * Lpx;
-        const scaleY = A * (H * 0.24);
+        const scaleY = A * (H * 0.15);
 
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         // Achsen
         ctx.strokeStyle = "rgba(120,130,150,0.65)";
@@ -2957,11 +3041,11 @@ function initLooseReflectionSim(root) {
         ctx.lineTo(xWall, H - 24);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "15px sans-serif";
-        ctx.fillText("y-Achse / loses Ende (Reflexion)", xWall - 120, 20);
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("Loses Ende", xWall - 120, 20);
 
         // Einfallende Welle (braun), links von y-Achse
-        ctx.strokeStyle = "#8b5e3c";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2;
         ctx.beginPath();
         const steps = 700;
@@ -2975,7 +3059,7 @@ function initLooseReflectionSim(root) {
         ctx.stroke();
 
         // Reflektierte Welle (grün), an y-Achse gespiegelt, ohne Phasensprung
-        ctx.strokeStyle = "#0f9d58";
+        ctx.strokeStyle = "#0d9488";
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -2988,8 +3072,8 @@ function initLooseReflectionSim(root) {
         ctx.stroke();
 
         // Überlagerung (pink), nur links von y-Achse
-        ctx.strokeStyle = "#d946ef";
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 4;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
           const xPix = xL + (i / steps) * (xWall - xL);
@@ -3003,7 +3087,7 @@ function initLooseReflectionSim(root) {
         ctx.stroke();
 
         // Einfallende Welle als Fortsetzung rechts der y-Achse
-        ctx.strokeStyle = "#8b5e3c";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -3044,16 +3128,17 @@ function initLooseReflectionSim(root) {
         ctx.fillStyle = "#64748b";
         ctx.fillText("rechts: nur einfallende Welle", xWall + 10, y0 - 10);
 
+        waveBoundary(ctx, xWall, y0 - scaleY * (yIncident(0, t, 1, 1, f) + yReflected(0, t, 1, 1, f)), H, false);
         readout.textContent =
           "Links der y-Achse:\n" +
-          "braun = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
-          "gruen = reflektiert y2 = A*sin(2pi*(t/T + x/lambda))\n" +
-          "pink  = ueberlagert y = y1 + y2\n" +
+          "Ocker = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
+          "Türkis = reflektiert y2 = A*sin(2pi*(t/T + x/lambda))\n" +
+          "Blau  = ueberlagert y = y1 + y2\n" +
           "Rechts der y-Achse: Fortsetzung der einfallenden Welle\n" +
           "rote Punkte = Knoten der stehenden Welle\n" +
           "Reflexion am losen Ende: ohne Phasensprung.";
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -3083,7 +3168,7 @@ function initLooseReflectionSim(root) {
         if(!isRunning) return;
       }));
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
+      rafId = requestWaveFrame(root, draw);
     }
 
 function initStandingModesSim(root) {
@@ -3162,7 +3247,7 @@ function initStandingModesSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
         const mode = boundaryEl ? boundaryEl.value : "fixed-fixed";
@@ -3177,7 +3262,7 @@ function initStandingModesSim(root) {
         const t = isRunning ? ((now - t0) / 1000) * speed : tFrozen;
         const phase = 2 * Math.PI * freqFactor(mode, n) * 0.6 * t;
 
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         ctx.strokeStyle = "rgba(120,130,150,0.6)";
         ctx.lineWidth = 1.2;
@@ -3187,8 +3272,8 @@ function initStandingModesSim(root) {
         ctx.stroke();
 
         const ampPx = A * (H * 0.22);
-        ctx.strokeStyle = "#111827";
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 4;
         ctx.beginPath();
         const steps = 600;
         for(let i = 0; i <= steps; i++){
@@ -3209,10 +3294,24 @@ function initStandingModesSim(root) {
           ctx.fill();
         });
 
+        ctx.save();
+        ctx.strokeStyle = "#94a3b8"; ctx.lineWidth = 1.5; ctx.setLineDash([7, 6]);
+        for (const sign of [-1, 1]) {
+          ctx.beginPath();
+          for (let i = 0; i <= 600; i++) {
+            const xn = i / 600;
+            const xx = xL + xn * plotW, yy = yMid + sign * ampPx * Math.abs(yNorm(xn, mode, n, 0));
+            if (!i) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+        waveBoundary(ctx, xL, yMid - ampPx * yNorm(0, mode, n, phase), H, mode !== "free-free");
+        waveBoundary(ctx, xR, yMid - ampPx * yNorm(1, mode, n, phase), H, mode === "fixed-fixed");
+
         ctx.fillStyle = "#374151";
-        ctx.font = "16px sans-serif";
-        ctx.fillText("Knoten", xL + 8, 26);
-        ctx.fillText("Baeuche schwingen mit", xL + 8, 48);
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("n = " + n + " · " + (mode === "fixed-fixed" ? "fest / fest" : mode === "fixed-free" ? "fest / lose" : "lose / lose"), xL + 8, 30);
 
         let endText = "";
         if(mode === "fixed-fixed") endText = "Enden: fest/fest -> Knoten an beiden Enden";
@@ -3225,7 +3324,7 @@ function initStandingModesSim(root) {
           `${endText}\n` +
           `Frequenzverhaeltnis: f_n/f_1 = ${freqFactor(mode, n)}`;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -3259,8 +3358,8 @@ function initStandingModesSim(root) {
       if(resetBtn) resetBtn.addEventListener("click", resetAnim);
       [boundaryEl, nEl, ampEl, speedEl].forEach(el => el && el.addEventListener("input", () => {}));
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initFixedReflectionSim(root) {
@@ -3312,7 +3411,7 @@ function initFixedReflectionSim(root) {
 
       function draw(now){
         if(!canvas.isConnected){
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
 
@@ -3328,9 +3427,9 @@ function initFixedReflectionSim(root) {
 
         const Lpx = xWall - xL;
         const lamPx = lamNorm * Lpx;
-        const scaleY = A * (H * 0.24);
+        const scaleY = A * (H * 0.15);
 
-        ctx.clearRect(0, 0, W, H);
+        waveStage(ctx, W, H);
 
         ctx.strokeStyle = "rgba(120,130,150,0.65)";
         ctx.lineWidth = 1.2;
@@ -3343,12 +3442,12 @@ function initFixedReflectionSim(root) {
         ctx.lineTo(xWall, H - 24);
         ctx.stroke();
         ctx.fillStyle = "#374151";
-        ctx.font = "15px sans-serif";
-        ctx.fillText("y-Achse / festes Ende (Reflexion)", xWall - 120, 20);
+        ctx.font = "20px system-ui, sans-serif";
+        ctx.fillText("Festes Ende", xWall - 120, 20);
 
         const steps = 700;
 
-        ctx.strokeStyle = "#f59e0b"; // einfallend links
+        ctx.strokeStyle = "#c77712"; // einfallend links
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -3359,7 +3458,7 @@ function initFixedReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#0f9d58"; // reflektiert mit Phasensprung
+        ctx.strokeStyle = "#0d9488"; // reflektiert mit Phasensprung
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -3370,8 +3469,8 @@ function initFixedReflectionSim(root) {
         }
         ctx.stroke();
 
-        ctx.strokeStyle = "#d946ef"; // Überlagerung nur links der y-Achse
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#2563eb"; // Überlagerung nur links der y-Achse
+        ctx.lineWidth = 4;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
           const xPix = xL + (i / steps) * (xWall - xL);
@@ -3384,7 +3483,7 @@ function initFixedReflectionSim(root) {
         ctx.stroke();
 
         // Einfallende Welle als Fortsetzung rechts der y-Achse
-        ctx.strokeStyle = "#f59e0b";
+        ctx.strokeStyle = "#c77712";
         ctx.lineWidth = 2;
         ctx.beginPath();
         for(let i = 0; i <= steps; i++){
@@ -3423,16 +3522,17 @@ function initFixedReflectionSim(root) {
         ctx.fillStyle = "#64748b";
         ctx.fillText("rechts: nur einfallende Welle", xWall + 10, y0 - 10);
 
+        waveBoundary(ctx, xWall, y0, H, true);
         readout.textContent =
           "Links der y-Achse:\n" +
-          "orange = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
-          "gruen  = reflektiert y2 = -A*sin(2pi*(t/T + x/lambda))\n" +
-          "pink   = ueberlagert y = y1 + y2\n" +
+          "Ocker = einfallend  y1 = A*sin(2pi*(t/T - x/lambda))\n" +
+          "Türkis = reflektiert y2 = -A*sin(2pi*(t/T + x/lambda))\n" +
+          "Blau = überlagert y = y1 + y2\n" +
           "Rechts der y-Achse: Fortsetzung der einfallenden Welle\n" +
           "rote Punkte = Knoten der stehenden Welle\n" +
           "Reflexion am festen Ende: mit Phasensprung (Spiegelung an y- und x-Achse).";
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function startAnim(){
@@ -3459,7 +3559,7 @@ function initFixedReflectionSim(root) {
 
       if(startBtn) startBtn.addEventListener("click", toggleAnim);
       updateToggleBtn();
-      rafId = requestAnimationFrame(draw);
+      rafId = requestWaveFrame(root, draw);
     }
 
 function initLeifiWaveSim(root) {
@@ -3502,7 +3602,7 @@ function initLeifiWaveSim(root) {
 
       function draw(now) {
         if (!canvas.isConnected) {
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
           return;
         }
 
@@ -3653,7 +3753,7 @@ function initLeifiWaveSim(root) {
           }
         }
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       function togglePlay() {
@@ -3674,7 +3774,7 @@ function initLeifiWaveSim(root) {
       if (playBtn) playBtn.addEventListener("click", togglePlay);
       if (resetBtn) resetBtn.addEventListener("click", resetSim);
 
-      rafId = requestAnimationFrame(draw);
+      rafId = requestWaveFrame(root, draw);
     }
 
 function initCoupledWaveSim(root) {
@@ -3730,15 +3830,15 @@ function initCoupledWaveSim(root) {
         isPlaying = !isPlaying;
         if (isPlaying) {
           lastTime = performance.now();
-          rafId = requestAnimationFrame(loop);
+          rafId = requestWaveFrame(root, loop);
         } else {
-          cancelAnimationFrame(rafId);
+          cancelWaveFrame(rafId);
         }
       });
 
       resetBtn.addEventListener("click", () => {
         isPlaying = false;
-        cancelAnimationFrame(rafId);
+        cancelWaveFrame(rafId);
         simTime = 0;
         updateVals(); // calls draw()
       });
@@ -3754,7 +3854,7 @@ function initCoupledWaveSim(root) {
         }
         draw();
         if (isPlaying) {
-          rafId = requestAnimationFrame(loop);
+          rafId = requestWaveFrame(root, loop);
         }
       }
 
@@ -4145,15 +4245,15 @@ function initSpringOscillatorSim(root) {
           "T = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz, ω = " + omega.toFixed(3) + " rad/s\n" +
           "s = " + s.toFixed(3) + " m, v = " + v.toFixed(3) + " m/s, a = " + a.toFixed(3) + " m/s²\n" +
           "E_ges = " + eTotal.toFixed(3) + " J = E_Elong + E_kin";
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       [massEl, springEl, ampEl, speedEl].forEach(el => el.addEventListener("input", sync));
       pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
       resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
       sync();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initUTubeOscillatorSim(root) {
@@ -4271,15 +4371,15 @@ function initUTubeOscillatorSim(root) {
           "T = 2π√(l/(2g)) = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz\n" +
           "s = " + s.toFixed(3) + " m, Höhenunterschied = " + (2 * Math.abs(s)).toFixed(3) + " m\n" +
           direction + "; Dichte und Querschnitt ändern T im Idealmodell nicht.";
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       [lengthEl, densityEl, areaEl, ampEl, gravityEl].forEach(el => el.addEventListener("input", sync));
       pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
       resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
       sync();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initTwoSpringCartSim(root) {
@@ -4392,15 +4492,15 @@ function initTwoSpringCartSim(root) {
           "T = 2π√(m/(D₁+D₂)) = " + T.toFixed(3) + " s, f = " + (1 / T).toFixed(3) + " Hz\n" +
           "s = " + s.toFixed(3) + " m relativ zur verschobenen Gleichgewichtslage\n" +
           "Die Neigung verändert die Gleichgewichtslage, nicht die Richtgröße D₁+D₂.";
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       [massEl, d1El, d2El, ampEl, angleEl].forEach(el => el.addEventListener("input", sync));
       pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
       resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
       sync();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initPendulumComparisonSim(root) {
@@ -4547,7 +4647,7 @@ function initPendulumComparisonSim(root) {
           "Kleinwinkelperiode T₀ = 2π√(l/g) = " + v.T0.toFixed(3) + " s\n" +
           "Periodennäherung für die exakte Bewegung = " + approxExactT.toFixed(3) + " s\n" +
           "Momentane Winkeldifferenz = " + (Math.abs(theta - thetaH) * 180 / Math.PI).toFixed(2) + "°; die Masse beeinflusst beide Bewegungen nicht.";
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       [lengthEl, massEl, angleEl, gravityEl].forEach(el => el.addEventListener("input", () => { sync(); resetState(); }));
@@ -4556,8 +4656,8 @@ function initPendulumComparisonSim(root) {
       resetBtn.addEventListener("click", resetState);
       sync();
       resetState();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initOscillationSuperpositionSim(root) {
@@ -4683,15 +4783,15 @@ function initOscillationSuperpositionSim(root) {
         readout.textContent =
           "s₁ = " + s1.toFixed(3) + ", s₂ = " + s2.toFixed(3) + ", Summe = " + sum.toFixed(3) + "\n" +
           "f_S = |f₂-f₁| = " + beat.toFixed(2) + " Hz, momentane Summenamplitude = " + currentAmp.toFixed(3) + "\n" + state;
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       [f1El, f2El, a1El, a2El, phaseEl, speedEl].forEach(el => el.addEventListener("input", sync));
       pauseBtn.addEventListener("click", () => { paused = !paused; pauseBtn.textContent = paused ? "Weiter" : "Pause"; });
       resetBtn.addEventListener("click", () => { time = 0; lastTs = 0; });
       sync();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
 
 function initLcCircuitSim(root) {
@@ -5035,7 +5135,7 @@ function initLcCircuitSim(root) {
           "Ladung Q/Qmax = " + qNorm.toFixed(2) + ", Strom I/Imax = " + currentNorm.toFixed(2) + "\n" +
           state;
 
-        rafId = requestAnimationFrame(draw);
+        rafId = requestWaveFrame(root, draw);
       }
 
       capEl.addEventListener("input", syncLabels);
@@ -5051,8 +5151,8 @@ function initLcCircuitSim(root) {
         lastTs = 0;
       });
       syncLabels();
-      rafId = requestAnimationFrame(draw);
-      canvas.addEventListener("wb-destroy", () => cancelAnimationFrame(rafId));
+      rafId = requestWaveFrame(root, draw);
+      canvas.addEventListener("wb-destroy", () => cancelWaveFrame(rafId));
     }
   register('spring-oscillator', initSpringOscillatorSim);
   register('u-tube-oscillator', initUTubeOscillatorSim);

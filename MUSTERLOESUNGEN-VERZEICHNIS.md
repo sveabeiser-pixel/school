@@ -69,5 +69,5 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Stehende Wellen: Knoten, Bäuche, Eigenfrequenzen und Resonanz](wellen/wellen-book-stehende-Welle.html) | [Musterlösung](wellen/wellen-book-stehende-Welle-schublade61.html) |
 | [Wellenfunktion: Zeit, Ort, Phase und Wellengleichung](wellen/wellen-book-wellenfunktion.html) | [Musterlösung](wellen/wellen-book-wellenfunktion-mosaik38.html) |
 | [Wellen-Sammlung: Grundbegriffe und Übungsaufgaben](wellen/wellen-book..html) | [Musterlösung](wellen/wellen-book.-karton68.html) |
-| [Wellen-Simulationen: Ausbreitung, Reflexion und Interferenz](wellen/wellen-simulationen.html) | [Musterlösung](wellen/wellen-simulationen-balkon82.html) |
+| [Wellen-Simulationen: Schwingungen, Beugung, Reflexion und Interferenz](wellen/wellen-simulationen.html) | [Musterlösung](wellen/wellen-simulationen-balkon82.html) |
 | [Wellenoptik im Leistungsfach: Polarisation, Beugung und Interferenz](wellen/wellenoptik-lf.html) | [Musterlösung](wellen/wellenoptik-lf-klammer57.html) |

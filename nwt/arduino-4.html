@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Arduino Lernbaustein - Seiten 18-22</title>
+  <title>Arduino 4: Taster, Abläufe, LCD und Motorsteuerung</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css" />
   <style>
     .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -235,8 +235,31 @@
     }
     .pudding-flow { color: #172033; --wb-muted: #4b5563; }
     .pudding-flow .wb-head { background: #f8fafc; }
+    .wb-soft-callout{border:0;border-left:3px solid var(--wb-line);border-radius:0;padding:8px 14px}
+    .grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid2 > *{min-width:0}
+    pre{max-width:100%;overflow-x:auto}
+    .lab-task{margin:24px 0;padding-top:12px;border-top:1px solid var(--wb-line)}
+    .lab-task h3{font-size:20px;line-height:1.35}
+    .lab-task li + li{margin-top:8px}
+    .material-detail{margin:16px 0;max-width:340px}
+    .material-detail figcaption{font-size:13px;color:var(--wb-muted);margin-top:8px}
+    .material-window{position:relative;overflow:hidden;background:#fff;aspect-ratio:var(--crop-ratio)}
+    .material-window img{position:absolute;display:block;width:var(--crop-width);max-width:none;height:auto;left:var(--crop-left);top:var(--crop-top)}
+    .pudding-flow{border-radius:8px}
+    .pudding-step{min-height:60px;font-size:13px}
+    .pudding-chip{font-size:13px;overflow-wrap:anywhere}
+    .pudding-diamond{overflow:visible}
+    .pudding-diamond .pudding-chip{width:78px;font-size:12px}
+    .pudding-flow-bank{--wb-bank-bg:#eef2ff;--wb-bank-border:#c7d2fe}
+    .pudding-flow .wb-hint{color:#4b5563}
+    .pudding-flow .pudding-score{color:#172033}
+    @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+    @media(max-width:700px){.pudding-branch-row{grid-template-columns:1fr 1fr;gap:8px}.pudding-step{width:100%;box-sizing:border-box}.pudding-diamond .pudding-chip{width:72px}}
   </style>
   <link rel="stylesheet" href="arduino-kurs.css" />
+  <link rel="stylesheet" href="../assets/musterloesungen.css" />
+  <link rel="stylesheet" href="arduino-selbstlernen.css" />
 </head>
 
 <body>
@@ -279,12 +302,24 @@
         <div><strong>Ausgabe</strong>Nur den gewählten Programmzweig verfolgen.</div>
       </div>
 
+      <h2>Dein Arbeitsplatz: aufbauen, hochladen, prüfen</h2>
+      <p>Du arbeitest hier mit einem <b>Arduino Uno R3 (5 V)</b>, Steckbrett und USB-Datenkabel. Für die Versuche brauchst du zwei Taster, eine LED mit 330-Ω-Vorwiderstand, eine RGB-LED mit gemeinsamer Kathode und drei Vorwiderständen, einen geprüften kleinen passiven Lautsprecher mit 330-Ω- oder 1-kΩ-Serienwiderstand (alternativ einen passiven Piezo) sowie später ein 5-V-I²C-LCD (16×2) und eine zum Motor passende L298N-Treiberplatine. Führe die Aufbauten nacheinander aus: Pins werden in späteren Versuchen neu belegt.</p>
+      <ol>
+        <li>Ziehe vor jedem Umbau USB und die externe Versorgung ab. Kontrolliere am vierbeinigen Taster mit Durchgangsprüfung bei abgezogener Versorgung, welche zwei Kontakte erst beim Drücken verbunden werden. Zwei bereits intern verbundene Beine würden den Eingang dauerhaft auf LOW legen.</li>
+        <li>Öffne die Arduino IDE. Lege für jeden Versuch mit <b>Datei → Neu</b> einen eigenen Sketch an und speichere ihn beispielsweise als <code>Aufgabe_11_1</code>. Ersetze den gesamten Vorgabetext durch den jeweiligen vollständigen Sketch; füge nicht mehrere <code>setup()</code>- oder <code>loop()</code>-Funktionen zusammen.</li>
+        <li>Verbinde den Uno per USB. Wähle im Boardwähler beziehungsweise unter <b>Werkzeuge → Board</b> den <b>Arduino Uno</b> und unter <b>Werkzeuge → Port</b> seinen Anschluss. Wenn der Port unklar ist, vergleiche die Liste vor und nach dem Anstecken. Fehlt er, prüfe Datenkabel und USB-Anschluss.</li>
+        <li>Klicke <b>Überprüfen</b>, behebe die erste gemeldete Fehlerstelle und klicke danach <b>Hochladen</b>. Erst die Erfolgsmeldung beim Hochladen bestätigt, dass das neue Programm auf dem Board läuft.</li>
+        <li>Öffne für <code>Serial</code>-Versuche den <b>seriellen Monitor</b> und stelle <b>9600 Baud</b> ein. Ein Reset startet den Versuch erneut; beim Öffnen des Monitors kann der Uno ebenfalls neu starten. Bei Uploadfehlern prüfst du Board, Port und Kabel, bei falschem Verhalten anschließend Code und Verdrahtung.</li>
+      </ol>
+      <p>Notiere zu jedem Auftrag zuerst deine Erwartung, dann deinen tatsächlichen Test und deine Beobachtung. Bewahre den Sketch in der IDE auf und übernimm Code oder Dateiname mit der Auswertung in die vorgesehenen Antwortfelder. Am Ende öffnest du <b>Ergebnisse &amp; Abschluss</b>, ergänzt deinen Namen und exportierst deine Antworten.</p>
+      <div class="wb-section-break"></div>
+
        <div class="grid2">
       <div class="wb-soft-callout">
         <strong>Was ist ein Taster?</strong>
         <div>
-          Ein <b>Taster</b> ist ein Schalter, der nur solange "an" ist,
-          wie man ihn gedrückt hält.
+          Der hier verwendete <b>Schließertaster</b> verbindet seine beiden Kontaktseiten nur,
+          solange du ihn gedrückt hältst. Nach dem Loslassen öffnet er wieder.
           <br>
           Damit kann der Arduino auf Eingaben reagieren - ähnlich wie bei einer Tastatur.
         </div>
@@ -297,10 +332,10 @@
         <div>
           Ein digitaler Eingang kennt nur zwei Zustände:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li><b>LOW</b> (0) - kein Signal / nicht gedrückt</li>
-            <li><b>HIGH</b> (1) - Signal / gedrückt</li>
+            <li><b>LOW</b> (0) - niedriger Spannungspegel, nahe GND</li>
+            <li><b>HIGH</b> (1) - hoher Spannungspegel</li>
           </ul>
-          Der Arduino liest das mit <code>digitalRead(pin)</code>.
+          Du liest das mit <code>digitalRead(pin)</code>. Ob HIGH oder LOW „gedrückt“ bedeutet, legt die Schaltung fest, nicht der Zahlenwert allein.
         </div>
       </div>
      
@@ -317,10 +352,10 @@
           <br><br>
           Bei <code>INPUT_PULLUP</code> steckst du den Taster meist so:
           <ul style="margin:6px 0 0; padding-left:18px">
-            <li>eine Seite des Tasters an <b>Pin 2</b></li>
+            <li>eine Seite des Tasters an <b>Pin 4</b></li>
             <li>die andere Seite an <b>GND</b></li>
           </ul>
-          Der Taster verbindet beim Dr&uuml;cken also <b>Pin 2 mit GND</b>.
+          Der Taster verbindet beim Drücken also <b>Pin 4 mit GND</b>.
           Die LED wird nicht direkt &uuml;ber den Taster geschaltet, sondern erst sp&auml;ter im Code &uuml;ber ihren eigenen Ausgangspin.
         </div>
       </div>
@@ -333,14 +368,14 @@
           <b>LOW</b> oder <b>HIGH</b> zieht.
           <br><br>
           Sehr praktisch ist der interne Pullup:
-          <pre><code>pinMode(2, INPUT_PULLUP);</code></pre>
-          Dann gilt meist:
+          <pre><code>pinMode(4, INPUT_PULLUP);</code></pre>
+          Für den hier zwischen Eingang und GND angeschlossenen Taster gilt:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li>Taster <b>nicht</b> gedrückt - <b>HIGH</b></li>
             <li>Taster gedrückt - <b>LOW</b></li>
           </ul>
           Der Arduino liest diesen Zustand dann zum Beispiel mit
-          <code>digitalRead(2)</code>.
+          <code>digitalRead(4)</code>.
         </div>
       </div>
       </div>
@@ -350,7 +385,7 @@
       <div class="wb-callout">
         <strong>Typischer Stolperstein</strong>
         <div>
-          Bei <code>INPUT_PULLUP</code> ist die Logik oft "umgedreht":
+          Bei unserem Aufbau mit <code>INPUT_PULLUP</code> gilt:
           gedrückt = LOW, nicht gedrückt = HIGH.
           <br>
           Das ist kein Fehler - beim Dr&uuml;cken zieht der Taster den Eingang auf GND.
@@ -410,7 +445,7 @@
             "id":"arduino4_pullup_verify",
             "title":"Wahr oder falsch?",
             "hint":"Nutze die Tabelle.",
-            "statement":"Bei INPUT_PULLUP bedeutet gedrückt meistens LOW.",
+            "statement":"Bei unserem Taster zwischen Eingang und GND bedeutet gedrückt mit INPUT_PULLUP LOW.",
             "answer": true,
             "explain":"Richtig. Der Taster verbindet den Eingang beim Drücken mit GND. Deshalb liest der Arduino LOW."
           }
@@ -421,7 +456,7 @@
 
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p>Ein Taster ist beim Arduino meist ein Eingangssignal, kein direkter LED-Schalter. Bei <code>INPUT_PULLUP</code> ist gedrückt normalerweise <code>LOW</code>, und genau diese Logik muss dein <code>if</code> prüfen.</p>
+        <p>Der Taster liefert hier ein Eingangssignal. Mit <code>INPUT_PULLUP</code> und Taster nach GND bedeutet gedrückt <code>LOW</code>. Dein <code>if</code> prüft genau diese Verbindung.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -429,8 +464,9 @@
       <div class="wb-soft-callout">
         <strong>Beispiel: Taster schaltet LED</strong>
         <div>
-          <pre><code>const int BTN = 2;
-const int LED = 13;
+          <p>Für diesen Sketch: Taster zwischen D4 und GND; D9 → 330 Ω → LED-Anode (langes Bein), LED-Kathode → GND.</p>
+          <pre><code>const int BTN = 4;
+const int LED = 9;
 
 void setup() {
   pinMode(LED, OUTPUT);
@@ -438,7 +474,7 @@ void setup() {
 }
 
 void loop() {
-  int pressed = (digitalRead(BTN) == LOW);
+  bool pressed = (digitalRead(BTN) == LOW);
   if (pressed) {
     digitalWrite(LED, HIGH);
   } else {
@@ -459,11 +495,11 @@ void loop() {
           {
             "id":"s18_vf",
             "title":"Verständnisfragen - Taster",
-            "hint":"Text wird gespeichert",
+            "hint":"Begründe deine Antworten mit der Verdrahtung und deinem Test.",
             "fields":[
-              {"label":"1","key":"s18_q1","kind":"textarea","placeholder":"1) Was ist der Unterschied zwischen Taster und Schalter?"},
-              {"label":"2","key":"s18_q2","kind":"textarea","placeholder":"2) Warum braucht ein Eingang Pullup/Pulldown?"},
-              {"label":"3","key":"s18_q3","kind":"textarea","placeholder":"3) Was bedeutet LOW/HIGH bei INPUT_PULLUP, wenn der Taster gedrückt ist?"}
+              {"label":"1","key":"s18_q1","kind":"textarea","prompt":"Was ist der Unterschied zwischen Taster und rastendem Schalter?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s18_q2","kind":"textarea","prompt":"Warum braucht ein offener digitaler Eingang Pullup oder Pulldown?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s18_q3","kind":"textarea","prompt":"Welchen Pegel liest du mit INPUT_PULLUP bei gedrücktem und bei freiem Taster nach GND? Begründe beide Zustände.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -476,6 +512,7 @@ void loop() {
           {
             "id":"mc_s18",
             "title":"Multiple Choice - Eingaben (mehrere Antworten möglich)",
+            "hint":"Wähle alle passenden Aussagen für den beschriebenen Aufbau.",
             "questions":[
               {
                 "text":"1) Was trifft auf digitale Eingänge zu?",
@@ -535,6 +572,25 @@ void loop() {
             Nutze <code>if / else</code> und <code>digitalRead()</code>.
           </div>
 
+          <p><b>Aufbau:</b> Trenne die Versorgung. Taster: D4 ↔ GND. Bei einer RGB-LED mit <b>gemeinsamer Kathode</b> kommt diese an GND. Verbinde die roten, grünen und blauen Anschlüsse jeweils über einen eigenen 330-Ω-Widerstand mit D9, D10 und D6. Bestimme die Anschlüsse mit dem Datenblatt deiner LED; die Beinlänge allein reicht nicht. Für eine gemeinsame Anode gilt dieser Sketch nicht.</p>
+          <p><b>IDE-Auftrag:</b> Speichere den folgenden Sketch als <code>RGB_Taster</code>, lade ihn hoch und teste frei, gedrückt und wieder frei. Erkläre, warum das ein Farbwechsel während des Drückens und kein gespeicherter Umschaltmodus ist.</p>
+          <pre><code>const int BTN = 4;
+const int ROT = 9, GRUEN = 10, BLAU = 6;
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+  pinMode(ROT, OUTPUT);
+  pinMode(GRUEN, OUTPUT);
+  pinMode(BLAU, OUTPUT);
+}
+void loop() {
+  bool gedrueckt = digitalRead(BTN) == LOW;
+  analogWrite(ROT, gedrueckt ? 0 : 255);
+  analogWrite(GRUEN, gedrueckt ? 255 : 0);
+  analogWrite(BLAU, 0);
+}</code></pre>
+          <p data-wb-prompt><b>Dokumentation:</b> Notiere Verdrahtung, Code und den Vergleich von Erwartung und Beobachtung für alle drei Testzustände. Erkläre die Abfrage des Tasters.</p>
+          <p><code>bedingung ? wertWennWahr : wertWennFalsch</code> ist eine kurze Fallunterscheidung. Beispielsweise setzt die rote Ausgabe bei gedrücktem Taster 0, sonst 255.</p>
+
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Taster als Modus-Wechsel" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
 
           <details>
@@ -553,28 +609,110 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>AUFGABEN</strong>
-        <div>
-          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich, baue die genauen Vorgaben nach, falls nötig. Schreibe neue
-          Befehle in OneNote auf deinen Spickzettel.
+      <h2>Werkstatt 11: Taster selbst untersuchen</h2>
+      <figure class="material-detail" style="max-width:140px">
+        <div class="material-window" style="--crop-ratio:210/280;--crop-width:748%;--crop-left:-650%;--crop-top:0%">
+          <img src="pdf-bilder/seite18.png" alt="Schaltsymbol: Der Taster schließt die Verbindung von D4 nach GND.">
         </div>
-      </div>
-
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite18.png" alt="Taster am Arduino mit Eingangsabfrage">
-          <div class="pdfcaption">Materialbild: Tasterzustand einlesen und auswerten</div>
-        </div>
-        <div class="image-guide">
-          <h3>Verbinde Elektrik und Bedingung</h3>
-          <p>Zeige im Aufbau, wodurch der Eingang bei gedrücktem und nicht gedrücktem Taster mit einem eindeutigen Potenzial verbunden ist.</p>
-          <p><b>Danach:</b> Übersetze beide Zustände in <code>HIGH</code>/<code>LOW</code> und erst dann in wahr/falsch.</p>
-        </div>
+        <figcaption>Ausschnitt aus Materialseite 18: Taster zwischen D4 und GND.</figcaption>
+      </figure>
+      <article class="lab-task" id="material_11_1">
+        <h3>11.1 Den Eingang im seriellen Monitor lesen</h3>
+        <ol>
+          <li>Baue bei abgezogenem USB den Taster zwischen D4 und GND auf. Du benötigst mit <code>INPUT_PULLUP</code> keinen zusätzlichen Pullup-Widerstand.</li>
+          <li>Überprüfe und lade den vollständigen Sketch hoch. Öffne den seriellen Monitor bei 9600 Baud.</li>
+          <li>Sage für frei, gedrückt und wieder frei jeweils 0 oder 1 voraus. Halte den Taster zwei Sekunden gedrückt. Trenne danach bei abgezogenem USB eine Tasterleitung, verbinde USB erneut und vergleiche den offenen Eingang mit dem freien Taster.</li>
+        </ol>
+        <pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  int zustand = digitalRead(4);
+  Serial.println(zustand);
+  delay(100);
+}</code></pre>
+        <p><b>Test und Reflexion:</b> Prüfe die Materialaussage „geschlossen ergibt 0, offen ergibt 1“ mit deinem Aufbau. Erkläre den Ruhepegel durch den internen Widerstand. Ein dauerhaftes 0 deutet zum Beispiel auf zwei intern verbundene Tasterbeine hin.</p>
+      </article>
+      <article class="lab-task" id="material_11_2">
+        <h3>11.2 Eine LED mit dem Taster steuern</h3>
+        <p>Baue D9 → 330 Ω → LED-Anode und LED-Kathode → GND auf; der Taster bleibt an D4/GND. Verwende den vollständigen Sketch „Taster schaltet LED“ weiter oben. Lade ihn als <code>Aufgabe_11_2</code> hoch. Prüfe: frei = aus, gedrückt = an, losgelassen = aus. Vertausche anschließend nur im Code <code>HIGH</code> und <code>LOW</code> der beiden LED-Ausgaben, lade erneut hoch und erkläre den geänderten Zustand. Stelle danach den Ausgangscode wieder her.</p>
+      </article>
+      <article class="lab-task" id="material_11_3">
+        <h3>11.3 Zwei Taster, zwei Tonhöhen</h3>
+        <p><b>Aufbau:</b> Je ein Schließertaster verbindet D4 beziehungsweise D5 mit GND. Für den leisen Tonversuch am Uno R3 verbindest du <b>D11 → 330 Ω oder 1 kΩ → geprüfter kleiner passiver Lautsprecher → GND</b>. Beginne mit 1 kΩ; der Serienwiderstand muss immer eingebaut bleiben. Lasse bei einem unbeschrifteten Bauteil zuerst prüfen, ob es ein passiver Lautsprecher ist. Schließe es nicht versuchsweise ohne Widerstand an. Für höhere Lautstärke brauchst du eine passende Treiberstufe. Ein passiver Piezo mit Serienwiderstand ist eine Alternative, aber keine Voraussetzung. Ein aktiver Summer erzeugt seine Tonhöhe selbst und passt nicht zu diesem Versuch.</p>
+        <pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    tone(11, 220);
+  } else if (digitalRead(5) == LOW) {
+    tone(11, 880);
+  } else {
+    noTone(11);
+  }
+}</code></pre>
+        <p><b>IDE und Test:</b> Lade <code>Aufgabe_11_3</code> hoch. Teste keinen, nur D4, nur D5 und beide Taster. Ordne jedem Fall still/tief/hoch zu. Erkläre mit <code>else if</code>, welcher Taster bei gleichzeitigem Druck Vorrang hat. Tausche die Reihenfolge der Abfragen und teste deine Vorhersage.</p>
+      </article>
+      <article class="lab-task" id="material_11_4">
+        <h3>11.4 Tastendrücke zählen: Zustand oder Ereignis?</h3>
+        <p>Verwende nur den Taster D4/GND. Lade diesen absichtlich einfachen Zähler hoch und öffne den Monitor bei 9600 Baud. Vergleiche kurzes Drücken mit zwei Sekunden Halten. Zählt das Programm Tastendrücke oder Schleifendurchläufe mit gedrücktem Taster?</p>
+        <pre><code>unsigned long anzahl = 0;
+void setup() {
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  if (digitalRead(4) == LOW) {
+    anzahl++;
+    Serial.println(anzahl);
+  }
+}</code></pre>
+        <p><b>Verbessern nach Kapitel 12:</b> Warte nach dem Zählen mit <code>while (digitalRead(4) == LOW) {}</code> auf das Loslassen. Teste fünf getrennte Betätigungen und einen langen Druck. Mechanische Kontakte können prellen: Ein Wechsel muss für eine verlässliche Zählung erst eine kurze Zeit stabil sein. Unterscheide Mehrfachzählen durch Halten von zusätzlichen Wechseln durch Prellen.</p>
+      </article>
+      <article class="lab-task" id="material_11_5">
+        <h3>11.5 Wie lange dauert die serielle Übertragung?</h3>
+        <p>Lade zuerst den Materialversuch hoch. Notiere aufeinanderfolgende Zeitstempel und ihre Differenzen. Begründe, weshalb eine ausgegebene Zahl aus mehreren Zeichen besteht und die Differenz noch keine genaue Übertragungszeit pro Zeichen ist.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  unsigned long m = millis();
+  Serial.println(m);
+}</code></pre>
+        <p><b>Kontrollversuch am Uno R3:</b> Lade nun den folgenden separaten Sketch hoch. Er misst die Übertragung von 100 gleichen Zeichen einschließlich des Leerens des Sendepuffers. Er gibt den Messwert einmal aus; Reset wiederholt die Messung. <code>Serial.flush()</code> wartet auf das Ende der Übertragung, nicht auf die Bildschirmdarstellung.</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  delay(1000);
+  Serial.flush();
+  unsigned long start = micros();
+  for (int i = 0; i &lt; 100; i++) {
+    Serial.write('A');
+  }
+  Serial.flush();
+  unsigned long dauer = micros() - start;
+  Serial.println();
+  Serial.print("Mikrosekunden pro Zeichen: ");
+  Serial.println(dauer / 100.0);
+}
+void loop() {}</code></pre>
+        <p><b>Auswerten:</b> Bei 9600 Baud und 8N1 benötigt ein Zeichen 1 Startbit + 8 Datenbits + 1 Stoppbit. Berechne <code>10 / 9600</code> Sekunden und vergleiche mit deinem Messwert. Wiederhole mit <code>Serial.begin(19200)</code> und 19200 Baud im Monitor. Welche Veränderung erwartest du? Dokumentiere echte Werte und mögliche Abweichungen. Dieses UART-Modell gilt hier für den Uno R3; native USB-Boards können sich anders verhalten.</p>
+      </article>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_material11_log","title":"Versuchsprotokoll 11.1–11.5","hint":"Trenne Vorhersage, tatsächliche Beobachtung und Erklärung. Nicht durchgeführte Messungen kennzeichnest du ausdrücklich.","fields":[
+          {"key":"taster","label":"11.1 und 11.2","kind":"textarea","prompt":"Notiere deine Pegeltests und LED-Tests einschließlich der Codeänderung. Erkläre jeweils die Verbindung nach GND und die Wirkung des if/else."},
+          {"key":"ereignisse","label":"11.3 und 11.4","kind":"textarea","prompt":"Dokumentiere die vier Ton-Tests und den Vorrang bei zwei Tastern. Vergleiche kurzes und langes Drücken beim Zähler, füge deinen verbesserten Code nach Kapitel 12 ein und erkläre Halten und Kontaktprellen."},
+          {"key":"zeit","label":"11.5","kind":"textarea","prompt":"Notiere Zeitstempel-Differenzen, deine Rechnung für ein 8N1-Zeichen und deine gemessenen Zeiten bei 9600 und 19200 Baud. Erkläre, was Pufferung und Zahlendarstellung mit dem ersten Versuch zu tun haben."}
+        ]}
+        </script>
       </div>
     </section>
     <section data-wb-page="2" data-wb-page-title="12. Wiederholung mit while">
-      <h2>12. Wiederholungen mit while - Solange bis ...</h2>
+      <h2>12. Wiederholungen mit while: solange eine Bedingung wahr ist</h2>
 
       <div class="wb-soft-callout">
         <strong>Was ist eine while-Schleife?</strong>
@@ -625,7 +763,7 @@ void loop() {
           (z. B. "5-mal blinken").
           <br><br>
           <b>while</b> nutzt man meist, wenn es heißt:
-          "<b>Solange bis</b> ..." (z. B. "solange warten, bis gedrückt").
+          „<b>Solange eine Bedingung wahr ist</b>“ (z. B. solange warten, wie der Taster frei ist).
         </div>
       </div>
 
@@ -650,7 +788,12 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Beispiel 1: Zählen bis ein Grenzwert erreicht ist</strong>
         <div>
+          <p>Ohne zusätzliche Bauteile: Lade diesen Sketch hoch, öffne den Monitor bei 9600 Baud und drücke Reset. Fülle zuerst die Ablaufspur aus und vergleiche danach mit der Ausgabe.</p>
           <pre><code>int x = 0;
+
+void setup() {
+  Serial.begin(9600);
+}
 
 void loop() {
   while (x &lt; 20) {
@@ -658,7 +801,7 @@ void loop() {
     x = x + 5;
   }
 }</code></pre>
-          Der Code läuft so lange, bis <code>x</code> mindestens 20 ist.
+          Die Schleife endet, sobald <code>x</code> mindestens 20 ist. Weil <code>x</code> global initialisiert wird, beginnt der nächste <code>loop()</code>-Durchlauf mit dem erreichten Wert. Es erscheint keine neue Zahlenfolge, bis du Reset drückst.
         </div>
       </div>
 
@@ -683,7 +826,8 @@ void loop() {
             {
               "label": "Ausgabe",
               "width": "25%",
-              "hint": "Ausgegebene Zahl; wenn der Rumpf nicht läuft: „keine Ausgabe“."
+              "hint": "Ausgegebene Zahl; wenn der Rumpf nicht läuft: „keine Ausgabe“.",
+              "answerOptions": ["keine Ausgabe"]
             },
             {
               "label": "x nachher",
@@ -696,7 +840,7 @@ void loop() {
             {"cells":[{"given":"5 < 20","code":true},{"answers":["5"]},{"answers":["5"]},{"answers":["10"]}]},
             {"cells":[{"given":"10 < 20","code":true},{"answers":["10"]},{"answers":["10"]},{"answers":["15"]}]},
             {"cells":[{"given":"15 < 20","code":true},{"answers":["15"]},{"answers":["15"]},{"answers":["20"]}]},
-            {"cells":[{"given":"20 < 20","code":true},{"answers":["20"]},{"answers":["keine","keine Ausgabe"]},{"answers":["20","Schleife endet"]}]}
+            {"cells":[{"given":"20 < 20","code":true},{"answers":["20"]},{"answers":["keine Ausgabe","keine"]},{"answers":["20"]}]}
           ]
         }
         </script>
@@ -708,14 +852,14 @@ void loop() {
             "id":"arduino4_while_cloze",
             "title":"Sicherung: while",
             "hint":"Setze die passenden Begriffe ein.",
-            "bank":["wahr","falsch","Bedingung","verändert"],
+            "bank":["wahr","falsch","Bedingung","ändern"],
             "segments":[
               {"t":"text","v":"Eine while-Schleife läuft, solange ihre "},
               {"t":"gap","a":"Bedingung"},
               {"t":"text","v":" "},
               {"t":"gap","a":"wahr"},
-              {"t":"text","v":" ist. Damit sie enden kann, muss sich etwas im Ablauf "},
-              {"t":"gap","a":"verändert"},
+              {"t":"text","v":" ist. Damit eine anfangs wahre Bedingung später falsch wird, muss sich eine für sie relevante Größe "},
+              {"t":"gap","a":"ändern"},
               {"t":"text","v":", sodass die Bedingung irgendwann "},
               {"t":"gap","a":"falsch"},
               {"t":"text","v":" wird."}
@@ -728,7 +872,7 @@ void loop() {
 
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
-        <p><code>while</code> bedeutet „solange“. Die Schleife läuft nur dann kontrolliert, wenn sich die geprüfte Bedingung irgendwann ändern kann.</p>
+        <p><code>while</code> prüft vor jedem Durchgang. Ist die Bedingung schon anfangs falsch, läuft der Block kein einziges Mal. Zum späteren Verlassen muss sich eine geprüfte Größe ändern; das kann auch der erneut gelesene Tasterzustand sein.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -736,19 +880,24 @@ void loop() {
       <div class="wb-soft-callout">
         <strong>Beispiel 2: Warten auf einen Tastendruck</strong>
         <div>
-          <pre><code>const int BTN = 2;
+          <p>Taster: D4/GND. Lade den Sketch hoch und teste Drücken, Halten und Loslassen mit dem Monitor bei 9600 Baud.</p>
+          <pre><code>const int BTN = 4;
 
 void setup() {
   pinMode(BTN, INPUT_PULLUP);
+  Serial.begin(9600);
 }
 
 void loop() {
   while (digitalRead(BTN) == HIGH) {
     // solange nicht gedrückt (HIGH)
   }
-  // hier geht es weiter, sobald gedrückt (LOW)
+  Serial.println("gedrueckt");
+  while (digitalRead(BTN) == LOW) {
+    // erst nach dem Loslassen den naechsten Druck zulassen
+  }
 }</code></pre>
-          Mit <code>INPUT_PULLUP</code> gilt: gedrückt = LOW.
+          Die zweite Schleife verhindert fortlaufende Ausgaben beim Halten. Prellen kann trotzdem zusätzliche Ausgaben verursachen; Aufgabe 12.3 zeigt eine Stabilitätsprüfung.
         </div>
       </div>
 
@@ -759,11 +908,11 @@ void loop() {
           {
             "id":"s19_vf",
             "title":"Verständnisfragen - while",
-            "hint":"Text wird gespeichert",
+            "hint":"Beziehe deine Erklärung auf einen ausgeführten Sketch.",
             "fields":[
-              {"label":"1","key":"s19_q1","kind":"textarea","placeholder":"1) Erkläre den Unterschied zwischen for und while in eigenen Worten."},
-              {"label":"2","key":"s19_q2","kind":"textarea","placeholder":"2) Wann ist eine while-Schleife besonders sinnvoll? Nenne ein Beispiel."},
-              {"label":"3","key":"s19_q3","kind":"textarea","placeholder":"3) Was ist eine Endlosschleife und wie kann sie entstehen?"}
+              {"label":"1","key":"s19_q1","kind":"textarea","prompt":"Erkläre den Unterschied zwischen for und while in eigenen Worten. Sind feste Wiederholungszahlen auch mit while möglich?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s19_q2","kind":"textarea","prompt":"Wann ist eine while-Schleife besonders sinnvoll? Nenne ein Beispiel und seine Ausstiegsbedingung.","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s19_q3","kind":"textarea","prompt":"Was ist eine Endlosschleife und wie kann sie entstehen? Erkläre den Unterschied zwischen while (2 < 5) und einer Schleife, die den Taster wiederholt einliest.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -776,6 +925,7 @@ void loop() {
           {
             "id":"mc_s19",
             "title":"Multiple Choice - while (mehrere Antworten möglich)",
+            "hint":"Wähle alle richtigen Aussagen. for und while sind keine starren Gegensätze.",
             "questions":[
               {
                 "text":"1) Eine while-Schleife läuft ...",
@@ -806,12 +956,12 @@ void loop() {
                 "multiple": true,
                 "choices":[
                   {"id":"a","label":"Die Bedingung muss irgendwann falsch werden können"},
-                  {"id":"b","label":"In der Schleife muss sich etwas ändern (z. B. Variable)"},
+                  {"id":"b","label":"Eine geprüfte Größe muss sich ändern können, etwa ein erneut gelesener Tasterzustand"},
                   {"id":"c","label":"Man darf nie Variablen benutzen"},
-                  {"id":"d","label":"Man sollte prüfen, ob die Bedingung erreichbar ist"}
+                  {"id":"d","label":"Man sollte prüfen, ob die Ausstiegsbedingung erreichbar ist"}
                 ],
                 "correct":["a","b","d"],
-                "explain":"Die Bedingung muss erreichbar sein und sich in der Schleife ändern können."
+                "explain":"Für einen regulären Ausstieg muss die Bedingung falsch werden können. Das kann durch Zählen oder einen neu eingelesenen äußeren Zustand geschehen."
               }
             ]
           }
@@ -830,10 +980,27 @@ void loop() {
         <div class="wb-body">
           <div class="wb-muted">
             Ziel: Eine LED soll blinken, <b>solange</b> der Taster <b>nicht gedrückt</b> ist.
-            Sobald der Taster gedrückt wird, soll das Blinken stoppen und die LED aus bleiben.
+            Wenn du den Taster gedrückt hältst, soll das Blinken stoppen und die LED aus bleiben. Nach dem Loslassen beginnt es wieder. Ein kurzer Druck innerhalb einer Wartezeit kann übersehen werden.
             <br><br>
             Tipp: Nutze <code>while</code> und <code>INPUT_PULLUP</code>.
           </div>
+
+          <p><b>Aufbau und IDE:</b> Nutze den Taster D4/GND und die eingebaute LED des Uno. Lade diesen vollständigen Sketch hoch. Halte den Taster länger als eine Blinkperiode gedrückt. Teste danach sehr kurze Drücke und erkläre die Verzögerung durch <code>delay()</code>.</p>
+          <pre><code>const int BTN = 4;
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+void loop() {
+  while (digitalRead(BTN) == HIGH) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(200);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(200);
+  }
+  digitalWrite(LED_BUILTIN, LOW);
+}</code></pre>
+          <p data-wb-prompt>Notiere Code, Erwartung und Beobachtung für frei, dauerhaft gedrückt und wieder frei. Begründe, weshalb die Reaktion bis ungefähr 400 ms dauern kann und das Blinken nach dem Loslassen wieder beginnt.</p>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Stoppe das Blinken mit einem Taster" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
 
@@ -853,24 +1020,84 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>AUFGABEN</strong>
-        <div>
-          Lies dir alles nochmal genau durch und beantworte die Fragen ausführlich. Schreibe neue
-          Befehle in OneNote auf deinen Spickzettel.
-        </div>
-      </div>
+      <h2>Werkstatt 12: Bedingungen und Tastendruck-Ereignisse</h2>
+      <article class="lab-task" id="material_12_1">
+        <h3>12.1 Erreicht das Programm loop()?</h3>
+        <p>Sage vor dem Hochladen voraus, welche Zahlen und Zeichen erscheinen und ob die eingebaute LED eingeschaltet wird. Dieser Sketch ergänzt das im Material fehlende <code>Serial.begin(9600)</code>. Beobachte den Monitor kurz; lade danach einen anderen Sketch hoch, um die Endlosschleife zu ersetzen.</p>
+        <pre><code>int x = 1;
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+  while (x &lt; 100) {
+    Serial.println(x);
+    x = x + 1;
+  }
+  while (2 &lt; 5) {
+    Serial.print("!");
+  }
+}
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+}</code></pre>
+        <p><b>Fehler finden:</b> Begründe, weshalb ein Reset die Endlosschleife nur neu startet. Ersetze den zweiten <code>while</code>-Block durch <code>Serial.println("fertig");</code>, lade erneut hoch und prüfe den Übergang zu <code>loop()</code>.</p>
+      </article>
+      <article class="lab-task" id="material_12_2">
+        <h3>12.2 Von jetzt bis jetzt</h3>
+        <p>Nutze D4/GND und den seriellen Monitor bei 9600 Baud. Lies den Code vor dem Upload wie einen Ablaufplan. Sage voraus, was vor dem Drücken, beim Halten und nach dem Loslassen erscheint.</p>
+        <pre><code>void setup() {
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  while (digitalRead(4) == HIGH) {}
+  Serial.print("von jetzt");
+  while (digitalRead(4) == LOW) {}
+  Serial.print("bis jetzt");
+}</code></pre>
+        <p><b>Test:</b> Drücke, halte zwei Sekunden und lasse los. Wiederhole das. Erkläre die leeren Schleifen und die Ausgabe ohne Zeilenumbruch. Ersetze testweise beide <code>print</code> durch <code>println</code>. Misst das Programm bereits eine Zeitdauer? Begründe.</p>
+      </article>
+      <article class="lab-task" id="material_12_3">
+        <h3>12.3 Feintuning: genau 1 Hz pro Betätigung</h3>
+        <p><b>Aufbau:</b> Taster D4/GND und D5/GND; D11 → 330 Ω oder 1 kΩ → geprüfter kleiner passiver Lautsprecher → GND wie in 11.3, alternativ ein passiver Piezo. Lade den Sketch als <code>Aufgabe_12_3</code> hoch. Er startet bei 440 Hz; D4 erhöht, D5 senkt die Frequenz um 1 Hz innerhalb 100–2000 Hz.</p>
+        <pre><code>int frequenz = 440;
 
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite19.png" alt="while-Schleife mit Bedingung und wiederholtem Block">
-          <div class="pdfcaption">Materialbild: Wiederholen, solange eine Bedingung wahr ist</div>
-        </div>
-        <div class="image-guide">
-          <h3>Suche die Ausstiegsbedingung</h3>
-          <p>Markiere die Variable, von der die Bedingung abhängt, und die Codezeile, die diese Variable verändert.</p>
-          <p><b>Sicherheitscheck:</b> Fehlt diese Veränderung, kann eine Endlosschleife entstehen.</p>
-        </div>
+void warteStabil(int pin, int pegel) {
+  unsigned long seit = millis();
+  while (millis() - seit &lt; 20) {
+    if (digitalRead(pin) != pegel) seit = millis();
+  }
+}
+
+void setup() {
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+  Serial.begin(9600);
+  tone(11, frequenz);
+}
+void loop() {
+  int taste = 0;
+  if (digitalRead(4) == LOW) taste = 4;
+  else if (digitalRead(5) == LOW) taste = 5;
+  if (taste == 0) return;
+  warteStabil(taste, LOW);
+  if (taste == 4 &amp;&amp; frequenz &lt; 2000) frequenz++;
+  if (taste == 5 &amp;&amp; frequenz &gt; 100) frequenz--;
+  tone(11, frequenz);
+  Serial.println(frequenz);
+  warteStabil(taste, HIGH);
+}</code></pre>
+        <p><b>Test:</b> Drücke D4 einzeln dreimal, halte ihn danach zwei Sekunden und lasse los. Prüfe die Frequenz im Monitor, weil 1 Hz Unterschied kaum hörbar sein kann. Teste D5 entsprechend. Für Grenztests setzt du den Startwert testweise auf 100 beziehungsweise 2000; stelle danach 440 wieder her. Teste beide Taster zusammen: D4 wird zuerst gewählt, ein weiter gehaltener D5 kann nach D4 folgen.</p>
+        <p><b>Erklären:</b> Die Funktion wartet auf 20 ms durchgehend denselben Pegel. Das unterdrückt das hier erwartete Kontaktprellen und erlaubt erst nach stabilem Loslassen eine neue Betätigung. Während des Wartens liest der Sketch die andere Taste nicht aus; der bereits gestartete Ton läuft weiter. <code>&amp;&amp;</code> bedeutet „und“, <code>||</code> bedeutet „oder“: Vergleiche <code>frequenz &lt; 100 || frequenz &gt; 2000</code> mit <code>frequenz &lt; 100 &amp;&amp; frequenz &gt; 2000</code>. Warum kann die zweite Bedingung nie wahr sein?</p>
+      </article>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_material12_log","title":"Versuchsprotokoll 12.1–12.3","hint":"Belege jede Erklärung mit einem Test oder einem konkreten Codeabschnitt.","fields":[
+          {"key":"schleifen","label":"12.1 und 12.2","kind":"textarea","prompt":"Notiere die vorhergesagte und beobachtete Ausgabe, den Übergang von setup zu loop nach deiner Reparatur und die Funktion der beiden Warteschleifen. Erkläre print/println und weshalb noch keine Dauer berechnet wird."},
+          {"key":"ton","label":"12.3","kind":"textarea","prompt":"Dokumentiere deine Frequenzfolge, Halte- und Grenztests. Erkläre die stabile Pegelprüfung, die Wartezeit bis zum Loslassen, gleichzeitige Taster sowie && und || an den vorgegebenen Bedingungen."}
+        ]}
+        </script>
       </div>
     </section>
     <section data-wb-page="3" data-wb-page-title="13. Programme planen - Denken vor dem Programmieren">
@@ -894,12 +1121,13 @@ void loop() {
       <div class="wb-section-break"></div>
 
       <div class="wb-callout">
-        <strong>Sollte man Flussdiagramme zuerst bringen?</strong>
+        <strong>Starte mit einem bekannten Ablauf</strong>
         <p>
-          Nicht als erstes großes Theoriepaket. Sinnvoller ist: zuerst einen sehr einfachen bekannten Ablauf
-          wie LED an - warten - LED aus, dann den gleichen Ablauf als Mini-Flussdiagramm. Danach nutzt du
-          Flussdiagramme genau dort, wo sie helfen: bei <code>if / else</code> für Entscheidungen und bei
-          <code>while</code> oder <code>for</code> für Wiederholungen.
+          Zeichne auf Papier „Start → LED an → 300 ms warten → LED aus → Ende“.
+          Nutze für Start und Ende ein Oval und für die drei Schritte Rechtecke.
+          Ergänze danach eine Raute „Taster gedrückt?“ vor dem Einschalten.
+          Beschrifte beide Wege mit Ja und Nein: Was soll auf dem Nein-Weg geschehen?
+          Vergleiche deinen Ablauf mit dem Taster-Sketch aus Kapitel 11.
         </p>
       </div>
 
@@ -924,9 +1152,8 @@ void loop() {
                 <li>an welchen Stellen Entscheidungen getroffen werden,</li>
                 <li>welche Informationen oder Eingaben daf&uuml;r gebraucht werden.</li>
               </ul>
-              Ein Flussdiagramm beginnt meist mit einem <b>Start</b> oder einer
-              <b>Eingabe</b> und endet mit einem <b>Ergebnis</b> oder <b>Output</b>.
-              Dazwischen liegen Prozessschritte und Bedingungen.
+              Ein Flussdiagramm kennzeichnet einen <b>Start</b> und gegebenenfalls ein <b>Ende</b>.
+              Ein Arduino-Ablauf mit <code>loop()</code> führt dagegen immer wieder zum Schleifenanfang zurück; er muss kein erreichbares Ende haben.
             </div>
           </div>
 
@@ -938,6 +1165,7 @@ void loop() {
                 <li><b>abgerundete Rechtecke</b> f&uuml;r Start und Ende,</li>
                 <li><b>Rechtecke</b> f&uuml;r konkrete Prozessschritte,</li>
                 <li><b>Rauten</b> f&uuml;r Entscheidungen wie "Ja oder Nein?",</li>
+                <li><b>Parallelogramme</b> für Ein- und Ausgaben, zum Beispiel einen Zeitstempel,</li>
                 <li><b>Pfeile</b> f&uuml;r die Richtung des Ablaufs.</li>
               </ul>
               Manche Darstellungen enthalten au&szlig;erdem Dokumente oder ausgelagerte
@@ -1072,6 +1300,9 @@ void loop() {
             <div class="pudding-step pudding-drop" data-accept="Bringe die übrige Milch zum Kochen"></div>
             <div class="pudding-arrow">↓</div>
 
+            <div class="pudding-step pudding-drop" data-accept="Nimm Milch von der Kochstelle und gib Pulver dazu"></div>
+            <div class="pudding-arrow">↓</div>
+
             <div class="pudding-diamond-wrap">
               <div class="pudding-diamond pudding-drop" data-accept="Kocht der Pudding?"></div>
             </div>
@@ -1079,9 +1310,8 @@ void loop() {
             <div class="pudding-branch-row">
               <div class="pudding-branch">
                 <div class="pudding-branch-label">Nein</div>
-                <div class="pudding-step pudding-drop" data-accept="Nimm Milch von der Kochstelle und gib Pulver dazu"></div>
-                <div class="pudding-arrow">↓</div>
                 <div class="pudding-step pudding-drop" data-accept="Rühre stetig"></div>
+                <div class="pudding-loop-note">auf der Kochstelle weiter erhitzen</div>
                 <div class="pudding-loop-note">↺ zurück zur Frage</div>
               </div>
 
@@ -1102,16 +1332,61 @@ void loop() {
         </div>
       </div>
 
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite20.png" alt="Programmplanung mit Eingaben, Verarbeitung und Ausgaben">
-          <div class="pdfcaption">Materialbild: Vom Problem zum überprüfbaren Ablauf</div>
-        </div>
-        <div class="image-guide">
-          <h3>Plane erst Zustände, dann Befehle</h3>
-          <p>Schreibe zu jeder Phase auf: Welche Eingabe liegt vor? Welche Bedingung wird geprüft? Welche Ausgabe soll sich ändern?</p>
-          <p>Ein guter Plan nennt außerdem Startzustand und Wiederholung.</p>
-        </div>
+      <p>Prüfe den Modellablauf gedanklich mit „kocht noch nicht“ und danach „kocht“. Das Pulver wird einmal vor der Wiederholung zugegeben; Rühren und weiteres Erhitzen führen zurück zur Prüfung. Der Ablauf ist ein vereinfachtes Denkmodell, kein vollständiges Kochrezept. Halte deine fertige Zuordnung im Protokoll fest.</p>
+      <h2>Werkstatt 13: Vom Ablaufplan zum Test</h2>
+      <article class="lab-task" id="material_13_1">
+        <h3>13.1 Ein Flussdiagramm übersetzen</h3>
+        <figure class="material-detail" style="max-width:220px">
+          <div class="material-window" style="--crop-ratio:330/430;--crop-width:326%;--crop-left:-38%;--crop-top:-205%">
+            <img src="pdf-bilder/seite20.png" alt="Ablaufplan: x auf 10 setzen, solange x kleiner als 100 ausgeben und um 2 erhöhen.">
+          </div>
+          <figcaption>Ausschnitt aus Materialseite 20: Zahlenfolge mit while.</figcaption>
+        </figure>
+        <p>Setze diesen Plan in einem neuen Sketch um: <b>Start → x = 10 → solange x &lt; 100: x ausgeben, x um 2 erhöhen → Ende</b>. Nutze <code>Serial.begin(9600)</code> und schreibe den einmaligen Ablauf in <code>setup()</code>; <code>loop()</code> bleibt leer. Die vollständige Grundstruktur zum Ausführen und Erweitern ist:</p>
+        <pre><code>void setup() {
+  Serial.begin(9600);
+  int x = 10;
+  while (x &lt; 100) {
+    Serial.println(x);
+    x = x + 2;
+  }
+}
+void loop() {}</code></pre>
+        <p><b>Vorhersage und Test:</b> Bestimme erste Zahl, letzte Zahl, Anzahl der Ausgaben und Endwert von x, bevor du hochlädst. Vergleiche im Monitor bei 9600 Baud. Ändere nur <code>&lt;</code> in <code>&lt;=</code> und sage die neue letzte Zahl und Anzahl voraus. Erkläre, warum die ursprüngliche Folge nicht bei 100 ausgegeben endet.</p>
+      </article>
+      <article class="lab-task" id="material_13_2">
+        <h3>13.2 Einen Tastendruck mit Zeitstempel planen</h3>
+        <p>Entwirf zuerst auf Papier oder in diagrams.net einen Ablaufplan: Taster D4/GND initialisieren, Monitor starten, auf Drücken warten, einmal <code>millis()</code> ausgeben, auf Loslassen warten, zurück zur ersten Abfrage. Zeichne die Ja-/Nein-Wege und Rücksprünge vollständig ein.</p>
+        <p><b>IDE-Auftrag:</b> Leite aus 12.2 einen vollständigen Sketch ab, ersetze die Textausgaben durch genau eine Zeitstempelausgabe nach dem Drücken und lade ihn hoch. Ergänze bei realen Tastern die stabile Pegelprüfung aus 12.3. Teste drei getrennte Drücke und einmal zwei Sekunden Halten. Erkläre, warum der Zeitstempel die Laufzeit seit dem Start und nicht die Dauer des Tastendrucks angibt.</p>
+      </article>
+      <article class="lab-task" id="material_13_3">
+        <h3>13.3 Zwei Programme als Ablaufpläne darstellen</h3>
+        <ol>
+          <li>Zeichne zu 12.2 den Ablauf mit beiden Ausgaben, beiden Warteschleifen und dem Rücksprung von <code>loop()</code>. Spiele Drücken, Halten und Loslassen mit dem Finger durch.</li>
+          <li>Zeichne den Ablauf des RGB-Programms aus Materialaufgabe 9.7. Damit du hier selbstständig arbeiten kannst, steht seine Schleifenstruktur unten. Nutze <b>int</b>-Zähler: Nach 255 muss 256 für den Abbruch darstellbar sein. Zeichne die äußeren Schleifen etwas breiter, die inneren darin. Markiere für jede Schleife Initialisierung, Prüfung und Erhöhung.</li>
+        </ol>
+        <pre><code>// Struktur fuer den Ablaufplan, kein vollstaendiger Sketch:
+for (int r = 0; r &lt; 256; r++) {
+  for (int g = 0; g &lt; 256; g++) {
+    for (int b = 0; b &lt; 256; b++) {
+      analogWrite(9, r);
+      analogWrite(10, g);
+      analogWrite(6, b);
+      delay(1);
+    }
+  }
+}</code></pre>
+        <p><b>Gedanklicher Test:</b> Verfolge die ersten drei RGB-Werte sowie den Übergang von <code>(0, 0, 255)</code> zur nächsten Kombination. Warum werden <code>b</code> und später <code>g</code> wieder auf 0 gesetzt? Beschreibe deine Diagramme im Protokoll und füge sie zusätzlich deinem Kursheft hinzu.</p>
+      </article>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_material13_log","title":"Planungsprotokoll 13.1–13.3","hint":"Deine Beschreibung muss auch ohne das gezeichnete Bild nachvollziehbar sein.","fields":[
+          {"key":"zahlen","label":"13.1","kind":"textarea","prompt":"Nenne erste und letzte Ausgabe, Anzahl und Endwert von x für < 100 und <= 100. Begründe sie und dokumentiere deinen Monitor-Test."},
+          {"key":"plaene","label":"13.2 und 13.3","kind":"textarea","prompt":"Beschreibe deine Ablaufpläne mit Bedingungen, Ja-/Nein-Wegen und Rücksprüngen. Füge den Zeitstempel-Sketch ein, erkläre den Halte-Test und nenne die gefragten RGB-Kombinationen samt Schleifenübergang."},
+          {"key":"pudding","label":"Pudding-Modell","kind":"textarea","prompt":"Notiere die Reihenfolge und beide Wege deines fertigen Pudding-Diagramms. Erkläre, welche Schritte wiederholt werden und weshalb die Pulverzugabe davor liegt."}
+        ]}
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1201,11 +1476,11 @@ LED ausschalten</code></pre>
           {
             "id":"s20_vf",
             "title":"Verständnisfragen - Flussdiagramme",
-            "hint":"Text wird gespeichert",
+            "hint":"Nutze die von dir erstellten Ablaufpläne als Beispiele.",
             "fields":[
-              {"label":"1","key":"s20_q1","kind":"textarea","placeholder":"1) Warum ist es sinnvoll, ein Programm vor dem Codieren zu planen?"},
-              {"label":"2","key":"s20_q2","kind":"textarea","placeholder":"2) Welche Symbole sind in einem Flussdiagramm besonders wichtig?"},
-              {"label":"3","key":"s20_q3","kind":"textarea","placeholder":"3) Warum helfen Pfeile und Symbole beim Planen eines Programms?"}
+              {"label":"1","key":"s20_q1","kind":"textarea","prompt":"Warum ist es sinnvoll, ein Programm vor dem Codieren zu planen? Nenne eine mögliche Lücke, die du im Plan erkennst.","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s20_q2","kind":"textarea","prompt":"Welche Symbole sind in einem Flussdiagramm besonders wichtig? Nenne Start/Ende, Verarbeitung, Entscheidung und Ein-/Ausgabe mit passender Form.","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s20_q3","kind":"textarea","prompt":"Warum helfen Pfeile und Symbole beim Planen? Erkläre einen Ja-/Nein-Weg und einen Rücksprung.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1234,6 +1509,7 @@ LED ausschalten</code></pre>
             Schreibe die Schritte so,
             dass man daraus direkt ein Flussdiagramm zeichnen könnte.
           </div>
+          <p data-wb-prompt><b>Präzisieren:</b> Verwende D4/GND und die eingebaute LED. Nach genau drei Blinkimpulsen à 300 ms an und 300 ms aus bleibt die LED bis Reset aus, auch bei weiterem Tastendruck. Beschreibe deshalb auch den dauerhaften Ruhezustand. Ein Ablauf in <code>loop()</code> würde von allein erneut starten.</p>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Vom Plan zum Code" placeholder="Schritte in der richtigen Reihenfolge"></textarea>
 
@@ -1247,7 +1523,7 @@ LED ausschalten</code></pre>
               warten<br>
               LED ausschalten<br>
               warten<br>
-              3. Programm endet.
+              3. LED bleibt aus. Der einmalige Ablauf steht in setup(); loop() bleibt leer. Reset startet wieder beim Warten auf den Taster.
             </div>
           </details>
         </div>
@@ -1255,6 +1531,20 @@ LED ausschalten</code></pre>
     </section>
     <section data-wb-page="4" data-wb-page-title="Vom Flussdiagramm zum Arduino-Code">
       <h2>Vom Flussdiagramm zum Arduino-Code</h2>
+      <p>Die kurzen Codeabschnitte in den vier Vergleichen zeigen einzelne Bausteine. Lade sie nicht allein hoch. Der vollständige Versuch folgt unter „Übung – Vom Plan zum Code“.</p>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="categorize">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_plan_bausteine","title":"Ordne die Planbausteine zu","hint":"Achte auf einmalige Einrichtung, Entscheidungen und Wiederholungen.","categories":[{"id":"setup","title":"Einmal in setup()"},{"id":"if","title":"Entscheidung mit if/else"},{"id":"while","title":"Warten mit while"},{"id":"for","title":"Feste Wiederholung mit for"}],"items":[{"label":"Pinmodi nach dem Start einrichten","category":"setup"},{"label":"Bei gedrücktem Taster Grün, sonst Rot ausgeben","category":"if"},{"label":"Solange der Taster frei ist, erneut prüfen","category":"while"},{"label":"Genau fünf Blinkimpulse erzeugen","category":"for"}]}
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="order">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_einmal_order","title":"Plane die einmalige Blinkfolge","hint":"Ordne die Schritte für einen Ablauf, der erst nach Reset erneut starten darf.","items":["setup startet: Taster als INPUT_PULLUP und LED als OUTPUT einrichten","LED zunächst ausschalten","Solange Taster frei ist: warten und Eingang erneut lesen","Nach Tastendruck: fünfmal LED 300 ms an und 300 ms aus","setup verlassen; im leeren loop bleibt die LED aus"]}
+        </script>
+      </div>
+      <div class="wb-section-break"></div>
 
       <div class="wb-soft-callout">
         <strong>Warum diese Brücke wichtig ist</strong>
@@ -1411,6 +1701,23 @@ digitalWrite(13, LOW);</code></pre>
             <br><br>
             Übersetze diesen Plan in Arduino-Code.
           </div>
+          <p><b>Aufbau und eindeutiges Ziel:</b> Taster D4/GND, eingebaute LED. Der Ablauf startet nach einem Tastendruck <b>genau einmal pro Reset</b>, blinkt fünfmal für jeweils 300 ms an und 300 ms aus und bleibt anschließend aus. Setze den Ablauf in <code>setup()</code>, lasse <code>loop()</code> leer.</p>
+          <p><b>IDE-Auftrag:</b> Lade den vollständigen Sketch hoch. Halte den Taster beim Start frei, drücke dann einmal und zähle die Impulse. Teste anschließend einen weiteren Druck, einen langen Druck und Reset. Ändere als Transfer auf drei Impulse und vergleiche mit deinem Plan aus Kapitel 13.</p>
+          <pre><code>const int BTN = 4;
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+  while (digitalRead(BTN) == HIGH) {}
+  for (int i = 0; i &lt; 5; i++) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(300);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(300);
+  }
+}
+void loop() {}</code></pre>
+          <p data-wb-prompt>Übernimm deinen vollständigen Sketch und beschreibe die beobachtete Impulszahl, die Wirkung eines weiteren Tastendrucks und des Resets. Ordne Warten, Wiederholen und dauerhaftes Ruhen den Codeabschnitten zu.</p>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Übung - Vom Plan zum Code" placeholder="Schreibe den passenden Arduino-Code oder beschreibe die Struktur."></textarea>
 
@@ -1420,7 +1727,7 @@ digitalWrite(13, LOW);</code></pre>
               <strong>Musterlösung (Struktur):</strong><br>
               <code>while</code> zum Warten auf den Taster,
               danach eine <code>for</code>-Schleife mit 5 Durchläufen,
-              in der die LED ein- und ausgeschaltet wird.
+              in der die LED ein- und ausgeschaltet wird. Alles steht in <code>setup()</code>; das leere <code>loop()</code> startet die Blinkfolge nicht erneut.
             </div>
           </details>
         </div>
@@ -1488,7 +1795,7 @@ digitalWrite(13, LOW);</code></pre>
           Häufige Stolpersteine:
           <ul style="margin:6px 0 0; padding-left:18px">
             <li><b>Kontrast</b>: Viele LCDs haben ein kleines Potentiometer - wenn der Kontrast falsch ist, siehst du "nichts".</li>
-            <li><b>5V vs. 3.3V</b>: Manche Displays sind 5V-tolerant, andere nicht (besonders bei OLED/TFT).</li>
+            <li><b>5 V oder 3,3 V</b>: Versorgung und Datenpegel müssen zum Modul passen. Verwende hier nur das ausdrücklich für 5 V vorgesehene I²C-LCD am Uno R3; 5-V-I²C-Pullups passen nicht direkt zu jedem 3,3-V-Board.</li>
             <li><b>Backlight</b>: Hintergrundbeleuchtung kann an/aus sein - bei falscher Verdrahtung wirkt das Display "tot".</li>
           </ul>
         </div>
@@ -1512,11 +1819,12 @@ digitalWrite(13, LOW);</code></pre>
       <div class="wb-section-break"></div>
 <div class="grid2">
       <div class="wb-soft-callout">
-        <strong>Beispiel: 16x2 LCD (parallel, LiquidCrystal)</strong>
+        <strong>Alternative: 16×2 LCD parallel</strong>
         <div>
+          <p>Dieser alternative Aufbau braucht <b>keinen I²C-Adapter</b>. Führe ihn nur mit einem passenden 16-poligen HD44780-LCD aus, nachdem du die anderen Bauteile entfernt hast: VSS→GND, VDD→5 V, VO→Schleifer eines 10-kΩ-Potentiometers (äußere Anschlüsse 5 V/GND), RS→D12, R/W→GND, E→D11, D4→D5, D5→D4, D6→D3, D7→D2. D0–D3 am LCD bleiben frei. LED+/LED− benötigen die Versorgung und den Vorwiderstand aus dem LCD-Datenblatt. Verwechsle die LCD-Datenleitungen D4–D7 nicht mit den Arduino-Pinnamen.</p>
           <pre><code>#include &lt;LiquidCrystal.h&gt;
 
-// Beispiel-Pins (passen ggf. an deine Verdrahtung an)
+// RS, E, LCD-D4, LCD-D5, LCD-D6, LCD-D7
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 void setup() {
@@ -1528,7 +1836,7 @@ void setup() {
 
 void loop() {
 }</code></pre>
-          Hinweis: Bei Parallel-LCDs hängen die Pins von deiner Verkabelung ab.
+          Die folgenden Werkstattaufgaben verwenden stattdessen das I²C-LCD mit vier Anschlüssen.
         </div>
       </div>
 
@@ -1540,7 +1848,7 @@ void loop() {
           <pre><code>#include &lt;Wire.h&gt;
 #include &lt;LiquidCrystal_I2C.h&gt;
 
-// Adresse ist oft 0x27 oder 0x3F (je nach Modul)
+// 0x27 erst nach dem I2C-Scan unten verwenden oder anpassen.
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 void setup() {
@@ -1559,23 +1867,75 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>AUFGABEN</strong>
-        <div>
-          Versuche die Schritte zum Anschluss und Programmierung eines LCD-Displays zu verstehen und
-          gleichzeitig am Arduino umzusetzen. Schreibe dir die wichtigsten Befehle und Schritte auf deinen Spickzettel.
-        </div>
+      <h2>Werkstatt 14: LCD selbst in Betrieb nehmen</h2>
+      <article class="lab-task" id="material_14_1_2">
+        <h3>14.1–14.2 Bibliothek, Anschluss und Adresse</h3>
+        <ol>
+          <li>Öffne in der IDE <b>Sketch → Bibliothek einbinden → Bibliotheken verwalten</b> beziehungsweise den Bibliotheksverwalter. Suche <b>LiquidCrystal I2C</b>. Die Beispiele hier verwenden die API mit <code>LiquidCrystal_I2C(adresse, spalten, zeilen)</code>, <code>init()</code>, <code>backlight()</code> und <code>noBacklight()</code>, wie sie im verlinkten Quellcode dokumentiert ist. Eine gleichnamige Bibliothek kann eine andere API haben. Notiere Name, Autor und installierte Version und prüfe deren mitgeliefertes Beispiel.</li>
+          <li>Trenne USB. Verbinde am <b>5-V-I²C-LCD</b> GND→GND, VCC→5 V, SDA→SDA (Uno R3: auch A4) und SCL→SCL (auch A5). Der parallel angeschlossene Taster darf D4/GND verwenden, nicht A4. Verlasse dich auf die Beschriftung und nicht die Reihenfolge der vier Stifte.</li>
+          <li>Verbinde USB und lade zuerst den Scanner unten hoch. Öffne den Monitor bei 9600 Baud und notiere die gefundene Hex-Adresse. Bei keinem Fund: Versorgung und SDA/SCL prüfen. Ersetze anschließend in den LCD-Sketches <code>0x27</code> durch deine tatsächlich gefundene Adresse.</li>
+          <li>Lade das vollständige I²C-Beispiel oben hoch. Erwartet ist <code>I2C LCD ready</code> in der ersten Zeile. Drehe den kleinen Kontrastregler vorsichtig, falls nur Licht oder Blöcke sichtbar sind. Bei <code>init</code>-Kompilierfehlern prüfst du die Bibliothek; bei erfolgreichem Upload, aber leerem LCD zuerst Adresse, Anschluss und Kontrast.</li>
+        </ol>
+        <figure class="material-detail">
+          <div class="material-window" style="--crop-ratio:390/160;--crop-width:372%;--crop-left:-165%;--crop-top:-335%">
+            <img src="pdf-bilder/seite21.png" alt="Rückseite eines LCD-I²C-Adapters mit blauem Kontrastpotentiometer und Anschlussstiften.">
+          </div>
+          <figcaption>Ausschnitt aus Materialseite 21: Kontrastregler am I²C-Adapter.</figcaption>
+        </figure>
+        <pre><code>#include &lt;Wire.h&gt;
+void setup() {
+  Serial.begin(9600);
+  Wire.begin();
+  Serial.println("I2C-Scan");
+  int gefunden = 0;
+  for (int adresse = 1; adresse &lt; 127; adresse++) {
+    Wire.beginTransmission(adresse);
+    if (Wire.endTransmission() == 0) {
+      Serial.print("Gefunden: 0x");
+      if (adresse &lt; 16) Serial.print('0');
+      Serial.println(adresse, HEX);
+      gefunden++;
+    }
+  }
+  if (gefunden == 0) Serial.println("Kein I2C-Geraet gefunden");
+}
+void loop() {}</code></pre>
+        <p>Der Scanner zeigt erreichbare I²C-Adressen, nicht den Displaytyp. Lasse für diesen Test nur das LCD am Bus angeschlossen. Ein Fund allein bestätigt noch nicht, dass die Bibliothek zur Adapterbelegung passt.</p>
+      </article>
+      <article class="lab-task" id="material_14_3">
+        <h3>14.3 Zeit anzeigen, Cursor und Hintergrundlicht untersuchen</h3>
+        <p>Lade diesen vollständigen Sketch mit deiner LCD-Adresse hoch. Sage voraus, an welcher sichtbaren Zeichenposition der Text beginnt. Das Material zählt Spalten und Zeilen ab 0; <code>(3, 0)</code> ist die vierte Stelle der ersten Zeile.</p>
+        <pre><code>#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+void setup() {
+  lcd.init();
+  lcd.backlight();
+}
+void loop() {
+  lcd.clear();
+  lcd.setCursor(3, 0);
+  lcd.print("Zeit:");
+  lcd.print(millis());
+  delay(100);
+}</code></pre>
+        <ol>
+          <li>Beobachte die zunehmende Millisekundenzahl. Welche Einheit zeigt das Programm tatsächlich? Setze den Cursor auf <code>(0, 1)</code>, lade erneut hoch und vergleiche.</li>
+          <li>Ergänze nach <code>lcd.backlight();</code> in <code>setup()</code> testweise <code>lcd.print("Lichttest"); delay(1000); lcd.noBacklight(); delay(1000); lcd.backlight(); delay(1000);</code>. Lade hoch und prüfe: Licht aus ist nicht dasselbe wie Text löschen.</li>
+          <li>Vergleiche die laufende Ausgabe mit und ohne <code>clear()</code>. Das häufige Löschen kann flackern; ohne Löschen bleiben beim Überschreiben eines längeren Texts mit einem kürzeren eventuell Restzeichen. Teste gezielt <code>LANGER TEXT</code> und danach <code>KURZ</code> an derselben Position. Fülle für die Statusanzeige unten die gesamte Zeile mit Leerzeichen auf.</li>
+        </ol>
+      </article>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="reveal">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_lcd_debug","title":"Stopp & check: Licht, aber kein Text","hint":"Formuliere erst eine Prüfreihenfolge und öffne dann die Erklärung.","question":"Der Sketch lädt erfolgreich hoch und das LCD leuchtet, aber du erkennst keinen Text. Was prüfst du?","answer":"Prüfe zuerst Kontrast und die vier Anschlüsse einschließlich SDA/SCL. Vergleiche dann die Scanneradresse mit der Adresse im Sketch und teste das mitgelieferte Beispiel deiner passenden Bibliothek. Licht bestätigt die Hintergrundbeleuchtung, aber weder eine richtige I²C-Adresse noch die erfolgreiche LCD-Initialisierung."}
+        </script>
       </div>
-
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite21.png" alt="LCD-Display am Arduino mit Beispielprogramm">
-          <div class="pdfcaption">Materialbild: Display anschließen, initialisieren und beschreiben</div>
-        </div>
-        <div class="image-guide">
-          <h3>Drei Ebenen getrennt prüfen</h3>
-          <ol><li>Stimmen Versorgung und gemeinsame Masse?</li><li>Stimmen Datenpins und Bibliothekskonfiguration?</li><li>Werden Cursorposition und Text im richtigen Ablauf gesetzt?</li></ol>
-        </div>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_material14_log","title":"Inbetriebnahmeprotokoll 14.1–14.3","hint":"Gib deine tatsächliche Hardware, Bibliothek und Beobachtung an.","fields":[{"key":"lcd","label":"LCD-Test","kind":"textarea","prompt":"Notiere Bibliotheksname, Autor, Version, Anschlussliste und gefundene I²C-Adresse. Beschreibe Textposition und Einheit sowie deine Tests mit Cursorposition, backlight/noBacklight, clear und dem Überschreiben durch einen kürzeren Text. Begründe deine Fehlerprüfreihenfolge."}]}
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1585,11 +1945,11 @@ void loop() {
           {
             "id":"s21_vf",
             "title":"Verständnisfragen - Displays",
-            "hint":"Text wird gespeichert",
+            "hint":"Beziehe dich auf dein Display und den Inbetriebnahmetest.",
             "fields":[
-              {"label":"1","key":"s21_q1","kind":"textarea","placeholder":"1) Nenne zwei verschiedene Display-Typen und einen Unterschied."},
-              {"label":"2","key":"s21_q2","kind":"textarea","placeholder":"2) Was bedeutet 16x2 bei einem LCD?"},
-              {"label":"3","key":"s21_q3","kind":"textarea","placeholder":"3) Warum kann ein LCD trotz richtiger Verdrahtung \"leer\" wirken?"}
+              {"label":"1","key":"s21_q1","kind":"textarea","prompt":"Nenne zwei verschiedene Display-Typen und einen Unterschied.","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s21_q2","kind":"textarea","prompt":"Was bedeutet 16×2 bei einem LCD? Welche Cursorposition ist links in der zweiten Zeile?","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s21_q3","kind":"textarea","prompt":"Warum kann ein LCD trotz richtiger Verdrahtung leer wirken? Erkläre zwei mögliche Ursachen und passende Tests.","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1602,6 +1962,7 @@ void loop() {
           {
             "id":"mc_s21",
             "title":"Multiple Choice - LCD (mehrere Antworten möglich)",
+            "hint":"Wähle alle zutreffenden Aussagen.",
             "questions":[
               {
                 "text":"1) Welche Display-Typen gibt es häufig?",
@@ -1662,6 +2023,24 @@ void loop() {
             </ul>
             Nutze <code>setCursor()</code> und <code>print()</code>.
           </div>
+          <p><b>Aufbau:</b> I²C-LCD wie in 14.2, Taster D4/GND. Das ist eine vereinfachte Statusanzeige: frei bedeutet ROT, gedrückt bedeutet GRUEN. Eine echte Ampelsteuerung wird nicht behauptet; es sind keine zusätzlichen Ampel-LEDs erforderlich. GELB testest du als dritte Textlänge durch eine gezielte Änderung im Sketch.</p>
+          <pre><code>#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+void setup() {
+  pinMode(4, INPUT_PULLUP);
+  lcd.init();
+  lcd.backlight();
+}
+void loop() {
+  bool gedrueckt = digitalRead(4) == LOW;
+  lcd.setCursor(0, 0);
+  lcd.print(gedrueckt ? "Ampel: GRUEN    " : "Ampel: ROT      ");
+  lcd.setCursor(0, 1);
+  lcd.print(gedrueckt ? "Taster:GEDRUECKT" : "Taster:FREI     ");
+  delay(50);
+}</code></pre>
+          <p data-wb-prompt><b>IDE und Test:</b> Passe die Adresse an, lade hoch und teste frei → gedrückt → frei. Halte die Beobachtungen und deinen Code fest. Ersetze testweise den 16 Zeichen langen Text <code>Ampel: ROT      </code> durch <code>Ampel: GELB     </code>. Erkläre, warum die Leerzeichen alte Restzeichen beseitigen und weshalb 50 ms Wartezeit keine Entprellung für einen Tastendruckzähler ersetzen.</p>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Statusanzeige bauen" placeholder="Beschreibe deinen Plan oder skizziere den Code."></textarea>
 
@@ -1747,12 +2126,11 @@ void loop() {
       <div class="wb-callout">
         <strong>Wichtiger Schutz: Freilaufdiode</strong>
         <div>
-          Motoren sind Spulen.
+          DC-Motoren enthalten induktive Wicklungen.
           Beim Abschalten können <b>Spannungsspitzen</b> entstehen,
           die den Arduino zerstören können.
           <br><br>
-          Eine <b>Freilaufdiode</b> schützt die Schaltung
-          vor diesen Spannungsspitzen.
+          Beim Schalten in nur einer Richtung kann eine passend angeschlossene <b>Freilaufdiode</b> den Strom weiterführen. Eine umpolbare H-Brücke benötigt passende Freilaufpfade für beide Richtungen; bei der verwendeten L298N-Platine müssen die Schutzdioden bereits vorhanden sein. Eine einzelne Diode direkt quer zum Motor wäre für den Richtungswechsel ungeeignet.
         </div>
       </div>
 
@@ -1764,9 +2142,9 @@ void loop() {
         <div>
           Der Arduino steuert den Motor ähnlich wie eine LED -
           aber indirekt:
-          <pre><code>digitalWrite(MOTOR, HIGH);  // Motor an
-digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
-          Intern schaltet dabei ein Transistor oder Treiber den Motorstrom.
+          <pre><code>digitalWrite(ENA, HIGH); // Treiber freigeben
+digitalWrite(ENA, LOW);  // Bruecke abschalten</code></pre>
+          <code>ENA</code> bezeichnet den Freigabeeingang des Treibers, nicht einen Motoranschluss. Bei passender Richtungsvorgabe schaltet der Treiber den Motorstrom aus der externen Versorgung.
         </div>
       </div>
 
@@ -1777,33 +2155,90 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         <div>
           Die Drehzahl eines DC-Motors kann mit
           <b>Pulsweitenmodulation (PWM)</b> verändert werden:
-          <pre><code>analogWrite(MOTOR, 120);</code></pre>
-          Je größer der Wert (0-255),
-          desto schneller dreht sich der Motor.
+          <pre><code>analogWrite(ENA, 120);</code></pre>
+          Der Wert 0–255 bestimmt beim Uno das Tastverhältnis am PWM-Steuereingang des Treibers. Bei gleicher Last führt ein größerer Wert häufig zu höherer Drehzahl, aber nicht proportional. Ein kleiner Wert kann zum Anlaufen zu wenig sein. PWM allein ist keine geregelte Strombegrenzung und ersetzt keinen Überstromschutz.
         </div>
       </div>
 </div>
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>AUFGABEN</strong>
-        <div>
-          Lies dir den Text aufmerksam durch und baue alles Schritt für Schritt genau nach.
-          Schreibe dir die wichtigsten Begriffe und Befehle auf deinen Spickzettel.
+      <h2>Werkstatt 15: Mit einer L298N-H-Brücke steuern</h2>
+      <p>Diese beiden Materialaufgaben gehören weiter zu diesem Modul. Du brauchst eine beschriftete <b>L298N-Treiberplatine mit Schutzdioden</b>, kleine dazu passende DC-Motoren und eine dafür ausgelegte externe Motorversorgung. Lies die Anleitung deiner Platine: Die mit „12 V“ oder „VS“ markierte Motorklemme bekommt die für <b>Motor und Modul</b> zulässige Spannung, nicht automatisch 12 V. Der L298 hat einen Spannungsabfall; Motorspannung und Netzteilspannung sind deshalb nicht gleich. Der Motor wird weder aus einem GPIO noch aus dem Uno-5-V-Anschluss gespeist.</p>
+      <figure class="material-detail" style="max-width:290px">
+        <div class="material-window" style="--crop-ratio:540/490;--crop-width:275%;--crop-left:0%;--crop-top:0%">
+          <img src="pdf-bilder/seite22.png" alt="L298N-Treiberplatine mit Motorklemmen, Versorgungsklemmen und Steueranschlüssen.">
         </div>
-      </div>
-
-      <div class="media-grid">
-        <div class="pdfpage">
-          <img src="pdf-bilder/seite22.png" alt="Motorsteuerung am Arduino mit Schutz- und Treiberbauteilen">
-          <div class="pdfcaption">Materialbild: Steuersignal und Motorstrom trennen</div>
-        </div>
-        <div class="image-guide">
-          <h3>Der Pin steuert, er versorgt nicht den Motor</h3>
-          <p>Unterscheide im Bild den kleinen Steuerstrom vom größeren Motorstrom. Finde außerdem gemeinsame Masse und Schutzbeschaltung.</p>
-          <p><b>Übergang:</b> Die genaue Auswahl und Programmierung der Motortypen folgt im Motorenmodul.</p>
-        </div>
+        <figcaption>Ausschnitt aus Materialseite 22. Entscheidend sind die Beschriftungen deiner Platine, nicht „rechts“ oder „links“ im Bild.</figcaption>
+      </figure>
+      <h3>Anschlussliste für diese Versuche</h3>
+      <ol>
+        <li>Trenne USB und Motorversorgung. Entferne die bisherigen LED-, Lautsprecher-/Piezo- und Tasterleitungen von den neu belegten Pins. Verbinde Motor links mit OUT1/OUT2 (Brücke A), Motor rechts später mit OUT3/OUT4 (Brücke B).</li>
+        <li>Arduino D3→IN1, D4→IN2; für den zweiten Motor D7→IN3, D8→IN4. Verbinde GND des Uno mit GND des Treibers und Minus der Motorversorgung.</li>
+        <li>Entferne die <b>ENA-/ENB-Steckbrücken</b> für dauerhaftes Einschalten. D5→ENA, später D6→ENB. Verwechsle diese Jumper nicht mit dem <b>5V-EN-Reglerjumper</b>. Dessen Stellung und die 5-V-Logikversorgung legst du ausschließlich nach der Modul-Anleitung fest; eine 5-V-Klemme kann je nach Stellung Ein- oder Ausgang sein. Verbinde keine zwei 5-V-Ausgänge miteinander.</li>
+        <li>Verbinde Plus und Minus der noch ausgeschalteten Motorversorgung mit den dafür markierten Motorklemmen. Sichere die Motoren und lasse Räder frei laufen. Prüfe zulässigen Anlauf-/Blockierstrom und die Schutzdioden anhand von Motor- und Modulunterlagen; blockiere die Motorwelle nicht zum Testen.</li>
+        <li>Verbinde USB, lade den passenden Sketch mit noch ausgeschalteter Motorversorgung hoch und schalte erst dann die Motorversorgung ein. Vor jedem Umbau oder erneutem Upload schaltest du die Motorversorgung aus. Bei Erwärmung oder Stillstand trotz Ansteuerung schaltest du sie ebenfalls aus und prüfst Aufbau, Versorgung und Belastung.</li>
+      </ol>
+      <article class="lab-task" id="material_15_1">
+        <h3>15.1 Zwei Sekunden antreiben, zwei Sekunden bremsen</h3>
+        <p>Verwende zunächst nur Motor A. Lade diesen Sketch hoch. Er bildet den Materialauftrag D3 HIGH/D4 LOW und danach beide HIGH ab; zusätzlich wird ENA ausdrücklich gesteuert.</p>
+        <pre><code>const int IN1 = 3, IN2 = 4, ENA = 5;
+void setup() {
+  pinMode(ENA, OUTPUT);
+  digitalWrite(ENA, LOW);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+}
+void loop() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 255);
+  delay(2000);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, HIGH);
+  delay(2000);
+}</code></pre>
+        <p><b>Erwartung und Test:</b> Sage die Bewegung in beiden Phasen voraus und beobachte drei Zyklen. Bei aktivem ENA bedeuten gleiche Eingänge <b>elektrisches Bremsen</b>, nicht Freilauf. Ersetze für einen Vergleich im zweiten Abschnitt nach <code>digitalWrite(IN2, HIGH);</code> die Bremsphase durch <code>analogWrite(ENA, 0);</code> mit unverändertem <code>delay(2000)</code>. Nun ist die Brücke abgeschaltet und der Motor kann auslaufen. Ob du den Unterschied gut erkennst, hängt von Trägheit und Last ab. Dokumentiere die tatsächliche Beobachtung.</p>
+      </article>
+      <article class="lab-task" id="material_15_2">
+        <h3>15.2 Zwei Motoren mit Unterprogrammen steuern</h3>
+        <p>Erweitere bei abgezogener Versorgung auf Motor B und ENB. Dieser Sketch enthält die fünf geforderten Funktionen: beide vorwärts, beide rückwärts, nur links vorwärts, nur rechts vorwärts und Stopp. „Vorwärts“ ist zunächst eine Annahme über Einbaurichtung und Motorpolung.</p>
+        <p>Wie im Motorenmodul ist A links (IN1 D3, IN2 D4, ENA D5) und B rechts (IN3 D7, IN4 D8, ENB D6). Damit weicht die Belegung des zweiten Motors vom ursprünglichen Material ab. <code>stopp()</code> bremst in diesem Versuch ausdrücklich beide Motoren bei aktivierten Enable-Eingängen. Das Motorenmodul verwendet dagegen einen auslaufenden Stopp mit abgeschalteten Enable-Eingängen.</p>
+        <pre><code>const int ENA = 5, ENB = 6;
+void setzen(int a, int b, int c, int d) {
+  digitalWrite(3, a); digitalWrite(4, b);
+  digitalWrite(7, c); digitalWrite(8, d);
+}
+void vorwaerts() { setzen(HIGH, LOW, HIGH, LOW); }
+void rueckwaerts() { setzen(LOW, HIGH, LOW, HIGH); }
+void linksVor() { setzen(HIGH, LOW, HIGH, HIGH); }
+void rechtsVor() { setzen(HIGH, HIGH, HIGH, LOW); }
+void stopp() { setzen(HIGH, HIGH, HIGH, HIGH); }
+void setup() {
+  pinMode(ENA, OUTPUT); pinMode(ENB, OUTPUT);
+  digitalWrite(ENA, LOW); digitalWrite(ENB, LOW);
+  pinMode(3, OUTPUT); pinMode(4, OUTPUT);
+  pinMode(7, OUTPUT); pinMode(8, OUTPUT);
+  stopp();
+  analogWrite(ENA, 255); analogWrite(ENB, 255);
+}
+void loop() {
+  vorwaerts(); delay(2000);
+  stopp(); delay(1000);
+  rueckwaerts(); delay(2000);
+  stopp(); delay(1000);
+  linksVor(); delay(1000);
+  stopp(); delay(1000);
+  rechtsVor(); delay(1000);
+  stopp(); delay(1000);
+}</code></pre>
+        <p><b>Test und Auswertung:</b> Lade hoch, schalte die Motorversorgung ein und prüfe jede Funktion bei frei laufenden Rädern. Falls ein eingebauter Motor bei <code>vorwaerts()</code> falsch dreht, vertausche bei abgezogener Versorgung seine beiden Motorleitungen oder korrigiere konsequent seine Signalzuordnung. „Nur links vorwärts“ bezeichnet das linke Rad und führt bei einem Fahrzeug typischerweise zu einer Rechtskurve. Erkläre, welcher Motor jeweils fährt und welcher bremst.</p>
+      </article>
+      <div class="wb-section-break"></div>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+        {"id":"arduino4_material15_log","title":"Motorprotokoll 15.1–15.2","hint":"Notiere nur tatsächlich geprüfte Hardwarezustände. Ohne Aufbau kennzeichnest du die Auswertung als Codeanalyse.","fields":[{"key":"aufbau","label":"Aufbau und Versorgung","kind":"textarea","prompt":"Nenne Motor-/Modultyp, zulässige Versorgung, verwendete Motorversorgung, gemeinsame Masse und die ENA-/ENB-Anschlüsse. Dokumentiere die passende Stellung des Reglerjumpers anhand deiner Modulunterlagen."},{"key":"tests","label":"Funktionstests","kind":"textarea","prompt":"Vergleiche Antreiben, Bremsen und Auslaufen in 15.1. Ordne in 15.2 allen fünf Funktionen die Zustände beider Motoren zu, dokumentiere deine Tests und gegebenenfalls eine Polungskorrektur. Begründe den Unterschied zwischen linkem Rad und Linkskurve."}]}
+        </script>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1813,11 +2248,11 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           {
             "id":"s22_vf",
             "title":"Verständnisfragen - Motoren",
-            "hint":"Text wird gespeichert",
+            "hint":"Erkläre mit Motorstrom, Treiber und deiner Anschlussliste.",
             "fields":[
-              {"label":"1","key":"s22_q1","kind":"textarea","placeholder":"1) Warum kann ein Motor nicht direkt an einen Arduino-Pin angeschlossen werden?"},
-              {"label":"2","key":"s22_q2","kind":"textarea","placeholder":"2) Nenne zwei verschiedene Motorarten und einen Unterschied."},
-              {"label":"3","key":"s22_q3","kind":"textarea","placeholder":"3) Welche Aufgabe hat eine Freilaufdiode?"}
+              {"label":"1","key":"s22_q1","kind":"textarea","prompt":"Warum darfst du den Motor nicht direkt an einen Arduino-Pin anschließen?","placeholder":"Deine Antwort"},
+              {"label":"2","key":"s22_q2","kind":"textarea","prompt":"Nenne zwei verschiedene Motorarten und einen Unterschied.","placeholder":"Deine Antwort"},
+              {"label":"3","key":"s22_q3","kind":"textarea","prompt":"Welche Aufgabe haben Freilaufdioden? Warum braucht eine umpolbare Motorbrücke passende Pfade für beide Stromrichtungen?","placeholder":"Deine Antwort"}
             ]
           }
         </script>
@@ -1830,6 +2265,7 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           {
             "id":"mc_s22",
             "title":"Multiple Choice - Motoren (mehrere Antworten möglich)",
+            "hint":"Prüfe besonders den Unterschied zwischen PWM-Ansteuerung und Stromregelung.",
             "questions":[
               {
                 "text":"1) Welche Aussagen zu Motoren sind richtig?",
@@ -1852,8 +2288,8 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
                   {"id":"c","label":"Strombegrenzung"},
                   {"id":"d","label":"Schutz vor Spannungsspitzen"}
                 ],
-                "correct":["a","c"],
-                "explain":"PWM steuert die Geschwindigkeit und kann den effektiven Strom beeinflussen."
+                "correct":["a"],
+                "explain":"PWM verändert das Tastverhältnis und kann damit die Drehzahl beeinflussen. Eine verlässliche Strombegrenzung benötigt zusätzliche Messung und Regelung; PWM allein bietet sie nicht."
               },
               {
                 "text":"3) Welche Bauteile werden häufig zur Motorsteuerung genutzt?",
@@ -1885,12 +2321,36 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
           <div class="wb-muted">
             Ziel: Ein Motor soll:
             <ul style="margin:6px 0 0; padding-left:18px">
-              <li>per Taster ein- und ausgeschaltet werden</li>
-              <li>bei eingeschaltetem Zustand langsam starten</li>
+              <li>nur während eines gedrückten Tasters angesteuert werden</li>
+              <li>sein PWM-Tastverhältnis beim Halten schrittweise erhöhen</li>
             </ul>
             Nutze <code>if</code>, <code>analogWrite()</code>
             und eine Variable für die Geschwindigkeit.
           </div>
+          <p><b>Aufbau:</b> Motor A mit IN1→D3, IN2→D4 und ENA→D5 wie in 15.1; Taster für diese Aufgabe <b>D2/GND</b>, weil D4 jetzt den Motor steuert. Motor B bleibt unversorgt. Entferne den ENA-Jumper; die externe Motorversorgung und gemeinsame Masse bleiben erforderlich.</p>
+          <pre><code>const int BTN = 2, IN1 = 3, IN2 = 4, ENA = 5;
+int pwm = 0;
+unsigned long zuletzt = 0;
+void setup() {
+  pinMode(BTN, INPUT_PULLUP);
+  pinMode(ENA, OUTPUT);
+  digitalWrite(ENA, LOW);
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+}
+void loop() {
+  if (digitalRead(BTN) == LOW) {
+    if (millis() - zuletzt &gt;= 20) {
+      zuletzt = millis();
+      if (pwm &lt; 255) pwm += 5;
+    }
+  } else {
+    pwm = 0;
+    zuletzt = millis();
+  }
+  analogWrite(ENA, pwm);
+}</code></pre>
+          <p data-wb-prompt><b>Test und Reflexion:</b> Lade bei ausgeschalteter Motorversorgung hoch. Schalte ein, teste frei, mindestens zwei Sekunden halten und loslassen. Dokumentiere Code und reale Beobachtung. Der PWM-Wert steigt bis 255; der Motor kann wegen Reibung erst ab einem Mindestwert anlaufen. Nach dem Loslassen wird die Brücke deaktiviert, der Motor kann auslaufen. Begründe, weshalb die Rampe weder einen sicheren Sanftanlauf noch eine Strombegrenzung garantiert und warum ein gespeicherter Ein-/Aus-Umschalter zusätzlichen Zustand und Entprellung bräuchte.</p>
 
           <textarea class="wb-textarea" data-wb-export="1" data-wb-label="Mini-Challenge - Ventilator steuern" placeholder="Beschreibe deinen Plan oder schreibe deinen Code."></textarea>
 
@@ -1917,8 +2377,22 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalread/" target="_blank" rel="noopener">Arduino Reference: digitalRead()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/control-structure/while/" target="_blank" rel="noopener">Arduino Reference: while</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogwrite/" target="_blank" rel="noopener">Arduino Reference: analogWrite()</a></li>
+        <li><a href="https://docs.arduino.cc/built-in-examples/digital/InputPullupSerial/" target="_blank" rel="noopener">Arduino: Eingang mit internem Pullup</a></li>
+        <li><a href="https://docs.arduino.cc/built-in-examples/digital/Debounce/" target="_blank" rel="noopener">Arduino: Kontaktprellen und Entprellung</a></li>
+        <li><a href="https://docs.arduino.cc/language-reference/en/functions/communication/serial/flush/" target="_blank" rel="noopener">Arduino: Serial.flush() und das Ende der Übertragung</a></li>
+        <li><a href="https://docs.arduino.cc/hardware/uno-rev3/" target="_blank" rel="noopener">Arduino Uno R3: Board und Pinout</a></li>
+        <li><a href="https://github.com/johnrickman/LiquidCrystal_I2C/blob/master/LiquidCrystal_I2C.h" target="_blank" rel="noopener">Bibliotheksquelle: verwendete LiquidCrystal_I2C-API</a></li>
+        <li><a href="https://docs.arduino.cc/learn/electronics/lcd-displays/" target="_blank" rel="noopener">Arduino: parallele Zeichen-LCDs</a></li>
+        <li><a href="https://www.st.com/resource/en/datasheet/l298.pdf" target="_blank" rel="noopener">STMicroelectronics: L298-Datenblatt, Steuertabelle und Schutzbeschaltung</a></li>
         <li><a href="https://app.diagrams.net/?src=about" target="_blank" rel="noopener">diagrams.net für Flussdiagramme</a></li>
       </ul>
+      <p><b>Weiterforschen:</b> Wie müsstest du Warten und Motor-Rampe mit <code>millis()</code> planen, damit währenddessen eine zweite Taste zuverlässig bearbeitet werden kann? Vergleiche diese Idee mit den blockierenden Warteschleifen aus 12.3.</p>
+      <div class="wb-section-break"></div>
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Du leitest Tasterpegel aus der Schaltung ab, unterscheidest Zustand und Ereignis, planst Schleifen mit erreichbarem Ausstieg und testest Code systematisch. Beim LCD prüfst du Versorgung, Adresse, Bibliothek und Textposition. Beim Motor trennst du Steuersignal und Motorversorgung sowie Antreiben, Bremsen und Auslaufen.</p>
+        <p>Prüfe vor der Abgabe deine Protokolle, gespeicherten Sketches und Diagramme. Ergänze neue Befehle auf deinem Spickzettel und exportiere deine Antworten über „Ergebnisse &amp; Abschluss“.</p>
+      </div>
 
       <div class="wb-section-break"></div>
       <div class="next-module">
@@ -1969,8 +2443,9 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
         });
         chip.addEventListener("click", () => {
           if(chip.parentElement && chip.parentElement.classList.contains("pudding-drop")){
+            const previousDrop = chip.parentElement;
             bank.appendChild(chip);
-            chip.parentElement.classList.remove("filled","ok","bad");
+            previousDrop.classList.remove("filled","ok","bad");
             scoreEl.textContent = "";
             return;
           }
@@ -1986,12 +2461,15 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
 
       function placeChip(drop, chip){
         if(!drop || !chip) return;
+        const previousDrop = chip.parentElement;
+        if(previousDrop?.classList.contains("pudding-drop")) previousDrop.classList.remove("filled","ok","bad");
         const existing = drop.querySelector(".pudding-chip");
         if(existing && existing !== chip) bank.appendChild(existing);
         drop.innerHTML = "";
         drop.appendChild(chip);
         drop.classList.add("filled");
         drop.classList.remove("ok","bad");
+        scoreEl.textContent = "";
         clearSelection();
       }
 
@@ -2010,7 +2488,10 @@ digitalWrite(MOTOR, LOW);   // Motor aus</code></pre>
       bank.addEventListener("drop", e => {
         e.preventDefault();
         if(dragged){
+          const previousDrop = dragged.parentElement;
           bank.appendChild(dragged);
+          if(previousDrop?.classList.contains("pudding-drop")) previousDrop.classList.remove("filled","ok","bad");
+          scoreEl.textContent = "";
           clearSelection();
         }
       });

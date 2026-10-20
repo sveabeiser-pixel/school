@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-5.html">
-<meta name="musterloesung-source-sha256" content="5a707cddb770b5a051e0ec28b7e1aceeb77e1362d073711be2e7d1ab4f9adf56">
+<meta name="musterloesung-source-sha256" content="b509cf34dfa07e9c38af6cfd998cfb6cdef88c637dd97d4dd106215b799ca658">
 <title>Arduino 5: Arrays, Interrupt und Troubleshooting – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
@@ -119,6 +119,38 @@
   </style>
 <link rel="stylesheet" href="arduino-kurs.css">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
+<link rel="stylesheet" href="arduino-selbstlernen.css">
+<style>
+    .lab-task { padding: 14px 0; border-top: 1px solid var(--wb-line); min-width: 0; }
+    .lab-task h3 { margin-top: 0; }
+    .lab-task li + li { margin-top: 8px; }
+    .lab-task pre { margin: 12px 0; padding: 14px; overflow-x: auto; background: var(--wb-block-bg); color: var(--wb-text); border: 1px solid var(--wb-line); border-radius: 6px; font-size: .9rem; line-height: 1.5; }
+    .lab-task pre code { white-space: pre; overflow-wrap: normal; }
+    .lab-table { max-width: 100%; overflow-x: auto; margin: 12px 0; }
+    .lab-table table { border-collapse: collapse; width: 100%; color: var(--wb-text); }
+    .lab-table th, .lab-table td { padding: 8px; border: 1px solid var(--wb-line); text-align: left; vertical-align: top; }
+    .lab-table th { background: var(--wb-head-bg); }
+    .material-crop { overflow: hidden; position: relative; background: #fff; }
+    .material-crop img { position: absolute; width: 100% !important; max-height: none !important; height: auto !important; }
+    .crop-keyboard { aspect-ratio: 392 / 335; }
+    .crop-keyboard img { top: -210%; }
+    .crop-interrupt { aspect-ratio: 1270 / 150; }
+    .crop-interrupt img { top: -195%; }
+    .crop-flag { aspect-ratio: 1090 / 135; }
+    .crop-flag img { top: -58%; }
+    .crop-trouble { aspect-ratio: 1114 / 252; }
+    .crop-trouble img { top: 0; }
+    .wb-book .topic-figure { width: min(100%, 480px); align-self: start; box-shadow: none; }
+    .wb-book .topic-figure.keyboard { max-width: 260px; }
+    .wb-book .lab-task .topic-figure { margin: 12px 0; }
+    .wb-book .lab-task code { overflow-wrap: anywhere; }
+    .wb-book .lab-task pre code { overflow-wrap: normal; }
+    @media (max-width: 600px) {
+      .lab-table { font-size: .9rem; }
+      .lab-task pre { padding: 10px; }
+    }
+  </style>
+<link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
 .solution-block{min-width:0}
@@ -150,111 +182,234 @@
 <script type="application/json" class="wb-book-config">{"bookTitle":"Arduino 5 · Musterlösung","sectionTitle":"Arrays, Interrupt und Troubleshooting · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
 <section data-wb-page="1" data-wb-page-title="Überblick"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Arrays, Interrupts und Troubleshooting</h1></div>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_start_reveal"><h3>Vor dem Start</h3><p>Weil du in echten Arduino-Projekten fast immer mehrere Dinge gleichzeitig brauchst: übersichtliche Datenstrukturen, schnelle Reaktionen auf Ereignisse und eine saubere Methode zur Fehlersuche. Genau diese Kombination trainierst du hier.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arbeitsplatz_start"><h3>Arbeitsplatz und erster Upload</h3><p>Für den Uno R3 wird in der IDE Arduino Uno aus dem Paket Arduino AVR Boards gewählt. Der Port ist der beim Anschließen tatsächlich neu erscheinende Anschluss; eine konkrete COM-Nummer ist rechnerabhängig. Überprüfen kompiliert, Hochladen überträgt zusätzlich auf das Board. Nach dem Upload von Blink blinkt die eingebaute L-LED. Ein Serieller Monitor muss auf dieselben 9600 Baud wie Serial.begin(9600) eingestellt werden; RESET startet auch eine Ausgabe aus setup() erneut. Vor jedem Umbau werden USB und weitere Versorgungen getrennt.</p></article></section>
 <section data-wb-page="2" data-wb-page-title="Arrays"><h1>Arrays: Arbeiten mit Listen</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_array_trace"><h3>Ablaufspur: Sechs Schleifendurchgänge</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Durchgang</th><th scope="col">i</th><th scope="col">Melodie[i]</th><th scope="col">notenWert[i]</th><th scope="col">tonDauer in ms</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>175</td><td>8</td><td>125</td></tr><tr><td>2</td><td>1</td><td>175</td><td>8</td><td>125</td></tr><tr><td>3</td><td>2</td><td>196</td><td>4</td><td>250</td></tr><tr><td>4</td><td>3</td><td>175</td><td>4</td><td>250</td></tr><tr><td>5</td><td>4</td><td>262</td><td>4</td><td>250</td></tr><tr><td>6</td><td>5</td><td>247</td><td>2</td><td>500</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_cloze"><h3>Sicherung: Wie funktionieren Arrays?</h3><p>Ein Array ist eine geordnete <b>Liste</b> von Werten. Jeder Eintrag wird über einen <b>Index</b> angesprochen. Der erste Listenplatz hat die Nummer <b>0</b> . Im Melodie-Beispiel berechnet man die <b>Tondauer</b> aus dem <b>Notenwert</b>.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Das erste Element eines Arrays hat normalerweise den Index 1.</p><p>Falsch. Das erste Element einer Liste bekommt immer Index 0.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_mcq"><h3>Mini-Check zu 6.1 bis 6.4</h3><h4>Warum muss die Schleife in Aufgabe 6.1 länger laufen als im ersten kurzen Beispiel?</h4><p>Weil die erweiterte Melodie mehr als 6 Töne enthält.</p><p>Die erweiterte Melodie enthält deutlich mehr Töne. Deshalb muss auch die Schleife mehr Elemente durchlaufen.</p><h4>Was ist der entscheidende Unterschied zwischen einem char-Array und einem Array mit Wörtern?</h4><p>Ein char-Array speichert einzelne Zeichen, für Wörter braucht man Zeichenketten mit Pointer.</p><p>Genau das gilt hier: einzelne Zeichen mit char, ganze Wörter als Zeichenketten mit Pointer.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_mcq"><h3>Mini-Check zu 6.1 bis 6.4</h3><h4>Warum muss die Schleife in Aufgabe 6.1 länger laufen als im ersten kurzen Beispiel?</h4><p>Weil die erweiterte Melodie mehr als 6 Töne enthält.</p><p>Die erweiterte Melodie enthält deutlich mehr Töne. Deshalb muss auch die Schleife mehr Elemente durchlaufen.</p><h4>Was unterscheidet char zeichen[] = {'P','f'} von const char* woerter[] = {&quot;Nacht&quot;,&quot;Wind&quot;}?</h4><p>zeichen enthält zwei Zeichen; woerter enthält zwei Zeiger auf vollständige Zeichenketten.</p><p>Ein char-Array kann auch eine ganze Zeichenkette mit Abschlusszeichen enthalten. In woerter verweist dagegen jedes Arrayelement auf eine eigene Zeichenkette. Zeiger sind nicht die einzige Möglichkeit, mehrere Wörter zu speichern.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_p2"><h3>Verbinde Aufgabe und Kernidee</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>6.1 Melodie erweitern</td><td>Viele Frequenzen und Notenwerte mit zwei Arrays abarbeiten.</td></tr><tr><td>6.2 Tafeldienst</td><td>Einen Namen per Zufallsindex auswählen.</td></tr><tr><td>6.3 Literaturautomat</td><td>Mit Wortlisten zufällige Sätze erzeugen.</td></tr><tr><td>6.4 Hausarbeiten</td><td>Zuweisungen so planen, dass niemand doppelt vorkommt.</td></tr></tbody></table></div></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_essay"><h3>Transfer: Entwickle deinen eigenen Array-Einsatz</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich würde einen Melodiespieler bauen. Ein Array speichert die Frequenzen, zum Beispiel 262, 294 und 330 Hz. Ein zweites Array enthält die zugehörigen Tondauern. Über denselben Index wähle ich Frequenz und Dauer eines Tons aus. Eine for-Schleife spielt die Liste nacheinander ab. Mit dieser Struktur kann ich die Melodie durch Änderung der Listen erweitern, ohne jeden Ton als eigenen Codeblock zu schreiben.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_melodie"><h3>1. Melodie erweitern</h3><pre><code>int melodie[] = {196,196,220,196,262,247,196,196,220,196,294,262,196,196,392,330,262,247,220,349,349,330,262,294,262};
-int notenWert[] = {8,8,4,4,4,2,8,8,4,4,4,2,8,8,4,4,4,4,8,8,4,4,4,4,2};
-void setup() {}
-void loop() {
-  for (int i = 0; i &lt; 25; i++) {
-    int dauer = 1000 / notenWert[i];
-    tone(11, melodie[i], dauer);
-    delay(dauer * 1.3);
-    noTone(11);
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_essay"><h3>Transfer: Entwickle deinen eigenen Array-Einsatz</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich würde einen Melodiespieler bauen. Ein int-Array speichert Frequenzen in Hertz, etwa 262, 294 und 330. Ein zweites int-Array enthält die passenden Notenwerte 4, 4 und 2. Derselbe Index wählt beide Werte aus; eine for-Schleife läuft von 0 bis ausschließlich zur Elementanzahl. Ich prüfe beim Kompilieren, ob beide Arrays gleich lang sind. Die Listen erlauben eine Erweiterung, ohne für jeden Ton einen eigenen Anweisungsblock zu schreiben.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_arrays_labor"><h3>Versuchsprotokoll: Array-Aufgaben</h3><span class="solution-label">Eine mögliche Antwort</span><h4>Melodie und Indexgrenzen</h4><p>Die folgenden Angaben sind aus dem Code abgeleitete Erwartungen, keine gemessenen Versuchsergebnisse. Bei 0.30 → 0.60 verdoppelt sich der berechnete Pausenfaktor; wegen der ganzzahligen Speicherung können einzelne Pausen nicht exakt doppelt so viele Millisekunden umfassen (bei 125 ms Ton: 37 statt 75 ms Pause). Frequenz und Tondauer bleiben gleich. Nach Wiederherstellen von 0.30 verdoppelt 1000 → 2000 die berechneten Tondauern und damit ungefähr auch die Pausen; die Tonhöhen bleiben gleich. In 6.1 entstehen 25 Ausgabezeilen mit den Indizes 0 bis 24. i &lt;= 25 würde auch Index 25 lesen, der nicht existiert; das Verhalten wäre undefiniert. Lösche ich einen mittleren Notenwert, passen die späteren Paare nicht mehr zusammen und die Listenlängen unterscheiden sich. Im vorgegebenen Sketch stoppt dann static_assert bereits die Kompilierung; ohne diese Prüfung könnte am Ende außerhalb des Notenwert-Arrays gelesen werden.</p><h4>Tafeldienst und Literaturautomat</h4><p>Für die acht Startnamen sind nur Indizes 0 bis 7 möglich. Eine nur zur Veranschaulichung gewählte Folge von zehn zulässigen Ausgaben lautet: 0: Martin; 3: Kolja; 3: Kolja; 7: Rainer; 1: Volker; 5: Mario; 2: Frank; 0: Martin; 6: Peter; 4: Alexander. Das sind keine aufgezeichneten Ziehungen. Wiederholungen sind beim unabhängigen Ziehen erlaubt; gleiche Häufigkeiten in zehn Versuchen sind nicht vorgeschrieben. Nach einem neunten Namen wird der Bereich durch sizeof automatisch 0 bis 8. Im Literatur-Startcode gibt es 3 · 3 = 9 mögliche Kombinationen, zum Beispiel „Wer reitet so spät durch Nacht und Wind?“ und „Wer reitet so spät durch Nebel und Schnee?“. Eine eigene Variante nutzt x = {Idee, Frage, Antwort, Vermutung} und y = {Experiment, Modell, Beobachtung}. Zwei mögliche, nicht als real beobachtet behauptete Ausgaben sind „Heute trifft Idee auf Experiment.“ und „Heute trifft Frage auf Modell.“. Dafür werden anzahlX = 4 und anzahlY = 3 getrennt berechnet; es gibt 12 Kombinationen.</p><h4>Hausdienste</h4><p>Die Papierprobe beginnt mit {0,1,2}. Beim Tausch i = 2, j = 0 entsteht {2,1,0}; bei i = 1, j = 1 bleibt {2,1,0}. Damit bekommt Sam abwaschen, Robin aufräumen und Alex Staub wischen. Beim Test mit vier Personen und vier Diensten muss jede Verteilung vier Zeilen mit jedem Namen und jedem Dienst genau einmal enthalten. Eine mögliche Verteilung wäre Alex → abwaschen, Sam → aufräumen, Mia → Staub wischen, Robin → Müll trennen. Sie illustriert nur die Prüfbedingung. Jeder Tausch erhält alle vorhandenen Indizes genau einmal. Wiederholungen eines Dienstes über mehrere Wochen sind trotzdem möglich, weil keine frühere Zuteilung gespeichert oder ausgeschlossen wird.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5-lautsprecher"><h3>Lautsprecher-Aufbau mit Vorwiderstand</h3><p>Am Uno R3 führt D8 über 330 Ω zum geprüften kleinen passiven Lautsprecher und dessen zweiter Anschluss zu GND. Der Widerstand begrenzt den Strom und hält den Ton leise; 1 kΩ macht ihn noch leiser. Ein passiver Piezo ist eine Alternative. Bei unbekannten Bauteilen entscheidet die Bauteilprüfung, nicht eine vermutete Beschriftung. Der Tonaufbau bleibt beim Erweitern der Melodie bestehen und wird vor den reinen seriellen Aufgaben bei getrennter Versorgung entfernt.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays-start"><h3>Sechs Töne: Aufbau, Pause und Tempo</h3><pre><code>const byte lautsprecher = 8;
+const int Melodie[] = {175,175,196,175,262,247};
+const int notenWert[] = {8,8,4,4,4,2};
+const int anzahlToene = sizeof(Melodie) / sizeof(Melodie[0]);
+static_assert(anzahlToene == sizeof(notenWert) / sizeof(notenWert[0]),
+              "Die beiden Listen muessen gleich lang sein.");
+
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i &lt; anzahlToene; i++) {
+    int tonDauer = 1000 / notenWert[i];
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(Melodie[i]);
+    tone(lautsprecher, Melodie[i]);
+    delay(tonDauer);
+    noTone(lautsprecher);
+    int pauseZwischenNoten = tonDauer * 0.30;
+    delay(pauseZwischenNoten);
   }
-  delay(1000);
-}</code></pre><p>Beide Arrays enthalten die 25 Werte aus dem Material. Der Index läuft von 0 bis 24; für jeden Eintrag werden Frequenz und Notenwert gemeinsam verwendet.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_tafeldienst"><h3>2. Tafeldienst auslosen</h3><pre><code>const char* namen[] = {"Martin", "Volker", "Frank", "Kolja", "Alexander", "Mario", "Peter", "Rainer"};
-void setup() {
-  Serial.begin(9600);
-  randomSeed(analogRead(A0));
-  int index = random(8);
-  Serial.println(namen[index]);
 }
-void loop() {}</code></pre><p>random(8) liefert einen Index von 0 bis 7. Das Beispiel lost einmal beim Start aus. Der Seed über einen freien Analogeingang ist für eine einfache Unterrichtsdemonstration gedacht, nicht für eine garantierte zufällige oder faire Zuteilung über längere Zeit.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_literatur"><h3>3. Literaturautomat</h3><pre><code>const char* x[] = {"Nacht", "Regen", "Nebel"};
-const char* y[] = {"Wind", "Sturm", "Schnee"};
+
+void loop() {}</code></pre><p>Der passive Piezo liegt zwischen D8 und GND; ein niederohmiger Lautsprecher braucht eine geprüfte Treiberschaltung. Die ersten beiden Töne haben dieselbe Frequenz 175 Hz. Der letzte Ton dauert mit Notenwert 2 am längsten: 1000 / 2 = 500 ms. Der Durchlauf erfolgt einmal in setup(), erneut nach RESET. Die Pausenänderung 0.30 → 0.60 verändert nur die Pausen; 1000 → 2000 verdoppelt die Tondauern bei gleichbleibenden Frequenzen. Ganzzahlige Pausenwerte können Rundungsabweichungen vom exakten Faktor zwei haben.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_melodie"><h3>6.1 · Melodie erweitern</h3><pre><code>const byte lautsprecher = 8;
+const int Melodie[] = {196,196,220,196,262,247,196,196,220,196,294,262,196,196,392,330,262,247,220,349,349,330,262,294,262};
+const int notenWert[] = {8,8,4,4,4,2,8,8,4,4,4,2,8,8,4,4,4,4,8,8,4,4,4,4,2};
+const int anzahlToene = sizeof(Melodie) / sizeof(Melodie[0]);
+static_assert(anzahlToene == sizeof(notenWert) / sizeof(notenWert[0]),
+              "Die beiden Listen muessen gleich lang sein.");
+
 void setup() {
   Serial.begin(9600);
-  randomSeed(analogRead(A0));
-  Serial.print("Wer reitet so spaet durch " );
-  Serial.print(x[random(3)]);
-  Serial.print(" und " );
-  Serial.print(y[random(3)]);
-  Serial.println("?");
+  for (int i = 0; i &lt; anzahlToene; i++) {
+    int tonDauer = 1000 / notenWert[i];
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(Melodie[i]);
+    tone(lautsprecher, Melodie[i]);
+    delay(tonDauer);
+    noTone(lautsprecher);
+    int pauseZwischenNoten = tonDauer * 0.30;
+    delay(pauseZwischenNoten);
+  }
 }
-void loop() {}</code></pre><p>Eine mögliche Ausgabe ist: Wer reitet so spaet durch Nebel und Wind? Jeder Begriff wird über einen gültigen Index ausgewählt.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_hausarbeiten"><h3>4. Hausarbeiten verteilen</h3><pre><code>const char* namen[] = {"Alex", "Robin", "Sam"};
-const char* dienste[] = {"abwaschen", "aufräumen", "Staub wischen"};
-int reihenfolge[] = {0, 1, 2};
+
+void loop() {}</code></pre><p>Beide vollständigen Listen ersetzen die sechs Startwerte und besitzen je 25 Einträge. Der Piezo bleibt an D8. Die Schleife verwendet die berechnete Grenze 25 und liest Index 0 bis 24. i &lt;= 25 würde außerhalb beider Arrays zugreifen. Löschen eines Notenwerts stoppt die Kompilierung durch static_assert; ohne Prüfung wären nachfolgende Zuordnungen verschoben und der letzte Zugriff ungültig.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_tafeldienst"><h3>6.2 · Tafeldienst auslosen</h3><pre><code>const char* mitSchueler[] = {
+"Martin","Volker","Frank","Kolja",
+"Alexander","Mario","Peter","Rainer"
+};
+const int anzahl = sizeof(mitSchueler) / sizeof(mitSchueler[0]);
+
 void setup() {
   Serial.begin(9600);
   randomSeed(analogRead(A0));
-  for (int i = 2; i &gt; 0; i--) {
+}
+
+void loop() {
+  int index = random(anzahl);
+  Serial.print(index);
+  Serial.print(": ");
+  Serial.println(mitSchueler[index]);
+  delay(2000);
+}</code></pre><p>Die Startliste erlaubt Indizes 0 bis 7; random(8) liefert niemals 8. Alle zwei Sekunden folgt eine neue Ziehung. Beim Ergänzen eines Namens passt sich anzahl über sizeof an. Ein freier A0 dient nur als einfacher Startwertgeber; zufällige Wiederholungen oder wiederkehrende Startwerte sind möglich. Eine Auswahl pro Woche garantiert ohne gespeicherte Ausschlüsse keinen gleichmäßig verteilten Dienstplan.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_literatur"><h3>6.3 · Eigener Literaturautomat</h3><pre><code>const char* x[] = {"Idee", "Frage", "Antwort", "Vermutung"};
+const char* y[] = {"Experiment", "Modell", "Beobachtung"};
+const int anzahlX = sizeof(x) / sizeof(x[0]);
+const int anzahlY = sizeof(y) / sizeof(y[0]);
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  Serial.print("Heute trifft ");
+  Serial.print(x[random(anzahlX)]);
+  Serial.print(" auf ");
+  Serial.print(y[random(anzahlY)]);
+  Serial.println(".");
+  delay(2000);
+}</code></pre><p>Die Startaufgabe hat 3 · 3 = 9 Kombinationen, diese eigene Variante 4 · 3 = 12. anzahlX und anzahlY passen sich unabhängig an. Mögliche Ausgaben sind „Heute trifft Idee auf Experiment.“ und „Heute trifft Frage auf Modell.“; diese Beispiele sind keine behaupteten Versuchsaufzeichnungen. Serial.print fügt keine eigenen Leerzeichen hinzu, deshalb stehen sie in den Satzteilen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arrays_hausarbeiten"><h3>6.4 · Vier Hausdienste ohne Doppelbelegung</h3><pre><code>const char* namen[] = {"Alex", "Robin", "Sam", "Mia"};
+const char* dienste[] = {"abwaschen", "aufräumen", "Staub wischen", "Müll trennen"};
+const int anzahl = sizeof(namen) / sizeof(namen[0]);
+static_assert(anzahl == sizeof(dienste) / sizeof(dienste[0]),
+              "Gleich viele Personen und Dienste erforderlich.");
+int reihenfolge[anzahl];
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  for (int i = 0; i &lt; anzahl; i++) reihenfolge[i] = i;
+  for (int i = anzahl - 1; i &gt; 0; i--) {
     int j = random(i + 1);
     int temp = reihenfolge[i];
     reihenfolge[i] = reihenfolge[j];
     reihenfolge[j] = temp;
   }
-  for (int i = 0; i &lt; 3; i++) {
+  Serial.println("Neue Verteilung:");
+  for (int i = 0; i &lt; anzahl; i++) {
     Serial.print(namen[reihenfolge[i]]);
-    Serial.print(" darf " );
+    Serial.print(" darf ");
     Serial.println(dienste[i]);
   }
-}
-void loop() {}</code></pre><p>Die Indexliste wird mit dem Fisher-Yates-Verfahren gemischt. Jeder ursprüngliche Index bleibt genau einmal enthalten; niemand bekommt im Beispiel zwei Dienste.</p></article></section>
-<section data-wb-page="3" data-wb-page-title="Interrupt"><h1>Interrupt: Auf Ereignisse sofort reagieren</h1>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_trace"><h3>Ablaufspur: Vom Tastendruck zur Reaktion</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Ereignis</th><th scope="col">aktiver Bereich</th><th scope="col">zustand</th><th scope="col">nächster Schritt</th></tr></thead><tbody><tr><td>Normalbetrieb</td><td>loop()</td><td>0</td><td>Hauptprogramm läuft weiter</td></tr><tr><td>Signal wechselt von HIGH zu LOW</td><td>ISR</td><td>1</td><td>ISR wird beendet</td></tr><tr><td>ISR ist beendet</td><td>loop()</td><td>1</td><td>Aktion ausführen</td></tr><tr><td>Aktion ist abgeschlossen</td><td>loop()</td><td>0</td><td>Hauptprogramm fortsetzen</td></tr></tbody></table></div></article>
+  Serial.println();
+  delay(5000);
+}</code></pre><p>Fisher-Yates mischt die vollständige Indexliste mit gültigen Tauschindizes. In der dreielementigen Papierprobe entstehen {2,1,0} und nochmals {2,1,0}. Jede Person und jeder Dienst kommen pro Verteilung genau einmal vor. Auch eine unveränderte Reihenfolge ist ein gültiges Mischergebnis. Ein Wochenplan müsste zusätzlich bisherige Dienste speichern und bei der Zuteilung berücksichtigen.</p></article></section>
+<section data-wb-page="3" data-wb-page-title="Interrupt"><h1>Interrupt: Auf Ereignisse reagieren</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_trace"><h3>Ablaufspur: Vom Tastendruck zur Reaktion</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Ereignis</th><th scope="col">aktiver Bereich</th><th scope="col">zustand</th><th scope="col">nächster Schritt</th></tr></thead><tbody><tr><td>Normalbetrieb</td><td>loop()</td><td>0</td><td>Hauptprogramm läuft weiter</td></tr><tr><td>Signal wechselt von HIGH zu LOW</td><td>ISR</td><td>1</td><td>ISR wird beendet</td></tr><tr><td>ISR ist beendet; vor der Flag-Übernahme</td><td>loop()</td><td>1</td><td>Aktion ausführen</td></tr><tr><td>Aktion ist abgeschlossen</td><td>loop()</td><td>0</td><td>Hauptprogramm fortsetzen</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_order"><h3>Ordne den Interrupt-Ablauf</h3><ol><li>Am Taster ändert sich das Signal am Pin.</li><li>Der Interrupt erkennt die Signaländerung.</li><li>Das Hauptprogramm wird kurz unterbrochen.</li><li>Die Interrupt Service Routine wird ausgeführt.</li><li>Nach der ISR läuft das Hauptprogramm an der unterbrochenen Stelle weiter.</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_categorize"><h3>Was gehört in eine ISR, was nicht?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>In einer ISR sinnvoll</td><td>Nur kurz einen Zustand merken</td></tr><tr><td>In einer ISR sinnvoll</td><td>Eine Variable auf 1 setzen</td></tr><tr><td>In einer ISR vermeiden</td><td>delay() benutzen</td></tr><tr><td>In einer ISR vermeiden</td><td>Seriellen Monitor umfangreich benutzen</td></tr><tr><td>In einer ISR vermeiden</td><td>LC-Display ansteuern</td></tr><tr><td>In einer ISR vermeiden</td><td>Aufwändige Berechnungen machen</td></tr></tbody></table></div></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_reveal"><h3>Warum volatile?</h3><p>Weil sich ihr Wert außerhalb des normalen Programmflusses ändern kann. Variablen im Interrupt müssen als volatile deklariert werden, damit der Compiler sie nicht falsch optimiert.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_reveal"><h3>Warum volatile?</h3><p>zustand wird von der ISR geändert und von loop() gelesen und gelöscht. volatile sorgt dafür, dass der Compiler die vorgesehenen Speicherzugriffe beibehält und Änderungen durch die ISR sichtbar bleiben. gemerkt ist nur eine lokale Kopie im Hauptprogramm. volatile macht die Folge aus Lesen und Löschen nicht unteilbar; dafür sperrt holeEreignis() kurz die Interrupts.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_verify"><h3>Wahr oder falsch?</h3><p><b>Falsch.</b> Während einer ISR sind delay(), serieller Monitor und aufwändige Berechnungen gute Ideen, weil der Interrupt dann besonders viel erledigt.</p><p>Falsch. Eine ISR muss kurz gehalten werden. delay(), serieller Monitor, LC-Display und aufwändige Berechnungen sollen dort nicht benutzt werden.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_essay"><h3>Transfer: Interrupt sinnvoll beschreiben</h3><span class="solution-label">Eine mögliche Antwort</span><p>Beim Polling wird ein Eingang nur an bestimmten Stellen des Hauptprogramms gelesen, sodass ein kurzes Signal zwischen zwei Abfragen übersehen werden kann. Ein Interrupt kann auf eine passende Signalflanke reagieren und kurz die ISR ausführen. Die ISR setzt nur eine als volatile deklarierte Ereignisvariable. Die eigentliche Aktion folgt in loop(), damit die ISR kurz bleibt. Wenn das Ereignis übernommen und gelöscht wird, schütze ich diesen gemeinsamen Zugriff vor einer gleichzeitig eintreffenden ISR; volatile allein verhindert keinen solchen Konflikt. Ein einzelnes Flag speichert nur, dass mindestens ein Ereignis aufgetreten ist, und zählt keine beliebig vielen Ereignisse.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_lauflicht"><h3>Aufgabe: Lauflicht mit Interrupt</h3><pre><code>const byte leds[] = {4,5,6,7,8,9,10,11};
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_essay"><h3>Transfer: Interrupt sinnvoll beschreiben</h3><span class="solution-label">Eine mögliche Antwort</span><p>Beim Polling wird der Eingang nur an bestimmten Stellen gelesen; ein kurzer Tastendruck zwischen zwei Abfragen kann unbemerkt bleiben. Ein Interrupt kann die fallende Flanke auch während delay() erfassen und die kurze ISR aufrufen. Die ISR setzt den gemeinsamen volatile-Merker, dessen Änderungen im Hauptprogramm sichtbar bleiben müssen. loop() übernimmt und löscht den Merker bei kurz gesperrten Interrupts, damit die ISR nicht zwischen diesen beiden Zugriffen ein neues Ereignis eintragen kann, das gleich wieder gelöscht würde. Die Aktion beginnt im Merker-Sketch erst nach dem laufenden 500-ms-Schritt und kann das Lauflicht zusätzlich verzögern. Ein einzelnes Flag merkt nur mindestens eine Flanke, zählt keine mehreren Ereignisse und entprellt den Taster nicht.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_interrupt_labor"><h3>Versuchsprotokoll: Drei Arten der Tasterabfrage</h3><span class="solution-label">Eine mögliche Antwort</span><h4>Direkte ISR und Polling</h4><p>Der Taster verbindet D2 mit GND. Das Lauflicht verwendet D4 bis D11, die rote LED D12; alle neun LEDs besitzen je 330 Ω in Reihe. Ein Umlauf ohne Zusatzaktion dauert ungefähr 8 · 500 ms = 4 s plus Ausführungszeit der Anweisungen. Erwartetes Verhalten: Die direkte ISR schaltet D12 bei einer FALLING-Flanke schon innerhalb eines Lauflichtschritts ein, während die Polling-Kopie den Pegel nur am Umlaufanfang liest. Ein kurzer Druck zwischen zwei Polling-Abfragen bleibt dort unbemerkt; ein über einen Abfragezeitpunkt hinaus gehaltener Taster wird erkannt. D12 wird bei beiden Versionen am Umlaufende ausgeschaltet. Bei einem weiter gehaltenen Taster schaltet die Polling-Kopie D12 zu Beginn des nächsten Umlaufs wieder ein; die FALLING-Version braucht eine neue fallende Flanke. Eine sehr kurze rote Leuchtphase am Umlaufende ist möglich. Das sind erwartete Abläufe, keine behaupteten Hardwarebeobachtungen.</p><h4>Merker und eigene Aktion</h4><pre><code>void machIrgendwas() {
+  for (byte k = 0; k &lt; 3; k++) {
+    digitalWrite(rot, HIGH);
+    delay(100);
+    digitalWrite(rot, LOW);
+    delay(100);
+  }
+}</code></pre><p>Die drei Blinkimpulse dauern zusammen etwa 600 ms und werden in loop() ausgeführt. Eine eigene Idee wären zwei längere Blinkimpulse mit 400 ms an und 200 ms aus; dafür ändere ich nur machIrgendwas():</p><pre><code>void machIrgendwas() {
+  for (byte k = 0; k &lt; 2; k++) {
+    digitalWrite(rot, HIGH);
+    delay(400);
+    digitalWrite(rot, LOW);
+    delay(200);
+  }
+}</code></pre><p>Beim Merker-Sketch wird die Flanke während delay(500) erfasst, die Aktion beginnt erst nach Ende des laufenden Schritts. Während der Aktion stehen alle Lauflicht-LEDs still und sind aus, weil der aktuelle Ausgang zuvor gelöscht wurde und der nächste noch nicht gesetzt ist. Neue Flanken können während der Aktion das bereits übernommene Flag erneut setzen und eine spätere Aktion auslösen. Mehrere Flanken vor dem nächsten Übernehmen fallen jedoch zusammen; Tasterprellen kann unerwünschte weitere Flanken verursachen. Deshalb folgt keine feste Anzahl von Aktionen aus der Anzahl mechanischer Tastendrücke.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_lauflicht"><h3>Lauflicht mit direkter ISR und Polling-Vergleich</h3><pre><code>const byte leds[] = {4,5,6,7,8,9,10,11};
 const byte rot = 12;
-volatile byte ereignis = 0;
-void tasteISR() { ereignis = 1; }
+const byte taster = 2;
+
+void roteLed() {
+  digitalWrite(rot, HIGH);
+}
+
 void setup() {
   for (byte i = 0; i &lt; 8; i++) pinMode(leds[i], OUTPUT);
   pinMode(rot, OUTPUT);
-  pinMode(2, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(2), tasteISR, FALLING);
+  pinMode(taster, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(taster), roteLed, FALLING);
 }
+
 void loop() {
   for (byte i = 0; i &lt; 8; i++) {
-    digitalWrite(leds[i], HIGH); delay(100);
+    digitalWrite(leds[i], HIGH);
+    delay(500);
     digitalWrite(leds[i], LOW);
-    noInterrupts();
-    byte merken = ereignis; ereignis = 0;
-    interrupts();
-    if (merken) digitalWrite(rot, HIGH);
   }
-}</code></pre><p>Ein Tasterdruck nach GND löst eine FALLING-Flanke aus. Die ISR merkt das Ereignis; die rote LED wird spätestens nach dem nächsten 100-ms-Lauflichtschritt eingeschaltet. Jede LED benötigt einen passenden eigenen Vorwiderstand.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_ereignis"><h3>Aufgabe: Ereignis merken</h3><pre><code>volatile byte zustand = 0;
-void tasteISR() { zustand = 1; }
-void machIrgendwas() { digitalWrite(13, HIGH); }
-void setup() {
-  pinMode(13, OUTPUT); pinMode(2, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(2), tasteISR, FALLING);
+  digitalWrite(rot, LOW);
+}</code></pre><p>D4 bis D11 steuern die acht Lauflicht-LEDs, D12 die rote LED; jeweils führt ein eigener 330-Ω-Widerstand zur Anode, die Kathode an GND. Der Taster verbindet D2 mit GND und wird als INPUT_PULLUP gelesen: offen HIGH, gedrückt LOW. FALLING erfasst den Tastendruck. Eine sehr kurze ISR darf hier direkt einen Ausgang setzen. Die rote LED geht am Umlaufende aus; ein Umlauf dauert ungefähr vier Sekunden. Die Polling-Kopie entfernt attachInterrupt und liest mit if (digitalRead(taster) == LOW) roteLed(); nur am Anfang von loop(). Sie verpasst kurze Drücke zwischen den Abfragen, kann aber einen dauerhaft gehaltenen Taster wiederholt erkennen. RISING reagiert beim Loslassen, CHANGE auf beide Flanken und LOW pegelabhängig wiederholt.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="interrupt_ereignis"><h3>Ereignis merken und drei Blinkimpulse ausführen</h3><pre><code>const byte leds[] = {4,5,6,7,8,9,10,11};
+const byte rot = 12;
+const byte taster = 2;
+volatile byte zustand = 0;
+
+void meineISR() {
+  zustand = 1;
 }
-void loop() {
+
+byte holeEreignis() {
+  // Nur aus loop() mit zuvor aktiven Interrupts aufrufen.
   noInterrupts();
-  byte ausloesen = zustand; zustand = 0;
+  byte gemerkt = zustand;
+  zustand = 0;
   interrupts();
-  if (ausloesen) machIrgendwas();
-}</code></pre><p>Die Übernahme und das Löschen des Flags erfolgen gemeinsam bei kurz gesperrten Interrupts. Ein später eintreffendes Ereignis bleibt damit für den nächsten Durchlauf erhalten.</p></article></section>
+  return gemerkt;
+}
+
+void machIrgendwas() {
+  for (byte k = 0; k &lt; 3; k++) {
+    digitalWrite(rot, HIGH);
+    delay(100);
+    digitalWrite(rot, LOW);
+    delay(100);
+  }
+}
+
+void setup() {
+  for (byte i = 0; i &lt; 8; i++) pinMode(leds[i], OUTPUT);
+  pinMode(rot, OUTPUT);
+  pinMode(taster, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(taster), meineISR, FALLING);
+}
+
+void loop() {
+  for (byte i = 0; i &lt; 8; i++) {
+    digitalWrite(leds[i], HIGH);
+    delay(500);
+    digitalWrite(leds[i], LOW);
+    byte ausloesen = holeEreignis();
+    if (ausloesen == 1) machIrgendwas();
+  }
+}</code></pre><p>Die ISR setzt ausschließlich zustand = 1. holeEreignis() wird nur aus loop() mit eingeschalteten Interrupts aufgerufen und übernimmt und löscht den Merker bei kurz gesperrten Interrupts. Erst danach folgt die etwa 600-ms-Aktion. Eine Flanke während delay(500) wird vorher erfasst, aber erst am nächsten Prüfpunkt verarbeitet. Während der Aktion bleibt das Lauflicht stehen. Spätere Ereignisse können für den nächsten Prüfpunkt gespeichert werden; mehrere Flanken werden vom Flag zusammengefasst. Tasterprellen wird damit nicht beseitigt.</p></article></section>
 <section data-wb-page="4" data-wb-page-title="Troubleshooting"><h1>Troubleshooting: Fehler systematisch finden</h1>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_trace"><h3>Ablaufspur: In welcher Fehlerebene suchst du?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Beobachtung</th><th scope="col">Fehlerebene</th><th scope="col">erster Prüfschritt</th></tr></thead><tbody><tr><td>Der Sketch kompiliert nicht; eine Zeile ist rot markiert.</td><td>Code</td><td>Fehlermeldung und vorherige Zeile prüfen</td></tr><tr><td>Der Sketch kompiliert, lässt sich aber nicht hochladen.</td><td>Upload</td><td>Board, Port und USB-Verbindung prüfen</td></tr><tr><td>Upload erfolgreich, aber alle externen Bauteile bleiben aus.</td><td>Hardware</td><td>GND und Spannungsversorgung prüfen</td></tr><tr><td>Messwerte erscheinen, aber das Programm wählt den falschen Zweig.</td><td>Logik</td><td>Bedingung und Vergleichsoperator prüfen</td></tr></tbody></table></div></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_mcq"><h3>Mini-Check: Troubleshooting</h3><h4>Was prüfst du zuerst, wenn ein Sketch gar nicht kompiliert?</h4><p>Die Fehlermeldung verstehen und auf setup(), loop() oder fehlende Bibliotheken achten.</p><p>Das ist der erste Schritt: Compilerfehler lesen und die eigentliche Ursache finden.</p><h4>Welcher Fehler führt oft dazu, dass ein Block gar nicht ausgeführt wird?</h4><p>Ein zusätzliches Semikolon direkt nach if(), while() oder for().</p><p>Genau dieser Fehler ist besonders tückisch: Dann wird der Block in den geschweiften Klammern übersprungen.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_reveal"><h3>Fehlermeldung einordnen</h3><p>Dann liegt das Problem häufig nicht mehr im Quelltext, sondern bei den Einstellungen oder der Verbindung: falsches Board, falscher COM-Port, Treiberproblem oder ein verstellter Programmer.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_essay"><h3>Dein Fehlersuchplan</h3><span class="solution-label">Eine mögliche Antwort</span><p>Zuerst kompiliere ich und korrigiere Syntaxfehler anhand der ersten Fehlermeldung. Danach prüfe ich den Upload mit Board-Typ, Port und USB-Verbindung. Bei erfolgreichem Upload prüfe ich Versorgung, gemeinsamen GND, Polung und Stromweg. Ich vergleiche die verwendeten Pins mit dem Sketch. Anschließend lasse ich einen einfachen Teiltest laufen, zum Beispiel nur eine LED. Mit serieller Ausgabe untersuche ich Messwerte und Entscheidungen. Nach jeder einzelnen Änderung wiederhole ich denselben Test und notiere, ob die Beobachtung nun zur Vorhersage passt.</p></article>
-</section>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_mcq"><h3>Mini-Check: Troubleshooting</h3><h4>Was prüfst du zuerst, wenn ein Sketch gar nicht kompiliert?</h4><p>Die Fehlermeldung verstehen und auf setup(), loop() oder fehlende Bibliotheken achten.</p><p>Das ist der erste Schritt: Compilerfehler lesen und die eigentliche Ursache finden.</p><h4>Warum wird bei if (sensorWert &gt; 500); { Serial.println(&quot;A&quot;); } auch für sensorWert = 400 ein A ausgegeben?</h4><p>Das Semikolon ist die leere if-Anweisung; der nachfolgende Block läuft unabhängig von der Bedingung.</p><p>Die Bedingung steuert nur die leere Anweisung vor dem Semikolon. Der folgende Block gehört nicht mehr zum if und wird ausgeführt, auch wenn die Bedingung falsch ist.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_reveal"><h3>Fehlermeldung einordnen</h3><p>Prüfe nun die Upload-Meldung, die passende Boardauswahl, den tatsächlich angeschlossenen Port und das USB-Datenkabel. Schließe andere Programme, die den Port belegen könnten, und prüfe bei Bedarf den zum Board gehörenden Treiber. Beim normalen USB-Upload des Uno R3 ist die Programmer-Auswahl nicht der übliche Ansatz; sie gehört zum ausdrücklich gewählten Hochladen mit Programmer oder zum Bootloader-Schreiben.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_essay"><h3>Dein Fehlersuchplan</h3><span class="solution-label">Eine mögliche Antwort</span><p>Zuerst überprüfe ich für das gewählte Board und lese die erste konkrete Compilermeldung oberhalb von exit status 1. Danach prüfe ich den Upload mit passendem Board, tatsächlichem Port und USB-Datenkabel. Vor der Prüfung oder Änderung von Leitungen trenne ich USB und andere Versorgungen. Bei erfolgreichem Upload kontrolliere ich GND, Polung, Vorwiderstände und die Zuordnung der Pins zum Sketch. Eine Blink-Kopie prüft gezielt einen Ausgang und hilft, den Fehler auf einen kleinen Teil einzugrenzen. Mit Serial.print() gebe ich einen Wert unmittelbar vor einer Bedingung und eine Markierung innerhalb des gewählten Zweigs aus. Ich ändere jeweils nur eine Sache und wiederhole danach denselben Test, um Ursache und Wirkung zu vergleichen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino5_trouble_labor"><h3>Versuchsprotokoll: Fehler gezielt eingrenzen</h3><span class="solution-label">Eine mögliche Antwort</span><h4>Logik- und Compilerfehler</h4><p>Die erwarteten Ausgaben sind vollständig durch die Testwerte bestimmt: Mit dem zusätzlichen if-Semikolon erscheint für 400 ebenso wie für 600 die jeweilige Zeile „Testwert: …“, dann „Zweig A: Wert ist groesser als 500“ und dann „Testende“. Ohne dieses Semikolon fehlt die Zweig-A-Zeile bei 400, bei 600 bleibt sie erhalten. Für 500 ist &gt; 500 falsch und &gt;= 500 wahr. Ein erfolgreicher Upload bestätigt die Übertragung, nicht die fachliche Aussage der Ausgabe.</p><p>Beim Entfernen des Semikolons hinter der Deklaration ist etwa eine Meldung wie „expected ',' or ';' before 'Serial'“ an der folgenden Serial-Zeile möglich; die konkrete Meldung ist compilerabhängig und kein hier aufgezeichnetes Versuchsergebnis. Die Ursache liegt in der vorherigen Zeile, die mit einem Semikolon ergänzt werden muss. exit status 1 meldet nur das Scheitern des Vorgangs, nicht die konkrete Ursache. Beim Zusatz-Semikolon nach if wird dagegen eine gültige leere Anweisung kompiliert; der folgende Block ist unabhängig. Ein = in einer Bedingung würde zuweisen, == vergleicht. Eine in loop() immer neu auf 0 gesetzte lokale Variable behält ihren Zählerstand nicht über Durchläufe.</p><h4>Hardware und Weiterdenken</h4><p>Erwartung beim nackten Uno R3 mit dem unveränderten Blink-Beispiel: Die eingebaute L-LED blinkt ungefähr im Sekundentakt. Ist das erfüllt, funktionieren die grundlegende Versorgung, Kompilierung und Übertragung für diesen Test. Eine einzelne externe dunkle LED prüfe ich bei getrennter Versorgung auf den richtigen Pin, Reihenschaltung mit 330 Ω, Polung, Breadboard-Reihe und GND; danach teste ich genau diesen Pin mit einer passenden Blink-Kopie. Ein mögliches eigenes Fehlerbeispiel wäre die logisch falsche Bedingung wert &lt; 500 statt wert &gt; 500: Der Sketch kompiliert und wird hochgeladen, wählt aber den falschen Zweig. Eine Ausgabe des Werts direkt vor der Bedingung und der Zweigname danach zeigen, ob Eingangswert oder Entscheidung falsch ist. Im Vergleich zum bloßen Vermuten kann ich so eine konkrete Fehlerursache prüfen. Ein nicht ausgeführter Hardwaretest wird als solcher gekennzeichnet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="trouble_fehlerlabor"><h3>Fehlerlabor: Reparierter vollständiger Sketch</h3><pre><code>void setup() {
+  Serial.begin(9600);
+  int sensorWert = 400;
+  Serial.print("Testwert: ");
+  Serial.println(sensorWert);
+  if (sensorWert &gt; 500)
+  {
+    Serial.println("Zweig A: Wert ist groesser als 500");
+  }
+  Serial.println("Testende");
+}
+
+void loop() {}</code></pre><p>Mit dem vorgegebenen Testwert 400 entstehen nur „Testwert: 400“ und „Testende“. Für 600 kommt die Zweig-A-Zeile dazwischen. Bei 500 führt &gt; nicht in Zweig A, &gt;= dagegen schon. Das zusätzliche Semikolon nach if ist eine leere Anweisung, sodass der folgende eigenständige Block ohne Bedingung ausgeführt wird. Beim absichtlichen Entfernen des Deklarations-Semikolons wird der Compilerfehler durch Wiedereinsetzen behoben. Eine Compilerdiagnose kann erst die folgende Zeile markieren; exit status 1 ist lediglich der Fehlerstatus. Bei einer leeren for-Schleife folgt der separate Block einmal nach Schleifenende, bei einer leeren while-Schleife erst nach Ende des Wartens oder bei dauerhaft wahrer Bedingung gar nicht.</p></article></section>
 </div>
 <script src="../assets/allgemeines_format.js"></script>
 <script>SBLibrary.autoMountAll({storagePrefix:"arduino-5-mosaik94.html__"});</script>
