@@ -6,7 +6,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | --- | --- |
 | [Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html) | [Musterlösung](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
-| [Elektrische Felder 2: Potenzial, Spannung und Kondensator](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
+| [Elektrische Felder 2: Potenzial, Spannung und Kondensator-Labor](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
 | [Elektrische Felder 3: Energie, Laden und Entladen](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
 | [Felder-Simulationen: Kondensator und Teilchenbahnen](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
 | [Induktion 1: Grundversuche, magnetischer Fluss und Lenz](felder/induktion.html) | [Musterlösung](felder/induktion-buchruecken37.html) |
@@ -27,7 +27,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Technik verstehen: Hardware, Software, Eingabe und Ausgabe](medien/technik.html) | [Musterlösung](medien/technik-bleistift97.html) |
 | [Scratch-Übungen: Koordinaten, Malstift und Kostümwechsel](misc/Scratch.html) | [Musterlösung](misc/Scratch-zeichendreieck59.html) |
 | [Arduino 1: Board, Pins und LED-Schaltung](nwt/arduino-1.html) | [Musterlösung](nwt/arduino-1-fensterglas34.html) |
-| [Arduino 2: Arduino-IDE, Upload, Blinken und Funktionen](nwt/arduino-2.html) | [Musterlösung](nwt/arduino-2-kupferband71.html) |
+| [Arduino 2: Selber programmieren, Blink-Aufgaben, Fehlersuche und Funktionen](nwt/arduino-2.html) | [Musterlösung](nwt/arduino-2-kupferband71.html) |
 | [Arduino 3: Variablen, serielle Ausgabe, Schleifen und PWM](nwt/arduino-3.html) | [Musterlösung](nwt/arduino-3-tintenfass28.html) |
 | [Arduino 4: Taster, while, Flussdiagramme, Displays und Motoren](nwt/arduino-4.html) | [Musterlösung](nwt/arduino-4-lichtblick63.html) |
 | [Arduino 5: Arrays, Interrupts und systematische Fehlersuche](nwt/arduino-5.html) | [Musterlösung](nwt/arduino-5-mosaik94.html) |

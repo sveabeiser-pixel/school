@@ -681,6 +681,28 @@
     root.dataset.fieldCapacitorMounted = "1";
     var ctx = canvas.getContext("2d");
     var frozenQ = null;
+    var status = document.createElement("p");
+    status.className = "capacitor-status";
+    status.setAttribute("data-role", "source-status");
+    status.setAttribute("aria-live", "polite");
+    canvas.parentNode.insertBefore(status, canvas);
+    var meters = document.createElement("div");
+    meters.className = "capacitor-meters";
+    meters.setAttribute("aria-label", "Messwerte am Kondensator");
+    meters.innerHTML = [
+      '<div class="capacitor-meter"><span>Kapazität C</span><output data-role="capacitance-output"></output><small>C = ε₀ · εᵣ · A / d</small></div>',
+      '<div class="capacitor-meter"><span>Plattenladung |Q|</span><output data-role="charge-output"></output><small>eine Platte +Q, die andere −Q</small></div>',
+      '<div class="capacitor-meter"><span>Gespeicherte Energie W</span><output data-role="energy-output"></output><small>W = ½ C U² = Q² / (2C)</small></div>',
+      '<div class="capacitor-meter capacitor-meter-secondary"><span>Kondensatorspannung U</span><output data-role="capacitor-voltage-output"></output></div>',
+      '<div class="capacitor-meter capacitor-meter-secondary"><span>Feldstärke E</span><output data-role="field-output"></output><small>E = U / d</small></div>'
+    ].join("");
+    canvas.parentNode.insertBefore(meters, canvas.nextSibling);
+    var capacitanceOutput = find(root, "capacitance-output");
+    var chargeOutput = find(root, "charge-output");
+    var energyOutput = find(root, "energy-output");
+    var capacitorVoltageOutput = find(root, "capacitor-voltage-output");
+    var fieldOutput = find(root, "field-output");
+    var sourceButton = find(root, "source-toggle");
 
     function capacitance(d, A, epsr) {
       return EPS0 * epsr * A / d;
@@ -699,16 +721,33 @@
       var E = U / d;
       var sigma = Q / A;
       if (sourceConnected) frozenQ = Q;
-      return { U: U, d: d, A: A, epsr: epsr, E: E, C: C, Q: Q, sigma: sigma, sourceConnected: sourceConnected };
+      return { U: U, sourceU: sourceU, d: d, A: A, epsr: epsr, E: E, C: C, Q: Q, sigma: sigma, energy: 0.5 * C * U * U, sourceConnected: sourceConnected };
     }
 
     function syncLabels(v) {
-      if (voltageVal) voltageVal.textContent = formatNumber(v.U / 1000, 1);
+      if (voltageVal) voltageVal.textContent = formatNumber(v.sourceU / 1000, 1);
       if (distanceVal) distanceVal.textContent = formatNumber(v.d * 100, 1);
       if (areaVal) areaVal.textContent = formatNumber(v.A * 10000, 0);
       if (epsVal) epsVal.textContent = formatNumber(v.epsr, 1);
       voltageEl.disabled = !v.sourceConnected;
       voltageEl.title = v.sourceConnected ? "" : "Die Spannungsquelle ist getrennt. Die Ladung Q bleibt konstant.";
+      if (sourceButton) {
+        sourceButton.textContent = v.sourceConnected ? "Spannungsquelle abtrennen" : "Spannungsquelle anschließen";
+        sourceButton.setAttribute("aria-pressed", String(v.sourceConnected));
+      }
+      status.textContent = v.sourceConnected
+        ? "Quelle angeschlossen · Spannung U bleibt konstant"
+        : "Quelle getrennt · Plattenladung Q bleibt konstant";
+      status.classList.toggle("is-disconnected", !v.sourceConnected);
+      function meter(output, value, scale, unit) {
+        output.textContent = formatNumber(value * scale, 2) + " " + unit;
+        output.dataset.siValue = String(value);
+      }
+      meter(capacitanceOutput, v.C, 1e12, "pF");
+      meter(chargeOutput, Math.abs(v.Q), 1e9, "nC");
+      meter(energyOutput, v.energy, 1e6, "µJ");
+      meter(capacitorVoltageOutput, v.U, 1e-3, "kV");
+      meter(fieldOutput, v.E, 1e-3, "kV/m");
     }
 
     function plusMinus(ctx, text, x, y, color, size) {
@@ -727,94 +766,134 @@
       var H = canvas.height;
       ctx.clearRect(0, 0, W, H);
 
-      var centerX = W * 0.52;
-      var gap = 110 + (v.d - 0.01) / 0.09 * 210;
-      var plateH = 190 + (v.A - 0.005) / 0.035 * 170;
-      plateH = Math.max(150, Math.min(370, plateH));
-      var plateW = 18;
-      var leftX = centerX - gap / 2;
-      var rightX = centerX + gap / 2;
-      var topY = H / 2 - plateH / 2;
-      var bottomY = H / 2 + plateH / 2;
+      // Schematic perspective: both plate side lengths scale with sqrt(A).
+      ctx.fillStyle = "#f8fafc";
+      ctx.fillRect(0, 0, W, H);
+      ctx.textBaseline = "alphabetic";
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "700 24px system-ui, sans-serif";
+      ctx.fillText("Kondensator-Labor", 28, 42);
+      ctx.font = "16px system-ui, sans-serif";
+      ctx.fillStyle = "#475569";
+      ctx.fillText("Platten verschieben und Messwerte vergleichen", 28, 70);
 
-      var grad = ctx.createLinearGradient(leftX, 0, rightX, 0);
-      grad.addColorStop(0, "rgba(239,68,68,.16)");
-      grad.addColorStop(.5, "rgba(37,99,235,.08)");
-      grad.addColorStop(1, "rgba(59,130,246,.16)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(leftX + plateW, topY, rightX - leftX - plateW * 2, plateH);
+      var sideScale = Math.sqrt(v.A / 0.02);
+      var plateWidth = 310 * sideScale;
+      var depthX = 52 * sideScale;
+      var depthY = 40 * sideScale;
+      var centerX = 600;
+      var left = centerX - plateWidth / 2;
+      var topY = 185;
+      var gap = 110 + (v.d - 0.01) / 0.09 * 145;
+      var bottomY = topY + gap;
+      var charged = Math.abs(v.Q) > 1e-20;
 
-      if (v.epsr > 1.05) {
-        ctx.fillStyle = "rgba(245,158,11,.18)";
-        ctx.fillRect(leftX + plateW + 8, topY + 12, rightX - leftX - plateW * 2 - 16, plateH - 24);
-        ctx.strokeStyle = "rgba(180,83,9,.45)";
-        ctx.setLineDash([8, 7]);
-        ctx.strokeRect(leftX + plateW + 8, topY + 12, rightX - leftX - plateW * 2 - 16, plateH - 24);
-        ctx.setLineDash([]);
+      // Leads have visible gaps at BOTH source terminals when disconnected.
+      function lead(y, terminalY, wireY) {
+        ctx.strokeStyle = "#475569";
+        ctx.lineWidth = 4;
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(108, terminalY);
+        ctx.lineTo(108, wireY);
+        ctx.lineTo(255, wireY);
+        ctx.moveTo(315, wireY);
+        ctx.lineTo(330, wireY);
+        ctx.lineTo(330, y);
+        ctx.lineTo(left + 16, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(255, wireY);
+        ctx.lineTo(315, v.sourceConnected ? wireY : wireY - 26);
+        ctx.stroke();
+        [255, 315].forEach(function (x) {
+          ctx.fillStyle = "#f8fafc";
+          ctx.beginPath(); ctx.arc(x, wireY, 5, 0, Math.PI * 2);
+          ctx.fill(); ctx.stroke();
+        });
       }
-
-      ctx.fillStyle = "#ef4444";
-      ctx.fillRect(leftX, topY, plateW, plateH);
-      ctx.fillStyle = "#2563eb";
-      ctx.fillRect(rightX - plateW, topY, plateW, plateH);
-
-      ctx.fillStyle = "#334155";
-      ctx.font = "700 18px system-ui, sans-serif";
+      lead(topY, 240, 120);
+      lead(bottomY, 350, 460);
+      ctx.fillStyle = "#e2e8f0";
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 3;
+      ctx.fillRect(64, 240, 88, 110);
+      ctx.strokeRect(64, 240, 88, 110);
+      plusMinus(ctx, "+", 108, 260, "#b91c1c", 28);
+      plusMinus(ctx, "−", 108, 331, "#1d4ed8", 28);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "700 16px system-ui, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("positive Platte", leftX + plateW / 2, topY - 18);
-      ctx.fillText("negative Platte", rightX - plateW / 2, topY - 18);
-
-      var chargeLevel = Math.abs(v.Q) / 1e-9;
-      var chargeCount = Math.max(2, Math.min(9, Math.round(2 + chargeLevel * 1.15)));
-      for (var i = 0; i < chargeCount; i++) {
-        var y = topY + 30 + i * ((plateH - 60) / Math.max(1, chargeCount - 1));
-        plusMinus(ctx, "+", leftX + plateW / 2, y, "#fff", 24);
-        plusMinus(ctx, "-", rightX - plateW / 2, y, "#fff", 28);
-      }
-
-      var fieldCount = Math.max(4, Math.min(24, Math.round(3 + v.E / 35000)));
-      for (var j = 0; j < fieldCount; j++) {
-        var fy = topY + 18 + j * ((plateH - 36) / Math.max(1, fieldCount - 1));
-        drawArrow(ctx, leftX + plateW + 16, fy, rightX - plateW - 16, fy, "rgba(30,64,175,.74)");
-      }
+      ctx.fillText(formatNumber(v.sourceU / 1000, 1) + " kV", 108, 298);
+      ctx.fillText("Spannungsquelle", 119, 480);
+      ctx.font = "15px system-ui, sans-serif";
+      ctx.fillText(v.sourceConnected ? "verbunden" : "beidseitig getrennt", 119, 505);
 
       if (v.epsr > 1.05) {
-        var dipoles = Math.min(8, Math.max(3, Math.round(v.epsr)));
-        for (var k = 0; k < dipoles; k++) {
-          var dx = leftX + plateW + 42 + k * ((rightX - leftX - plateW * 2 - 84) / Math.max(1, dipoles - 1));
-          var dy = bottomY - 30;
-          plusMinus(ctx, "-", dx - 7, dy, "#2563eb", 14);
-          plusMinus(ctx, "+", dx + 7, dy, "#ef4444", 14);
+        ctx.fillStyle = "rgba(245,158,11,.14)";
+        ctx.fillRect(left + depthX, topY + 12, plateWidth - depthX, gap - depthY - 24);
+      }
+      function plate(y, color) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(left + depthX, y - depthY);
+        ctx.lineTo(left + plateWidth + depthX, y - depthY);
+        ctx.lineTo(left + plateWidth, y);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = "#94a3b8";
+        ctx.fillRect(left, y, plateWidth, 8);
+      }
+      plate(bottomY, charged ? "#dbeafe" : "#e2e8f0");
+
+      // Symbol density is qualitative and capped; readouts give exact values.
+      if (charged) {
+        var columns = Math.max(2, Math.min(12, Math.round(2 + Math.log2(1 + Math.abs(v.Q) / 1e-9) * 1.4)));
+        for (var row = 0; row < 2; row++) {
+          for (var column = 0; column < columns; column++) {
+            var fraction = (column + 0.5) / columns;
+            var back = (row + 0.5) / 2;
+            plusMinus(ctx, "−", left + fraction * plateWidth + back * depthX, bottomY - back * depthY - 1, "#1d4ed8", 21);
+          }
+        }
+        var arrowCount = Math.max(2, Math.min(20, Math.round(plateWidth / 310 * v.E / 12000)));
+        for (var j = 0; j < arrowCount; j++) {
+          var arrowX = left + depthX + (j + 0.5) / arrowCount * (plateWidth - depthX);
+          drawArrow(ctx, arrowX, topY + 20, arrowX, bottomY - depthY - 15, "rgba(14,116,144,.7)");
         }
       }
-
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "700 20px system-ui, sans-serif";
+      plate(topY, charged ? "#fee2e2" : "#e2e8f0");
+      if (charged) {
+        for (var r = 0; r < 2; r++) {
+          for (var c = 0; c < columns; c++) {
+            plusMinus(ctx, "+", left + (c + 0.5) / columns * plateWidth + (r + 0.5) / 2 * depthX, topY - (r + 0.5) / 2 * depthY - 1, "#b91c1c", 21);
+          }
+        }
+      }
       ctx.textAlign = "left";
-      ctx.fillText("Plattenkondensator", 26, 34);
-      ctx.font = "15px system-ui, sans-serif";
-      ctx.fillText("Mehr Zeichen: größere gespeicherte Ladungsmenge Q", 26, 61);
-      ctx.fillText("Mehr Feldlinien: größere Feldstärke E = U / d", 26, 84);
-      ctx.fillText(v.sourceConnected ? "Quelle angeschlossen: U fest, Q passt sich an" : "Quelle getrennt: Q fest, U passt sich an", 26, 107);
-
-      var wireY = bottomY + 42;
-      ctx.strokeStyle = "#475569";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(leftX + plateW / 2, bottomY);
-      ctx.lineTo(leftX + plateW / 2, wireY);
-      ctx.lineTo(rightX - plateW / 2, wireY);
-      ctx.lineTo(rightX - plateW / 2, bottomY);
-      ctx.stroke();
-      ctx.fillStyle = "#e2e8f0";
+      ctx.textBaseline = "alphabetic";
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "700 17px system-ui, sans-serif";
+      ctx.fillText("+Q", left + plateWidth + depthX + 12, topY - 10);
+      ctx.fillText("−Q", left + plateWidth + depthX + 12, bottomY + 28);
+      ctx.font = "16px system-ui, sans-serif";
+      ctx.fillText("A = " + formatNumber(v.A * 10000, 0) + " cm²", left + 50, topY - depthY - 15);
       ctx.strokeStyle = "#475569";
       ctx.lineWidth = 2;
-      ctx.fillRect(centerX - 78, wireY - 22, 156, 44);
-      ctx.strokeRect(centerX - 78, wireY - 22, 156, 44);
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "700 15px system-ui, sans-serif";
+      var rulerX = left + plateWidth + depthX + 35;
+      ctx.beginPath(); ctx.moveTo(rulerX, topY + 8); ctx.lineTo(rulerX, bottomY);
+      ctx.moveTo(rulerX - 7, topY + 8); ctx.lineTo(rulerX + 7, topY + 8);
+      ctx.moveTo(rulerX - 7, bottomY); ctx.lineTo(rulerX + 7, bottomY); ctx.stroke();
+      ctx.save(); ctx.translate(rulerX + 23, (topY + bottomY) / 2); ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center"; ctx.fillText("d = " + formatNumber(v.d * 100, 1) + " cm", 0, 0); ctx.restore();
+      ctx.fillStyle = "#475569";
+      ctx.font = "15px system-ui, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(v.sourceConnected ? formatNumber(v.U / 1000, 1) + " kV" : "getrennt", centerX, wireY + 1);
+      ctx.fillText("εᵣ = " + formatNumber(v.epsr, 1) + (v.epsr > 1.05 ? " · Dielektrikum" : " · Luft / Vakuum"), 615, 490);
+      ctx.fillText("Darstellung schematisch · Zeichen und Feldlinien qualitativ", 615, 518);
 
       readout.textContent =
         (v.sourceConnected ? "Spannungsquelle angeschlossen: U vorgegeben, Q verändert sich.\n" : "Spannungsquelle getrennt: Q bleibt konstant, U = Q/C verändert sich.\n") +
@@ -823,6 +902,7 @@
         "E = U/d = " + formatNumber(v.E / 1000, 1) + " kV/m\n" +
         "C = ε0·εr·A/d = " + formatNumber(v.C * 1e12, 2) + " pF\n" +
         "Q = C·U = " + formatNumber(v.Q * 1e9, 2) + " nC\n" +
+        "W = ½·C·U² = " + formatNumber(v.energy * 1e6, 2) + " µJ\n" +
         "σ = Q/A = " + formatNumber(v.sigma * 1e9, 2) + " nC/m²";
     }
 
@@ -846,6 +926,10 @@
         draw();
       });
     }
+    if (sourceButton && sourceEl) sourceButton.addEventListener("click", function () {
+      sourceEl.checked = !sourceEl.checked;
+      sourceEl.dispatchEvent(new Event("change", { bubbles: true }));
+    });
     if (resetBtn) resetBtn.addEventListener("click", reset);
     draw();
   }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-2.html">
-<meta name="musterloesung-source-sha256" content="f88370425e0026c57e2b955f457a587ba5d2217ef89e66c5acb28706888045d0">
+<meta name="musterloesung-source-sha256" content="3cddf6079634a5e84374bb31758665fefb6c1cde369132186bf897361f770e65">
 <title>Arduino Lernbaustein – Seiten 6–11 – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
@@ -118,6 +118,23 @@
     }
     .ide-checklist strong{display:block; margin-bottom:4px}
     .error-title{color:#b83a4b}
+    .error-example,
+    .programming-task{
+      border-top:1px solid var(--wb-line, #cbd7df);
+      margin-top:22px;
+      padding-top:16px;
+      min-width:0;
+    }
+    .error-code-pair{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+    .error-code-pair > div{min-width:0}
+    .error-code-pair p{margin-bottom:6px; font-weight:700}
+    .programming-task h3,
+    .error-example h3{font-size:1.1rem; overflow-wrap:anywhere}
+    .programming-steps li + li{margin-top:8px}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ide-checklist > div{
       background:var(--wb-block-bg);
       color:var(--wb-text);
@@ -127,7 +144,8 @@
     @media (max-width: 900px){
       .ide-transition,
       .ide-shot-grid,
-      .ide-checklist{grid-template-columns:1fr}
+      .ide-checklist,
+      .error-code-pair{grid-template-columns:1fr}
       .ide-logo-card img{min-height:130px}
     }
   </style>
@@ -182,9 +200,20 @@
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s8_aufgabe"><h3>Aufgabe: Ab welcher Dauer der Pausen kann dein Auge das Blinken nicht mehr erkennen?</h3><span class="solution-label">Eine mögliche Antwort</span><p>Es gibt keine feste Bildrate, oberhalb der ein menschliches Auge grundsätzlich nichts mehr unterscheiden kann. Die Flimmerverschmelzung hängt unter anderem von Helligkeit, Kontrast und Blickposition ab. Für gleiche Ein- und Ausschaltzeiten gilt näherungsweise f = 1000 / (2 · Pause in ms). Bei 10 ms pro Phase sind es 50 Hz, bei 5 ms 100 Hz; ob das Blinken noch sichtbar ist, muss ich unter festgehaltenen Bedingungen beobachten. Ein gemessener Grenzwert ist deshalb mein Versuchsergebnis und kein allgemeines Gesetz.</p><p>Stubenfliegen können schnelle Lichtänderungen deutlich besser zeitlich auflösen; in der Forschung wird eine klassische Flimmerverschmelzungsgrenze von etwa 230 Hz genannt. Das entspräche bei gleichen Phasen ungefähr 2,2 ms pro Phase. Eine Untersuchung zur Stubenfliege beschreibt darüber hinaus schnellere neuronale Verarbeitung unter speziellen bewegten Reizen; das ist nicht dasselbe wie eine allgemeine Kamera-Bildrate. Quellen: <a href='https://www.nature.com/articles/srep07861'>Humanes Flimmersehen</a>, <a href='https://www.nature.com/articles/s41467-026-72509-2'>Zeitliche Verarbeitung bei Stubenfliegen</a>.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s8_reflexion_reihenfolge"><h3>Reflexion – Reihenfolge verstehen</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich öffne den Sketch in der Arduino-IDE, verbinde das Board, wähle den passenden Board-Typ und den zugehörigen Port. Danach prüfe ich den Code mit Verify, korrigiere Fehler und starte den Upload. Erst nach der Abschlussmeldung kontrolliere ich, ob die LED wie vorhergesagt reagiert.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s8_fehlersuche"><h3>Fehlersuche</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ein fehlerfreier Sketch allein garantiert keinen Upload. Ich kontrolliere zuerst, ob das Board korrekt ausgewählt ist und der Port zum angeschlossenen Arduino gehört. Danach prüfe ich USB-Kabel und Verbindung. Ein falscher Port kann ein anderes Gerät ansprechen oder einen Verbindungsfehler erzeugen; ein falscher Board-Typ kann die Übersetzung oder das Uploadverfahren unpassend konfigurieren.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="blink-start"><h3>Aufgabe: Selber programmieren – Blink_Start</h3><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
+void loop() {
+  digitalWrite(13, HIGH); delay(1000);
+  digitalWrite(13, LOW); delay(1000);
+}</code></pre><p>Die LED mit Vorwiderstand liegt zwischen Pin 13 und GND. Vor einer Änderung der Schaltung wird die Versorgung getrennt. Nach Verify und Upload ist die LED abwechselnd 1 s an und 1 s aus. Für die Variation wird nur die erste Wartezeit auf 200 und die zweite auf 800 geändert und der geänderte Sketch erneut hochgeladen.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="bild_blink_zeitlinie"><h3>Übersetze Code in Zeit</h3><p>Bei delay(1000) für beide Phasen ist die LED von 0 bis 1 s an und von 1 bis 2 s aus. Der Zyklus dauert 2 s. Mit 200 ms an und 800 ms aus dauert ein Zyklus 1 s; die LED ist während 20 % der Zeit an.</p></article></section>
-<section data-wb-page="4" data-wb-page-title="Häufige Fehlermeldungen verstehen, Aufgaben"><h2>Häufige Fehlermeldungen verstehen</h2>
+<section data-wb-page="4" data-wb-page-title="Fehlermeldungen verstehen"><h2>Häufige Fehlermeldungen verstehen</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino2_error_categories"><h3>Fehler einordnen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Compilerfehler</td><td>expected ';' before ...</td></tr><tr><td>Upload/Verbindung</td><td>falscher COM-Port ausgewählt</td></tr><tr><td>Programmlogik</td><td>Pin 13 wird vorbereitet, aber Pin 12 geschaltet</td></tr><tr><td>Upload/Verbindung</td><td>Board-Typ falsch eingestellt</td></tr><tr><td>Compilerfehler</td><td>Variable falsch geschrieben: ton statt Ton</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino2_error_diagnosis"><h3>Stopp &amp; check: Wo suchst du zuerst?</h3><span class="solution-label">Eine mögliche Antwort</span><p>Ich ergänze das Semikolon direkt hinter digitalWrite(13, HIGH). Die nachfolgende delay-Zeile wird gemeldet, weil der Compiler dort die vorherige, noch nicht abgeschlossene Anweisung bemerkt. exit status 1 zeigt nur das Scheitern an; die konkrete Fehlermeldung davor nennt den benötigten Prüfschritt. Danach starte ich Verify erneut.</p></article>
+</section>
+<section data-wb-page="5" data-wb-page-title="Selber programmieren: Blink-Aufgaben"><h2>Aufgabe: Selber programmieren</h2>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="arduino2_programming_protocol"><h3>Sicherung: Dein eigener Sketch im Test</h3><span class="solution-label">Eine mögliche Antwort</span><p>Eine mögliche Antwort bei erfolgreichem Test von 4.3: Ich habe den Sketch Blink_Windrad mit einer LED und Vorwiderstand an Pin 13 und GND umgesetzt. Meine Wartezeiten sind 1000, 500, 1000 und 1500 ms. Ich erwarte zweimal je eine Sekunde Licht, getrennt durch 0,5 s und 1,5 s Dunkelheit; die vollständige Folge dauert 4 s. Beim erfolgreichen Test entspricht das beobachtete Blinken diesem Rhythmus. Falls die LED aus bleibt, prüfe ich zuerst bei getrennter Stromversorgung, ob die Leitung wirklich an Pin 13 statt an 5 V liegt und LED sowie Widerstand korrekt verbunden sind. Mein eigenes Protokoll muss die tatsächlich beobachtete Wirkung und das wirkliche Ergebnis meiner Prüfung nennen.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_4_3"><h3>4.3 Blinkrhythmus am Windrad</h3><pre><code>void setup() { pinMode(13, OUTPUT); }
 void loop() {
   digitalWrite(13, HIGH); delay(1000);
@@ -196,6 +225,7 @@ void loop() {
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_4_5"><h3>4.5 Einmal blinken oder dauerhaft leuchten?</h3><p>Im ersten Programm steht das Schalten in setup(): Die LED ist beim Start 500 ms an und danach dauerhaft aus. Im zweiten Programm steht es in loop(): LOW wird am Ende sofort beim nächsten Durchlauf wieder durch HIGH ersetzt. Die LED ist deshalb fast durchgehend an; es gibt keine längere LOW-Pause.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_4_6"><h3>4.6 Ampel</h3><p>Beispielpins: Grün 8, Gelb 9, Rot 10; jede LED erhält einen eigenen Vorwiderstand.</p><pre><code>void setup() {
   pinMode(8, OUTPUT); pinMode(9, OUTPUT); pinMode(10, OUTPUT);
+  digitalWrite(8, LOW); digitalWrite(9, LOW); digitalWrite(10, LOW);
 }
 void loop() {
   digitalWrite(8, HIGH); delay(3000);
@@ -203,9 +233,9 @@ void loop() {
   digitalWrite(9, LOW); digitalWrite(10, HIGH); delay(3000);
   digitalWrite(9, HIGH); delay(1000);
   digitalWrite(10, LOW); digitalWrite(9, LOW);
-}</code></pre></article>
+}</code></pre><p>Der Ablauf ist Grün, Gelb, Rot, Rot-Gelb, dann wieder Grün. Alle LEDs starten ausgeschaltet; die langen Phasen dauern hier 3 s und die kurzen 1 s. Andere passende Zeiten sind möglich.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_4_7"><h3>4.7 Liste der bisher verwendeten Funktionen</h3><p>void setup() { ... }: einmalige Vorbereitung; void loop() { ... }: wiederholter Ablauf; pinMode(13, OUTPUT): Ausgang einstellen; digitalWrite(13, HIGH): Ausgang einschalten; delay(500): 500 ms warten. LOW ist der Gegenwert zu HIGH.</p></article></section>
-<section data-wb-page="5" data-wb-page-title="5 Töne erzeugen - Musik verstehen"><h2>5. Töne erzeugen - Musik verstehen</h2>
+<section data-wb-page="6" data-wb-page-title="5 Töne erzeugen - Musik verstehen"><h2>5. Töne erzeugen - Musik verstehen</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s10_vf"><h3>Verständnisfragen</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Die Frequenz gibt die Zahl der Schwingungen pro Sekunde an. Eine höhere Frequenz wird im hörbaren Bereich als höherer Ton wahrgenommen.</li><li>C ist die weiße Taste unmittelbar links von einer Zweiergruppe schwarzer Tasten. Dieses Muster wiederholt sich über die Tastatur.</li><li>Jede Note lässt sich durch eine Frequenz und eine Dauer beschreiben. tone() kann den passenden Ton erzeugen; mit Wartezeiten und noTone() lassen sich Dauer und Pausen strukturieren. Der Klang entspricht dabei nicht vollständig dem Klang eines Klaviers.</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino2_tone_pairs"><h3>Verbinde Ton-Code und Bedeutung</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td><code>tone(11, 262);</code></td><td>Spielt am Pin 11 einen Ton mit 262 Hz.</td></tr><tr><td><code>delay(500);</code></td><td>Wartet eine halbe Sekunde.</td></tr><tr><td><code>noTone(11);</code></td><td>Beendet den Ton am Pin 11.</td></tr><tr><td>hohe Frequenz</td><td>höher klingender Ton</td></tr></tbody></table></div></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_5_1"><h3>5.1 Eine eigene Melodie spielen</h3><pre><code>void setup() {}
@@ -216,7 +246,7 @@ void loop() {
   tone(11, 392); delay(600);
   noTone(11); delay(1000);
 }</code></pre><p>Diese mögliche eigene Melodie spielt C, D, E und G mit den gerundeten Frequenzen aus dem Material. Der letzte Ton dauert doppelt so lang; danach folgt eine Pause. Eine geeignete Piezo-Ausgabe oder Treiberstufe verhindert, dass ein niederohmiger Lautsprecher den Pin überlastet. Eine Verdopplung der Frequenz verschiebt einen Ton um eine Oktave nach oben.</p></article></section>
-<section data-wb-page="6" data-wb-page-title="Unterprogramme"><h2>6. Unterprogramme (Funktionen)</h2>
+<section data-wb-page="7" data-wb-page-title="Unterprogramme"><h2>6. Unterprogramme (Funktionen)</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s11_denken"><h3>Denken wie ein Programmierer</h3><span class="solution-label">Eine mögliche Antwort</span><p>Das Zähneputzen ist ein wiederkehrender Teil eines Morgenablaufs. Ich kann die Einzelschritte einmal als Unterprogramm beschreiben und im Tagesablauf mit dem Namen zaehnePutzen() aufrufen. Der Name beschreibt den Zweck, während die einzelnen Arbeitsschritte in der Definition stehen.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="arduino2_function_order"><h3>Was passiert bei einem Funktionsaufruf?</h3><ol><li>Arduino erreicht die Zeile mit dem Funktionsaufruf</li><li>Arduino springt in die Funktion</li><li>Alle Zeilen in der Funktion werden ausgeführt</li><li>Arduino kehrt zur nächsten Zeile nach dem Aufruf zurück</li><li>Das Hauptprogramm läuft weiter</li></ol></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="s11_vf"><h3>Verständnisfragen</h3><span class="solution-label">Eine mögliche Antwort</span><ol><li>Ein Refrain wird an mehreren Stellen wiederholt. Ebenso wird ein Unterprogramm einmal definiert und an passenden Stellen aufgerufen.</li><li>Unterprogramme verringern doppelten Code, geben Abläufen verständliche Namen und erleichtern Änderungen: Ich ändere die Definition statt jede Kopie.</li><li>Ein Arduino-Pin kann nur einen begrenzten Strom liefern. Ein größerer Verbraucher könnte ihn überlasten; deshalb wird die Last über einen passenden Treiber und eine geeignete Versorgung angeschlossen.</li><li>Der Transistor arbeitet hier als steuerbarer Schalter. Ein kleines Steuersignal beeinflusst den Laststrom; bei einem Bipolartransistor gehört ein passend dimensionierter Basiswiderstand dazu. Versorgung und Schaltung müssen zur Last passen, und die beteiligten Stromkreise brauchen einen gemeinsamen Bezugspunkt.</li></ol></article>
@@ -230,7 +260,7 @@ void refrain() {
   tone(11, 262); delay(300); noTone(11);
 }</code></pre><p>Beispiel: Werden 7 Anweisungszeilen zweimal benötigt, ersetzen zwei Aufrufe 14 kopierte Zeilen. Die Definition enthält die 7 Zeilen nur einmal; ohne Funktionskopf und Klammern werden somit 5 Anweisungszeilen eingespart.</p></article>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="material_5_3"><h3>5.3 Lautsprecher über einen Transistor ansteuern</h3><p>Bei einer passenden NPN-Schaltstufe liegt der Emitter an GND und der Kollektor am Lastzweig. Der Arduino steuert die Basis über einen passend dimensionierten Basiswiderstand. Der Laststrom kommt aus einer zur Last passenden Versorgung; Arduino und Treiber teilen GND. tone(11, 440) liefert das Steuersignal, noTone(11) beendet es. Anders als die vereinfachte Materialzeichnung muss die reale Schaltung Basisstrom, Lautsprecherstrom und die benötigte Schutz-/Koppelbeschaltung berücksichtigen. Vin ist nicht automatisch ein geregelter, beliebig belastbarer 5-V-Ausgang.</p></article></section>
-<section data-wb-page="7" data-wb-page-title="Multiple Choice"><h2>Multiple Choice und Abgabe</h2>
+<section data-wb-page="8" data-wb-page-title="Multiple Choice"><h2>Multiple Choice und Abgabe</h2>
 <div class="wb-section-break"></div><article class="solution-block" data-solution="mcq-arduino-2"><h3>Multiple Choice – Seiten 6–11</h3><h4>1. Wozu dient die Arduino-IDE?</h4><p>B – Zum Schreiben und Übertragen von Programmen</p><p>B – In der IDE schreibt und überträgt man Programme.</p><h4>2. Welche Funktion wird nur einmal beim Start ausgeführt?</h4><p>C – setup()</p><p>C – setup() läuft nur einmal beim Start.</p><h4>3. Warum blinkt eine LED im Blink-Programm?</h4><p>B – Weil HIGH und LOW abwechselnd gesetzt werden</p><p>B – Der Pin wird ein- und ausgeschaltet.</p><h4>4. Wovon hängt die Tonhöhe ab?</h4><p>C – Von der Frequenz</p><p>C – Je höher die Frequenz, desto höher der Ton.</p><h4>5. Was ist ein Unterprogramm?</h4><p>B – Ein Teilprogramm, das wiederverwendet wird</p><p>B – Unterprogramme vermeiden doppelten Code.</p><h4>6. Warum braucht man einen Transistor?</h4><p>C – Um große Ströme mit kleinen Signalen zu schalten</p><p>C – Der Transistor schützt den Arduino und schaltet größere Verbraucher.</p></article>
 </section>
 </div>

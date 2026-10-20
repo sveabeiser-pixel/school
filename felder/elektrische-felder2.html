@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder 2: Potenzial und Kondensator</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
   <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -57,7 +57,7 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <p>Werden die Platten eines geladenen Kondensators weiter auseinandergezogen, muss gegen die anziehenden Feldkräfte Arbeit verrichtet werden. Die gespeicherte elektrische Energie und die Spannung steigen. Ein Elektroskop bzw. Elektrometer kann diese Spannungsänderung sichtbar machen, weil bei größerer Spannung mehr Ladung auf das Messgerät übertragen wird.</p>
+    <p>Werden die Platten eines geladenen, von der Spannungsquelle getrennten Kondensators weiter auseinandergezogen, muss gegen die anziehenden Feldkräfte Arbeit verrichtet werden. Die gespeicherte elektrische Energie und die Spannung steigen. Ein Elektroskop bzw. Elektrometer kann diese Spannungsänderung sichtbar machen, weil bei größerer Spannung mehr Ladung auf das Messgerät übertragen wird.</p>
     <div class="wb-section-break"></div>
 
     <div class="wb-callout">
@@ -424,7 +424,7 @@
     <h1>Der Kondensator als Ladungsspeicher</h1>
     <p>Kondensatoren speichern getrennte Ladungen. Bei Superkondensatoren wird diese Eigenschaft technisch genutzt, zum Beispiel um Bremsenergie in Fahrzeugen kurzzeitig zu speichern und später wieder abzugeben.</p>
     <p>Ein Plattenkondensator besteht aus zwei leitenden Platten, die sich nicht berühren. Zwischen ihnen befindet sich Luft, Plexiglas oder ein anderes nicht leitendes Material. Dieses Material nennt man Dielektrikum.</p>
-    <p>Ohne angeschlossene Spannungsquelle sind die beweglichen Ladungen gleich verteilt; der Kondensator ist nach außen ungeladen. Legst du eine Spannung an, dann wird die mit dem Pluspol verbundene Platte positiv und die mit dem Minuspol verbundene Platte negativ geladen. Zwischen den Platten entsteht ein elektrisches Feld, und der Kondensator speichert elektrische Energie.</p>
+    <p>Ein zunächst ungeladener Kondensator trägt auf keiner Platte einen Ladungsüberschuss. Legst du eine Spannung an, dann wird die mit dem Pluspol verbundene Platte positiv und die mit dem Minuspol verbundene Platte negativ geladen. Zwischen den Platten entsteht ein elektrisches Feld, und der Kondensator speichert elektrische Energie. Trennst du anschließend die Quelle ab, bleiben die getrennten Ladungen im idealen Kondensator erhalten.</p>
     <p>Die gespeicherte Ladungsmenge hängt von der angelegten Spannung ab. Bei einem bestimmten Kondensator ist \(Q\) proportional zu \(U\). Der Quotient aus Ladung und Spannung heißt Kapazität \(C\). Sie beschreibt, wie viel Ladung pro Volt gespeichert werden kann.</p>
     <p>Trägst du die Ladungsmenge \(Q\) gegen die Spannung \(U\) in ein Diagramm ein, erhältst du idealisiert eine Ursprungsgerade. Ihre Steigung ist die Kapazität. Anschaulich ist die Kapazität das Fassungsvermögen des Kondensators für Ladung bei einer bestimmten Spannung.</p>
     <div class="wb-section-break"></div>
@@ -477,39 +477,40 @@
     <div class="field-sim-card" data-field-sim="capacitor">
       <div class="field-sim-grid">
         <div class="field-sim-controls">
-          <h2>Simulation: Plattenkondensator</h2>
-          <p>Verändere Spannung, Plattenabstand, Plattenfläche und Dielektrizitätszahl. Beobachte, wie viele Ladungszeichen auf den Platten sitzen und wie dicht die Feldlinien im Inneren liegen.</p>
+          <h2>Simulation: Kondensator-Labor</h2>
+          <p>Verändere Plattenabstand und Plattenfläche. Beobachte Kapazität, Plattenladung und Energie. Vergleiche danach mit abgetrennter Spannungsquelle.</p>
 
-          <label>Spannung U</label>
-          <input data-role="voltage" type="range" min="0.2" max="5.0" value="2.0" step="0.1">
-          <div class="field-sim-mono">U = <span data-role="voltage-value">2,0</span> kV</div>
+          <label for="ef2-cap-voltage">Quellspannung U₀</label>
+          <input id="ef2-cap-voltage" data-role="voltage" type="range" min="0" max="5.0" value="2.0" step="0.1">
+          <div class="field-sim-mono">U₀ = <span data-role="voltage-value">2,0</span> kV</div>
 
-          <label style="font-weight:normal; margin-top:12px">
+          <button class="wb-btn primary" type="button" data-role="source-toggle" aria-pressed="true">Spannungsquelle abtrennen</button>
+          <label class="capacitor-source-check">
             <input data-role="source-connected" type="checkbox" checked>
             Spannungsquelle angeschlossen
           </label>
           <div class="field-sim-mono">Aus: Ladung \(Q\) bleibt konstant, Spannung \(U\) ändert sich mit der Kapazität.</div>
 
-          <label>Plattenabstand d</label>
-          <input data-role="distance" type="range" min="1.0" max="10.0" value="4.0" step="0.2">
+          <label for="ef2-cap-distance">Plattenabstand d</label>
+          <input id="ef2-cap-distance" data-role="distance" type="range" min="1.0" max="10.0" value="4.0" step="0.2">
           <div class="field-sim-mono">d = <span data-role="distance-value">4,0</span> cm</div>
 
-          <label>Plattenfläche A</label>
-          <input data-role="area" type="range" min="50" max="400" value="200" step="10">
+          <label for="ef2-cap-area">Fläche A einer Platte</label>
+          <input id="ef2-cap-area" data-role="area" type="range" min="50" max="400" value="200" step="10">
           <div class="field-sim-mono">A = <span data-role="area-value">200</span> cm²</div>
 
-          <label>Dielektrizitätszahl εᵣ</label>
-          <input data-role="epsilon" type="range" min="1.0" max="8.0" value="1.0" step="0.1">
+          <label for="ef2-cap-epsilon">Dielektrizitätszahl εᵣ</label>
+          <input id="ef2-cap-epsilon" data-role="epsilon" type="range" min="1.0" max="8.0" value="1.0" step="0.1">
           <div class="field-sim-mono">εᵣ = <span data-role="epsilon-value">1,0</span></div>
 
           <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            <button class="wb-btn" type="button" data-role="reset">Zurücksetzen</button>
             <a class="wb-btn" href="felder-simulationen.html" target="_blank" rel="noopener">Simulation einzeln öffnen</a>
           </div>
         </div>
         <div>
-          <canvas data-role="canvas" width="980" height="560" aria-label="Simulation eines Plattenkondensators mit Feldlinien und Ladungen"></canvas>
-          <div class="field-sim-mono" data-role="readout"></div>
+          <canvas data-role="canvas" width="980" height="560" role="img" aria-label="Plattenkondensator mit räumlich dargestellten Platten, Ladungen, Feldlinien und trennbarer Spannungsquelle. Die aktuellen Zahlenwerte stehen direkt darunter."></canvas>
+          <details><summary>Alle Werte und Formeln</summary><div class="field-sim-mono" data-role="readout"></div></details>
         </div>
       </div>
       <div class="ef-note-grid" style="margin-top:14px">
@@ -520,9 +521,29 @@
         <div class="field-sim-note">
           <strong>Der entscheidende Unterschied</strong>
           <p>Ist die Spannungsquelle getrennt, kann keine Ladung nachfließen: \(Q\) bleibt konstant. Ist sie angeschlossen, hält sie \(U\) konstant und kann zusätzliche Ladung auf die Platten transportieren.</p>
-          <p><a class="wb-btn primary" href="felder-simulationen.html" target="_blank" rel="noopener">Simulation einzeln öffnen</a></p>
+          <p>Die Quellspannung U₀ bleibt eingestellt. Die Kondensatorspannung U kann nach dem Abtrennen davon abweichen. Beim erneuten Anschließen gleicht die Quelle die Spannung wieder an U₀ an.</p>
         </div>
       </div>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <p class="wb-muted">Modell: ideale parallele Platten, homogenes Feld ohne Randeffekte, kein Ladungsverlust und sofortiger Spannungsausgleich beim Anschließen. Dielektrika füllen den ganzen Zwischenraum. Abstände, Ladungszeichen und Feldlinien sind schematisch dargestellt. Die Energieanzeige zeigt die im Kondensator gespeicherte Feldenergie.</p>
+    <div class="wb-section-break"></div>
+
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef2_essay_kondensatorlabor",
+        "title":"Experiment: Was bleibt konstant?",
+        "hint":"Vermute zuerst, teste dann. Starte jeden Versuch mit Zurücksetzen: U₀ = 2,0 kV, d = 4,0 cm, A = 200 cm² und εᵣ = 1. Notiere C, Q, U und W vor und nach jeder Änderung.",
+        "storagePrefix":"ef_",
+        "fields":[
+          {"label":"1. Abstand ändern bei angeschlossener Quelle","key":"quelle_angeschlossen","kind":"textarea","prompt":"Lass die Quelle angeschlossen und vergrößere nur d von 4,0 auf 8,0 cm. Welche der Größen C, Q, U und W bleiben konstant, welche halbieren oder verdoppeln sich? Prüfe deine Vorhersage mit den Anzeigen und begründe mit C = ε₀A/d, Q = CU und W = ½CU².","placeholder":"Vermutung, Werte vorher/nachher und Begründung …"},
+          {"label":"2. Abstand ändern nach dem Abtrennen","key":"quelle_getrennt","kind":"textarea","prompt":"Setze zurück und trenne zuerst die Spannungsquelle ab. Vergrößere danach nur d von 4,0 auf 8,0 cm. Vergleiche C, Q, U und W mit Versuch 1. Warum bleibt die Ladung erhalten? Woher stammt die zusätzliche Feldenergie? Nutze U = Q/C und W = Q²/(2C).","placeholder":"Vermutung, Werte vorher/nachher und Energiebilanz …"},
+          {"label":"3. Plattenfläche verdoppeln","key":"flaeche_vergleich","kind":"textarea","prompt":"Verdopple nach dem Zurücksetzen nur A von 200 auf 400 cm² bei angeschlossener Quelle. Wiederhole den Versuch nach erneutem Zurücksetzen und Abtrennen der Quelle. Vergleiche C, Q, U und W in beiden Fällen. Erkläre, warum eine größere Kapazität je nach Anschlusszustand zu mehr oder weniger gespeicherter Energie führt.","placeholder":"Vorhersage, beide Messwertvergleiche und Erklärung …"}
+        ]
+      }
+      </script>
     </div>
     <div class="wb-section-break"></div>
 
@@ -1294,11 +1315,15 @@
 
     <h2>Quelle</h2>
     <p class="wb-muted">Inhaltlich orientiert an Dorn/Bader: Physik Kursstufe, Kapitel 1 „Das elektrische Feld“, sowie Bildungsplan BW Physik V3.0. Der Text wurde für diese interaktive Schülerseite neu formuliert.</p>
+    <ul>
+      <li><a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet/versuche/kapazitaet-labor-einstieg-simulation-von-phet" target="_blank" rel="noopener">LEIFIphysik / PhET: Kapazität-Labor als Anregung für die eigene Simulation</a></li>
+      <li><a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet" target="_blank" rel="noopener">LEIFIphysik: Kapazität und Energie eines Kondensators</a></li>
+    </ul>
   </section>
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261005-2"></script>
+  <script src="../assets/felder-simulations.js?v=20261020-kondensator"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

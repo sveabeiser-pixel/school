@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Felder-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -66,7 +66,7 @@
 
     <div class="wb-callout">
       <strong>Formeln der Simulation:</strong>
-      <p class="ef-formula">\(E=\frac{U}{d}\), \(C=\varepsilon_0\varepsilon_r\frac{A}{d}\), \(Q=C\cdot U\), \(\sigma=\frac{Q}{A}\)</p>
+      <p class="ef-formula">\(E=\frac{U}{d}\), \(C=\varepsilon_0\varepsilon_r\frac{A}{d}\), \(Q=C\cdot U\), \(\sigma=\frac{Q}{A}\), \(W=\frac12 CU^2\)</p>
       <p>Die Feldliniendichte folgt \(E\). Die Zahl der Plus- und Minuszeichen folgt der gespeicherten Ladungsmenge \(Q\).</p>
     </div>
     <div class="wb-section-break"></div>
@@ -76,30 +76,31 @@
         <div class="field-sim-controls">
           <h2>Parameter verändern</h2>
 
-          <label>Spannung U</label>
-          <input data-role="voltage" type="range" min="0.2" max="5.0" value="2.0" step="0.1">
-          <div class="field-sim-mono">U = <span data-role="voltage-value">2,0</span> kV</div>
+          <label for="fs-cap-voltage">Quellspannung U₀</label>
+          <input id="fs-cap-voltage" data-role="voltage" type="range" min="0" max="5.0" value="2.0" step="0.1">
+          <div class="field-sim-mono">U₀ = <span data-role="voltage-value">2,0</span> kV</div>
 
-          <label style="font-weight:normal; margin-top:12px">
+          <button class="wb-btn primary" type="button" data-role="source-toggle" aria-pressed="true">Spannungsquelle abtrennen</button>
+          <label class="capacitor-source-check">
             <input data-role="source-connected" type="checkbox" checked>
             Spannungsquelle angeschlossen
           </label>
           <div class="field-sim-mono">Aus: Ladung \(Q\) bleibt konstant, Spannung \(U\) ändert sich mit der Kapazität.</div>
 
-          <label>Plattenabstand d</label>
-          <input data-role="distance" type="range" min="1.0" max="10.0" value="4.0" step="0.2">
+          <label for="fs-cap-distance">Plattenabstand d</label>
+          <input id="fs-cap-distance" data-role="distance" type="range" min="1.0" max="10.0" value="4.0" step="0.2">
           <div class="field-sim-mono">d = <span data-role="distance-value">4,0</span> cm</div>
 
-          <label>Plattenfläche A</label>
-          <input data-role="area" type="range" min="50" max="400" value="200" step="10">
+          <label for="fs-cap-area">Fläche A einer Platte</label>
+          <input id="fs-cap-area" data-role="area" type="range" min="50" max="400" value="200" step="10">
           <div class="field-sim-mono">A = <span data-role="area-value">200</span> cm²</div>
 
-          <label>Dielektrizitätszahl εr</label>
-          <input data-role="epsilon" type="range" min="1.0" max="8.0" value="1.0" step="0.1">
+          <label for="fs-cap-epsilon">Dielektrizitätszahl εr</label>
+          <input id="fs-cap-epsilon" data-role="epsilon" type="range" min="1.0" max="8.0" value="1.0" step="0.1">
           <div class="field-sim-mono">εr = <span data-role="epsilon-value">1,0</span></div>
 
           <div class="wb-row" style="margin-top:10px">
-            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+            <button class="wb-btn" type="button" data-role="reset">Zurücksetzen</button>
           </div>
 
           <div class="field-sim-note">
@@ -427,7 +428,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261005-2"></script>
+  <script src="../assets/felder-simulations.js?v=20261020-kondensator"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

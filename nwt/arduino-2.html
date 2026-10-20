@@ -116,6 +116,23 @@
     }
     .ide-checklist strong{display:block; margin-bottom:4px}
     .error-title{color:#b83a4b}
+    .error-example,
+    .programming-task{
+      border-top:1px solid var(--wb-line, #cbd7df);
+      margin-top:22px;
+      padding-top:16px;
+      min-width:0;
+    }
+    .error-code-pair{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+    .error-code-pair > div{min-width:0}
+    .error-code-pair p{margin-bottom:6px; font-weight:700}
+    .programming-task h3,
+    .error-example h3{font-size:1.1rem; overflow-wrap:anywhere}
+    .programming-steps li + li{margin-top:8px}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ide-checklist > div{
       background:var(--wb-block-bg);
       color:var(--wb-text);
@@ -125,7 +142,8 @@
     @media (max-width: 900px){
       .ide-transition,
       .ide-shot-grid,
-      .ide-checklist{grid-template-columns:1fr}
+      .ide-checklist,
+      .error-code-pair{grid-template-columns:1fr}
       .ide-logo-card img{min-height:130px}
     }
   </style>
@@ -462,21 +480,28 @@
 
       <div class="wb-section-break"></div>
 
-      <div class="wb-soft-callout">
-        <strong>Jetzt geht's los, du schreibst dein erstes Programm! Folge den Anweisungen:</strong>
-        <div>
-          Ab hier bist du nicht mehr nur beim Anschließen, sondern beim Programmieren.
-          Stecke zuerst das Kabel, das an dem Pin 5V hing, an Pin 13.
-          Öffne dann auf dem Desktop das Programm <b>Arduino</b>. Das ist die Arduino-IDE,
-          also die Umgebung, in der du deinen Sketch schreibst und hochlädst.<br>
-          Stelle Board und Port ein, wie du es im letzten Kapitel gelernt hast.
-          Schreibe anschließend den Code aus dem unteren Bild in den Texteditor der IDE ab
-          und lies dir alle Begründungen genau durch.<br>
-          Klicke zuerst auf <b>Verify</b>, damit die IDE deinen Code prüft.
-          Wenn keine Fehlermeldung erscheint, klickst du auf <b>Upload</b> und überträgst
-          das Programm auf den Arduino.
-        </div>
-      </div>
+      <h3 id="blink-start">Aufgabe: Selber programmieren</h3>
+      <p><b>Wechsle jetzt in die Arduino-IDE und bringe deine eigene LED zum Blinken.</b>
+        Das Bild und der Codeblock darunter sind deine Vorlage. Nur Lesen reicht hier nicht:
+        Du schreibst, überträgst und testest den Sketch selbst am Board.</p>
+      <ol class="programming-steps">
+        <li><b>Schaltung vorbereiten:</b> Trenne zuerst die Stromversorgung. Verbinde die Leitung,
+          die bisher an 5 V lag, mit Pin 13. LED und Vorwiderstand bleiben in Reihe;
+          die Rückleitung bleibt an GND. Verbinde das Board anschließend wieder per USB.</li>
+        <li><b>Sketch schreiben:</b> Öffne die Arduino-IDE, lege einen neuen Sketch an und speichere
+          ihn als <code>Blink_Start</code>. Tippe den Blink-Code aus der Vorlage ab.
+          Im Editor darf es jeweils nur ein <code>setup()</code> und ein <code>loop()</code> geben.</li>
+        <li><b>Prüfen und übertragen:</b> Wähle Board und Port aus. Klicke zuerst auf
+          <b>Verify</b>. Korrigiere mögliche Fehler, lade den Sketch mit <b>Upload</b> hoch
+          und warte auf die Abschlussmeldung.</li>
+        <li><b>Beobachten:</b> Prüfe, ob die LED abwechselnd eine Sekunde an und eine Sekunde aus ist.
+          Notiere deine Beobachtung und mögliche Schwierigkeiten unten bei der Reflexion.</li>
+        <li><b>Selbst verändern:</b> Sage zuerst voraus, was bei 200 ms an und 800 ms aus passieren wird.
+          Ändere anschließend die beiden Wartezeiten im Sketch, lade ihn erneut hoch und vergleiche
+          deine Vorhersage mit dem tatsächlichen Blinken.</li>
+      </ol>
+
+      <div class="wb-section-break"></div>
 
       <div class="media-grid">
         <div class="pdfpage">
@@ -638,68 +663,87 @@ void loop() {
       </div>
     </section>
 
-    <section data-wb-page="4" data-wb-page-title="Häufige Fehlermeldungen verstehen, Aufgaben">
+    <section data-wb-page="4" data-wb-page-title="Fehlermeldungen verstehen">
       <h2>Häufige Fehlermeldungen verstehen</h2>
 
-      <div class="wb-soft-callout">
-        <strong>Hinweis</strong>
-        <div>
-          Die Entwicklungsumgebung zeigt Fehlermeldungen teils auf Deutsch,
-          teils auf Englisch an. Die folgende Übersicht hilft dir, diese
-          Meldungen richtig zu deuten.
+      <p>Eine Fehlermeldung ist ein Hinweis auf die Ursache. Unterscheide zuerst:
+        Scheitert schon <b>Verify</b>, scheitert erst <b>Upload</b> oder läuft das Programm
+        anders als erwartet? Die genaue Formulierung der Meldung kann je nach IDE,
+        Board und Compiler abweichen.</p>
+      <ol class="programming-steps">
+        <li>Lies die erste konkrete Fehlermeldung in der Ausgabe, nicht nur die letzte Zeile
+          <code>exit status 1</code>. Diese sagt nur, dass der Vorgang gescheitert ist.</li>
+        <li>Prüfe die genannte Codezeile <b>und die Zeile davor</b>. Dort kann die eigentliche Ursache liegen.</li>
+        <li>Ändere eine Sache und klicke erneut auf <b>Verify</b>. Weitere Meldungen können Folgefehler sein.</li>
+      </ol>
+
+      <div class="error-example">
+        <h3 class="error-title">Beispiel 1: Ein Semikolon fehlt</h3>
+        <p>Bei einer Meldung wie <code>expected ';' before ...</code> fehlt häufig ein
+          Semikolon am Ende einer Anweisung. Hier entdeckt der Compiler das Problem erst bei
+          <code>delay</code>; die Ursache liegt in der Zeile davor.</p>
+        <div class="error-code-pair">
+          <div><p>Fehler im Beispiel</p><div class="code-card"><pre><code>digitalWrite(13, HIGH)
+delay(1000);</code></pre></div></div>
+          <div><p>Korrigiert</p><div class="code-card"><pre><code>digitalWrite(13, HIGH);
+delay(1000);</code></pre></div></div>
         </div>
       </div>
 
-      <div class="grid2">
-        <div class="wb-soft-callout">
-          <strong class="error-title">Problem beim Hochladen</strong>
-          <div>
-            Meistens hast du nicht die richtige Schnittstelle oder das
-            richtige Board ausgewählt.
-            <br>
-            Prüfe die Einstellungen wie auf <b>Seite 7</b> beschrieben.
-          </div>
-        </div>
-
-        <div class="wb-soft-callout">
-          <strong class="error-title">expected “;” before …</strong>
-          <div>
-            Auf Deutsch: <i>„Ich erwarte einen Strichpunkt“</i>.
-            <br>
-            Häufig fehlt am Ende einer Zeile ein <code>;</code>.
-            Das passiert besonders oft am Anfang.
-          </div>
-        </div>
-
-        <div class="wb-soft-callout">
-          <strong class="error-title">expected “)” before …</strong>
-          <div>
-            Es fehlt eine runde Klammer
-            <code>(</code> oder <code>)</code>,
-            <br>
-            oder es wurde ein Strichpunkt statt eines Kommas gesetzt.
-          </div>
-        </div>
-
-        <div class="wb-soft-callout">
-          <strong class="error-title">a function-definition is not allowed here</strong>
-          <div>
-            Prüfe die <b>geschweiften Klammern</b> <code>{ }</code>.
-            <br>
-            Wahrscheinlich ist eine Klammer zu viel oder zu wenig vorhanden.
-          </div>
-        </div>
-
-        <div class="wb-soft-callout">
-          <strong class="error-title">… was not declared in this scope</strong>
-          <div>
-            Der Compiler kennt etwas nicht.
-            <br>
-            Wahrscheinlich hast du dich bei einem Namen
-            (Variable oder Funktion) vertippt.
-          </div>
+      <div class="error-example">
+        <h3 class="error-title">Beispiel 2: Eine runde Klammer fehlt</h3>
+        <p>Die Meldung <code>expected ')' before ...</code> kann auf eine nicht geschlossene
+          Argumentliste hinweisen. Prüfe beide Klammern und das Komma zwischen den Argumenten.</p>
+        <div class="error-code-pair">
+          <div><p>Fehler im Beispiel</p><div class="code-card"><pre><code>digitalWrite(13, HIGH;</code></pre></div></div>
+          <div><p>Korrigiert</p><div class="code-card"><pre><code>digitalWrite(13, HIGH);</code></pre></div></div>
         </div>
       </div>
+
+      <div class="error-example">
+        <h3 class="error-title">Beispiel 3: Ein Funktionsname ist falsch geschrieben</h3>
+        <p>Bei <code>'digitalwrite' was not declared in this scope</code> kennt der Compiler
+          den angegebenen Namen nicht. Im Beispiel muss das <b>W groß</b> sein.
+          Bei Variablen kann diese Meldung auch bedeuten, dass sie nicht oder nur in einem anderen Bereich angelegt wurden.</p>
+        <div class="error-code-pair">
+          <div><p>Fehler im Beispiel</p><div class="code-card"><pre><code>digitalwrite(13, HIGH);</code></pre></div></div>
+          <div><p>Korrigiert</p><div class="code-card"><pre><code>digitalWrite(13, HIGH);</code></pre></div></div>
+        </div>
+      </div>
+
+      <div class="error-example">
+        <h3 class="error-title">Beispiel 4: setup() ist nicht geschlossen</h3>
+        <p>Steht <code>loop()</code> versehentlich innerhalb von <code>setup()</code>, kann
+          <code>a function-definition is not allowed here</code> erscheinen.
+          Hier fehlt die schließende geschweifte Klammer <b>vor</b> <code>void loop()</code>.</p>
+        <div class="error-code-pair">
+          <div><p>Fehler im Beispiel</p><div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+
+void loop() {
+  digitalWrite(13, HIGH);
+}</code></pre></div></div>
+          <div><p>Korrigiert</p><div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+}</code></pre></div></div>
+        </div>
+      </div>
+
+      <div class="error-example">
+        <h3 class="error-title">Beispiel 5: Verify klappt, Upload scheitert</h3>
+        <p>Zum Beispiel meldet die IDE, dass der Port nicht geöffnet werden kann, oder zeigt
+          einen Fehler mit <code>avrdude</code>. Prüfe Board-Auswahl, Port und USB-Verbindung
+          wie auf der Seite <b>Programm übertragen</b>. Ein reines Ladekabel kann keine Daten übertragen;
+          auch ein von einem anderen Programm belegter Port kann den Upload verhindern.</p>
+        <p>Wenn der Upload erfolgreich ist, die LED aber aus bleibt, prüfst du stattdessen
+          Pinangabe, Schaltung, LED-Polung und Programmlogik.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
 
       <div class="wb-section-break"></div>
 
@@ -727,7 +771,42 @@ void loop() {
 
       <div class="wb-section-break"></div>
 
-      <h2>Jetzt darfst du weiter üben</h2>
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_error_diagnosis",
+            "title":"Stopp & check: Wo suchst du zuerst?",
+            "hint":"Begründe deinen ersten Prüfschritt in 2–3 Sätzen.",
+            "fields":[
+              {"label":"Deine Diagnose","key":"diagnose","kind":"textarea","prompt":"Im Blink-Sketch fehlt hinter digitalWrite(13, HIGH) das Semikolon. Die Meldung verweist auf die folgende delay-Zeile. Welche Stelle korrigierst du und warum reicht es nicht, nur exit status 1 zu lesen?","placeholder":"Schreibe hier..."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Compilerfehler, Uploadfehler und ein falsches Programmverhalten haben unterschiedliche Ursachen.
+          Du nutzt die konkrete Meldung, prüfst gezielt und testest nach jeder Korrektur erneut.</p>
+      </div>
+      <p class="wb-mini-note">Zum Nachschlagen:
+        <a href="https://support.arduino.cc/hc/en-us/articles/4402764401554-If-your-sketch-doesn-t-compile" target="_blank" rel="noopener">Arduino-Hilfe zu Compilerfehlern</a> und
+        <a href="https://support.arduino.cc/hc/en-us/articles/4403365313810-If-your-sketch-doesn-t-upload" target="_blank" rel="noopener">Arduino-Hilfe zu Uploadfehlern</a>.</p>
+    </section>
+
+    <section data-wb-page="5" data-wb-page-title="Selber programmieren: Blink-Aufgaben">
+      <h2>Aufgabe: Selber programmieren</h2>
+      <p><b>Jetzt arbeitest du wieder selbst in der Arduino-IDE.</b> Entwickle und teste die
+        Blink-Sketches auf dieser Seite. Die Aufgaben 4.3–4.7 aus dem Material stehen darunter
+        auch als Text. Code schreibst du in der IDE; Vorhersagen, Beobachtungen und Erklärungen
+        hältst du in OneNote fest.</p>
+      <p>Speichere Varianten unter eigenen Namen, zum Beispiel <code>Blink_Windrad</code> und
+        <code>Ampel</code>. Prüfe jeden Sketch mit Verify, lade ihn hoch und vergleiche
+        das Verhalten mit deiner Vorhersage.</p>
+
+      <div class="wb-section-break"></div>
 
       <div class="media-grid">
         <div class="pdfpage">
@@ -735,23 +814,127 @@ void loop() {
           <div class="pdfcaption">Materialbild: Blink-Variationen und Fehlerdiagnose</div>
         </div>
         <div class="image-guide">
-          <h3>Ändere immer nur einen Parameter</h3>
-          <p>Notiere vor jedem Test deine Vorhersage. Verändere dann Pin, Zustand oder Zeitwert einzeln und vergleiche Soll- und Istverhalten.</p>
-          <p>So kannst du aus einer Beobachtung tatsächlich auf die Ursache schließen.</p>
+          <h3>Dein Arbeitsauftrag</h3>
+          <p>Programmiere zunächst den Blinkrhythmus aus 4.3. Sage bei 4.4 und 4.5 das Verhalten
+            voraus und teste die Programme anschließend. Baue zum Schluss die Ampel aus 4.6.</p>
+          <p>Das Bild ergänzt die folgenden Aufgaben. Alle Zeiten, Codevorlagen und Arbeitsschritte
+            stehen auch im Text darunter.</p>
         </div>
       </div>
 
-      <div class="wb-soft-callout">
-        <strong>Auf dem Bild findest du weitere Aufgaben zum Üben</strong>
-        <div>
-          Bearbeite alle Aufgaben auf dem Bild, schreibe direkt in OneNote.
-          Lege dir in OneNote auch eine Seite – Spickzettel – an,
-          auf die du alle 30 Befehle, die du bis jetzt gelernt hast mit Bedeutung aufschreibst.
+      <div class="programming-task" id="material-4-3">
+        <h3>4.3 Programmiere einen Windrad-Blinkrhythmus</h3>
+        <p>Deine LED soll einen vorgegebenen Warnrhythmus nachbilden:
+          <b>1 s an, 0,5 s aus, 1 s an, 1,5 s aus</b>. Danach beginnt die Folge von vorn.</p>
+        <ol>
+          <li>Plane die Reihenfolge von HIGH, LOW und den Wartezeiten. Rechne die Sekunden in Millisekunden um.</li>
+          <li>Schreibe den Sketch für die LED an Pin 13. Entscheide, was in setup() und was in loop() gehört.</li>
+          <li>Übertrage den Sketch und prüfe den vollständigen Rhythmus. Notiere in OneNote,
+            wie lange eine komplette Wiederholung dauert.</li>
+        </ol>
+      </div>
+
+      <div class="programming-task" id="material-4-4">
+        <h3>4.4 Sage die Leucht- und Ausschaltzeiten voraus</h3>
+        <p>Verfolge den folgenden Sketch zuerst auf Papier. Wie lange leuchtet die LED direkt
+          nach dem Start? Wie lange ist sie aus? Was ändert sich bei den weiteren Durchläufen
+          von loop()? Achte auf den Übergang vom Ende zum Anfang der Schleife.</p>
+        <div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  digitalWrite(13, HIGH);
+}
+
+void loop() {
+  delay(400);
+  digitalWrite(13, LOW);
+  delay(200);
+  digitalWrite(13, HIGH);
+  delay(300);
+}</code></pre></div>
+        <p>Tippe den Sketch in der IDE ein und teste deine Vorhersage am Board.
+          Zeichne eine Zeitlinie und begründe die Zeiten in OneNote.</p>
+      </div>
+
+      <div class="programming-task" id="material-4-5">
+        <h3>4.5 Vergleiche einmaliges und wiederholtes Schalten</h3>
+        <p>Welches Programm lässt die LED nur einmal aufleuchten? Bei welchem wirkt sie danach
+          fast dauerhaft eingeschaltet? Begründe vor dem Test, was nach der letzten LOW-Anweisung passiert.</p>
+        <div class="error-code-pair">
+          <div><p>Programm A</p><div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+  digitalWrite(13, HIGH);
+  delay(500);
+  digitalWrite(13, LOW);
+}
+
+void loop() {
+}</code></pre></div></div>
+          <div><p>Programm B</p><div class="code-card"><pre><code>void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(500);
+  digitalWrite(13, LOW);
+}</code></pre></div></div>
         </div>
+        <p>Teste beide Programme nacheinander und halte in OneNote fest, warum eine
+          LOW-Anweisung allein noch keine gut sichtbare Dunkelpause erzeugt.</p>
+      </div>
+
+      <div class="programming-task" id="material-4-6">
+        <h3>4.6 Programmiere eine Ampel</h3>
+        <p>Baue eine grüne, eine gelbe und eine rote LED auf. Jede LED braucht einen eigenen
+          Vorwiderstand. Trenne die Stromversorgung vor dem Umbauen und verwende drei verschiedene
+          Digitalpins, zum Beispiel Grün an 8, Gelb an 9 und Rot an 10.</p>
+        <p>Setze diesen wiederkehrenden Ablauf in einen eigenen Sketch um:</p>
+        <ol>
+          <li>Grün einschalten und länger warten.</li>
+          <li>Grün ausschalten, Gelb einschalten und kurz warten.</li>
+          <li>Gelb ausschalten, Rot einschalten und länger warten.</li>
+          <li>Zusätzlich Gelb einschalten und kurz warten.</li>
+          <li>Rot und Gelb ausschalten; wieder mit Grün beginnen.</li>
+        </ol>
+        <p>Wähle passende Wartezeiten. Konfiguriere alle drei Pins in setup() und lege dort
+          einen eindeutigen Startzustand fest: alle LEDs aus. Teste deinen Sketch am Board
+          und dokumentiere Pinbelegung und Zeiten in OneNote.</p>
+      </div>
+
+      <div class="programming-task" id="material-4-7">
+        <h3>4.7 Ergänze deinen Befehls-Spickzettel</h3>
+        <p>Lege in OneNote eine Übersicht mit den Spalten <b>Schreibweise, Bedeutung und Beispiel</b> an.
+          Beginne mit <code>setup()</code>, <code>loop()</code>, <code>pinMode()</code>,
+          <code>digitalWrite()</code> und <code>delay()</code>. Erkläre daneben
+          <code>OUTPUT</code>, <code>HIGH</code> und <code>LOW</code>. Ergänze später neu gelernte Befehle.</p>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div data-wb-type="essay">
+        <script type="application/json" class="wb-config">
+          {
+            "id":"arduino2_programming_protocol",
+            "title":"Sicherung: Dein eigener Sketch im Test",
+            "hint":"Beziehe dich auf deine tatsächlich getestete Lösung zu 4.3 oder 4.6.",
+            "fields":[
+              {"label":"Dein Versuchsprotokoll","key":"protokoll","kind":"textarea","prompt":"Welche Aufgabe hast du umgesetzt? Nenne deine Pinbelegung und Wartezeiten. Vergleiche Vorhersage und Beobachtung. Falls etwas nicht geklappt hat: Beschreibe deine erste gezielte Prüfung und deren Ergebnis.","placeholder":"Schreibe hier..."}
+            ]
+          }
+        </script>
+      </div>
+
+      <div class="wb-section-break"></div>
+
+      <div class="wb-callout">
+        <strong>Jetzt hast du das gelernt:</strong>
+        <p>Du kannst einen beschriebenen Ablauf selbst als Sketch umsetzen, auf das Board
+          übertragen und durch Beobachtung prüfen. Wartezeiten und die Platzierung in setup()
+          oder loop() bestimmen, welches Verhalten entsteht.</p>
       </div>
     </section>
 
-    <section data-wb-page="5" data-wb-page-title="5 Töne erzeugen - Musik verstehen">
+    <section data-wb-page="6" data-wb-page-title="5 Töne erzeugen - Musik verstehen">
       <h2>5. Töne erzeugen - Musik verstehen</h2>
 
       <div class="wb-soft-callout">
@@ -898,7 +1081,7 @@ void loop() {
       </div>
     </section>
 
-    <section data-wb-page="6" data-wb-page-title="Unterprogramme">
+    <section data-wb-page="7" data-wb-page-title="Unterprogramme">
       <h2>6. Unterprogramme (Funktionen)</h2>
 
       <div class="wb-soft-callout">
@@ -1076,7 +1259,7 @@ void loop() {
       </div>
     </section>
 
-    <section data-wb-page="7" data-wb-page-title="Multiple Choice">
+    <section data-wb-page="8" data-wb-page-title="Multiple Choice">
       <h2>Multiple Choice und Abgabe</h2>
 
       
@@ -1166,7 +1349,9 @@ void loop() {
 
       <div class="wb-callout">
         <strong>Wichtig:</strong> 
-        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Ergebnisse & Abschluss</b>. Deine Antworten werden an deine Lehrerin übertragen und zusätzlich als TXT-Datei exportiert.</p>
+        <p>Zum Schluss gibst du deinen Namen links unten ein und klickst auf <b>Ergebnisse & Abschluss</b>.
+          Deine Antworten werden an deine Lehrerin übertragen. Zusätzlich erhältst du eine
+          PDF-Übersicht deiner Ergebnisse; deine Sketches bleiben in der Arduino-IDE gespeichert.</p>
       </div>
 
       <div class="wb-section-break"></div>
@@ -1177,6 +1362,8 @@ void loop() {
         <li><a href="https://docs.arduino.cc/language-reference/en/structure/sketch/loop/" target="_blank" rel="noopener">Arduino Reference: loop()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/" target="_blank" rel="noopener">Arduino Reference: digitalWrite()</a></li>
         <li><a href="https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/" target="_blank" rel="noopener">Arduino Reference: tone()</a></li>
+        <li><a href="https://support.arduino.cc/hc/en-us/articles/4402764401554-If-your-sketch-doesn-t-compile" target="_blank" rel="noopener">Arduino: Compilerfehler verstehen</a></li>
+        <li><a href="https://support.arduino.cc/hc/en-us/articles/4403365313810-If-your-sketch-doesn-t-upload" target="_blank" rel="noopener">Arduino: Uploadfehler beheben</a></li>
       </ul>
 
       <div class="wb-section-break"></div>
