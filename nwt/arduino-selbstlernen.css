@@ -1,0 +1,33 @@
+.wb-book section[data-wb-page] :is(h1, h2, h3, h4) {
+  overflow-wrap: anywhere;
+  letter-spacing: 0;
+}
+.wb-book section[data-wb-page] p code {
+  overflow-wrap: anywhere;
+}
+.wb-book :is(.grid2x, .grid3x, .a6-grid2, .a6-grid3, .media-grid) > * {
+  min-width: 0;
+}
+.wb-book .a6-figure { box-sizing: border-box; }
+.wb-book .p2 .p2-banks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.wb-book .p2 .p2-banks > div { min-width: 0; }
+.wb-book .p2 .p2-piece,
+.wb-book .p2 .p2-joined .p2-piece {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+.wb-book .p2 .p2-joined { max-width: 100%; }
+@media (max-width: 900px) {
+  .wb-book .p2 .p2-banks { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .wb-book .p2 .p2-solved .p2-joined {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .wb-book .p2 .p2-seam { width: 100%; height: 2px; }
+}

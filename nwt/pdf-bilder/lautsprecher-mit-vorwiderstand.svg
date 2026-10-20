@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="270" viewBox="0 0 440 270" role="img" aria-labelledby="title desc">
+  <title id="title">Lautsprecher mit Vorwiderstand am Arduino Uno R3</title>
+  <desc id="desc">Pin D11 ist durch einen 330-Ohm-Widerstand mit dem ersten Lautsprecheranschluss verbunden. Der zweite Lautsprecheranschluss geht zu GND am selben Arduino.</desc>
+  <rect width="440" height="270" fill="#fff"/>
+  <g fill="none" stroke="#17242b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="18" y="36" width="128" height="198" rx="4" fill="#edf7f5"/>
+    <path d="M146 100H198M260 100H326V132M326 156V214H146"/>
+    <rect x="198" y="90" width="62" height="20"/>
+    <rect x="316" y="132" width="20" height="24"/>
+    <path d="M336 132L364 112V176L336 156Z"/>
+    <circle cx="146" cy="100" r="4" fill="#17242b"/>
+    <circle cx="146" cy="214" r="4" fill="#17242b"/>
+  </g>
+  <g fill="#17242b" font-family="Arial, sans-serif" font-size="18">
+    <text x="82" y="65" text-anchor="middle" font-weight="700">Arduino</text>
+    <text x="82" y="87" text-anchor="middle">Uno R3</text>
+    <text x="132" y="123" text-anchor="end" font-weight="700">D11</text>
+    <text x="132" y="208" text-anchor="end" font-weight="700">GND</text>
+    <text x="229" y="54" text-anchor="middle">Vorwiderstand</text>
+    <text x="229" y="78" text-anchor="middle" font-weight="700">330 &#937;</text>
+    <text x="350" y="84" text-anchor="middle">Lautsprecher</text>
+    <text x="226" y="255" text-anchor="middle" font-size="16">Beide Bauteile liegen in Reihe.</text>
+  </g>
+</svg>
