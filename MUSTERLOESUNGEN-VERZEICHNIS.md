@@ -8,8 +8,8 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Spannung und Kondensator-Labor](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
 | [Elektrische Felder 3: Energie, Laden und Entladen mit Kapitelaufgaben](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
-| [Felder-Simulationen: Kondensator und Teilchenbahnen](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
-| [Induktion 1: Grundversuche, magnetischer Fluss und Lenz](felder/induktion.html) | [Musterlösung](felder/induktion-buchruecken37.html) |
+| [Felder-Simulationen: Elektrostatik, Teilchenbahnen und Induktionslabor](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
+| [Induktion 1: Grundversuche, magnetischer Fluss, Lenz und Induktionslabor](felder/induktion.html) | [Musterlösung](felder/induktion-buchruecken37.html) |
 | [Induktion 2: Anwendungen, Selbstinduktion und Maxwell](felder/induktion2.html) | [Musterlösung](felder/induktion2-garderobe84.html) |
 | [Magnetische Felder 1: Feldlinien, Flussdichte und Spule](felder/magnetische-felder.html) | [Musterlösung](felder/magnetische-felder-teetasse46.html) |
 | [Magnetische Felder 2: Lorentzkraft und Anwendungen](felder/magnetische-felder2.html) | [Musterlösung](felder/magnetische-felder2-wolldecke62.html) |

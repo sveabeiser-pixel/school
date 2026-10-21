@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektromagnetische Induktion</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
@@ -256,6 +257,71 @@
     <div class="wb-section-break"></div>
     <div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"ind_cloze","title":"Sicherung: Induktionsidee","hint":"Setze die Begriffe ein.","bank":["Änderung","magnetischen Flusses","entgegen","Energieerhaltung"],"segments":[{"t":"text","v":"Induktion entsteht durch eine "},{"t":"gap","a":"Änderung"},{"t":"text","v":" des "},{"t":"gap","a":"magnetischen Flusses"},{"t":"text","v":". Nach der Lenz'schen Regel wirkt die induzierte Wirkung der Ursache "},{"t":"gap","a":"entgegen"},{"t":"text","v":". Das passt zur "},{"t":"gap","a":"Energieerhaltung"},{"t":"text","v":"."}]}</script></div>
     <div class="wb-section-break"></div>
+    <h2>Simulation: Vier Wege zur Flussänderung</h2>
+    <p>Du hast Bewegung, Drehung, Flächenänderung und ein veränderliches Magnetfeld zunächst getrennt untersucht. Vergleiche sie jetzt im selben Induktionslabor: Welche Größe verändert sich jeweils, und wann entsteht eine Spannung? Die beiden Diagramme zeigen den magnetischen Fluss und die Induktionsspannung über eine vollständige Periode.</p>
+    <p>Beginne mit dem Hinein- und Herausfahren. Wechsle anschließend zu den drei anderen Versuchen. Die roten Pfeile geben die technische Stromrichtung einer geschlossen gedachten Leiterschleife an, nicht die Bewegungsrichtung der Elektronen. Die Feldrichtung legt zusammen mit der festgelegten Flächennormale das Vorzeichen fest.</p>
+    <div class="wb-section-break"></div>
+    <div class="field-sim-card" data-field-sim="induction-lab">
+      <div class="field-sim-grid">
+        <div class="field-sim-controls">
+          <h3>Versuch einstellen</h3>
+          <label for="ind-lab-mode">Art der Flussänderung</label>
+          <select id="ind-lab-mode" data-role="mode">
+            <option value="translate" selected>Schleife hinein- und herausfahren</option>
+            <option value="rotate">Schleife im Magnetfeld drehen</option>
+            <option value="resize">Schleifenfläche vergrößern und verkleinern</option>
+            <option value="field-change">Magnetfeld verstärken und abschwächen</option>
+          </select>
+          <label for="ind-lab-magnetic">Maximale Flussdichte B</label>
+          <input id="ind-lab-magnetic" data-role="magnetic" type="range" min="5" max="100" value="40" step="1">
+          <div class="field-sim-mono">B<sub>max</sub> = <span data-role="magnetic-value">40</span> mT</div>
+          <label for="ind-lab-area">Schleifenfläche A</label>
+          <input id="ind-lab-area" data-role="area" type="range" min="100" max="1000" value="400" step="20">
+          <div class="field-sim-mono">A = <span data-role="area-value">400</span> cm²</div>
+          <label for="ind-lab-turns">Windungszahl n</label>
+          <input id="ind-lab-turns" data-role="turns" type="range" min="1" max="100" value="20" step="1">
+          <div class="field-sim-mono">n = <span data-role="turns-value">20</span></div>
+          <label for="ind-lab-rate">Ablauftempo</label>
+          <input id="ind-lab-rate" data-role="rate" type="range" min="0.25" max="2" value="1" step="0.05">
+          <div class="field-sim-mono">Tempo = <span data-role="rate-value">1,00</span> ×</div>
+          <label for="ind-lab-direction">Richtung des äußeren Magnetfelds</label>
+          <select id="ind-lab-direction" data-role="direction">
+            <option value="out" selected>aus der Zeichenfläche heraus</option>
+            <option value="in">in die Zeichenfläche hinein</option>
+          </select>
+          <div class="wb-row" style="margin-top:10px">
+            <button class="wb-btn primary" type="button" data-role="play">Start</button>
+            <button class="wb-btn" type="button" data-role="reset">Reset</button>
+          </div>
+          <div class="field-sim-note">
+            <strong data-role="mode-title">Schleife hinein- und herausfahren</strong>
+            <p data-role="mode-help">Beim Eintreten wächst die vom Feld durchsetzte Fläche, im vollständig eingetauchten Zustand bleibt sie konstant und beim Austreten nimmt sie wieder ab.</p>
+          </div>
+        </div>
+        <div>
+          <canvas data-role="canvas" width="980" height="560" aria-label="Induktionslabor mit Leiterschleife, Magnetfeld, Stromrichtung sowie Fluss- und Spannungsdiagrammen"></canvas>
+          <div class="field-sim-mono" data-role="readout"></div>
+        </div>
+      </div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ind_essay_induktionslabor",
+        "title":"Untersuchungsauftrag: Die vier Versuche vergleichen",
+        "hint":"Sage zuerst einen Verlauf voraus und prüfe ihn anschließend. Verändere für einen Vergleich jeweils nur einen Parameter.",
+        "storagePrefix":"ind_",
+        "fields":[
+          {"key":"labor_bewegung","label":"1. Hinein- und herausfahren","kind":"textarea","prompt":"Beschreibe die Induktionsspannung beim Eintreten, bei vollständiger Überlappung und beim Austreten. Warum kann sich die Schleife bewegen, obwohl die Spannung null bleibt?","placeholder":"Deine Beobachtung und Begründung"},
+          {"key":"labor_drehung","label":"2. Schleife drehen","kind":"textarea","prompt":"Vergleiche die beiden Diagramme: Wann ist der Fluss maximal oder null, und wann ist der Betrag der Spannung maximal? Begründe mit der Änderungsrate des Flusses.","placeholder":"Dein Diagrammvergleich"},
+          {"key":"labor_flaeche_feld","label":"3. Fläche oder Magnetfeld ändern","kind":"textarea","prompt":"Vergleiche Vergrößern und Verkleinern der Fläche mit Verstärken und Abschwächen des Magnetfelds. Was bleibt jeweils konstant? Erkläre die abschnittsweise konstante Spannung und den Vorzeichenwechsel.","placeholder":"Dein Vergleich der Versuche"},
+          {"key":"labor_parameter","label":"4. Windungszahl und Feldrichtung","kind":"textarea","prompt":"Verdopple die Windungszahl bei sonst gleichen Einstellungen und vergleiche dieselbe Bewegungsphase. Kehre danach die Feldrichtung um. Beschreibe jeweils die Änderung von Fluss und Spannung und erkläre die Richtung des Gegenfeldes mit Lenz.","placeholder":"Dein Parametervergleich"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
   </section>
 
 <section data-wb-page="7" data-wb-page-title="Lenz und Energie">
@@ -322,6 +388,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+<script src="../assets/felder-simulations.js?v=20261020-kondensator"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

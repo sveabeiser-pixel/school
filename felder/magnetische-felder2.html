@@ -7,7 +7,15 @@
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
   <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
   <style>
-    .mf-grid{display:grid;grid-template-columns:minmax(240px,520px) minmax(260px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .wb-book .mf-grid[data-course-media="paired"]{display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);gap:22px;align-items:center!important;margin:18px 0}
+    .wb-book .mf-grid[data-course-media="paired"]>*{min-width:0;align-self:center!important}
+    .wb-book .mf-grid>figure.mf-figure{width:100%!important;max-width:300px;margin:0 auto;order:-1}
+    .wb-book .mf-grid>figure.mf-figure img{display:block;width:auto!important;max-width:100%!important;max-height:250px;height:auto;margin:0 auto;object-fit:contain}
+    .wb-book .mf-image-note{box-sizing:border-box;padding:14px 16px;border:1px solid var(--wb-line,#d8e1e9);border-left:3px solid #39729d;border-radius:6px;background:rgba(49,95,157,.07);color:var(--wb-text)}
+    .wb-book .mf-image-note>p{margin:0;font-size:16px;line-height:1.6}
+    .wb-book .mf-details{margin:0 0 22px}
+    .wb-book .mf-details>:first-child{margin-top:0}
+    @media(max-width:900px){.wb-book .mf-grid[data-course-media="paired"]{grid-template-columns:minmax(0,1fr);gap:14px}}
     .mf-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
     .mf-figure{margin:0 auto;max-width:520px}
     .mf-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -47,7 +55,7 @@
   }
   </script>
 
-  <section data-wb-page="1" data-wb-page-title="Spulenarten">
+<section data-wb-page="1" data-wb-page-title="Spulenarten">
     <h1>Kurze Spulen, Material und Ferromagnetismus</h1>
     <div class="wb-callout">
       <strong>Teil 2 der magnetischen Felder</strong>
@@ -60,12 +68,15 @@
     <p>Das ist didaktisch wichtig: Die Spulenformel ist kein Allzweckwerkzeug für jede Spule. Sie ist ein Modell für lange, schlanke Spulen. Bei kurzen Spulen, Helmholtzspulen oder Spulen mit Eisenkern musst du prüfen, ob zusätzliche Geometriefaktoren oder Materialfaktoren auftreten.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-1">
         <img src="bilder/magnetisierung-elementarmagneten.png" alt="Elementarmagnete und Hysteresekurve eines ferromagnetischen Materials">
-        <figcaption>Ferromagnetischer Kern: Elementarmagnete richten sich aus; bei starken Feldern tritt Sättigung auf.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-1"><p>Ferromagnetischer Kern: Elementarmagnete richten sich aus; bei starken Feldern tritt Sättigung auf.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(B_m=\mu_r\cdot B_0\)</p>
@@ -75,7 +86,6 @@
         <p>Magnetisch weich bedeutet nicht mechanisch weich. Gemeint ist: Das Material lässt sich leicht magnetisieren und verliert die Magnetisierung nach Abschalten des Feldes wieder weitgehend. Magnetisch hart bedeutet: Die Ausrichtung bleibt stärker erhalten.</p>
         <div><strong>Hysterese</strong><p>Die Hysteresekurve beschreibt, dass \(B_m\) nicht nur vom aktuellen Spulenfeld abhängt, sondern auch von der Vorgeschichte der Magnetisierung. Begriffe wie Neukurve, Sättigung \(B_S\) und Restmagnetisierung \(B_R\) sind Vertiefung.</p></div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: kurze Spulen und Material</h2>
@@ -102,7 +112,7 @@
     </div>
   </section>
 
-  <section data-wb-page="2" data-wb-page-title="Erdmagnetfeld">
+<section data-wb-page="2" data-wb-page-title="Erdmagnetfeld">
     <h1>Das Magnetfeld der Erde</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Am Erdmagnetfeld deutest du zunächst die Ausrichtung eines Kompasses qualitativ. Danach bestimmst du das Feld rechnerisch mit Spule, Inklination und Komponenten.</p></div>
     <p>Eine Kompassnadel richtet sich in Nord-Süd-Richtung aus, weil die Erde ein Magnetfeld besitzt. Der magnetische Südpol liegt in der Nähe des geografischen Nordpols; deshalb zeigt der Nordpol der Kompassnadel nach Norden. Die Magnetpole stimmen aber nicht genau mit den geografischen Polen überein und wandern mit der Zeit.</p>
@@ -110,35 +120,42 @@
     <p>Eine gewöhnliche Kompassnadel kann nur in der Horizontalebene drehen. Sie reagiert deshalb auf die Horizontalkomponente \(B_h\). Eine Inklinationsnadel kann sich zusätzlich nach oben oder unten neigen und zeigt die Richtung des gesamten Feldvektors.</p>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-2">
         <img src="bilder/magnetfeld-erde.png" alt="Erdmagnetfeld mit magnetischen Polen und Inklination">
-        <figcaption>Erdmagnetfeld: vereinfacht wie ein Stabmagnet im Erdinneren, aber mit wandernden Magnetpolen.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-2"><p>Erdmagnetfeld: vereinfacht wie ein Stabmagnet im Erdinneren, aber mit wandernden Magnetpolen.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Warum ist das Feld nicht einfach ein Eisenmagnet?</h2>
         <p>Im Erdinneren ist es zu heiß, damit Eisen dauerhaft ferromagnetisch bleibt. Das Erdmagnetfeld entsteht durch elektrische Ströme im Erdinneren, ähnlich einem Dynamo. Viele Details sind weiterhin Forschungsgegenstand.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-3">
         <img src="bilder/sonnenwind.png" alt="Verformung des Erdmagnetfeldes durch den Sonnenwind">
-        <figcaption>Sonnenwind: Auf der Tagseite wird das Erdmagnetfeld zusammengedrückt, auf der Nachtseite entsteht ein Schweif.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-3"><p>Sonnenwind: Auf der Tagseite wird das Erdmagnetfeld zusammengedrückt, auf der Nachtseite entsteht ein Schweif.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Der Sonnenwind ist ein Strom geladener Teilchen von der Sonne. Er besitzt selbst ein Magnetfeld und verformt das Erdmagnetfeld. Das Erdmagnetfeld schützt die Erde teilweise vor diesen Teilchen.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-4">
         <img src="bilder/bestimmung-erdmagnetfeld.png" alt="Bestimmung des Erdmagnetfeldes mit Spulenfeld und Kompass">
-        <figcaption>Bestimmung des Erdmagnetfeldes: Bei \(45^\circ\) Ablenkung gilt \(B_\mathrm{Sp}=B_h\).</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-4"><p>Bestimmung des Erdmagnetfeldes: Bei \(45^\circ\) Ablenkung gilt \(B_\mathrm{Sp}=B_h\).</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(B_h=B\cos\delta\), \(\quad B=\frac{B_h}{\cos\delta}\)</p>
@@ -150,7 +167,6 @@
           <p>Zeichne \(B_h\) nach Norden und \(B_\mathrm{Sp}\) nach Osten oder Westen. Die Kompassnadel zeigt in Richtung der Resultierenden. Bei \(45^\circ\) sind die beiden rechtwinkligen Komponenten gleich groß.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: Erdmagnetfeld</h2>
@@ -176,19 +192,22 @@
     </div>
   </section>
 
-  <section data-wb-page="3" data-wb-page-title="Fadenstrahlrohr">
+<section data-wb-page="3" data-wb-page-title="Fadenstrahlrohr">
     <h1>Elektronen im magnetischen Feld</h1>
     <div><strong>Geladene Teilchen im Magnetfeld</strong><p>Hier verknüpfst du die Lorentzkraft auf einzelne Ladungen mit Kreisbahnen im homogenen Magnetfeld, der Radiusformel, der spezifischen Ladung und der Elektronenmasse.</p></div>
     <p>Im Fadenstrahlrohr wird ein Elektronenstrahl in einem homogenen Magnetfeld sichtbar gemacht. Ohne Magnetfeld läuft der Strahl gerade. Schaltet man das Magnetfeld ein, wirkt die Lorentzkraft senkrecht zur Bewegungsrichtung. Sie verändert die Richtung der Geschwindigkeit fortlaufend und wirkt wie eine Zentripetalkraft. Die Elektronen laufen auf einer Kreisbahn.</p>
     <p>Der leuchtende Kreis ist kein Draht und keine Spur im Glas. In der Röhre befindet sich Gas mit geringem Druck. Elektronen stoßen mit Gasatomen zusammen und regen sie zum Leuchten an. So wird die Bahn des Elektronenstrahls sichtbar.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-5">
         <img src="bilder/elektronen-im-magnetfeld.png" alt="Elektronen werden im Magnetfeld auf eine Kreisbahn abgelenkt">
-        <figcaption>Elektronen im Magnetfeld: Die Lorentzkraft wirkt als Zentripetalkraft.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-5"><p>Elektronen im Magnetfeld: Die Lorentzkraft wirkt als Zentripetalkraft.</p></aside>
+    </div>
+    <div class="mf-details">
         <div><strong>Radius der Kreisbahn</strong><p>Für senkrechten Eintritt gilt \(F_L=F_Z\). Damit erhält man \(e v B=\frac{m_e v^2}{r}\).</p></div>
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
@@ -205,19 +224,20 @@
           <p>Erhöht man \(B\), wird der Kreis enger. Erhöht man die Beschleunigungsspannung \(U\), steigt \(v\), und der Radius wird größer.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-6">
         <img src="bilder/fadenstrahlrohr.png" alt="Fadenstrahlrohr mit Elektronenkanone und Helmholtzspulenpaar">
-        <figcaption>Fadenstrahlrohr: Elektronenkanone, leuchtender Elektronenstrahl und homogenes Feld eines Helmholtzspulenpaares.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-6"><p>Fadenstrahlrohr: Elektronenkanone, leuchtender Elektronenstrahl und homogenes Feld eines Helmholtzspulenpaares.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Messidee</h2>
         <p>Die Beschleunigungsspannung stellt die Geschwindigkeit der Elektronen ein. Die Stromstärke im Helmholtzspulenpaar stellt \(B\) ein. Aus dem sichtbaren Kreisradius kann man \(e/m_e\) bestimmen. Mit bekannter Elementarladung folgt \(m_e\approx9{,}1\cdot10^{-31}\,\mathrm{kg}\).</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: Elektronen auf Kreisbahnen</h2>
@@ -245,19 +265,22 @@
     </div>
   </section>
 
-  <section data-wb-page="4" data-wb-page-title="Massenspektrometer">
+<section data-wb-page="4" data-wb-page-title="Massenspektrometer">
     <h1>Massenspektrometer und wienscher Geschwindigkeitsfilter</h1>
     <p>Ionen aus einer Ionenquelle besitzen zunächst unterschiedliche Geschwindigkeiten. Für eine genaue Massenbestimmung braucht man aber Teilchen gleicher Geschwindigkeit. Dazu nutzt man einen wienschen Geschwindigkeitsfilter: Ein elektrisches Feld und ein magnetisches Feld stehen senkrecht zueinander und auch senkrecht zur Teilchenbewegung.</p>
     <p>Die elektrische Kraft und die Lorentzkraft werden so ausgerichtet, dass sie entgegengesetzt wirken. Nur wenn beide Beträge gleich groß sind, bewegt sich das geladene Teilchen geradlinig weiter. Schnellere oder langsamere Teilchen werden abgelenkt und gelangen nicht durch die nächste Blende.</p>
     <p>Der Filter sortiert also nicht nach Masse, sondern zunächst nach Geschwindigkeit. Das ist der Trick: Erst wenn alle durchgelassenen Teilchen dieselbe Geschwindigkeit besitzen, kann der Bahnradius im nächsten Magnetfeld als Hinweis auf Masse und Ladung genutzt werden.</p>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-7">
         <img src="bilder/elektronen-in-e-b-feld.png" alt="Elektronen in gekreuzten elektrischen und magnetischen Feldern">
-        <figcaption>Wienscher Filter: Nur bei passender Geschwindigkeit heben sich elektrische Kraft und Lorentzkraft auf.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-7"><p>Wienscher Filter: Nur bei passender Geschwindigkeit heben sich elektrische Kraft und Lorentzkraft auf.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(F_\mathrm{el}=|q|E\), \(\quad F_\mathrm L=|q|vB\)</p>
@@ -269,15 +292,17 @@
           <p>Nur Teilchen mit dieser Geschwindigkeit durchlaufen den Geschwindigkeitsfilter geradlinig. Die Bedingung ist unabhängig von Masse und Ladungsbetrag.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure wide">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure wide" aria-describedby="mf2-image-note-8">
         <img src="bilder/massenspektrometer.png" alt="Aufbau eines Massenspektrometers mit Ionenquelle, Geschwindigkeitsfilter und Detektor">
-        <figcaption>Massenspektrometer: Geschwindigkeitsfilter, Ablenkmagnet und Detektorplatte.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-8"><p>Massenspektrometer: Geschwindigkeitsfilter, Ablenkmagnet und Detektorplatte.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Wie entsteht das Massenspektrum?</h2>
         <p>Nach dem Filter treten Ionen gleicher Geschwindigkeit in ein zweites homogenes Magnetfeld ein. Dort wirkt die Lorentzkraft als Zentripetalkraft. Der Radius der Kreisbahn hängt von Masse, Ladung, Geschwindigkeit und Magnetfeld ab.</p>
         <div class="wb-callout">
@@ -290,7 +315,6 @@
           <p>1. Im Filter: \(v=E/B_1\). 2. Im Ablenkmagneten: \(r=\frac m q\frac v{B_2}\). 3. Nach \(m\) umstellen. 4. Mit \(1u=1{,}66\cdot10^{-27}\,\mathrm{kg}\) in Nukleonenzahlen umrechnen.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <p>Massenspektrometer zeigen, dass viele chemische Elemente aus Isotopen bestehen. Isotope besitzen die gleiche Protonenzahl, aber unterschiedliche Neutronenzahl und damit unterschiedliche Masse. Das Isotopenverhältnis ist wichtig in Geologie, Archäologie und Umweltphysik.</p>
@@ -319,7 +343,7 @@
     </div>
   </section>
 
-  <section data-wb-page="5" data-wb-page-title="Zyklotron">
+<section data-wb-page="5" data-wb-page-title="Zyklotron">
     <h1>Exkurs: Zyklotron und Abiturtraining zu E- und B-Feldern</h1>
     <p>In Teilchenbeschleunigern sollen geladene Teilchen sehr hohe Energien erreichen. Statt eine extrem hohe Spannung einmal zu durchlaufen, lässt man sie viele Beschleunigungsstrecken nacheinander durchlaufen. Das Zyklotron ist ein klassisches Beispiel dafür.</p>
     <p>Im Zyklotron werden positive Ionen zwischen zwei D-förmigen Metallhohlräumen immer wieder durch ein elektrisches Feld beschleunigt. Innerhalb der Dosen ist der Raum elektrisch feldfrei; dort zwingt ein starkes Magnetfeld die Ionen auf Halbkreisbahnen. Nach jedem Durchgang ist die Geschwindigkeit größer, also auch der Radius der Bahn.</p>
@@ -330,12 +354,15 @@
     </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="compact">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-9">
         <img src="bilder/zyklotron.png" alt="Aufbau eines Zyklotrons mit Dosen, Magnetfeld und Teilchenbahn">
-        <figcaption>Zyklotron: E-Feld beschleunigt zwischen den Dosen, B-Feld lenkt im Inneren auf Halbkreise.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-9"><p>Zyklotron: E-Feld beschleunigt zwischen den Dosen, B-Feld lenkt im Inneren auf Halbkreise.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(f=\frac1{2\pi}\frac{qB}{m}\)</p>
@@ -343,19 +370,21 @@
         </div>
         <p>Bei sehr hohen Geschwindigkeiten werden relativistische Effekte wichtig. Dann bleibt die Frequenz nicht mehr exakt konstant. Moderne Beschleuniger nutzen deshalb weiterentwickelte Konzepte.</p>
         <div class="mf-stop">
-          <strong>Stopp & check</strong>
+          <strong>Stopp &amp; check</strong>
           <p>Warum muss die Spannung zwischen den Dosen immer zum richtigen Zeitpunkt umgepolt werden? Formuliere deine Antwort mit „Beschleunigungsstrecke“ und „Richtung des elektrischen Feldes“.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure wide">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure wide" aria-describedby="mf2-image-note-10">
         <img src="bilder/aufgaben-elektronen-magnetfeld.png" alt="Abituraufgabe: Elektronen durch Magnetfeld und Kondensator">
-        <figcaption>Abiturtraining: Elektronen werden im Magnetfeld vorselektiert und danach im Kondensator abgelenkt.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-10"><p>Abiturtraining: Elektronen werden im Magnetfeld vorselektiert und danach im Kondensator abgelenkt.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Rechenidee</h2>
         <p>Das Magnetfeld lässt nur Elektronen mit passendem Kreisbahnradius durch die Blende. Danach treten sie mit dieser Geschwindigkeit in den Plattenkondensator ein. Dort entsteht wieder die bekannte waagrechte-Wurf-Struktur: gleichförmig in x-Richtung, beschleunigt in y-Richtung.</p>
         <div class="wb-callout">
@@ -364,7 +393,6 @@
           <p>Diese Formel verknüpft die Ablenkung im Kondensator mit der spezifischen Ladung.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Vorbereitung auf das Abitur</h2>
@@ -390,7 +418,7 @@
     </div>
   </section>
 
-  <section data-wb-page="6" data-wb-page-title="Natur und Technik">
+<section data-wb-page="6" data-wb-page-title="Natur und Technik">
     <h1>Magnetfelder in Natur, Forschung und Technik</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Die Beispiele zeigen Anwendungen magnetischer Felder. Bei Penning-Fallen und magnetischen Linsen untersuchst du anschließend Bahn und Feld genauer.</p></div>
     <p>Magnetfelder spielen nicht nur im Physikraum eine Rolle. Sie strukturieren den Raum um die Erde, halten Teilchen in Forschungsapparaturen fest, fokussieren Elektronenstrahlen und speichern Informationen in technischen Geräten.</p>
@@ -402,40 +430,46 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-11">
         <img src="bilder/polarlichter.png" alt="Polarlicht in der oberen Atmosphäre">
-        <figcaption>Polarlichter: Elektronen regen Atome der oberen Atmosphäre zum Leuchten an.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-11"><p>Polarlichter: Elektronen regen Atome der oberen Atmosphäre zum Leuchten an.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Der Sonnenwind transportiert geladene Teilchen zur Erde. Viele Teilchen werden durch das Erdmagnetfeld abgelenkt oder entlang von Feldlinien geführt. In Polnähe können beschleunigte Elektronen in die obere Atmosphäre eindringen und dort Atome zum Leuchten anregen.</p>
         <p>Das Licht entsteht also nicht, weil Magnetfeldlinien selbst leuchten. Das Magnetfeld lenkt geladene Teilchen; die sichtbare Strahlung entsteht erst, wenn diese Teilchen Atome und Moleküle der Atmosphäre anregen.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-12">
         <img src="bilder/strahlenguetel-erde.png" alt="Strahlungsgürtel der Erde mit eingefangenen geladenen Teilchen">
-        <figcaption>Strahlungsgürtel: Geladene Teilchen bewegen sich im Erdmagnetfeld und können für Raumfahrt gefährlich sein.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-12"><p>Strahlungsgürtel: Geladene Teilchen bewegen sich im Erdmagnetfeld und können für Raumfahrt gefährlich sein.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>In den van-Allen-Strahlungsgürteln bewegen sich Protonen und Elektronen entlang magnetischer Feldlinien und pendeln zwischen Nord- und Südpolregion. Für Raumfahrer und Satelliten können diese Teilchen wegen ihrer ionisierenden Wirkung gefährlich werden.</p>
         <p>Hier wird die Schraubenbahn-Idee anschaulich: Die Teilchen besitzen eine Bewegungskomponente um die Feldlinie und eine Komponente entlang der Feldlinie. Dadurch bleiben sie über längere Zeit im Magnetfeldbereich gefangen.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-13">
         <img src="bilder/magnetische-linse.png" alt="Schattenkreuzröhre mit magnetischer Linse">
-        <figcaption>Magnetische Linse: Ein Magnetfeld kann Elektronenstrahlen bündeln und abbilden.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-13"><p>Magnetische Linse: Ein Magnetfeld kann Elektronenstrahlen bündeln und abbilden.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Elektronen statt Licht</h2>
         <p>In der Schattenkreuzröhre breiten sich Elektronen zunächst geradlinig aus. Ein geeignetes Magnetfeld kann die Elektronenbahnen fokussieren. Dadurch wirkt das Magnetfeld ähnlich wie eine Sammellinse für Licht.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <div>
@@ -445,28 +479,32 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-14">
         <img src="bilder/magnetische-linse2.png" alt="Spule mit Eisenpanzer als magnetische Linse">
-        <figcaption>Technische magnetische Linse: Inhomogene rotationssymmetrische Felder ermöglichen starke Vergrößerungen.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-14"><p>Technische magnetische Linse: Inhomogene rotationssymmetrische Felder ermöglichen starke Vergrößerungen.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Für große Vergrößerungen nutzt man nicht homogene Felder, sondern gezielt geformte inhomogene Magnetfelder. In Elektronenmikroskopen werden solche magnetischen Linsen eingesetzt.</p>
         <p>Der Vergleich mit einer Glaslinse ist hilfreich, aber nicht wörtlich gemeint: Eine Glaslinse bricht Licht, eine magnetische Linse übt Kräfte auf bewegte Elektronen aus. In beiden Fällen werden Strahlen so beeinflusst, dass ein Bild entsteht.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-15">
         <img src="bilder/festplatte.png" alt="Aufbau einer klassischen magnetischen Festplatte">
-        <figcaption>Festplatte: Daten werden als Magnetisierungsrichtungen auf rotierenden Scheiben gespeichert.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-15"><p>Festplatte: Daten werden als Magnetisierungsrichtungen auf rotierenden Scheiben gespeichert.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Bei klassischen Festplatten magnetisiert der Schreibkopf winzige Bereiche der Datenscheibe. Beim Lesen reagiert der Lesekopf auf das Magnetfeld dieser Bereiche. So werden Informationen als Reihen unterschiedlicher Magnetisierungsrichtungen gespeichert.</p>
         <p>Das ist ein anderes Prinzip als bei Teilchenbahnen: Hier ist nicht die Lorentzkraft auf einzelne freie Teilchen im Vordergrund, sondern die dauerhafte Ausrichtung magnetischer Bereiche in einem Material.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: Anwendungen</h2>
@@ -518,48 +556,52 @@
     </div>
   </section>
 
-  <section data-wb-page="7" data-wb-page-title="Gesamtaufgaben">
+<section data-wb-page="7" data-wb-page-title="Gesamtaufgaben">
     <h1>Gesamtzusammenfassung und gemischte Aufgaben</h1>
     <p>Diese Seite bündelt das Kapitel. Die Aufgaben 1 und 2 sichern die Grundlagen. Die Aufgaben 3 bis 7 vertiefen Hall-Effekt, Lorentzkraft auf einzelne Ladungen, Kreisbahnen, Massenspektrometer und Schraubenbahnen.</p>
     <p>Nutze die Zusammenfassung nicht nur zum Nachschlagen. Versuche zuerst, die Situation zu erkennen: Geht es um einen stromführenden Leiter, eine bewegte einzelne Ladung, eine Spule, ein Material im Magnetfeld oder eine technische Kombination mehrerer Felder?</p>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-16">
         <img src="bilder/zusammenfassung-leiter-magnetfeld.png" alt="Zusammenfassung Kraft auf Leiter im Magnetfeld">
-        <figcaption>Zusammenfassung: Flussdichte \(B\), Leiterlänge \(s\), Stromstärke \(I\) und Kraft \(F\).</figcaption>
+
       </figure>
-      <div class="wb-callout">
+
+    <aside class="mf-image-note" id="mf2-image-note-16"><p>Zusammenfassung: Flussdichte \(B\), Leiterlänge \(s\), Stromstärke \(I\) und Kraft \(F\).</p></aside></div><div class="wb-callout mf-details">
         <strong>1. Magnetische Flussdichte</strong>
         <p class="mf-formula">\(B=\frac{F}{I\cdot s}\), \(\quad [B]=1\,\mathrm T\)</p>
         <p>\(\vec B\) zeigt in Richtung der magnetischen Feldlinien und beschreibt die Stärke des Magnetfeldes.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-17">
         <img src="bilder/zusammenfassung-dreifingerregel.png" alt="Zusammenfassung Drei-Finger-Regel und Lorentzkraft">
-        <figcaption>Zusammenfassung: Lorentzkraft und Drei-Finger-Regel.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-17"><p>Zusammenfassung: Lorentzkraft und Drei-Finger-Regel.</p></aside>
+    </div>
+    <div class="mf-details">
         <strong>2. Lorentzkraft auf einzelne Ladungen</strong>
         <p class="mf-formula">\(F_L=|q|v_sB\)</p>
         <p>Die Lorentzkraft steht senkrecht zur Geschwindigkeit und senkrecht zum Magnetfeld. Sie ändert die Bewegungsrichtung, aber im reinen Magnetfeld nicht den Betrag der Geschwindigkeit.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-18">
         <img src="bilder/zusammenfassung-massenspektrometer.png" alt="Zusammenfassung Massenspektrometer">
-        <figcaption>Zusammenfassung: Geschwindigkeitsfilter und Massenspektrometer.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf2-image-note-18"><p>Zusammenfassung: Geschwindigkeitsfilter und Massenspektrometer.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout"><strong>3. Magnetfeld einer langen Spule</strong><p class="mf-formula">\(B=\mu_0\mu_r\frac nl I\)</p><p>Diese Spulenformel verbindet Geometrie, Material und Stromstärke mit der magnetischen Flussdichte.</p></div>
         <div><strong>Hall-Effekt, Teilchenbahnen und Filter</strong><p class="mf-formula">\(U_H=Bvh\), \(\quad v=\frac EB\), \(\quad r=\frac m q\frac vB\)</p></div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Elektrisches, magnetisches und Gravitationsfeld vergleichen</h2>
@@ -598,16 +640,18 @@
       <li>Elektronen werden schräg in ein homogenes Magnetfeld geschossen und beschreiben eine Schraubenbahn. a) Erkläre qualitativ das Zustandekommen durch Zerlegung von \(\vec v\). b) Mit \(v_s=15\cdot10^6\,\mathrm{m/s}\), \(v_p=1{,}3\cdot10^6\,\mathrm{m/s}\) und \(B=6\,\mathrm{mT}\): Berechne Radius, Umlaufdauer und Ganghöhe. c) Berechne den Betrag der Geschwindigkeit und den Einfallswinkel.</li>
       <li>Fehleranalyse: Eine Schülerin schreibt bei einer Aufgabe zur Kreisbahn \(F=BIs\), weil im Magnetfeld eine Kraft wirkt. Erkläre, warum diese Formel hier nicht passt, und nenne die passende Grundgleichung.</li>
     </ol>
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf2-image-note-19">
         <img src="bilder/aufgaben-lochblende.png" alt="Aufgabenbild zum Massenspektrometer mit Lochblenden">
-        <figcaption>Bild zu Aufgabe 5: Geschwindigkeitsfilter und Magnetfeld mit Fotoplatte.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf2-image-note-19"><p>Bild zu Aufgabe 5: Geschwindigkeitsfilter und Magnetfeld mit Fotoplatte.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Aufgabenhinweis</h2>
         <p>Bei Aufgabe 5 brauchst du zuerst das Kräftegleichgewicht im Geschwindigkeitsfilter. Danach nutzt du die Kreisbahnformel im zweiten Magnetfeld.</p>
       </div>
-    </div>
     <div data-wb-type="essay">
       <script class="wb-config" type="application/json">
       {

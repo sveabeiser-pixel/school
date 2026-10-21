@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="induktion.html">
-<meta name="musterloesung-source-sha256" content="da2a30710a07047ce08f117052aa279e9d6da1c3e914346a0cf24476aa6de39e">
+<meta name="musterloesung-source-sha256" content="c03b0e9e58e97be3b40cc8c79626face84c67a8d52d6a07fe287a8561b24e85b">
 <title>Elektromagnetische Induktion – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
 <style>
     .ind-grid{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:1.25rem;align-items:center}
     .ind-figure{margin:0;text-align:center}
@@ -47,6 +48,7 @@
     }
     .ind-task { color: #172033; --wb-muted: #4b5563; }
   </style>
+<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
@@ -72,7 +74,6 @@
 .wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
 }
 </style>
-<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 </head>
 <body>
 <div data-wb-book>
@@ -131,6 +132,9 @@
 <div class="wb-section-break"></div>
 <article class="solution-block" data-solution="ind_cloze"><h3>Sicherung: Induktionsidee</h3>
 <p>Induktion entsteht durch eine <b>Änderung</b> des <b>magnetischen Flusses</b>. Nach der Lenz'schen Regel wirkt die induzierte Wirkung der Ursache <b>entgegen</b>. Das passt zur <b>Energieerhaltung</b>.</p></article>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ind_essay_induktionslabor"><h3>Untersuchungsauftrag: Die vier Versuche vergleichen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Hinein- und herausfahren</h4><p>Beim Eintreten wächst die vom Feld durchsetzte Fläche und damit der Fluss; U ist ungleich null. Bei vollständiger Überlappung bleiben B und A⊥ konstant, also Φ ebenfalls: Trotz Bewegung ist U = 0. Beim Austreten sinkt der Fluss, die Spannung hat das entgegengesetzte Vorzeichen. Vollständig außerhalb ist der Fluss konstant null und damit auch U. Für das nach außen gerichtete Feld und die positive Flächennormale zum Betrachter ist U beim Eintreten negativ und beim Austreten positiv.</p><h4>2. Drehung</h4><p>Bei gleichförmiger Drehung gilt Φ = BA cos(ωt) und U = nBAω sin(ωt). Bei maximalem positivem oder negativem Fluss ist die momentane Steigung null, also U = 0. Beim Flussnulldurchgang ist |Φ′| und damit |U| maximal. Fluss und Spannung sind um eine Viertelperiode verschoben. Entscheidend ist nicht der Flussbetrag, sondern seine Änderungsrate.</p><h4>3. Flächen- und Feldänderung</h4><p>Beim Verändern der vollständig im Feld liegenden Schleife bleibt B konstant: U = −nBA⊥′. Bei der Feldänderung bleiben Fläche und Orientierung konstant: U = −nA⊥B′. Die Simulation verändert Fläche beziehungsweise Feld abschnittsweise linear; daher ist die Spannung innerhalb jedes Abschnitts konstant. Vergrößern und Verkleinern beziehungsweise Verstärken und Abschwächen ergeben entgegengesetzte Vorzeichen. An den idealisierten Umkehrpunkten wechselt die Steigung; der einzelne Knickzeitpunkt hat keine eindeutige Ableitung.</p><h4>4. Windungszahl, Feldrichtung und Lenz</h4><p>Doppeltes n verdoppelt U und seinen Scheitelwert, verändert aber weder Φ pro Windung noch den zeitlichen Verlauf der Bewegung. Die Flussverkettung nΦ verdoppelt sich. Beim Umkehren des äußeren Feldes wechseln Φ und U bei gleicher Phase ihre Vorzeichen; ihre Beträge bleiben gleich. Bei nach außen zunehmendem Fluss zeigt das induzierte Feld nach innen, bei nach außen abnehmendem Fluss nach außen. Nach der Feldumkehr kehren sich auch diese Gegenfeldrichtungen um. Das Eigenfeld wirkt immer der Änderung entgegen, nicht grundsätzlich dem äußeren Feld.</p></article>
 </section>
 <section data-wb-page="7" data-wb-page-title="Lenz und Energie">
 <h1>Lenz'sches Gesetz: Energie bestimmt die Richtung</h1>

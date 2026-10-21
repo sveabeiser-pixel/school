@@ -7,7 +7,15 @@
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
   <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
   <style>
-    .mf-grid{display:grid;grid-template-columns:minmax(240px,520px) minmax(260px,1fr);gap:18px;align-items:center;margin:14px 0}
+    .wb-book .mf-grid[data-course-media="paired"]{display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);gap:22px;align-items:center!important;margin:18px 0}
+    .wb-book .mf-grid[data-course-media="paired"]>*{min-width:0;align-self:center!important}
+    .wb-book .mf-grid>figure.mf-figure{width:100%!important;max-width:300px;margin:0 auto;order:-1}
+    .wb-book .mf-grid>figure.mf-figure img{display:block;width:auto!important;max-width:100%!important;max-height:250px;height:auto;margin:0 auto;object-fit:contain}
+    .wb-book .mf-image-note{box-sizing:border-box;padding:14px 16px;border:1px solid var(--wb-line,#d8e1e9);border-left:3px solid #39729d;border-radius:6px;background:rgba(49,95,157,.07);color:var(--wb-text)}
+    .wb-book .mf-image-note>p{margin:0;font-size:16px;line-height:1.6}
+    .wb-book .mf-details{margin:0 0 22px}
+    .wb-book .mf-details>:first-child{margin-top:0}
+    @media(max-width:900px){.wb-book .mf-grid[data-course-media="paired"]{grid-template-columns:minmax(0,1fr);gap:14px}}
     .mf-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
     .mf-figure{margin:0 auto;max-width:520px}
     .mf-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -86,7 +94,7 @@
     </div>
   </section>
 
-  <section data-wb-page="2" data-wb-page-title="Magnete">
+<section data-wb-page="2" data-wb-page-title="Magnete">
     <h1>Magnete und ihre Eigenschaften</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Du untersuchst die Eigenschaften von Magneten, deutest Feldlinienbilder und arbeitest mit dem Elementarmagnetmodell.</p></div>
     <p>Magnete erkennst du daran, dass sie magnetisierbare Stoffe wie Eisen, Nickel und Kobalt anziehen. Auf nicht magnetisierbare Stoffe üben Magnete keine nennenswerte magnetische Kraft aus. Die stärkste Wirkung findest du an den Polen.</p>
@@ -95,25 +103,30 @@
     <p>Ein häufiger Denkfehler ist die Vorstellung, ein Nordpol sei so etwas wie eine positive elektrische Ladung und ein Südpol wie eine negative Ladung. Die Analogie hilft nur begrenzt: Elektrische Ladungen können getrennt auftreten, magnetische Pole nach heutigem Wissen nicht. Wenn du einen Magneten teilst, trennst du nicht Nord und Süd, sondern erzeugst zwei kleinere Dipole.</p>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-1">
         <img src="bilder/magnetfeld-stabmagnet.png" alt="Stabmagnet, Pole und magnetische Feldlinien">
-        <figcaption>Stabmagnet: Die Wirkung ist an den Polen am stärksten; Feldlinien zeigen die Struktur des Magnetfelds.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf1-image-note-1"><p>Stabmagnet: Die Wirkung ist an den Polen am stärksten; Feldlinien zeigen die Struktur des Magnetfelds.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Was du im Bild siehst</h2>
         <p>Die Kompassnadeln richten sich entlang der Feldlinien aus. Die Richtung der Feldlinie ist so definiert, wie der Nordpol einer Kompassnadel zeigt. Außerhalb eines Stabmagneten verlaufen die Feldlinien vom Nordpol zum Südpol.</p>
         <p>Teilst du einen Stabmagneten, entstehen nicht einzelne Nord- oder Südpole, sondern zwei neue Dipole.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-2">
         <img src="bilder/stahlnadel-magnetisieren.png" alt="Stahlnadel wird durch Überstreichen mit einem Magneten magnetisiert">
-        <figcaption>Magnetisieren einer Stahlnadel: Die Elementarmagnete werden geordnet.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-2"><p>Magnetisieren einer Stahlnadel: Die Elementarmagnete werden geordnet.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Das Elementarmagnetmodell erklärt, warum ein Stück Eisen magnetisiert werden kann. In unmagnetisiertem Eisen sind viele kleine magnetische Dipole ungeordnet. Beim Magnetisieren werden sie ausgerichtet. Dabei werden keine magnetischen Teilchen übertragen; die Dipole werden nur geordnet.</p>
         <p>Dieses Modell ist besonders nützlich, wenn du später Elektromagnete und Eisenkerne verstehst: Ein äußeres Magnetfeld kann die kleinen Dipole im Material teilweise ordnen. Dadurch verstärkt das Material das Magnetfeld der Spule.</p>
         <div class="wb-callout">
@@ -121,11 +134,10 @@
           <p>Magnete sind stets Dipole mit Nordpol und Südpol. Magnetisieren bedeutet: magnetische Dipole werden ausgerichtet.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <div class="mf-stop">
-      <strong>Stopp & check</strong>
+      <strong>Stopp &amp; check</strong>
       <p>Erkläre in eigenen Worten: Warum wird eine Stahlnadel durch Überstreichen mit einem Magneten selbst magnetisch, obwohl keine „magnetische Ladung“ übertragen wird?</p>
     </div>
     <div class="wb-section-break"></div>
@@ -144,7 +156,7 @@
     </div>
   </section>
 
-  <section data-wb-page="3" data-wb-page-title="Feldlinien">
+<section data-wb-page="3" data-wb-page-title="Feldlinien">
     <h1>Magnetfeld, Feldlinien und Stromfelder</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Du deutest Feldlinienbilder von Magneten, Leitern und Spulen und bestimmst ihre Richtung mit der Faustregel.</p></div>
     <p>Ein Magnet ist von einem Magnetfeld umgeben. In diesem Feld werden andere magnetische Dipole ausgerichtet und es wirken Kräfte. Sichtbar machen kannst du das Feld mit Kompassnadeln oder Eisenfeilspänen. Feldlinien sind ein Modell: Sie zeigen Richtung und Struktur des Feldes.</p>
@@ -152,25 +164,30 @@
     <p>Feldlinien sind keine echten Fäden im Raum. Sie sind eine Zeichensprache: Die Richtung zeigt, wie sich ein Nordpol ausrichten würde. Die Dichte der Linien zeigt qualitativ, wo das Feld stärker ist. Wenn du Feldlinienbilder vergleichst, achte deshalb immer auf zwei Dinge: Richtung und Dichte.</p>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-3">
         <img src="bilder/magnetfeld-leiter-spule.png" alt="Magnetfeld eines stromdurchflossenen Leiters und einer Spule">
-        <figcaption>Strom erzeugt Magnetfelder: Kreisförmige Feldlinien am Draht, spulenähnliches Feld bei Windungen.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf1-image-note-3"><p>Strom erzeugt Magnetfelder: Kreisförmige Feldlinien am Draht, spulenähnliches Feld bei Windungen.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Stromdurchflossene Leiter</h2>
         <p>Ein stromdurchflossener gerader Draht erzeugt ein Magnetfeld mit geschlossenen kreisförmigen Feldlinien um den Draht. Eine stromführende Spule besitzt ein Feld, das außen dem Feld eines Stabmagneten ähnelt. Innen ist es bei einer langen Spule näherungsweise homogen.</p>
         <p>Der wichtige Unterschied zum elektrischen Feld: Magnetische Feldlinien beginnen und enden nicht an einzelnen Polen. Sie sind immer geschlossen. Beim Stabmagneten sieht man außen nur den Teil vom Nordpol zum Südpol; im Magneten laufen die Feldlinien zurück.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="compact">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-4">
         <img src="bilder/linke-faust-regel.png" alt="Linke-Faust-Regel zur Richtung des Magnetfelds um einen Leiter">
-        <figcaption>Linke-Faust-Regel: Daumen in Elektronenstromrichtung, gekrümmte Finger zeigen die Magnetfeldrichtung.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-4"><p>Linke-Faust-Regel: Daumen in Elektronenstromrichtung, gekrümmte Finger zeigen die Magnetfeldrichtung.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Bei der hier verwendeten Linke-Faust-Regel zeigt der Daumen in Richtung der Elektronenbewegung, also von Minus nach Plus. Die gekrümmten Finger zeigen die Richtung der magnetischen Feldlinien um den Leiter.</p>
         <p>Merke dir dabei: Viele Schulbücher nutzen die technische Stromrichtung und dann die rechte Hand. Diese Seite arbeitet bei Leitern konsequent mit der Elektronenbewegung und der linken Hand. Entscheidend ist, dass du die gewählte Konvention nicht mischst.</p>
         <div class="wb-callout">
@@ -178,7 +195,6 @@
           <p>Stromdurchflossene Leiter sind von Magnetfeldern mit geschlossenen Feldlinien umgeben. Eine stromführende Spule wirkt nach außen wie ein Stabmagnet; im Inneren einer langen Spule ist das Feld homogen.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <div data-wb-type="cloze">
@@ -232,33 +248,38 @@
     </div>
   </section>
 
-  <section data-wb-page="4" data-wb-page-title="Leiterkraft">
+<section data-wb-page="4" data-wb-page-title="Leiterkraft">
     <h1>Stromdurchflossene Leiter im Magnetfeld</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Du untersuchst die Kraft auf stromdurchflossene Leiter im Magnetfeld, ihre Richtung und die qualitative Abhängigkeit von Stromstärke und Orientierung.</p></div>
     <p>Ein stromführender unmagnetischer Leiter wird im Magnetfeld abgelenkt. Je größer die Stromstärke ist, desto stärker ist die Auslenkung. Dreht man den Leiter so, dass er nicht mehr senkrecht zu den Feldlinien steht, wird die Kraft kleiner. Ist der Leiter parallel zu den Feldlinien, wirkt keine magnetische Kraft.</p>
     <p>Die Leiterschaukel ist deshalb ein Schlüsselfall: Sie zeigt, dass Strom und Magnetfeld nicht nur nebeneinander existieren. Sobald sich Ladungsträger im Leiter bewegen und ein äußeres Magnetfeld vorhanden ist, kann eine messbare Kraft auf den Leiter entstehen.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="compact">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-5">
         <img src="bilder/leiter-magnetfeldablenkung-lorentzkraft.png" alt="Stromführender Leiter wird im Magnetfeld abgelenkt">
-        <figcaption>Leiter im Hufeisenmagneten: Bei Stromfluss wirkt eine Kraft seitlich auf den Leiter.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf1-image-note-5"><p>Leiter im Hufeisenmagneten: Bei Stromfluss wirkt eine Kraft seitlich auf den Leiter.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Die entscheidende Beobachtung</h2>
         <p>Der Leiter selbst ist nicht magnetisiert. Die Kraft entsteht, weil sich im Leiter Elektronen bewegen. Ihre einzelnen Lorentzkräfte ergeben zusammen die Kraft auf den Leiter.</p>
         <p>Die Kraft ist maximal, wenn Leiter und Magnetfeld senkrecht zueinander stehen.</p>
         <p>Wenn du eine Richtung vorhersagen sollst, kläre zuerst drei Richtungen: Elektronenbewegung im Leiter, Richtung des äußeren Magnetfelds und gesuchte Kraft. Zeichne sie lieber in eine kleine Skizze, bevor du die Handregel anwendest.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-6">
         <img src="bilder/leiterschaukelversuch.png" alt="Leiterschaukel im Magnetfeld eines Hufeisenmagneten und einer Spule">
-        <figcaption>Leiterschaukel: Im Hufeisenmagneten wird der Leiter abgelenkt; parallel zu Spulenfeldlinien wirkt keine Kraft.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-6"><p>Leiterschaukel: Im Hufeisenmagneten wird der Leiter abgelenkt; parallel zu Spulenfeldlinien wirkt keine Kraft.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Die Leiterschaukel zeigt die Lageabhängigkeit besonders klar: Im homogenen Feld des Hufeisenmagneten wird der stromführende Leiter je nach Stromrichtung hinein- oder herausgedrückt. Hängt der Leiter parallel zu den Feldlinien einer Spule, wird er nicht abgelenkt.</p>
         <div class="mf-strategy">
           <strong>Denkstrategie für Leiterschaukel-Aufgaben</strong>
@@ -269,7 +290,6 @@
           <p>Auf einen stromführenden Leiter, der nicht parallel zu den Feldlinien eines äußeren Magnetfelds steht, wirkt eine Kraft. Sie ist maximal bei orthogonaler Ausrichtung.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Mini-Aufgaben: Leiterkraft</h2>
@@ -295,7 +315,7 @@
     </div>
   </section>
 
-  <section data-wb-page="5" data-wb-page-title="Lorentzkraft">
+<section data-wb-page="5" data-wb-page-title="Lorentzkraft">
     <h1>Die Lorentzkraft auf bewegte Ladungen</h1>
     <div><strong>Lorentzkraft auf einzelne Ladungen</strong><p>Hier überträgst du die Kraftwirkung vom stromdurchflossenen Leiter auf einzelne bewegte Ladungen. Dazu nutzt du die Drei-Finger-Regel und den Zusammenhang \(F_\mathrm L=qvB\).</p></div>
     <p>Wenn Strom durch einen Leiter fließt, bewegen sich darin Elektronen. Freie bewegte Elektronen, zum Beispiel in einer braunschen Röhre, werden ebenfalls im Magnetfeld abgelenkt. Die Kraft heißt Lorentzkraft. Sie wirkt senkrecht zur Bewegungsrichtung und senkrecht zur Magnetfeldrichtung.</p>
@@ -303,12 +323,15 @@
     <p>Die Lorentzkraft ist für viele Lernende ungewohnt, weil sie nicht in Bewegungsrichtung wirkt. Eine Kraft in Bewegungsrichtung würde ein Teilchen schneller oder langsamer machen. Die magnetische Lorentzkraft steht aber seitlich zur Bewegung. Sie biegt die Bahn, ohne im idealen homogenen Magnetfeld direkt die Geschwindigkeit zu vergrößern.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="compact">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-7">
         <img src="bilder/drei-finger-regel.png" alt="Drei-Finger-Regel für Lorentzkraft">
-        <figcaption>Drei-Finger-Regel: Bewegungsrichtung, Magnetfeldrichtung und Kraftrichtung stehen senkrecht aufeinander.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-7"><p>Drei-Finger-Regel: Bewegungsrichtung, Magnetfeldrichtung und Kraftrichtung stehen senkrecht aufeinander.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(F_\mathrm L=|q|\cdot v_s\cdot B\)</p>
@@ -323,19 +346,20 @@
           <p>Die Lorentzkraft kann die Bewegungsrichtung ändern, im reinen Magnetfeld aber nicht direkt den Betrag der Geschwindigkeit erhöhen.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-8">
         <img src="bilder/aufgabe-kohlestab.png" alt="Beweglicher Kohlestab in einem Magnetfeld">
-        <figcaption>Aufgabe: Beweglicher Kohlestab auf zwei festen Stäben im Magnetfeld.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf1-image-note-8"><p>Aufgabe: Beweglicher Kohlestab auf zwei festen Stäben im Magnetfeld.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Warum bewegt sich der Stab?</h2>
         <p>Fließt Strom durch den beweglichen Kohlestab, bewegen sich Ladungsträger im äußeren Magnetfeld. Auf sie wirkt die Lorentzkraft. Weil die Ladungsträger im Leiter an das Material gekoppelt sind, wird der ganze Stab mitgenommen.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <div data-wb-type="mcq">
@@ -389,19 +413,22 @@
     </div>
   </section>
 
-  <section data-wb-page="6" data-wb-page-title="Flussdichte">
+<section data-wb-page="6" data-wb-page-title="Flussdichte">
     <h1>Die magnetische Flussdichte \(B\)</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Du definierst die magnetische Flussdichte über die Kraft auf einen stromdurchflossenen Leiter und wendest die Beziehung in einfachen Rechnungen an.</p></div>
     <p>Um Magnetfelder zu vergleichen, braucht man eine Messgröße für die Feldstärke. Dafür eignet sich die Kraft auf einen Probestrom: Ein Drahtrahmen wird so in ein homogenes Magnetfeld gebracht, dass ein Leiterstück senkrecht zu den Feldlinien steht. Die Kraft auf dieses wirksame Leiterstück wird gemessen.</p>
     <p>Das Vorgehen ähnelt der Einführung der elektrischen Feldstärke: Dort testet man ein elektrisches Feld mit einer Probeladung. Hier testet man ein Magnetfeld mit einem Probestrom, weil einzelne Magnetpole nicht verfügbar sind und kleine Permanentmagnete selbst komplizierte Felder mitbringen würden.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-9">
         <img src="bilder/drahtrahmen-magnetfeld.png" alt="Drahtrahmen als Probestrom im Magnetfeld">
-        <figcaption>Drahtrahmen im Magnetfeld: Nur die passende Leiterseite liefert die messbare Kraft.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-9"><p>Drahtrahmen im Magnetfeld: Nur die passende Leiterseite liefert die messbare Kraft.</p></aside>
+    </div>
+    <div class="mf-details">
         <p>Für jedes Magnetfeld ist der Quotient aus Kraft, Stromstärke und wirksamer Leiterlänge konstant. Je größer dieser Quotient ist, desto stärker ist das Magnetfeld.</p>
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
@@ -418,36 +445,37 @@
           <p>Setze \(I\) immer in Ampere und \(s\) in Meter ein. Millinewton, Zentimeter und Millitesla müssen vor dem Einsetzen umgerechnet werden.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
-    <div class="mf-grid">
-      <figure class="mf-figure">
+    <div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-10">
         <img src="bilder/wirksame-leiterlänge-magnetfeld.png" alt="Wirksame Leiterlänge bei gedrehtem Drahtrahmen im Magnetfeld">
-        <figcaption>Wirksame Leiterlänge: Beim Drehen zählt nur die Projektion senkrecht zum Magnetfeld.</figcaption>
+
       </figure>
-      <div class="mf-note">
+
+    <aside class="mf-image-note" id="mf1-image-note-10"><p>Wirksame Leiterlänge: Beim Drehen zählt nur die Projektion senkrecht zum Magnetfeld.</p></aside>
+    </div>
+    <div class="mf-details">
         <h2>Wenn der Rahmen gedreht wird</h2>
         <p>Dreht man den Drahtrahmen, nimmt die Kraft ab, weil die wirksame Leiterlänge kleiner wird. Steht der Leiter parallel zu den Feldlinien, ist die wirksame Leiterlänge null und damit auch die Kraft.</p>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Beispiel</h2>
     <p>Ein Drahtrahmen hat \(s=5\,\mathrm{cm}\). Bei \(I=1\,\mathrm A\) wirkt die Kraft \(F=2\,\mathrm{mN}\).</p>
     <p>Dann gilt \(B=\frac{2\,\mathrm{mN}}{1\,\mathrm A\cdot0{,}05\,\mathrm m}=0{,}04\,\mathrm T=40\,\mathrm{mT}\). Bei \(I=2{,}5\,\mathrm A\) folgt \(F=BIs=5\,\mathrm{mN}\). Soll die Kraft wieder \(2\,\mathrm{mN}\) betragen, muss die wirksame Leiterlänge auf \(s=2\,\mathrm{cm}\) sinken.</p>
     <div class="mf-stop">
-      <strong>Stopp & check</strong>
+      <strong>Stopp &amp; check</strong>
       <p>Warum wäre \(s=5\) statt \(s=0{,}05\,\mathrm m\) in der Rechnung ein Fehler? Schreibe kurz auf, wie sich das Ergebnis dadurch verändern würde.</p>
     </div>
     <div class="wb-section-break"></div>
 
-    <div data-p2 class="p2" data-p2-id="magnetfeld-symbole" data-p2-title="Finde Paare" data-p2-hint="Ordne Symbol und Bedeutung zu.">
+    <div data-p2="" class="p2" data-p2-id="magnetfeld-symbole" data-p2-title="Finde Paare" data-p2-hint="Ordne Symbol und Bedeutung zu.">
       <div class="p2-hint">Ziehe jedes Symbol auf seine Bedeutung.</div>
       <div class="p2-banks">
         <div>
           <div class="p2-col-title">Symbol oder Formel</div>
-          <div class="p2-bank" data-left-bank>
+          <div class="p2-bank" data-left-bank="">
             <div class="p2-piece p2-left" data-side="L" data-pair="1">\(B\)</div>
             <div class="p2-piece p2-left" data-side="L" data-pair="2">\(I\)</div>
             <div class="p2-piece p2-left" data-side="L" data-pair="3">\(s\)</div>
@@ -456,7 +484,7 @@
         </div>
         <div>
           <div class="p2-col-title">Bedeutung</div>
-          <div class="p2-bank" data-right-bank>
+          <div class="p2-bank" data-right-bank="">
             <div class="p2-piece p2-right" data-side="R" data-pair="1">magnetische Flussdichte</div>
             <div class="p2-piece p2-right" data-side="R" data-pair="2">Stromstärke im Leiter</div>
             <div class="p2-piece p2-right" data-side="R" data-pair="3">wirksame Leiterlänge</div>
@@ -465,32 +493,35 @@
         </div>
       </div>
       <div class="p2-row" style="margin-top:12px">
-        <button class="wb-btn" type="button" data-shuffle>Mischen</button>
-        <button class="wb-btn" type="button" data-reset>Zurücksetzen</button>
-        <button class="wb-btn primary" type="button" data-check>Überprüfen</button>
-        <div class="p2-score" data-score></div>
+        <button class="wb-btn" type="button" data-shuffle="">Mischen</button>
+        <button class="wb-btn" type="button" data-reset="">Zurücksetzen</button>
+        <button class="wb-btn primary" type="button" data-check="">Überprüfen</button>
+        <div class="p2-score" data-score=""></div>
       </div>
       <div style="margin-top:12px">
         <div class="p2-col-title">Verbundene Paare</div>
-        <div class="p2-solved" data-solved></div>
+        <div class="p2-solved" data-solved=""></div>
       </div>
     </div>
     <div class="wb-section-break"></div>
   </section>
 
-  <section data-wb-page="7" data-wb-page-title="Rechnen">
+<section data-wb-page="7" data-wb-page-title="Rechnen">
     <h1>Lorentzkraft berechnen</h1>
     <div><strong>Lorentzkraft berechnen</strong><p>Die Formel \(F_\mathrm L=e\cdot v_s\cdot B\) lässt sich aus der Leiterkraft herleiten und auf bewegte einzelne Ladungen anwenden.</p></div>
     <p>Die Kraft auf einen Leiter lässt sich als Summe vieler Lorentzkräfte auf bewegte Elektronen deuten. Wenn in der Zeit \(\Delta t\) die Ladungsmenge \(\Delta Q=N\cdot e\) durch einen Leiterquerschnitt fließt, gilt \(I=\Delta Q/\Delta t\). Setzt man dies in \(F=BIs\) ein, erhält man für ein einzelnes Elektron bei senkrechter Bewegung die Lorentzkraft.</p>
     <p>Für Aufgaben reicht oft die fertige Formel. Wichtig ist aber die Deutung: Ein Magnetfeld „zieht“ nicht einfach an Ladung. Es wirkt auf bewegte Ladung, und zwar abhängig davon, wie stark die Bewegung quer zum Feld ist.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-11">
         <img src="bilder/elektronen-im-Leiter.png" alt="Elektronen bewegen sich durch ein Leiterstück im Magnetfeld">
-        <figcaption>Vom Leiter zur einzelnen Ladung: Der Strom besteht aus vielen bewegten Elektronen.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-11"><p>Vom Leiter zur einzelnen Ladung: Der Strom besteht aus vielen bewegten Elektronen.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(F_\mathrm L=e\cdot v_s\cdot B\)</p>
@@ -502,7 +533,6 @@
           <p>1. Kläre, ob \(v\) senkrecht zum Feld ist. 2. Falls nicht, bestimme \(v_s\). 3. Rechne \(F_L=|q|v_sB\). 4. Bestimme die Richtung getrennt mit der Handregel.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: Flussdichte und Lorentzkraft</h2>
@@ -531,19 +561,22 @@
     </div>
   </section>
 
-  <section data-wb-page="8" data-wb-page-title="Hall-Effekt">
+<section data-wb-page="8" data-wb-page-title="Hall-Effekt">
     <h1>Hallsonden und Hall-Effekt</h1>
     <p>Eine Hallsonde ersetzt eine aufwendige Kraftmessung durch eine Spannungsmessung. In einem stromdurchflossenen Leiterplättchen bewegen sich Elektronen. Durch ein senkrechtes Magnetfeld werden sie seitlich abgelenkt. Dadurch entsteht eine Ladungstrennung und quer zum Strom eine messbare Hallspannung.</p>
     <p>Die Ladungstrennung wächst so lange, bis die elektrische Kraft der Lorentzkraft entgegenwirkt. Im Gleichgewicht fliegen die Elektronen wieder geradlinig weiter.</p>
     <p>Das ist ein typischer Rückkopplungsprozess: Zuerst trennt die Lorentzkraft Ladungen. Durch die getrennten Ladungen entsteht ein elektrisches Feld. Dieses elektrische Feld wirkt der weiteren Trennung entgegen. Sobald beide Kräfte gleich groß sind, bleibt eine konstante Hallspannung messbar.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-12">
         <img src="bilder/halleffekt.png" alt="Hall-Effekt in einem Leiterplättchen mit Hallspannung">
-        <figcaption>Hall-Effekt: Lorentzkraft trennt Ladungen; quer zum Strom entsteht die Hallspannung.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-12"><p>Hall-Effekt: Lorentzkraft trennt Ladungen; quer zum Strom entsteht die Hallspannung.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(F_\mathrm{el}=F_\mathrm L\)</p>
@@ -564,7 +597,6 @@
           <p>Metalle haben sehr viele freie Ladungsträger. Dadurch ist die Driftgeschwindigkeit klein und die Hallspannung oft winzig. Halbleiter können eine deutlich größere messbare Hallspannung liefern.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: Hall-Effekt</h2>
@@ -590,7 +622,7 @@
     </div>
   </section>
 
-  <section data-wb-page="9" data-wb-page-title="Spule und mu0">
+<section data-wb-page="9" data-wb-page-title="Spule und mu0">
     <h1>Die magnetische Feldkonstante und die schlanke Spule</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Die schlanke Spule und die Formel \(B=\mu_0\mu_r\frac nl I\) gehören zur Grundlage. In der Vertiefung leitest du den Zusammenhang her und wertest Messreihen ausführlicher aus.</p></div>
     <p>Stromdurchflossene Spulen werden überall dort eingesetzt, wo man Magnetfelder gezielt erzeugen möchte. Für das Grundverständnis betrachtet man zuerst eine lange, luftgefüllte Spule. In ihrem Inneren verlaufen die Feldlinien parallel zur Spulenachse; die magnetische Flussdichte ist dort näherungsweise konstant. Das Feld ist also homogen.</p>
@@ -598,12 +630,15 @@
     <p>Anschaulich bedeutet das: Jede Windung trägt zum Magnetfeld bei. Packst du mehr Windungen auf dieselbe Länge oder erhöhst du den Strom, wird das Feld stärker. Ziehst du dieselbe Windungszahl auf eine größere Länge auseinander, verteilt sich die Wirkung stärker und \(B\) wird kleiner.</p>
     <div class="wb-section-break"></div>
 
-<div class="mf-grid" data-course-media="stack">
-      <figure class="mf-figure">
+<div class="mf-grid" data-course-media="paired">
+      <figure class="mf-figure" aria-describedby="mf1-image-note-13">
         <img src="bilder/magnetfeld-einer-spule.png" alt="Magnetische Flussdichte im Inneren einer langen Spule">
-        <figcaption>Schlanke Spule: In der Mitte ist \(B\) nahezu konstant, an den Rändern fällt das Feld ab.</figcaption>
+
       </figure>
-      <div>
+
+    <aside class="mf-image-note" id="mf1-image-note-13"><p>Schlanke Spule: In der Mitte ist \(B\) nahezu konstant, an den Rändern fällt das Feld ab.</p></aside>
+    </div>
+    <div class="mf-details">
         <div class="wb-callout">
           <strong>Neue Formel:</strong>
           <p class="mf-formula">\(B=\mu_0\frac nl I\)</p>
@@ -620,7 +655,6 @@
           <p>Je größer \(I\), desto größer \(B\). Je größer \(n/l\), desto größer \(B\). Je größer \(\mu_r\), desto stärker wird das Feld durch das Material im Inneren der Spule verstärkt.</p>
         </div>
       </div>
-    </div>
     <div class="wb-section-break"></div>
 
     <h2>Aufgaben: schlanke Spule</h2>
@@ -628,7 +662,7 @@
       <li>Die Länge einer Spule mit 40 Windungen kann man wie bei einer Ziehharmonika ändern. a) Berechne, welche Stromstärke eine magnetische Flussdichte \(B=0{,}02\,\mathrm{mT}\) im Inneren der Spule bei \(l=30\,\mathrm{cm}\) erzeugt. b) Die Spule wird bei konstanter Stromstärke auf \(20\,\mathrm{cm}\) zusammengedrückt. Berechne den neuen Wert für \(B\).</li>
       <li>Begründe, warum an den Enden einer langen Spule der Betrag des \(B\)-Feldes näherungsweise halb so groß ist wie in ihrer Mitte.</li>
       <li>Zur Bestimmung von \(\mu_0\) wird eine luftgefüllte Zylinderspule mit \(n=120\) Windungen und \(l=42\,\mathrm{cm}\) verwendet. Messwerte: \(I\) in A: 2, 4, 5, 6, 8, 10; \(B\) in mT: 0,7, 1,3, 1,7, 2,2, 2,8, 3,6. a) Trage die Werte mit Ausgleichsgerade auf. b) Bestimme die Steigung und berechne daraus \(\mu_0\). c) Bestimme die prozentuale Abweichung vom Literaturwert.</li>
-      <li>Eine schlanke Spule ist \(30\,\mathrm{cm}\) lang und hat 1200 Windungen. a) Berechne \(I\), damit \(B=0{,}1\,\mathrm T\) wird. b) Beurteile, ob mit dieser Spule im Physiksaal ein Feld \(B>1\,\mathrm T\) erzeugt werden kann.</li>
+      <li>Eine schlanke Spule ist \(30\,\mathrm{cm}\) lang und hat 1200 Windungen. a) Berechne \(I\), damit \(B=0{,}1\,\mathrm T\) wird. b) Beurteile, ob mit dieser Spule im Physiksaal ein Feld \(B&gt;1\,\mathrm T\) erzeugt werden kann.</li>
       <li>In das homogene Magnetfeld einer schlanken Spule \((n=1200,\ l=60\,\mathrm{cm})\) wird ein rechteckiges Drahträhmchen mit wirksamer Leiterlänge \(s=5\,\mathrm{cm}\) orthogonal zu den Feldlinien eingeschoben. Spule und Rahmen sind in Reihe geschaltet. Berechne, bei welcher Stromstärke die Kraft auf den Rahmen \(2\,\mathrm{mN}\) beträgt.</li>
       <li>Formuliere zu \(B=\mu_0\frac nl I\) drei Je-desto-Sätze und gib jeweils an, welche Größe konstant bleiben muss.</li>
     </ol>
