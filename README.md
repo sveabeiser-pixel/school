@@ -91,6 +91,14 @@ To build a SCORM package, use the PowerShell script:
 
 This produces a ZIP file you can upload to your LMS.
 
+## Resetting a lesson on a shared computer
+
+Learning pages using the shared book module show **Alle Einträge löschen** on their first page. After confirmation, this removes the current lesson's locally saved answers and saved name, then reloads the lesson. Other lessons, the theme, submission cooldowns and already submitted results are not deleted. Solution pages do not show this button.
+
+Custom local answer storage must register each exact key with `SBBook.registerResetStorageKey(key)` after loading `allgemeines_format.js`. The built-in task blocks register their keys automatically. Do not use `localStorage.clear()` for lesson resets.
+
+Verification: `node scripts/check-alle-eintraege-loeschen.cjs`.
+
 ## Community vision
 
 This project is meant to grow through teachers helping each other. If you improve a lesson, add a new topic, or find a better prompt for agents, share it back. The more we share, the more we reduce dependence on commercial content platforms and create truly open education materials.

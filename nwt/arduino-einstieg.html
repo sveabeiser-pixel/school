@@ -1081,6 +1081,7 @@ GIB Gesamtwasser aus</div>
     "use strict";
 
     const STORAGE_KEY = "nwt-arduino-einstieg-traces-v1";
+    SBBook.registerResetStorageKey(STORAGE_KEY);
 
     function normalize(value) {
       return String(value || "")

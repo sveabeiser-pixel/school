@@ -17,6 +17,12 @@
   const NAME_MAX_LENGTH = 30;
   const assetsBase = new URL('.', document.currentScript && document.currentScript.src || new URL('assets/allgemeines_format.js', document.baseURI)).href;
   let resultsPdfLoader = null;
+  const resetStorageKeys = new Set();
+
+  function registerResetStorageKey(key){
+    resetStorageKeys.add(String(key));
+    return key;
+  }
 
   function limitName(value){
     return String(value || "").slice(0, NAME_MAX_LENGTH);
@@ -192,7 +198,7 @@ function el(tag, attrs = {}, children = []) {
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const qEls = [];
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "mcq_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "mcq");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "mcq_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "mcq"));
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -345,7 +351,7 @@ function el(tag, attrs = {}, children = []) {
     const scoreEl = el("div", {class:"wb-score", "aria-live":"polite"});
     const gaps = [];
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "cloze_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "cloze");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "cloze_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "cloze"));
     let selectedChip = null;
     function normalizeGapAnswers(raw){
       if(Array.isArray(raw)){
@@ -605,7 +611,7 @@ function el(tag, attrs = {}, children = []) {
       return {label: String(column), width: "", hint:"", answerOptions:[]};
     });
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "trace_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "trace");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "trace_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "trace"));
     const fields = [];
     const table = el("table", {class:"wb-trace-table"});
     const colgroup = el("colgroup");
@@ -833,7 +839,7 @@ function el(tag, attrs = {}, children = []) {
     const bank = el("div", {class:"wb-order-bank", "data-order-bank":"1"});
     const slotsWrap = el("div", {class:"wb-order-slots"});
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "order_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "order");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "order_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "order"));
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -1026,7 +1032,7 @@ function el(tag, attrs = {}, children = []) {
       category: String(item.category || "")
     }));
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "categorize_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "categorize");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "categorize_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "categorize"));
 
     function shuffle(arr){
       for(let i = arr.length - 1; i > 0; i--){
@@ -1367,7 +1373,7 @@ function el(tag, attrs = {}, children = []) {
       if(i < inputs.length-1) body.appendChild(el("div", {class:"wb-spacer"}));
     });
 
-    const storageKey = (k) => `${storagePrefix}${pageKey}_${id}__${k}`;
+    const storageKey = (k) => registerResetStorageKey(`${storagePrefix}${pageKey}_${id}__${k}`);
     const load = () => inputs.forEach(fi => {
       const v = localStorage.getItem(storageKey(fi.key));
       if(v != null) fi.input.value = v;
@@ -1447,7 +1453,7 @@ ${fi.input.value || ""}
     const btnShow = String(cfg.buttonLabel || "Antwort anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Antwort verbergen");
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "reveal_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "reveal");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "reveal_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "reveal"));
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const aEl = el("div", {class:"wb-reveal-a", "data-wb-reveal":"1"}, []);
@@ -1483,7 +1489,7 @@ ${fi.input.value || ""}
     const btnShow = String(cfg.buttonLabel || "Bild anzeigen");
     const btnHide = String(cfg.buttonHideLabel || "Bild verbergen");
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = (cfg.storagePrefix || "wb_") + "revealimg_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "revealimg");
+    const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "revealimg_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "revealimg"));
 
     const qEl = el("div", {class:"wb-reveal-q"}, [question]);
     const imgEl = el("img", {src, alt, class:"wb-reveal-img"}, []);
@@ -2527,7 +2533,7 @@ ${fi.input.value || ""}
     const submitLabel = cfg.submitLabel || "Summary & submit";
     const nameLabel = cfg.studentNameLabel || "Name";
     const namePlaceholder = cfg.studentNamePlaceholder || "Vorname Nachname";
-    const nameStorageKey = cfg.studentNameStorageKey || "wbStudentName";
+    const nameStorageKey = registerResetStorageKey(cfg.studentNameStorageKey || "wbStudentName");
 
     const pages = qsa("[data-wb-page]", bookEl).map(n => ({node:n, page:Number(n.getAttribute("data-wb-page")||"1")})).sort((a,b)=>a.page-b.page);
     let resultsPage = qs('[data-wb-results="1"]', bookEl);
@@ -2690,6 +2696,33 @@ ${fi.input.value || ""}
 
     bookEl.innerHTML = "";
     bookEl.appendChild(root);
+
+    if(!qs('meta[name="musterloesung-source"]') && qs('[data-wb-type], [data-p2], [data-wb-export], [data-trace], input, textarea, select', paper)){
+      const firstPage = pages.find(p => p.node !== resultsPage);
+      const resetButton = el("button", {class:"wb-btn wb-reset-all", type:"button", "data-wb-reset-all":"1"}, ["Alle Einträge löschen"]);
+      const resetActions = el("div", {class:"wb-reset-actions"}, [resetButton]);
+      const heading = qs("h1", firstPage.node);
+      if(heading && heading.parentElement === firstPage.node) heading.after(resetActions);
+      else firstPage.node.prepend(resetActions);
+      resetButton.addEventListener("click", () => {
+        if(!global.confirm("Alle Antworten, Zuordnungen, Freitexte und dein gespeicherter Name auf allen Seiten dieses Lernmaterials werden in diesem Browser gelöscht.\n\nAndere Lernmaterialien und bereits abgeschickte Ergebnisse bleiben erhalten.\n\nMöchtest du wirklich alle Einträge löschen?")) return;
+        try{
+          resetStorageKeys.forEach(key => global.localStorage.removeItem(key));
+        }catch(_error){
+          global.alert("Die gespeicherten Einträge konnten nicht vollständig gelöscht werden. Bitte prüfe, ob der Browser den Zugriff auf den lokalen Speicher erlaubt.");
+          return;
+        }
+        // Clear live fields before reloading so browser form restoration cannot retain answers.
+        qsa("input, textarea", root).forEach(input => {
+          if(input.type === "checkbox" || input.type === "radio") input.checked = input.defaultChecked;
+          else if(input.type !== "file") input.value = input.defaultValue;
+        });
+        const url = new URL(global.location.href);
+        url.hash = firstPage.node.id;
+        global.history.replaceState(null, "", url.href);
+        global.location.reload();
+      });
+    }
 
     const nowEl = qs("[data-wb-pagenow]", root);
     const prevBtn = qs("[data-wb-prev]", root);
@@ -3538,7 +3571,7 @@ function initPuzzle2(root, idx=0){
     const p2Id = root.getAttribute("data-p2-id") || root.id || `p2_${idx}`;
     const requireComplete = String(root.getAttribute("data-p2-require-complete") || "").toLowerCase() !== "false";
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
-    const storageKey = "wb_p2_" + pageKey + "_" + p2Id;
+    const storageKey = registerResetStorageKey("wb_p2_" + pageKey + "_" + p2Id);
 
     if(!leftBank || !rightBank || !solved) return;
 
@@ -3712,7 +3745,7 @@ function initPuzzle2(root, idx=0){
 
     const banksWrap = qs(".p2-banks", root);
     if(banksWrap && !qs(".p2-touch-hint", root)){
-      root.insertBefore(el("div", {class:"p2-touch-hint"}, ["Auf dem iPad: Tippe zuerst einen Begriff und danach das passende Gegenstück an. Zum Scrollen wischst du wie gewohnt nach oben oder unten."]), banksWrap);
+      banksWrap.before(el("div", {class:"p2-touch-hint"}, ["Auf dem iPad: Tippe zuerst einen Begriff und danach das passende Gegenstück an. Zum Scrollen wischst du wie gewohnt nach oben oder unten."]));
     }
 
     // ---- Drag core ----
@@ -3949,7 +3982,7 @@ function autoMountPuzzle2(){
  
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
   global.SBBlocks = { createMCQ, createVerify, createCloze, createOrder, createCategorize, createTrace, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
-  global.SBBook   = { mount: mountBook, autoMount: autoMountBooks };
+  global.SBBook   = { mount: mountBook, autoMount: autoMountBooks, registerResetStorageKey };
   global.SBTheme  = { mountOne: mountTheme, autoMount: autoMountThemes };
   global.SBLibrary = {
   autoMountAll: (opts={}) => ({

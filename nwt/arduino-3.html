@@ -2353,7 +2353,7 @@ void loop() {
   <script>
     SBLibrary.autoMountAll({ storagePrefix: "arduino_lernbaustein_s12-17__" });
     document.querySelectorAll('textarea[data-wb-export]').forEach(field => {
-      const key = "arduino_lernbaustein_s12-17__manual_" + (field.id || field.dataset.wbLabel);
+      const key = SBBook.registerResetStorageKey("arduino_lernbaustein_s12-17__manual_" + (field.id || field.dataset.wbLabel));
       try {
         const saved = localStorage.getItem(key);
         if (saved !== null) field.value = saved;

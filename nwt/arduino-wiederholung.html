@@ -1254,6 +1254,7 @@ noTone(8);</div>
   (function () {
     "use strict";
     const STORAGE_KEY = "nwt-arduino-wiederholung-traces-v1";
+    SBBook.registerResetStorageKey(STORAGE_KEY);
 
     function normalize(value) {
       return String(value || "")

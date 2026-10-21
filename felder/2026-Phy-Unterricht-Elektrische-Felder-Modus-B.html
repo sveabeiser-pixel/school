@@ -356,7 +356,10 @@
   window.addEventListener('afterprint', restorePrint);
   document.getElementById('print').addEventListener('click', () => { preparePrint(); window.print(); });
 
-  document.getElementById('reset').addEventListener('click', () => {
+  const resetButton = document.getElementById('reset');
+  resetButton.textContent = 'Alle Einträge löschen';
+  document.querySelector('.toolbar-actions').appendChild(resetButton);
+  resetButton.addEventListener('click', () => {
     if (!confirm('Alle Antworten, Zahlencheck-Eingaben und Bearbeitungsmarkierungen dieser Übungsseite in diesem Browser löschen? Exportiere wichtige Antworten vorher.')) return;
     clearTimeout(saveTimer);
     state = {answers:{}, done:{}, checks:{}};

@@ -2249,6 +2249,29 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   box-shadow: 0 0 0 3px rgba(220,38,38,.12), var(--p2-shadow);
 }
 
+.wb-book .wb-reset-actions{
+  display:flex;
+  flex-wrap:wrap;
+  margin:12px 0 20px;
+}
+.wb-book .wb-reset-all,
+.wb-book[data-theme] .wb-btn.wb-reset-all{
+  max-width:100%;
+  min-height:44px;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  background:var(--wb-block-bg);
+  color:var(--wb-text);
+  border:1px solid var(--wb-line);
+  border-radius:6px;
+}
+.wb-book .wb-btn.wb-reset-all:hover{
+  border-color:var(--wb-text);
+}
+@media print{
+  .wb-book .wb-reset-actions{display:none}
+}
+
 /* 3-column layout for images or other content */
 .wb-book .grid3{
   display:grid;
