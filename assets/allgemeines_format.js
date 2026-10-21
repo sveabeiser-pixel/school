@@ -2492,6 +2492,19 @@ ${fi.input.value || ""}
 
 
   // ---------- Book + autoNav ----------
+  function pageHasSimulation(pageNode){
+    if(qs('meta[name="musterloesung-source"]')) return false;
+    if(pageNode.getAttribute("data-wb-simulation") === "false") return false;
+    if(pageNode.hasAttribute("data-wb-simulation")) return true;
+    // Existing simulation mounts plus an explicit marker for future custom labs.
+    const selector = [
+      "[data-wb-simulation]", "[data-field-sim]", "[data-wave-sim]", "[data-photoeffect-sim]",
+      "[data-ep-lab]", "[data-system-lab]", "[data-code-sim]", "[data-analog-sim]",
+      "[data-variable-sim]", "[data-pwm-sim]", "[data-array-sim]"
+    ].join(",");
+    return qsa(selector, pageNode).some(node => !node.closest('[data-wb-simulation="false"]'));
+  }
+
   function buildAutoNav(bookMountEl, cfg){
     const headings = Array.isArray(cfg.autoNavHeadings) && cfg.autoNavHeadings.length ? cfg.autoNavHeadings : ["h1","h2"];
     const includeBlocks = cfg.autoNavIncludeBlocks === true;
@@ -2634,8 +2647,13 @@ ${fi.input.value || ""}
       const pageId = ensureId(p.node, `page-${n}`);
       const href = `#${pageId}`;
       const a = el("a", {class:"wb-nav-item", href, "data-wb-target": href, "data-wb-page": String(n), "data-wb-page-list":"1"}, [
-        el("span", {class:"wb-dot"}), el("span", {}, [pageLabelFor(n)])
+        el("span", {class:"wb-dot"}), el("span", {class:"wb-nav-page-label"}, [pageLabelFor(n)])
       ]);
+      if(pageHasSimulation(p.node)){
+        a.setAttribute("aria-label", pageLabelFor(n) + ", mit Simulation");
+        a.setAttribute("title", "Diese Seite enthält eine Simulation.");
+        a.appendChild(el("span", {class:"wb-nav-sim-badge", "aria-hidden":"true"}, ["SIM"]));
+      }
       pageNav.appendChild(a);
       navLinks.push(a);
     }

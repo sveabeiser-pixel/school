@@ -23,6 +23,7 @@
   </style>
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 </head>
 <body>
 <div data-wb-book>
@@ -191,7 +192,7 @@
     <p>Beim Laden und Entladen bewegen sich Ladungsträger durch die Leitungen. Diese gerichtete Bewegung von elektrischen Ladungen nennt man elektrischen Strom. Je mehr Ladung in einer bestimmten Zeit durch einen festen Leiterquerschnitt transportiert wird, desto größer ist die Stromstärke.</p>
     <div class="wb-section-break"></div>
 
-    <div class="ef-img-grid">
+<div class="ef-img-grid" data-course-media="compact">
       <figure class="ef-figure">
         <img src="bilder/laden_entladen_Kondensator.png" alt="Schaltung zum Laden und Entladen eines Kondensators">
         <figcaption class="ef-caption">Schalterstellung A: Aufladen über die Spannungsquelle. Schalterstellung E: Entladen über den Widerstand.</figcaption>
@@ -304,7 +305,7 @@
     <p>Deshalb steigen Spannung und Ladung nicht linear, sondern nähern sich exponentiell ihren Grenzwerten. Die Spannung nähert sich \(U_0\), die Ladung nähert sich \(Q_0=C\cdot U_0\), und die Stromstärke nähert sich null.</p>
     <div class="wb-section-break"></div>
 
-    <div class="ef-img-grid">
+<div class="ef-img-grid" data-course-media="stack">
       <figure class="ef-figure ef-wide-figure">
         <img src="bilder/aufladevorgang_kondensator.png" alt="U-t-, Q-t- und I-t-Diagramme beim Aufladen eines Kondensators">
         <figcaption class="ef-caption">Beim Aufladen wachsen Spannung und Ladung gegen einen Maximalwert. Der Betrag der Stromstärke fällt gegen null.</figcaption>
@@ -543,7 +544,7 @@
     <p>Jetzt ist die Zusammenfassung vollständig sinnvoll: Du kennst Feldstärke, Spannung, Kondensator, Kapazität, Energie, Stromstärke sowie Auf- und Entladevorgänge. Deshalb kannst du die gemischten Aufgaben auf dieser Seite jetzt fachlich bearbeiten.</p>
     <div class="wb-section-break"></div>
 
-    <div class="ef-img-grid">
+<div class="ef-img-grid" data-course-media="stack">
       <figure class="ef-figure">
         <img src="bilder/zusammenfassung-Feldlinien.png" alt="Zusammenfassung elektrischer Feldlinien und elektrischer Feldstärke">
         <figcaption>Elektrische Feldstärke: Richtung, Betrag und Kraft auf Probeladungen.</figcaption>
@@ -585,7 +586,7 @@
     <div class="wb-callout"><strong>Energiedichte:</strong><p class="ef-formula">\(\rho_\mathrm{el}=\frac{E_\mathrm{el}}V=\frac12\varepsilon_0\varepsilon_rE^2\)</p></div>
     <div class="wb-section-break"></div>
 
-    <div class="ef-img-grid">
+<div class="ef-img-grid" data-course-media="stack">
       <figure class="ef-figure">
         <img src="bilder/zusammenfassung-auf-entladevorgang-kondensator.png" alt="Zusammenfassung der Auf- und Entladung eines Kondensators">
         <figcaption>Auf- und Entladung: \(U\), \(Q\) und \(|I|\) ändern sich exponentiell.</figcaption>
@@ -618,29 +619,109 @@
     </table>
     <div class="wb-section-break"></div>
 
-    <div class="ef-img-grid">
-      <figure class="ef-figure">
-        <img src="bilder/aufgabe-kondensatoren.png" alt="Kondensatorschaltung für eine Ersatzkapazitätsaufgabe">
-        <figcaption>Bild zu Aufgabe 4: Ersatzkapazität einer Kondensatorschaltung.</figcaption>
-      </figure>
-      <div class="ef-side-note">
-        <h3>Strategie</h3>
-        <p>Reduziere die Schaltung Schritt für Schritt. Parallel: Kapazitäten direkt addieren. Reihe: Kehrwerte addieren.</p>
-      </div>
-    </div>
-    <div class="wb-section-break"></div>
-
     <h2>Gemischte Aufgaben zum gesamten Kapitel</h2>
-    <ol class="ef-task-list">
-      <li>Ein Wattestück hat die Masse \(0{,}01\,\mathrm g\) und die Ladung \(-0{,}1\,\mathrm{nC}\). Berechne die Stärke eines elektrischen Feldes, in dem das Wattestück schwebt. Gib die Richtung des Feldes an.</li>
-      <li>Nach dem Coulomb-Gesetz ist die Kraft zwischen zwei punkt- oder kugelförmigen Ladungen \(F=kqQ/r^2\). a) Elektron und Proton haben im Wasserstoffatom einen Abstand von \(5\cdot10^{-11}\,\mathrm m\). Bestimme die Anziehungskraft. b) In einem Atomkern haben Protonen etwa \(3\cdot10^{-15}\,\mathrm m\) Abstand. Berechne die Abstoßungskraft und erläutere Folgerungen aus dem Ergebnis.</li>
-      <li>Der Elektronenstrahl einer braunschen Röhre, die mit \(U=1000\,\mathrm V\) betrieben wird, durchläuft einen Kondensator mit \(U_y=100\,\mathrm V\), horizontalen Platten, Plattenabstand \(d=1{,}0\,\mathrm{cm}\), Länge \(l=4{,}0\,\mathrm{cm}\). Randeffekte sind zu vernachlässigen. a) Berechne Kraft, Beschleunigung und Eintrittsgeschwindigkeit. b) Bestimme die Durchlaufzeit. c) Berechne die Ablenkung im Kondensator und die Gesamtablenkung auf dem \(s=20\,\mathrm{cm}\) entfernten Leuchtschirm.</li>
-      <li>Berechne die Ersatzkapazität der abgebildeten Kondensatorschaltung, a) wenn alle Kondensatoren gleich groß sind, b) wenn \(C_1=2C_2=3C_3=4C_4=5C_5=6C_6=7C_7\) gilt.</li>
-      <li>Ein Elektron hat die Anfangsgeschwindigkeit \(1{,}0\cdot10^7\,\mathrm{m/s}\) und durchläuft eine Spannung von \(100\,\mathrm V\). Berechne Endgeschwindigkeit und Energie des Elektrons. Verwende \(m=9{,}1\cdot10^{-31}\,\mathrm{kg}\).</li>
-      <li>Elektronen werden in einer Elektronenkanone mit \(U_0=100\,\mathrm V\) beschleunigt. Dann fliegen sie im Vakuum durch eine Öffnung in einen Plattenkondensator, dessen Feldlinien entlang der Flugrichtung zeigen. Der Plattenabstand ist \(d=0{,}1\,\mathrm m\). a) Bei \(U_1=70\,\mathrm V\): Berechne Bremsbeschleunigung und Durchflugzeit. b) Bei \(U_2=400\,\mathrm V\): Ermittle, welche Strecke die Elektronen zurücklegen, bevor sie umkehren.</li>
-      <li>Ein Pendelschalter lädt 20-mal pro Sekunde einen Kondensator auf \(40\,\mathrm V\) auf und entlädt ihn wieder vollständig. Die mittlere Stromstärke beträgt \(2{,}0\,\mathrm{mA}\). Berechne die Kapazität.</li>
-      <li>Zwischen zwei Kondensatorplatten mit Abstand \(d=5{,}0\,\mathrm{cm}\) und je \(450\,\mathrm{cm^2}\) Fläche liegt die Spannung \(10\,\mathrm{kV}\). a) Berechne Feldstärke, Flächenladungsdichte und Plattenladung. b) Die Platten werden bei angeschlossener und bei abgetrennter Spannungsquelle auf \(d=10\,\mathrm{cm}\) auseinandergezogen. Erläutere Unterschiede bei Spannung, Feldstärke und Ladung. c) Vergleiche in beiden Fällen die Änderung der Feldenergie und erkläre, was mit der aufzubringenden mechanischen Energie geschieht.</li>
-      <li>Ein Kondensator mit \(C=100\,\mathrm{\mu F}\) wird über ein Spannungsmessgerät mit Innenwiderstand \(R=300\,\mathrm{k\Omega}\) entladen. Bestimme die Halbwertszeit \(T_{1/2}\).</li>
+    <ol class="ef-task-list ef-mixed-tasks">
+      <li id="ef3-mixed-1">
+        <h3>Ein Wattestück schwebt</h3>
+        <p>Ein geladenes Wattestück soll in einem elektrischen Feld schweben.</p>
+        <dl class="ef-task-data">
+          <div><dt>Masse</dt><dd>\(m=0{,}01\,\mathrm g\)</dd></div>
+          <div><dt>Ladung</dt><dd>\(q=-0{,}1\,\mathrm{nC}\)</dd></div>
+        </dl>
+        <p>Berechne die benötigte Feldstärke und gib die Richtung des elektrischen Feldes an.</p>
+      </li>
+      <li id="ef3-mixed-2">
+        <h3>Kräfte in Atom und Atomkern</h3>
+        <p>Verwende das Coulomb-Gesetz für punkt- oder kugelförmige Ladungen: \(F=kqQ/r^2\).</p>
+        <ol type="a" class="ef-task-parts">
+          <li>Elektron und Proton haben im Wasserstoffatom einen Abstand von \(5\cdot10^{-11}\,\mathrm m\). Bestimme die Anziehungskraft.</li>
+          <li>In einem Atomkern haben Protonen etwa \(3\cdot10^{-15}\,\mathrm m\) Abstand. Berechne die Abstoßungskraft und erläutere Folgerungen aus dem Ergebnis.</li>
+        </ol>
+      </li>
+      <li id="ef3-mixed-3">
+        <h3>Ein Elektronenstrahl wird abgelenkt</h3>
+        <p>Der Elektronenstrahl einer braunschen Röhre durchläuft einen Kondensator mit horizontalen Platten. Vernachlässige Randeffekte.</p>
+        <dl class="ef-task-data">
+          <div><dt>Beschleunigungsspannung</dt><dd>\(U=1000\,\mathrm V\)</dd></div>
+          <div><dt>Kondensatorspannung</dt><dd>\(U_y=100\,\mathrm V\)</dd></div>
+          <div><dt>Plattenabstand</dt><dd>\(d=1{,}0\,\mathrm{cm}\)</dd></div>
+          <div><dt>Plattenlänge</dt><dd>\(l=4{,}0\,\mathrm{cm}\)</dd></div>
+          <div><dt>Entfernung des Leuchtschirms</dt><dd>\(s=20\,\mathrm{cm}\)</dd></div>
+        </dl>
+        <ol type="a" class="ef-task-parts">
+          <li>Berechne Kraft, Beschleunigung und Eintrittsgeschwindigkeit.</li>
+          <li>Bestimme die Durchlaufzeit.</li>
+          <li>Berechne die Ablenkung im Kondensator und die Gesamtablenkung auf dem entfernten Leuchtschirm.</li>
+        </ol>
+      </li>
+      <li id="ef3-mixed-4">
+        <h3>Kondensatoren geschickt zusammenfassen</h3>
+        <p>Berechne die Ersatzkapazität der abgebildeten Kondensatorschaltung.</p>
+        <figure class="ef-figure ef-task-image">
+          <img src="bilder/aufgabe-kondensatoren.png" alt="Kondensatorschaltung für eine Ersatzkapazitätsaufgabe">
+          <figcaption>Bild zu Aufgabe 4: Ersatzkapazität einer Kondensatorschaltung.</figcaption>
+        </figure>
+        <ol type="a" class="ef-task-parts">
+          <li>Alle Kondensatoren haben die gleiche Kapazität.</li>
+          <li>Es gilt \(C_1=2C_2=3C_3=4C_4=5C_5=6C_6=7C_7\).</li>
+        </ol>
+        <p class="wb-muted"><strong>Strategie:</strong> Reduziere die Schaltung Schritt für Schritt. Parallel: Kapazitäten direkt addieren. Reihe: Kehrwerte addieren.</p>
+      </li>
+      <li id="ef3-mixed-5">
+        <h3>Geschwindigkeit und Energie eines Elektrons</h3>
+        <p>Ein Elektron durchläuft eine Spannung von \(100\,\mathrm V\).</p>
+        <dl class="ef-task-data">
+          <div><dt>Anfangsgeschwindigkeit</dt><dd>\(v_0=1{,}0\cdot10^7\,\mathrm{m/s}\)</dd></div>
+          <div><dt>Elektronenmasse</dt><dd>\(m=9{,}1\cdot10^{-31}\,\mathrm{kg}\)</dd></div>
+        </dl>
+        <p>Berechne die Endgeschwindigkeit und die Energie des Elektrons.</p>
+      </li>
+      <li id="ef3-mixed-6">
+        <h3>Elektronen abbremsen und umkehren</h3>
+        <p>Elektronen werden in einer Elektronenkanone beschleunigt. Anschließend fliegen sie im Vakuum durch eine Öffnung in einen Plattenkondensator, dessen Feldlinien entlang der Flugrichtung zeigen.</p>
+        <dl class="ef-task-data">
+          <div><dt>Beschleunigungsspannung</dt><dd>\(U_0=100\,\mathrm V\)</dd></div>
+          <div><dt>Plattenabstand</dt><dd>\(d=0{,}1\,\mathrm m\)</dd></div>
+        </dl>
+        <ol type="a" class="ef-task-parts">
+          <li>Bei \(U_1=70\,\mathrm V\): Berechne die Bremsbeschleunigung und die Durchflugzeit.</li>
+          <li>Bei \(U_2=400\,\mathrm V\): Ermittle, welche Strecke die Elektronen zurücklegen, bevor sie umkehren.</li>
+        </ol>
+      </li>
+      <li id="ef3-mixed-7">
+        <h3>Ladungstransport mit einem Pendelschalter</h3>
+        <p>Ein Pendelschalter lädt einen Kondensator auf und entlädt ihn anschließend wieder vollständig.</p>
+        <dl class="ef-task-data">
+          <div><dt>Ladevorgänge</dt><dd>20 pro Sekunde</dd></div>
+          <div><dt>Ladespannung</dt><dd>\(U=40\,\mathrm V\)</dd></div>
+          <div><dt>Mittlere Stromstärke</dt><dd>\(I=2{,}0\,\mathrm{mA}\)</dd></div>
+        </dl>
+        <p>Berechne die Kapazität des Kondensators.</p>
+      </li>
+      <li id="ef3-mixed-8">
+        <h3>Kondensatorplatten auseinanderziehen</h3>
+        <p>Zwei Kondensatorplatten werden auf einen größeren Abstand auseinandergezogen. Vergleiche den Fall mit angeschlossener Spannungsquelle mit dem Fall einer zuvor abgetrennten Spannungsquelle.</p>
+        <dl class="ef-task-data">
+          <div><dt>Anfangsabstand</dt><dd>\(d=5{,}0\,\mathrm{cm}\)</dd></div>
+          <div><dt>Fläche jeder Platte</dt><dd>\(A=450\,\mathrm{cm^2}\)</dd></div>
+          <div><dt>Anfangsspannung</dt><dd>\(U=10\,\mathrm{kV}\)</dd></div>
+          <div><dt>Neuer Abstand</dt><dd>\(d=10\,\mathrm{cm}\)</dd></div>
+        </dl>
+        <ol type="a" class="ef-task-parts">
+          <li>Berechne zunächst Feldstärke, Flächenladungsdichte und Plattenladung.</li>
+          <li>Erläutere für beide Fälle die Unterschiede bei Spannung, Feldstärke und Ladung.</li>
+          <li>Vergleiche die Änderung der Feldenergie und erkläre, was jeweils mit der aufzubringenden mechanischen Energie geschieht.</li>
+        </ol>
+      </li>
+      <li id="ef3-mixed-9">
+        <h3>Ein Messgerät entlädt den Kondensator</h3>
+        <p>Ein Kondensator wird über ein Spannungsmessgerät entladen.</p>
+        <dl class="ef-task-data">
+          <div><dt>Kapazität</dt><dd>\(C=100\,\mathrm{\mu F}\)</dd></div>
+          <div><dt>Innenwiderstand des Messgeräts</dt><dd>\(R=300\,\mathrm{k\Omega}\)</dd></div>
+        </dl>
+        <p>Bestimme die Halbwertszeit \(T_{1/2}\).</p>
+      </li>
     </ol>
     <div class="wb-section-break"></div>
 

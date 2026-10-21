@@ -944,6 +944,32 @@ body.wb-global-fs{
 }
 .wb-book a.wb-nav-item.active .wb-dot{border-color: var(--wb-blue); background: var(--wb-blue);}
 
+.wb-book .wb-nav-page-label{
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.wb-book .wb-nav-sim-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  border: 1px solid #acd7c9;
+  border-radius: 4px;
+  background: #e2f4ed;
+  color: #125b49;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .wb-nav-sim-badge{
+  border-color: #367d68;
+  background: #153d33;
+  color: #b6f3dd;
+}
+
 .wb-book .wb-side-footer{
 
   padding: 14px;

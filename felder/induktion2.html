@@ -47,6 +47,7 @@
     }
     .ind-task { color: #172033; --wb-muted: #4b5563; }
   </style>
+  <link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 </head>
 <body>
 <div data-wb-book>
@@ -54,7 +55,7 @@
 
   <section data-wb-page="1" data-wb-page-title="Abiturtraining">
     <h1>Abiturtraining: Flussänderungen aus Diagrammen</h1>
-    <div class="ind-grid">
+<div class="ind-grid" data-course-media="stack">
       <figure class="ind-figure">
         <img src="bilder/aufgabe-abitur-zwei-magnetfelder1.png" alt="Quadratische Spule bewegt sich nacheinander durch zwei begrenzte Magnetfelder">
         <figcaption>Eine Spule bewegt sich von (C) nach (D) durch zwei Felder mit unterschiedlicher Flussdichte.</figcaption>
@@ -216,7 +217,7 @@
 
 <section data-wb-page="5" data-wb-page-title="Induktivität messen">
     <h1>Induktivität bestimmen und Schaltvorgänge auswerten</h1>
-    <div class="ind-grid">
+<div class="ind-grid" data-course-media="stack">
       <figure class="ind-figure"><img src="bilder/messung-selbstinduktion.png" alt="Zwei übereinander gewickelte Spulen auf einem geschlossenen Eisenkern"><figcaption>Eine Messspule erfasst nur die induzierte Spannung, während durch die darunterliegende Spule der veränderliche Strom fließt.</figcaption></figure>
       <div>
         <h2>Warum eine zweite Spule?</h2>
@@ -291,12 +292,12 @@
       <div><h2>2. Gaußsches Gesetz für Magnetfelder</h2><p>Magnetische Felder besitzen keine Quellen und Senken. Die Feldlinien eines Magneten verlaufen außerhalb vom Nord- zum Südpol und im Inneren zurück. Sie bilden stets geschlossene Linien. Teilt man einen Magneten, entstehen zwei neue Dipole und keine isolierten Magnetpole.</p><div class="wb-callout"><strong>Kernaussage</strong><p>Es gibt keine beobachteten magnetischen Monopole; magnetische Feldlinien sind geschlossen.</p></div></div>
     </div>
     <div class="wb-section-break"></div>
-    <div class="ind-grid">
+<div class="ind-grid" data-course-media="stack">
       <figure class="ind-figure"><img src="bilder/magnetfeldaenderung-wirbelfeld.png" alt="Elektrisches Wirbelfeld um ein zunehmendes und abnehmendes Magnetfeld"><figcaption>3. Faraday: Die Richtung des elektrischen Wirbelfeldes kehrt sich mit dem Vorzeichen von \(\dot B\) um.</figcaption></figure>
       <div><h2>3. Faradaysches Induktionsgesetz als Feldaussage</h2><p>Ein sich änderndes Magnetfeld ist von einem elektrischen Wirbelfeld umgeben. Dieses elektrische Feld existiert auch ohne Draht; ein Leiter macht seine Wirkung lediglich als Induktionsspannung oder Induktionsstrom messbar.</p><p>Bewegungsinduktion durch die Lorentzkraft ist eine zweite Induktionsursache. Für die vollständige Elektrodynamik benötigt man deshalb Maxwell-Gleichungen und Lorentzkraft.</p><div class="wb-callout"><strong>Kernaussage</strong><p>Ein zeitlich veränderliches Magnetfeld erzeugt ein elektrisches Wirbelfeld.</p></div></div>
     </div>
     <div class="wb-section-break"></div>
-    <div class="ind-grid">
+<div class="ind-grid" data-course-media="stack">
       <figure class="ind-figure"><img src="bilder/strom-wirbelfeld.png" alt="Magnetisches Wirbelfeld um einen Strom und um ein zunehmendes elektrisches Feld"><figcaption>4. Ampère-Maxwell: Sowohl Strom als auch ein veränderliches elektrisches Feld erzeugen ein magnetisches Wirbelfeld.</figcaption></figure>
       <div><h2>4. Erweitertes ampèresches Gesetz</h2><p>Elektrische Ströme sind von magnetischen Wirbelfeldern umgeben. Maxwell ergänzte: Auch ein zeitlich veränderliches elektrisches Feld erzeugt ein Magnetfeld. Beim Laden eines Kondensators fließt zwischen den Platten kein Leitungsstrom, dennoch wächst dort das elektrische Feld und damit entsteht ein Magnetfeld.</p><p>Maxwell bezeichnete den zusätzlichen Beitrag als Verschiebungsstrom. Diese Ergänzung ermöglicht die Vorhersage elektromagnetischer Wellen.</p><div class="wb-callout"><strong>Kernaussage</strong><p>Elektrische Ströme und zeitlich veränderliche elektrische Felder erzeugen magnetische Wirbelfelder.</p></div></div>
     </div>
@@ -356,7 +357,7 @@
     <div><strong>Aufgaben 13 bis 15</strong><p>Diese Aufgaben verbinden Energie, Produktregel und die Umkehrung des Induktionsgesetzes und gehören zur vertieften quantitativen Auswertung.</p></div>
     <div class="ind-task"><h3>Aufgabe 13: Energie beim Einschieben</h3><p>Ein quadratischer Rahmen mit Seitenlänge \(50\,\mathrm{cm}\) wird in \(0{,}50\,\mathrm s\) vollständig in ein homogenes Feld mit \(B=2{,}0\,\mathrm T\) geschoben. Er ist über \(R=0{,}20\,\Omega\) geschlossen.</p><ol type="a"><li>Berechne \(U_\mathrm{ind}\) und \(I\).</li><li>Berechne die notwendige äußere Kraft.</li><li>Bestimme mechanische Energie und Leistung sowie auf zwei Wegen die umgewandelte elektrische Energie.</li><li>Untersuche alle Änderungen, wenn der Einschub in der halben Zeit erfolgt.</li></ol></div>
     <div class="ind-task"><h3>Aufgabe 14: Rotation und Feldänderung gleichzeitig</h3><p>In einer \(50\,\mathrm{cm}\) langen Feldspule mit \(n_F=10^4\) und \(I_F=2{,}0\,\mathrm A\) befindet sich ein quadratischer Rahmen mit \(1000\) Windungen und \(10\,\mathrm{cm}\) Seitenlänge.</p><ol type="a"><li>Der Rahmen rotiert \(20\)-mal pro Sekunde um eine Flächenachse. Stelle \(U(t)\) auf.</li><li>Der Rahmen ruht senkrecht zu den Feldlinien; stattdessen steigt der Feldstrom gemäß \(I_F(t)=(0{,}10\,\mathrm{A/s})t\). Stelle \(U(t)\) auf.</li><li>Leite \(U(t)\) her, wenn Rotation und Feldzunahme gleichzeitig stattfinden.</li></ol></div>
-    <div class="ind-grid">
+<div class="ind-grid" data-course-media="stack">
       <figure class="ind-figure"><img src="bilder/aufgabe-4-drahtrahmen.png" alt="Stückweise konstante Induktionsspannung eines Drahtrahmens"><figcaption>Spannungsverlauf für Aufgabe 15.</figcaption></figure>
       <div class="ind-task"><h3>Aufgabe 15: Aus Spannung auf Ursache schließen</h3><p>Ein quadratischer Drahtrahmen hat \(100\) Windungen und \(5{,}0\,\mathrm{cm}\) Seitenlänge. Er steht stets senkrecht zu den Feldlinien.</p><ol type="a"><li>Beschreibe mögliche Versuchsbedingungen für den dargestellten Verlauf.</li><li>Der Rahmen ruht, \(B(0)=0\). Zeichne das zugehörige \(B\)-\(t\)-Diagramm.</li><li>Alternativ gilt konstant \(B=0{,}20\,\mathrm T\). Beschreibe eine passende Bewegung des Rahmens.</li></ol></div>
     </div>
