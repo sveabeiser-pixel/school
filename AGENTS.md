@@ -111,6 +111,10 @@ Nutze das Book-Layout: ein Mount-Element mit `data-wb-book`, darin mehrere `sect
 - `<script class="wb-book-config" type="application/json">...</script>`
 - Option `autoNav: true` nutzen, damit Navigation aus Überschriften automatisch entsteht.
 
+**Simulationen in der Seitenleiste (verbindlich):**
+- Jede Unterseite mit einer Simulation muss am Rand beim zugehörigen Seiteneintrag in der Seitenleiste das vorhandene `SIM`-Abzeichen anzeigen, auch im mobilen Navigationsmenü.
+- Nutze dafür die gemeinsame Navigation aus `allgemeines_format.js`. Eigene oder eingebettete Simulationen, die nicht automatisch erkannt werden, markierst du am Simulationsblock oder an der zugehörigen `section` mit `data-wb-simulation`.
+- Reine Links zu Simulationen und statische Abbildungen erhalten kein `SIM`-Abzeichen.
 
 ### 4.2 Interaktions-Blöcke korrekt einbauen
 
@@ -378,6 +382,7 @@ Jede Interaktion besitzt:
 
 - HTML ist valide (keine kaputten Tags).  
 - Book-Navigation funktioniert.  
+- Jede Unterseite mit Simulation zeigt ihr `SIM`-Abzeichen in der Seitenleiste, auch mobil.
 - Interaktionen mounten korrekt (`data-wb-type` richtig, JSON gültig).  
 - Keine JavaScript-Fehler in der Konsole.  
 -Die Umlaute in Deutsch korrekt verwenden
