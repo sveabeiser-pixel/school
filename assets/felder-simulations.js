@@ -693,7 +693,7 @@
       '<div class="capacitor-meter"><span>Kapazität C</span><output data-role="capacitance-output"></output><small>C = ε₀ · εᵣ · A / d</small></div>',
       '<div class="capacitor-meter"><span>Plattenladung |Q|</span><output data-role="charge-output"></output><small>eine Platte +Q, die andere −Q</small></div>',
       '<div class="capacitor-meter"><span>Gespeicherte Energie W</span><output data-role="energy-output"></output><small>W = ½ C U² = Q² / (2C)</small></div>',
-      '<div class="capacitor-meter capacitor-meter-secondary"><span>Kondensatorspannung U</span><output data-role="capacitor-voltage-output"></output></div>',
+      '<div class="capacitor-meter capacitor-meter-secondary"><span>Kondensatorspannung U</span><output data-role="capacitor-voltage-output"></output><small>U = E · d</small></div>',
       '<div class="capacitor-meter capacitor-meter-secondary"><span>Feldstärke E</span><output data-role="field-output"></output><small>E = U / d</small></div>'
     ].join("");
     canvas.parentNode.insertBefore(meters, canvas.nextSibling);
