@@ -19,6 +19,10 @@
     .ef-circuit-points{overflow-wrap:anywhere}
     [data-wb-page="5"] .ef-figure img{box-sizing:border-box;max-width:100%}
     [data-wb-page="5"] .ef-side-note{min-width:0;overflow-wrap:anywhere}
+    .ef-source-comparison{max-width:100%;overflow-x:auto;margin:14px 0}
+    .ef-source-comparison table{width:100%;min-width:460px;border-collapse:collapse;font-size:.92rem}
+    .ef-source-comparison th,.ef-source-comparison td{border:1px solid var(--wb-line,#cbd5e1);padding:10px;text-align:left;vertical-align:top}
+    .ef-source-comparison th{background:var(--wb-head-bg,#f1f5f9);color:var(--wb-text,#0f172a)}
     .ef-note-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
     @media (max-width:760px){.ef-img-grid,.ef-note-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
@@ -46,6 +50,7 @@
 <section data-wb-page="1" data-wb-page-title="Potenzial">
     <h1>Elektrisches Potenzial und Spannung</h1>
     <p class="wb-muted">Fortsetzung zu <a href="elektrische-felder.html">Elektrische Felder 1</a>: Hier geht es um Energie, Potenzial, Spannung, Kondensatoren und Dielektrika.</p>
+    <p><strong>Schreibweise:</strong> Energien bezeichnen wir mit \(W\), zum Beispiel \(W_\mathrm{pot}\) oder \(W_\mathrm{kin}\). Das Zeichen \(E\) steht hier für die elektrische Feldstärke.</p>
     <p>Auf der Erde bewegen sich Körper von alleine vom Berg ins Tal. Für den umgekehrten Weg musst du Energie zuführen. Eine ähnliche Idee hilft beim elektrischen Potenzial: Positive Ladungen bewegen sich von selbst von Orten höheren Potenzials zu Orten niedrigeren Potenzials. Negative Ladungen bewegen sich in die umgekehrte Richtung.</p>
     <p>Wenn du eine Ladung gegen dieses Potenzialgefälle transportierst, musst du Energie aufbringen. In einem Kondensator kann man als Bezugspunkt zum Beispiel die negative Platte wählen. Dann lässt sich jedem Punkt im Feld ein elektrisches Potenzial zuordnen.</p>
     <div class="wb-section-break"></div>
@@ -68,7 +73,7 @@
 
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(E_\mathrm{pot}=q\cdot \varphi(P)\)</p>
+      <p class="ef-formula">\(W_\mathrm{pot}=q\cdot \varphi(P)\)</p>
       <p>Die potenzielle elektrische Energie einer Ladung hängt von der Ladungsmenge \(q\) und vom Potenzial \(\varphi\) am Punkt \(P\) ab.</p>
     </div>
     <div class="wb-callout">
@@ -167,17 +172,17 @@
 
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(E_\mathrm{pot}=mgh\)</p>
+      <p class="ef-formula">\(W_\mathrm{pot}=mgh\)</p>
       <p>Diese bekannte Formel zur Höhenenergie hilft als Analogie für elektrische potenzielle Energie.</p>
     </div>
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(E_\mathrm{el}=F_\mathrm{el}\cdot d=q\cdot E\cdot d\)</p>
+      <p class="ef-formula">\(W_\mathrm{el}=F_\mathrm{el}\cdot d=q\cdot E\cdot d\)</p>
       <p>Diese Energie wird benötigt, wenn eine Ladung im homogenen Feld gegen die elektrische Feldkraft über die Strecke \(d\) transportiert wird.</p>
     </div>
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(E_\mathrm{el}=q\cdot U\)</p>
+      <p class="ef-formula">\(W_\mathrm{el}=q\cdot U\)</p>
       <p>Die elektrische Energie hängt auch von Ladung und durchlaufener Spannung ab.</p>
     </div>
     <div class="wb-callout">
@@ -631,7 +636,18 @@
     <div class="wb-soft-callout"><strong>Grundlage</strong><p>Mit der relativen Permittivität \(\varepsilon_r\) und der Kapazität \(C=\varepsilon_0\varepsilon_r A/d\) erklärst du, wie ein Dielektrikum die Kapazität verändert.</p></div>
     <div><strong>Zusätzliche Schaltungsvertiefung</strong><p>Komplexe Ersatzkapazitäten, Plattenkombinationen und Aufgaben mit mehreren Teilkondensatoren gehen über die ausdrücklich verlangten Bildungsplaninhalte hinaus und sind hier als Vertiefung eingeordnet.</p></div>
     <p>Bringt man einen Isolator wie Glas, Keramik oder Öl zwischen die Kondensatorplatten, steigt die Kapazität. Faraday nannte solche Isolatoren Dielektrika. Im Dielektrikum werden Moleküle polarisiert; dadurch entsteht ein Gegenfeld, das die Wirkung im Inneren verändert.</p>
-    <p>Ist der Kondensator von der Spannungsquelle getrennt, bleibt die Ladung erhalten. Entfernt man dann das Dielektrikum, ändert sich die Spannung. Bleibt der Kondensator dagegen an der Spannungsquelle angeschlossen, bleibt die Spannung konstant und zusätzliche Ladung kann nachfließen.</p>
+    <p>Ist der Kondensator von der Spannungsquelle <strong>getrennt, bleibt der Ladungsbetrag \(Q\) auf jeder Platte erhalten</strong>. Die Spannung kann sich ändern, wenn du ein Dielektrikum einsetzt oder entfernst oder die Plattengeometrie veränderst. Bleibt der Kondensator dagegen an einer Spannungsquelle mit konstanter Spannung <strong>angeschlossen, bleibt die Spannung \(U\) konstant</strong>. Dann kann Ladung nachfließen oder zur Quelle zurückfließen.</p>
+    <div class="ef-source-comparison" tabindex="0" role="region" aria-label="Vergleich: Kondensator mit angeschlossener oder getrennter Spannungsquelle">
+      <table>
+        <caption>Was bleibt bei einer Änderung der Kapazität gleich?</caption>
+        <thead><tr><th scope="col">Spannungsquelle</th><th scope="col">Bleibt konstant</th><th scope="col">Kann sich ändern</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Getrennt</th><td><strong>Ladungsbetrag \(Q\)</strong><br>Kein Ladungsaustausch mit der Quelle.</td><td>Die Spannung folgt aus \(U=Q/C\).<br>Größeres \(C\) → kleineres \(U\).</td></tr>
+          <tr><th scope="row">Angeschlossen</th><td><strong>Spannung \(U\)</strong><br>Die Quelle hält die Spannung fest.</td><td>Die Ladung folgt aus \(Q=CU\).<br>Größeres \(C\) → größeres \(Q\).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Voraussetzung: Der getrennte Kondensator ist isoliert und verliert keine Ladung; die angeschlossene Quelle liefert eine konstante Spannung. <strong>Die gespeicherte Energie \(W\) bleibt bei einer Änderung der Kapazität nicht automatisch konstant.</strong></p>
     <p>Kondensatoren können außerdem parallel oder in Reihe geschaltet werden. Die Ersatzkapazität verhält sich dabei umgekehrt zu Widerständen: Parallelkapazitäten addieren sich direkt, bei Reihenschaltungen addieren sich die Kehrwerte.</p>
     <div class="wb-section-break"></div>
 
@@ -644,12 +660,12 @@
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
       <p class="ef-formula">\(U=\frac{1}{\varepsilon_r}\cdot U_0\)</p>
-      <p>Bei getrennter Spannungsquelle und gleicher Ladung ist die Spannung mit Dielektrikum kleiner.</p>
+      <p>Bei <strong>getrennter Spannungsquelle bleibt \(Q\) erhalten</strong>. Mit Dielektrikum ist die Spannung kleiner als ohne Dielektrikum.</p>
     </div>
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
       <p class="ef-formula">\(Q=\varepsilon_r\cdot Q_0\)</p>
-      <p>Bei angeschlossener Spannungsquelle kann durch ein Dielektrikum mehr Ladung auf den Kondensator fließen.</p>
+      <p>Bei <strong>angeschlossener Spannungsquelle bleibt \(U\) konstant</strong>. Mit Dielektrikum fließt zusätzliche Ladung auf die Platten.</p>
     </div>
     <div class="wb-section-break"></div>
 
@@ -895,7 +911,7 @@
 
     <div class="wb-callout">
       <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(E_\mathrm{kin}=\frac12mv^2=eU\)</p>
+      <p class="ef-formula">\(W_\mathrm{kin}=\frac12mv^2=eU\)</p>
       <p>Ein zunächst ruhendes Elektron gewinnt beim Durchlaufen der Spannung \(U\) die Energie \(eU\).</p>
     </div>
     <div class="wb-callout">
@@ -1071,7 +1087,7 @@
       <div class="ef-side-note">
         <p>a) Damit ein Elektron nach oben abgelenkt wird, muss die elektrische Kraft nach oben zeigen. Weil Elektronen negativ geladen sind, ist das elektrische Feld nach unten gerichtet: obere Platte positiv, untere Platte negativ.</p>
         <p>b) Für \(v=0{,}05c\) ergibt sich aus \(U=mv^2/(2e)\) etwa \(640\,\mathrm V\).</p>
-        <p>c) Bei einem bremsenden Längsfeld gilt \(E_\mathrm{kin}=eEd\), also \(d=E_\mathrm{kin}/(eE)\).</p>
+        <p>c) Bei einem bremsenden Längsfeld gilt \(W_\mathrm{kin}=eEd\), also \(d=W_\mathrm{kin}/(eE)\).</p>
       </div>
     </div>
     <div class="wb-section-break"></div>
@@ -1214,7 +1230,7 @@
     <h2>Formeln, die bis hier machbar sind</h2>
     <div class="wb-callout"><strong>Feldstärke und Kraft:</strong><p class="ef-formula">\(\vec E=\frac{\vec F}{q}\), \(\quad \vec F=q\vec E\)</p></div>
     <div class="wb-callout"><strong>Homogenes Feld im Kondensator:</strong><p class="ef-formula">\(E=\frac Ud\)</p></div>
-    <div class="wb-callout"><strong>Potenzial und Spannung:</strong><p class="ef-formula">\(U=\Delta\varphi\), \(\quad E_\mathrm{el}=qU\)</p></div>
+    <div class="wb-callout"><strong>Potenzial und Spannung:</strong><p class="ef-formula">\(U=\Delta\varphi\), \(\quad W_\mathrm{el}=qU\)</p></div>
     <div class="wb-callout"><strong>Kapazität:</strong><p class="ef-formula">\(C=\frac QU\), \(\quad C=\varepsilon_0\varepsilon_r\frac Ad\)</p></div>
     <div class="wb-callout"><strong>Elementarladung und Elektronenvolt:</strong><p class="ef-formula">\(e=1{,}602\cdot10^{-19}\,\mathrm C\), \(\quad 1\,\mathrm{eV}=1{,}602\cdot10^{-19}\,\mathrm J\)</p></div>
     <div><strong>Teilchenbahnen und Coulomb-Gesetz</strong><p>Für die quantitative Vertiefung verwendest du \(v=\sqrt{2eU/m}\), \(a_y=qE_y/m\), \(y(x)=\frac12a_y(x/v_x)^2\) und \(F_\mathrm{el}=kqQ/r^2\).</p></div>
