@@ -14,6 +14,11 @@
     .ef-img-grid{display:grid;grid-template-columns:minmax(220px,520px) minmax(240px,1fr);gap:18px;align-items:center;margin:14px 0}
     .ef-img-note{border-left:5px solid #315f9d;background:rgba(49,95,157,.08);padding:12px;border-radius:8px}
     .ef-formula{font-size:1.15rem;font-weight:700}
+    .ef-circuit-grid>*{min-width:0;overflow-wrap:anywhere}
+    .ef-circuit-grid figure{width:100%;box-sizing:border-box}
+    .ef-circuit-points{overflow-wrap:anywhere}
+    [data-wb-page="5"] .ef-figure img{box-sizing:border-box;max-width:100%}
+    [data-wb-page="5"] .ef-side-note{min-width:0;overflow-wrap:anywhere}
     .ef-note-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
     @media (max-width:760px){.ef-img-grid,.ef-note-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
@@ -646,7 +651,62 @@
       <p class="ef-formula">\(Q=\varepsilon_r\cdot Q_0\)</p>
       <p>Bei angeschlossener Spannungsquelle kann durch ein Dielektrikum mehr Ladung auf den Kondensator fließen.</p>
     </div>
-<div class="ef-img-grid" data-course-media="stack">
+    <div class="wb-section-break"></div>
+
+    <h2>Parallelschaltung von Kondensatoren</h2>
+    <p>Die Kondensatoren sind jeweils mit denselben beiden Anschlüssen verbunden. Deshalb liegt an allen dieselbe Spannung an. Jeder Kondensator speichert einen Teil der Gesamtladung. Mit \(Q_i=C_iU\) folgt aus dem Addieren der Ladungen direkt das Addieren der Kapazitäten:</p>
+    <p class="ef-formula">\(C_\mathrm{ges}=C_1+C_2+\dots\)</p>
+    <div class="ef-img-grid ef-circuit-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator_parallelschaltung.png" alt="Parallelschaltung von Kondensatoren">
+        <figcaption>Parallelschaltung: Alle Kondensatoren liegen an denselben zwei Anschlüssen.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Mehr Fläche für Ladung</h3>
+        <p>Anschaulich vergrößert sich die wirksame Plattenfläche. Bei gleicher Spannung kann dadurch mehr Ladung gespeichert werden. Das passt zu \(C=\varepsilon A/d\) mit \(\varepsilon=\varepsilon_0\varepsilon_r\).</p>
+      </div>
+    </div>
+    <ul class="ef-circuit-points">
+      <li>An allen Kondensatoren liegt <strong>dieselbe Spannung</strong>: \(U=U_1=U_2=\dots\).</li>
+      <li>Die gespeicherten <strong>Ladungen addieren sich</strong>: \(Q_\mathrm{ges}=Q_1+Q_2+\dots\).</li>
+      <li>Die Gesamtkapazität ist bei mindestens zwei Kondensatoren mit positiver Kapazität <strong>größer als jede einzelne Kapazität</strong>.</li>
+      <li>Für \(n\) gleiche Kondensatoren gilt: \(C_\mathrm{ges}=nC\).</li>
+    </ul>
+    <p><strong>Merksatz:</strong> Parallel bedeutet anschaulich mehr Plattenfläche – die Kapazität steigt.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Reihenschaltung von Kondensatoren</h2>
+    <p>Die Kondensatoren sind hintereinander geschaltet. Bei anfangs ungeladenen Kondensatoren und ohne zusätzliche Ladung auf den isolierten Zwischenverbindungen tragen sie denselben Ladungsbetrag \(Q\). Die Gesamtspannung verteilt sich auf die einzelnen Kondensatoren. Mit \(U_i=Q/C_i\) folgt aus dem Addieren der Teilspannungen:</p>
+    <p class="ef-formula">\(\frac{1}{C_\mathrm{ges}}=\frac{1}{C_1}+\frac{1}{C_2}+\dots\)</p>
+    <div class="ef-img-grid ef-circuit-grid">
+      <figure class="ef-figure">
+        <img src="bilder/kondensator_reihenschaltung.png" alt="Reihenschaltung von Kondensatoren">
+        <figcaption>Reihenschaltung: Die Teilspannungen ergeben zusammen die Gesamtspannung.</figcaption>
+      </figure>
+      <div class="ef-side-note">
+        <h3>Mehr Abstand für denselben Ladungsbetrag</h3>
+        <p>Bei gleicher Plattenfläche und gleichem Dielektrikum kannst du dir vorstellen, dass sich die Plattenabstände addieren. Nach \(C=\varepsilon A/d\) bedeutet ein größerer Abstand eine kleinere Kapazität. Das ist eine anschauliche Analogie; die Kehrwertformel gilt auch bei unterschiedlichen Bauformen.</p>
+      </div>
+    </div>
+    <ul class="ef-circuit-points">
+      <li>Die <strong>Teilspannungen addieren sich</strong>: \(U_\mathrm{ges}=U_1+U_2+\dots\).</li>
+      <li>Unter den oben genannten Bedingungen ist der <strong>Ladungsbetrag an jedem Kondensator gleich</strong>: \(Q_1=Q_2=\dots=Q\).</li>
+      <li>Wegen \(U_i=Q/C_i\) liegt am Kondensator mit der <strong>kleineren Kapazität die größere Spannung</strong>.</li>
+      <li>Die Gesamtkapazität ist bei mindestens zwei Kondensatoren mit positiver Kapazität <strong>kleiner als jede einzelne Kapazität</strong>.</li>
+      <li>Für \(n\) gleiche Kondensatoren gilt: \(C_\mathrm{ges}=C/n\).</li>
+    </ul>
+    <p>Für genau zwei Kondensatoren kannst du die Kehrwertformel umstellen:</p>
+    <p class="ef-formula">\(C_\mathrm{ges}=\frac{C_1C_2}{C_1+C_2}\)</p>
+    <p><strong>Merksatz:</strong> In Reihe bedeutet anschaulich mehr Plattenabstand – die Kapazität sinkt.</p>
+    <div class="wb-section-break"></div>
+
+    <p class="ef-formula">\(Q=C\cdot U,\qquad U=\frac{Q}{C}\)</p>
+    <p>Diese Beziehungen gelten für jeden einzelnen Kondensator und für die gesamte Ersatzkapazität. Du brauchst sie auch bei Elektrometer- und Messverstärkeraufgaben.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Anwenden: Große Kapazität und Plattenkombinationen</h2>
+    <p>Jetzt kannst du eine kompliziertere Plattenanordnung in Teilkondensatoren zerlegen. Prüfe zuerst: Liegen Teilbereiche an derselben Spannung, oder durchläuft die Spannung nacheinander mehrere Zwischenräume? Zeichne dazu eine Ersatzschaltung und wähle erst dann die passende Formel.</p>
+    <div class="ef-img-grid" data-course-media="stack">
       <figure class="ef-figure">
         <img src="bilder/aufgabe-plattenkondensator.png" alt="Aufgabe zum Plattenkondensator mit zusätzlicher Plattenanordnung">
         <figcaption>Aufgabe: Parameter für möglichst große Kapazität wählen.</figcaption>
@@ -681,23 +741,6 @@
     </div>
     <div class="wb-section-break"></div>
 
-    <div class="wb-callout">
-      <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(C_\mathrm{ges}=C_1+C_2+C_3\)</p>
-      <p>Für parallel geschaltete Kondensatoren addieren sich die Kapazitäten.</p>
-    </div>
-    <div class="wb-callout">
-      <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(\frac{1}{C_\mathrm{ges}}=\frac{1}{C_1}+\frac{1}{C_2}+\frac{1}{C_3}\)</p>
-      <p>Für in Reihe geschaltete Kondensatoren addieren sich die Kehrwerte der Kapazitäten.</p>
-    </div>
-    <div class="wb-callout">
-      <strong>Neue Formel:</strong>
-      <p class="ef-formula">\(Q=C\cdot U\), \(U=\frac{Q}{C}\)</p>
-      <p>Diese Umstellungen brauchst du bei Elektrometer- und Messverstärkeraufgaben.</p>
-    </div>
-    <div class="wb-section-break"></div>
-
     <div data-wb-type="categorize">
       <script class="wb-config" type="application/json">
       {
@@ -718,30 +761,6 @@
         ]
       }
       </script>
-    </div>
-    <div class="wb-section-break"></div>
-
-    <div class="ef-img-grid">
-      <figure class="ef-figure">
-        <img src="bilder/kondensator_parallelschaltung.png" alt="Parallelschaltung von Kondensatoren">
-        <figcaption>Parallelschaltung von Kondensatoren.</figcaption>
-      </figure>
-      <div class="ef-side-note">
-        <h3>So liest du die Schaltung</h3>
-        <p>Alle Kondensatoren liegen an derselben Spannung. Die Ladungen auf den einzelnen Kondensatoren addieren sich zur Gesamtladung. Deshalb addieren sich bei der Parallelschaltung die Kapazitäten direkt.</p>
-      </div>
-    </div>
-    <div class="wb-section-break"></div>
-
-    <div class="ef-img-grid">
-      <figure class="ef-figure">
-        <img src="bilder/kondensator_reihenschaltung.png" alt="Reihenschaltung von Kondensatoren">
-        <figcaption>Reihenschaltung von Kondensatoren.</figcaption>
-      </figure>
-      <div class="ef-side-note">
-        <h3>So liest du die Schaltung</h3>
-        <p>Bei der Reihenschaltung tragen die Kondensatoren betragsmäßig dieselbe Ladung. Die Teilspannungen addieren sich zur Gesamtspannung. Deshalb addieren sich die Kehrwerte der Kapazitäten.</p>
-      </div>
     </div>
     <div class="wb-section-break"></div>
 
