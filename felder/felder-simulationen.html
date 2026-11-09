@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Felder-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261109-laengsfeld">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -131,8 +131,31 @@
     </div>
   </section>
 
-  <section data-wb-page="2" data-wb-page-title="Teilchenbahn">
-    <h1>Simulation: Geladene Teilchen im Kondensator</h1>
+  <section data-wb-page="2" data-wb-page-title="Teilchenbahn" data-wb-simulation>
+    <h1>Simulationen: Teilchen im Längs- und Querfeld</h1>
+    <h2>Beschleunigung im elektrischen Längsfeld</h2>
+    <p>Untersuche zuerst eine geradlinige Bewegung: Das Feld liegt auf der Bewegungsachse. Für positive Ladung zeigt die Kraft mit dem Feld, für negative dagegen. Ob das Teilchen schneller oder langsamer wird, hängt zusätzlich von seiner momentanen Bewegungsrichtung ab. Die positive x-Richtung zeigt nach rechts.</p>
+    <p class="ef-formula">\(F_x=qE_x,\quad a_x=\frac{qE_x}{m},\quad v_x(t)=v_0+a_xt,\quad x(t)=x_0+v_0t+\frac12a_xt^2\)</p>
+    <div class="field-sim-card" data-field-sim="longitudinal-field"></div>
+    <p>Vergleiche die Voreinstellungen „Elektronenkanone“, „Positive Ladung“ und „Gegenfeld“. Beim Vergleich des Ladungsvorzeichens musst du die Masse gleich lassen. In den voreingestellten Beispielen haben Elektron und positive Ladung unterschiedliche Massen. Spurpunkte liegen zeitlich gleich weit auseinander.</p>
+    <p>Quelle &amp; Weiterforschen: <a href="https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/grundwissen/geladene-teilchen-im-elektrischen-laengsfeld" target="_blank" rel="noopener">LEIFIphysik: Geladene Teilchen im elektrischen Längsfeld</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"felder_sim_laengsfeld_essay",
+        "title":"Auswertung: Bewegung im Längsfeld",
+        "hint":"Vergleiche jeweils bei gleicher Masse und begründe mit aₓ = qEₓ/m.",
+        "fields":[
+          {"label":"Aus der Ruhe beschleunigen","key":"beschleunigung","kind":"textarea","prompt":"Begründe bei der Voreinstellung Elektronenkanone die Richtungen von E, F und a. Berechne die Endgeschwindigkeit nach 10 cm. Was bewirken doppelte Masse und doppelter Ladungsbetrag bei der Kraft und Beschleunigung?"},
+          {"label":"Bremsen und Umkehren","key":"umkehr","kind":"textarea","prompt":"Wähle Gegenfeld. Bestimme aus v₀ = 4,0 · 10⁶ m/s und Eₓ = +1000 V/m die Umkehrzeit und die Umkehrstrecke. Beschreibe Geschwindigkeit und Beschleunigung am Umkehrpunkt und danach."},
+          {"label":"Grenzfälle und Feldvergleich","key":"transfer","kind":"textarea","prompt":"Vergleiche q > 0 und q < 0 bei gleicher Masse. Erkläre den Wechsel nur eines bzw. beider Vorzeichen von q und E sowie die Fälle q = 0 und E = 0. Was bleibt im unten gezeigten Querfeld gleich, was ändert sich gegenüber dem Längsfeld?"}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>Ablenkung im elektrischen Querfeld</h2>
     <p>In dieser Simulation fliegt ein geladenes Teilchen waagrecht in das homogene Feld eines Plattenkondensators. Das Feld wirkt senkrecht zur Flugrichtung. Dadurch wird das Teilchen nach oben oder unten abgelenkt.</p>
     <p>Du kannst die Ladungsstärke, die Spannung, die Feldstärke und die Richtung der Spannung verändern. Spannung und Feldstärke sind gekoppelt, denn im idealen Plattenkondensator gilt \(E=\frac{U}{d}\). Der Plattenabstand ist hier fest auf \(d=5{,}0\,\mathrm{cm}\) gesetzt.</p>
     <div class="wb-section-break"></div>
@@ -428,7 +451,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261020-kondensator"></script>
+  <script src="../assets/felder-simulations.js?v=20261109-laengsfeld"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

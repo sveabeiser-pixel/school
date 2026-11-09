@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="elektrische-felder2.html">
-<meta name="musterloesung-source-sha256" content="a3766d6d4d8c4617d72bd2414076f8aa3e66093178b43057c337fb3b288468dc">
+<meta name="musterloesung-source-sha256" content="c36408042f6480e33cdff5a867c8a4ea865780bceb604dac4d8e0e871bd9473d">
 <title>Elektrische Felder 2: Potenzial und Kondensator – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
-<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261109-laengsfeld">
 <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -20,6 +20,7 @@
     @media (max-width:760px){.ef-img-grid,.ef-note-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
   </style>
+<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
@@ -45,7 +46,6 @@
 .wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
 }
 </style>
-<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 </head>
 <body>
 <div data-wb-book>
@@ -122,6 +122,9 @@
 </section>
 <section data-wb-page="7" data-wb-page-title="Elektronenkanone">
 <h1>Geladene Teilchen im elektrischen Feld: Elektronenkanone</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef2_essay_laengsfeld"><h3>Untersuche: Beschleunigen, Bremsen und Umkehren</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Elektronenkanone und Parametervergleich</h4><p>Eₓ = −1000 V/m zeigt nach links. Für q = −e zeigen Fₓ = qEₓ = +1,602·10⁻¹⁶ N und aₓ = +1,759·10¹⁴ m/s² nach rechts. Nach d = 0,10 m beträgt die kinetische Energie e|Eₓ|d = 100 eV; aus ½mv² = e|Eₓ|d folgt <b>v = 5,93·10⁶ m/s</b>. Die Durchflugzeit ist etwa 33,7 ns. Doppelte Masse lässt die Kraft unverändert und halbiert a; doppelter Ladungsbetrag bei gleichem Vorzeichen verdoppelt Kraft und Beschleunigung. Die Spurpunkte rücken beim Beschleunigen auseinander. x(t) ist eine Parabel, vₓ(t) eine Gerade.</p><h4>2. Gegenfeld und Umkehr</h4><p>Bei Eₓ = +1000 V/m und q = −e gilt aₓ = −1,759·10¹⁴ m/s². Aus 0 = v₀+aₓt folgt <b>tU = 22,7 ns</b>. Die Umkehrstrecke ist v₀²/(2|aₓ|) = <b>0,0455 m = 4,55 cm</b>. Am Umkehrpunkt gilt vₓ = 0, aber Fₓ und aₓ bleiben ungleich null und zeigen nach links. Danach ist auch vₓ negativ: Das Teilchen wird nach links schneller. Die Rückkehr zur linken Feldgrenze erfolgt nach etwa 45,5 ns. Ein negatives a bedeutet also nicht grundsätzlich Abbremsen.</p><h4>3. Vorzeichen und Grenzfälle</h4><p>Bei gleichem m und gleichem E kehrt ein Wechsel von q das Vorzeichen von F und a um. Ebenso wirkt ein alleiniger Feldrichtungswechsel. Werden q und E gleichzeitig umgekehrt, bleiben F und a unverändert; bei gleichen Anfangswerten ist dann auch die Bewegung identisch. Bei q = 0 oder E = 0 sind F und a null: Ein zunächst ruhendes Teilchen bleibt in Ruhe, ein bewegtes fliegt gleichförmig weiter. Ein Teilchen kann v = 0 und trotzdem a ≠ 0 haben, etwa beim Start aus Ruhe oder am Umkehrpunkt.</p></article>
 <div class="wb-section-break"></div>
 <article class="solution-block" data-solution="ef2_mcq_elektronenkanone"><h3>Check: Elektronenkanone</h3>
 <p><b>Die Geschwindigkeit verdoppelt sich.</b> Aus v = √(2eU/m) folgt v ∝ √U. Vierfache Beschleunigungsspannung liefert doppelte Geschwindigkeit im nichtrelativistischen Modell.</p></article>

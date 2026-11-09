@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder 2: Potenzial und Kondensator</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261109-laengsfeld">
   <style>
     .ef-figure{margin:0 auto;max-width:520px}
     .ef-figure img{width:100%;max-height:340px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -856,7 +856,7 @@
     </div>
   </section>
 
-  <section data-wb-page="7" data-wb-page-title="Elektronenkanone">
+  <section data-wb-page="7" data-wb-page-title="Elektronenkanone" data-wb-simulation>
     <h1>Geladene Teilchen im elektrischen Feld: Elektronenkanone</h1>
     <p>Elektrische Felder können geladene Teilchen beschleunigen oder abbremsen. Das ist keine neue Mechanik: Auf das Teilchen wirkt eine Kraft, also ändert sich seine Geschwindigkeit. Neu ist nur die Ursache der Kraft: Sie kommt vom elektrischen Feld.</p>
     <p>Eine Elektronenkanone erzeugt ein schmales Elektronenbündel. Aus einer erhitzten Glühkathode treten Elektronen aus. Zwischen Kathode und Anode liegt eine Beschleunigungsspannung. Die Elektronen werden zur Anode hin beschleunigt und treten durch eine kleine Öffnung aus. Ein negativ geladener Wehnelt-Zylinder bündelt den Strahl.</p>
@@ -893,6 +893,30 @@
 
     <h2>Beispiel: Beschleunigung mit 100 V</h2>
     <p>Für \(U=100\,\mathrm V\), \(e=1{,}602\cdot10^{-19}\,\mathrm C\) und \(m=9{,}1\cdot10^{-31}\,\mathrm{kg}\) ergibt sich \(v\approx6{,}0\cdot10^6\,\mathrm{m/s}\). Setzt man formal \(v=c\), erhält man etwa \(260\,\mathrm{kV}\). Das ist aber nur eine klassische Rechnung: Bei sehr großen Geschwindigkeiten muss relativistisch gerechnet werden; die Lichtgeschwindigkeit wird nicht erreicht.</p>
+    <div class="wb-section-break"></div>
+
+    <h2>Simulation: Beschleunigung im elektrischen Längsfeld</h2>
+    <p>Hier liegen Bewegung und Feld auf derselben Achse. Die positive x-Richtung zeigt nach rechts. Entscheidend für die Beschleunigungsrichtung ist nicht allein das Feld, sondern das Produkt aus Ladung und Feldkomponente: Ein Elektron beschleunigt entgegen der Feldrichtung, ein positiv geladenes Teilchen in Feldrichtung. Zeigt die Kraft entgegen der momentanen Geschwindigkeit, wird das Teilchen zunächst langsamer und kann umkehren.</p>
+    <p class="ef-formula">\(F_x=qE_x,\qquad a_x=\frac{qE_x}{m},\qquad v_x(t)=v_0+a_xt,\qquad x(t)=x_0+v_0t+\frac12a_xt^2\)</p>
+    <p>In der Voreinstellung „Elektronenkanone“ ist die linke Platte negativ und die rechte positiv. Das Feld zeigt nach links, die Elektronen beschleunigen nach rechts. Bei \(d=10\,\mathrm{cm}\) und \(|E_x|=1000\,\mathrm{V/m}\) beträgt die Beschleunigungsspannung \(100\,\mathrm V\). Die Spur setzt Punkte in gleichen Zeitabständen: Wachsende Abstände bedeuten wachsenden Geschwindigkeitsbetrag.</p>
+    <div class="field-sim-card" data-field-sim="longitudinal-field"></div>
+    <p>Jetzt hast du gelernt: Im homogenen Längsfeld bleibt die Beschleunigung konstant, aber die Geschwindigkeit nicht. Ein negatives \(a_x\) bedeutet nicht automatisch Abbremsen: Bewegt sich das Teilchen ebenfalls nach links, wird es schneller.</p>
+    <p>Quelle &amp; Weiterforschen: Vergleiche deine Beobachtung mit <a href="https://www.leifiphysik.de/elektrizitaetslehre/bewegte-ladungen-feldern/grundwissen/geladene-teilchen-im-elektrischen-laengsfeld" target="_blank" rel="noopener">LEIFIphysik: Geladene Teilchen im elektrischen Längsfeld</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef2_essay_laengsfeld",
+        "title":"Untersuche: Beschleunigen, Bremsen und Umkehren",
+        "hint":"Ändere jeweils nur einen Parameter. Nutze Pfeile, Spurpunkte und Zeitdiagramme als Belege.",
+        "fields":[
+          {"label":"Elektronenkanone","key":"kanone","kind":"textarea","prompt":"Starte mit der Voreinstellung Elektronenkanone. Begründe die Richtungen von E, F und a. Berechne die Geschwindigkeit nach 10 cm und vergleiche mit dem Messwert. Erkläre, wie sich Kraft und Beschleunigung bei doppelter Masse bzw. doppeltem Ladungsbetrag ändern."},
+          {"label":"Gegenfeld","key":"gegenfeld","kind":"textarea","prompt":"Wähle Gegenfeld und untersuche den Umkehrpunkt mit dem Zeitregler. Berechne mit v₀ = 4,0 · 10⁶ m/s und Eₓ = +1000 V/m die Umkehrzeit und die Strecke bis zur Umkehr. Ist dort nur die Geschwindigkeit null oder auch die Beschleunigung? Begründe."},
+          {"label":"Vorzeichen und Grenzfälle","key":"vergleich","kind":"textarea","prompt":"Vergleiche positive und negative Ladung bei gleicher Masse und gleichen übrigen Einstellungen. Was ändert sich, wenn du stattdessen nur E umkehrst, beide Vorzeichen umkehrst oder q = 0 bzw. E = 0 setzt? Erkläre auch: Kann ein Teilchen bei v = 0 eine Beschleunigung besitzen?"}
+        ]
+      }
+      </script>
+    </div>
     <div class="wb-section-break"></div>
 
     <div data-wb-type="mcq">
@@ -1324,7 +1348,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261020-kondensator"></script>
+  <script src="../assets/felder-simulations.js?v=20261109-laengsfeld"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

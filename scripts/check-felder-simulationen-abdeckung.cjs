@@ -23,7 +23,7 @@ async function main() {
       const lessons = rows.filter(row => !row.solution && row.file !== 'felder-simulationen.html');
       return types.map(type => ({ type, lessons: lessons.flatMap(lesson => lesson.simulations.filter(sim => sim.type === type).map(sim => ({ file: lesson.file, page: sim.page }))) }));
     }, sources);
-    assert.equal(coverage.length, 9);
+    assert.equal(coverage.length, 10);
     assert.deepEqual(coverage.filter(row => !row.lessons.length), [], 'Missing simulation in field lessons');
     const markupModes = await page.evaluate(sources => {
       const modes = file => [...new DOMParser().parseFromString(sources.find(s => s.file === file).html, 'text/html').querySelectorAll('[data-field-sim="induction-lab"] [data-role="mode"] option')].map(n => n.value);

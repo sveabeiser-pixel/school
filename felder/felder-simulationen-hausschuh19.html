@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="felder-simulationen.html">
-<meta name="musterloesung-source-sha256" content="fc3523b8f1e4b044c25759864d174bd2e2670a944b87c9ebab1d39674fdd4527">
+<meta name="musterloesung-source-sha256" content="727ca5b4421e00d46b93580696828f2a2e4835e1e628cf5320046eed3e53e863">
 <title>Felder-Simulationen – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
-<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261020-kondensator">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261109-laengsfeld">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
@@ -57,7 +57,10 @@
 <p>An feinen Spitzen ist die lokale Feldstärke bei gleicher Ladung größer als an abgerundeten Enden. Oberhalb der Ionisationsschwelle werden Luftmoleküle ionisiert; beschleunigte Ionen nehmen neutrale Luft mit. Bei gleichsinnig gekrümmten Spitzen liefert deren Rückstoß ein gleichgerichtetes Drehmoment, der Rotor dreht entgegen der Ausströmrichtung. Runde Enden liefern bei derselben angelegten Spannung weniger oder keinen Ionenwind und damit geringere oder keine Drehbewegung.</p></article>
 </section>
 <section data-wb-page="2" data-wb-page-title="Teilchenbahn">
-<h1>Simulation: Geladene Teilchen im Kondensator</h1>
+<h1>Simulationen: Teilchen im Längs- und Querfeld</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="felder_sim_laengsfeld_essay"><h3>Auswertung: Bewegung im Längsfeld</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Elektronenkanone und Parametervergleich</h4><p>Eₓ = −1000 V/m zeigt nach links. Für q = −e zeigen Fₓ = qEₓ = +1,602·10⁻¹⁶ N und aₓ = +1,759·10¹⁴ m/s² nach rechts. Nach d = 0,10 m beträgt die kinetische Energie e|Eₓ|d = 100 eV; aus ½mv² = e|Eₓ|d folgt <b>v = 5,93·10⁶ m/s</b>. Die Durchflugzeit ist etwa 33,7 ns. Doppelte Masse lässt die Kraft unverändert und halbiert a; doppelter Ladungsbetrag bei gleichem Vorzeichen verdoppelt Kraft und Beschleunigung. Die Spurpunkte rücken beim Beschleunigen auseinander. x(t) ist eine Parabel, vₓ(t) eine Gerade.</p><h4>2. Gegenfeld und Umkehr</h4><p>Bei Eₓ = +1000 V/m und q = −e gilt aₓ = −1,759·10¹⁴ m/s². Aus 0 = v₀+aₓt folgt <b>tU = 22,7 ns</b>. Die Umkehrstrecke ist v₀²/(2|aₓ|) = <b>0,0455 m = 4,55 cm</b>. Am Umkehrpunkt gilt vₓ = 0, aber Fₓ und aₓ bleiben ungleich null und zeigen nach links. Danach ist auch vₓ negativ: Das Teilchen wird nach links schneller. Die Rückkehr zur linken Feldgrenze erfolgt nach etwa 45,5 ns. Ein negatives a bedeutet also nicht grundsätzlich Abbremsen.</p><h4>3. Vorzeichen und Grenzfälle</h4><p>Bei gleichem m und gleichem E kehrt ein Wechsel von q das Vorzeichen von F und a um. Ebenso wirkt ein alleiniger Feldrichtungswechsel. Werden q und E gleichzeitig umgekehrt, bleiben F und a unverändert; bei gleichen Anfangswerten ist dann auch die Bewegung identisch. Bei q = 0 oder E = 0 sind F und a null: Ein zunächst ruhendes Teilchen bleibt in Ruhe, ein bewegtes fliegt gleichförmig weiter. Ein Teilchen kann v = 0 und trotzdem a ≠ 0 haben, etwa beim Start aus Ruhe oder am Umkehrpunkt.</p><h4>4. Vergleich mit dem Querfeld</h4><p>In beiden Fällen gilt die konstante Beschleunigung a⃗ = qE⃗/m. Im Längsfeld liegt sie auf der Anfangsbewegungsachse: Die Geschwindigkeit auf dieser Achse ändert sich, die räumliche Bahn bleibt gerade. Im Querfeld bleibt vₓ konstant, während vᵧ mit der Zeit wächst. Daraus entsteht eine Parabel im x-y-Diagramm. Die Parabel des x-t-Diagramms im Längsfeld darf nicht mit einer räumlich gekrümmten Bahn verwechselt werden.</p></article>
 <div class="wb-section-break"></div>
 <article class="solution-block" data-solution="felder_sim_teilchen_essay"><h3>Auswertung: Teilchenbahn</h3>
 <span class="solution-label">Eine mögliche Antwort</span><p>Die Querbeschleunigung ist aᵧ = qE/m, die Bahn y(x) = qEx²/(2mvₓ²). Bei unverändertem m und vₓ verdoppelt doppelt so großes |q| oder E die Ablenkung bei demselben x. Doppelte waagrechte Geschwindigkeit reduziert die Ablenkung auf ein Viertel, weil die Durchflugzeit halb so lang ist. Das Umkehren des Ladungsvorzeichens oder der Spannungsrichtung kehrt die Ablenkung um; beide zusammen erhalten die Richtung. Beim Startwert q = −2 nC und oberer positiver Platte zeigt E nach unten und die Kraft nach oben. Mit U = 2 kV und d = 5 cm gilt E = 40 kV/m und |F| = |q|E = 80 µN.</p></article>

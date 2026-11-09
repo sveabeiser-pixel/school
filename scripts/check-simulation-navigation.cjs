@@ -36,7 +36,7 @@ async function main() {
     const candidates = inventory.filter(item => item.pages.length && !item.solution);
     const expectedExamples = {
       'felder/elektrische-felder.html': ['5', '7', '9'],
-      'felder/elektrische-felder2.html': ['2', '4', '8'],
+      'felder/elektrische-felder2.html': ['2', '4', '7', '8'],
       'felder/felder-simulationen.html': ['1', '2', '3', '4', '5'],
       'wellen/wellen-simulationen.html': ['1', '2', '4', '5', '6', '7', '8', '9'],
       'nwt/arduino-6.html': ['3'],

@@ -934,6 +934,213 @@
     draw();
   }
 
+  function initLongitudinalFieldSim(root) {
+    if (!root || root.dataset.longitudinalMounted === "1") return;
+    root.dataset.longitudinalMounted = "1";
+    var e = 1.602176634e-19, me = 9.1093837139e-31, d = 0.10;
+    var parameters = [
+      ["field", "Feldkomponente Eₓ", "V/m", -2000, 2000, 50, -1000],
+      ["mass", "Masse m / mₑ", "", 1, 2000, 1, 1],
+      ["charge", "Ladung q / e", "", -3, 3, 1, -1],
+      ["position", "Startort x₀", "cm", 0, 10, 0.1, 0],
+      ["velocity", "Anfangsgeschwindigkeit v₀", "10⁶ m/s", -6, 6, 0.1, 0]
+    ];
+    var switches = [["poles", "Pole", true], ["lines", "Feldlinien", true],
+      ["force", "Elektrische Kraft", true], ["acceleration", "Beschleunigung", true],
+      ["speed", "Geschwindigkeit", true], ["axes", "Koordinatensystem", true], ["trace", "Spur", true]];
+    root.innerHTML = '<div class="field-sim-grid longitudinal-grid"><div class="field-sim-controls">' +
+      '<label>Versuch wählen<select data-role="preset"><option value="electron">Elektronenkanone</option><option value="positive">Positive Ladung</option><option value="counter">Gegenfeld</option><option value="neutral">Neutrales Teilchen</option><option value="custom">Eigene Einstellungen</option></select></label>' +
+      parameters.map(function (p) {
+        return '<div class="longitudinal-parameter"><span>' + p[1] + (p[2] ? ' in ' + p[2] : '') + '</span>' +
+          '<input type="range" data-role="' + p[0] + '" min="' + p[3] + '" max="' + p[4] + '" step="' + p[5] + '" value="' + p[6] + '" aria-label="' + p[1] + '">' +
+          '<input type="number" data-role="' + p[0] + '-number" min="' + p[3] + '" max="' + p[4] + '" step="' + p[5] + '" value="' + p[6] + '" aria-label="' + p[1] + ' als Zahl"></div>';
+      }).join('') +
+      '<fieldset class="longitudinal-switches"><legend>Einblenden</legend>' + switches.map(function (s) {
+        return '<label><input type="checkbox" data-role="show-' + s[0] + '"' + (s[2] ? ' checked' : '') + '> ' + s[1] + '</label>';
+      }).join('') + '</fieldset></div><div class="longitudinal-stage">' +
+      '<canvas data-role="canvas" width="840" height="360" role="img" aria-label="Teilchenbewegung zwischen zwei Platten im elektrischen Längsfeld"></canvas>' +
+      '<div class="longitudinal-actions"><button class="wb-btn primary" type="button" data-role="play">Start</button><button class="wb-btn" type="button" data-role="step">Zeitschritt</button><button class="wb-btn" type="button" data-role="reset">Zurücksetzen</button></div>' +
+      '<label class="longitudinal-time">Zeitpunkt im Versuch<input type="range" data-role="time" min="0" max="1000" step="1" value="0"></label>' +
+      '<p class="longitudinal-status" data-role="status" aria-live="polite"></p>' +
+      '<dl class="longitudinal-meters"><div><dt>Ort x</dt><dd data-role="x-output"></dd></div><div><dt>Geschwindigkeit vₓ</dt><dd data-role="v-output"></dd></div><div><dt>Kraft Fₓ = qEₓ</dt><dd data-role="f-output"></dd></div><div><dt>Beschleunigung aₓ = qEₓ/m</dt><dd data-role="a-output"></dd></div><div><dt>Zeit t</dt><dd data-role="t-output"></dd></div><div><dt>Kinetische Energie</dt><dd data-role="energy-output"></dd></div></dl>' +
+      '<canvas class="longitudinal-plot" data-role="plot" width="840" height="230" role="img" aria-label="Ort-Zeit- und Geschwindigkeit-Zeit-Diagramme"></canvas>' +
+      '<p class="longitudinal-model">Homogenes Feld, d = 10 cm; Randfelder, Stöße und Gravitation vernachlässigt. Klassisches Modell in starker Zeitlupe; die Animation endet an der Feldgrenze. mₑ = 9,11 · 10⁻³¹ kg, e = 1,602 · 10⁻¹⁹ C. Die Pfeile für F, a und v haben unterschiedliche Maßstäbe.</p></div></div>';
+    var canvas = find(root, "canvas"), plot = find(root, "plot");
+    var play = find(root, "play"), timeSlider = find(root, "time"), preset = find(root, "preset");
+    var progress = 0, running = false, last = null, raf = null, model;
+    function scientific(n, unit) {
+      return (n === 0 ? "0" : n.toLocaleString("de-DE", {notation:"scientific", maximumFractionDigits:3})) + " " + unit;
+    }
+    function buildModel() {
+      var E = Number(find(root, "field").value), m = Number(find(root, "mass").value) * me;
+      var q = Number(find(root, "charge").value) * e, x0 = Number(find(root, "position").value) / 100;
+      var v0 = Number(find(root, "velocity").value) * 1e6, a = q * E / m;
+      function at(t) { return {x:x0 + v0 * t + a * t * t / 2, v:v0 + a * t}; }
+      var exits = [];
+      // Solve the boundary crossings analytically so no time step can skip a reversal.
+      [0, d].forEach(function (boundary) {
+        if ((boundary === 0 && x0 === 0 && (v0 < 0 || (v0 === 0 && a < 0))) ||
+            (boundary === d && x0 === d && (v0 > 0 || (v0 === 0 && a > 0)))) { exits.push(0); return; }
+        if (a === 0) {
+          if (v0 !== 0 && (boundary - x0) / v0 > 0) exits.push((boundary - x0) / v0);
+        } else {
+          var disc = v0 * v0 + 2 * a * (boundary - x0);
+          if (disc < 0) return;
+          var sq = Math.sqrt(disc);
+          [(-v0 - sq) / a, (-v0 + sq) / a].forEach(function (t) {
+            var velocity = v0 + a * t;
+            if (t > 1e-20 && ((boundary === 0 && velocity < 0) || (boundary === d && velocity > 0))) exits.push(t);
+          });
+        }
+      });
+      var end = exits.length ? Math.min.apply(Math, exits) : 1e-7;
+      return {E:E, m:m, q:q, x0:x0, v0:v0, a:a, F:q * E, end:end, at:at, exits:exits.length > 0};
+    }
+    function surface(element, height) {
+      var width = Math.max(280, element.getBoundingClientRect().width || 600), ratio = Math.min(window.devicePixelRatio || 1, 2);
+      if (element.width !== Math.round(width * ratio) || element.height !== Math.round(height * ratio)) {
+        element.width = Math.round(width * ratio); element.height = Math.round(height * ratio);
+      }
+      var ctx = element.getContext("2d"); ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, width, height);
+      return {ctx:ctx, width:width};
+    }
+    function shown(key) { return find(root, "show-" + key).checked; }
+    function draw() {
+      var t = progress * model.end, state = model.at(t), s = surface(canvas, 360), ctx = s.ctx, w = s.width;
+      var left = 32, right = w - 32, span = right - left;
+      function px(x) { return left + x / d * span; }
+      ctx.font = "13px system-ui"; ctx.textAlign = "center";
+      ctx.fillStyle = "#0f172a"; ctx.fillText("Elektrisches Längsfeld · d = 10 cm", w / 2, 24);
+      if (shown("poles")) {
+        [left, right].forEach(function (x, i) {
+          var positive = model.E > 0 ? i === 0 : i === 1;
+          ctx.fillStyle = model.E === 0 ? "#64748b" : positive ? "#be123c" : "#1d4ed8";
+          ctx.fillRect(x - 5, 55, 10, 212);
+          ctx.font = "bold 18px system-ui"; ctx.fillText(model.E === 0 ? "0" : positive ? "+" : "−", x, 46);
+        });
+      }
+      if (shown("lines") && model.E !== 0) {
+        var rows = 2 + Math.round(Math.abs(model.E) / 250);
+        for (var row = 0; row < rows; row++) {
+          var y = 63 + row * 192 / (rows - 1);
+          ctx.strokeStyle = "#9abfc5"; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(left + 8, y); ctx.lineTo(right - 8, y); ctx.stroke();
+          var middle = (left + right) / 2;
+          drawArrow(ctx, middle - Math.sign(model.E) * 12, y, middle + Math.sign(model.E) * 12, y, "#0e7490");
+        }
+      }
+      if (shown("trace")) {
+        for (var dot = 0; dot <= Math.floor(progress * 32); dot++) {
+          var old = model.at(model.end * dot / 32);
+          ctx.fillStyle = "#a16207"; ctx.beginPath(); ctx.arc(px(old.x), 167, 3, 0, 2 * Math.PI); ctx.fill();
+        }
+      }
+      var x = px(Math.max(0, Math.min(d, state.x)));
+      ctx.fillStyle = model.q < 0 ? "#1d4ed8" : model.q > 0 ? "#be123c" : "#64748b";
+      ctx.beginPath(); ctx.arc(x, 167, 10, 0, 2 * Math.PI); ctx.fill();
+      ctx.fillStyle = "#fff"; ctx.font = "bold 14px system-ui";
+      ctx.fillText(model.q < 0 ? "−" : model.q > 0 ? "+" : "0", x, 172);
+      var vmax = Math.max(Math.abs(model.v0), Math.abs(model.at(model.end).v), 1);
+      [["force", model.F, "Fₓ", "#b45309", 103, 1], ["acceleration", model.a, "aₓ", "#7e22ce", 130, 1],
+        ["speed", state.v, "vₓ", "#047857", 213, Math.abs(state.v) / vmax]].forEach(function (vector) {
+        if (!shown(vector[0])) return;
+        var length = Math.min(85, span * .25) * vector[5], direction = Math.sign(vector[1]);
+        var origin = Math.max(left + 8 + (direction < 0 ? length : 0), Math.min(right - 8 - (direction > 0 ? length : 0), x));
+        if (vector[1] !== 0) drawArrow(ctx, origin, vector[4], origin + direction * length, vector[4], vector[3]);
+        ctx.fillStyle = vector[3]; ctx.font = "bold 13px system-ui";
+        ctx.fillText(vector[2] + (vector[1] === 0 ? " = 0" : direction > 0 ? " →" : " ←"), origin + direction * length / 2, vector[4] - 9);
+      });
+      if (shown("axes")) {
+        drawArrow(ctx, left, 293, right + 10, 293, "#334155");
+        ctx.font = "12px system-ui"; ctx.fillStyle = "#334155";
+        for (var tick = 0; tick <= 10; tick += 2) {
+          var xt = left + tick / 10 * span;
+          ctx.fillRect(xt, 290, 1, 6); ctx.fillText(String(tick), xt, 311);
+        }
+        ctx.fillText("x in cm", w / 2, 330);
+      }
+      ctx.fillStyle = "#475569"; ctx.font = "12px system-ui";
+      ctx.fillText("Spurpunkte: gleiche Zeitabstände", w / 2, 351);
+      find(root, "x-output").textContent = formatNumber(Math.max(0, Math.min(d, state.x)) * 100, 2) + " cm";
+      find(root, "v-output").textContent = scientific(state.v, "m/s");
+      find(root, "f-output").textContent = scientific(model.F, "N");
+      find(root, "a-output").textContent = scientific(model.a, "m/s²");
+      find(root, "t-output").textContent = formatNumber(t * 1e9, 2) + " ns";
+      find(root, "energy-output").textContent = formatNumber(.5 * model.m * state.v * state.v / e, 2) + " eV";
+      root.dataset.x = state.x; root.dataset.v = state.v; root.dataset.a = model.a; root.dataset.time = t;
+      root.dataset.duration = model.end;
+      var message = progress >= 1 && model.exits ? "Feldgrenze erreicht: Der Versuch ist beendet." :
+        model.a === 0 ? (state.v === 0 ? "Keine elektrische Kraft: Das Teilchen bleibt in Ruhe." : "Keine elektrische Kraft: Das Teilchen bewegt sich gleichförmig.") :
+        state.v === 0 ? "Momentan in Ruhe: Die elektrische Kraft setzt das Teilchen in Bewegung." :
+        state.v * model.a < 0 ? "Gegenfeld: Das Teilchen wird abgebremst; seine Beschleunigung bleibt konstant." : "Das Teilchen wird schneller; seine Beschleunigung bleibt konstant.";
+      if (find(root, "status").textContent !== message) find(root, "status").textContent = message;
+      timeSlider.value = String(Math.round(progress * 1000));
+      drawPlots(t);
+    }
+    function drawPlots(t) {
+      var s = surface(plot, 230), ctx = s.ctx, w = s.width;
+      var vmax = Math.max(Math.abs(model.v0), Math.abs(model.at(model.end).v), 1);
+      [["x(t) / cm", "#a16207", 28, 102, function (st) {return st.x / d;}],
+        ["vₓ(t) / 10⁶ m/s", "#047857", 141, 213, function (st) {return .5 + st.v / vmax * .5;}]].forEach(function (p) {
+        var l = 44, r = w - 18, top = p[2], bottom = p[3];
+        ctx.textAlign = "left"; ctx.font = "12px system-ui"; ctx.fillStyle = p[1]; ctx.fillText(p[0], l, top - 8);
+        ctx.strokeStyle = "#cbd5e1"; ctx.lineWidth = 1; ctx.strokeRect(l, top, r - l, bottom - top);
+        if (top > 100) { ctx.beginPath(); ctx.moveTo(l, (top + bottom) / 2); ctx.lineTo(r, (top + bottom) / 2); ctx.stroke(); }
+        ctx.fillStyle = "#475569"; ctx.font = "10px system-ui"; ctx.textAlign = "right";
+        ctx.fillText(top > 100 ? formatNumber(vmax / 1e6, 2) : "10", l - 4, top + 8);
+        ctx.fillText("0", l - 4, top > 100 ? (top + bottom) / 2 + 3 : bottom);
+        if (top > 100) ctx.fillText(formatNumber(-vmax / 1e6, 2), l - 4, bottom);
+        ctx.strokeStyle = p[1]; ctx.lineWidth = 2; ctx.beginPath();
+        for (var i = 0; i <= 160; i++) {
+          var st = model.at(i / 160 * model.end), y = bottom - p[4](st) * (bottom - top);
+          if (i === 0) ctx.moveTo(l, y); else ctx.lineTo(l + i / 160 * (r - l), y);
+        }
+        ctx.stroke();
+        var current = model.at(t), cx = l + progress * (r - l), cy = bottom - p[4](current) * (bottom - top);
+        ctx.fillStyle = p[1]; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fill();
+        ctx.textAlign = "right"; ctx.font = "10px system-ui"; ctx.fillStyle = "#334155";
+        ctx.fillText("t: 0 … " + formatNumber(model.end * 1e9, 1) + " ns", r, bottom + 12);
+      });
+    }
+    function stop() { running = false; last = null; if (raf !== null) window.cancelAnimationFrame(raf); raf = null; play.textContent = "Start"; }
+    function restart() { stop(); progress = 0; model = buildModel(); draw(); }
+    function frame(ts) {
+      if (!running) return;
+      if (!root.getClientRects().length || document.hidden) { stop(); return; }
+      if (last !== null) progress = Math.min(1, progress + Math.min((ts - last) / 1000, .05) / 7);
+      last = ts; draw();
+      if (progress >= 1) stop(); else raf = window.requestAnimationFrame(frame);
+    }
+    play.addEventListener("click", function () {
+      if (running) { stop(); return; }
+      if (progress >= 1) progress = 0;
+      running = true; last = null; play.textContent = "Pause"; raf = window.requestAnimationFrame(frame);
+    });
+    find(root, "step").addEventListener("click", function () { stop(); progress = Math.min(1, progress + .025); draw(); });
+    find(root, "reset").addEventListener("click", restart);
+    timeSlider.addEventListener("input", function () { stop(); progress = Number(timeSlider.value) / 1000; draw(); });
+    parameters.forEach(function (p) {
+      var range = find(root, p[0]), number = find(root, p[0] + "-number");
+      range.addEventListener("input", function () { number.value = range.value; preset.value = "custom"; restart(); });
+      number.addEventListener("input", function () {
+        if (number.value === "" || !Number.isFinite(number.valueAsNumber)) return;
+        range.value = String(Math.max(p[3], Math.min(p[4], number.valueAsNumber)));
+        preset.value = "custom"; restart();
+      });
+      number.addEventListener("change", function () { number.value = range.value; });
+    });
+    switches.forEach(function (s) { find(root, "show-" + s[0]).addEventListener("change", draw); });
+    preset.addEventListener("change", function () {
+      var values = {electron:[-1000,1,-1,0,0], positive:[1000,1836,1,0,0], counter:[1000,1,-1,0,4], neutral:[1000,1,0,0,2]}[preset.value];
+      if (!values) return;
+      parameters.forEach(function (p, i) { find(root, p[0]).value = values[i]; find(root, p[0] + "-number").value = values[i]; });
+      restart();
+    });
+    if (window.ResizeObserver) new window.ResizeObserver(function () { draw(); }).observe(canvas.parentNode);
+    restart();
+  }
+
   function initParticleTrajectorySim(root) {
     if (!root || (root.dataset && root.dataset.fieldParticleMounted === "1")) return;
 
@@ -2679,6 +2886,7 @@
   register("electrostatic-field", initElectrostaticFieldLab);
   register("capacitor", initCapacitorSim);
   register("particle-trajectory", initParticleTrajectorySim);
+  register("longitudinal-field", initLongitudinalFieldSim);
   register("magnetic-trajectory", initMagneticTrajectorySim);
   register("helix-trajectory", initHelixTrajectorySim);
   register("induction-lab", initInductionLab);
