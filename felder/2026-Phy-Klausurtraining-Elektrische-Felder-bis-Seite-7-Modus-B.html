@@ -108,9 +108,71 @@ body{overflow-x:clip}
  body[data-print-mode="cylinder"] .chapter[data-worksheet-section="14"]{display:block!important}
  .standalone-solutions .solution-answer{font-size:10.5pt}
 }
+</style><style id="direkte-kurzchecks-design">:root,.check-interactive.wb-book {
+ --wb-blue:#076b60;--wb-blue2:#07594f;--wb-blue3:#076b60;
+ --wb-text:#192c31;--wb-text-color:#192c31;--wb-muted:#52676a;--wb-line:#d7e0da;
+ --wb-block-bg:#fff;--wb-block-border:#d7e0da;--wb-head-bg:#edf2ec;--wb-head-border:#d7e0da;
+ --wb-input-bg:#fff;--wb-input-border:#bfcec4;--wb-input-text:#192c31;--wb-input-placeholder:#52676a;
+ --wb-q-bg:#fff;--wb-choice-hover:#e9f5ee;--wb-bank-bg:#e9f5ee;--wb-bank-border:#bfd5c8;
+ --wb-chip-bg:#fff;--wb-chip-border:#8ebcab;--wb-chip-text:#192c31;
+ --wb-gap-bg:#f8faf7;--wb-gap-border:#8ebcab;--wb-gap-color:#192c31;
+ --wb-gap-filled-bg:#e9f5ee;--wb-gap-filled-border:#8ebcab;
+ --wb-ok:#126140;--wb-bad:#8a460b;--wb-soft-bg:#f4f7f2;
+}
+.check-interactive.wb-book {min-width:0;height:auto;min-height:0;max-height:none;overflow:visible;position:static;background:transparent;--wb-shadow:none}
+.check-interactive > .wb-block,.check-interactive > [data-wb-type] > .wb-block {
+ margin-top:0;border:0;box-shadow:none;background:transparent;overflow:visible;
+}
+.check-interactive .wb-head {display:none}
+.check-interactive .wb-body {padding:0}
+.check-interactive .wb-q {min-width:0}
+.check-interactive h3 {font-size:16px;line-height:1.5}
+.check-interactive .wb-btn {font:600 14px/1.5 system-ui,sans-serif;border-radius:9px}
+.check-interactive .wb-btn.primary {background:var(--teal);border-color:var(--teal);color:white}
+.check-interactive .wb-score {color:var(--teal)}
+.check-interactive .wb-feedback {line-height:1.6}
+.check-interactive .wb-choice {font-size:15px;line-height:1.55}
+.check-interactive .wb-trace-scroll {max-width:100%;overflow-x:auto}
+.check-interactive .wb-trace-table {font-size:14px}
+.check-interactive .wb-trace-input {min-height:40px;font:inherit}
+.check-interactive .p2-container,.check-interactive [data-p2] {min-width:0;max-width:100%}
+.check-interactive.wb-book .p2 {--p2-card2:#f4f7f2;--p2-text:#192c31;--p2-muted:#52676a;--p2-shadow:0 3px 12px #20332b07}
+.check-interactive .p2-banks {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px}
+.check-interactive .p2-banks>div {min-width:0}
+.check-interactive.wb-book .p2 .p2-bank {display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.check-interactive.wb-book .p2 .p2-piece {min-width:0;max-width:100%;width:100%;font-size:14px;font-weight:650;overflow-wrap:anywhere}
+.check-interactive.wb-book .p2 .p2-joined {display:grid;grid-template-columns:minmax(0,1fr) 2px minmax(0,1.4fr);width:100%;min-width:0}
+.check-interactive.wb-book .p2 .p2-joined .p2-piece {min-width:0;max-width:100%;width:auto}
+.check-interactive.wb-book .p2 .p2-score {color:var(--teal);font-size:14px}
+.check-interactive .p2-touch-hint {font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.check-interactive .p2-row {margin-top:14px}
+.check-interactive .wb-order-chip,.check-interactive .wb-categorize-chip {font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.check-interactive:empty {display:none}
+.check-number {font-size:14px}
+.check-number .check-row {gap:8px}
+.check-number input {font-size:14px;min-height:40px}
+.check-number button {font-size:13px}
+@media screen {
+ .has-interactive-check > .task-body > .check-paper {display:none}
+ .has-number-check .check-in-heft {display:none}
+}
+@media(max-width:540px) {
+ .check-interactive .wb-choice {font-size:14px;padding:9px}
+ .check-interactive .wb-btn {padding:9px 10px;font-size:13px}
+ .check-interactive .wb-q {padding:10px}
+ .check-interactive .wb-row {gap:7px}
+ .check-interactive .wb-trace-table {font-size:12px}
+ .check-interactive .p2-banks {grid-template-columns:minmax(0,1fr)}
+ .check-interactive.wb-book .p2 .p2-joined {grid-template-columns:minmax(0,1fr)}
+ .check-interactive.wb-book .p2 .p2-seam {width:100%;height:1px}
+}
+@media print {
+ .check-interactive,.check-number {display:none!important}
+ .check-paper,.check-in-heft {display:block!important}
+}
 </style></head><body data-progress-key="physik-elektrische-felder-klausurtraining-heft-v1"><a class="skip" href="#inhalt">Zum Aufgabenbereich</a><header class="topbar"><div class="topbar-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">↗</span>Physik · Übungswerkstatt</div><span class="small">Elektrische Felder · Klausurtraining</span></div></header><div class="layout"><aside class="sidebar" aria-label="Aufgabenübersicht"><div class="progress-box"><div class="progress-label"><span>Dein Fortschritt</span><span id="progress-count">0 / 23</span></div><progress id="progress" value="0" max="23" aria-label="Als bearbeitet markierte Aufgaben"></progress><p>Markiere Aufgaben nach deinem eigenen Lösungsvergleich.</p></div><div class="nav-outline"><h2>Aufgaben &amp; Materialien</h2><nav aria-label="Übersicht"><a href="#page-1"><span class="navnum">01</span>Start &amp; Lernstand</a><a href="#page-2"><span class="navnum">02</span>Ladung &amp; Feld</a><a href="#page-3"><span class="navnum">03</span>Potenzial &amp; Kapazität</a><a href="#page-4"><span class="navnum">04</span>Dielektrikum &amp; Energie</a><a href="#page-5"><span class="navnum">05</span>Schaltungen · Vertiefung</a><a href="#page-6"><span class="navnum">06</span>Millikan</a><a href="#page-7"><span class="navnum">07</span>Elektronen im Längsfeld</a><a href="#page-8"><span class="navnum">08</span>Klausurcheck · 45 Minuten</a><a href="#page-9"><span class="navnum">09</span>Formeln &amp; Nacharbeit</a><a href="#page-10"><span class="navnum">10</span>Zusatz · Energie &amp; Feldenergie</a><a href="#page-11"><span class="navnum">11</span>Zusatz · Influenz &amp; Feldlinien</a><a href="#page-12"><span class="navnum">12</span>Zusatz · Kräfte im Gitter</a><a href="#page-13"><span class="navnum">13</span>Zusatz · Flächenladung</a><a href="#page-14"><span class="navnum">14</span>Zusatz · Zylinderkondensator</a></nav></div><details class="mobile-outline"><summary>Aufgabenübersicht öffnen</summary><h2>Aufgaben &amp; Materialien</h2><nav aria-label="Übersicht"><a href="#page-1"><span class="navnum">01</span>Start &amp; Lernstand</a><a href="#page-2"><span class="navnum">02</span>Ladung &amp; Feld</a><a href="#page-3"><span class="navnum">03</span>Potenzial &amp; Kapazität</a><a href="#page-4"><span class="navnum">04</span>Dielektrikum &amp; Energie</a><a href="#page-5"><span class="navnum">05</span>Schaltungen · Vertiefung</a><a href="#page-6"><span class="navnum">06</span>Millikan</a><a href="#page-7"><span class="navnum">07</span>Elektronen im Längsfeld</a><a href="#page-8"><span class="navnum">08</span>Klausurcheck · 45 Minuten</a><a href="#page-9"><span class="navnum">09</span>Formeln &amp; Nacharbeit</a><a href="#page-10"><span class="navnum">10</span>Zusatz · Energie &amp; Feldenergie</a><a href="#page-11"><span class="navnum">11</span>Zusatz · Influenz &amp; Feldlinien</a><a href="#page-12"><span class="navnum">12</span>Zusatz · Kräfte im Gitter</a><a href="#page-13"><span class="navnum">13</span>Zusatz · Flächenladung</a><a href="#page-14"><span class="navnum">14</span>Zusatz · Zylinderkondensator</a></nav></details></aside><main id="inhalt">
 <section id="page-1" class="chapter" data-worksheet-section="1">
-<div class="hero"><div class="eyebrow">Modus B · Klausurvorbereitung</div><h1>Elektrische Felder<br>Dein Training mit Feldenergie</h1><p>Erklären, rechnen, Messwerte auswerten und Ergebnisse prüfen – mit genau dem Wissen aus eurem bisherigen Unterricht.</p><div class="meta"><span>23 Hauptaufgaben</span><span>12 Kurzchecks</span><span>Grundblock: ca. 135–150 min</span><span>Ergänzung: ca. 90 min</span><span>Zylinderblock: ca. 35 min</span><span>45-Minuten-Klausurcheck</span></div></div><section class="scope"><strong>So arbeitest du</strong><p>Alle Aufgaben stehen auf dieser Seite. Schreibe deine Lösungen ins Heft. Zu jeder Aufgabe findest du einen aufklappbaren Hinweis und eine Lösung zum Vergleichen.</p></section><div class="toolbar"><div class="toolbar-actions"><button class="primary" id="print" type="button">Drucken / PDF</button><button id="reset" type="button">Bearbeitungsmarkierungen zurücksetzen</button></div><label class="print-choice"><input id="print-solutions" type="checkbox">Lösungen mitdrucken</label></div><p class="save-status" id="save-status" role="status" aria-live="polite">Schreibe deine Lösungen ins Heft.</p>
+<div class="hero"><div class="eyebrow">Modus B · Klausurvorbereitung</div><h1>Elektrische Felder<br>Dein Training mit Feldenergie</h1><p>Erklären, rechnen, Messwerte auswerten und Ergebnisse prüfen – mit genau dem Wissen aus eurem bisherigen Unterricht.</p><div class="meta"><span>23 Hauptaufgaben</span><span>12 Kurzchecks</span><span>Grundblock: ca. 135–150 min</span><span>Ergänzung: ca. 90 min</span><span>Zylinderblock: ca. 35 min</span><span>45-Minuten-Klausurcheck</span></div></div><section class="scope"><strong>So arbeitest du</strong><p>Alle Aufgaben stehen auf dieser Seite. Schreibe längere Lösungswege ins Heft. Die Kurzchecks bearbeitest du direkt mit „Überprüfen“. Zu jeder Aufgabe findest du weiterhin Hinweis und Lösung zum Aufklappen.</p></section><div class="toolbar"><div class="toolbar-actions"><button class="primary" id="print" type="button">Drucken / PDF</button><button id="reset" type="button">Bearbeitungsmarkierungen zurücksetzen</button></div><label class="print-choice"><input id="print-solutions" type="checkbox">Lösungen mitdrucken</label></div><p class="save-status" id="save-status" role="status" aria-live="polite">Schreibe deine Lösungen ins Heft.</p>
 <h2>Dein Stoffumfang</h2><p>Grundlage sind <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1 vollständig</a> und <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2 bis einschließlich der intern nummerierten Seite 7 „Elektronenkanone“</a> sowie <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3, ausschließlich die Seiten 1–3 zu Energieformeln und Feldenergie</a>.</p>
 <p>Du übst Ladung, Influenz, Abschirmung, Coulomb-Gesetz, Feldstärke, Potenzial, Spannung, Flächenladungsdichte, Kapazität, Kondensatorenergie, Dielektrika, Reihen- und Parallelschaltungen, Millikan und die Bewegung von Elektronen im Längsfeld. Hinzu kommen U-Q-Flächen, weitere Energieformeln, Energiedichte sowie vertiefende Aufgaben zu Influenz, Feldlinien und Flächenladung. Die zusätzlich bereitgestellte Aufgabe zum Zylinderkondensator bildet die Grundlage der neuen Aufgaben 21–23.</p>
 <div class="scope"><strong>Annahmen für dieses Training</strong><p>Gymnasiale Oberstufe ohne Festlegung auf BF oder LF. Nutze Taschenrechner, Lineal, Heft und eure Unterrichtsnotizen. Aufgabe 7 zur gemischten Kondensatorschaltung ist als Vertiefung markiert. Der Klausurcheck enthält keine gemischte Schaltung. Die Zeiten sind Richtwerte.</p></div>
@@ -120,7 +182,77 @@ body{overflow-x:clip}
 
 <article class="task practice-check" id="ef_b7_20261109_start" data-exercise-id="ef_b7_20261109_start" data-title="Kurzcheck 1 · Drei typische Stolperstellen">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 1 · Drei typische Stolperstellen</h3><p class="task-meta">Wähle pro Frage genau eine Antwort. Prüfe danach die Erklärung.</p></div></header>
-      <div class="task-body"><h4>Das elektrische Feld zeigt nach rechts. Wohin wirkt die elektrische Kraft auf ein Elektron?</h4><ol class="choice-list"><li>Nach links.</li><li>Nach rechts.</li><li>Es wirkt keine Kraft.</li></ol><h4>Ein isolierter geladener Kondensator wird von der Spannungsquelle getrennt. Was bleibt bei anschließendem Einsetzen eines Dielektrikums erhalten?</h4><ol class="choice-list"><li>Der Ladungsbetrag Q auf jeder Platte.</li><li>Die Spannung U.</li><li>Die gespeicherte Energie W.</li></ol><h4>Welche Formel beschreibt die gespeicherte Energie eines idealen Kondensators?</h4><ol class="choice-list"><li>W = ½ C U².</li><li>W = C U².</li><li>W = C/U.</li></ol><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_start",
+  "title": "Kurzcheck 1 · Drei typische Stolperstellen",
+  "hint": "Wähle pro Frage genau eine Antwort. Prüfe danach die Erklärung.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "Das elektrische Feld zeigt nach rechts. Wohin wirkt die elektrische Kraft auf ein Elektron?",
+      "choices": [
+        {
+          "id": "L",
+          "label": "Nach links."
+        },
+        {
+          "id": "R",
+          "label": "Nach rechts."
+        },
+        {
+          "id": "N",
+          "label": "Es wirkt keine Kraft."
+        }
+      ],
+      "correct": [
+        "L"
+      ],
+      "explain": "Für q = −e zeigt die Kraft entgegen der Feldrichtung."
+    },
+    {
+      "text": "Ein isolierter geladener Kondensator wird von der Spannungsquelle getrennt. Was bleibt bei anschließendem Einsetzen eines Dielektrikums erhalten?",
+      "choices": [
+        {
+          "id": "Q",
+          "label": "Der Ladungsbetrag Q auf jeder Platte."
+        },
+        {
+          "id": "U",
+          "label": "Die Spannung U."
+        },
+        {
+          "id": "W",
+          "label": "Die gespeicherte Energie W."
+        }
+      ],
+      "correct": [
+        "Q"
+      ],
+      "explain": "Ohne Ladungsaustausch bleibt Q erhalten. Die größere Kapazität verändert Spannung und Energie."
+    },
+    {
+      "text": "Welche Formel beschreibt die gespeicherte Energie eines idealen Kondensators?",
+      "choices": [
+        {
+          "id": "half",
+          "label": "W = ½ C U²."
+        },
+        {
+          "id": "full",
+          "label": "W = C U²."
+        },
+        {
+          "id": "charge",
+          "label": "W = C/U."
+        }
+      ],
+      "correct": [
+        "half"
+      ],
+      "explain": "Für den gesamten geladenen Kondensator gilt W = ½ C U². Der Zusammenhang |q|U beschreibt den Energiebetrag für eine einzelne Ladung beim Durchlaufen einer festen Spannung."
+    }
+  ]
+}</script></div></div><div class="check-paper"><h4>Das elektrische Feld zeigt nach rechts. Wohin wirkt die elektrische Kraft auf ein Elektron?</h4><ol class="choice-list"><li>Nach links.</li><li>Nach rechts.</li><li>Es wirkt keine Kraft.</li></ol><h4>Ein isolierter geladener Kondensator wird von der Spannungsquelle getrennt. Was bleibt bei anschließendem Einsetzen eines Dielektrikums erhalten?</h4><ol class="choice-list"><li>Der Ladungsbetrag Q auf jeder Platte.</li><li>Die Spannung U.</li><li>Die gespeicherte Energie W.</li></ol><h4>Welche Formel beschreibt die gespeicherte Energie eines idealen Kondensators?</h4><ol class="choice-list"><li>W = ½ C U².</li><li>W = C U².</li><li>W = C/U.</li></ol></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_start"><summary>Lösung vergleichen</summary><div class="detail-content"><h4>Das elektrische Feld zeigt nach rechts. Wohin wirkt die elektrische Kraft auf ein Elektron?</h4><p>Nach links.</p><p>Für q = −e zeigt die Kraft entgegen der Feldrichtung.</p><h4>Ein isolierter geladener Kondensator wird von der Spannungsquelle getrennt. Was bleibt bei anschließendem Einsetzen eines Dielektrikums erhalten?</h4><p>Der Ladungsbetrag Q auf jeder Platte.</p><p>Ohne Ladungsaustausch bleibt Q erhalten. Die größere Kapazität verändert Spannung und Energie.</p><h4>Welche Formel beschreibt die gespeicherte Energie eines idealen Kondensators?</h4><p>W = ½ C U².</p><p>Für den gesamten geladenen Kondensator gilt W = ½ C U². Der Zusammenhang |q|U beschreibt den Energiebetrag für eine einzelne Ladung beim Durchlaufen einer festen Spannung.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_start","title":"Kurzcheck 1 · Drei typische Stolperstellen","worksheetStatic":true}</script></article>
@@ -156,7 +288,7 @@ d) Der Abstand wird verdoppelt und zugleich Q verdoppelt. Bestimme den neuen Kra
 
 <article class="task practice-check" id="ef_b7_20261109_begriffe" data-exercise-id="ef_b7_20261109_begriffe" data-title="Kurzcheck 2 · Fachsprache sichern">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 2 · Fachsprache sichern</h3><p class="task-meta">Setze die Begriffe ein.</p></div></header>
-      <div class="task-body"><div class="word-bank"><strong>Wortbank:</strong> Influenz · Feldstärke · negativen · senkrecht · homogen</div><p>Die Ladungsverschiebung in einem Leiter durch ein äußeres Feld heißt <span class="heft-entry">________</span>. Die Kraft pro Probeladung beschreibt die <span class="heft-entry">________</span>. Feldlinien laufen von positiven zu <span class="heft-entry">________</span> Ladungen und stehen im elektrostatischen Gleichgewicht <span class="heft-entry">________</span> auf leitenden Oberflächen. Ein Feld mit überall gleichem Betrag und gleicher Richtung heißt <span class="heft-entry">________</span>.</p><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Lies zuerst den gesamten Text. Ordne die Begriffe aus der Wortbank nach ihrer physikalischen Bedeutung zu.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="cloze"><script class="wb-config" type="application/json">{"id":"ef_b7_20261109_begriffe","title":"Kurzcheck 2 · Fachsprache sichern","hint":"Setze die Begriffe ein.","bank":["Influenz","Feldstärke","negativen","senkrecht","homogen"],"segments":[{"t":"text","v":"Die Ladungsverschiebung in einem Leiter durch ein äußeres Feld heißt "},{"t":"gap","a":"Influenz"},{"t":"text","v":". Die Kraft pro Probeladung beschreibt die "},{"t":"gap","a":"Feldstärke"},{"t":"text","v":". Feldlinien laufen von positiven zu "},{"t":"gap","a":"negativen"},{"t":"text","v":" Ladungen und stehen im elektrostatischen Gleichgewicht "},{"t":"gap","a":"senkrecht"},{"t":"text","v":" auf leitenden Oberflächen. Ein Feld mit überall gleichem Betrag und gleicher Richtung heißt "},{"t":"gap","a":"homogen"},{"t":"text","v":"."}],"dropHint":"Ziehe die Begriffe in die Lücken oder tippe sie in der passenden Reihenfolge an. Mit einem weiteren Tippen kommt ein Begriff zurück in die Wortbank."}</script></div></div><div class="check-paper"><div class="word-bank"><strong>Wortbank:</strong> Influenz · Feldstärke · negativen · senkrecht · homogen</div><p>Die Ladungsverschiebung in einem Leiter durch ein äußeres Feld heißt <span class="heft-entry">________</span>. Die Kraft pro Probeladung beschreibt die <span class="heft-entry">________</span>. Feldlinien laufen von positiven zu <span class="heft-entry">________</span> Ladungen und stehen im elektrostatischen Gleichgewicht <span class="heft-entry">________</span> auf leitenden Oberflächen. Ein Feld mit überall gleichem Betrag und gleicher Richtung heißt <span class="heft-entry">________</span>.</p></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Lies zuerst den gesamten Text. Ordne die Begriffe aus der Wortbank nach ihrer physikalischen Bedeutung zu.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_begriffe"><summary>Lösung vergleichen</summary><div class="detail-content"><p>Die Ladungsverschiebung in einem Leiter durch ein äußeres Feld heißt <b>Influenz</b>. Die Kraft pro Probeladung beschreibt die <b>Feldstärke</b>. Feldlinien laufen von positiven zu <b>negativen</b> Ladungen und stehen im elektrostatischen Gleichgewicht <b>senkrecht</b> auf leitenden Oberflächen. Ein Feld mit überall gleichem Betrag und gleicher Richtung heißt <b>homogen</b>.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_begriffe","title":"Kurzcheck 2 · Fachsprache sichern","worksheetStatic":true}</script></article>
@@ -192,7 +324,7 @@ d) Bestimme mit der gemessenen Kapazität die Ladung bei 250 V. Erläutere den U
 <div class="scope"><strong>Jetzt hast du gelernt</strong><p>Potenzial bezieht sich auf einen Ort, Spannung auf den Unterschied zwischen zwei Orten. Die Steigung einer Q-U-Geraden ist die Kapazität, nicht die elektrische Feldstärke.</p></div>
 <article class="task practice-check" id="ef_b7_20261109_paare" data-exercise-id="ef_b7_20261109_paare" data-title="Kurzcheck 3 · Größe und Bedeutung">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 3 · Größe und Bedeutung</h3><p class="task-meta">Ordne jeder Größe die passende Bedeutung zu.</p></div></header>
-      <div class="task-body"><div class="pairs-columns"><div><strong>Größen</strong><ol><li>E · Feldstärke</li><li>φ · Potenzial</li><li>U · Spannung</li><li>C · Kapazität</li><li>σ · Flächenladungsdichte</li></ol></div><div><strong>Bedeutungen · ungeordnet</strong><ol type="A"><li>Gespeicherter Ladungsbetrag pro Spannung, Einheit F</li><li>Kraft pro Probeladung, Einheit N/C</li><li>Ladung pro Fläche, Einheit C/m²</li><li>Potenzialdifferenz zwischen zwei Orten, Einheit V</li><li>Potenzielle Energie pro Ladung an einem Ort, Einheit V</li></ol></div></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Achte bei jeder Größe auf ihre Definition und ihre Einheit. Notiere im Heft die passenden Zahlen-Buchstaben-Paare.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-p2="" data-p2-id="ef_b7_20261109_paare" data-p2-title="Kurzcheck 3 · Größe und Bedeutung" data-p2-hint="Ordne jeder Größe die passende Bedeutung zu." class="p2"><div class="p2-banks"><div><h4>Größen</h4><div class="p2-bank" data-left-bank=""><div data-side="L" data-pair="1" class="p2-piece p2-left">E · Feldstärke</div><div data-side="L" data-pair="2" class="p2-piece p2-left">φ · Potenzial</div><div data-side="L" data-pair="3" class="p2-piece p2-left">U · Spannung</div><div data-side="L" data-pair="4" class="p2-piece p2-left">C · Kapazität</div><div data-side="L" data-pair="5" class="p2-piece p2-left">σ · Flächenladungsdichte</div></div></div><div><h4>Bedeutungen</h4><div class="p2-bank" data-right-bank=""><div data-side="R" data-pair="1" class="p2-piece p2-right">Kraft pro Probeladung, Einheit N/C</div><div data-side="R" data-pair="2" class="p2-piece p2-right">Potenzielle Energie pro Ladung an einem Ort, Einheit V</div><div data-side="R" data-pair="3" class="p2-piece p2-right">Potenzialdifferenz zwischen zwei Orten, Einheit V</div><div data-side="R" data-pair="4" class="p2-piece p2-right">Gespeicherter Ladungsbetrag pro Spannung, Einheit F</div><div data-side="R" data-pair="5" class="p2-piece p2-right">Ladung pro Fläche, Einheit C/m²</div></div></div></div><h4>Deine Paare</h4><div class="p2-solved" data-solved=""></div><div class="p2-row"><button type="button" class="wb-btn primary" data-check="">Überprüfen</button><button type="button" class="wb-btn" data-reset="">Zurücksetzen</button><span class="p2-score" data-score="" aria-live="polite"></span></div></div></div><div class="check-paper"><div class="pairs-columns"><div><strong>Größen</strong><ol><li>E · Feldstärke</li><li>φ · Potenzial</li><li>U · Spannung</li><li>C · Kapazität</li><li>σ · Flächenladungsdichte</li></ol></div><div><strong>Bedeutungen · ungeordnet</strong><ol type="A"><li>Gespeicherter Ladungsbetrag pro Spannung, Einheit F</li><li>Kraft pro Probeladung, Einheit N/C</li><li>Ladung pro Fläche, Einheit C/m²</li><li>Potenzialdifferenz zwischen zwei Orten, Einheit V</li><li>Potenzielle Energie pro Ladung an einem Ort, Einheit V</li></ol></div></div></div><details class="hint"><summary>Hinweis</summary><div class="detail-content">Achte bei jeder Größe auf Definition und Einheit. Verbinde die passenden Teile und überprüfe anschließend deine Zuordnung.</div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_paare"><summary>Lösung vergleichen</summary><div class="detail-content"><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>E · Feldstärke</td><td>Kraft pro Probeladung, Einheit N/C</td></tr><tr><td>φ · Potenzial</td><td>Potenzielle Energie pro Ladung an einem Ort, Einheit V</td></tr><tr><td>U · Spannung</td><td>Potenzialdifferenz zwischen zwei Orten, Einheit V</td></tr><tr><td>C · Kapazität</td><td>Gespeicherter Ladungsbetrag pro Spannung, Einheit F</td></tr><tr><td>σ · Flächenladungsdichte</td><td>Ladung pro Fläche, Einheit C/m²</td></tr></tbody></table></div></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_paare","title":"Kurzcheck 3 · Größe und Bedeutung","worksheetStatic":true}</script></article>
@@ -214,8 +346,91 @@ d) Beschreibe den Zusammenhang zwischen Polarisation des Dielektrikums und der K
 
 
 <article class="task practice-check" id="ef_b7_20261109_dielektrikum_tabelle" data-exercise-id="ef_b7_20261109_dielektrikum_tabelle" data-title="Kurzcheck 4 · Rechentabelle zu Aufgabe 5">
-      <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 4 · Rechentabelle zu Aufgabe 5</h3><p class="task-meta">Notiere die gesuchten Zahlen ohne Einheiten im Heft. Die Einheit steht dauerhaft im Spaltenkopf.</p></div></header>
-      <div class="task-body"><div class="table-wrap"><table class="trace-table"><thead><tr><th scope="col">Versuch</th><th scope="col">C in pF<small>Zahl in pF, ganzzahlig.</small></th><th scope="col">U in V<small>Zahl in V, ganzzahlig.</small></th><th scope="col">Q in nC<small>Zahl in nC, eine Nachkommastelle.</small></th><th scope="col">E in V/m<small>Zahl in V/m, ohne Tausenderpunkt.</small></th></tr></thead><tbody><tr><td>A: Quelle angeschlossen</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>B: isoliert und getrennt</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr></tbody></table></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Übernimm die Tabelle ins Heft. Beginne mit der vorgegebenen konstanten Größe und ergänze die fehlenden Werte mit den bekannten Beziehungen.</p></div></details>
+      <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 4 · Rechentabelle zu Aufgabe 5</h3><p class="task-meta">Gib Zahlen ohne Einheiten ein. Die Einheit steht dauerhaft im Spaltenkopf.</p></div></header>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="trace"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_dielektrikum_tabelle",
+  "title": "Kurzcheck 4 · Rechentabelle zu Aufgabe 5",
+  "hint": "Gib Zahlen ohne Einheiten ein. Die Einheit steht dauerhaft im Spaltenkopf.",
+  "columns": [
+    {
+      "label": "Versuch"
+    },
+    {
+      "label": "C in pF",
+      "hint": "Zahl in pF, ganzzahlig."
+    },
+    {
+      "label": "U in V",
+      "hint": "Zahl in V, ganzzahlig."
+    },
+    {
+      "label": "Q in nC",
+      "hint": "Zahl in nC, eine Nachkommastelle."
+    },
+    {
+      "label": "E in V/m",
+      "hint": "Zahl in V/m, ohne Tausenderpunkt."
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "given": "A: Quelle angeschlossen"
+        },
+        {
+          "answers": [
+            "24"
+          ]
+        },
+        {
+          "answers": [
+            "300"
+          ]
+        },
+        {
+          "answers": [
+            "7,2",
+            "7.2"
+          ]
+        },
+        {
+          "answers": [
+            "15000"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "B: isoliert und getrennt"
+        },
+        {
+          "answers": [
+            "24"
+          ]
+        },
+        {
+          "answers": [
+            "100"
+          ]
+        },
+        {
+          "answers": [
+            "2,4",
+            "2.4"
+          ]
+        },
+        {
+          "answers": [
+            "5000"
+          ]
+        }
+      ]
+    }
+  ]
+}</script></div></div><div class="check-paper"><div class="table-wrap"><table class="trace-table"><thead><tr><th scope="col">Versuch</th><th scope="col">C in pF<small>Zahl in pF, ganzzahlig.</small></th><th scope="col">U in V<small>Zahl in V, ganzzahlig.</small></th><th scope="col">Q in nC<small>Zahl in nC, eine Nachkommastelle.</small></th><th scope="col">E in V/m<small>Zahl in V/m, ohne Tausenderpunkt.</small></th></tr></thead><tbody><tr><td>A: Quelle angeschlossen</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>B: isoliert und getrennt</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr></tbody></table></div></div><details class="hint"><summary>Hinweis</summary><div class="detail-content">Beginne mit der vorgegebenen konstanten Größe und ergänze die fehlenden Zahlen mit den bekannten Beziehungen. Achte auf Einheiten und Antwortformat im Tabellenkopf.</div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_dielektrikum_tabelle"><summary>Lösung vergleichen</summary><div class="detail-content"><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Versuch</th><th scope="col">C in pF</th><th scope="col">U in V</th><th scope="col">Q in nC</th><th scope="col">E in V/m</th></tr></thead><tbody><tr><td>A: Quelle angeschlossen</td><td>24</td><td>300</td><td>7,2</td><td>15000</td></tr><tr><td>B: isoliert und getrennt</td><td>24</td><td>100</td><td>2,4</td><td>5000</td></tr></tbody></table></div></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_dielektrikum_tabelle","title":"Kurzcheck 4 · Rechentabelle zu Aufgabe 5","worksheetStatic":true}</script></article>
@@ -236,7 +451,39 @@ d) Unabhängig davon wird eine kleine positive Probeladung von 50 pC durch ein u
 
 <article class="task practice-check" id="ef_b7_20261109_konstant" data-exercise-id="ef_b7_20261109_konstant" data-title="Kurzcheck 5 · Konstant ist …">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 5 · Konstant ist …</h3><p class="task-meta">Ordne die jeweils genannte Größe dem passenden Versuch zu. Geometrie und Temperatur bleiben unverändert.</p></div></header>
-      <div class="task-body"><div class="word-bank"><strong>Kategorien:</strong> Beim angeschlossenen Versuch A konstant · Beim isolierten Versuch B konstant</div><ul><li>Freie Flächenladungsdichte Q/A bei festem A</li><li>Spannung U zwischen den Platten</li><li>Feldstärke E bei festem d</li><li>Freier Ladungsbetrag Q auf jeder Platte</li></ul><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Kläre zuerst, welche Größe die Spannungsquelle festlegt und welche Größe nach dem isolierten Abtrennen erhalten bleibt.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="categorize"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_konstant",
+  "title": "Kurzcheck 5 · Konstant ist …",
+  "hint": "Ordne die jeweils genannte Größe dem passenden Versuch zu. Geometrie und Temperatur bleiben unverändert.",
+  "categories": [
+    {
+      "id": "U",
+      "title": "Beim angeschlossenen Versuch A konstant"
+    },
+    {
+      "id": "Q",
+      "title": "Beim isolierten Versuch B konstant"
+    }
+  ],
+  "items": [
+    {
+      "label": "Spannung U zwischen den Platten",
+      "category": "U"
+    },
+    {
+      "label": "Feldstärke E bei festem d",
+      "category": "U"
+    },
+    {
+      "label": "Freier Ladungsbetrag Q auf jeder Platte",
+      "category": "Q"
+    },
+    {
+      "label": "Freie Flächenladungsdichte Q/A bei festem A",
+      "category": "Q"
+    }
+  ]
+}</script></div></div><div class="check-paper"><div class="word-bank"><strong>Kategorien:</strong> Beim angeschlossenen Versuch A konstant · Beim isolierten Versuch B konstant</div><ul><li>Freie Flächenladungsdichte Q/A bei festem A</li><li>Spannung U zwischen den Platten</li><li>Feldstärke E bei festem d</li><li>Freier Ladungsbetrag Q auf jeder Platte</li></ul></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Kläre zuerst, welche Größe die Spannungsquelle festlegt und welche Größe nach dem isolierten Abtrennen erhalten bleibt.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_konstant"><summary>Lösung vergleichen</summary><div class="detail-content"><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Beim angeschlossenen Versuch A konstant</td><td>Spannung U zwischen den Platten</td></tr><tr><td>Beim angeschlossenen Versuch A konstant</td><td>Feldstärke E bei festem d</td></tr><tr><td>Beim isolierten Versuch B konstant</td><td>Freier Ladungsbetrag Q auf jeder Platte</td></tr><tr><td>Beim isolierten Versuch B konstant</td><td>Freie Flächenladungsdichte Q/A bei festem A</td></tr></tbody></table></div></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_konstant","title":"Kurzcheck 5 · Konstant ist …","worksheetStatic":true}</script></article>
@@ -260,7 +507,20 @@ d) Bestimme die Ladungsbeträge Q₁ und Q₂. Prüfe die Ladungssumme am Parall
 
 <article class="task practice-check" id="ef_b7_20261109_rechenroute" data-exercise-id="ef_b7_20261109_rechenroute" data-title="Kurzcheck 6 · Eine sinnvolle Rechenroute">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 6 · Eine sinnvolle Rechenroute</h3><p class="task-meta">Bringe die Schritte für diese Schaltung in die passende Reihenfolge.</p></div></header>
-      <div class="task-body"><ol class="choice-list"><li>Q = Cges · U berechnen.</li><li>Parallele Teilgruppe C₁ und C₂ erkennen.</li><li>Mit der gemeinsamen Spannung U₁₂ die Ladungen Q₁ und Q₂ berechnen.</li><li>Reihenschaltung aus C₁₂ und C₃ zur Gesamtkapazität zusammenfassen.</li><li>C₁₂ = C₁ + C₂ berechnen.</li><li>Mit U₁₂ = Q/C₁₂ und U₃ = Q/C₃ die Teilspannungen bestimmen.</li></ol><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Notiere eine Reihenfolge, in der jeder Rechenschritt auf einem zuvor bestimmten Ergebnis aufbaut.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="order"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_rechenroute",
+  "title": "Kurzcheck 6 · Eine sinnvolle Rechenroute",
+  "hint": "Bringe die Schritte für diese Schaltung in die passende Reihenfolge.",
+  "shuffle": true,
+  "items": [
+    "Parallele Teilgruppe C₁ und C₂ erkennen.",
+    "C₁₂ = C₁ + C₂ berechnen.",
+    "Reihenschaltung aus C₁₂ und C₃ zur Gesamtkapazität zusammenfassen.",
+    "Q = Cges · U berechnen.",
+    "Mit U₁₂ = Q/C₁₂ und U₃ = Q/C₃ die Teilspannungen bestimmen.",
+    "Mit der gemeinsamen Spannung U₁₂ die Ladungen Q₁ und Q₂ berechnen."
+  ]
+}</script></div></div><div class="check-paper"><ol class="choice-list"><li>Q = Cges · U berechnen.</li><li>Parallele Teilgruppe C₁ und C₂ erkennen.</li><li>Mit der gemeinsamen Spannung U₁₂ die Ladungen Q₁ und Q₂ berechnen.</li><li>Reihenschaltung aus C₁₂ und C₃ zur Gesamtkapazität zusammenfassen.</li><li>C₁₂ = C₁ + C₂ berechnen.</li><li>Mit U₁₂ = Q/C₁₂ und U₃ = Q/C₃ die Teilspannungen bestimmen.</li></ol></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Notiere eine Reihenfolge, in der jeder Rechenschritt auf einem zuvor bestimmten Ergebnis aufbaut.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_rechenroute"><summary>Lösung vergleichen</summary><div class="detail-content"><ol><li>Parallele Teilgruppe C₁ und C₂ erkennen.</li><li>C₁₂ = C₁ + C₂ berechnen.</li><li>Reihenschaltung aus C₁₂ und C₃ zur Gesamtkapazität zusammenfassen.</li><li>Q = Cges · U berechnen.</li><li>Mit U₁₂ = Q/C₁₂ und U₃ = Q/C₃ die Teilspannungen bestimmen.</li><li>Mit der gemeinsamen Spannung U₁₂ die Ladungen Q₁ und Q₂ berechnen.</li></ol></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_rechenroute","title":"Kurzcheck 6 · Eine sinnvolle Rechenroute","worksheetStatic":true}</script></article>
@@ -284,7 +544,14 @@ d) Untersuche die vier weiteren Messwerte: Welche ganzzahligen Vielfachen von e 
 
 <article class="task practice-check" id="ef_b7_20261109_quantelung" data-exercise-id="ef_b7_20261109_quantelung" data-title="Kurzcheck 7 · Eine Messung richtig deuten">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 7 · Eine Messung richtig deuten</h3><p class="task-meta">Beurteile die Aussage.</p></div></header>
-      <div class="task-body"><p class="task-prompt">Ein gemessener Ladungsbetrag von 1,99 e widerlegt bereits die Vorstellung, dass freie Ladungen als ganzzahlige Vielfache von e vorkommen.</p><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="verify"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_quantelung",
+  "title": "Kurzcheck 7 · Eine Messung richtig deuten",
+  "hint": "Beurteile die Aussage.",
+  "statement": "Ein gemessener Ladungsbetrag von 1,99 e widerlegt bereits die Vorstellung, dass freie Ladungen als ganzzahlige Vielfache von e vorkommen.",
+  "answer": false,
+  "explain": "Falsch. Ein Messwert von 1,99 e kann im Rahmen der Messabweichungen zu einer tatsächlichen Ladung von 2 e gehören. Messwert und idealer physikalischer Wert sind zu unterscheiden."
+}</script></div></div><div class="check-paper"><p class="task-prompt">Ein gemessener Ladungsbetrag von 1,99 e widerlegt bereits die Vorstellung, dass freie Ladungen als ganzzahlige Vielfache von e vorkommen.</p></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_quantelung"><summary>Lösung vergleichen</summary><div class="detail-content"><p><b>Falsch.</b> Ein gemessener Ladungsbetrag von 1,99 e widerlegt bereits die Vorstellung, dass freie Ladungen als ganzzahlige Vielfache von e vorkommen.</p><p>Falsch. Ein Messwert von 1,99 e kann im Rahmen der Messabweichungen zu einer tatsächlichen Ladung von 2 e gehören. Messwert und idealer physikalischer Wert sind zu unterscheiden.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_quantelung","title":"Kurzcheck 7 · Eine Messung richtig deuten","worksheetStatic":true}</script></article>
@@ -410,7 +677,56 @@ d) Vergleiche Versuch B mit dem Ausgangszustand: Welche Faktoren ergeben sich f�
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_a15","title":"Aufgabe 15 · Gleicher Eingriff, verschiedene Energiebilanzen","worksheetStatic":true}</script></article>
 <article class="task practice-check" id="ef_b7_20261109_feldenergie_check" data-exercise-id="ef_b7_20261109_feldenergie_check" data-title="Kurzcheck 9 · Energiedichte und Gesamtenergie">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 9 · Energiedichte und Gesamtenergie</h3><p class="task-meta">Wähle pro Frage genau eine Antwort.</p></div></header>
-      <div class="task-body"><h4>In Luft wird die Feldstärke verdreifacht. Was geschieht mit der Energiedichte?</h4><ol class="choice-list"><li>Sie wird dreimal so groß.</li><li>Sie wird neunmal so groß.</li><li>Sie bleibt gleich.</li></ol><h4>Ein isolierter Luftkondensator wird bei gleicher Plattenfläche auf den doppelten Abstand gebracht. Welche Aussage passt?</h4><ol class="choice-list"><li>E und Energiedichte bleiben gleich; die Feldenergie verdoppelt sich.</li><li>Die Feldstärke verdoppelt sich; die Energie bleibt gleich.</li><li>Die Feldenergie bleibt gleich, weil Q gleich bleibt.</li></ol><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_feldenergie_check",
+  "title": "Kurzcheck 9 · Energiedichte und Gesamtenergie",
+  "hint": "Wähle pro Frage genau eine Antwort.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "In Luft wird die Feldstärke verdreifacht. Was geschieht mit der Energiedichte?",
+      "choices": [
+        {
+          "id": "3",
+          "label": "Sie wird dreimal so groß."
+        },
+        {
+          "id": "9",
+          "label": "Sie wird neunmal so groß."
+        },
+        {
+          "id": "1",
+          "label": "Sie bleibt gleich."
+        }
+      ],
+      "correct": [
+        "9"
+      ],
+      "explain": "ρ_el = ½ε₀E². Der Faktor 3 der Feldstärke wird quadriert."
+    },
+    {
+      "text": "Ein isolierter Luftkondensator wird bei gleicher Plattenfläche auf den doppelten Abstand gebracht. Welche Aussage passt?",
+      "choices": [
+        {
+          "id": "rho",
+          "label": "E und Energiedichte bleiben gleich; die Feldenergie verdoppelt sich."
+        },
+        {
+          "id": "E",
+          "label": "Die Feldstärke verdoppelt sich; die Energie bleibt gleich."
+        },
+        {
+          "id": "W",
+          "label": "Die Feldenergie bleibt gleich, weil Q gleich bleibt."
+        }
+      ],
+      "correct": [
+        "rho"
+      ],
+      "explain": "Bei konstantem Q und A bleibt E = Q/(ε₀A) gleich. Das doppelte Feldvolumen enthält bei gleicher Energiedichte die doppelte Energie."
+    }
+  ]
+}</script></div></div><div class="check-paper"><h4>In Luft wird die Feldstärke verdreifacht. Was geschieht mit der Energiedichte?</h4><ol class="choice-list"><li>Sie wird dreimal so groß.</li><li>Sie wird neunmal so groß.</li><li>Sie bleibt gleich.</li></ol><h4>Ein isolierter Luftkondensator wird bei gleicher Plattenfläche auf den doppelten Abstand gebracht. Welche Aussage passt?</h4><ol class="choice-list"><li>E und Energiedichte bleiben gleich; die Feldenergie verdoppelt sich.</li><li>Die Feldstärke verdoppelt sich; die Energie bleibt gleich.</li><li>Die Feldenergie bleibt gleich, weil Q gleich bleibt.</li></ol></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_feldenergie_check"><summary>Lösung vergleichen</summary><div class="detail-content"><h4>In Luft wird die Feldstärke verdreifacht. Was geschieht mit der Energiedichte?</h4><p>Sie wird neunmal so groß.</p><p>ρ_el = ½ε₀E². Der Faktor 3 der Feldstärke wird quadriert.</p><h4>Ein isolierter Luftkondensator wird bei gleicher Plattenfläche auf den doppelten Abstand gebracht. Welche Aussage passt?</h4><p>E und Energiedichte bleiben gleich; die Feldenergie verdoppelt sich.</p><p>Bei konstantem Q und A bleibt E = Q/(ε₀A) gleich. Das doppelte Feldvolumen enthält bei gleicher Energiedichte die doppelte Energie.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_feldenergie_check","title":"Kurzcheck 9 · Energiedichte und Gesamtenergie","worksheetStatic":true}</script></article>
@@ -441,7 +757,14 @@ d) Beurteile: „Weil der Ring aus Metall besteht, ist seine freie Öffnung imme
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_a17","title":"Aufgabe 17 · Neutral heißt nicht ohne Kraft","worksheetStatic":true}</script></article>
 <article class="task practice-check" id="ef_b7_20261109_ring_check" data-exercise-id="ef_b7_20261109_ring_check" data-title="Kurzcheck 10 · Ring oder geschlossene Hülle?">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 10 · Ring oder geschlossene Hülle?</h3><p class="task-meta">Beurteile die Aussage.</p></div></header>
-      <div class="task-body"><p class="task-prompt">Eine freie Öffnung in einem Metallring muss genauso feldfrei sein wie die ladungsfreie Höhlung einer vollständig geschlossenen leitenden Hülle.</p><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="verify"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_ring_check",
+  "title": "Kurzcheck 10 · Ring oder geschlossene Hülle?",
+  "hint": "Beurteile die Aussage.",
+  "statement": "Eine freie Öffnung in einem Metallring muss genauso feldfrei sein wie die ladungsfreie Höhlung einer vollständig geschlossenen leitenden Hülle.",
+  "answer": false,
+  "explain": "Falsch. Im elektrostatischen Gleichgewicht ist das leitende Metall feldfrei. Die Öffnung im Ring ist aber keine vollständig geschlossene Höhlung; ein äußeres Feld kann dort vorhanden sein."
+}</script></div></div><div class="check-paper"><p class="task-prompt">Eine freie Öffnung in einem Metallring muss genauso feldfrei sein wie die ladungsfreie Höhlung einer vollständig geschlossenen leitenden Hülle.</p></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_ring_check"><summary>Lösung vergleichen</summary><div class="detail-content"><p><b>Falsch.</b> Eine freie Öffnung in einem Metallring muss genauso feldfrei sein wie die ladungsfreie Höhlung einer vollständig geschlossenen leitenden Hülle.</p><p>Falsch. Im elektrostatischen Gleichgewicht ist das leitende Metall feldfrei. Die Öffnung im Ring ist aber keine vollständig geschlossene Höhlung; ein äußeres Feld kann dort vorhanden sein.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_ring_check","title":"Kurzcheck 10 · Ring oder geschlossene Hülle?","worksheetStatic":true}</script></article>
@@ -486,8 +809,97 @@ d) In einer Vergleichsanordnung wird derselbe Ladungsbetrag Q je Platte auf die 
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_a20","title":"Aufgabe 20 · Ein Rechenweg von σ bis W","worksheetStatic":true}</script></article>
 <article class="task practice-check" id="ef_b7_20261109_sigma_tabelle" data-exercise-id="ef_b7_20261109_sigma_tabelle" data-title="Kurzcheck 11 · Faktoren beim Vergrößern der Fläche">
-      <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 11 · Faktoren beim Vergrößern der Fläche</h3><p class="task-meta">Vergleiche Aufgabe 20d mit der ursprünglichen Anordnung. Q und d bleiben gleich. Notiere Faktoren als Dezimalzahlen ohne Einheit im Heft.</p></div></header>
-      <div class="task-body"><div class="table-wrap"><table class="trace-table"><thead><tr><th scope="col">Größe</th><th scope="col">Faktor neu/alt<small>Zahl ohne Einheit, z. B. 1,5. Dezimalkomma und Dezimalpunkt sind möglich.</small></th></tr></thead><tbody><tr><td>Plattenfläche A</td><td>2</td></tr><tr><td>Flächenladungsdichte σ</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Feldstärke E</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Energiedichte ρ_el</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Feldvolumen A d</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Gesamte Feldenergie W</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr></tbody></table></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Übernimm die Tabelle ins Heft. Beginne mit der vorgegebenen konstanten Größe und ergänze die fehlenden Werte mit den bekannten Beziehungen.</p></div></details>
+      <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 11 · Faktoren beim Vergrößern der Fläche</h3><p class="task-meta">Vergleiche Aufgabe 20d mit der ursprünglichen Anordnung. Q und d bleiben gleich. Gib Faktoren als Dezimalzahlen ohne Einheit ein.</p></div></header>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="trace"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_sigma_tabelle",
+  "title": "Kurzcheck 11 · Faktoren beim Vergrößern der Fläche",
+  "hint": "Vergleiche Aufgabe 20d mit der ursprünglichen Anordnung. Q und d bleiben gleich. Gib Faktoren als Dezimalzahlen ohne Einheit ein.",
+  "columns": [
+    {
+      "label": "Größe"
+    },
+    {
+      "label": "Faktor neu/alt",
+      "hint": "Zahl ohne Einheit, z. B. 1,5. Dezimalkomma und Dezimalpunkt sind möglich."
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "given": "Plattenfläche A"
+        },
+        {
+          "given": "2"
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Flächenladungsdichte σ"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Feldstärke E"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Energiedichte ρ_el"
+        },
+        {
+          "answers": [
+            "0,25",
+            "0.25"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Feldvolumen A d"
+        },
+        {
+          "answers": [
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Gesamte Feldenergie W"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    }
+  ]
+}</script></div></div><div class="check-paper"><div class="table-wrap"><table class="trace-table"><thead><tr><th scope="col">Größe</th><th scope="col">Faktor neu/alt<small>Zahl ohne Einheit, z. B. 1,5. Dezimalkomma und Dezimalpunkt sind möglich.</small></th></tr></thead><tbody><tr><td>Plattenfläche A</td><td>2</td></tr><tr><td>Flächenladungsdichte σ</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Feldstärke E</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Energiedichte ρ_el</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Feldvolumen A d</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr><tr><td>Gesamte Feldenergie W</td><td><span class="heft-entry" aria-label="Im Heft ergänzen">…</span></td></tr></tbody></table></div></div><details class="hint"><summary>Hinweis</summary><div class="detail-content">Beginne mit der vorgegebenen konstanten Größe und ergänze die fehlenden Zahlen mit den bekannten Beziehungen. Achte auf Einheiten und Antwortformat im Tabellenkopf.</div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_sigma_tabelle"><summary>Lösung vergleichen</summary><div class="detail-content"><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Größe</th><th scope="col">Faktor neu/alt</th></tr></thead><tbody><tr><td>Plattenfläche A</td><td>2</td></tr><tr><td>Flächenladungsdichte σ</td><td>0,5</td></tr><tr><td>Feldstärke E</td><td>0,5</td></tr><tr><td>Energiedichte ρ_el</td><td>0,25</td></tr><tr><td>Feldvolumen A d</td><td>2</td></tr><tr><td>Gesamte Feldenergie W</td><td>0,5</td></tr></tbody></table></div></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_sigma_tabelle","title":"Kurzcheck 11 · Faktoren beim Vergrößern der Fläche","worksheetStatic":true}</script></article>
@@ -529,14 +941,63 @@ d) Ist diese mittlere Energiedichte gleich der lokalen Energiedichte an jedem Ra
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_a23","title":"Aufgabe 23 · Gleiche Ladung, unterschiedliche Mantelflächen","worksheetStatic":true}</script></article>
 <article class="task practice-check" id="ef_b7_20261109_zylinder_check" data-exercise-id="ef_b7_20261109_zylinder_check" data-title="Kurzcheck 12 · Zylinder und Füllstand">
       <header class="task-head"><span class="task-number">✓</span><div class="task-title"><h3>Kurzcheck 12 · Zylinder und Füllstand</h3><p class="task-meta">Wähle pro Frage genau eine Antwort.</p></div></header>
-      <div class="task-body"><h4>Warum werden der luftgefüllte und der flüssigkeitsgefüllte Höhenabschnitt im Sensor parallel zusammengefasst?</h4><ol class="choice-list"><li>Beide liegen zwischen denselben Elektroden und haben dieselbe Spannung.</li><li>Beide müssen denselben Ladungsbetrag speichern.</li><li>Unterschiedliche Dielektrika bedeuten immer Reihenschaltung.</li></ol><h4>Was gilt für die Energiedichte im luftgefüllten Zylinderkondensator?</h4><ol class="choice-list"><li>Sie ist nahe der inneren Elektrode größer als nahe der äußeren.</li><li>Sie ist überall gleich, weil die Gesamtspannung fest ist.</li><li>Sie ist überall null, weil die Gesamtladung beider Elektroden null ist.</li></ol><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
+      <div class="task-body"><div class="check-interactive wb-book"><div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_zylinder_check",
+  "title": "Kurzcheck 12 · Zylinder und Füllstand",
+  "hint": "Wähle pro Frage genau eine Antwort.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "Warum werden der luftgefüllte und der flüssigkeitsgefüllte Höhenabschnitt im Sensor parallel zusammengefasst?",
+      "choices": [
+        {
+          "id": "sameU",
+          "label": "Beide liegen zwischen denselben Elektroden und haben dieselbe Spannung."
+        },
+        {
+          "id": "sameQ",
+          "label": "Beide müssen denselben Ladungsbetrag speichern."
+        },
+        {
+          "id": "series",
+          "label": "Unterschiedliche Dielektrika bedeuten immer Reihenschaltung."
+        }
+      ],
+      "correct": [
+        "sameU"
+      ],
+      "explain": "Entscheidend ist die Verbindung zu denselben Elektroden. Die Teilkapazitäten addieren sich bei gleicher Spannung."
+    },
+    {
+      "text": "Was gilt für die Energiedichte im luftgefüllten Zylinderkondensator?",
+      "choices": [
+        {
+          "id": "local",
+          "label": "Sie ist nahe der inneren Elektrode größer als nahe der äußeren."
+        },
+        {
+          "id": "flat",
+          "label": "Sie ist überall gleich, weil die Gesamtspannung fest ist."
+        },
+        {
+          "id": "zero",
+          "label": "Sie ist überall null, weil die Gesamtladung beider Elektroden null ist."
+        }
+      ],
+      "correct": [
+        "local"
+      ],
+      "explain": "Das Feld wird nach außen schwächer. Wegen ρ_el = ½ε₀E² nimmt die lokale Energiedichte ebenfalls nach außen ab."
+    }
+  ]
+}</script></div></div><div class="check-paper"><h4>Warum werden der luftgefüllte und der flüssigkeitsgefüllte Höhenabschnitt im Sensor parallel zusammengefasst?</h4><ol class="choice-list"><li>Beide liegen zwischen denselben Elektroden und haben dieselbe Spannung.</li><li>Beide müssen denselben Ladungsbetrag speichern.</li><li>Unterschiedliche Dielektrika bedeuten immer Reihenschaltung.</li></ol><h4>Was gilt für die Energiedichte im luftgefüllten Zylinderkondensator?</h4><ol class="choice-list"><li>Sie ist nahe der inneren Elektrode größer als nahe der äußeren.</li><li>Sie ist überall gleich, weil die Gesamtspannung fest ist.</li><li>Sie ist überall null, weil die Gesamtladung beider Elektroden null ist.</li></ol></div><details class="hint"><summary>Hinweis</summary><div class="detail-content"><p>Prüfe jede Aussage mit den bekannten Begriffen und Beziehungen. Begründe deine Entscheidung kurz im Heft.</p></div></details>
       <details class="solution" data-compare-for="ef_b7_20261109_zylinder_check"><summary>Lösung vergleichen</summary><div class="detail-content"><h4>Warum werden der luftgefüllte und der flüssigkeitsgefüllte Höhenabschnitt im Sensor parallel zusammengefasst?</h4><p>Beide liegen zwischen denselben Elektroden und haben dieselbe Spannung.</p><p>Entscheidend ist die Verbindung zu denselben Elektroden. Die Teilkapazitäten addieren sich bei gleicher Spannung.</p><h4>Was gilt für die Energiedichte im luftgefüllten Zylinderkondensator?</h4><p>Sie ist nahe der inneren Elektrode größer als nahe der äußeren.</p><p>Das Feld wird nach außen schwächer. Wegen ρ_el = ½ε₀E² nimmt die lokale Energiedichte ebenfalls nach außen ab.</p></div></details>
 
       </div><script type="application/json" class="wb-config">{"id":"ef_b7_20261109_zylinder_check","title":"Kurzcheck 12 · Zylinder und Füllstand","worksheetStatic":true}</script></article>
 <div class="scope"><strong>Jetzt hast du das zusätzlich gelernt</strong><p>Du kannst radiale Feldlinien und Äquipotenziallinien unterscheiden, eine vorgegebene Zylinderformel anwenden, den Füllstand aus einer Kapazität bestimmen und Flächenladung sowie Energie bei einer anderen Kondensatorbauform vergleichen.</p></div>
 <div class="toolbar"><button type="button" data-training-print="cylinder">Nur Zylinderaufgaben drucken</button><a class="nav-button" href="#page-9">Zu Formeln und Nacharbeit →</a></div>
 </section>
-<footer class="footer"><p>Alle Aufgaben, Hinweise und Lösungen sind auch ohne JavaScript lesbar. Die Bearbeitungsmarkierungen und die Auswahl der Drucklösungen benötigen JavaScript.</p></footer></main></div><script src="../assets/allgemeines_format.js"></script><script>(() => {
+<footer class="footer"><p>Alle Aufgaben, Hinweise und Lösungen sind auch ohne JavaScript lesbar. Die direkte Überprüfung der Kurzchecks, Bearbeitungsmarkierungen und die Auswahl der Drucklösungen benötigen JavaScript.</p></footer></main></div><script src="../assets/allgemeines_format.js"></script><script>(() => {
   'use strict';
   const key = document.body.dataset.progressKey;
   const tasks = [...document.querySelectorAll('[data-progress-task]')];
@@ -555,8 +1016,8 @@ d) Ist diese mittlere Energiedichte gleich der lokalen Energiedichte an jedem Ra
     if (bar) { bar.max=tasks.length;bar.value=done; }
     if (count) count.textContent = done + ' / ' + tasks.length;
     if (status) status.textContent = available
-      ? 'Schreibe deine Lösungen ins Heft. Nur die Bearbeitungsmarkierungen werden lokal in diesem Browser gespeichert.'
-      : 'Schreibe deine Lösungen ins Heft. Bearbeitungsmarkierungen bleiben hier nur bis zum Neuladen erhalten.';
+      ? 'Schreibe längere Lösungswege ins Heft. Fortschritt und interaktive Kurzchecks werden lokal in diesem Browser gespeichert.'
+      : 'Schreibe längere Lösungswege ins Heft. Die Fortschrittsmarkierungen bleiben hier nur bis zum Neuladen erhalten.';
   };
   const save = () => {
     try { if (available) localStorage.setItem(key,JSON.stringify(state)); }
@@ -615,5 +1076,47 @@ d) Ist diese mittlere Energiedichte gleich der lokalen Energiedichte an jedem Ra
     document.querySelectorAll('section[data-worksheet-section],article[data-progress-task]').forEach(node=>observer.observe(node));
   }
   progress();
+})();
+</script>
+<script>(() => {
+ 'use strict';
+ // Die gemeinsamen Kurzcheck-Module brauchen keine Book-Navigation oder Abgabe.
+ if (window.SBBlocks && window.SBPuzzle2) {
+  SBBlocks.autoMount({storagePrefix:'ef_b7_20261109_'});
+  SBPuzzle2.autoMount();
+  document.querySelectorAll('.check-interactive').forEach(host=>{
+   if(host.querySelector('[data-wb-rendered],[data-p2-mounted]'))host.closest('.task')?.classList.add('has-interactive-check');
+  });
+  document.querySelectorAll('.check-interactive .wb-chip,.check-interactive .wb-order-chip').forEach(chip=>{
+   chip.setAttribute('role','button');chip.tabIndex=0;
+   chip.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();chip.click();}});
+  });
+ }
+ const checkKey=(document.body.dataset.progressKey||'physik-werkstatt')+'-zahlenchecks';
+ let answers={};
+ try {answers=JSON.parse(localStorage.getItem(checkKey)||'{}');if(!answers||typeof answers!=='object'||Array.isArray(answers))answers={};}catch(_){}
+ const parse=value=>{
+  const text=value.trim().replace(/[−–]/g,'-').replace(/\s/g,'').replace(/,/g,'.').replace(/[·×]/g,'*').replace(/\*10\^?([+-]?\d+)$/i,'e$1');
+  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text)?Number(text):NaN;
+ };
+ document.querySelectorAll('.check-number').forEach(box=>{
+  const input=box.querySelector('input');const feedback=box.querySelector('.feedback');
+  if(typeof answers[input.id]==='string')input.value=answers[input.id];
+  const check=()=>{
+   const number=parse(input.value);feedback.classList.remove('correct','wrong');
+   if(!Number.isFinite(number)){feedback.textContent='Gib eine Zahl in der angegebenen Einheit ein, zum Beispiel 0,6 oder 6e-1.';return;}
+   const expected=Number(box.dataset.expected);const tolerance=Number(box.dataset.tolerance);
+   const correct=Math.abs(number-expected)<=Math.abs(expected)*tolerance+Number.EPSILON;
+   feedback.classList.add(correct?'correct':'wrong');
+   feedback.textContent=correct?'✓ Das Zahlenergebnis passt. Vergleiche auch deinen Rechenweg und deine Begründung mit der Lösung.':'Noch nicht passend. Prüfe Einheiten, Zehnerpotenzen und deinen Ansatz.';
+  };
+  box.querySelector('button').addEventListener('click',check);
+  input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();check();}});
+  input.addEventListener('input',()=>{
+   answers[input.id]=input.value;feedback.textContent='';feedback.classList.remove('correct','wrong');
+   try{localStorage.setItem(checkKey,JSON.stringify(answers));}catch(_){}
+  });
+  box.closest('.task')?.classList.add('has-number-check');
+ });
 })();
 </script></body></html>

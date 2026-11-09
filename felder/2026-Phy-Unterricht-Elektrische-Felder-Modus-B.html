@@ -108,6 +108,68 @@ body{overflow-x:clip}
  body[data-print-mode="cylinder"] .chapter[data-worksheet-section="14"]{display:block!important}
  .standalone-solutions .solution-answer{font-size:10.5pt}
 }
+</style><style id="direkte-kurzchecks-design">:root,.check-interactive.wb-book {
+ --wb-blue:#076b60;--wb-blue2:#07594f;--wb-blue3:#076b60;
+ --wb-text:#192c31;--wb-text-color:#192c31;--wb-muted:#52676a;--wb-line:#d7e0da;
+ --wb-block-bg:#fff;--wb-block-border:#d7e0da;--wb-head-bg:#edf2ec;--wb-head-border:#d7e0da;
+ --wb-input-bg:#fff;--wb-input-border:#bfcec4;--wb-input-text:#192c31;--wb-input-placeholder:#52676a;
+ --wb-q-bg:#fff;--wb-choice-hover:#e9f5ee;--wb-bank-bg:#e9f5ee;--wb-bank-border:#bfd5c8;
+ --wb-chip-bg:#fff;--wb-chip-border:#8ebcab;--wb-chip-text:#192c31;
+ --wb-gap-bg:#f8faf7;--wb-gap-border:#8ebcab;--wb-gap-color:#192c31;
+ --wb-gap-filled-bg:#e9f5ee;--wb-gap-filled-border:#8ebcab;
+ --wb-ok:#126140;--wb-bad:#8a460b;--wb-soft-bg:#f4f7f2;
+}
+.check-interactive.wb-book {min-width:0;height:auto;min-height:0;max-height:none;overflow:visible;position:static;background:transparent;--wb-shadow:none}
+.check-interactive > .wb-block,.check-interactive > [data-wb-type] > .wb-block {
+ margin-top:0;border:0;box-shadow:none;background:transparent;overflow:visible;
+}
+.check-interactive .wb-head {display:none}
+.check-interactive .wb-body {padding:0}
+.check-interactive .wb-q {min-width:0}
+.check-interactive h3 {font-size:16px;line-height:1.5}
+.check-interactive .wb-btn {font:600 14px/1.5 system-ui,sans-serif;border-radius:9px}
+.check-interactive .wb-btn.primary {background:var(--teal);border-color:var(--teal);color:white}
+.check-interactive .wb-score {color:var(--teal)}
+.check-interactive .wb-feedback {line-height:1.6}
+.check-interactive .wb-choice {font-size:15px;line-height:1.55}
+.check-interactive .wb-trace-scroll {max-width:100%;overflow-x:auto}
+.check-interactive .wb-trace-table {font-size:14px}
+.check-interactive .wb-trace-input {min-height:40px;font:inherit}
+.check-interactive .p2-container,.check-interactive [data-p2] {min-width:0;max-width:100%}
+.check-interactive.wb-book .p2 {--p2-card2:#f4f7f2;--p2-text:#192c31;--p2-muted:#52676a;--p2-shadow:0 3px 12px #20332b07}
+.check-interactive .p2-banks {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px}
+.check-interactive .p2-banks>div {min-width:0}
+.check-interactive.wb-book .p2 .p2-bank {display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.check-interactive.wb-book .p2 .p2-piece {min-width:0;max-width:100%;width:100%;font-size:14px;font-weight:650;overflow-wrap:anywhere}
+.check-interactive.wb-book .p2 .p2-joined {display:grid;grid-template-columns:minmax(0,1fr) 2px minmax(0,1.4fr);width:100%;min-width:0}
+.check-interactive.wb-book .p2 .p2-joined .p2-piece {min-width:0;max-width:100%;width:auto}
+.check-interactive.wb-book .p2 .p2-score {color:var(--teal);font-size:14px}
+.check-interactive .p2-touch-hint {font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.check-interactive .p2-row {margin-top:14px}
+.check-interactive .wb-order-chip,.check-interactive .wb-categorize-chip {font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.check-interactive:empty {display:none}
+.check-number {font-size:14px}
+.check-number .check-row {gap:8px}
+.check-number input {font-size:14px;min-height:40px}
+.check-number button {font-size:13px}
+@media screen {
+ .has-interactive-check > .task-body > .check-paper {display:none}
+ .has-number-check .check-in-heft {display:none}
+}
+@media(max-width:540px) {
+ .check-interactive .wb-choice {font-size:14px;padding:9px}
+ .check-interactive .wb-btn {padding:9px 10px;font-size:13px}
+ .check-interactive .wb-q {padding:10px}
+ .check-interactive .wb-row {gap:7px}
+ .check-interactive .wb-trace-table {font-size:12px}
+ .check-interactive .p2-banks {grid-template-columns:minmax(0,1fr)}
+ .check-interactive.wb-book .p2 .p2-joined {grid-template-columns:minmax(0,1fr)}
+ .check-interactive.wb-book .p2 .p2-seam {width:100%;height:1px}
+}
+@media print {
+ .check-interactive,.check-number {display:none!important}
+ .check-paper,.check-in-heft {display:block!important}
+}
 </style></head>
 <body data-progress-key="physik-elektrische-felder-modus-b-2026-v1">
 <a class="skip" href="#inhalt">Zum Aufgabenbereich</a>
@@ -132,7 +194,7 @@ body{overflow-x:clip}
     <div class="meta"><span>12 Aufgaben</span><span>ca. 90 Minuten</span><span>3 Schwierigkeitsstufen</span><span>Offline nutzbar</span></div>
   </section>
   <section class="scope" aria-label="Lernstand und Arbeitsweise"><strong>Passend zu eurem bisherigen Lernstand</strong><p>Grundlage: <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1 vollständig</a> sowie aus <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2 ausschließlich Seite 2 „Äquipotenzial“ und Seite 3 „Flächenladung“</a>.</p><p><strong>Annahmen:</strong> Übungen für die gymnasiale Oberstufe ohne Festlegung auf BF oder LF. Hilfsmittel: Taschenrechner, Unterrichtsnotizen, Lineal und Heft. Die Zeitangaben sind Richtwerte; einzelne Aufgaben eignen sich auch als Hausaufgabe.</p><p><strong>So arbeitest du:</strong> Notiere bei Rechnungen Ansatz, Umrechnung und Einheit. Zeichne Skizzen und Diagramme ins Heft. Nutze zuerst einen Hinweis und öffne die Lösung erst nach deinem eigenen Versuch.</p></section>
-  <noscript><p class="noscript">Aufgaben, Hinweise und Lösungen funktionieren auch ohne JavaScript. Die Fortschrittsmarkierungen und die Druckauswahl benötigen JavaScript.</p></noscript>
+  <noscript><p class="noscript">Aufgaben, Hinweise und Lösungen sind auch ohne JavaScript lesbar. Direktes Überprüfen, Fortschrittsmarkierungen und Druckauswahl benötigen JavaScript.</p></noscript>
   <div class="toolbar"><div class="toolbar-actions"><button id="print" type="button">Drucken / PDF</button><button type="button" id="reset">Bearbeitungsmarkierungen zurücksetzen</button></div><label class="print-choice"><input id="print-solutions" type="checkbox">Lösungen mitdrucken</label></div>
   <p class="save-status" id="save-status" role="status" aria-live="polite">Schreibe deine Lösungen ins Heft. Nur die Bearbeitungsmarkierungen werden lokal gespeichert.</p>
   <details class="scope" id="formeln"><summary>Formeln &amp; Einheiten aus dem behandelten Stoff</summary><div class="detail-content">
@@ -204,7 +266,7 @@ body{overflow-x:clip}
       <div class="material table-wrap"><p class="material-label">M4 · Idealisierte Messwerte</p><table><thead><tr><th scope="col">q in nC</th><th scope="col">2,0</th><th scope="col">4,0</th><th scope="col">6,0</th><th scope="col">8,0</th></tr></thead><tbody><tr><th scope="row">F in µN</th><td>6,0</td><td>12,0</td><td>18,0</td><td>24,0</td></tr></tbody></table></div>
       <ol class="subtasks"><li><strong>Zeichne</strong> ein F-q-Diagramm: q auf der waagerechten und F auf der senkrechten Achse. Beschreibe den Zusammenhang.</li><li><strong>Bestimme</strong> die Feldstärke in N/C. Zeige die Umrechnung der Einheiten.</li><li>Die Feldrichtung zeigt nach rechts. Nun wird q = −3,0 nC eingesetzt. <strong>Bestimme</strong> Betrag und Richtung der Kraft.</li><li><strong>Beurteile</strong>: „Wenn die Probeladung verdoppelt wird, verdoppelt sich auch die Feldstärke.“</li></ol>
 
-      <p class="check-in-heft">Zahlencheck zu b) · E in N/C. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
+      <div class="check check-number" data-expected="3000" data-tolerance="0.01"><label for="check-5">Zahlencheck zu b) · E in N/C</label><div class="check-row"><input id="check-5" type="text" inputmode="decimal" placeholder="z. B. 1,2e3" aria-describedby="feedback-5"><span>N/C</span><button type="button">Prüfen</button></div><p class="feedback" id="feedback-5" role="status" aria-live="polite"></p></div><p class="check-in-heft">Zahlencheck zu b) · E in N/C. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
       <details class="hint"><summary>Hinweis</summary><div class="detail-content">Eine Gerade durch den Ursprung spricht für direkte Proportionalität. Es gilt: 1 µN / 1 nC = 10³ N/C.</div></details>
       <details class="solution"><summary>Lösung vergleichen</summary><div class="detail-content"><p><strong>a)</strong> Die Punkte liegen auf einer Geraden durch den Ursprung. F ist proportional zu q. Beispielsweise verläuft die Gerade durch (0 nC | 0 µN), (4 nC | 12 µN) und (8 nC | 24 µN).</p><p><strong>b)</strong> E = F/q = (6,0 · 10⁻⁶ N)/(2,0 · 10⁻⁹ C) = <strong>3,0 · 10³ N/C</strong>.</p><p><strong>c)</strong> F = |q|E = 3,0 · 10⁻⁹ C · 3,0 · 10³ N/C = <strong>9,0 µN nach links</strong>, da q negativ ist.</p><p><strong>d)</strong> Falsch. Bei unveränderter Feldquelle und gleichem Ort bleibt E gleich. Die Kraft wird doppelt so groß; der Quotient F/|q| bleibt konstant.</p></div></details>
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
@@ -216,7 +278,7 @@ body{overflow-x:clip}
     <div class="task-body"><div class="material"><p class="material-label">M5 · Punktladungsmodell in Luft</p><p class="given">Q = +4,0 nC &nbsp; · &nbsp; q = −6,0 nC &nbsp; · &nbsp; r = 12 cm<br>k = 8,99 · 10⁹ N m²/C²</p><p>Die Kugeln sind im Vergleich zu ihrem Abstand sehr klein. Ihre gegenseitige Ladungsverschiebung wird vernachlässigt.</p></div>
       <ol class="subtasks"><li><strong>Berechne</strong> den Kraftbetrag und gib an, ob Anziehung oder Abstoßung vorliegt. Zeichne die Kräfte auf beide Kugeln ein.</li><li>Der Abstand wird bei unveränderten Ladungen auf 24 cm vergrößert. <strong>Bestimme</strong> den neuen Kraftbetrag möglichst mithilfe eines Faktors.</li><li>Ausgehend von M5 wird nur Q verdoppelt und gleichzeitig r halbiert. <strong>Bestimme</strong> den Änderungsfaktor und den neuen Kraftbetrag.</li></ol>
 
-      <p class="check-in-heft">Zahlencheck zu a) · F in µN. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
+      <div class="check check-number" data-expected="14.9833333333" data-tolerance="0.02"><label for="check-6">Zahlencheck zu a) · F in µN</label><div class="check-row"><input id="check-6" type="text" inputmode="decimal" aria-describedby="feedback-6"><span>µN</span><button type="button">Prüfen</button></div><p class="feedback" id="feedback-6" role="status" aria-live="polite"></p></div><p class="check-in-heft">Zahlencheck zu a) · F in µN. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
       <details class="hint"><summary>Hinweis</summary><div class="detail-content">Setze r in Metern und die Ladungen in Coulomb ein. Wegen F ∝ |qQ|/r² bewirkt eine Halbierung von r allein den Faktor 4.</div></details>
       <details class="solution"><summary>Lösung vergleichen</summary><div class="detail-content"><p><strong>a)</strong> F = 8,99 · 10⁹ · (4,0 · 10⁻⁹ · 6,0 · 10⁻⁹)/(0,12)² N ≈ <strong>1,50 · 10⁻⁵ N = 15,0 µN</strong>. Die Ladungen ziehen sich an. Beide Kraftpfeile zeigen entlang der Verbindungslinie auf die jeweils andere Kugel; sie sind gleich lang und entgegengesetzt gerichtet.</p><p><strong>b)</strong> Doppelter Abstand: F′ = F/4 ≈ <strong>3,75 µN</strong>.</p><p><strong>c)</strong> Faktor 2 durch Q und Faktor 4 durch den halben Abstand ergeben insgesamt <strong>Faktor 8</strong>. F″ = 8F ≈ <strong>120 µN</strong>.</p></div></details>
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
@@ -252,7 +314,7 @@ body{overflow-x:clip}
     <div class="task-body"><div class="material"><p class="material-label">M8 · Homogenes Plattenfeld in Luft</p><p class="given">Linke Platte positiv, rechte Platte negativ<br>U = 480 V &nbsp; · &nbsp; d = 2,4 cm &nbsp; · &nbsp; q = +3,0 nC</p><p>Die Probeladung wird im homogenen Bereich langsam 1,0 cm nach links transportiert. Anfangs- und Endgeschwindigkeit sind gleich; andere Kräfte und Reibung werden bei der Energiebilanz vernachlässigt.</p></div>
       <ol class="subtasks"><li><strong>Berechne</strong> die Feldstärke und gib ihre Richtung an.</li><li><strong>Berechne</strong> den Betrag der elektrischen Kraft auf die Probeladung und gib die Kraftrichtung an.</li><li><strong>Bestimme</strong> die für den Transport benötigte äußere Arbeit auf zwei Wegen: mit W = F s und mit W = |q| U<sub>s</sub>. U<sub>s</sub> bezeichnet die Spannung über die Teilstrecke s = 1,0 cm. Nimmt die elektrische potenzielle Energie zu oder ab?</li><li>Die positive Probeladung wird durch eine gleich große negative ersetzt. <strong>Gib</strong> die neue Kraftrichtung an und begründe, ob sich das Feld dadurch im verwendeten Modell ändert.</li></ol>
 
-      <p class="check-in-heft">Zahlencheck zu c) · W in µJ. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
+      <div class="check check-number" data-expected="0.6" data-tolerance="0.01"><label for="check-9">Zahlencheck zu c) · W in µJ</label><div class="check-row"><input id="check-9" type="text" inputmode="decimal" aria-describedby="feedback-9"><span>µJ</span><button type="button">Prüfen</button></div><p class="feedback" id="feedback-9" role="status" aria-live="polite"></p></div><p class="check-in-heft">Zahlencheck zu c) · W in µJ. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
       <details class="hint"><summary>Hinweis</summary><div class="detail-content">Die gesamten 480 V liegen über 2,4 cm. Über die kürzere Teilstrecke gilt U<sub>s</sub> = E s. Prüfe, ob der Transport mit oder gegen die elektrische Kraft erfolgt.</div></details>
       <details class="solution"><summary>Lösung vergleichen</summary><div class="detail-content"><p><strong>a)</strong> E = 480 V / 0,024 m = <strong>2,0 · 10⁴ V/m nach rechts</strong>.</p><p><strong>b)</strong> F = 3,0 · 10⁻⁹ C · 2,0 · 10⁴ N/C = <strong>6,0 · 10⁻⁵ N = 60 µN nach rechts</strong>.</p><p><strong>c)</strong> W = 6,0 · 10⁻⁵ N · 0,010 m = <strong>6,0 · 10⁻⁷ J = 0,60 µJ</strong>. Zweiter Weg: U<sub>s</sub> = E s = 200 V; W = 3,0 · 10⁻⁹ C · 200 V = 6,0 · 10⁻⁷ J. Die Bewegung erfolgt gegen die elektrische Kraft. Die potenzielle Energie nimmt um 0,60 µJ zu.</p><p><strong>d)</strong> Die Kraft zeigt nun nach links. Das vorgegebene Feld bleibt im Probeladungsmodell unverändert; das Vorzeichen von q ändert die Kraftrichtung.</p></div></details>
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
@@ -267,7 +329,7 @@ body{overflow-x:clip}
       <div class="material"><p class="material-label">M9 · Plattenanordnung</p><p class="given">Fläche je Platte: A = 150 cm²<br>Ladungen: +Q und −Q mit Q = 2,655 nC<br>Plattenabstand: d = 2,0 cm</p></div>
       <ol class="subtasks"><li><strong>Berechne</strong> den Betrag der Flächenladungsdichte in C/m². Zeige die Flächenumrechnung.</li><li><strong>Bestimme</strong> daraus die Feldstärke und anschließend die Spannung zwischen den Platten.</li><li>In einer zweiten Anordnung wird dieselbe Ladungsmenge je Platte gleichmäßig auf die doppelte Fläche verteilt. Der Abstand bleibt gleich. <strong>Vergleiche</strong> Flächenladungsdichte, Feldstärke und Spannung mit der ersten Anordnung.</li><li><strong>Erkläre</strong>, warum die Gesamtladung beider Platten zusammen null sein kann, obwohl zwischen ihnen ein elektrisches Feld besteht.</li></ol>
 
-      <p class="check-in-heft">Zahlencheck zu b) · U in V. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
+      <div class="check check-number" data-expected="400" data-tolerance="0.02"><label for="check-10">Zahlencheck zu b) · U in V</label><div class="check-row"><input id="check-10" type="text" inputmode="decimal" aria-describedby="feedback-10"><span>V</span><button type="button">Prüfen</button></div><p class="feedback" id="feedback-10" role="status" aria-live="polite"></p></div><p class="check-in-heft">Zahlencheck zu b) · U in V. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
       <details class="hint"><summary>Hinweis</summary><div class="detail-content">Nutze nacheinander σ = Q/A, E = σ/ε₀ und U = E d. 150 cm² sind 150 · 10⁻⁴ m².</div></details>
       <details class="solution"><summary>Lösung vergleichen</summary><div class="detail-content"><p><strong>a)</strong> A = 0,0150 m². σ = 2,655 · 10⁻⁹ C / 0,0150 m² = <strong>1,770 · 10⁻⁷ C/m²</strong>.</p><p><strong>b)</strong> E = (1,770 · 10⁻⁷)/(8,85 · 10⁻¹²) N/C = <strong>2,00 · 10⁴ N/C</strong>. U = E d = 2,00 · 10⁴ V/m · 0,020 m = <strong>400 V</strong>.</p><p><strong>c)</strong> Doppelte Fläche bei gleichem Q: σ halbiert sich auf 8,85 · 10⁻⁸ C/m². E halbiert sich auf 1,00 · 10⁴ N/C und U auf 200 V.</p><p><strong>d)</strong> +Q und −Q ergeben zwar zusammen null, befinden sich aber an verschiedenen Orten. Zwischen den Platten zeigen beide Feldbeiträge von der positiven zur negativen Platte und verstärken sich.</p></div></details>
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
@@ -279,7 +341,7 @@ body{overflow-x:clip}
     <div class="task-body"><div class="material"><p class="material-label">M10 · Kräftegleichgewicht</p><p>Ein kleines negativ geladenes Kunststoffteilchen soll zwischen zwei waagerechten Platten in Luft schweben. Es wird als Punktladung betrachtet; Auftrieb und Luftbewegung werden vernachlässigt.</p><p class="given">m = 1,8 mg &nbsp; · &nbsp; q = −3,0 nC &nbsp; · &nbsp; d = 4,0 cm<br>g = 9,81 N/kg</p></div>
       <ol class="subtasks"><li><strong>Skizziere</strong> die Gewichtskraft und die elektrische Kraft am Teilchen. Leite daraus Feldrichtung und Vorzeichen der oberen und unteren Platte ab.</li><li><strong>Berechne</strong> die zum Schweben erforderliche Feldstärke und den Spannungsbetrag.</li><li><strong>Bestimme</strong> den Betrag der zugehörigen Flächenladungsdichte auf den Platteninnenseiten.</li><li>Der Plattenabstand wird verdoppelt. <strong>Bestimme</strong>, wie die Spannung für erneutes Schweben verändert werden muss. Begründe außerdem, warum das Teilchen bei unveränderter Spannung nicht mehr schwebt.</li></ol>
 
-      <p class="check-in-heft">Zahlencheck zu b) · U in V. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
+      <div class="check check-number" data-expected="235.44" data-tolerance="0.02"><label for="check-11">Zahlencheck zu b) · U in V</label><div class="check-row"><input id="check-11" type="text" inputmode="decimal" aria-describedby="feedback-11"><span>V</span><button type="button">Prüfen</button></div><p class="feedback" id="feedback-11" role="status" aria-live="polite"></p></div><p class="check-in-heft">Zahlencheck zu b) · U in V. Prüfe dein Ergebnis über „Lösung vergleichen“.</p>
       <details class="hint"><summary>Hinweis</summary><div class="detail-content">1,8 mg = 1,8 · 10⁻⁶ kg. Zum Schweben gilt |q|E = mg. Bei einer negativen Ladung sind Feld- und Kraftrichtung entgegengesetzt.</div></details>
       <details class="solution"><summary>Lösung vergleichen</summary><div class="detail-content"><p><strong>a)</strong> Die Gewichtskraft zeigt nach unten, die elektrische Kraft nach oben. Wegen q &lt; 0 muss das Feld <strong>nach unten</strong> zeigen: obere Platte positiv, untere Platte negativ.</p><p><strong>b)</strong> F<sub>G</sub> = 1,8 · 10⁻⁶ kg · 9,81 N/kg = 1,7658 · 10⁻⁵ N. E = mg/|q| = <strong>5886 N/C ≈ 5,9 · 10³ N/C</strong>. U = E d = 5886 V/m · 0,040 m = <strong>235,44 V ≈ 2,4 · 10² V</strong>.</p><p><strong>c)</strong> σ = ε₀ E = 8,85 · 10⁻¹² · 5886 C/m² = <strong>5,21 · 10⁻⁸ C/m²</strong>.</p><p><strong>d)</strong> Das erforderliche E bleibt wegen unveränderter Masse und Ladung gleich. Bei d′ = 2d muss deshalb <strong>U′ = 2U ≈ 471 V</strong> gelten. Bei konstantem U halbieren sich E und die elektrische Kraft. Die Gewichtskraft überwiegt; das Teilchen bewegt sich nach unten.</p></div></details>
       <label class="finish"><input type="checkbox" class="done">Bearbeitet und mit der Lösung verglichen</label>
@@ -298,7 +360,7 @@ body{overflow-x:clip}
     </div>
   <script type="application/json" class="wb-config">{"id":"aufgabe-12","title":"Ein Messprotokoll auf dem Prüfstand","worksheetStatic":true}</script></article>
 
-  <footer class="footer" id="quellen"><strong>Unterrichtsgrundlage &amp; Hinweise</strong><ul><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1</a>: vollständig, insbesondere Ladung, Coulomb-Gesetz, Influenz, Feldstärke, Feldlinien, Abschirmung und Schweben.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2</a>: ausschließlich die intern nummerierten Seiten 2 „Äquipotenzial“ und 3 „Flächenladung“. Maßgeblich ist die Seitenzählung der Unterrichtsseite.</li></ul><p>Die Aufgaben wurden neu entwickelt. Die lokalen Aufgaben aus <code>2024-Phy</code> (HT, Aufgabenblatt) und <code>2025-Phy</code> dienten als Orientierung für Operatoren, Materialbeschriftungen und begründete Teilaufgaben. Der fachliche Umfang richtet sich ausschließlich nach dem oben genannten Lernstand.</p><p>Alle Grafiken sind eigene schematische Darstellungen. Messwerte sind didaktisch konstruiert. Vergleiche deine Ergebnisse, Begründungen und Skizzen im Heft mit der aufklappbaren Lösung.</p><p>Deine Lösungen stehen in deinem Heft. Nur Bearbeitungsmarkierungen werden lokal in diesem Browser gespeichert; es werden keine Antworten übertragen.</p></footer>
+  <footer class="footer" id="quellen"><strong>Unterrichtsgrundlage &amp; Hinweise</strong><ul><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1</a>: vollständig, insbesondere Ladung, Coulomb-Gesetz, Influenz, Feldstärke, Feldlinien, Abschirmung und Schweben.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2</a>: ausschließlich die intern nummerierten Seiten 2 „Äquipotenzial“ und 3 „Flächenladung“. Maßgeblich ist die Seitenzählung der Unterrichtsseite.</li></ul><p>Die Aufgaben wurden neu entwickelt. Die lokalen Aufgaben aus <code>2024-Phy</code> (HT, Aufgabenblatt) und <code>2025-Phy</code> dienten als Orientierung für Operatoren, Materialbeschriftungen und begründete Teilaufgaben. Der fachliche Umfang richtet sich ausschließlich nach dem oben genannten Lernstand.</p><p>Alle Grafiken sind eigene schematische Darstellungen. Messwerte sind didaktisch konstruiert. Vergleiche deine Ergebnisse, Begründungen und Skizzen im Heft mit der aufklappbaren Lösung.</p><p>Deine längeren Lösungen stehen in deinem Heft. Bearbeitungsmarkierungen und kurze Ergebnischecks werden lokal gespeichert; es werden keine Antworten übertragen.</p></footer>
 </main>
 </div>
 
@@ -323,8 +385,8 @@ body{overflow-x:clip}
     if (bar) { bar.max=tasks.length;bar.value=done; }
     if (count) count.textContent = done + ' / ' + tasks.length;
     if (status) status.textContent = available
-      ? 'Schreibe deine Lösungen ins Heft. Nur die Bearbeitungsmarkierungen werden lokal in diesem Browser gespeichert.'
-      : 'Schreibe deine Lösungen ins Heft. Bearbeitungsmarkierungen bleiben hier nur bis zum Neuladen erhalten.';
+      ? 'Schreibe längere Lösungswege ins Heft. Fortschritt und interaktive Kurzchecks werden lokal in diesem Browser gespeichert.'
+      : 'Schreibe längere Lösungswege ins Heft. Die Fortschrittsmarkierungen bleiben hier nur bis zum Neuladen erhalten.';
   };
   const save = () => {
     try { if (available) localStorage.setItem(key,JSON.stringify(state)); }
@@ -383,5 +445,47 @@ body{overflow-x:clip}
     document.querySelectorAll('section[data-worksheet-section],article[data-progress-task]').forEach(node=>observer.observe(node));
   }
   progress();
+})();
+</script>
+<script>(() => {
+ 'use strict';
+ // Die gemeinsamen Kurzcheck-Module brauchen keine Book-Navigation oder Abgabe.
+ if (window.SBBlocks && window.SBPuzzle2) {
+  SBBlocks.autoMount({storagePrefix:'ef_b7_20261109_'});
+  SBPuzzle2.autoMount();
+  document.querySelectorAll('.check-interactive').forEach(host=>{
+   if(host.querySelector('[data-wb-rendered],[data-p2-mounted]'))host.closest('.task')?.classList.add('has-interactive-check');
+  });
+  document.querySelectorAll('.check-interactive .wb-chip,.check-interactive .wb-order-chip').forEach(chip=>{
+   chip.setAttribute('role','button');chip.tabIndex=0;
+   chip.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();chip.click();}});
+  });
+ }
+ const checkKey=(document.body.dataset.progressKey||'physik-werkstatt')+'-zahlenchecks';
+ let answers={};
+ try {answers=JSON.parse(localStorage.getItem(checkKey)||'{}');if(!answers||typeof answers!=='object'||Array.isArray(answers))answers={};}catch(_){}
+ const parse=value=>{
+  const text=value.trim().replace(/[−–]/g,'-').replace(/\s/g,'').replace(/,/g,'.').replace(/[·×]/g,'*').replace(/\*10\^?([+-]?\d+)$/i,'e$1');
+  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text)?Number(text):NaN;
+ };
+ document.querySelectorAll('.check-number').forEach(box=>{
+  const input=box.querySelector('input');const feedback=box.querySelector('.feedback');
+  if(typeof answers[input.id]==='string')input.value=answers[input.id];
+  const check=()=>{
+   const number=parse(input.value);feedback.classList.remove('correct','wrong');
+   if(!Number.isFinite(number)){feedback.textContent='Gib eine Zahl in der angegebenen Einheit ein, zum Beispiel 0,6 oder 6e-1.';return;}
+   const expected=Number(box.dataset.expected);const tolerance=Number(box.dataset.tolerance);
+   const correct=Math.abs(number-expected)<=Math.abs(expected)*tolerance+Number.EPSILON;
+   feedback.classList.add(correct?'correct':'wrong');
+   feedback.textContent=correct?'✓ Das Zahlenergebnis passt. Vergleiche auch deinen Rechenweg und deine Begründung mit der Lösung.':'Noch nicht passend. Prüfe Einheiten, Zehnerpotenzen und deinen Ansatz.';
+  };
+  box.querySelector('button').addEventListener('click',check);
+  input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();check();}});
+  input.addEventListener('input',()=>{
+   answers[input.id]=input.value;feedback.textContent='';feedback.classList.remove('correct','wrong');
+   try{localStorage.setItem(checkKey,JSON.stringify(answers));}catch(_){}
+  });
+  box.closest('.task')?.classList.add('has-number-check');
+ });
 })();
 </script></body></html>
