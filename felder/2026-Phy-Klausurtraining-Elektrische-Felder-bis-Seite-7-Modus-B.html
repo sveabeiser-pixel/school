@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elektrische Felder · Klausurtraining mit Feldenergie · Modus B</title>
+<meta name="description" content="20 Übungsaufgaben und 11 Kurzchecks: elektrische Felder, Kondensatoren, Millikan, Elektronen im Längsfeld, Feldenergie, Influenz und Flächenladungsdichte. Mit einem 45-Minuten-Klausurcheck.">
+<link rel="stylesheet" href="../assets/allgemeines_format.css">
+<style>
+.wb-book{--wb-blue:#146b75;--wb-blue2:#105964}.wb-book .wb-paper{max-width:1040px}.training-hero{padding:26px;border:1px solid var(--wb-line);border-radius:14px;background:linear-gradient(120deg,var(--wb-head-bg),var(--wb-block-bg));margin-bottom:22px}.training-hero h1{font-size:clamp(29px,4vw,44px);line-height:1.15;letter-spacing:-1px;margin:10px 0 16px}.training-kicker{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;font-weight:750;color:var(--wb-muted);margin-bottom:8px}.training-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.training-badges span{padding:4px 9px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);font-size:12px;color:var(--wb-text)}.training-material,.training-note{border:1px solid var(--wb-line);border-radius:10px;padding:18px;margin:18px 0;background:var(--wb-block-bg);color:var(--wb-text)}.training-note{border-left:4px solid var(--wb-blue)}.training-material p,.training-note p{margin:8px 0}.training-table{max-width:100%;overflow:auto;margin:14px 0}.training-table table{width:100%;border-collapse:collapse;color:var(--wb-text);font-size:14px}.training-table th,.training-table td{border:1px solid var(--wb-line);padding:9px 11px;text-align:left;vertical-align:top}.training-table th{background:var(--wb-head-bg);color:var(--wb-text)}.training-table caption{text-align:left;font-size:12px;color:var(--wb-muted);padding-top:6px;caption-side:bottom}.training-figure{margin:16px 0}.training-figure svg{display:block;width:100%;height:auto;max-width:720px;margin:auto;color:var(--wb-text)}.training-figure figcaption{font-size:12px;color:var(--wb-muted);margin-top:9px}.training-small{font-size:13px;color:var(--wb-muted)}.training-hint{border:1px dashed var(--wb-line);border-radius:8px;padding:10px 14px;margin:18px 0;color:var(--wb-text)}.training-hint summary{font-size:14px;cursor:pointer;font-weight:650}.training-hint p{font-size:14px}.training-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.training-actions button{padding:10px 14px;border:1px solid var(--wb-line);border-radius:8px;background:var(--wb-head-bg);color:var(--wb-text);cursor:pointer;font:inherit;font-size:14px;font-weight:650}.training-actions button:hover{filter:brightness(.96)}.training-actions button:focus-visible{outline:3px solid var(--wb-blue);outline-offset:3px}.training-print-answer{display:none;white-space:pre-wrap;overflow-wrap:anywhere}.wb-book .wb-paper,.wb-book .wb-content,.training-material{min-width:0}body.training-source-failed{overflow:auto;padding:20px;font-family:system-ui,sans-serif}.training-load-error{padding:12px;border:1px solid #a44;background:#fff4ed;color:#6b2813}
+@media(max-width:600px){.training-hero{padding:19px}.training-material,.training-note{padding:13px}.training-table th,.training-table td{padding:8px;font-size:13px}.training-kicker{letter-spacing:.7px}.wb-book:not(.wb-present-mode){--wb-topH:112px}.wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap}.wb-book:not(.wb-present-mode) .wb-top-left{flex:0 0 100%;width:100%;min-width:0;height:44px}.wb-book:not(.wb-present-mode) .wb-top-right{flex:0 0 100%;width:100%;height:36px;justify-content:space-between}.wb-book:not(.wb-present-mode) .wb-brand{font-size:17px;overflow-wrap:anywhere}.wb-book:not(.wb-present-mode) .wb-theme-wrap{padding:4px}.wb-book:not(.wb-present-mode) .wb-theme-label{display:none}.wb-book:not(.wb-present-mode) .wb-theme-select{width:90px}.wb-book:not(.wb-present-mode) .wb-page-ind{min-width:36px}.wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}}
+@page{size:A4;margin:16mm}
+@media print{html,body,.wb-book,.wb-layout,.wb-content,.wb-paper{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;position:static!important;display:block!important;margin:0!important;padding:0!important;background:white!important;color:black!important}.wb-book .wb-topbar,.wb-sidebar,.wb-backdrop,.training-actions,.training-hint,.wb-side-footer,.wb-actions,.wb-block-actions,.wb-btn,.wb-dnd-feedback,.wb-export-panel{display:none!important}.wb-book section[data-wb-page]{display:block!important;break-before:page}.wb-book section[data-wb-page="1"]{break-before:auto}.wb-book [data-wb-results]{display:none!important}.training-hero,.training-material,.training-note,.wb-block{background:white!important;color:black!important;border-color:#999!important;box-shadow:none!important}.training-hero h1{font-size:27pt}.training-material,.training-figure,.training-table tr{break-inside:avoid}textarea{display:none!important}.training-print-answer{display:block;min-height:75px;border:1px solid #bbb;padding:8px;margin:8px 0}.training-check-print .wb-book section[data-wb-page]{display:none!important}.training-check-print .wb-book section[data-wb-page="8"]{display:block!important;break-before:auto}.wb-book{--wb-text:#000;--wb-muted:#333;--wb-line:#aaa;--wb-head-bg:#fff;--wb-block-bg:#fff}.training-figure svg{max-height:160px}.training-kicker,.training-small{color:#333!important}}
+
+@media(max-width:600px){.wb-book .wb-content{padding-left:10px;padding-right:10px}.wb-book .wb-paper{padding:22px 16px}.wb-book:not(.wb-present-mode) .wb-theme-select{width:96px!important}}
+@media print{.wb-book,.wb-book p,.wb-book li,.wb-book .wb-field-prompt{font-size:10.5pt!important;line-height:1.4!important}.wb-book .wb-score{display:none!important}.training-hero,.training-material,.training-note{padding:12px!important;margin:12px 0!important}.training-hero h1{font-size:22pt!important;margin:6px 0 10px}.wb-book .wb-block{padding:12px!important;margin:10px 0!important}.wb-book .wb-block h3{font-size:13pt!important}.training-check-print #material-12{break-before:page}.training-badges{margin-top:10px;gap:6px}.training-print-answer{min-height:55px}}
+
+@media print{.training-extra-print .wb-book section[data-wb-page]{display:none!important}.training-extra-print .wb-book section[data-wb-page="10"],.training-extra-print .wb-book section[data-wb-page="11"],.training-extra-print .wb-book section[data-wb-page="12"],.training-extra-print .wb-book section[data-wb-page="13"]{display:block!important}.training-extra-print .wb-book section[data-wb-page="10"]{break-before:auto}}
+</style></head><body>
+<noscript><p class="training-load-error">Für Navigation und interaktive Eingabefelder benötigst du JavaScript. Die Aufgabenstellungen bleiben im HTML lesbar.</p></noscript>
+<div data-wb-book><script class="wb-book-config" type="application/json">{
+  "bookTitle": "Felder · Klausurtraining",
+  "sectionTitle": "Modus B · Felder und Feldenergie",
+  "startPage": 1,
+  "submitLabel": "Ergebnisse exportieren",
+  "onSubmit": "exportResults",
+  "autoNav": true,
+  "autoNavHeadings": [
+    "h1",
+    "h2"
+  ],
+  "autoNavIncludeBlocks": false,
+  "autoNavGroupTitle": "Training",
+  "themeDefault": "default",
+  "studentNameStorageKey": "ef_b7_20261109_name",
+  "resultsPageTitle": "Meine Ergebnisse"
+}</script>
+<section data-wb-page="1" data-wb-page-title="Start & Lernstand">
+<div class="training-hero"><div class="training-kicker">Modus B · Klausurvorbereitung</div><h1>Elektrische Felder<br>Dein Training mit Feldenergie</h1><p>Erklären, rechnen, Messwerte auswerten und Ergebnisse prüfen – mit genau dem Wissen aus eurem bisherigen Unterricht.</p><div class="training-badges"><span>20 Hauptaufgaben</span><span>11 Kurzchecks</span><span>Grundblock: ca. 135–150 min</span><span>Ergänzung: ca. 90 min</span><span>45-Minuten-Klausurcheck</span></div></div>
+<h2>Dein Stoffumfang</h2><p>Grundlage sind <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1 vollständig</a> und <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2 bis einschließlich der intern nummerierten Seite 7 „Elektronenkanone“</a> sowie <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3, ausschließlich die Seiten 1–3 zu Energieformeln und Feldenergie</a>.</p>
+<p>Du übst Ladung, Influenz, Abschirmung, Coulomb-Gesetz, Feldstärke, Potenzial, Spannung, Flächenladungsdichte, Kapazität, Kondensatorenergie, Dielektrika, Reihen- und Parallelschaltungen, Millikan und die Bewegung von Elektronen im Längsfeld. Hinzu kommen U-Q-Flächen, weitere Energieformeln, Energiedichte sowie vertiefende Aufgaben zu Influenz, Feldlinien und Flächenladung.</p>
+<div class="training-note"><strong>Annahmen für dieses Training</strong><p>Gymnasiale Oberstufe ohne Festlegung auf BF oder LF. Nutze Taschenrechner, Lineal, Heft und eure Unterrichtsnotizen. Aufgabe 7 zur gemischten Kondensatorschaltung ist als Vertiefung markiert. Der Klausurcheck enthält keine gemischte Schaltung. Die Zeiten sind Richtwerte.</p></div>
+<h2>So trainierst du</h2><ol><li>Bearbeite die Grundlagen und Anwendungen auf den Seiten 2–7. Formuliere auch bei Rechnungen eine kurze Deutung.</li><li>Nutze Hinweise erst nach einem eigenen Versuch. Vergleiche danach mit der separat bereitgestellten Musterlösung.</li><li>Bearbeite zum Schluss Seite 8 für 45 Minuten ohne Hinweise. Auf Seite 9 planst du deine Wiederholung.</li><li>Die neuen Aufgaben 13–20 auf den Seiten 10–13 bilden einen zusätzlichen Übungsblock. Der bisherige 45-Minuten-Klausurcheck bleibt bestehen.</li></ol>
+<div class="training-actions"><button type="button" data-training-page="2">Mit Aufgabe 1 starten →</button><button type="button" data-training-page="8">Zum Klausurcheck →</button><button type="button" data-training-page="10">Zu den Zusatzaufgaben 13–20 →</button><button type="button" data-training-print="all">Aufgaben drucken / PDF</button></div>
+<p class="training-small">Freitextantworten und Kurzchecks werden über das gemeinsame Lernseiten-Modul lokal gespeichert, sofern dein Browser dies erlaubt. Nutze „Ergebnisse exportieren“, um deine Arbeit zusätzlich zu sichern. Skizzen und Diagramme gehören ins Heft.</p>
+<div class="wb-section-break"></div>
+<div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_start",
+  "title": "Kurzcheck 1 · Drei typische Stolperstellen",
+  "hint": "Wähle pro Frage genau eine Antwort. Prüfe danach die Erklärung.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "Das elektrische Feld zeigt nach rechts. Wohin wirkt die elektrische Kraft auf ein Elektron?",
+      "choices": [
+        {
+          "id": "L",
+          "label": "Nach links."
+        },
+        {
+          "id": "R",
+          "label": "Nach rechts."
+        },
+        {
+          "id": "N",
+          "label": "Es wirkt keine Kraft."
+        }
+      ],
+      "correct": [
+        "L"
+      ],
+      "explain": "Für q = −e zeigt die Kraft entgegen der Feldrichtung."
+    },
+    {
+      "text": "Ein isolierter geladener Kondensator wird von der Spannungsquelle getrennt. Was bleibt bei anschließendem Einsetzen eines Dielektrikums erhalten?",
+      "choices": [
+        {
+          "id": "Q",
+          "label": "Der Ladungsbetrag Q auf jeder Platte."
+        },
+        {
+          "id": "U",
+          "label": "Die Spannung U."
+        },
+        {
+          "id": "W",
+          "label": "Die gespeicherte Energie W."
+        }
+      ],
+      "correct": [
+        "Q"
+      ],
+      "explain": "Ohne Ladungsaustausch bleibt Q erhalten. Die größere Kapazität verändert Spannung und Energie."
+    },
+    {
+      "text": "Welche Formel beschreibt die gespeicherte Energie eines idealen Kondensators?",
+      "choices": [
+        {
+          "id": "half",
+          "label": "W = ½ C U²."
+        },
+        {
+          "id": "full",
+          "label": "W = C U²."
+        },
+        {
+          "id": "charge",
+          "label": "W = C/U."
+        }
+      ],
+      "correct": [
+        "half"
+      ],
+      "explain": "Für den gesamten geladenen Kondensator gilt W = ½ C U². Der Zusammenhang |q|U beschreibt den Energiebetrag für eine einzelne Ladung beim Durchlaufen einer festen Spannung."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="2" data-wb-page-title="Ladung & Feld">
+<h1>1 · Ladungen, Influenz und elektrische Kräfte</h1><p>Beginne mit dem Modell: Welche Ladungen bewegen sich, was bleibt erhalten und welche Richtung hat die Kraft?</p>
+<div class="training-material"><div class="training-kicker">M1 · Ein Sensor in einer Metallhülle</div><p>Ein sehr kleiner, idealisiert ungeladener Feldsensor befindet sich im Hohlraum einer geschlossenen leitenden Metallbox. Außerhalb wird ein positiv geladener Stab angenähert, ohne die Box zu berühren. Die Box ist isoliert, nicht geerdet und befindet sich im elektrostatischen Gleichgewicht. Im Hohlraum gibt es keine Ladung.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 1</summary><p>Unterscheide Ladungsverschiebung innerhalb der Box und Ladungsaustausch mit der Umgebung.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a1",
+  "title": "Aufgabe 1 · Schützen ohne Erdung",
+  "hint": "6 Minuten · Teil 1 · Seiten 3, 5 und 9. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Beschreibe die Verschiebung der Elektronen in der Metallbox und begründe, ob sich ihre Gesamtladung ändert.\nb) Gib die Feldstärke in der geschlossenen, ladungsfreien Höhlung an und erkläre die Abschirmung.\nc) Beurteile: „Ohne Erdung kann eine Metallbox nicht abschirmen.“ Beschreibe außerdem, warum eine Box mit großen Öffnungen weniger eindeutig abschirmt.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-material"><div class="training-kicker">M2 · Kräfte zwischen Punktladungen</div><figure class="training-figure"><svg viewBox="0 0 660 150" role="img" aria-labelledby="b7-source-title"><title id="b7-source-title">Q links plus 5 Nanocoulomb, q rechts minus 10 Nanocoulomb, Abstand 15 Zentimeter.</title><line x1="100" y1="65" x2="560" y2="65" stroke="currentColor" opacity=".5"/><circle cx="100" cy="65" r="25" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="560" cy="65" r="25" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor" font-size="26" text-anchor="middle"><text x="100" y="74">+</text><text x="560" y="74">−</text></g><g fill="currentColor" font-size="16" text-anchor="middle"><text x="100" y="123">Q = +5,0 nC</text><text x="560" y="123">q = −10,0 nC</text><text x="330" y="49">r = 15 cm</text></g></svg><figcaption>Eigene schematische Ladungsanordnung; r ist der Abstand der Ladungsmittelpunkte.</figcaption></figure><p>Beide Körper sind klein im Vergleich zum Abstand. Rechne mit k = 8,99 · 10⁹ N m²/C² und vernachlässige andere Felder.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 2</summary><p>Nutze F = k|qQ|/r² und anschließend E = F/|q|. Vergleiche für d) die Faktoren, bevor du erneut einsetzt.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a2",
+  "title": "Aufgabe 2 · Gleiche Kräfte trotz ungleicher Ladungen",
+  "hint": "7 Minuten · Teil 1 · Seiten 2 und 6. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne den Kraftbetrag zwischen Q und q. Zeichne beide Kraftpfeile ein.\nb) Beurteile: „Die Ladung mit dem doppelt so großen Betrag erfährt die doppelte Kraft.“\nc) Berechne die von Q erzeugte Feldstärke am Ort von q. Gib Feld- und Kraftrichtung an. Berücksichtige dabei nicht das Eigenfeld von q.\nd) Der Abstand wird verdoppelt und zugleich Q verdoppelt. Bestimme den neuen Kraftbetrag mit einem Änderungsfaktor.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du gelernt</strong><p>Die Feldrichtung beschreibt die Kraftrichtung einer positiven Probeladung. Bei negativen Ladungen kehrt sich die Kraftrichtung um; die Feldquelle selbst wird dadurch im Probeladungsmodell nicht geändert.</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="cloze"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_begriffe",
+  "title": "Kurzcheck 2 · Fachsprache sichern",
+  "hint": "Setze die Begriffe ein.",
+  "bank": [
+    "Influenz",
+    "Feldstärke",
+    "negativen",
+    "senkrecht",
+    "homogen"
+  ],
+  "segments": [
+    {
+      "t": "text",
+      "v": "Die Ladungsverschiebung in einem Leiter durch ein äußeres Feld heißt "
+    },
+    {
+      "t": "gap",
+      "a": "Influenz"
+    },
+    {
+      "t": "text",
+      "v": ". Die Kraft pro Probeladung beschreibt die "
+    },
+    {
+      "t": "gap",
+      "a": "Feldstärke"
+    },
+    {
+      "t": "text",
+      "v": ". Feldlinien laufen von positiven zu "
+    },
+    {
+      "t": "gap",
+      "a": "negativen"
+    },
+    {
+      "t": "text",
+      "v": " Ladungen und stehen im elektrostatischen Gleichgewicht "
+    },
+    {
+      "t": "gap",
+      "a": "senkrecht"
+    },
+    {
+      "t": "text",
+      "v": " auf leitenden Oberflächen. Ein Feld mit überall gleichem Betrag und gleicher Richtung heißt "
+    },
+    {
+      "t": "gap",
+      "a": "homogen"
+    },
+    {
+      "t": "text",
+      "v": "."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="3" data-wb-page-title="Potenzial & Kapazität">
+<h1>2 · Vom Feldbild zur messbaren Größe</h1><p>Nutze Vorzeichen und Einheiten, um deine Ergebnisse zu kontrollieren. Energien heißen hier W, die elektrische Feldstärke heißt E.</p>
+<div class="training-material"><div class="training-kicker">M3 · Potenzialkarte</div><figure class="training-figure"><svg viewBox="0 0 660 250" role="img" aria-labelledby="b7-potential-title b7-potential-desc"><title id="b7-potential-title">Potenzialkarte im homogenen Plattenfeld</title><desc id="b7-potential-desc">Links 180 Volt, rechts 0 Volt, Abstand 6 Zentimeter. Die senkrechten Linien stehen bei 150, 120, 90, 60 und 30 Volt. A liegt auf 150 Volt; B und C auf 60 Volt.</desc><g stroke="currentColor" fill="none"><rect x="50" y="45" width="9" height="165"/><rect x="590" y="45" width="9" height="165"/><path d="M145 45V210M235 45V210M325 45V210M415 45V210M505 45V210" stroke-dasharray="6 5" opacity=".5"/></g><g fill="currentColor" font-size="14" text-anchor="middle"><text x="55" y="28">180 V</text><text x="145" y="28">150 V</text><text x="235" y="28">120 V</text><text x="325" y="28">90 V</text><text x="415" y="28">60 V</text><text x="505" y="28">30 V</text><text x="595" y="28">0 V</text><text x="325" y="237">Plattenabstand 6,0 cm · Linienabstand 1,0 cm</text></g><g fill="currentColor"><circle cx="145" cy="95" r="5"/><circle cx="415" cy="95" r="5"/><circle cx="415" cy="175" r="5"/><text x="157" y="90" font-size="18">A</text><text x="427" y="90" font-size="18">B</text><text x="427" y="170" font-size="18">C</text></g></svg><figcaption>Eigene Potenzialkarte. Die gestrichelten Linien sind Äquipotenziallinien.</figcaption></figure><p>Im homogenen Bereich wird eine Probeladung q = −4,0 nC langsam von A nach B transportiert. Anfangs- und Endgeschwindigkeit sind gleich. Andere Energieänderungen werden vernachlässigt.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 3</summary><p>Verwende die Ladung q mit Vorzeichen. Eine negative Ladung und eine negative Potenzialdifferenz ergeben eine positive Energieänderung.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a3",
+  "title": "Aufgabe 3 · Negative Ladung auf einer Potenzialkarte",
+  "hint": "8 Minuten · Teil 2 · Seiten 1 und 2. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Zeichne Feldlinien mit Richtung und den elektrischen Kraftpfeil auf q an A. Berechne die Feldstärke.\nb) Bestimme die gerichtete Potenzialdifferenz Δφ = φ(B) − φ(A) und den Spannungsbetrag zwischen A und B.\nc) Berechne ΔW_pot = q · Δφ. Erkläre, ob die elektrische potenzielle Energie zu- oder abnimmt und ob beim langsamen Transport äußere Arbeit erforderlich ist.\nd) Vergleiche den Weg A → B → C mit einem direkten Weg A → C. Auf welcher Teilstrecke ist die Energieänderung null?",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-material"><div class="training-kicker">M4 · Ladung und Spannung</div><div class="training-table" tabindex="0" role="region" aria-label="Didaktisch erzeugte Messwerte mit kleinen Messabweichungen."><table><thead><tr><th scope="col">U in V</th><th scope="col">50</th><th scope="col">100</th><th scope="col">150</th><th scope="col">200</th></tr></thead><tbody><tr><td>Q in nC</td><td>0,355</td><td>0,710</td><td>1,065</td><td>1,420</td></tr></tbody><caption>Didaktisch erzeugte Messwerte mit kleinen Messabweichungen.</caption></table></div><p>Die Platten sind luftgefüllt. Ihre Fläche beträgt A = 160 cm², ihr Abstand d = 2,0 cm.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 4</summary><p>Einheiten beachten: nC/V entspricht nF; pF = 10⁻¹² F. Beim Umrechnen der Fläche wird auch der Umrechnungsfaktor quadriert.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a4",
+  "title": "Aufgabe 4 · Eine Kapazität aus Messwerten bestimmen",
+  "hint": "10 Minuten · Teil 2 · Seiten 3 und 4. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Zeichne ein Q-U-Diagramm und begründe die näherungsweise Proportionalität.\nb) Bestimme die Kapazität aus der Steigung in pF.\nc) Berechne C zusätzlich aus A und d. Vergleiche beide Werte; eine statistische Fehleranalyse ist nicht verlangt.\nd) Bestimme mit der gemessenen Kapazität die Ladung bei 250 V. Erläutere den Unterschied zwischen Kapazität C, Ladung Q und der Einheit Coulomb.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du gelernt</strong><p>Potenzial bezieht sich auf einen Ort, Spannung auf den Unterschied zwischen zwei Orten. Die Steigung einer Q-U-Geraden ist die Kapazität, nicht die elektrische Feldstärke.</p></div>
+<div class="wb-section-break"></div><div data-p2 data-p2-id="ef_b7_20261109_paare" data-p2-title="Kurzcheck 3 · Größe und Bedeutung" data-p2-hint="Ordne jeder Größe die passende Bedeutung zu."><div data-side="L" data-pair="1">E · Feldstärke</div><div data-side="R" data-pair="1">Kraft pro Probeladung, Einheit N/C</div><div data-side="L" data-pair="2">φ · Potenzial</div><div data-side="R" data-pair="2">Potenzielle Energie pro Ladung an einem Ort, Einheit V</div><div data-side="L" data-pair="3">U · Spannung</div><div data-side="R" data-pair="3">Potenzialdifferenz zwischen zwei Orten, Einheit V</div><div data-side="L" data-pair="4">C · Kapazität</div><div data-side="R" data-pair="4">Gespeicherter Ladungsbetrag pro Spannung, Einheit F</div><div data-side="L" data-pair="5">σ · Flächenladungsdichte</div><div data-side="R" data-pair="5">Ladung pro Fläche, Einheit C/m²</div></div><div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="4" data-wb-page-title="Dielektrikum & Energie">
+<h1>3 · Zuerst klären: Was bleibt konstant?</h1><p>Vergleiche zwei neue Versuche, die jeweils vom selben Ausgangszustand starten. Das vollständige Einsetzen eines Dielektrikums wird nur als Änderung zwischen zwei Gleichgewichtszuständen betrachtet.</p>
+<div class="training-material"><div class="training-kicker">M5 · Zwei Versuche mit demselben Kondensatortyp</div><p>C₀ = 8,0 pF; U₀ = 300 V; d = 2,0 cm. Ein Dielektrikum mit εᵣ = 3,0 füllt den Zwischenraum vollständig.</p><p><b>Versuch A:</b> Die ideale 300-V-Spannungsquelle bleibt angeschlossen.<br><b>Versuch B:</b> Der auf 300 V geladene Kondensator wird vor dem Einsetzen isoliert von der Quelle getrennt. Er verliert keine Ladung.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 5</summary><p>In A ist U konstant, in B der freie Ladungsbetrag Q. Verwende σ = ε₀E nur für Luft/Vakuum, nicht ohne Anpassung für das gefüllte Dielektrikum.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a5",
+  "title": "Aufgabe 5 · Angeschlossen oder isoliert?",
+  "hint": "10 Minuten · Teil 2 · Seiten 4 und 5. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne zunächst Q₀ und W₀ = ½ C₀U₀².\nb) Bestimme für beide Versuche nach dem Einsetzen C, U, Q und E. Begründe jeweils, welche Größe konstant bleibt. Du kannst die Rechentabelle darunter nutzen.\nc) Berechne die jeweils gespeicherte Energie. Beurteile: „Bei Änderungen am Kondensator bleibt seine gespeicherte Energie immer gleich.“\nd) Beschreibe den Zusammenhang zwischen Polarisation des Dielektrikums und der Kapazitätsänderung.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="trace"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_dielektrikum_tabelle",
+  "title": "Kurzcheck 4 · Rechentabelle zu Aufgabe 5",
+  "hint": "Gib Zahlen ohne Einheiten ein. Die Einheit steht dauerhaft im Spaltenkopf.",
+  "columns": [
+    {
+      "label": "Versuch"
+    },
+    {
+      "label": "C in pF",
+      "hint": "Zahl in pF, ganzzahlig."
+    },
+    {
+      "label": "U in V",
+      "hint": "Zahl in V, ganzzahlig."
+    },
+    {
+      "label": "Q in nC",
+      "hint": "Zahl in nC, eine Nachkommastelle."
+    },
+    {
+      "label": "E in V/m",
+      "hint": "Zahl in V/m, ohne Tausenderpunkt."
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "given": "A: Quelle angeschlossen"
+        },
+        {
+          "answers": [
+            "24"
+          ]
+        },
+        {
+          "answers": [
+            "300"
+          ]
+        },
+        {
+          "answers": [
+            "7,2",
+            "7.2"
+          ]
+        },
+        {
+          "answers": [
+            "15000"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "B: isoliert und getrennt"
+        },
+        {
+          "answers": [
+            "24"
+          ]
+        },
+        {
+          "answers": [
+            "100"
+          ]
+        },
+        {
+          "answers": [
+            "2,4",
+            "2.4"
+          ]
+        },
+        {
+          "answers": [
+            "5000"
+          ]
+        }
+      ]
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-material"><div class="training-kicker">M6 · Eine fehlerhafte Energierechnung</div><p>Ein idealer Kondensator mit C = 4,0 nF wird auf U = 200 V geladen. Eine Schülerin rechnet: „Q = CU = 0,80 µC. Deshalb ist die gespeicherte Energie W = QU = 160 µJ.“</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a6",
+  "title": "Aufgabe 6 · Einzelne Ladung oder ganzer Kondensator?",
+  "hint": "8 Minuten · Teil 2 · Seiten 2 und 4. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Prüfe Q und berechne die tatsächlich gespeicherte Energie.\nb) Erkläre den Fehler in der Rechnung W = QU für das Aufladen des ganzen Kondensators.\nc) Bestimme Q und W, wenn derselbe Kondensator stattdessen auf 400 V geladen wird.\nd) Unabhängig davon wird eine kleine positive Probeladung von 50 pC durch ein unverändertes äußeres Feld über eine Spannung von 200 V gegen die elektrische Kraft bewegt. Bestimme die zugeführte Energie und erkläre, warum hier |q|U passt.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du gelernt</strong><p>Eine konstante Quellspannung und eine konstante isolierte Ladung führen bei demselben Eingriff zu verschiedenen Ergebnissen. Für die gespeicherte Kondensatorenergie gilt W = ½CU².</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="categorize"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_konstant",
+  "title": "Kurzcheck 5 · Konstant ist …",
+  "hint": "Ordne die jeweils genannte Größe dem passenden Versuch zu. Geometrie und Temperatur bleiben unverändert.",
+  "categories": [
+    {
+      "id": "U",
+      "title": "Beim angeschlossenen Versuch A konstant"
+    },
+    {
+      "id": "Q",
+      "title": "Beim isolierten Versuch B konstant"
+    }
+  ],
+  "items": [
+    {
+      "label": "Spannung U zwischen den Platten",
+      "category": "U"
+    },
+    {
+      "label": "Feldstärke E bei festem d",
+      "category": "U"
+    },
+    {
+      "label": "Freier Ladungsbetrag Q auf jeder Platte",
+      "category": "Q"
+    },
+    {
+      "label": "Freie Flächenladungsdichte Q/A bei festem A",
+      "category": "Q"
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="5" data-wb-page-title="Schaltungen · Vertiefung">
+<h1>4 · Eine Schaltung schrittweise vereinfachen</h1><div class="training-note"><strong>Vertiefung aus der behandelten Seite 5</strong><p>Die gemischte Schaltung nutzt ausschließlich die dort eingeführten Reihen- und Parallelregeln. Bearbeite sie nach den Grundaufgaben zu C, Q und U. Für den abschließenden Klausurcheck brauchst du nur die einfache Parallelschaltung.</p></div>
+<div class="training-material"><div class="training-kicker">M7 · Drei ideale Kondensatoren</div><figure class="training-figure"><svg viewBox="0 0 680 270" role="img" aria-labelledby="b7-circuit-title b7-circuit-desc"><title id="b7-circuit-title">Parallelschaltung von C1 und C2 in Reihe mit C3</title><desc id="b7-circuit-desc">Von Anschluss A führen zwei parallele Zweige mit C1 gleich 6 Nanofarad und C2 gleich 3 Nanofarad zu einem gemeinsamen Knoten. Von diesem geht es über C3 gleich 18 Nanofarad zum Anschluss B. Zwischen A und B liegen 120 Volt.</desc><g stroke="currentColor" stroke-width="2" fill="none"><path d="M45 130H110V65H205M110 130V195H205M225 65H330V195H225M330 130H445M465 130H620"/><path d="M205 43V87M225 43V87M205 173V217M225 173V217M445 108V152M465 108V152" stroke-width="4"/></g><g fill="currentColor"><circle cx="45" cy="130" r="4"/><circle cx="110" cy="130" r="4"/><circle cx="330" cy="130" r="4"/><circle cx="620" cy="130" r="4"/></g><g fill="currentColor" font-size="17" text-anchor="middle"><text x="45" y="111">A</text><text x="620" y="111">B</text><text x="215" y="30">C₁ = 6,0 nF</text><text x="215" y="247">C₂ = 3,0 nF</text><text x="455" y="87">C₃ = 18 nF</text><text x="454" y="202">U_AB = 120 V</text></g></svg><figcaption>Eigene Ersatzschaltung. Die Kondensatoren sind anfangs ungeladen; der isolierte mittlere Leiter besitzt keine zusätzliche Gesamtladung.</figcaption></figure></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 7</summary><p>Vereinfache zunächst nur C₁ und C₂. Beim anschließenden Zurückrechnen sind die Ladungsbeträge der Reihenglieder gleich, die Spannungen der Parallelglieder gleich.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a7",
+  "title": "Aufgabe 7 · Zwei parallel, dann in Reihe",
+  "hint": "8 Minuten · Teil 2 · Seite 5, Schaltungsvertiefung. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Kennzeichne die Parallelschaltung und berechne ihre Ersatzkapazität C₁₂.\nb) Bestimme die Gesamtkapazität zwischen A und B. Prüfe, ob dein Ergebnis für eine Reihenschaltung sinnvoll ist.\nc) Berechne den Ladungsbetrag der gesamten Anordnung und die Spannungen U₁₂ und U₃.\nd) Bestimme die Ladungsbeträge Q₁ und Q₂. Prüfe die Ladungssumme am Parallelzweig und die Summe der Teilspannungen.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="order"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_rechenroute",
+  "title": "Kurzcheck 6 · Eine sinnvolle Rechenroute",
+  "hint": "Bringe die Schritte für diese Schaltung in die passende Reihenfolge.",
+  "shuffle": true,
+  "items": [
+    "Parallele Teilgruppe C₁ und C₂ erkennen.",
+    "C₁₂ = C₁ + C₂ berechnen.",
+    "Reihenschaltung aus C₁₂ und C₃ zur Gesamtkapazität zusammenfassen.",
+    "Q = Cges · U berechnen.",
+    "Mit U₁₂ = Q/C₁₂ und U₃ = Q/C₃ die Teilspannungen bestimmen.",
+    "Mit der gemeinsamen Spannung U₁₂ die Ladungen Q₁ und Q₂ berechnen."
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="6" data-wb-page-title="Millikan">
+<h1>5 · Aus dem Schweben eine Ladung bestimmen</h1><p>Die Masse des Tröpfchens ist vorgegeben. Du benötigst keine zusätzliche Formel für Luftreibung, Tröpfchenradius oder Sinkgeschwindigkeit.</p>
+<div class="training-material"><div class="training-kicker">M8 · Ein vereinfachter Millikan-Versuch</div><p>Ein Öltröpfchen der Masse m = 2,45 · 10⁻¹⁵ kg schwebt zwischen waagerechten Platten. Die obere Platte ist positiv, die untere negativ. Der Plattenabstand beträgt d = 5,0 mm, der Spannungsbetrag U = 250 V. Rechne mit g = 9,81 N/kg und e = 1,602 · 10⁻¹⁹ C. Auftrieb und Luftströmungen werden vernachlässigt.</p><div class="training-table" tabindex="0" role="region" aria-label="Didaktisch erzeugte Messwerte mit kleinen Messabweichungen."><table><thead><tr><th scope="col">Weitere Messung</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th></tr></thead><tbody><tr><td>|q| in 10⁻¹⁹ C</td><td>1,60</td><td>3,19</td><td>4,82</td><td>6,41</td></tr></tbody><caption>Didaktisch erzeugte Messwerte mit kleinen Messabweichungen.</caption></table></div></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 8</summary><p>Für das Vorzeichen brauchst du die Richtung der elektrischen Kraft. Rechne den Betrag anschließend mit |q|, damit keine negative Masse oder negative Feldstärke entsteht.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a8",
+  "title": "Aufgabe 8 · Wie viele Elektronen sind es?",
+  "hint": "10 Minuten · Teil 1 · Schweben; Teil 2 · Seite 6. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Zeichne die Feldrichtung sowie die elektrische Kraft und die Gewichtskraft am Tröpfchen. Bestimme das Vorzeichen seiner Ladung.\nb) Leite aus dem Kräftegleichgewicht |q| = mgd/U her. Berechne den Ladungsbetrag.\nc) Bestimme |q|/e und deute das Ergebnis als Zahl überschüssiger oder fehlender Elektronen.\nd) Untersuche die vier weiteren Messwerte: Welche ganzzahligen Vielfachen von e passen dazu? Begründe, warum geringe Abweichungen von ganzen Zahlen die Ladungsquantelung nicht widerlegen.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="verify"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_quantelung",
+  "title": "Kurzcheck 7 · Eine Messung richtig deuten",
+  "hint": "Beurteile die Aussage.",
+  "statement": "Ein gemessener Ladungsbetrag von 1,99 e widerlegt bereits die Vorstellung, dass freie Ladungen als ganzzahlige Vielfache von e vorkommen.",
+  "answer": false,
+  "explain": "Falsch. Ein Messwert von 1,99 e kann im Rahmen der Messabweichungen zu einer tatsächlichen Ladung von 2 e gehören. Messwert und idealer physikalischer Wert sind zu unterscheiden."
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du gelernt</strong><p>Die Schwebebedingung liefert den Betrag der Ladung. Das Vorzeichen folgt aus den Kraftrichtungen. Viele Ladungsmessungen lassen sich als ganzzahlige Vielfache der Elementarladung deuten.</p></div>
+</section>
+
+<section data-wb-page="7" data-wb-page-title="Elektronen im Längsfeld">
+<h1>6 · Beschleunigen, abbremsen und umkehren</h1><p>Auf dieser Seite liegen Bewegung und elektrisches Feld auf derselben Achse. Verwende nur die auf Unterrichtsseite 7 eingeführten Energie- und Bewegungsgleichungen.</p>
+<div class="training-material"><div class="training-kicker">M9 · Elektronenkanone</div><p>Elektronen treten mit vernachlässigbarer Anfangsgeschwindigkeit aus einer Glühkathode aus. Zwischen Kathode und Lochanode liegt die Beschleunigungsspannung U = 180 V. Verwende mₑ = 9,109 · 10⁻³¹ kg und e = 1,602 · 10⁻¹⁹ C. Energieverluste werden vernachlässigt.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 9</summary><p>1 eV ist eine Energieeinheit. Für das Einsetzen in ½mv² brauchst du Joule.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a9",
+  "title": "Aufgabe 9 · Energie und Geschwindigkeit des Elektronenstrahls",
+  "hint": "8 Minuten · Teil 2 · Seite 7. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Beschreibe die Funktionen von Glühkathode, Wehnelt-Zylinder und Lochanode. Gib an, welche Elektrode auf höherem Potenzial liegen muss.\nb) Berechne die kinetische Energie eines Elektrons nach der Beschleunigung in eV und J.\nc) Leite v = √(2eU/mₑ) aus der Energiebilanz her und berechne v.\nd) Die Spannung wird auf 720 V erhöht. Bestimme ohne vollständige Neuberechnung die Faktoren für Energie und Geschwindigkeit.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-material"><div class="training-kicker">M10 · Ein bremsendes Längsfeld</div><p>Ein Elektron fliegt bei x = 0 mit v₀ = +4,00 · 10⁶ m/s nach rechts in ein homogenes Feld. Das Feld erstreckt sich bis x = 8,0 cm und hat die Komponente Eₓ = +1200 V/m. Die Feldrichtung bleibt während des Versuchs unverändert.</p><p>Bekannte Beziehungen: Fₓ = qEₓ; aₓ = Fₓ/mₑ; vₓ(t) = v₀ + aₓt; x(t) = v₀t + ½aₓt².</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 10</summary><p>Setze für b) zuerst vₓ = 0 und berechne t. Setze diese Zeit anschließend in x(t) ein. Das Vorzeichen von a allein sagt noch nicht, ob der Geschwindigkeitsbetrag kleiner wird.</p></details><div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a10",
+  "title": "Aufgabe 10 · Am Umkehrpunkt ist die Kraft nicht null",
+  "hint": "10 Minuten · Teil 2 · Seite 7, Längsfeld. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Bestimme Vorzeichen, Betrag und Richtung von Fₓ und aₓ.\nb) Berechne die Zeit bis zum ersten Stillstand und die zugehörige Strecke. Prüfe, ob die Umkehr innerhalb des Feldes stattfindet.\nc) Skizziere vₓ(t) und x(t) vom Eintritt bis zur Rückkehr an x = 0. Kennzeichne den Umkehrpunkt.\nd) Beurteile: „Am Umkehrpunkt verschwindet die Beschleunigung“ und „Eine negative Beschleunigung bedeutet immer Abbremsen“.",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="reveal"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_potentialverschiebung",
+  "title": "Kurzcheck 8 · Ein anderer Bezugspunkt",
+  "question": "Alle Potenziale der Elektronenkanone werden um +50 V verschoben. Die Potenzialdifferenz zwischen Kathode und Anode bleibt gleich. Ändert sich die Endgeschwindigkeit?",
+  "answer": "Nein. Entscheidend ist die Potenzialdifferenz, nicht die gemeinsame Verschiebung des Bezugspotenzials. Bei gleicher Beschleunigungsspannung gewinnt das Elektron dieselbe kinetische Energie eU und erreicht dieselbe Geschwindigkeit."
+}</script></div>
+<div class="wb-section-break"></div>
+</section>
+
+<section data-wb-page="8" data-wb-page-title="Klausurcheck · 45 Minuten">
+<div class="training-hero"><div class="training-kicker">Anwenden ohne Hinweise</div><h1>Dein Klausurcheck</h1><p>Bearbeite die beiden zusammenhängenden Aufgaben in 45 Minuten. Nutze Taschenrechner, Lineal und die Formeln auf Seite 9. Vergleiche erst anschließend mit der separat bereitgestellten Musterlösung.</p><div class="training-badges"><span>Aufgabe 11 · 22 min · 12 Punkte</span><span>Aufgabe 12 · 23 min · 12 Punkte</span></div></div>
+<div class="training-actions"><button type="button" data-training-print="check">Nur den Klausurcheck drucken</button><button type="button" data-training-page="9">Zu den Formeln →</button></div>
+<div class="training-material"><div class="training-kicker">M11 · Ein kapazitiver Materialprüfer</div><p>Ein Labor prüft einen Isolator mit einem idealen Plattenkondensator. Die Plattenfläche beträgt A = 240 cm², der Abstand d = 1,2 mm. Zunächst enthält der Zwischenraum Luft und die Spannung ist U₀ = 120 V.</p><p>Danach wird die Spannungsquelle abgetrennt. Der Kondensator bleibt isoliert und verliert keine Ladung. Ein zu prüfender Isolator füllt den gesamten Zwischenraum aus, ohne den Plattenabstand zu ändern. Nun wird U = 40 V gemessen. Randeffekte werden vernachlässigt.</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a11",
+  "title": "Aufgabe 11 · Einen Isolator mit Ladung und Spannung untersuchen",
+  "hint": "22 Minuten · Klausurcheck · Teil 2, Seiten 3–5. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne die Kapazität C₀, den Ladungsbetrag Q₀ und die Feldstärke E₀ des luftgefüllten Kondensators. (4 Punkte)\nb) Bestimme die Kapazität nach dem Einsetzen und die relative Permittivität εᵣ des Isolators. Begründe, welche Erhaltungsbedingung du verwendest. (4 Punkte)\nc) Berechne die gespeicherte Energie vor und nach dem Einsetzen. Beurteile die Aussage, beide Energien müssten gleich sein. (2 Punkte)\nd) In einem neuen Versuchsaufbau werden der gefüllte Kondensator und ein Referenzkondensator mit 177 pF parallel an eine ideale 120-V-Quelle angeschlossen. Bestimme die Gesamtkapazität und den gesamten Ladungsbetrag. (2 Punkte)",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<div class="training-material" id="material-12"><div class="training-kicker">M12 · Ein Elektronenstrahl vor einem Gegenfeld</div><figure class="training-figure"><svg viewBox="0 0 680 185" role="img" aria-labelledby="b7-gun-title b7-gun-desc"><title id="b7-gun-title">Beschleunigung und anschließendes Gegenfeld</title><desc id="b7-gun-desc">Ein Elektron wird links in einer Elektronenkanone aus Ruhe mit 125 Volt beschleunigt. Danach fliegt es nach rechts in einen zweieinhalb Zentimeter langen Bereich mit elektrischem Feld nach rechts und einer Gegenspannung von zunächst 100 Volt.</desc><g fill="none" stroke="currentColor" stroke-width="2"><rect x="30" y="60" width="170" height="65" rx="8"/><path d="M200 92H280M270 85L280 92L270 99"/><path d="M320 50V140M590 50V140M335 75H575M335 115H575M565 69L575 75L565 81M565 109L575 115L565 121"/></g><g fill="currentColor" font-size="15" text-anchor="middle"><text x="115" y="86">Elektronenkanone</text><text x="115" y="109">Uₐ = 125 V</text><text x="246" y="70">v nach rechts</text><text x="455" y="30">Gegenfeld E nach rechts</text><text x="455" y="167">L = 2,5 cm · Uᵦ zunächst 100 V</text></g></svg><figcaption>Eigene schematische Anordnung. Die Lochöffnungen in den Elektroden sind nicht dargestellt.</figcaption></figure><p>Die Elektronen starten in der Kanone näherungsweise aus Ruhe. Nach der Beschleunigung durchlaufen sie eine feldfreie kurze Strecke und anschließend ein homogenes bremsendes Längsfeld. Anfangs beträgt die Gegenspannung Uᵦ = 100 V über L = 2,5 cm.</p><p>mₑ = 9,109 · 10⁻³¹ kg; e = 1,602 · 10⁻¹⁹ C. Die Bewegung bleibt eindimensional. Energieverluste, gegenseitige Beeinflussung und Randeffekte werden vernachlässigt.</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a12",
+  "title": "Aufgabe 12 · Kommt das Elektron durch das Gegenfeld?",
+  "hint": "23 Minuten · Klausurcheck · Teil 2, Seiten 1, 2 und 7. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Gib die elektrische Feldrichtung und Kraftrichtung im bremsenden Bereich an. Bestimme das Vorzeichen der linken und rechten Elektrode des Gegenfelds. (3 Punkte)\nb) Berechne die kinetische Energie eines Elektrons nach der Elektronenkanone in eV und J sowie seine Geschwindigkeit. (3 Punkte)\nc) Prüfe, ob es die anfängliche Gegenspannung von 100 V durchlaufen kann. Bestimme seine kinetische Energie und Geschwindigkeit hinter dem Gegenfeld. (3 Punkte)\nd) Die Gegenspannung wird bei gleicher Länge L auf 200 V erhöht. Bestimme, ob das Elektron jetzt durchkommt. Berechne gegebenenfalls seine Umkehrstrecke ab dem Eintritt in das Gegenfeld und begründe, was nach dem ersten Stillstand geschieht. (3 Punkte)",
+      "placeholder": "Notiere hier deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<p class="training-small">Die 24 Punkte sind ein Übungsmaßstab: Beurteile auch Ansatz, Einheiten, Richtung und Begründung. Korrekte alternative Lösungswege sind gleichwertig.</p>
+</section>
+
+<section data-wb-page="9" data-wb-page-title="Formeln & Nacharbeit">
+<h1>7 · Formeln prüfen, gezielt nacharbeiten</h1>
+<h2>Formeln aus eurem Unterricht</h2><p>Beträge und Vorzeichen werden unterschieden: Für gerichtete Größen gelten Fₓ = qEₓ und ΔW<sub>pot</sub> = q[φ₂ − φ₁]. Bei Spannungs- und Kraftbeträgen werden positive Beträge verwendet.</p>
+<div class="training-table" tabindex="0" role="region" aria-label="Datentabelle"><table><thead><tr><th scope="col">Bereich</th><th scope="col">Bekannte Beziehungen</th></tr></thead><tbody><tr><td>Kraft und Feld</td><td>F = |q|E; E = F/|q|; F = k|qQ|/r²</td></tr><tr><td>Potenzial und Energie</td><td>U₂₁ = φ₂ − φ₁; W<sub>pot</sub> = qφ; ΔW<sub>pot</sub> = qΔφ</td></tr><tr><td>Homogenes Feld</td><td>E = U/d; |W<sub>el</sub>| = |q|U</td></tr><tr><td>Flächenladung in Luft/Vakuum</td><td>σ = |Q|/A = ε₀E</td></tr><tr><td>Kondensator</td><td>C = Q/U; C = ε₀εᵣA/d; W = ½QU = ½CU² = Q²/(2C)</td></tr><tr><td>Feldenergie</td><td>V<sub>Feld</sub> = Ad; W = ½ε₀εᵣE²V<sub>Feld</sub>; ρ<sub>el</sub> = W/V<sub>Feld</sub> = ½ε₀εᵣE². In Luft: ρ<sub>el</sub> = σ²/(2ε₀).</td></tr><tr><td>Schaltungen</td><td>Parallel: C<sub>ges</sub> = C₁ + C₂ + …; Reihe: 1/C<sub>ges</sub> = 1/C₁ + 1/C₂ + …</td></tr><tr><td>Schweben</td><td>|q|E = mg; |q| = mgd/U; |q| = ne mit ganzzahligem n</td></tr><tr><td>Elektronenkanone aus Ruhe</td><td>W<sub>kin</sub> = ½mₑv² = eU; v = √(2eU/mₑ)</td></tr><tr><td>Homogenes Längsfeld</td><td>Fₓ = qEₓ; aₓ = Fₓ/m; vₓ = v₀ + aₓt; x = x₀ + v₀t + ½aₓt²</td></tr></tbody></table></div>
+<p><b>Konstanten:</b> ε₀ = 8,85 · 10⁻¹² C²/(N m²); k = 8,99 · 10⁹ N m²/C²; e = 1,602 · 10⁻¹⁹ C; mₑ = 9,109 · 10⁻³¹ kg; g = 9,81 N/kg.</p>
+<p><b>Einheiten:</b> 1 N/C = 1 V/m; 1 F = 1 C/V; 1 eV = 1,602 · 10⁻¹⁹ J. Vorsätze: m = 10⁻³, µ = 10⁻⁶, n = 10⁻⁹, p = 10⁻¹². 1 cm² = 10⁻⁴ m²; 1 mm = 10⁻³ m.</p>
+<div class="training-note"><strong>Jetzt hast du das gelernt</strong><p>Du kannst bei Kondensatoränderungen die richtige konstante Größe wählen, eine Ladung aus dem Schweben bestimmen und Elektronenbewegungen im Längsfeld mit Kraft und Energie erklären.</p></div>
+<div class="wb-section-break"></div>
+<div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_reflexion",
+  "title": "Dein nächster Lernschritt",
+  "hint": "Vergleiche mit der separat bereitgestellten Musterlösung und plane eine kurze Wiederholung.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Mein Lernplan",
+      "key": "plan",
+      "kind": "textarea",
+      "prompt": "Welche zwei Teilaufgaben waren noch unsicher? Nenne jeweils die Aufgabe, deinen Fehler und einen konkreten nächsten Übungsschritt.",
+      "placeholder": "Notiere deinen Lernplan."
+    }
+  ]
+}</script></div>
+<div class="wb-section-break"></div>
+<h2>Quellen &amp; gezieltes Weiterüben</h2><ul><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1</a>: gesamte Unterrichtsseite.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2</a>: ausschließlich die intern nummerierten Seiten 1–7. Wiederhole für Q-/U-Konstanz die Seiten 4–5, für Millikan Seite 6 und für die Längsfeldbewegung Seite 7.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3</a>: nur die Seiten 1–3. Die Ergänzungen nutzen die Energieformeln und die Energiedichte, keine späteren Formeln für zeitabhängiges Laden oder Entladen.</li><li>Das bereitgestellte Aufgabenfoto diente als Anregung für neue Aufgaben zu Elektroskop, Metallring, Kräfteüberlagerung und Flächenladungen. Zahlenwerte, Darstellungen und Aufgabenstellungen wurden neu entwickelt.</li></ul><p class="training-small">Alle Aufgaben, Messwerte und Grafiken wurden für dieses Training neu erstellt. Die lokalen Physik-Abituraufgaben 2024 (HT, Aufgabenblatt) und 2025 sowie die <a href="https://www.iqb.hu-berlin.de/media/exercise_files/Abituraufgaben_PHYSIK/2025gNFEmg3_Aufgabe.pdf">IQB-Aufgabe 2025 zu kapazitiven Beschleunigungssensoren</a> dienten als Orientierung für Materialaufbau, Operatoren und begründete Auswertungen. Der vorausgesetzte Stoff stammt ausschließlich aus den angegebenen Unterrichtsseiten.</p>
+<div class="training-actions"><button type="button" data-training-page="8">Klausurcheck erneut bearbeiten →</button><button type="button" data-training-print="all">Alle Aufgaben drucken / PDF</button></div>
+</section>
+<section data-wb-page="10" data-wb-page-title="Zusatz · Energie & Feldenergie">
+<div class="training-hero"><div class="training-kicker">Ergänzung · Elektrische Felder 3, Seiten 1–3</div><h1>8 · Energie im Kondensator und im Feld</h1><p>Die Aufgaben 1–12 bleiben bestehen. Hier beginnt dein zusätzlicher Übungsblock mit den Aufgaben 13–20. Du kannst die Ergänzungen unabhängig vom bisherigen 45-Minuten-Klausurcheck bearbeiten.</p><div class="training-badges"><span>8 zusätzliche Hauptaufgaben</span><span>ca. 90 Minuten</span><span>Feldenergie · Influenz · Flächenladung</span></div></div>
+<div class="training-material" id="material-13"><div class="training-kicker">M13 · Energie aus einer Kennlinie</div><figure class="training-figure"><svg viewBox="0 0 660 330" role="img" aria-labelledby="ex-uq-title"><title id="ex-uq-title">U-Q-Gerade eines Kondensators von null bis 100 Mikrocoulomb und 40 Volt.</title><g stroke="currentColor" stroke-width="1" opacity=".18"><path d="M195 45V265M315 45V265M435 45V265M555 45V265M75 210H555M75 155H555M75 100H555M75 45H555"/></g><g stroke="currentColor" fill="none" stroke-width="2"><path d="M75 30V265H590M69 39L75 30L81 39M581 259L590 265L581 271"/><path d="M75 265L555 45" stroke-width="3"/></g><g fill="currentColor" font-size="15" text-anchor="middle"><text x="75" y="289">0</text><text x="195" y="289">25</text><text x="315" y="289">50</text><text x="435" y="289">75</text><text x="555" y="289">100</text><text x="560" y="318">Q in µC</text></g><g fill="currentColor" font-size="15" text-anchor="end"><text x="62" y="216">10</text><text x="62" y="161">20</text><text x="62" y="106">30</text><text x="62" y="51">40</text></g><text x="26" y="28" fill="currentColor" font-size="15">U in V</text></svg><figcaption>Eigene ideale U-Q-Kennlinie. Die Kapazität bleibt während des Ladens konstant.</figcaption></figure><p>Ein Kondensator wird von Q = 0 bis Q = 100 µC geladen. Die Endspannung beträgt 40 V. Die Kennlinie zeigt seine momentane Spannung während des Ladens.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 13</summary><p>Die Achsenreihenfolge ist wichtig: U steht senkrecht, Q waagerecht. V · C ergibt Joule. Für d) ist Q gleich, nicht U.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a13",
+  "title": "Aufgabe 13 · Warum nur die halbe Rechteckfläche zählt",
+  "hint": "10 Minuten · Teil 3 · Seiten 1 und 2. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Bestimme die Kapazität aus der Kennlinie.\nb) Markiere im U-Q-Diagramm die gespeicherte Energie. Berechne sie als Dreiecksfläche und kontrolliere mit W = ½CU² und W = Q²/(2C).\nc) Bei einer momentanen Spannung von ungefähr 30 V wird ein kleines zusätzliches Ladungspaket ΔQ = 0,50 µC getrennt. Berechne die Energie näherungsweise mit ΔW = Uᵢ ΔQ. Warum ist dies nur eine Näherung?\nd) Ein anderer Kondensator besitzt die doppelte Kapazität, aber denselben Ladungsbetrag Q = 100 µC. Vergleiche Spannung und gespeicherte Energie mit dem ersten Kondensator.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-14"><div class="training-kicker">M14 · Ein homogen gefüllter Plattenkondensator</div><p>A = 240 cm², d = 3,0 mm, U = 450 V und εᵣ = 2,4. Das Dielektrikum füllt den gesamten Zwischenraum. Das Feld ist homogen; Randeffekte werden vernachlässigt. Für Energien wird W verwendet, für die Feldstärke E. Das Volumen des Zwischenraums heißt V<sub>Feld</sub> = A d.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 14</summary><p>Beim Ableiten kürzt sich nur ein Faktor d. Für Energiedichte und Gesamtenergie sind unterschiedliche Einheiten nötig: J/m³ bzw. J.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a14",
+  "title": "Aufgabe 14 · Die Energie steckt im Feldvolumen",
+  "hint": "10 Minuten · Teil 3 · Seite 3. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Leite aus W = ½CU², C = ε₀εᵣA/d und U = Ed die Beziehung W = ½ε₀εᵣE²V_Feld her.\nb) Berechne Feldstärke, Feldvolumen und Energiedichte ρ_el = W/V_Feld.\nc) Bestimme W aus Energiedichte und Volumen. Kontrolliere durch Berechnung von C und Anwendung von W = ½CU².\nd) Vergleiche die Energiedichte bei doppelter Feldstärke mit der bei doppeltem Feldvolumen und unveränderter Feldstärke.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-15"><div class="training-kicker">M15 · Platten langsam auseinanderziehen</div><p>Ein idealer luftgefüllter Plattenkondensator hat A = 300 cm², d₀ = 4,0 mm und U₀ = 600 V. In Versuch A wird er vor dem Auseinanderziehen isoliert von der Quelle getrennt. In Versuch B bleibt er an der idealen 600-V-Quelle angeschlossen. Beide Versuche beginnen mit demselben Ausgangszustand. Der Abstand wird jeweils auf 8,0 mm verdoppelt.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 15</summary><p>Beginne mit der konstanten Größe: in A Q, in B U. Prüfe W zusätzlich mit Energiedichte mal Feldvolumen.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a15",
+  "title": "Aufgabe 15 · Gleicher Eingriff, verschiedene Energiebilanzen",
+  "hint": "12 Minuten · Teil 2 · Seiten 4–5; Teil 3 · Seite 3. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne C₀, Q₀, E₀ und W₀.\nb) Bestimme für den getrennten Kondensator nach dem Auseinanderziehen C, Q, U, E, Energiedichte und gespeicherte Energie. Nutze Änderungsfaktoren.\nc) Bestimme die Zunahme der Feldenergie in Versuch A. Welche äußere Arbeit ist mindestens nötig, wenn keine Verluste auftreten und der Vorgang langsam erfolgt?\nd) Vergleiche Versuch B mit dem Ausgangszustand: Welche Faktoren ergeben sich für E, Energiedichte und W? Begründe, warum die gespeicherte Energie hier nicht allein durch die mechanische Arbeit festgelegt wird.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="wb-section-break"></div><div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_feldenergie_check",
+  "title": "Kurzcheck 9 · Energiedichte und Gesamtenergie",
+  "hint": "Wähle pro Frage genau eine Antwort.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "In Luft wird die Feldstärke verdreifacht. Was geschieht mit der Energiedichte?",
+      "choices": [
+        {
+          "id": "3",
+          "label": "Sie wird dreimal so groß."
+        },
+        {
+          "id": "9",
+          "label": "Sie wird neunmal so groß."
+        },
+        {
+          "id": "1",
+          "label": "Sie bleibt gleich."
+        }
+      ],
+      "correct": [
+        "9"
+      ],
+      "explain": "ρ_el = ½ε₀E². Der Faktor 3 der Feldstärke wird quadriert."
+    },
+    {
+      "text": "Ein isolierter Luftkondensator wird bei gleicher Plattenfläche auf den doppelten Abstand gebracht. Welche Aussage passt?",
+      "choices": [
+        {
+          "id": "rho",
+          "label": "E und Energiedichte bleiben gleich; die Feldenergie verdoppelt sich."
+        },
+        {
+          "id": "E",
+          "label": "Die Feldstärke verdoppelt sich; die Energie bleibt gleich."
+        },
+        {
+          "id": "W",
+          "label": "Die Feldenergie bleibt gleich, weil Q gleich bleibt."
+        }
+      ],
+      "correct": [
+        "rho"
+      ],
+      "explain": "Bei konstantem Q und A bleibt E = Q/(ε₀A) gleich. Das doppelte Feldvolumen enthält bei gleicher Energiedichte die doppelte Energie."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-actions"><button type="button" data-training-page="11">Weiter mit Influenz →</button><button type="button" data-training-print="extra">Zusatzaufgaben drucken</button></div>
+</section>
+
+<section data-wb-page="11" data-wb-page-title="Zusatz · Influenz & Feldlinien">
+<h1>9 · Versuche mit Elektroskop und Metallring</h1><p>Diese Aufgaben greifen die Aufgabenarten aus dem bereitgestellten Foto auf. Beschreibe Ladungsverschiebung, Feld und Kraft jeweils getrennt.</p>
+<div class="training-material" id="material-16"><div class="training-kicker">M16 · Zwei voneinander unabhängige Elektroskopversuche</div><figure class="training-figure"><svg viewBox="0 0 640 280" role="img" aria-labelledby="ex-electro-title"><title id="ex-electro-title">Geladener äußerer Körper wird ohne Berührung dem Metallteller eines isolierten Elektroskops angenähert.</title><g stroke="currentColor" fill="none" stroke-width="3"><circle cx="90" cy="72" r="30"/><path d="M147 72H195M185 64L195 72L185 80"/><ellipse cx="300" cy="72" rx="44" ry="10"/><path d="M300 82V203M300 137L352 185M257 229H367"/><rect x="228" y="108" width="143" height="121" rx="10" stroke-width="1.5"/></g><g fill="currentColor" font-size="16"><text x="82" y="78">?</text><text x="25" y="133">äußerer Körper</text><text x="365" y="76">Metallteller</text><text x="384" y="167">Zeiger und Halterung</text><text x="240" y="259">isolierender Standfuß</text></g></svg><figcaption>Eigene schematische Versuchsanordnung. Das Fragezeichen steht für das jeweils untersuchte Vorzeichen.</figcaption></figure><p><b>Versuch I:</b> Ein negativ geladener Körper wird einem zunächst neutralen Elektroskop langsam angenähert. Es gibt keine Berührung und keine Erdung. Der Zeiger schlägt aus.</p><p><b>Versuch II:</b> Ein anderes Elektroskop ist bereits negativ geladen. Beim ersten vorsichtigen Annähern einer Kugel mit unbekanntem Vorzeichen wird sein Ausschlag kleiner. Es fließt keine Ladung zu oder ab.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 16</summary><p>In Metallen werden Elektronen verschoben. Ein kleinerer Ausschlag ist zunächst eine Aussage über die Ladung im Zeigerbereich, nicht über einen Verlust der Gesamtladung.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a16",
+  "title": "Aufgabe 16 · Zeigerausschläge richtig deuten",
+  "hint": "8 Minuten · Teil 1 · Seiten 3 und 5; Aufgabenart aus dem Foto. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Erkläre Versuch I mit der Bewegung der Elektronen. Gib die Ladungsverteilung am Teller sowie an Zeiger und Halterung an.\nb) Vergleiche qualitativ eine eingeschobene Glasplatte mit einem großen geerdeten Metallgitter zwischen äußerem Körper und neutralem Elektroskop.\nc) Bestimme aus der ersten Ausschlagsänderung in Versuch II das Vorzeichen der Kugel und begründe es. Warum muss man dabei wissen, wie das Elektroskop zuvor geladen war?\nd) Beschreibe für Versuch I die Beobachtung, wenn der äußere Körper anschließend wieder weit entfernt wird.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-17"><div class="training-kicker">M17 · Eine Platte zieht einen neutralen Ring an</div><figure class="training-figure"><svg viewBox="0 0 660 290" role="img" aria-labelledby="ex-ring-title"><title id="ex-ring-title">Ein neutraler leitender Ring rechts neben einer endlichen positiv geladenen Platte.</title><g stroke="currentColor" fill="none" stroke-width="2"><rect x="72" y="34" width="18" height="220"/><circle cx="350" cy="145" r="75"/><circle cx="350" cy="145" r="53"/></g><g fill="currentColor" font-size="21"><text x="75" y="67">+</text><text x="75" y="111">+</text><text x="75" y="155">+</text><text x="75" y="199">+</text><text x="75" y="243">+</text></g><g fill="currentColor" font-size="15"><text x="108" y="47">endliche positive Platte</text><text x="300" y="254">neutraler Metallring</text><text x="455" y="144">freie Öffnung</text></g><path d="M448 140H376" fill="none" stroke="currentColor"/></svg><figcaption>Eigene Skizze in der Ringebene. Eine Öffnung im Ring ist keine vollständig geschlossene Metallhülle.</figcaption></figure><p>Der Ring ist leitend, isoliert und anfangs insgesamt neutral. Im Bereich der endlichen Platte ist das äußere Feld inhomogen: Auf der nahen Ringseite ist es stärker als auf der fernen. Das System wird elektrostatisch betrachtet.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 17</summary><p>Die beiden Ringseiten tragen gleich große entgegengesetzte Ladungen, befinden sich aber im vorgegebenen inhomogenen Feld an Orten unterschiedlicher Feldstärke.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a17",
+  "title": "Aufgabe 17 · Neutral heißt nicht ohne Kraft",
+  "hint": "10 Minuten · Teil 1 · Seiten 5, 8 und 9; Aufgabenart aus dem Foto. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Trage die durch Influenz entstehenden Ladungsbereiche am Ring in eine eigene Skizze ein. Begründe, warum der Ring insgesamt neutral bleibt.\nb) Skizziere einige Feldlinien. Beachte Pfeilrichtungen, den feldfreien Leiter und die senkrechte Richtung an der Metalloberfläche.\nc) Gib die Richtung der Kräfte auf die nahe und die ferne Ringseite an und erkläre die resultierende Anziehung. Was ändert sich im ideal homogenen äußeren Feld?\nd) Beurteile: „Weil der Ring aus Metall besteht, ist seine freie Öffnung immer feldfrei.“",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="wb-section-break"></div><div data-wb-type="verify"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_ring_check",
+  "title": "Kurzcheck 10 · Ring oder geschlossene Hülle?",
+  "hint": "Beurteile die Aussage.",
+  "statement": "Eine freie Öffnung in einem Metallring muss genauso feldfrei sein wie die ladungsfreie Höhlung einer vollständig geschlossenen leitenden Hülle.",
+  "answer": false,
+  "explain": "Falsch. Im elektrostatischen Gleichgewicht ist das leitende Metall feldfrei. Die Öffnung im Ring ist aber keine vollständig geschlossene Höhlung; ein äußeres Feld kann dort vorhanden sein."
+}</script></div><div class="wb-section-break"></div>
+<div class="training-actions"><button type="button" data-training-page="12">Weiter mit Kräfteüberlagerung →</button></div>
+</section>
+
+<section data-wb-page="12" data-wb-page-title="Zusatz · Kräfte im Gitter">
+<h1>10 · Aus Einzelkräften ein Feldlinienbild gewinnen</h1><p>Skizziere zunächst die Beiträge jeder Feldquelle am gewählten Punkt und addiere die Kraft- beziehungsweise Feldpfeile. Die Feldquellen werden an den eingezeichneten Orten festgehalten. Die Probeladung wird nur zur Untersuchung der Kraftwirkung eingesetzt.</p>
+<div class="training-material" id="material-18"><div class="training-kicker">M18 · Zwei Ladungsanordnungen</div><h3>Anordnung A</h3><figure class="training-figure"><svg viewBox="0 0 660 430" role="img" aria-labelledby="ex-main-a-title"><title id="ex-main-a-title">Gitter zur Konstruktion der Feldrichtungen</title><defs><marker id="ex-main-a-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs><g stroke="currentColor" opacity=".16"><path d="M55 375L55 45"/><path d="M110 375L110 45"/><path d="M165 375L165 45"/><path d="M220 375L220 45"/><path d="M275 375L275 45"/><path d="M330 375L330 45"/><path d="M385 375L385 45"/><path d="M440 375L440 45"/><path d="M495 375L495 45"/><path d="M550 375L550 45"/><path d="M605 375L605 45"/><path d="M55 375L605 375"/><path d="M55 320L605 320"/><path d="M55 265L605 265"/><path d="M55 210L605 210"/><path d="M55 155L605 155"/><path d="M55 100L605 100"/><path d="M55 45L605 45"/></g><circle cx="220" cy="210" r="13" fill="var(--wb-block-bg,white)" stroke="currentColor" stroke-width="2"/><text x="220" y="216" text-anchor="middle" fill="currentColor" font-size="20">+</text><circle cx="440" cy="210" r="13" fill="var(--wb-block-bg,white)" stroke="currentColor" stroke-width="2"/><text x="440" y="216" text-anchor="middle" fill="currentColor" font-size="20">+</text><circle cx="330" cy="210" r="4" fill="currentColor"/><text x="339" y="201" fill="currentColor" font-size="16">M</text><circle cx="330" cy="100" r="4" fill="currentColor"/><text x="339" y="91" fill="currentColor" font-size="16">P</text><circle cx="495" cy="210" r="4" fill="currentColor"/><text x="504" y="201" fill="currentColor" font-size="16">R</text><circle cx="330" cy="320" r="4" fill="currentColor"/><text x="339" y="311" fill="currentColor" font-size="16">S</text><text x="330" y="415" text-anchor="middle" fill="currentColor" font-size="14">1 Kästchen = 2,0 cm · gleiche Ladungsbeträge</text></svg><figcaption>Eigene Gitterzeichnung. Die kleinen Punkte markieren Untersuchungsorte, keine weiteren Feldquellen.</figcaption></figure><p>Beide Quellen tragen +Q mit Q = 3,0 nC. Die Punkte M, P, R und S sind eingezeichnet.</p><h3>Anordnung B</h3><figure class="training-figure"><svg viewBox="0 0 660 430" role="img" aria-labelledby="ex-main-b-title"><title id="ex-main-b-title">Gitter zur Konstruktion der Feldrichtungen</title><defs><marker id="ex-main-b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs><g stroke="currentColor" opacity=".16"><path d="M55 375L55 45"/><path d="M110 375L110 45"/><path d="M165 375L165 45"/><path d="M220 375L220 45"/><path d="M275 375L275 45"/><path d="M330 375L330 45"/><path d="M385 375L385 45"/><path d="M440 375L440 45"/><path d="M495 375L495 45"/><path d="M550 375L550 45"/><path d="M605 375L605 45"/><path d="M55 375L605 375"/><path d="M55 320L605 320"/><path d="M55 265L605 265"/><path d="M55 210L605 210"/><path d="M55 155L605 155"/><path d="M55 100L605 100"/><path d="M55 45L605 45"/></g><circle cx="220" cy="100" r="13" fill="var(--wb-block-bg,white)" stroke="currentColor" stroke-width="2"/><text x="220" y="106" text-anchor="middle" fill="currentColor" font-size="20">−</text><circle cx="440" cy="100" r="13" fill="var(--wb-block-bg,white)" stroke="currentColor" stroke-width="2"/><text x="440" y="106" text-anchor="middle" fill="currentColor" font-size="20">−</text><circle cx="330" cy="320" r="13" fill="var(--wb-block-bg,white)" stroke="currentColor" stroke-width="2"/><text x="330" y="326" text-anchor="middle" fill="currentColor" font-size="20">+</text><circle cx="330" cy="210" r="4" fill="currentColor"/><text x="339" y="201" fill="currentColor" font-size="16">T</text><text x="330" y="415" text-anchor="middle" fill="currentColor" font-size="14">1 Kästchen = 2,0 cm · gleiche Ladungsbeträge</text></svg><figcaption>Eigene Gitterzeichnung. Die kleinen Punkte markieren Untersuchungsorte, keine weiteren Feldquellen.</figcaption></figure><p>Oben liegen zwei Quellen mit −Q, unten eine mit +Q. Alle haben denselben Ladungsbetrag Q = 3,0 nC. Untersucht wird der Punkt T.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 18</summary><p>Beachte die Symmetrie. Gleich große entgegengesetzte Teilpfeile können sich aufheben, gleichgerichtete Teilpfeile addieren sich. Für d) liegen beide Kraftbeiträge auf derselben Geraden.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a18",
+  "title": "Aufgabe 18 · Feldlinien aus Kraftpfeilen konstruieren",
+  "hint": "12 Minuten · Teil 1 · Seiten 2, 6–8; Aufgabenart aus dem Foto. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Konstruiere für Anordnung A die Richtung der elektrischen Kraft auf eine positive Probeladung an M, P, R und S. Kennzeichne einen möglichen Punkt mit verschwindender Gesamtkraft.\nb) Zeichne daraus und aus weiteren geeigneten Gitterpunkten ein qualitatives Feldlinienbild für A. Begründe, warum du keine Feldlinie von der einen positiven Quelle zur anderen zeichnen darfst.\nc) Bestimme in Anordnung B die resultierende Feldrichtung in T. Skizziere auch hier einige Feldlinien und gib die Kraftrichtung auf ein dort eingesetztes Elektron an.\nd) Berechne in A den Kraftbetrag auf q = +2,0 nC am Punkt R. Bestimme dafür zuerst die beiden tatsächlichen Abstände aus dem Gitter.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-actions"><button type="button" data-training-page="13">Weiter mit Flächenladungsdichte →</button></div>
+</section>
+
+<section data-wb-page="13" data-wb-page-title="Zusatz · Flächenladung">
+<h1>11 · Flächenladungsdichte erklärt Feld und Energie</h1><p>Unterscheide die Gesamtladung eines Körpers von den getrennten Ladungen auf seinen Oberflächen. Die Einheit der Flächenladungsdichte ist C/m².</p>
+<div class="training-material" id="material-19"><div class="training-kicker">M19 · Eine neutrale Metallplatte im äußeren Feld</div><figure class="training-figure"><svg viewBox="0 0 660 260" role="img" aria-labelledby="ex-sheet-title"><title id="ex-sheet-title">Breite waagerechte Metallplatte im äußeren elektrischen Feld nach unten.</title><defs><marker id="ex-sheet-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs><rect x="90" y="116" width="480" height="28" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="1.6" marker-end="url(#ex-sheet-arrow)"><path d="M150 30V94M270 30V94M390 30V94M510 30V94M150 166V230M270 166V230M390 166V230M510 166V230"/></g><text x="330" y="18" text-anchor="middle" fill="currentColor" font-size="15">äußeres Feld E₀ = 140 N/C nach unten</text><text x="330" y="137" text-anchor="middle" fill="currentColor" font-size="14">leitendes Metall</text><text x="330" y="256" text-anchor="middle" fill="currentColor" font-size="14">Fläche je horizontaler Seite A = 0,120 m²</text></svg><figcaption>Idealisierter zentraler Bereich einer breiten Platte; Dicken- und Seitenverhältnisse sind nicht maßstäblich.</figcaption></figure><p>Eine breite, anfangs neutrale und isolierte Metallplatte steht mit ihren Flächen senkrecht zu einem äußeren homogenen Feld. Sie ist 2,0 mm dick. Für den zentralen Bereich wird das Modell zweier großer paralleler Oberflächen verwendet; Randeffekte werden vernachlässigt.</p><p>Im Modell erzeugen die induzierten Oberflächenladungen im Metall ein gleich großes Gegenfeld. Daher darf für ihren Betrag die bekannte Beziehung |σ| = ε₀ E₀ genutzt werden. Sie ist hier eine Näherung für das ausdrücklich angegebene Plattenmodell, keine exakte Aussage für beliebig geformte Körper.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 19</summary><p>Das im Metall insgesamt vorhandene Feld ist nach der Influenz nicht mehr das ursprünglich angelegte äußere Feld E₀. Für Q verwendest du die Fläche einer Seite, nicht die Summe beider Flächen.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a19",
+  "title": "Aufgabe 19 · Getrennte Oberflächenladungen trotz Neutralität",
+  "hint": "10 Minuten · Teil 1 · Influenz; Teil 2 · Seite 3; Aufgabenart aus dem Foto. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Beschreibe die Elektronenverschiebung und gib die Vorzeichen der oberen und unteren Oberfläche an.\nb) Berechne im angegebenen Modell den Betrag der Flächenladungsdichte und die Ladungen auf beiden horizontalen Seiten. Gib auch die Gesamtladung an.\nc) Bestimme im elektrostatischen Gleichgewicht die Feldstärke im Metall und die Spannung zwischen den beiden Metalloberflächen.\nd) Lässt sich dieselbe quantitative Rechnung ohne weitere Angaben auf einen Metallwürfel oder eine 1,7 m große Person übertragen? Begründe, welche zusätzlichen Modellannahmen oder Angaben nötig wären.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-20"><div class="training-kicker">M20 · Von der Plattenladung zur Feldenergie</div><p>Ein idealer luftgefüllter Plattenkondensator trägt auf seinen gegenüberliegenden Innenseiten +Q und −Q mit Q = 18 nC. Es gelten A = 200 cm² und d = 4,0 mm. Die Ladungen sind gleichmäßig verteilt, Randeffekte werden vernachlässigt.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 20</summary><p>Behalte ungerundete Zwischenergebnisse bis zum letzten Schritt. Der Faktor für die Energiedichte ist nicht automatisch derselbe wie für die gesamte Energie.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a20",
+  "title": "Aufgabe 20 · Ein Rechenweg von σ bis W",
+  "hint": "12 Minuten · Teil 2 · Seiten 3–4; Teil 3 · Seiten 2–3. Rechne mit Einheiten und begründe deine Aussagen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne σ, E und U. Erkläre, warum ein Feld vorliegen kann, obwohl die Gesamtladung beider Platten zusammen null ist.\nb) Berechne C und die gespeicherte Energie W mit Q²/(2C).\nc) Leite für Luft ρ_el = σ²/(2ε₀) her und überprüfe deine Energie mit W = ρ_el A d.\nd) In einer Vergleichsanordnung wird derselbe Ladungsbetrag Q je Platte auf die doppelte Fläche verteilt. Der Abstand bleibt gleich. Vergleiche die Faktoren für σ, E, ρ_el und W.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="wb-section-break"></div><div data-wb-type="trace"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_sigma_tabelle",
+  "title": "Kurzcheck 11 · Faktoren beim Vergrößern der Fläche",
+  "hint": "Vergleiche Aufgabe 20d mit der ursprünglichen Anordnung. Q und d bleiben gleich. Gib Faktoren als Dezimalzahlen ohne Einheit ein.",
+  "columns": [
+    {
+      "label": "Größe"
+    },
+    {
+      "label": "Faktor neu/alt",
+      "hint": "Zahl ohne Einheit, z. B. 1,5. Dezimalkomma und Dezimalpunkt sind möglich."
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "given": "Plattenfläche A"
+        },
+        {
+          "given": "2"
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Flächenladungsdichte σ"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Feldstärke E"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Energiedichte ρ_el"
+        },
+        {
+          "answers": [
+            "0,25",
+            "0.25"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Feldvolumen A d"
+        },
+        {
+          "answers": [
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "given": "Gesamte Feldenergie W"
+        },
+        {
+          "answers": [
+            "0,5",
+            "0.5"
+          ]
+        }
+      ]
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du das zusätzlich gelernt</strong><p>Du kannst die Energie als Dreiecksfläche im U-Q-Diagramm deuten, Energiedichte und Gesamtenergie unterscheiden, Feldlinien aus Einzelkräften konstruieren und Flächenladungen in einem passenden Modell berechnen.</p></div>
+<div class="training-actions"><button type="button" data-training-page="9">Zu den Formeln und zur Nacharbeit →</button><button type="button" data-training-print="extra">Zusatzaufgaben drucken</button></div>
+</section>
+</div>
+<script src="../assets/allgemeines_format.js"></script>
+<script>
+(() => {
+ 'use strict';
+ const book = SBBook.autoMount()[0];
+ SBBlocks.autoMount();
+ SBLibrary.autoMountAll({storagePrefix:'ef_b7_20261109_'});
+ document.querySelectorAll('[data-training-page]').forEach(button => button.addEventListener('click', () => {
+  const page = Number(button.dataset.trainingPage);
+  book.showPage(page);
+  try { history.replaceState(null, '', '#page-' + page); } catch (_) {}
+ }));
+ const mirrors=[];
+ document.querySelectorAll('textarea').forEach(input => {
+  const mirror=document.createElement('div');mirror.className='training-print-answer';
+  input.after(mirror);const update=()=>{mirror.textContent=input.value;};
+  input.addEventListener('input',update);update();mirrors.push(update);
+ });
+ let printMode='all';
+ const prepare=()=>{mirrors.forEach(update=>update());document.body.classList.toggle('training-check-print',printMode==='check');document.body.classList.toggle('training-extra-print',printMode==='extra');};
+ window.addEventListener('beforeprint',prepare);
+ window.addEventListener('afterprint',()=>{document.body.classList.remove('training-check-print','training-extra-print');printMode='all';});
+ document.querySelectorAll('[data-training-print]').forEach(button=>button.addEventListener('click',()=>{printMode=button.dataset.trainingPrint;prepare();window.print();}));
+})();</script>
+</body></html>
