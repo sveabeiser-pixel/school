@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Elektrische Felder · Klausurtraining mit Feldenergie · Modus B</title>
-<meta name="description" content="20 Übungsaufgaben und 11 Kurzchecks: elektrische Felder, Kondensatoren, Millikan, Elektronen im Längsfeld, Feldenergie, Influenz und Flächenladungsdichte. Mit einem 45-Minuten-Klausurcheck.">
+<meta name="description" content="23 Übungsaufgaben und 12 Kurzchecks: elektrische Felder, Kondensatoren, Millikan, Elektronen im Längsfeld, Feldenergie, Influenz, Flächenladungsdichte und Zylinderkondensator. Mit einem 45-Minuten-Klausurcheck.">
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
 .wb-book{--wb-blue:#146b75;--wb-blue2:#105964}.wb-book .wb-paper{max-width:1040px}.training-hero{padding:26px;border:1px solid var(--wb-line);border-radius:14px;background:linear-gradient(120deg,var(--wb-head-bg),var(--wb-block-bg));margin-bottom:22px}.training-hero h1{font-size:clamp(29px,4vw,44px);line-height:1.15;letter-spacing:-1px;margin:10px 0 16px}.training-kicker{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;font-weight:750;color:var(--wb-muted);margin-bottom:8px}.training-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.training-badges span{padding:4px 9px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);font-size:12px;color:var(--wb-text)}.training-material,.training-note{border:1px solid var(--wb-line);border-radius:10px;padding:18px;margin:18px 0;background:var(--wb-block-bg);color:var(--wb-text)}.training-note{border-left:4px solid var(--wb-blue)}.training-material p,.training-note p{margin:8px 0}.training-table{max-width:100%;overflow:auto;margin:14px 0}.training-table table{width:100%;border-collapse:collapse;color:var(--wb-text);font-size:14px}.training-table th,.training-table td{border:1px solid var(--wb-line);padding:9px 11px;text-align:left;vertical-align:top}.training-table th{background:var(--wb-head-bg);color:var(--wb-text)}.training-table caption{text-align:left;font-size:12px;color:var(--wb-muted);padding-top:6px;caption-side:bottom}.training-figure{margin:16px 0}.training-figure svg{display:block;width:100%;height:auto;max-width:720px;margin:auto;color:var(--wb-text)}.training-figure figcaption{font-size:12px;color:var(--wb-muted);margin-top:9px}.training-small{font-size:13px;color:var(--wb-muted)}.training-hint{border:1px dashed var(--wb-line);border-radius:8px;padding:10px 14px;margin:18px 0;color:var(--wb-text)}.training-hint summary{font-size:14px;cursor:pointer;font-weight:650}.training-hint p{font-size:14px}.training-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.training-actions button{padding:10px 14px;border:1px solid var(--wb-line);border-radius:8px;background:var(--wb-head-bg);color:var(--wb-text);cursor:pointer;font:inherit;font-size:14px;font-weight:650}.training-actions button:hover{filter:brightness(.96)}.training-actions button:focus-visible{outline:3px solid var(--wb-blue);outline-offset:3px}.training-print-answer{display:none;white-space:pre-wrap;overflow-wrap:anywhere}.wb-book .wb-paper,.wb-book .wb-content,.training-material{min-width:0}body.training-source-failed{overflow:auto;padding:20px;font-family:system-ui,sans-serif}.training-load-error{padding:12px;border:1px solid #a44;background:#fff4ed;color:#6b2813}
@@ -12,8 +12,153 @@
 @media(max-width:600px){.wb-book .wb-content{padding-left:10px;padding-right:10px}.wb-book .wb-paper{padding:22px 16px}.wb-book:not(.wb-present-mode) .wb-theme-select{width:96px!important}}
 @media print{.wb-book,.wb-book p,.wb-book li,.wb-book .wb-field-prompt{font-size:10.5pt!important;line-height:1.4!important}.wb-book .wb-score{display:none!important}.training-hero,.training-material,.training-note{padding:12px!important;margin:12px 0!important}.training-hero h1{font-size:22pt!important;margin:6px 0 10px}.wb-book .wb-block{padding:12px!important;margin:10px 0!important}.wb-book .wb-block h3{font-size:13pt!important}.training-check-print #material-12{break-before:page}.training-badges{margin-top:10px;gap:6px}.training-print-answer{min-height:55px}}
 
-@media print{.training-extra-print .wb-book section[data-wb-page]{display:none!important}.training-extra-print .wb-book section[data-wb-page="10"],.training-extra-print .wb-book section[data-wb-page="11"],.training-extra-print .wb-book section[data-wb-page="12"],.training-extra-print .wb-book section[data-wb-page="13"]{display:block!important}.training-extra-print .wb-book section[data-wb-page="10"]{break-before:auto}}
-</style></head><body>
+@media print{.training-extra-print .wb-book section[data-wb-page]{display:none!important}.training-extra-print .wb-book section[data-wb-page="10"],.training-extra-print .wb-book section[data-wb-page="11"],.training-extra-print .wb-book section[data-wb-page="12"],.training-extra-print .wb-book section[data-wb-page="13"],.training-extra-print .wb-book section[data-wb-page="14"]{display:block!important}.training-extra-print .wb-book section[data-wb-page="10"]{break-before:auto}}
+
+.cylinder-formula{font-family:Cambria,Georgia,serif;font-size:1.12em;overflow-wrap:anywhere}
+@media print{.training-cylinder-print .wb-book section[data-wb-page]{display:none!important}.training-cylinder-print .wb-book section[data-wb-page="14"]{display:block!important;break-before:auto}}
+</style><style id="uebungswerkstatt-design">
+/* Farben und Karten der früheren Übungswerkstatt; Inhalte bleiben unverändert. */
+@media screen {
+  .wb-book:is([data-theme="default"], :not([data-theme])) {
+    --wb-blue:#076b60;
+    --wb-blue2:#07594f;
+    --wb-blue3:#076b60;
+    --wb-bg:#f4f5f1;
+    --wb-paper:#fff;
+    --wb-text:#192c31;
+    --wb-muted:#52676a;
+    --wb-line:#d7e0da;
+    --wb-block-bg:#fff;
+    --wb-block-border:#d7e0da;
+    --wb-head-bg:#edf2ec;
+    --wb-head-border:#d7e0da;
+    --wb-q-bg:#fff;
+    --wb-choice-hover:#e9f5ee;
+    --wb-bank-bg:#e9f5ee;
+    --wb-bank-border:#bfd5c8;
+    --wb-chip-bg:#fff;
+    --wb-chip-border:#bfd5c8;
+    --wb-chip-text:#192c31;
+    --wb-text-bg:#fff;
+    --wb-text-border:#d7e0da;
+    --wb-text-color:#192c31;
+    --wb-gap-bg:#f8faf7;
+    --wb-gap-border:#8ebcab;
+    --wb-gap-color:#192c31;
+    --wb-gap-filled-bg:#e9f5ee;
+    --wb-gap-filled-border:#8ebcab;
+    --wb-input-bg:#fff;
+    --wb-input-border:#d7e0da;
+    --wb-input-text:#192c31;
+    --wb-input-placeholder:#52676a;
+    --wb-soft-bg:#f4f7f2;
+    --wb-shadow:0 7px 24px #20332b07;
+    --wb-hamburger-bg:#076b60;
+    --wb-hamburger-icon:#fff;
+    --training-hero-bg:#e7f0e5;
+    --training-hero-border:#cedecf;
+    --training-hero-text:#3c5752;
+    --training-material-bg:#f8faf7;
+    --training-note-bg:#e9f5ee;
+    --training-figure-bg:#fbfcfa;
+    --training-badge-bg:#ffffffb0;
+    --training-accent:#076b60;
+  }
+  .wb-book .wb-brand {font-weight:750;letter-spacing:-.3px}
+  .wb-book .wb-paper {border-radius:14px}
+  .wb-book .wb-paper p {font-size:16px;line-height:1.65}
+  .wb-book .training-hero,.wb-book .course-hero {
+    padding:34px 36px;
+    border-radius:20px;
+    border-color:var(--training-hero-border,var(--wb-line));
+    background:var(--training-hero-bg,var(--wb-head-bg));
+  }
+  .wb-book .course-hero {border:1px solid var(--training-hero-border,var(--wb-line));margin-bottom:22px}
+  .wb-book .course-kicker {color:var(--training-accent,var(--wb-muted));font-size:12px;font-weight:750;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:10px}
+  .wb-book .training-hero h1 {
+    font-size:clamp(30px,4.2vw,46px);
+    line-height:1.13;
+    letter-spacing:-1.5px;
+    margin:10px 0 14px;
+  }
+  .wb-book .training-hero p {color:var(--training-hero-text,var(--wb-text))}
+  .wb-book .training-kicker {color:var(--training-accent,var(--wb-muted));letter-spacing:1.8px;font-weight:750}
+  .wb-book .training-badges {gap:9px;margin-top:24px}
+  .wb-book .training-badges span {
+    padding:4px 10px;
+    color:var(--wb-text);
+    background:var(--training-badge-bg,var(--wb-block-bg));
+    border-radius:6px;
+    font-weight:600;
+  }
+  .wb-book .training-material {
+    padding:18px 22px;
+    background:var(--training-material-bg,var(--wb-block-bg));
+    border-radius:12px;
+  }
+  .wb-book .training-note {
+    padding:18px 22px;
+    background:var(--training-note-bg,var(--wb-block-bg));
+    border-radius:12px;
+  }
+  .wb-book .training-hint {border-style:solid;border-radius:10px}
+  .wb-book .training-hint summary {font-weight:650}
+  .wb-book .training-figure svg {
+    background:var(--training-figure-bg,var(--wb-block-bg));
+    border:1px solid var(--wb-line);
+    border-radius:10px;
+    box-sizing:border-box;
+  }
+  .wb-book .wb-block {border-radius:14px;box-shadow:var(--wb-shadow)}
+  .wb-book .wb-head {padding:22px 26px 15px;background:var(--wb-block-bg)}
+  .wb-book .wb-head .wb-title {font-size:21px;line-height:1.25;font-weight:750;letter-spacing:-.4px}
+  .wb-book .wb-body {padding:18px 26px 24px}
+  .wb-book .solution-block {padding:22px 26px;background:var(--wb-block-bg);border:1px solid var(--wb-line);border-radius:14px;box-shadow:var(--wb-shadow);margin:18px 0}
+  .wb-book .solution-block h3 {font-size:21px;line-height:1.3;font-weight:750;letter-spacing:-.4px}
+  .wb-book .training-actions button,.wb-book .wb-btn {border-radius:9px;font-weight:650}
+  .wb-book .training-actions button {background:var(--wb-block-bg)}
+  .wb-book .training-actions button:hover {background:var(--wb-choice-hover);filter:none}
+  .wb-book :is(button,a,summary,textarea,input,select):focus-visible {outline:3px solid #d78d13;outline-offset:3px}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-brand {color:var(--wb-text)}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-paper :is(p,li) {color:var(--wb-text)}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-paper a {color:var(--wb-blue);text-underline-offset:3px}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-paper {
+    background:transparent;
+    border-color:transparent;
+    box-shadow:none;
+  }
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-sidebar {
+    background:#f4f5f1;
+    color:var(--wb-text);
+    border-right-color:var(--wb-line);
+  }
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-side-top {
+    color:var(--wb-blue);
+    border-bottom-color:var(--wb-line);
+    font-size:16px;
+    font-weight:750;
+    padding:20px 18px 16px;
+  }
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-side-nav {background:#f4f5f1}
+  .wb-book:is([data-theme="default"], :not([data-theme])) :is(details.wb-group summary,.wb-chev) {color:var(--wb-muted);font-weight:700}
+  .wb-book:is([data-theme="default"], :not([data-theme])) a.wb-nav-item {color:var(--wb-muted);border-radius:7px;font-size:13px;font-weight:500}
+  .wb-book:is([data-theme="default"], :not([data-theme])) a.wb-nav-item:is(:hover,.active) {background:#e4eee7;color:var(--wb-blue)}
+  .wb-book:is([data-theme="default"], :not([data-theme])) a.wb-nav-item.active {font-weight:750}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-score {color:var(--wb-blue)}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .training-actions button:first-child {background:var(--wb-blue);border-color:var(--wb-blue);color:#fff}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .training-actions button:first-child:hover {background:var(--wb-blue2)}
+  .wb-book:is([data-theme="default"], :not([data-theme])) .wb-theme-wrap {background:#f8faf7}
+  @media(max-width:600px) {
+    .wb-book .training-hero,.wb-book .course-hero {padding:24px 20px}
+    .wb-book .training-hero h1 {letter-spacing:-1px}
+    .wb-book .training-material,.wb-book .training-note {padding:16px}
+    .wb-book .wb-head {padding:18px 16px 13px}
+    .wb-book .wb-body,.wb-book .solution-block {padding:16px}
+    .wb-book .wb-head .wb-title,.wb-book .solution-block h3 {font-size:19px}
+  }
+}
+</style>
+</head><body>
 <noscript><p class="training-load-error">Für Navigation und interaktive Eingabefelder benötigst du JavaScript. Die Aufgabenstellungen bleiben im HTML lesbar.</p></noscript>
 <div data-wb-book><script class="wb-book-config" type="application/json">{
   "bookTitle": "Felder · Klausurtraining",
@@ -33,12 +178,12 @@
   "resultsPageTitle": "Meine Ergebnisse"
 }</script>
 <section data-wb-page="1" data-wb-page-title="Start & Lernstand">
-<div class="training-hero"><div class="training-kicker">Modus B · Klausurvorbereitung</div><h1>Elektrische Felder<br>Dein Training mit Feldenergie</h1><p>Erklären, rechnen, Messwerte auswerten und Ergebnisse prüfen – mit genau dem Wissen aus eurem bisherigen Unterricht.</p><div class="training-badges"><span>20 Hauptaufgaben</span><span>11 Kurzchecks</span><span>Grundblock: ca. 135–150 min</span><span>Ergänzung: ca. 90 min</span><span>45-Minuten-Klausurcheck</span></div></div>
+<div class="training-hero"><div class="training-kicker">Modus B · Klausurvorbereitung</div><h1>Elektrische Felder<br>Dein Training mit Feldenergie</h1><p>Erklären, rechnen, Messwerte auswerten und Ergebnisse prüfen – mit genau dem Wissen aus eurem bisherigen Unterricht.</p><div class="training-badges"><span>23 Hauptaufgaben</span><span>12 Kurzchecks</span><span>Grundblock: ca. 135–150 min</span><span>Ergänzung: ca. 90 min</span><span>Zylinderblock: ca. 35 min</span><span>45-Minuten-Klausurcheck</span></div></div>
 <h2>Dein Stoffumfang</h2><p>Grundlage sind <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1 vollständig</a> und <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2 bis einschließlich der intern nummerierten Seite 7 „Elektronenkanone“</a> sowie <a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3, ausschließlich die Seiten 1–3 zu Energieformeln und Feldenergie</a>.</p>
-<p>Du übst Ladung, Influenz, Abschirmung, Coulomb-Gesetz, Feldstärke, Potenzial, Spannung, Flächenladungsdichte, Kapazität, Kondensatorenergie, Dielektrika, Reihen- und Parallelschaltungen, Millikan und die Bewegung von Elektronen im Längsfeld. Hinzu kommen U-Q-Flächen, weitere Energieformeln, Energiedichte sowie vertiefende Aufgaben zu Influenz, Feldlinien und Flächenladung.</p>
+<p>Du übst Ladung, Influenz, Abschirmung, Coulomb-Gesetz, Feldstärke, Potenzial, Spannung, Flächenladungsdichte, Kapazität, Kondensatorenergie, Dielektrika, Reihen- und Parallelschaltungen, Millikan und die Bewegung von Elektronen im Längsfeld. Hinzu kommen U-Q-Flächen, weitere Energieformeln, Energiedichte sowie vertiefende Aufgaben zu Influenz, Feldlinien und Flächenladung. Die zusätzlich bereitgestellte Aufgabe zum Zylinderkondensator bildet die Grundlage der neuen Aufgaben 21–23.</p>
 <div class="training-note"><strong>Annahmen für dieses Training</strong><p>Gymnasiale Oberstufe ohne Festlegung auf BF oder LF. Nutze Taschenrechner, Lineal, Heft und eure Unterrichtsnotizen. Aufgabe 7 zur gemischten Kondensatorschaltung ist als Vertiefung markiert. Der Klausurcheck enthält keine gemischte Schaltung. Die Zeiten sind Richtwerte.</p></div>
-<h2>So trainierst du</h2><ol><li>Bearbeite die Grundlagen und Anwendungen auf den Seiten 2–7. Formuliere auch bei Rechnungen eine kurze Deutung.</li><li>Nutze Hinweise erst nach einem eigenen Versuch. Vergleiche danach mit der separat bereitgestellten Musterlösung.</li><li>Bearbeite zum Schluss Seite 8 für 45 Minuten ohne Hinweise. Auf Seite 9 planst du deine Wiederholung.</li><li>Die neuen Aufgaben 13–20 auf den Seiten 10–13 bilden einen zusätzlichen Übungsblock. Der bisherige 45-Minuten-Klausurcheck bleibt bestehen.</li></ol>
-<div class="training-actions"><button type="button" data-training-page="2">Mit Aufgabe 1 starten →</button><button type="button" data-training-page="8">Zum Klausurcheck →</button><button type="button" data-training-page="10">Zu den Zusatzaufgaben 13–20 →</button><button type="button" data-training-print="all">Aufgaben drucken / PDF</button></div>
+<h2>So trainierst du</h2><ol><li>Bearbeite die Grundlagen und Anwendungen auf den Seiten 2–7. Formuliere auch bei Rechnungen eine kurze Deutung.</li><li>Nutze Hinweise erst nach einem eigenen Versuch. Vergleiche danach mit der separat bereitgestellten Musterlösung.</li><li>Bearbeite zum Schluss Seite 8 für 45 Minuten ohne Hinweise. Auf Seite 9 planst du deine Wiederholung.</li><li>Die neuen Aufgaben 13–20 auf den Seiten 10–13 bilden einen zusätzlichen Übungsblock. Der bisherige 45-Minuten-Klausurcheck bleibt bestehen.</li><li>Auf Seite 14 folgen die neuen Zylinderaufgaben 21–23 mit ausdrücklich vorgegebenen Formeln.</li></ol>
+<div class="training-actions"><button type="button" data-training-page="2">Mit Aufgabe 1 starten →</button><button type="button" data-training-page="8">Zum Klausurcheck →</button><button type="button" data-training-page="10">Zu den Zusatzaufgaben 13–20 →</button><button type="button" data-training-page="14">Zum Zylinderkondensator →</button><button type="button" data-training-print="all">Aufgaben drucken / PDF</button></div>
 <p class="training-small">Freitextantworten und Kurzchecks werden über das gemeinsame Lernseiten-Modul lokal gespeichert, sofern dein Browser dies erlaubt. Nutze „Ergebnisse exportieren“, um deine Arbeit zusätzlich zu sichern. Skizzen und Diagramme gehören ins Heft.</p>
 <div class="wb-section-break"></div>
 <div data-wb-type="mcq"><script class="wb-config" type="application/json">{
@@ -584,7 +729,7 @@
 <section data-wb-page="9" data-wb-page-title="Formeln & Nacharbeit">
 <h1>7 · Formeln prüfen, gezielt nacharbeiten</h1>
 <h2>Formeln aus eurem Unterricht</h2><p>Beträge und Vorzeichen werden unterschieden: Für gerichtete Größen gelten Fₓ = qEₓ und ΔW<sub>pot</sub> = q[φ₂ − φ₁]. Bei Spannungs- und Kraftbeträgen werden positive Beträge verwendet.</p>
-<div class="training-table" tabindex="0" role="region" aria-label="Datentabelle"><table><thead><tr><th scope="col">Bereich</th><th scope="col">Bekannte Beziehungen</th></tr></thead><tbody><tr><td>Kraft und Feld</td><td>F = |q|E; E = F/|q|; F = k|qQ|/r²</td></tr><tr><td>Potenzial und Energie</td><td>U₂₁ = φ₂ − φ₁; W<sub>pot</sub> = qφ; ΔW<sub>pot</sub> = qΔφ</td></tr><tr><td>Homogenes Feld</td><td>E = U/d; |W<sub>el</sub>| = |q|U</td></tr><tr><td>Flächenladung in Luft/Vakuum</td><td>σ = |Q|/A = ε₀E</td></tr><tr><td>Kondensator</td><td>C = Q/U; C = ε₀εᵣA/d; W = ½QU = ½CU² = Q²/(2C)</td></tr><tr><td>Feldenergie</td><td>V<sub>Feld</sub> = Ad; W = ½ε₀εᵣE²V<sub>Feld</sub>; ρ<sub>el</sub> = W/V<sub>Feld</sub> = ½ε₀εᵣE². In Luft: ρ<sub>el</sub> = σ²/(2ε₀).</td></tr><tr><td>Schaltungen</td><td>Parallel: C<sub>ges</sub> = C₁ + C₂ + …; Reihe: 1/C<sub>ges</sub> = 1/C₁ + 1/C₂ + …</td></tr><tr><td>Schweben</td><td>|q|E = mg; |q| = mgd/U; |q| = ne mit ganzzahligem n</td></tr><tr><td>Elektronenkanone aus Ruhe</td><td>W<sub>kin</sub> = ½mₑv² = eU; v = √(2eU/mₑ)</td></tr><tr><td>Homogenes Längsfeld</td><td>Fₓ = qEₓ; aₓ = Fₓ/m; vₓ = v₀ + aₓt; x = x₀ + v₀t + ½aₓt²</td></tr></tbody></table></div>
+<div class="training-table" tabindex="0" role="region" aria-label="Datentabelle"><table><thead><tr><th scope="col">Bereich</th><th scope="col">Bekannte Beziehungen</th></tr></thead><tbody><tr><td>Kraft und Feld</td><td>F = |q|E; E = F/|q|; F = k|qQ|/r²</td></tr><tr><td>Potenzial und Energie</td><td>U₂₁ = φ₂ − φ₁; W<sub>pot</sub> = qφ; ΔW<sub>pot</sub> = qΔφ</td></tr><tr><td>Homogenes Feld</td><td>E = U/d; |W<sub>el</sub>| = |q|U</td></tr><tr><td>Flächenladung in Luft/Vakuum</td><td>σ = |Q|/A = ε₀E</td></tr><tr><td>Kondensator</td><td>C = Q/U; C = ε₀εᵣA/d; W = ½QU = ½CU² = Q²/(2C)</td></tr><tr><td>Feldenergie</td><td>V<sub>Feld</sub> = Ad; W = ½ε₀εᵣE²V<sub>Feld</sub>; ρ<sub>el</sub> = W/V<sub>Feld</sub> = ½ε₀εᵣE². In Luft: ρ<sub>el</sub> = σ²/(2ε₀).</td></tr><tr><td>Zylinder · vorgegebene Beziehungen</td><td>C₀ = 2π ε₀h/ln(r₂/r₁); C(x) = C₀[1 + (εᵣ − 1)x/h]; Mantelfläche A = 2πrh; V<sub>Feld</sub> = π(r₂² − r₁²)h.</td></tr><tr><td>Schaltungen</td><td>Parallel: C<sub>ges</sub> = C₁ + C₂ + …; Reihe: 1/C<sub>ges</sub> = 1/C₁ + 1/C₂ + …</td></tr><tr><td>Schweben</td><td>|q|E = mg; |q| = mgd/U; |q| = ne mit ganzzahligem n</td></tr><tr><td>Elektronenkanone aus Ruhe</td><td>W<sub>kin</sub> = ½mₑv² = eU; v = √(2eU/mₑ)</td></tr><tr><td>Homogenes Längsfeld</td><td>Fₓ = qEₓ; aₓ = Fₓ/m; vₓ = v₀ + aₓt; x = x₀ + v₀t + ½aₓt²</td></tr></tbody></table></div>
 <p><b>Konstanten:</b> ε₀ = 8,85 · 10⁻¹² C²/(N m²); k = 8,99 · 10⁹ N m²/C²; e = 1,602 · 10⁻¹⁹ C; mₑ = 9,109 · 10⁻³¹ kg; g = 9,81 N/kg.</p>
 <p><b>Einheiten:</b> 1 N/C = 1 V/m; 1 F = 1 C/V; 1 eV = 1,602 · 10⁻¹⁹ J. Vorsätze: m = 10⁻³, µ = 10⁻⁶, n = 10⁻⁹, p = 10⁻¹². 1 cm² = 10⁻⁴ m²; 1 mm = 10⁻³ m.</p>
 <div class="training-note"><strong>Jetzt hast du das gelernt</strong><p>Du kannst bei Kondensatoränderungen die richtige konstante Größe wählen, eine Ladung aus dem Schweben bestimmen und Elektronenbewegungen im Längsfeld mit Kraft und Energie erklären.</p></div>
@@ -605,7 +750,7 @@
   ]
 }</script></div>
 <div class="wb-section-break"></div>
-<h2>Quellen &amp; gezieltes Weiterüben</h2><ul><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1</a>: gesamte Unterrichtsseite.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2</a>: ausschließlich die intern nummerierten Seiten 1–7. Wiederhole für Q-/U-Konstanz die Seiten 4–5, für Millikan Seite 6 und für die Längsfeldbewegung Seite 7.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3</a>: nur die Seiten 1–3. Die Ergänzungen nutzen die Energieformeln und die Energiedichte, keine späteren Formeln für zeitabhängiges Laden oder Entladen.</li><li>Das bereitgestellte Aufgabenfoto diente als Anregung für neue Aufgaben zu Elektroskop, Metallring, Kräfteüberlagerung und Flächenladungen. Zahlenwerte, Darstellungen und Aufgabenstellungen wurden neu entwickelt.</li></ul><p class="training-small">Alle Aufgaben, Messwerte und Grafiken wurden für dieses Training neu erstellt. Die lokalen Physik-Abituraufgaben 2024 (HT, Aufgabenblatt) und 2025 sowie die <a href="https://www.iqb.hu-berlin.de/media/exercise_files/Abituraufgaben_PHYSIK/2025gNFEmg3_Aufgabe.pdf">IQB-Aufgabe 2025 zu kapazitiven Beschleunigungssensoren</a> dienten als Orientierung für Materialaufbau, Operatoren und begründete Auswertungen. Der vorausgesetzte Stoff stammt ausschließlich aus den angegebenen Unterrichtsseiten.</p>
+<h2>Quellen &amp; gezieltes Weiterüben</h2><ul><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder.html">Elektrische Felder 1</a>: gesamte Unterrichtsseite.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder2.html">Elektrische Felder 2</a>: ausschließlich die intern nummerierten Seiten 1–7. Wiederhole für Q-/U-Konstanz die Seiten 4–5, für Millikan Seite 6 und für die Längsfeldbewegung Seite 7.</li><li><a href="https://sveabeiser-pixel.github.io/school/bbz/felder/elektrische-felder3.html">Elektrische Felder 3</a>: nur die Seiten 1–3. Die Ergänzungen nutzen die Energieformeln und die Energiedichte, keine späteren Formeln für zeitabhängiges Laden oder Entladen.</li><li>Das bereitgestellte Aufgabenfoto diente als Anregung für neue Aufgaben zu Elektroskop, Metallring, Kräfteüberlagerung und Flächenladungen. Zahlenwerte, Darstellungen und Aufgabenstellungen wurden neu entwickelt.</li><li>Zusätzliche Materialvorlage: die bereitgestellten Ausschnitte aus <a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet/aufgabe/ein-zylinderkondensator-als-fuellstandsmesser-abitur-2024-ph11-2-a1">„Ein Zylinderkondensator als Füllstandsmesser“, Abitur BY 2024 Ph11-2 A1</a>. Die Aufgaben 21–23 verwenden eigene Zahlen und Grafiken; die Formeln stehen im Material.</li></ul><p class="training-small">Alle Aufgaben, Messwerte und Grafiken wurden für dieses Training neu erstellt. Die lokalen Physik-Abituraufgaben 2024 (HT, Aufgabenblatt) und 2025 sowie die <a href="https://www.iqb.hu-berlin.de/media/exercise_files/Abituraufgaben_PHYSIK/2025gNFEmg3_Aufgabe.pdf">IQB-Aufgabe 2025 zu kapazitiven Beschleunigungssensoren</a> dienten als Orientierung für Materialaufbau, Operatoren und begründete Auswertungen. Der vorausgesetzte Stoff stammt ausschließlich aus den angegebenen Unterrichtsseiten.</p>
 <div class="training-actions"><button type="button" data-training-page="8">Klausurcheck erneut bearbeiten →</button><button type="button" data-training-print="all">Alle Aufgaben drucken / PDF</button></div>
 </section>
 <section data-wb-page="10" data-wb-page-title="Zusatz · Energie & Feldenergie">
@@ -904,6 +1049,110 @@
 <div class="training-note"><strong>Jetzt hast du das zusätzlich gelernt</strong><p>Du kannst die Energie als Dreiecksfläche im U-Q-Diagramm deuten, Energiedichte und Gesamtenergie unterscheiden, Feldlinien aus Einzelkräften konstruieren und Flächenladungen in einem passenden Modell berechnen.</p></div>
 <div class="training-actions"><button type="button" data-training-page="9">Zu den Formeln und zur Nacharbeit →</button><button type="button" data-training-print="extra">Zusatzaufgaben drucken</button></div>
 </section>
+<section data-wb-page="14" data-wb-page-title="Zusatz · Zylinderkondensator">
+<div class="training-hero"><div class="training-kicker">Zusätzliche Vorlage · Zylinderkondensator als Füllstandssensor</div><h1>12 · Zylinder statt Platten</h1><p>Drei neue Aufgaben verbinden bekannte Feldlinien, Potenziale, Kapazität, Flächenladung und Energie mit der in deinem Material beschriebenen Bauform. Die Aufgaben 1–20 bleiben erhalten.</p><div class="training-badges"><span>Aufgaben 21–23</span><span>ca. 35 Minuten</span><span>Formeln ausdrücklich vorgegeben</span></div></div>
+<div class="training-note"><strong>Dein Modell</strong><p>Zwei leitende Zylinder besitzen dieselbe Achse und überlappen sich über die aktive Höhe h. r₁ bezeichnet den Außenradius der inneren Elektrode; r₂ den Innenradius der äußeren Elektrode. Die Höhe ist groß gegenüber dem Spalt. End- und Randeffekte sowie Leitungs- und Streukapazitäten werden vernachlässigt.</p></div>
+<div class="training-material" id="material-21"><div class="training-kicker">M21 · Feldbilder im Querschnitt</div><figure class="training-figure"><svg viewBox="0 0 660 390" role="img" aria-labelledby="cyl-main-title"><title id="cyl-main-title">Querschnitt eines Zylinderkondensators mit positiver innerer und negativer äußerer Elektrode.</title><defs><marker id="cyl-main-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs><circle cx="205" cy="185" r="46" fill="var(--wb-head-bg,white)" stroke="currentColor" stroke-width="2.5"/><circle cx="205" cy="185" r="138" fill="none" stroke="currentColor" stroke-width="3"/><text x="205" y="194" text-anchor="middle" fill="currentColor" font-size="30">+</text><text x="354" y="192" fill="currentColor" font-size="29">−</text><g fill="currentColor" font-size="16"><text x="395" y="94">Innen: φ = 1500 V</text><text x="395" y="124">Außen: φ = 0 V</text><text x="395" y="173">Innenradius r₁</text><text x="395" y="203">Außenradius r₂</text></g><text x="205" y="366" text-anchor="middle" fill="currentColor" font-size="14">Querschnitt · gemeinsame Zylinderachse senkrecht zum Bild</text></svg><figcaption>Eigene schematische Draufsicht. Die Feldlinien sollen nur im Zwischenraum eingezeichnet werden.</figcaption></figure><p>Für die Skizzen in Aufgabe 21 liegt die innere Elektrode auf φ = 1500 V und die äußere auf φ = 0 V. Der Zwischenraum enthält Luft.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 21</summary><p>Feldlinien stehen senkrecht auf Äquipotenziallinien. Gleiche Potenzialschritte benötigen in schwächeren Feldbereichen größere räumliche Abstände.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a21",
+  "title": "Aufgabe 21 · Ein radiales Feld mit einem homogenen Feld vergleichen",
+  "hint": "10 Minuten · Vorgegebenes Material zum Zylinderkondensator sowie bekannte Feld-, Kapazitäts- und Energiebeziehungen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Zeichne acht Feldlinien im Zwischenraum mit korrekter Pfeilrichtung ein. Beschreibe die Richtung an den Metalloberflächen und vergleiche die Feldstärke nahe der inneren und nahe der äußeren Elektrode.\nb) Skizziere zum Vergleich einen Plattenkondensator mit demselben Spannungsbetrag. Zeichne vier innere Äquipotenziallinien ein, die zusammen mit den beiden Platten fünf gleiche Potenzialschritte bilden. Beschrifte sie.\nc) Ergänze qualitativ vier Äquipotenziallinien im Zylinderquerschnitt, ebenfalls für gleiche Potenzialschritte. Begründe ihre Form und die Veränderung ihrer Abstände nach außen; genaue Radien werden nicht verlangt.\nd) Beurteile, ob sich die lokale Feldstärke überall im Zwischenraum mit E = U/(r₂ − r₁) berechnen lässt.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen und Diagramme zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-22"><div class="training-kicker">M22 · Ein kapazitiver Füllstandssensor</div><figure class="training-figure"><svg viewBox="0 0 660 360" role="img" aria-labelledby="cyl-side-title"><title id="cyl-side-title">Axialer Schnitt durch einen teilweise mit nicht leitendem Öl gefüllten Zylinderkondensator. Innere und äußere Elektrode reichen über die gesamte aktive Höhe h. Die Ölfüllhöhe x beginnt unten.</title><defs><marker id="cyl-side-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs><path d="M178 191.7H382V300H178Z" fill="var(--wb-blue,#146b75)" opacity=".18"/><rect x="243.3" y="40" width="73.4" height="260" fill="var(--wb-head-bg,white)" stroke="currentColor" stroke-width="2"/><g fill="none" stroke="currentColor" stroke-width="2.5"><path d="M170 40V300M390 40V300M170 300H390"/><path d="M280 40V15M390 40L410 15"/><path d="M178 191.7H243.3M316.7 191.7H382" stroke-dasharray="5 4" stroke-width="1.5"/></g><g stroke="currentColor" marker-start="url(#cyl-side-arrow)" marker-end="url(#cyl-side-arrow)"><path d="M455 43V297"/><path d="M515 194V297"/></g><g fill="currentColor" font-size="16"><text x="291" y="22">+</text><text x="422" y="23">−</text><text x="470" y="120">h = 72 cm</text><text x="530" y="251">x</text><text x="90" y="94">Luft</text><text x="58" y="259">Öl, εᵣ = 2,8</text></g><path d="M112 100H209M145 263H209" stroke="currentColor" fill="none"/><text x="330" y="340" text-anchor="middle" fill="currentColor" font-size="14">Axialschnitt · aktive Überlappungshöhe h · nicht maßstäblich</text></svg><figcaption>Eigene Materialskizze. Die sichtbaren Flüssigkeitsbereiche links und rechts gehören zum selben ringförmigen Zwischenraum.</figcaption></figure><p>Für diesen eigenständigen Messversuch gilt h = 72 cm, r₁ = 1,2 cm und r₂ = 3,6 cm. Eine nicht leitende Flüssigkeit mit εᵣ = 2,8 füllt den Zwischenraum von unten bis zur Höhe x. Oberhalb befindet sich Luft. Der Sensor bleibt an einer idealen Quelle mit U = 24 V angeschlossen.</p><p><b>Vorgegebene Beziehungen aus dem bereitgestellten Material:</b></p><p class="cylinder-formula">C₀ = 2π ε₀ h / ln(r₂/r₁)</p><p class="cylinder-formula">C(x) = C₀ [1 + (εᵣ − 1) x/h] &nbsp; für 0 ≤ x ≤ h</p><p>ln bezeichnet den natürlichen Logarithmus. Im Verhältnis r₂/r₁ müssen beide Radien in derselben Einheit eingesetzt werden; der Logarithmus hat ein dimensionsloses Argument. C₀ ist die Kapazität des vollständig luftgefüllten Sensors. ε₀ = 8,85 · 10⁻¹² F/m.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 22</summary><p>Nutze die Logarithmustaste ln. Beim Diagramm ist C(0) nicht null. Für d) zuerst nach x umstellen und anschließend prüfen, ob der Wert zwischen 0 und h liegt.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a22",
+  "title": "Aufgabe 22 · Eine Kapazitätsmessung in einen Füllstand umrechnen",
+  "hint": "15 Minuten · Vorgegebenes Material zum Zylinderkondensator sowie bekannte Feld-, Kapazitäts- und Energiebeziehungen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne C₀ in pF und kontrolliere, dass ln(r₂/r₁) dimensionslos ist.\nb) Bestimme C bei x = 30 cm und bei vollständiger Füllung x = h.\nc) Erkläre die Beziehung C(x) als Summe eines luftgefüllten und eines flüssigkeitsgefüllten Teilkondensators. Leite sie mithilfe der gemeinsamen Spannung und der Parallelschaltungsregel her. Zeichne ein C-x-Diagramm mit x in cm und C in pF. Bestimme Achsenabschnitt und Steigung.\nd) Die Messelektronik zeigt C = 80,0 pF. Berechne die Füllhöhe, überprüfe den zulässigen Bereich und kontrolliere das Ergebnis mit deinem Diagramm.",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen und Diagramme zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-material" id="material-23"><div class="training-kicker">M23 · Flächenladung und Energie beim leeren Sensor</div><p>Der Sensor aus M22 enthält nun vollständig Luft und bleibt an U = 24 V angeschlossen. Es gelten dieselben Radien und dieselbe aktive Höhe. Verwende den ungerundeten Wert von C₀ aus Aufgabe 22 oder berechne ihn erneut aus der vorgegebenen Formel.</p><p>Für die einander zugewandten Mantelflächen gilt A₁ = 2πr₁h und A₂ = 2πr₂h. Im idealisierten langen Zylinder tragen sie gleich große entgegengesetzte Ladungen +Q und −Q. Das Volumen zwischen ihnen beträgt V<sub>Feld</sub> = π(r₂² − r₁²)h. Die innere Elektrode ist positiv.</p></div>
+<details class="training-hint"><summary>Hinweis zu Aufgabe 23</summary><p>Die relevante Fläche ist jeweils eine Zylindermantelfläche, nicht eine Kreisfläche. Bei der Energiedichte muss zwischen lokalem Wert und Mittelwert über ein inhomogenes Feld unterschieden werden.</p></details><div class="wb-section-break"></div><div data-wb-type="essay"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_a23",
+  "title": "Aufgabe 23 · Gleiche Ladung, unterschiedliche Mantelflächen",
+  "hint": "10 Minuten · Vorgegebenes Material zum Zylinderkondensator sowie bekannte Feld-, Kapazitäts- und Energiebeziehungen.",
+  "storagePrefix": "ef_b7_20261109_",
+  "fields": [
+    {
+      "label": "Dein Lösungsweg",
+      "key": "loesung",
+      "kind": "textarea",
+      "prompt": "a) Berechne den Ladungsbetrag Q = C₀U und die beiden einander zugewandten Mantelflächen A₁ und A₂.\nb) Bestimme die vorzeichenbehafteten Flächenladungsdichten σ₁ = +Q/A₁ und σ₂ = −Q/A₂. Vergleiche ihre Beträge und erkläre den Unterschied trotz gleicher Ladungsbeträge.\nc) Berechne die gespeicherte Energie mit W = ½C₀U². Berechne außerdem die mittlere Energiedichte W/V_Feld.\nd) Ist diese mittlere Energiedichte gleich der lokalen Energiedichte an jedem Radius? Begründe mit dem Feldlinienbild und ρ_el = ½ε₀E².",
+      "placeholder": "Notiere deinen Lösungsweg. Skizzen und Diagramme zeichnest du ins Heft."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="wb-section-break"></div><div data-wb-type="mcq"><script class="wb-config" type="application/json">{
+  "id": "ef_b7_20261109_zylinder_check",
+  "title": "Kurzcheck 12 · Zylinder und Füllstand",
+  "hint": "Wähle pro Frage genau eine Antwort.",
+  "shuffleChoices": true,
+  "questions": [
+    {
+      "text": "Warum werden der luftgefüllte und der flüssigkeitsgefüllte Höhenabschnitt im Sensor parallel zusammengefasst?",
+      "choices": [
+        {
+          "id": "sameU",
+          "label": "Beide liegen zwischen denselben Elektroden und haben dieselbe Spannung."
+        },
+        {
+          "id": "sameQ",
+          "label": "Beide müssen denselben Ladungsbetrag speichern."
+        },
+        {
+          "id": "series",
+          "label": "Unterschiedliche Dielektrika bedeuten immer Reihenschaltung."
+        }
+      ],
+      "correct": [
+        "sameU"
+      ],
+      "explain": "Entscheidend ist die Verbindung zu denselben Elektroden. Die Teilkapazitäten addieren sich bei gleicher Spannung."
+    },
+    {
+      "text": "Was gilt für die Energiedichte im luftgefüllten Zylinderkondensator?",
+      "choices": [
+        {
+          "id": "local",
+          "label": "Sie ist nahe der inneren Elektrode größer als nahe der äußeren."
+        },
+        {
+          "id": "flat",
+          "label": "Sie ist überall gleich, weil die Gesamtspannung fest ist."
+        },
+        {
+          "id": "zero",
+          "label": "Sie ist überall null, weil die Gesamtladung beider Elektroden null ist."
+        }
+      ],
+      "correct": [
+        "local"
+      ],
+      "explain": "Das Feld wird nach außen schwächer. Wegen ρ_el = ½ε₀E² nimmt die lokale Energiedichte ebenfalls nach außen ab."
+    }
+  ]
+}</script></div><div class="wb-section-break"></div>
+<div class="training-note"><strong>Jetzt hast du das zusätzlich gelernt</strong><p>Du kannst radiale Feldlinien und Äquipotenziallinien unterscheiden, eine vorgegebene Zylinderformel anwenden, den Füllstand aus einer Kapazität bestimmen und Flächenladung sowie Energie bei einer anderen Kondensatorbauform vergleichen.</p></div>
+<div class="training-actions"><button type="button" data-training-print="cylinder">Nur Zylinderaufgaben drucken</button><button type="button" data-training-page="9">Zu Formeln und Nacharbeit →</button></div>
+</section>
 </div>
 <script src="../assets/allgemeines_format.js"></script>
 <script>
@@ -924,9 +1173,9 @@
   input.addEventListener('input',update);update();mirrors.push(update);
  });
  let printMode='all';
- const prepare=()=>{mirrors.forEach(update=>update());document.body.classList.toggle('training-check-print',printMode==='check');document.body.classList.toggle('training-extra-print',printMode==='extra');};
+ const prepare=()=>{mirrors.forEach(update=>update());document.body.classList.toggle('training-check-print',printMode==='check');document.body.classList.toggle('training-extra-print',printMode==='extra');document.body.classList.toggle('training-cylinder-print',printMode==='cylinder');};
  window.addEventListener('beforeprint',prepare);
- window.addEventListener('afterprint',()=>{document.body.classList.remove('training-check-print','training-extra-print');printMode='all';});
+ window.addEventListener('afterprint',()=>{document.body.classList.remove('training-check-print','training-extra-print','training-cylinder-print');printMode='all';});
  document.querySelectorAll('[data-training-print]').forEach(button=>button.addEventListener('click',()=>{printMode=button.dataset.trainingPrint;prepare();window.print();}));
 })();</script>
 </body></html>

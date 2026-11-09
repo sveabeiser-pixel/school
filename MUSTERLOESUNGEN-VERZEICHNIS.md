@@ -4,7 +4,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 
 | Lernseite | Musterlösung |
 | --- | --- |
-| [Elektrische Felder: Klausurtraining mit Feldenergie, Influenz und Flächenladung (Modus B)](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B.html) | [Musterlösung](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B-gartenbank247.html) |
+| [Elektrische Felder: Klausurtraining mit Feldenergie, Influenz, Flächenladung und Zylinderkondensator (Modus B)](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B.html) | [Musterlösung](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B-gartenbank247.html) |
 | [Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html) | [Musterlösung](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Kondensator-Labor und -schaltungen, Elektronenkanone im Längsfeld](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
