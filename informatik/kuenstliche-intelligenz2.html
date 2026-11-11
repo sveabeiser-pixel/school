@@ -314,9 +314,26 @@
     <p><strong>T:</strong> Ein Foto mit genau einem Hund oder einer Katze der passenden Klasse zuordnen. <strong>P:</strong> Anteil richtiger Vorhersagen auf zurückgehaltenen Fotos, zusätzlich Fehler je Klasse. <strong>E:</strong> Korrekt beschriftete und vielfältige Hunde- und Katzenbilder. Es handelt sich um überwachtes Lernen.</p>
     <div class="wb-section-break"></div>
     <h2>1 · Bilder vorbereiten und trennen</h2>
-    <p>Nutze eigene Tierfotos, bereitgestellte Unterrichtsdateien oder den <a href="https://www.microsoft.com/en-us/download/details.aspx?id=54765" target="_blank" rel="noopener">Katzen-und-Hunde-Datensatz im Microsoft Download Center</a>. Die zugehörige <a href="https://www.kaggle.com/c/dogs-vs-cats/data" target="_blank" rel="noopener">Kaggle-Datenseite</a> beschreibt die Herkunft; für deren Download kann ein Konto nötig sein. Wähle für den Schulversuch eine überschaubare Teilmenge, beispielsweise 50 Bilder je Klasse.</p>
+    <p>Lade die vier Bildarchive für deinen Versuch herunter. Trainings- und Testbilder sind als getrennte Downloads bereitgestellt. Die Dateigrößen sind gerundet; die Dateien werden erst beim Anklicken geladen.</p>
     <div class="wb-section-break"></div>
-    <p>Prüfe falsche Labels, beschädigte Bilder und Duplikate. Lege vier getrennte Ordner an: <code>train-cats</code>, <code>train-dogs</code>, <code>test-cats</code>, <code>test-dogs</code>. Reserviere beispielsweise je 10 der 50 Bilder als unabhängigen Test. Testbilder dürfen nicht in die Trainingsklassen hochgeladen werden.</p>
+    <div data-ki2-downloads>
+      <h3>Trainingsbilder · Für das Lernen des Modells</h3>
+      <ul>
+        <li><a href="https://github.com/sveabeiser-pixel/school/releases/download/trainingsdaten-v1/train_cats.zip" data-ki2-download="train_cats.zip">Katzen: Trainingsbilder herunterladen (ZIP, 26,2 MB)</a></li>
+        <li><a href="https://github.com/sveabeiser-pixel/school/releases/download/trainingsdaten-v1/train_dogs.zip" data-ki2-download="train_dogs.zip">Hunde: Trainingsbilder herunterladen (ZIP, 26,3 MB)</a></li>
+      </ul>
+      <h3>Testbilder · Erst nach dem Training verwenden</h3>
+      <ul>
+        <li><a href="https://github.com/sveabeiser-pixel/school/releases/download/trainingsdaten-v1/test_cats.zip" data-ki2-download="test_cats.zip">Katzen: Testbilder herunterladen (ZIP, 6,2 MB)</a></li>
+        <li><a href="https://github.com/sveabeiser-pixel/school/releases/download/trainingsdaten-v1/test_dogs.zip" data-ki2-download="test_dogs.zip">Hunde: Testbilder herunterladen (ZIP, 8,8 MB)</a></li>
+      </ul>
+    </div>
+    <div class="wb-section-break"></div>
+    <div class="ki-note-amber"><strong>Training und Test getrennt halten:</strong> Entpacke jedes ZIP-Archiv in einen eigenen Ordner. Lade nur Bilder aus <code>train_cats.zip</code> und <code>train_dogs.zip</code> in die beiden Trainingsklassen hoch. Bilder aus <code>test_cats.zip</code> und <code>test_dogs.zip</code> bleiben bis zur abschließenden Überprüfung ungenutzt. Nutze sie nicht, um deine Einstellungen zu verbessern.</div>
+    <div class="wb-section-break"></div>
+    <p>Prüfe falsche Labels, beschädigte Bilder und Duplikate, insbesondere Überschneidungen zwischen Training und Test. Wähle für einen kleinen Schulversuch beispielsweise je 40 Trainingsbilder und je 10 separate Testbilder aus den passenden Archiven. Das sind Beispielzahlen für deinen Versuch, keine Angaben zum Gesamtinhalt der ZIP-Dateien. Benötigst du zusätzliche Validierungsbilder zur Wahl der Einstellungen, trenne sie nur aus den Trainingsarchiven ab.</p>
+    <div class="wb-section-break"></div>
+    <p>Alternativ kannst du eigene Tierfotos oder den <a href="https://www.microsoft.com/en-us/download/details.aspx?id=54765" target="_blank" rel="noopener">Katzen-und-Hunde-Datensatz im Microsoft Download Center</a> verwenden. Die <a href="https://www.kaggle.com/c/dogs-vs-cats/data" target="_blank" rel="noopener">Kaggle-Datenseite</a> beschreibt diesen Datensatz; für deren Download kann ein Konto nötig sein. Bei einer eigenen Sammlung legst du die Trennung in Training, Validierung und Test vor dem ersten Training selbst fest.</p>
     <div class="wb-section-break"></div>
     <h2>2 und 3 · Modell wählen und trainieren</h2>
     <ol>
