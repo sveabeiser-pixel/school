@@ -51,7 +51,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [10. Ausfallsicherheit, Abnahme und Projektreflexion](nwt/huehnerstall/10-ausfallsicherheit-abgabe.html) | [Musterlösung](nwt/huehnerstall/10-ausfallsicherheit-abgabe-wolke19.html) |
 | [Gruppe A: ESP32, Sensorik, Messdaten und Webserver](nwt/huehnerstall/gruppe-a.html) | [Musterlösung](nwt/huehnerstall/gruppe-a-anker64.html) |
 | [Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage](nwt/huehnerstall/gruppe-b.html) | [Musterlösung](nwt/huehnerstall/gruppe-b-laterne97.html) |
-| [Smart Chicken Coop: Projektüberblick und vernetzte Systemplanung](nwt/huehnerstall/index.html) | [Musterlösung](nwt/huehnerstall/index-wuerfel72.html) |
+| [Smart Chicken Coop: Projektüberblick, Hardware und vernetzte Systemplanung](nwt/huehnerstall/index.html) | [Musterlösung](nwt/huehnerstall/index-wuerfel72.html) |
 | [Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung](physik_1/Akustik-Versuche.html) | [Musterlösung](physik_1/Akustik-Versuche-segeltuch24.html) |
 | [Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben](physik_misc/Einheiten_Formeln.html) | [Musterlösung](physik_misc/Einheiten_Formeln-farn39.html) |
 | [Oberstufenphysik: Größen, Einheiten und ausfüllbare Tabelle](physik_misc/Einstieg.html) | [Musterlösung](physik_misc/Einstieg-wolke73.html) |

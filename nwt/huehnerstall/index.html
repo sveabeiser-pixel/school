@@ -71,6 +71,7 @@
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="2" data-wb-page-title="Lernroute">
@@ -134,6 +135,7 @@
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="3" data-wb-page-title="Arbeitsweise">
@@ -175,6 +177,7 @@
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="4" data-wb-page-title="Klausur und Abgabe">
@@ -201,11 +204,12 @@
           "title":"Deine Startreflexion",
           "hint":"Antworte in 4–6 Sätzen: Welche Systementscheidung wird vermutlich besonders wichtig? Begründe deine Vermutung mit mindestens zwei Fachbegriffen.",
           "fields":[
-            {"label":"Antwort","key":"answer","kind":"textarea","placeholder":"Meine Vermutung ..."}
+            {"label":"Antwort","key":"answer","kind":"textarea","prompt":"Welche Systementscheidung wird vermutlich besonders wichtig? Begründe deine Vermutung in 4–6 Sätzen mit mindestens zwei Fachbegriffen.","placeholder":"Schreibe hier deine begründete Vermutung ..."}
           ]
         }
         </script>
       </div>
+      <div class="wb-section-break"></div>
       <div class="wb-callout">
         <strong>Jetzt hast du das gelernt:</strong>
         <p>Das Projekt verbindet Physik, Informatik und Technik über eine nachvollziehbare Mess- und Datenkette. Du arbeitest in einer Gruppe, musst das Gesamtsystem aber individuell erklären können.</p>
@@ -261,16 +265,45 @@
         }]
       }
       </script></div>
+      <div class="wb-section-break"></div>
     </section>
 
     <section data-wb-page="6" data-wb-page-title="Material und Differenzierung">
       <h1>Material, Hilfen und Erweiterungen</h1>
-      <h2>Grundausstattung</h2>
+      <h2>Die Hardware des gesamten Projekts</h2>
       <div class="coop-card-grid">
-        <div class="coop-card"><span class="coop-card__icon">📡</span><strong>Sensorik</strong><p>ESP32-DevKitC-VIE, Joy-it SensorKit X40 mit KY-015 und KY-018, Breadboard, Jumperkabel und USB-Datenkabel.</p></div>
-        <div class="coop-card"><span class="coop-card__icon">📷</span><strong>Kamera</strong><p>Raspberry Pi 4 B mit 2 GB, Aluminiumgehäuse, 5,1-V-/3-A-Netzteil, 64-GB-microSD und Camera Module 3 Wide NoIR.</p></div>
-        <div class="coop-card"><span class="coop-card__icon">🧰</span><strong>Arbeitsplatz</strong><p>Computer mit Arduino IDE und Raspberry Pi Imager, freigegebenes Netzwerk, serieller Monitor, Terminal und Messprotokoll.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">📡</span><strong>Messknoten</strong><p>Joy-it NodeMCU ESP32, KY-015 mit DHT11 für Temperatur und Luftfeuchtigkeit sowie KY-018 mit LDR für die vergleichende Helligkeitsmessung.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">📷</span><strong>Kameraknoten</strong><p>Raspberry Pi 4 Model B mit 2 GB RAM, Camera Module 3 Wide NoIR, 15-poliges CSI-Flachbandkabel und 64-GB-microSD-Karte.</p></div>
+        <div class="coop-card"><span class="coop-card__icon">🔌</span><strong>Versorgung und Verbindung</strong><p>5,1-V-/3-A-USB-C-Netzteil für den Pi, Micro-USB-Datenkabel für den ESP32, Breadboard, Dupont-Leitungen, Kartenleser und freigegebenes Netzwerk.</p></div>
       </div>
+
+      <p>Die folgende Liste enthält nicht nur die beiden Rechner, sondern auch Sensoren, Kabel, Speicher, Stromversorgung, Beleuchtung und Montagezubehör. Prüfe vor jeder Einheit, welche Teile deine Gruppe tatsächlich benötigt.</p>
+      <table class="coop-comparison">
+        <thead><tr><th>Bereich</th><th>Hardware</th><th>Aufgabe im Projekt</th><th>Wichtiger Hinweis</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sensorik und Steuerung</strong></td><td>Joy-it NodeMCU ESP32</td><td>Liest die Sensoren aus, verarbeitet Messwerte und überträgt Daten per WLAN.</td><td>Das konkrete Pinout des vorhandenen Boards prüfen; GPIOs arbeiten mit 3,3-V-Logik.</td></tr>
+          <tr><td><strong>Sensorik und Steuerung</strong></td><td>Joy-it SensorKit X40</td><td>Stellt die im Projekt verwendeten Sensormodule und weiteres Experimentiermaterial bereit.</td><td>Wir verwenden daraus insbesondere KY-015 und KY-018.</td></tr>
+          <tr><td><strong>Sensor</strong></td><td>KY-015 Temperatur-/Feuchtemodul mit DHT11</td><td>Misst Temperatur und relative Luftfeuchtigkeit und sendet digital codierte Werte an den ESP32.</td><td>Im Projekt: Signal an GPIO4; Versorgung und Modulbeschriftung vor dem Anschluss kontrollieren.</td></tr>
+          <tr><td><strong>Sensor</strong></td><td>KY-018 Fotowiderstandsmodul mit LDR</td><td>Erzeugt eine lichtabhängige Spannung für den ADC-Versuch.</td><td>Im Projekt wird ein ADC1-Eingang, beispielsweise GPIO34, verwendet; der Rohwert ist keine Luxangabe.</td></tr>
+          <tr><td><strong>Aufbau</strong></td><td>Lötfreies Breadboard</td><td>Trägt den Versuchsaufbau ohne Löten.</td><td>Vor dem Einschalten Versorgungsschienen und getrennte Kontaktreihen prüfen.</td></tr>
+          <tr><td><strong>Aufbau</strong></td><td>Dupont-Steckleitungen, passend als Male–Male und Female–Male</td><td>Verbinden ESP32, Breadboard und Sensormodule.</td><td>Kabelfarben sind nur Orientierung; entscheidend sind Pinbeschriftung und Schaltskizze.</td></tr>
+          <tr><td><strong>Programmierung</strong></td><td>Micro-USB-Datenkabel</td><td>Versorgt den ESP32 am Arbeitsplatz und überträgt Programme sowie serielle Diagnosedaten.</td><td>Ein reines Ladekabel funktioniert nicht für den Upload.</td></tr>
+          <tr><td><strong>Linux-Computer</strong></td><td>Raspberry Pi 4 Model B mit 2 GB RAM</td><td>Betreibt Raspberry Pi OS, Kamera, Dateien, Videoprogramme und Netzwerkdienste.</td><td>Vor Arbeiten an Kamera oder microSD vollständig herunterfahren und stromlos machen.</td></tr>
+          <tr><td><strong>Stromversorgung</strong></td><td>5,1-V-/3-A-Netzteil mit USB-C-Stecker</td><td>Versorgt den Raspberry Pi stabil.</td><td>Unterspannung kann Boot-, Speicher- und Kamerafehler verursachen.</td></tr>
+          <tr><td><strong>Speicher</strong></td><td>64-GB-microSD-Karte</td><td>Enthält Raspberry Pi OS, Programme, Einstellungen, Bilder und Videos.</td><td>Nie im laufenden Betrieb entnehmen; zuerst <code>sudo shutdown -h now</code> ausführen.</td></tr>
+          <tr><td><strong>Vorbereitung</strong></td><td>microSD-Kartenleser oder passender SD-Adapter</td><td>Verbindet die microSD mit dem Arbeitscomputer, damit Raspberry Pi OS geschrieben werden kann.</td><td>Im Raspberry Pi Imager den Zieldatenträger anhand seiner Größe sorgfältig kontrollieren.</td></tr>
+          <tr><td><strong>Schutz</strong></td><td>Aluminiumgehäuse für Raspberry Pi 4</td><td>Schützt die Platine und unterstützt je nach Bauform die Wärmeabgabe.</td><td>Lüftungsöffnungen und Kameraanschluss dürfen nicht verdeckt werden.</td></tr>
+          <tr><td><strong>Kamera</strong></td><td>Raspberry Pi Camera Module 3 Wide NoIR</td><td>Nimmt Weitwinkelbilder und Videos im sichtbaren und nahen infraroten Bereich auf.</td><td>NoIR ist keine Wärmebildkamera und benötigt weiterhin sichtbares oder infrarotes Licht.</td></tr>
+          <tr><td><strong>Kameraverbindung</strong></td><td>15-poliges CSI-Flachbandkabel für Raspberry Pi 4</td><td>Überträgt Steuer- und Bilddaten zwischen Kamera und Pi.</td><td>Nur bei ausgeschaltetem und vom Netz getrenntem Pi gerade und richtig orientiert einstecken.</td></tr>
+          <tr><td><strong>Nachtversuch</strong></td><td>Geeignete 850-nm-Infrarotleuchte mit passender, geprüfter Stromversorgung</td><td>Beleuchtet die Szene für den NoIR-Versuch, ohne sichtbares Weißlicht zu benötigen.</td><td>Leistung, Erwärmung, Abstand und sichere Versorgung vor dem Einsatz prüfen; nicht direkt in die LEDs blicken.</td></tr>
+          <tr><td><strong>Vergleichslicht</strong></td><td>Weiße LED-Leuchte oder Taschenlampe</td><td>Ermöglicht den Vergleich von sichtbarer Beleuchtung, IR-Beleuchtung und Dunkelheit.</td><td>Für vergleichbare Bilder Abstand und Kameraeinstellungen dokumentieren.</td></tr>
+          <tr><td><strong>Netzwerk</strong></td><td>Freigegebener WLAN-Zugangspunkt; bei Bedarf Ethernetkabel</td><td>Verbindet ESP32, Pi und Arbeitscomputer für SSH, HTTP und Projektübertragung.</td><td>Das Schulnetz muss lokale Gerätekommunikation erlauben; keine eigenständige Portfreigabe einrichten.</td></tr>
+          <tr><td><strong>Arbeitsplatz</strong></td><td>Computer oder Notebook mit USB-Anschluss</td><td>Führt Arduino IDE, Raspberry Pi Imager, Terminal, Browser und Dokumentation aus.</td><td>Für SSH-Schlüssel und Projektdateien wird ein festgelegter schulischer Speicherort verwendet.</td></tr>
+          <tr><td><strong>Montage</strong></td><td>Kamerahalterung sowie geeignetes Gehäuse, Schrauben und Kabelbinder</td><td>Fixieren Kamera, Pi, ESP32 und Leitungen am Versuchsplatz beziehungsweise später am Stall.</td><td>Bauteile gegen Zug, Staub und Feuchtigkeit schützen; Kamerabildausschnitt vor dem Betrieb prüfen.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="wb-callout"><strong>Nicht Teil des Aufbaus:</strong><p>Der Arduino Uno wird in der Unterrichtsreihe als bekannte Mikrocontrollerklasse mit ESP32 und Raspberry Pi verglichen. Der eigentliche Smart-Coop-Aufbau arbeitet jedoch mit ESP32 und Raspberry Pi.</p></div>
 
       <h2>Differenzierung ohne getrennte Ziele</h2>
       <table class="coop-comparison">
