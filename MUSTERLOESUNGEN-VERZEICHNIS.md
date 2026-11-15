@@ -6,7 +6,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | --- | --- |
 | [Elektrische Felder: Klausurtraining mit Feldenergie, Influenz, Ionenwind, Flächenladung und Zylinderkondensator (Modus B)](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B.html) | [Musterlösung](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B-gartenbank247.html) |
 | [Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html) | [Musterlösung](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html) |
-| [Elektrische Felder: Knackpunkte vor der Klausur – sechs kurze Übungen und eine Reserve (Modus B)](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B.html) | [Musterlösung](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B-regenschirm83.html) |
+| [Elektrische Felder: Übungsaufgaben zu Feld, Potenzial, Kondensatoren und Teilchenbewegung (Modus B)](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B.html) | [Musterlösung](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B-regenschirm83.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Kondensator-Labor und -schaltungen, Elektronenkanone im Längsfeld](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
 | [Elektrische Felder 3: Energie, Laden und Entladen mit Kapitelaufgaben](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
