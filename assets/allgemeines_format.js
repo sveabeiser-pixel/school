@@ -3773,13 +3773,38 @@ function initPuzzle2(root, idx=0){
       if(!piece || piece.classList.contains("p2-locked")) return;
 
       const rect = piece.getBoundingClientRect();
+      const book = root.closest && root.closest(".wb-book");
+      const dragLayer = document.createElement("div");
+      const dragScope = document.createElement("div");
+      dragLayer.className = "wb-book p2-drag-layer";
+      dragLayer.setAttribute("aria-hidden", "true");
+      if(book && book.getAttribute("data-theme")){
+        dragLayer.setAttribute("data-theme", book.getAttribute("data-theme"));
+      }
+      dragScope.className = "p2";
+      dragLayer.appendChild(dragScope);
+      document.body.appendChild(dragLayer);
+
+      // Schrift und eventuell seitenspezifisch gesetzte Puzzle-Variablen mitnehmen.
+      const pieceStyle = global.getComputedStyle ? global.getComputedStyle(piece) : null;
+      const rootStyle = global.getComputedStyle ? global.getComputedStyle(root) : null;
+      if(pieceStyle) dragLayer.style.fontFamily = pieceStyle.fontFamily;
+      if(rootStyle){
+        ["--p2-card","--p2-card2","--p2-text","--p2-muted","--p2-line","--p2-line2","--p2-shadow","--p2-radius"].forEach(name => {
+          const value = rootStyle.getPropertyValue(name);
+          if(value) dragScope.style.setProperty(name, value);
+        });
+      }
+
       drag = {
         piece,
         offsetX: clientX - rect.left,
         offsetY: clientY - rect.top,
         placeholder: document.createElement("div"),
         originParent: piece.parentElement,
-        originNext: piece.nextSibling
+        originNext: piece.nextSibling,
+        dragLayer,
+        dragScope
       };
 
       drag.placeholder.className = "p2-placeholder";
@@ -3789,13 +3814,16 @@ function initPuzzle2(root, idx=0){
       drag.originParent.insertBefore(drag.placeholder, drag.originNext);
 
       piece.classList.add("p2-dragging");
-      // clientX/clientY, DOMRect und fixed positioning share viewport coordinates.
-      // Adding visualViewport offsets here makes the piece drift at browser zoom.
+      // Das Originalteil liegt während des Ziehens in einer globalen Ebene.
+      // So kann kein transformierter/animierter Vorfahr das Koordinatensystem
+      // von position:fixed verschieben. clientX/clientY, DOMRect und fixed
+      // verwenden dadurch auf allen Seiten dieselben Viewport-Koordinaten.
       piece.style.position = "fixed";
       piece.style.left = rect.left + "px";
       piece.style.top  = rect.top + "px";
       piece.style.width = rect.width + "px";
       piece.style.zIndex = 9999;
+      dragScope.appendChild(piece);
     }
 
     function moveDrag(clientX, clientY){
@@ -3806,7 +3834,9 @@ function initPuzzle2(root, idx=0){
 
     function restoreDrag(){
       if(!drag) return;
-      const { piece, placeholder, originParent } = drag;
+      const { piece, placeholder, originParent, dragLayer } = drag;
+
+      originParent.insertBefore(piece, placeholder);
 
       piece.classList.remove("p2-dragging");
       piece.style.position = "";
@@ -3815,8 +3845,8 @@ function initPuzzle2(root, idx=0){
       piece.style.width = "";
       piece.style.zIndex = "";
 
-      originParent.insertBefore(piece, placeholder);
       placeholder.remove();
+      if(dragLayer && dragLayer.parentNode) dragLayer.parentNode.removeChild(dragLayer);
     }
 
     function endDrag(clientX, clientY){

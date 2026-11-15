@@ -1997,6 +1997,38 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
   z-index: 9999;
   box-shadow: 0 18px 60px rgba(2, 6, 23, 0.22);
 }
+
+/*
+  Globale Drag-Ebene für Puzzle2.
+  Ein position:fixed-Element wird innerhalb eines transformierten Vorfahren
+  relativ zu diesem Vorfahren positioniert. Da Aufgabenblöcke beim Einblenden
+  animiert werden, führte das abhängig von Seite, Zoom und Scrollposition zu
+  einem sichtbaren Versatz zwischen Mauszeiger und Puzzleteil. Die Drag-Ebene
+  liegt direkt unter body und besitzt bewusst kein eigenes Transform.
+*/
+.wb-book.p2-drag-layer{
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:visible !important;
+  pointer-events:none !important;
+  transform:none !important;
+  filter:none !important;
+  perspective:none !important;
+  contain:none !important;
+  background:transparent !important;
+  z-index:2147483000 !important;
+}
+.wb-book.p2-drag-layer .p2,
+.wb-book.p2-drag-layer .p2 .p2-piece{
+  pointer-events:none !important;
+}
+.wb-book.p2-drag-layer .p2 .p2-piece{
+  margin:0 !important;
+}
 .wb-book .p2 .p2-piece.p2-locked{
   cursor: default;
   opacity: .98;
