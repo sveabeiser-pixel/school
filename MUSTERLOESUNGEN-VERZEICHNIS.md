@@ -9,8 +9,8 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Elektrische Felder: Übungsaufgaben zu Feld, Potenzial, Kondensatoren und Teilchenbewegung (Modus B)](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B.html) | [Musterlösung](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B-regenschirm83.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Kondensator-Labor und -schaltungen, Elektronenkanone im Längsfeld](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
-| [Elektrische Felder 3: Energie, Laden und Entladen mit Kapitelaufgaben](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
-| [Felder-Simulationen: Elektrostatik, Längs- und Querfeld, Magnetfeld und Induktionslabor](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
+| [Elektrische Felder 3: Energie, RC-Labor zum Laden und Entladen, Kapitelaufgaben](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
+| [Felder-Simulationen: Elektrostatik, Teilchenbahnen, Induktions- und RC-Labor](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
 | [Induktion 1: Grundversuche, magnetischer Fluss, Lenz und Induktionslabor](felder/induktion.html) | [Musterlösung](felder/induktion-buchruecken37.html) |
 | [Induktion 2: Anwendungen, Selbstinduktion und Maxwell](felder/induktion2.html) | [Musterlösung](felder/induktion2-garderobe84.html) |
 | [Magnetische Felder 1: Feldlinien, Flussdichte und Spule](felder/magnetische-felder.html) | [Musterlösung](felder/magnetische-felder-teetasse46.html) |

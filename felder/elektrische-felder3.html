@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elektrische Felder 3: Energie, Laden und Entladen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261116-rc">
   <style>
     .ef-figure{margin:0 auto;max-width:560px}
     .ef-figure img{width:100%;max-height:350px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -299,7 +300,7 @@
     </div>
   </section>
 
-  <section data-wb-page="6" data-wb-page-title="Aufladen">
+  <section data-wb-page="6" data-wb-page-title="Aufladen" data-wb-simulation>
     <h1>Aufladevorgang eines Kondensators</h1>
     <p>Beim Aufladen treibt die Spannungsquelle Ladung auf die Kondensatorplatten. Anfangs ist noch keine Gegenspannung am Kondensator vorhanden, deshalb ist die Stromstärke groß. Mit jeder zusätzlichen Ladung wächst die Kondensatorspannung und wirkt dem weiteren Laden stärker entgegen.</p>
     <p>Deshalb steigen Spannung und Ladung nicht linear, sondern nähern sich exponentiell ihren Grenzwerten. Die Spannung nähert sich \(U_0\), die Ladung nähert sich \(Q_0=C\cdot U_0\), und die Stromstärke nähert sich null.</p>
@@ -342,6 +343,28 @@
       <strong>Neue Formel:</strong>
       <p class="ef-formula">\(I(t)=I_0\cdot e^{-t/(RC)}\)</p>
       <p>Der Betrag der Stromstärke nimmt beim Aufladen exponentiell ab. Das Vorzeichen hängt davon ab, welche Richtung du als positiv festlegst.</p>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Simulation: RC-Labor zum Aufladen und Entladen</h2>
+    <p>Wird der Kondensator über einen Widerstand geladen, steigt seine Spannung immer langsamer. Beim Entladen über denselben Widerstand sinkt sie exponentiell. Vergleiche beide Vorgänge mit denselben Werten für \(R\), \(C\) und \(U_0\). Die positive Stromrichtung zeigt in die obere Kondensatorplatte; deshalb ist der Entladestrom negativ.</p>
+    <div class="field-sim-card" data-field-sim="rc-circuit"></div>
+    <p>Jetzt hast du gelernt: Die Spannung am Kondensator kann beim Umschalten nicht sprunghaft wechseln. Die Stromstärke kann dagegen sofort ihr Vorzeichen ändern. Nach \(\tau=RC\) ist beim Aufladen aus dem ungeladenen Zustand etwa 63 % des Endwerts erreicht; beim Entladen aus dem voll geladenen Zustand bleiben etwa 37 % übrig. Die Halbwertszeit von Spannung und Ladung ist nicht die Halbwertszeit der Energie \(W\).</p>
+    <p>Quelle &amp; Weiterforschen: <a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet/grundwissen/ein-und-ausschalten-von-rc-kreisen" target="_blank" rel="noopener">LEIFIphysik: Ein- und Ausschalten von RC-Kreisen</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"ef3_essay_rc_labor",
+        "title":"Auswertung: Aufladen und Entladen vergleichen",
+        "hint":"Beginne mit R = 10 kΩ, C = 100 µF und U₀ = 12 V. Notiere immer auch die Einheit.",
+        "fields":[
+          {"label":"Zeitverläufe vergleichen","key":"zeitverlauf","kind":"textarea","prompt":"Vergleiche Aufladen aus dem ungeladenen und Entladen aus dem voll geladenen Zustand. Bestimme τ und T₁/₂. Notiere U_C, I, Q und W bei t = 0 und t = T₁/₂ sowie U_C bei t = τ. Erkläre, warum beim Entladen nach T₁/₂ nur ein Viertel der anfänglichen Energie gespeichert ist."},
+          {"label":"Parameter verändern","key":"parameter","kind":"textarea","prompt":"Verdopple ausgehend von den Anfangswerten jeweils nur R, nur C und nur U₀. Vergleiche τ, T₁/₂, den Anfangsstrom beim Laden, die endgültige Ladung und die endgültige Energie. Begründe mit τ = RC, I(0) = U₀/R, Q_max = CU₀ und W_max = ½CU₀²."},
+          {"label":"Während des Versuchs umschalten","key":"umschalten","kind":"textarea","prompt":"Starte wieder mit den Anfangswerten und dem Versuch Aufladen. Halte bei T₁/₂ an und schalte mit dem Umschalter auf Entladen. Vergleiche U_C, Q, W und I unmittelbar vor und nach dem Umschalten. Erkläre, welche Größen stetig bleiben und welche sich sofort ändern. Warum bedeutet Quelle abgetrennt hier nicht, dass überhaupt kein Strom mehr fließt?"}
+        ]
+      }
+      </script>
     </div>
     <div class="wb-section-break"></div>
 
@@ -796,6 +819,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();</script>
+<script src="../assets/felder-simulations.js?v=20261116-rc"></script>
+<script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

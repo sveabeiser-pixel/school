@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="elektrische-felder3.html">
-<meta name="musterloesung-source-sha256" content="acd98197953f7f503ea58c116cd52d753aabe9c000a8966d75d6ac4651d774d2">
+<meta name="musterloesung-source-sha256" content="a4107a6e59a6a8a5e7d324f04e094e5ba764252b463bfd0689024ac623833b4d">
 <title>Elektrische Felder 3: Energie, Laden und Entladen – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
+<link rel="stylesheet" href="../assets/felder-simulations.css?v=20261116-rc">
 <style>
     .ef-figure{margin:0 auto;max-width:560px}
     .ef-figure img{width:100%;max-height:350px;object-fit:contain;height:auto;border-radius:8px;border:1px solid rgba(0,0,0,.14);background:#fff}
@@ -23,6 +24,7 @@
     @media (max-width:760px){.ef-img-grid{grid-template-columns:1fr}.ef-figure{max-width:100%}}
     .wb-book:is([data-theme="dark"], [data-theme="dark-blue"]) .ef-caption { color: var(--wb-muted); }
   </style>
+<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 <link rel="stylesheet" href="../assets/musterloesungen.css">
 <style>
 .wb-book .wb-side-footer{display:none}
@@ -48,7 +50,6 @@
 .wb-book:not(.wb-present-mode) .wb-icon-btn{width:32px;height:32px;flex-shrink:0}
 }
 </style>
-<link rel="stylesheet" href="../assets/kursstufe-layout.css?v=20261021-1">
 </head>
 <body>
 <div data-wb-book>
@@ -89,6 +90,9 @@
 </section>
 <section data-wb-page="6" data-wb-page-title="Aufladen">
 <h1>Aufladevorgang eines Kondensators</h1>
+<div class="wb-section-break"></div>
+<article class="solution-block" data-solution="ef3_essay_rc_labor"><h3>Auswertung: Aufladen und Entladen vergleichen</h3>
+<span class="solution-label">Eine mögliche Antwort</span><h4>1. Anfangs- und Halbwertszeiten</h4><p>R = 10000 Ω, C = 100·10⁻⁶ F und U₀ = 12 V ergeben <b>τ = RC = 1,00 s</b> und <b>T₁/₂ = τ ln 2 = 0,693 s</b>. Der Endladungsbetrag ist Qmax = CU₀ = 1200 µC, die volle Feldenergie Wmax = ½CU₀² = 7,20 mJ. Positive Stromrichtung ist in die obere Kondensatorplatte.</p><div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Versuch / Zeitpunkt</th><th>U_C</th><th>I</th><th>Q</th><th>W</th></tr></thead><tbody><tr><td>Aufladen: t = 0</td><td>0 V</td><td>+1,20 mA</td><td>0 µC</td><td>0 mJ</td></tr><tr><td>Aufladen: t = T₁/₂</td><td>6,00 V</td><td>+0,60 mA</td><td>600 µC</td><td>1,80 mJ</td></tr><tr><td>Entladen: t = 0</td><td>12,00 V</td><td>−1,20 mA</td><td>1200 µC</td><td>7,20 mJ</td></tr><tr><td>Entladen: t = T₁/₂</td><td>6,00 V</td><td>−0,60 mA</td><td>600 µC</td><td>1,80 mJ</td></tr></tbody></table></div><p>Nach τ beträgt U_C beim Aufladen 12(1−e⁻¹) V = <b>7,59 V</b>, beim Entladen 12e⁻¹ V = <b>4,41 V</b>. Beim Entladen halbiert sich nach T₁/₂ die Spannung. Wegen W = ½CU_C² sinkt die Energie dabei auf (½)² = ¼ des Anfangswerts. Ihre eigene Halbwertszeit ist τ ln 2 / 2 = 0,347 s. Die negative Entladestromstärke nähert sich null von unten; ihr Betrag nimmt ab.</p><h4>2. Parametervergleich</h4><p>Jeweils nur der genannte Parameter wird gegenüber den Anfangswerten verdoppelt. Die Endwerte gelten für vollständiges Aufladen nach hinreichend langer Zeit; nach 5τ bleibt noch etwa 0,67 % der Spannungsdifferenz übrig.</p><div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Änderung</th><th>τ</th><th>T₁/₂</th><th>I(0) beim Laden</th><th>Qmax</th><th>Wmax</th></tr></thead><tbody><tr><td>R → 20 kΩ</td><td>2,00 s</td><td>1,386 s</td><td>0,60 mA</td><td>1200 µC</td><td>7,20 mJ</td></tr><tr><td>C → 200 µF</td><td>2,00 s</td><td>1,386 s</td><td>1,20 mA</td><td>2400 µC</td><td>14,40 mJ</td></tr><tr><td>U₀ → 24 V</td><td>1,00 s</td><td>0,693 s</td><td>2,40 mA</td><td>2400 µC</td><td>28,80 mJ</td></tr></tbody></table></div><p>τ = RC und T₁/₂ = RC ln 2 wachsen mit R oder C, nicht mit U₀. I(0) = U₀/R hängt nicht von C ab. Die Endladung CU₀ wächst linear mit C und U₀; die Energie ½CU₀² wächst linear mit C und quadratisch mit U₀. R beeinflusst die Geschwindigkeit des Vorgangs, nicht die endgültige Ladung oder Kondensatorenergie.</p><h4>3. Umschalten bei halber Ladespannung</h4><p>Unmittelbar vor dem Umschalten nach 0,693 s: U_C = 6,00 V, Q = 600 µC, W = 1,80 mJ und I = +0,60 mA. Unmittelbar danach bleiben <b>U_C, Q und W gleich</b>, während <b>I sofort auf −0,60 mA</b> springt. Die Quelle wird aus dem RC-Kreis herausgeschaltet, aber Kondensator und Widerstand bleiben verbunden. Der geladene Kondensator liefert nun Energie, die im Widerstand in innere Energie umgewandelt wird. Ohne Widerstandsverbindung und ohne Leckstrom wäre der Kondensator dagegen isoliert und behielte seine Ladung. Im endlichen Widerstandskreis kann die Ladung nicht sprunghaft wechseln, denn dazu wäre eine unendlich große Stromstärke nötig. Die Simulationszeit zählt nach dem Umschalten wieder ab null für den neuen Teilvorgang.</p></article>
 <div class="wb-section-break"></div>
 <article class="solution-block" data-solution="ef3_cat_laden_entladen"><h3>Sortiere: Aufladen oder Entladen?</h3>
 <div class="solution-table" tabindex="0" role="region" aria-label="Lösungstabelle"><table><thead><tr><th>Vorgang</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Aufladen</td><td>U_C nähert sich der Quellspannung U₀; Q nähert sich Q₀ = C·U₀.</td></tr><tr><td>Entladen</td><td>U_C fällt gegen 0 V; der Ladungsüberschuss wird kleiner; der Kondensator gibt gespeicherte Energie ab.</td></tr><tr><td>Beide Vorgänge</td><td>Der Strombetrag ist zu Beginn groß und wird dann kleiner. Diese Aussage wird in der Quellkonfiguration nur dem Aufladen zugeordnet, gilt fachlich aber ebenso beim Entladen.</td></tr></tbody></table></div></article>

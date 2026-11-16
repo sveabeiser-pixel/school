@@ -24,6 +24,50 @@
     return key;
   }
 
+  function shuffleInPlace(arr){
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // Zufällig mischen, aber bei mindestens zwei unterscheidbaren Elementen
+  // niemals exakt die übergebene Ausgangsreihenfolge stehen lassen.
+  function shuffleDifferent(arr, keyFn=(value => value)){
+    const original = arr.slice();
+    shuffleInPlace(arr);
+    if(arr.length < 2) return arr;
+
+    const keys = list => list.map((value, index) => String(keyFn(value, index)));
+    const originalKeys = keys(original);
+    const sameAsOriginal = list => keys(list).every((value, index) => value === originalKeys[index]);
+    if(!sameAsOriginal(arr)) return arr;
+
+    const alternatives = [];
+    for(let shift = 1; shift < original.length; shift++){
+      const rotated = original.slice(shift).concat(original.slice(0, shift));
+      if(!sameAsOriginal(rotated)) alternatives.push(rotated);
+    }
+    if(alternatives.length){
+      const chosen = alternatives[Math.floor(Math.random() * alternatives.length)];
+      arr.splice(0, arr.length, ...chosen);
+    }
+    return arr;
+  }
+
+  // Sattolo erzeugt aus eindeutigen Elementen einen Zyklus ohne Fixpunkt:
+  // Kein Element bleibt an derselben Position. Das ist für P2 wichtig,
+  // damit links und rechts anfangs nicht bereits zeilenweise zusammenpassen.
+  function derangeInPlace(arr){
+    if(arr.length < 2) return arr;
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * i);
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
   function limitName(value){
     return String(value || "").slice(0, NAME_MAX_LENGTH);
   }
@@ -200,14 +244,6 @@ function el(tag, attrs = {}, children = []) {
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "mcq_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "mcq"));
 
-    function shuffle(arr){
-      for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     cfg.questions.forEach((q, qi) => {
       const qEl = el("div", {class:"wb-q", "data-qi": String(qi)});
       qEl.appendChild(el("h3", {}, [`${qi+1}. ${q.text || ""}`]));
@@ -215,7 +251,7 @@ function el(tag, attrs = {}, children = []) {
       const type = (q.multiple || hasMultipleCorrect) ? "checkbox" : "radio";
       const name = `wbq_${cfg.id || "mcq"}_${qi}`;
       const choices = (q.choices || []).slice();
-      if(cfg.shuffleChoices !== false) shuffle(choices);
+      if(cfg.shuffleChoices !== false) shuffleDifferent(choices, choice => choice.id || choice.label || "");
       choices.forEach(choice => {
         const inp = el("input", {type, name, value: choice.id || ""});
         const label = el("label", {class:"wb-choice"}, [inp, el("span", {}, [choice.label || ""])]);
@@ -361,15 +397,6 @@ function el(tag, attrs = {}, children = []) {
       return s ? [s] : [];
     }
 
-        // --- shuffle (einmal beim Start) ---
-    function shuffle(arr){
-      for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     function clearGap(g){
       g.classList.remove("filled","ok","bad");
       g.innerHTML = "&nbsp;";
@@ -451,8 +478,16 @@ function el(tag, attrs = {}, children = []) {
       return chip;
     }
 
-    // Bank zufällig befüllen
-    shuffle(cfg.bank.map(t => String(t))).forEach(t => bank.appendChild(makeChip(t)));
+    // Bank zufällig befüllen. Wenn die Wortbank genau aus den Lösungen besteht,
+    // darf sie auch dann nicht zufällig wieder in Lücken-Reihenfolge erscheinen.
+    const initialBankTokens = shuffleDifferent(cfg.bank.map(t => String(t)), token => token);
+    const primaryGapAnswers = cfg.segments
+      .filter(segment => segment.t === "gap")
+      .map(segment => normalizeGapAnswers(segment.a)[0] || "");
+    const bankShowsSolutionOrder = initialBankTokens.length === primaryGapAnswers.length
+      && initialBankTokens.every((token, index) => token === primaryGapAnswers[index]);
+    if(bankShowsSolutionOrder) shuffleDifferent(initialBankTokens, token => token);
+    initialBankTokens.forEach(t => bank.appendChild(makeChip(t)));
 
     // --- Drop auf GAP ---
     function allowDropGap(gap){
@@ -573,6 +608,8 @@ function el(tag, attrs = {}, children = []) {
         g.classList.remove("filled","ok","bad");
         g.innerHTML = "&nbsp;";
       });
+      shuffleDifferent(Array.from(bank.children), chip => chip.getAttribute("data-token") || "")
+        .forEach(chip => bank.appendChild(chip));
       scoreEl.textContent = "";
       try{ localStorage.removeItem(storageKey); }catch(_e){}
       updateCheckState();
@@ -841,14 +878,6 @@ function el(tag, attrs = {}, children = []) {
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "order_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "order"));
 
-    function shuffle(arr){
-      for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     function makeChip(item){
       const chip = el("div", {class:"wb-order-chip", draggable:"true", "data-id": item.id}, [item.label]);
       chip.addEventListener("dragstart", (e) => {
@@ -876,7 +905,7 @@ function el(tag, attrs = {}, children = []) {
     }
 
     const chips = items.map(makeChip);
-    const order = (cfg.shuffle === false) ? chips : shuffle(chips.slice());
+    const order = (cfg.shuffle === false) ? chips : shuffleDifferent(chips.slice(), chip => chip.getAttribute("data-id") || "");
     order.forEach(ch => bank.appendChild(ch));
 
     function nextEmptyDrop(){
@@ -993,7 +1022,7 @@ function el(tag, attrs = {}, children = []) {
     function reset(){
       Array.from(slotsWrap.querySelectorAll(".wb-order-slot")).forEach(s => s.classList.remove("ok","bad"));
       chips.forEach(ch => bank.appendChild(ch));
-      if(cfg.shuffle !== false) shuffle(chips).forEach(ch => bank.appendChild(ch));
+      if(cfg.shuffle !== false) shuffleDifferent(chips.slice(), chip => chip.getAttribute("data-id") || "").forEach(ch => bank.appendChild(ch));
       scoreEl.textContent = "";
       try{ localStorage.removeItem(storageKey); }catch(_e){}
       updateCheckState();
@@ -1033,14 +1062,6 @@ function el(tag, attrs = {}, children = []) {
     }));
     const pageKey = (global.location && (global.location.pathname || global.location.href || "")) || "";
     const storageKey = registerResetStorageKey((cfg.storagePrefix || "wb_") + "categorize_" + pageKey + "_" + (cfg.__wbKey || cfg.id || "categorize"));
-
-    function shuffle(arr){
-      for(let i = arr.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
 
     const host = el("div", {});
     const grid = el("div", {class:"wb-categorize-grid"}, []);
@@ -1268,7 +1289,7 @@ function el(tag, attrs = {}, children = []) {
         const chip = qs(`.wb-categorize-chip[data-id="${item.id}"]`, host);
         if(chip) bank.appendChild(chip);
       });
-      if(cfg.shuffle !== false) shuffle(Array.from(bank.children)).forEach(ch => bank.appendChild(ch));
+      if(cfg.shuffle !== false) shuffleDifferent(Array.from(bank.children), chip => chip.getAttribute("data-id") || "").forEach(ch => bank.appendChild(ch));
       clearCheckState();
       try{ localStorage.removeItem(storageKey); }catch(_e){}
     }
@@ -1297,7 +1318,7 @@ function el(tag, attrs = {}, children = []) {
     }
 
     items.forEach(item => bank.appendChild(makeChip(item)));
-    if(cfg.shuffle !== false) shuffle(Array.from(bank.children)).forEach(ch => bank.appendChild(ch));
+    if(cfg.shuffle !== false) shuffleDifferent(Array.from(bank.children), chip => chip.getAttribute("data-id") || "").forEach(ch => bank.appendChild(ch));
 
     const controls = el("div", {class:"wb-row"}, [
       el("button", {class:"wb-btn primary", type:"button", onclick: check}, ["Überprüfen"]),
@@ -3599,17 +3620,26 @@ function initPuzzle2(root, idx=0){
     const allPieces = () => qsa(".p2-piece", root);
     const totalPairs = () => new Set(allPieces().map(p => (p.getAttribute("data-pair")||"").trim())).size;
 
-    function shuffleChildren(container){
-      const kids = Array.from(container.children);
-      for(let i = kids.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        container.appendChild(kids[j]);
-        kids.splice(j, 1);
-      }
-    }
     function shuffleAll(){
-      shuffleChildren(leftBank);
-      shuffleChildren(rightBank);
+      const leftPieces = shuffleDifferent(
+        Array.from(leftBank.children),
+        piece => piece.getAttribute("data-pair") || piece.textContent || ""
+      );
+      leftPieces.forEach(piece => leftBank.appendChild(piece));
+
+      const rightPieces = Array.from(rightBank.children);
+      const rightByPair = new Map(rightPieces.map(piece => [piece.getAttribute("data-pair") || "", piece]));
+      const alignedRight = leftPieces.map(piece => rightByPair.get(piece.getAttribute("data-pair") || ""));
+      const hasUniqueCompletePairs = alignedRight.every(Boolean) && new Set(alignedRight).size === alignedRight.length;
+
+      if(hasUniqueCompletePairs && alignedRight.length > 1){
+        derangeInPlace(alignedRight).forEach(piece => rightBank.appendChild(piece));
+      }else{
+        shuffleDifferent(
+          rightPieces,
+          piece => piece.getAttribute("data-pair") || piece.textContent || ""
+        ).forEach(piece => rightBank.appendChild(piece));
+      }
     }
 
     function setScore(graded){
@@ -3785,6 +3815,12 @@ function initPuzzle2(root, idx=0){
       dragLayer.appendChild(dragScope);
       document.body.appendChild(dragLayer);
 
+      const layerRect = dragLayer.getBoundingClientRect();
+      const layerScaleX = dragLayer.offsetWidth ? layerRect.width / dragLayer.offsetWidth : 1;
+      const layerScaleY = dragLayer.offsetHeight ? layerRect.height / dragLayer.offsetHeight : 1;
+      const safeScaleX = Number.isFinite(layerScaleX) && layerScaleX > 0 ? layerScaleX : 1;
+      const safeScaleY = Number.isFinite(layerScaleY) && layerScaleY > 0 ? layerScaleY : 1;
+
       // Schrift und eventuell seitenspezifisch gesetzte Puzzle-Variablen mitnehmen.
       const pieceStyle = global.getComputedStyle ? global.getComputedStyle(piece) : null;
       const rootStyle = global.getComputedStyle ? global.getComputedStyle(root) : null;
@@ -3804,7 +3840,11 @@ function initPuzzle2(root, idx=0){
         originParent: piece.parentElement,
         originNext: piece.nextSibling,
         dragLayer,
-        dragScope
+        dragScope,
+        layerLeft: layerRect.left,
+        layerTop: layerRect.top,
+        layerScaleX: safeScaleX,
+        layerScaleY: safeScaleY
       };
 
       drag.placeholder.className = "p2-placeholder";
@@ -3819,17 +3859,17 @@ function initPuzzle2(root, idx=0){
       // von position:fixed verschieben. clientX/clientY, DOMRect und fixed
       // verwenden dadurch auf allen Seiten dieselben Viewport-Koordinaten.
       piece.style.position = "fixed";
-      piece.style.left = rect.left + "px";
-      piece.style.top  = rect.top + "px";
-      piece.style.width = rect.width + "px";
+      piece.style.left = ((rect.left - layerRect.left) / safeScaleX) + "px";
+      piece.style.top  = ((rect.top - layerRect.top) / safeScaleY) + "px";
+      piece.style.width = (rect.width / safeScaleX) + "px";
       piece.style.zIndex = 9999;
       dragScope.appendChild(piece);
     }
 
     function moveDrag(clientX, clientY){
       if(!drag) return;
-      drag.piece.style.left = (clientX - drag.offsetX) + "px";
-      drag.piece.style.top  = (clientY - drag.offsetY) + "px";
+      drag.piece.style.left = ((clientX - drag.offsetX - drag.layerLeft) / drag.layerScaleX) + "px";
+      drag.piece.style.top  = ((clientY - drag.offsetY - drag.layerTop) / drag.layerScaleY) + "px";
     }
 
     function restoreDrag(){

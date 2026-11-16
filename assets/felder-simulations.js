@@ -934,6 +934,174 @@
     draw();
   }
 
+  function initRCCircuitSim(root) {
+    if (!root || root.dataset.rcMounted === "1") return;
+    root.dataset.rcMounted = "1";
+    var controls = [
+      ["resistance", "Widerstand R in kΩ", 1, 100, 1, 10],
+      ["capacitance", "Kapazität C in µF", 10, 1000, 10, 100],
+      ["voltage", "Quellspannung U₀ in V", 1, 24, 1, 12]
+    ];
+    root.innerHTML = '<div class="rc-parameters">' + controls.map(function (p) {
+      return '<div class="rc-parameter"><span>' + p[1] + '</span><input type="range" data-role="' + p[0] + '" min="' + p[2] + '" max="' + p[3] + '" step="' + p[4] + '" value="' + p[5] + '" aria-label="' + p[1] + '"><input type="number" data-role="' + p[0] + '-number" min="' + p[2] + '" max="' + p[3] + '" step="' + p[4] + '" value="' + p[5] + '" aria-label="' + p[1] + ' als Zahl"></div>';
+    }).join('') + '</div><div class="rc-toolbar">' +
+      '<label>Versuch<select data-role="mode"><option value="charge">Aufladen · leer starten</option><option value="discharge">Entladen · voll starten</option></select></label>' +
+      '<label>Wiedergabetempo<select data-role="rate"><option value="0.1">0,1 ×</option><option value="1" selected>1 ×</option><option value="5">5 ×</option><option value="20">20 ×</option></select></label>' +
+      '<button class="wb-btn primary" type="button" data-role="play">Start</button><button class="wb-btn" type="button" data-role="reset">Neu starten</button>' +
+      '<button class="wb-btn" type="button" data-role="switch">Auf Entladen umschalten</button></div>' +
+      '<div class="rc-stage"><div><canvas data-role="canvas" width="560" height="320" role="img" aria-label="RC-Stromkreis mit Spannungsquelle, Umschalter, Widerstand und Kondensator"></canvas>' +
+      '<p class="rc-status" data-role="status" aria-live="polite"></p>' +
+      '<dl class="rc-meters"><div><dt>Spannung U_C</dt><dd data-role="uc-output"></dd></div><div><dt>Stromstärke I</dt><dd data-role="i-output"></dd></div><div><dt>Ladungsbetrag Q = C U_C</dt><dd data-role="q-output"></dd></div><div><dt>Energie W = ½ C U_C²</dt><dd data-role="w-output"></dd></div><div><dt>Zeitkonstante τ = RC</dt><dd data-role="tau-output"></dd></div><div><dt>Halbwertszeit T₁/₂ = τ ln 2</dt><dd data-role="half-output"></dd></div></dl></div>' +
+      '<div><canvas class="rc-plot" data-role="plot" width="700" height="470" role="img" aria-label="Zeitdiagramme von Kondensatorspannung, Ladungsbetrag und vorzeichenbehafteter Stromstärke"></canvas>' +
+      '<label class="rc-time">Zeit seit Start / Umschalten: <output data-role="time-output"></output><input type="range" data-role="time" min="0" max="1000" value="0" step="1"></label>' +
+      '<div class="rc-markers"><button class="wb-btn" type="button" data-role="half">T₁/₂</button><button class="wb-btn" type="button" data-role="tau">τ</button><button class="wb-btn" type="button" data-role="five-tau">5τ</button></div>' +
+      '<label class="rc-check"><input type="checkbox" data-role="show-current" checked> Technische Stromrichtung im Schaltbild</label></div></div>' +
+      '<p class="rc-formula">U_C(t) = U_Ziel + (U_Start − U_Ziel) · exp(−t/τ), &nbsp; I(t) = (U_Ziel − U_C(t))/R</p>' +
+      '<p class="rc-model">Idealer RC-Kreis ohne Leckstrom. Positive Stromrichtung: in die obere Kondensatorplatte. Bei „Aufladen“ ist U_Ziel = U₀, bei „Entladen“ U_Ziel = 0. Der Umschalter trennt beim Entladen die Quelle vom Widerstand; R und C bilden weiter einen geschlossenen Kreis. Parameteränderungen beginnen einen neuen Versuch. Nach 5τ bleiben etwa 0,67 % der anfänglichen Differenz zum Spannungs-Endwert. Der Endwert wird nicht exakt erreicht.</p>';
+    var canvas = find(root, "canvas"), plot = find(root, "plot"), modeEl = find(root, "mode");
+    var play = find(root, "play"), timeEl = find(root, "time"), switchBtn = find(root, "switch");
+    var model, initialU = 0, t = 0, running = false, raf = null, last = null, mode = "charge";
+    function values(time) {
+      var U = model.target + (initialU - model.target) * Math.exp(-time / model.tau);
+      return {U:U, I:(model.target - U) / model.R, Q:model.C * U, W:.5 * model.C * U * U};
+    }
+    function stop() {
+      running = false; last = null;
+      if (raf !== null) window.cancelAnimationFrame(raf);
+      raf = null; play.textContent = "Start";
+    }
+    function configure(startU) {
+      var R = Number(find(root, "resistance").value) * 1000;
+      var C = Number(find(root, "capacitance").value) * 1e-6;
+      var U0 = Number(find(root, "voltage").value);
+      model = {R:R, C:C, U0:U0, tau:R * C, target:mode === "charge" ? U0 : 0};
+      initialU = startU; t = 0;
+      switchBtn.textContent = mode === "charge" ? "Auf Entladen umschalten" : "Auf Aufladen umschalten";
+      draw();
+    }
+    function restart() {
+      stop(); mode = modeEl.value;
+      configure(mode === "charge" ? 0 : Number(find(root, "voltage").value));
+    }
+    function surface(element, height) {
+      var w = Math.max(270, element.getBoundingClientRect().width || 550), ratio = Math.min(window.devicePixelRatio || 1, 2);
+      if (element.width !== Math.round(w * ratio) || element.height !== height * ratio) {
+        element.width = Math.round(w * ratio); element.height = height * ratio;
+      }
+      var ctx = element.getContext("2d"); ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, w, height);
+      ctx.font = "13px system-ui"; ctx.lineWidth = 2; ctx.textAlign = "center";
+      return {ctx:ctx, width:w};
+    }
+    function wire(ctx, points, color) {
+      ctx.strokeStyle = color || "#475569"; ctx.lineWidth = 2;
+      ctx.beginPath(); points.forEach(function (p, i) { if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }); ctx.stroke();
+    }
+    function drawCircuit(v) {
+      var s = surface(canvas, 320), ctx = s.ctx, w = s.width;
+      var xC = w - 34, pivot = 95, contact = 60, rX = (pivot + xC) / 2, top = 80, bottom = 248;
+      ctx.fillStyle = "#0f172a"; ctx.font = "bold 14px system-ui"; ctx.fillText(mode === "charge" ? "Aufladen: Quelle angeschlossen" : "Entladen: Quelle abgetrennt", w / 2, 22);
+      wire(ctx, [[35,130],[35,55],[contact,55]]);
+      wire(ctx, [[35,166],[35,bottom],[xC,bottom],[xC,175]]);
+      wire(ctx, [[contact,105],[contact,bottom]]);
+      wire(ctx, [[contact,mode === "charge" ? 55 : 105],[pivot,top],[rX-22,top]], "#0e7490");
+      wire(ctx, [[rX+22,top],[xC,top],[xC,155]]);
+      ctx.strokeStyle = "#334155"; ctx.lineWidth = 2; ctx.strokeRect(rX-22, top-9, 44, 18);
+      ctx.fillStyle = "#334155"; ctx.fillText("R", rX, top-18);
+      [[contact,55],[contact,105],[pivot,top]].forEach(function (p) { ctx.beginPath(); ctx.arc(p[0],p[1],3,0,2*Math.PI); ctx.fill(); });
+      ctx.textAlign = "left"; ctx.fillText("A", contact+5, 48); ctx.fillText("E", contact+5, 124);
+      ctx.textAlign = "center"; ctx.fillText("U₀", 14, 191);
+      wire(ctx, [[35,130],[35,141]]); wire(ctx, [[35,157],[35,166]]);
+      wire(ctx, [[18,141],[52,141]], "#be123c"); wire(ctx, [[25,157],[45,157]], "#1d4ed8");
+      ctx.font = "12px system-ui"; ctx.fillStyle = "#be123c"; ctx.fillText("+", 13, 140);
+      ctx.fillStyle = "#1d4ed8"; ctx.fillText("−", 13, 161);
+      wire(ctx, [[xC-24,155],[xC+24,155]], "#be123c");
+      wire(ctx, [[xC-24,175],[xC+24,175]], "#1d4ed8");
+      ctx.fillStyle = "#334155"; ctx.fillText("C", xC-35, 170);
+      var amount = Math.min(5, Math.round(v.U / model.U0 * 5));
+      for (var k = 0; k < amount; k++) {
+        var cx = xC - (amount-1) * 4 + k * 8;
+        ctx.fillStyle = "#be123c"; ctx.fillText("+", cx, 148);
+        ctx.fillStyle = "#1d4ed8"; ctx.fillText("−", cx, 192);
+      }
+      if (find(root, "show-current").checked && Math.abs(v.I) > 1e-12) {
+        var dir = Math.sign(v.I), arrowY = 110;
+        drawArrow(ctx, rX-dir*22, arrowY, rX+dir*22, arrowY, "#7e22ce");
+        ctx.fillStyle = "#7e22ce"; ctx.fillText(dir > 0 ? "I > 0" : "I < 0", rX, arrowY+20);
+        // Charge transport determines the moving dots; they never cross the dielectric.
+        var phase = Math.abs(v.Q - model.C * initialU) / (model.C * model.U0) * 8;
+        for (var dot = 0; dot < 4; dot++) {
+          var fraction = ((dot / 4 + dir * phase) % 1 + 1) % 1;
+          ctx.fillStyle = "#a16207"; ctx.beginPath(); ctx.arc(pivot+fraction*(xC-pivot),top,3,0,2*Math.PI);ctx.fill();
+        }
+      }
+      ctx.fillStyle = "#475569"; ctx.font = "12px system-ui";
+      ctx.fillText("Feldenergie im Kondensator", w / 2, 281);
+      ctx.fillStyle = "#dbe3ea"; ctx.fillRect(35,291,w-70,10);
+      ctx.fillStyle = "#0e7490"; ctx.fillRect(35,291,(w-70)*Math.min(1, v.W/(.5*model.C*model.U0*model.U0)),10);
+    }
+    function drawPlots(v) {
+      var s = surface(plot,470), ctx=s.ctx, w=s.width, l=47, r=w-14, end=5*model.tau;
+      var maximumI=model.U0/model.R;
+      var graphs = [
+        {label:"U_C in V",max:model.U0,color:"#0e7490",key:"U",unit:1},
+        {label:"Q in µC",max:model.C*model.U0,color:"#a16207",key:"Q",unit:1e6},
+        {label:"I in mA",max:maximumI,color:"#7e22ce",key:"I",unit:1000}
+      ];
+      graphs.forEach(function (g,index) {
+        var top=30+index*150, height=99, bottom=top+height;
+        var y = function (value) { return g.key === "I" ? top+height/2-value/g.max*height/2 : bottom-value/g.max*height; };
+        ctx.fillStyle=g.color;ctx.textAlign="left";ctx.font="bold 12px system-ui";ctx.fillText(g.label,l,top-10);
+        ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1;ctx.strokeRect(l,top,r-l,height);
+        ctx.textAlign="right";ctx.font="11px system-ui";ctx.fillStyle="#475569";
+        ctx.fillText(formatNumber(g.max*g.unit, g.max*g.unit<1?2:1),l-5,top+8);
+        ctx.fillText("0",l-5,y(0)+4);
+        if(g.key==="I")ctx.fillText(formatNumber(-g.max*g.unit,g.max*g.unit<1?2:1),l-5,bottom);
+        if(g.key==="I")wire(ctx,[[l,y(0)],[r,y(0)]],"#cbd5e1");
+        [Math.LN2,1].forEach(function (factor,i) {
+          var x=l+factor/5*(r-l);ctx.setLineDash([3,4]);wire(ctx,[[x,top],[x,bottom]],i?"#94a3b8":"#e2b675");ctx.setLineDash([]);
+          if(index===0){ctx.textAlign=i?"left":"right";ctx.font="10px system-ui";ctx.fillStyle="#475569";ctx.fillText(i?"τ":"T₁/₂",x+(i?3:-3),bottom+29);}
+        });
+        ctx.lineWidth=2;ctx.strokeStyle=g.color;ctx.beginPath();
+        for(var i=0;i<=180;i++){var st=values(i/180*end),x=l+i/180*(r-l);if(i)ctx.lineTo(x,y(st[g.key]));else ctx.moveTo(x,y(st[g.key]));}ctx.stroke();
+        ctx.fillStyle=g.color;ctx.beginPath();ctx.arc(l+t/end*(r-l),y(v[g.key]),4,0,2*Math.PI);ctx.fill();
+        ctx.textAlign="center";ctx.font="10px system-ui";ctx.fillStyle="#334155";
+        for(var tick=0;tick<=5;tick++)ctx.fillText(formatNumber(tick*model.tau,model.tau<.1?2:1),l+tick/5*(r-l),bottom+15);
+        ctx.textAlign="right";ctx.fillText("t in s",r,bottom+29);
+      });
+    }
+    function draw() {
+      if(!model)return;
+      var v=values(t);
+      [["uc-output",v.U," V",2],["i-output",v.I*1000," mA",3],["q-output",v.Q*1e6," µC",2],["w-output",v.W*1000," mJ",3],
+        ["tau-output",model.tau," s",3],["half-output",model.tau*Math.LN2," s",3],["time-output",t," s",3]].forEach(function (item) {find(root,item[0]).textContent=formatNumber(item[1],item[3])+item[2];});
+      timeEl.value=String(Math.round(t/(5*model.tau)*1000));
+      root.dataset.time=t;root.dataset.voltage=v.U;root.dataset.current=v.I;root.dataset.charge=v.Q;root.dataset.energy=v.W;
+      root.dataset.tau=model.tau;root.dataset.initialVoltage=initialU;root.dataset.mode=mode;
+      var message=mode==="charge"?"Aufladen: U_C und Q steigen; der positive Strom nimmt ab.":"Entladen: U_C und Q fallen; der Strom ist negativ, sein Betrag nimmt ab.";
+      if(Math.abs(initialU-model.target)<1e-10)message="Kein Spannungsunterschied am Widerstand: Es fließt kein Strom.";
+      if(t>=5*model.tau)message+=" 5τ erreicht: kleiner Rest statt exakter Grenzwert.";
+      if(find(root,"status").textContent!==message)find(root,"status").textContent=message;
+      drawCircuit(v);drawPlots(v);
+    }
+    function frame(ts) {
+      if(!running)return;
+      if(!root.getClientRects().length||document.hidden){stop();return;}
+      if(last!==null)t=Math.min(5*model.tau,t+Math.min((ts-last)/1000,.05)*Number(find(root,"rate").value));
+      last=ts;draw();if(t>=5*model.tau)stop();else raf=window.requestAnimationFrame(frame);
+    }
+    play.addEventListener("click",function(){if(running){stop();return;}if(t>=5*model.tau)restart();running=true;last=null;play.textContent="Pause";raf=window.requestAnimationFrame(frame);});
+    find(root,"reset").addEventListener("click",restart);
+    modeEl.addEventListener("change",restart);
+    switchBtn.addEventListener("click",function(){var U=values(t).U,wasRunning=running;stop();mode=mode==="charge"?"discharge":"charge";modeEl.value=mode;configure(U);if(wasRunning){running=true;play.textContent="Pause";raf=window.requestAnimationFrame(frame);}});
+    timeEl.addEventListener("input",function(){stop();t=Number(timeEl.value)/1000*5*model.tau;draw();});
+    [["half",Math.LN2],["tau",1],["five-tau",5]].forEach(function (p){find(root,p[0]).addEventListener("click",function(){stop();t=p[1]*model.tau;draw();});});
+    find(root,"show-current").addEventListener("change",draw);
+    controls.forEach(function(p){var range=find(root,p[0]),number=find(root,p[0]+"-number");range.addEventListener("input",function(){number.value=range.value;restart();});number.addEventListener("input",function(){if(number.value===""||!Number.isFinite(number.valueAsNumber))return;range.value=String(Math.max(p[2],Math.min(p[3],number.valueAsNumber)));restart();});number.addEventListener("change",function(){number.value=range.value;});});
+    if(window.ResizeObserver)new window.ResizeObserver(function(){draw();}).observe(root);
+    restart();
+  }
+
   function initLongitudinalFieldSim(root) {
     if (!root || root.dataset.longitudinalMounted === "1") return;
     root.dataset.longitudinalMounted = "1";
@@ -2885,6 +3053,7 @@
 
   register("electrostatic-field", initElectrostaticFieldLab);
   register("capacitor", initCapacitorSim);
+  register("rc-circuit", initRCCircuitSim);
   register("particle-trajectory", initParticleTrajectorySim);
   register("longitudinal-field", initLongitudinalFieldSim);
   register("magnetic-trajectory", initMagneticTrajectorySim);
