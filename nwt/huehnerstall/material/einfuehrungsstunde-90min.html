@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Einführungsstunde Smart Chicken Coop – 90 Minuten</title>
+  <style>
+    :root {
+      --green-950:#173a2d;
+      --green-800:#275b46;
+      --green-650:#3f7f61;
+      --green-150:#dcebe3;
+      --green-075:#eff7f2;
+      --gold:#e6a83c;
+      --gold-pale:#fff4d8;
+      --ink:#1e2924;
+      --muted:#5b6861;
+      --line:#b9c9c0;
+      --paper:#ffffff;
+    }
+    * { box-sizing:border-box; }
+    html { font-family:Arial, Helvetica, sans-serif; color:var(--ink); background:#dfe6e2; }
+    body { margin:0; }
+    a { color:#145b42; text-decoration-thickness:1px; text-underline-offset:2px; }
+    code { font-family:Consolas, "Courier New", monospace; font-size:.94em; }
+    .sheet {
+      width:210mm;
+      min-height:297mm;
+      margin:10mm auto;
+      padding:14mm 15mm 13mm;
+      background:var(--paper);
+      box-shadow:0 8px 30px rgba(20,50,38,.16);
+      position:relative;
+      page-break-after:always;
+      overflow:hidden;
+    }
+    .sheet:last-child { page-break-after:auto; }
+    .topline { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:7mm; }
+    .eyebrow { color:var(--green-650); font-size:9pt; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .docmark { text-align:right; color:var(--muted); font-size:8.5pt; line-height:1.4; }
+    h1 { margin:0 0 3mm; color:var(--green-950); font-size:27pt; line-height:1.06; letter-spacing:-.02em; }
+    h2 { margin:6mm 0 2.5mm; color:var(--green-800); font-size:15pt; line-height:1.2; }
+    h3 { margin:0 0 1.5mm; color:var(--green-950); font-size:11pt; }
+    p, li, td, th { font-size:9.6pt; line-height:1.42; }
+    p { margin:0 0 2.5mm; }
+    ul, ol { margin:1.5mm 0 3mm; padding-left:5mm; }
+    li { margin:1mm 0; }
+    .lead { max-width:160mm; color:#2e453a; font-size:13pt; line-height:1.45; }
+    .badges { display:flex; flex-wrap:wrap; gap:2mm; margin:5mm 0 7mm; }
+    .badge { padding:1.7mm 3mm; border-radius:99px; color:var(--green-950); background:var(--green-150); font-size:9pt; font-weight:700; }
+    .badge.gold { background:var(--gold-pale); }
+    .hero {
+      margin:-14mm -15mm 9mm;
+      padding:14mm 15mm 11mm;
+      color:#fff;
+      background:linear-gradient(135deg, var(--green-950), var(--green-650));
+      position:relative;
+    }
+    .hero::after { content:""; position:absolute; width:65mm; height:65mm; border-radius:50%; right:-18mm; top:-24mm; background:rgba(255,211,119,.18); }
+    .hero h1, .hero .eyebrow, .hero .lead { color:#fff; }
+    .hero .lead { opacity:.92; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:5mm; }
+    .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; }
+    .card { border:1px solid var(--line); border-radius:3mm; padding:4mm; background:#fff; break-inside:avoid; }
+    .card.soft { background:var(--green-075); border-color:#c7dbd0; }
+    .card.gold { background:var(--gold-pale); border-color:#efd38f; }
+    .callout { margin:4mm 0; padding:3.5mm 4mm; border-left:4px solid var(--gold); background:var(--gold-pale); break-inside:avoid; }
+    .route { margin:3mm 0; padding:3mm 4mm; border-radius:3mm; background:var(--green-950); color:#fff; }
+    .route a { color:#fff; font-weight:700; }
+    .route code { color:#fff; }
+    table { width:100%; border-collapse:collapse; margin:2mm 0 4mm; break-inside:avoid; }
+    th { color:var(--green-950); background:var(--green-150); font-weight:800; text-align:left; }
+    th, td { border:1px solid var(--line); padding:2.2mm 2.5mm; vertical-align:top; }
+    .compact th, .compact td { padding:1.7mm 2mm; font-size:8.5pt; line-height:1.3; }
+    .timeline { display:grid; grid-template-columns:1fr 1fr; gap:3mm; }
+    .phase { min-height:46mm; border:1px solid var(--line); border-radius:3mm; padding:3.5mm; position:relative; break-inside:avoid; }
+    .phase .time { display:inline-block; margin-bottom:2mm; padding:1.2mm 2.2mm; border-radius:99px; background:var(--green-950); color:#fff; font-size:8.5pt; font-weight:800; }
+    .phase p, .phase li { font-size:8.8pt; line-height:1.34; }
+    .phase ul { margin-bottom:0; }
+    .minutes { display:grid; grid-template-columns:8fr 10fr 14fr 14fr 12fr 12fr 12fr 8fr; margin:4mm 0 6mm; border-radius:2mm; overflow:hidden; }
+    .minutes span { padding:2mm 1mm; text-align:center; color:#fff; background:var(--green-800); border-right:1px solid rgba(255,255,255,.55); font-size:7.5pt; font-weight:700; }
+    .minutes span:nth-child(even) { background:var(--green-650); }
+    .fill { display:block; min-height:10mm; margin:1.5mm 0 3mm; border-bottom:1px solid #65736c; }
+    .fill.small { min-height:6mm; }
+    .fill.tall { min-height:18mm; }
+    .identity { display:grid; grid-template-columns:1.3fr 1fr .8fr; gap:5mm; margin-bottom:5mm; }
+    .identity span { display:block; border-bottom:1px solid #4f5d56; padding:0 1mm 1mm; font-size:9pt; color:var(--muted); }
+    .chain { display:flex; align-items:stretch; gap:1.4mm; margin:3mm 0 5mm; }
+    .chain .box { flex:1; min-width:0; min-height:22mm; padding:2mm; overflow:hidden; border:1.5px solid var(--green-650); border-radius:2mm; text-align:center; font-size:8.5pt; background:var(--green-075); }
+    .chain .arrow { display:grid; place-items:center; color:var(--green-650); font-size:14pt; font-weight:bold; }
+    .blank-label { display:block; height:4mm; margin:0 0 2mm; border-bottom:1px solid #4e6559; }
+    .checklist { list-style:none; padding:0; }
+    .checklist li { position:relative; padding-left:7mm; margin:2.2mm 0; }
+    .checklist li::before { content:"□"; position:absolute; left:0; top:-.5mm; font-size:14pt; color:var(--green-800); }
+    .answer { border-left:3px solid var(--green-650); padding-left:3mm; margin:2.5mm 0; }
+    .answer strong { color:var(--green-800); }
+    .worksheet { padding-top:10mm; padding-bottom:10mm; }
+    .worksheet .topline { margin-bottom:4mm; }
+    .worksheet h1 { font-size:23pt; }
+    .worksheet h2 { margin:4mm 0 1.5mm; font-size:14pt; }
+    .worksheet h3 { font-size:10pt; }
+    .worksheet p { margin-bottom:1.5mm; }
+    .worksheet .identity { margin-bottom:3mm; }
+    .worksheet .card { padding:3mm; }
+    .worksheet .card .fill { min-height:5mm; margin:1mm 0 1.5mm; }
+    .worksheet .fill { min-height:6mm; margin:1mm 0 2mm; }
+    .worksheet .fill.small { min-height:4mm; }
+    .worksheet .chain { margin:2mm 0 3mm; gap:1mm; }
+    .worksheet .chain .box { min-height:16mm; padding:1.5mm; font-size:7.5pt; }
+    .worksheet .chain .arrow { font-size:11pt; }
+    .worksheet table { margin-bottom:2.5mm; }
+    .worksheet th, .worksheet td { padding:1.5mm 2mm; }
+    .worksheet .compact th, .worksheet .compact td { padding:1.25mm 1.7mm; font-size:8.1pt; }
+    .cover .hero { margin-bottom:6mm; padding-top:10mm; padding-bottom:8mm; }
+    .cover .hero h1 { font-size:25pt; }
+    .cover .hero .lead { font-size:11.5pt; }
+    .cover .badges { margin:3mm 0 4mm; }
+    .cover h2 { margin:4mm 0 2mm; font-size:14pt; }
+    .cover p, .cover li { font-size:9pt; line-height:1.33; }
+    .cover .callout { margin:3mm 0; padding:3mm 4mm; }
+    .cover .card { padding:3mm 4mm; }
+    .answers .topline { margin-bottom:4mm; }
+    .answers h1 { font-size:24pt; }
+    .answers h2 { margin:4mm 0 1.5mm; font-size:14pt; }
+    .answers p, .answers li, .answers td, .answers th { font-size:8.8pt; line-height:1.3; }
+    .answers .card { padding:3mm 4mm; }
+    .answers table { margin:1.5mm 0 2.5mm; }
+    .answers th, .answers td { padding:1.4mm 1.8mm; }
+    .answers .callout { margin:3mm 0; padding:3mm 4mm; }
+    .footer { position:absolute; left:15mm; right:15mm; bottom:6mm; display:flex; justify-content:space-between; color:#69766f; font-size:8pt; border-top:1px solid #d6dfda; padding-top:2mm; }
+    .no-print { display:block; }
+    @media print {
+      @page { size:A4; margin:0; }
+      html, body { background:#fff; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+      .sheet { margin:0; box-shadow:none; width:210mm; height:297mm; min-height:297mm; }
+      .no-print { display:none; }
+      a { color:inherit; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="sheet cover">
+    <div class="hero">
+      <div class="eyebrow">Lehrkraftfassung · NWT</div>
+      <h1>Einführungsstunde<br>Smart Chicken Coop</h1>
+      <p class="lead">Ein problemorientierter 90-Minuten-Einstieg mit Projektüberblick, Hardware-Erkundung, Teamrollen und verantwortungsvoller Technik.</p>
+      <div class="badges">
+        <span class="badge">90 Minuten</span>
+        <span class="badge">gemeinsamer Einstieg</span>
+        <span class="badge gold">mit index.html</span>
+        <span class="badge gold">Arbeitsblatt enthalten</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h3>Leitfrage der Stunde</h3>
+      <p><strong>Wie kann ein technisches System einen Hühnerstall beobachten, Messwerte verständlich darstellen und dabei sicher sowie verantwortungsvoll eingesetzt werden?</strong></p>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <h2>Lernziele</h2>
+        <p>Am Ende der Stunde können die Schülerinnen und Schüler …</p>
+        <ul>
+          <li>die Kette <strong>Messgröße → Sensor → Signal → Verarbeitung → Übertragung → Anzeige</strong> erklären,</li>
+          <li>ESP32 und Raspberry Pi jeweils eine sinnvolle Projektrolle zuordnen,</li>
+          <li>zentrale Hardware des Projekts erkennen und ihre Aufgabe nennen,</li>
+          <li>mindestens zwei Sicherheits- oder Datenschutzregeln begründen,</li>
+          <li>ihren Arbeitsweg in Gruppe A oder B und einen ersten Meilenstein formulieren.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Benötigtes Material</h2>
+        <ul>
+          <li>Lehrkraftrechner, Beamer und Internet oder lokale Projektdateien</li>
+          <li>Schülergeräte, möglichst eines pro Zweierteam</li>
+          <li>Hardware sichtbar, aber noch nicht angeschlossen: ESP32, KY-015, KY-018, Pi 4, microSD, Kamera, Kabel</li>
+          <li>Ausdruck der Arbeitsblattseiten 3 und 4</li>
+          <li>Stifte; optional A3-Papier oder Haftnotizen</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Digitale Grundlage</h2>
+    <div class="route">
+      <p><strong>Lokal:</strong> <a href="../index.html#page-1">Projektübersicht index.html öffnen</a></p>
+      <p><strong>GitHub Pages:</strong> <a href="https://sveabeiser-pixel.github.io/school/bbz/nwt/huehnerstall/index.html#page-1">sveabeiser-pixel.github.io/school/bbz/nwt/huehnerstall/index.html</a></p>
+    </div>
+
+    <div class="grid2">
+      <div class="card soft">
+        <h3>Vorbereitung der Lehrkraft</h3>
+        <ul>
+          <li>Seiten 1, 2, 3 und 6 der Projektübersicht vorab testen.</li>
+          <li>Hardware stromlos in zwei Materialgruppen auslegen.</li>
+          <li>Keine Kameraaufnahme und keine öffentliche Netzwerkfreigabe aktivieren.</li>
+          <li>Gruppengröße und spätere Geräteverteilung festlegen.</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h3>Druckhinweis</h3>
+        <p>Seiten 1, 2 und 5 sind für die Lehrkraft. Seiten 3 und 4 bilden ein zweiseitiges Schülerarbeitsblatt. Bei digitaler Bearbeitung können die Antworten in ein Projektprotokoll übertragen werden.</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>Smart Chicken Coop · Einführungsstunde</span><span>1 / 5</span></div>
+  </section>
+
+  <section class="sheet">
+    <div class="topline">
+      <div><div class="eyebrow">Unterrichtsverlauf</div><h1>90 Minuten im Überblick</h1></div>
+      <div class="docmark">Lehrkraftfassung<br>Gesamtzeit: exakt 90 Minuten</div>
+    </div>
+
+    <div class="minutes">
+      <span>8</span><span>10</span><span>14</span><span>14</span><span>12</span><span>12</span><span>12</span><span>8</span>
+    </div>
+
+    <div class="timeline">
+      <article class="phase">
+        <span class="time">0–8 Min. · Problemstart</span>
+        <h3>Was müsste ein „smarter“ Hühnerstall können?</h3>
+        <ul><li>Hardware sichtbar auslegen, noch nichts anschließen.</li><li>Einzelnotiz: zwei nützliche Informationen und ein mögliches Risiko.</li><li>Kurz im Zweierteam vergleichen.</li></ul>
+        <p><strong>Ergebnis:</strong> erste Hypothesen ohne technische Vorwegnahme.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">8–18 Min. · Projekt eröffnen</span>
+        <h3>Leitfrage und Zielsystem</h3>
+        <ul><li><a href="../index.html#page-1">index.html · Seite 1</a> projizieren.</li><li>Leitfrage lesen und Datenwege in der Grafik verfolgen.</li><li>Reveal erst nach einer eigenen Vermutung öffnen.</li></ul>
+        <p><strong>Ergebnis:</strong> gemeinsame Projektfrage und Systemidee.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">18–32 Min. · Systemkette</span>
+        <h3>Vom Stall zur Anzeige</h3>
+        <ul><li>Arbeitsblatt Aufgabe 1 und 2 bearbeiten.</li><li>Begriffe Sensor, Signal, Verarbeitung, Netzwerk und Anzeige sichern.</li><li><a href="../index.html#page-2">Seite 2</a>: Order-Aufgabe gemeinsam prüfen.</li></ul>
+        <p><strong>Ergebnis:</strong> beschriftete Mess- und Kamerakette.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">32–46 Min. · Hardware-Safari</span>
+        <h3>Bauteil, Aufgabe, Risiko</h3>
+        <ul><li><a href="../index.html#page-6">index.html · Seite 6</a> öffnen.</li><li>Je Zweierteam drei reale Bauteile zuordnen.</li><li>Arbeitsblatt Aufgabe 3 ausfüllen.</li></ul>
+        <p><strong>Ergebnis:</strong> Hardware wird funktional statt nur optisch benannt.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">46–58 Min. · Rollen und Gruppen</span>
+        <h3>Gemeinsames Projekt, zwei Arbeitswege</h3>
+        <ul><li><a href="../index.html#page-2">Seite 2</a>: Gruppe A und B vorstellen.</li><li><a href="../index.html#page-3">Seite 3</a>: Rollen-Kategorisierung bearbeiten.</li><li>Rollen Hardware, Software, Messung, Dokumentation erläutern.</li></ul>
+        <p><strong>Ergebnis:</strong> jede Person kennt Arbeitsweg und wechselnde Rolle.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">58–70 Min. · Verantwortung</span>
+        <h3>Sicher ist Teil von „funktioniert“</h3>
+        <ul><li>Arbeitsblatt Aufgabe 4 als Fallkarten diskutieren.</li><li>Kleinspannung, stromloses Umstecken, microSD, Bildausschnitt und Netzwerk klären.</li><li>Begründungen statt bloßer Verbote verlangen.</li></ul>
+        <p><strong>Ergebnis:</strong> technische und gesellschaftliche Risiken werden getrennt.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">70–82 Min. · Mini-Planung</span>
+        <h3>Erster überprüfbarer Meilenstein</h3>
+        <ul><li>Arbeitsblatt Aufgabe 5 in den künftigen Gruppen bearbeiten.</li><li>Input, Verarbeitung, Output, Nachweis und Fehlerquelle festlegen.</li><li>Eine Person bereitet 30-Sekunden-Übergabe vor.</li></ul>
+        <p><strong>Ergebnis:</strong> konkreter erster Arbeitsauftrag je Gruppe.</p>
+      </article>
+
+      <article class="phase">
+        <span class="time">82–90 Min. · Sicherung</span>
+        <h3>Übergabe und Exit-Ticket</h3>
+        <ul><li>Je Gruppe eine 30-Sekunden-Übergabe.</li><li>Exit-Ticket einzeln ausfüllen.</li><li>Ausblick: nächste Stunde beginnt mit ESP32/Pi-Vorbereitung.</li></ul>
+        <p><strong>Ergebnis:</strong> individuelle Lernstandssicherung.</p>
+      </article>
+    </div>
+
+    <div class="footer"><span>Smart Chicken Coop · Einführungsstunde</span><span>2 / 5</span></div>
+  </section>
+
+  <section class="sheet worksheet">
+    <div class="topline">
+      <div><div class="eyebrow">Schülerarbeitsblatt · Seite 1</div><h1>Das System verstehen</h1></div>
+      <div class="docmark">Arbeite zuerst selbst,<br>dann im Zweierteam.</div>
+    </div>
+    <div class="identity"><span>Name</span><span>Team</span><span>Datum</span></div>
+
+    <h2>1. Einstieg: Was soll das System leisten?</h2>
+    <p>Notiere zwei Informationen, die im Hühnerstall technisch erfasst oder dargestellt werden könnten. Ergänze ein mögliches Risiko.</p>
+    <div class="grid3">
+      <div class="card"><h3>Information 1</h3><span class="fill"></span><span class="fill small"></span></div>
+      <div class="card"><h3>Information 2</h3><span class="fill"></span><span class="fill small"></span></div>
+      <div class="card"><h3>Mögliches Risiko</h3><span class="fill"></span><span class="fill small"></span></div>
+    </div>
+
+    <h2>2. Der Datenweg</h2>
+    <p>Ergänze in den Feldern passende Fachbegriffe. Nutze: <strong>Messgröße, Sensor, elektrisches Signal, ESP32, Netzwerk, Webseite</strong>.</p>
+    <div class="chain">
+      <div class="box"><span class="blank-label"></span><small>z. B. Temperatur</small></div><div class="arrow">→</div>
+      <div class="box"><span class="blank-label"></span></div><div class="arrow">→</div>
+      <div class="box"><span class="blank-label"></span></div><div class="arrow">→</div>
+      <div class="box"><span class="blank-label"></span></div><div class="arrow">→</div>
+      <div class="box"><span class="blank-label"></span></div><div class="arrow">→</div>
+      <div class="box"><span class="blank-label"></span></div>
+    </div>
+    <p><strong>Erkläre in zwei Sätzen:</strong> Warum kann an jedem Pfeil eine eigene Fehlerquelle liegen?</p>
+    <span class="fill"></span><span class="fill small"></span>
+
+    <h2>3. Zwei Rechner, zwei Hauptrollen</h2>
+    <table>
+      <thead><tr><th>Frage</th><th>ESP32</th><th>Raspberry Pi</th></tr></thead>
+      <tbody>
+        <tr><td>Hauptaufgabe im Projekt</td><td style="height:9mm"></td><td></td></tr>
+        <tr><td>Direkt angeschlossene Hardware</td><td style="height:9mm"></td><td></td></tr>
+        <tr><td>Typisches Ergebnis</td><td style="height:9mm"></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Hardware-Safari</h2>
+    <p>Wähle sechs Komponenten aus der Hardwaretabelle auf <a href="../index.html#page-6">Seite 6 der Projektübersicht</a>. Notiere jeweils eine konkrete Aufgabe.</p>
+    <table class="compact">
+      <thead><tr><th>Hardware</th><th>Aufgabe im Projekt</th><th>Eine wichtige Vorsichtsmaßnahme</th></tr></thead>
+      <tbody>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+        <tr><td style="height:8mm"></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer"><span>Smart Chicken Coop · Schülerarbeitsblatt</span><span>3 / 5</span></div>
+  </section>
+
+  <section class="sheet worksheet">
+    <div class="topline">
+      <div><div class="eyebrow">Schülerarbeitsblatt · Seite 2</div><h1>Sicher planen und zusammenarbeiten</h1></div>
+      <div class="docmark">Begründe deine Entscheidungen<br>mit Fachbegriffen.</div>
+    </div>
+    <div class="identity"><span>Name</span><span>Team</span><span>Datum</span></div>
+
+    <h2>5. Sicherheits- und Verantwortungscheck</h2>
+    <p>Kreuze die sichere Entscheidung an und begründe zwei deiner Entscheidungen auf den Linien.</p>
+    <table class="compact">
+      <thead><tr><th>Situation</th><th>Entscheidung A</th><th>Entscheidung B</th></tr></thead>
+      <tbody>
+        <tr><td>Kamerakabel anschließen</td><td>□ Pi läuft weiter.</td><td>□ Pi herunterfahren und Netzteil trennen.</td></tr>
+        <tr><td>microSD entnehmen</td><td>□ Direkt herausziehen.</td><td>□ <code>sudo shutdown -h now</code>, LED abwarten, Strom trennen.</td></tr>
+        <tr><td>ESP32-Sensorleitung</td><td>□ Pin und Spannung vorher prüfen.</td><td>□ Nach Kabelfarbe raten.</td></tr>
+        <tr><td>Kamerabildausschnitt</td><td>□ Nur Hühnerbereich erfassen.</td><td>□ Schulhof und öffentliche Wege mitfilmen.</td></tr>
+        <tr><td>Zugriff aus dem Internet</td><td>□ Spontan Port freigeben.</td><td>□ Nur freigegebene Architektur und Konten verwenden.</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Begründung 1:</strong></p><span class="fill"></span>
+    <p><strong>Begründung 2:</strong></p><span class="fill"></span>
+
+    <h2>6. Unsere erste Gruppenplanung</h2>
+    <p>Markiere euren Arbeitsweg und plant einen überprüfbaren ersten Meilenstein.</p>
+    <div class="grid2">
+      <div class="card soft"><h3>□ Gruppe A · Sensorik und ESP32</h3><p>Messkette, KY-015, KY-018, ADC, WLAN und Messwertanzeige.</p></div>
+      <div class="card soft"><h3>□ Gruppe B · Kamera und Raspberry Pi</h3><p>Linux, Kamera, NoIR, Video, Streaming und Wiederanlauf.</p></div>
+    </div>
+    <table class="compact">
+      <tbody>
+        <tr><th style="width:31%">Unser erster Input</th><td style="height:8mm"></td></tr>
+        <tr><th>Verarbeitung / Programm</th><td style="height:8mm"></td></tr>
+        <tr><th>Erwarteter Output</th><td style="height:8mm"></td></tr>
+        <tr><th>So weisen wir Funktion nach</th><td style="height:8mm"></td></tr>
+        <tr><th>Eine mögliche Fehlerquelle</th><td style="height:8mm"></td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. Exit-Ticket – einzeln ausfüllen</h2>
+    <div class="card gold">
+      <p><strong>1. Der ESP32 übernimmt im Projekt hauptsächlich …</strong></p><span class="fill small"></span>
+      <p><strong>2. Der Raspberry Pi übernimmt hauptsächlich …</strong></p><span class="fill small"></span>
+      <p><strong>3. Eine Regel, die ich begründen kann:</strong></p><span class="fill small"></span>
+      <p><strong>4. Meine offene Frage für die nächste Stunde:</strong></p><span class="fill small"></span>
+    </div>
+
+    <div class="footer"><span>Smart Chicken Coop · Schülerarbeitsblatt</span><span>4 / 5</span></div>
+  </section>
+
+  <section class="sheet answers">
+    <div class="topline">
+      <div><div class="eyebrow">Erwartungshorizont</div><h1>Sicherung und Diagnose</h1></div>
+      <div class="docmark">Lehrkraftfassung<br>Keine erfundenen Messwerte verlangen.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card soft">
+        <h3>Aufgabe 1 · plausible Ideen</h3>
+        <p>Temperatur, relative Luftfeuchtigkeit, vergleichende Helligkeit, Kamerabild oder Systemstatus. Risiken können falsche Messdeutung, elektrische Fehlanschlüsse, erfasste Personen, ungeschützte Zugriffe oder Ausfälle sein.</p>
+      </div>
+      <div class="card soft">
+        <h3>Aufgabe 2 · Datenweg</h3>
+        <p><strong>Messgröße → Sensor → elektrisches Signal → ESP32 → Netzwerk → Webseite.</strong> Fehler sind beispielsweise falscher Sensoranschluss, ungültiger Messwert, Programmfehler, fehlendes WLAN oder eine veraltete Anzeige.</p>
+      </div>
+    </div>
+
+    <h2>Aufgabe 3 · Rechnerrollen</h2>
+    <table class="compact">
+      <thead><tr><th>Frage</th><th>ESP32</th><th>Raspberry Pi</th></tr></thead>
+      <tbody>
+        <tr><td>Hauptaufgabe</td><td>Sensoren zyklisch auslesen, Werte verarbeiten und per WLAN bereitstellen.</td><td>Linux, Kamera, Dateien, Video und Dienste verwalten.</td></tr>
+        <tr><td>Hardware</td><td>KY-015 und KY-018 über GPIO beziehungsweise ADC.</td><td>Camera Module 3 Wide NoIR über CSI; microSD als Systemplatte.</td></tr>
+        <tr><td>Ergebnis</td><td>Messwerte, serieller Log, HTTP-/JSON-Daten.</td><td>Foto, Video, Kamerastatus und später Stream.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Aufgabe 4 · mögliche Hardwarezuordnungen</h2>
+    <table class="compact">
+      <thead><tr><th>Hardware</th><th>Aufgabe</th><th>Vorsicht</th></tr></thead>
+      <tbody>
+        <tr><td>Joy-it NodeMCU ESP32</td><td>Sensor- und Netzwerkknoten</td><td>3,3-V-GPIO und konkretes Pinout beachten</td></tr>
+        <tr><td>KY-015 / DHT11</td><td>Temperatur und relative Feuchte</td><td>Versorgung, GND und Signalpin kontrollieren</td></tr>
+        <tr><td>KY-018 / LDR</td><td>lichtabhängige Spannung für ADC</td><td>Rohwert nicht als Lux ausgeben</td></tr>
+        <tr><td>Raspberry Pi 4</td><td>Linux, Kamera und Dienste</td><td>vor Hardwarearbeiten herunterfahren</td></tr>
+        <tr><td>microSD</td><td>Betriebssystem und Dateien</td><td>nie im laufenden Betrieb entnehmen</td></tr>
+        <tr><td>Camera Module 3 Wide NoIR</td><td>Bild und Video, auch nahes IR</td><td>stromlos anschließen; Bildausschnitt prüfen</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Aufgabe 5 · richtige Entscheidungen</h2>
+    <p class="answer"><strong>Kamera:</strong> B · stromlos anschließen. <strong>microSD:</strong> B · kontrolliert herunterfahren. <strong>Sensorleitung:</strong> A · Pin und Spannung prüfen. <strong>Bildausschnitt:</strong> A · nur den erforderlichen Bereich erfassen. <strong>Internetzugriff:</strong> B · ausschließlich freigegebene Architektur verwenden.</p>
+
+    <h2>Aufgabe 6 und Exit-Ticket · Qualitätskriterien</h2>
+    <ul>
+      <li>Der Meilenstein ist beobachtbar: konkreter Befehl, Messwert, Datei, Log oder HTTP-Antwort.</li>
+      <li>Input, Verarbeitung und Output sind logisch verbunden.</li>
+      <li>Eine Fehlerquelle liegt am nächsten Übergang der eigenen Kette.</li>
+      <li>ESP32 und Pi werden nicht als austauschbare „kleine Computer“ beschrieben.</li>
+      <li>Eine Sicherheitsregel wird mit möglicher Schadensfolge begründet.</li>
+    </ul>
+
+    <div class="callout">
+      <h3>Differenzierung</h3>
+      <p><strong>Unterstützung:</strong> Begriffsbank und Hardwaretabelle geöffnet lassen; Kette zunächst mit Karten legen. <strong>Erweiterung:</strong> zusätzlich erklären, warum Kamera- und Sensorstatus getrennt angezeigt werden sollten und welcher Nachweis nach einem Neustart zuerst sinnvoll ist.</p>
+    </div>
+
+    <div class="footer"><span>Smart Chicken Coop · Erwartungshorizont</span><span>5 / 5</span></div>
+  </section>
+
+</body>
+</html>

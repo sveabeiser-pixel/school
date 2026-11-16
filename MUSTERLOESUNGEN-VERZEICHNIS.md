@@ -5,6 +5,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | Lernseite | Musterlösung |
 | --- | --- |
 | [Elektrische Felder: Klausurtraining mit Feldenergie, Influenz, Ionenwind, Flächenladung und Zylinderkondensator (Modus B)](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B.html) | [Musterlösung](felder/2026-Phy-Klausurtraining-Elektrische-Felder-bis-Seite-7-Modus-B-gartenbank247.html) |
+| [RC-Kreis: Unterrichtsstunde zum Ein- und Ausschalten mit Simulation, Zeitkonstante und Umschalten](felder/2026-Phy-RC-Kreis-Ein-und-Ausschalten.html) | [Musterlösung](felder/2026-Phy-RC-Kreis-Ein-und-Ausschalten-tannenzapfen64.html) |
 | [Elektrische Felder: 12 Übungen zu Ladung, Feldstärke, Energie und Flächenladung (Modus B)](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B.html) | [Musterlösung](felder/2026-Phy-Unterricht-Elektrische-Felder-Modus-B-windspiel58.html) |
 | [Elektrische Felder: Übungsaufgaben zu Feld, Potenzial, Kondensatoren und Teilchenbewegung (Modus B)](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B.html) | [Musterlösung](felder/2026-Phy-Vor-der-Klausur-Knackpunkte-Modus-B-regenschirm83.html) |
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
