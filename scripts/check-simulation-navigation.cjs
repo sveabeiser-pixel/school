@@ -38,7 +38,7 @@ async function main() {
       'felder/elektrische-felder.html': ['5', '7', '9'],
       'felder/elektrische-felder2.html': ['2', '4', '7', '8'],
       'felder/elektrische-felder3.html': ['6'],
-      'felder/felder-simulationen.html': ['1', '2', '3', '4', '5', '6'],
+      'felder/felder-simulationen.html': ['1', '2', '3', '4', '5'],
       'wellen/wellen-simulationen.html': ['1', '2', '4', '5', '6', '7', '8', '9'],
       'nwt/arduino-6.html': ['3'],
       'felder/induktion.html': ['6']

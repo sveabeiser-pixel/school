@@ -25,7 +25,7 @@
   }
   </script>
 
-  <section data-wb-page="1" data-wb-page-title="Elektrisches Feld">
+  <section data-wb-page="1" data-wb-page-title="Elektrisches Feld und Kondensator" data-wb-simulation>
     <h1>Simulation: Feldlinien und Äquipotenziallinien</h1>
     <p>Setze positive und negative Punktladungen oder geladene Platten frei auf die Zeichenfläche. Die Simulation überlagert ihre Felder und berechnet daraus Feldlinien, Äquipotenziallinien und eine farbige Potenzialfläche. Du kannst jede Ladung und Platte nachträglich verschieben und so die Feldstruktur unmittelbar verändern.</p>
     <div class="wb-callout">
@@ -125,6 +125,29 @@
         "storagePrefix":"felder_sim_",
         "fields":[
           {"label":"Deine Beobachtung","key":"beobachtung","kind":"textarea","placeholder":"Was verändert die Feldliniendichte? Was verändert die Zahl der Ladungszeichen? Begründe mit E=U/d und Q=C·U."}
+        ]
+      }
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+
+    <h2>Simulation: Kondensator aufladen und entladen</h2>
+    <p>Untersuche, wie Widerstand, Kapazität und Quellspannung den Lade- und Entladevorgang beeinflussen. Die Diagramme zeigen die Kondensatorspannung, den Ladungsbetrag auf einer Platte und die vorzeichenbehaftete Stromstärke. Die gespeicherte Energie wird mit \(W\) bezeichnet.</p>
+    <p>Der Versuch „Aufladen“ beginnt ungeladen, der Versuch „Entladen“ voll geladen. Mit dem Umschalter kannst du dagegen mitten im Vorgang wechseln und den aktuellen Ladezustand beibehalten. Blaue Elektronen und Pfeile zeigen die Elektronenrichtung in allen stromführenden Leiterzweigen. Sie ist entgegengesetzt zur technischen Stromrichtung, auf die sich das Vorzeichen im I-Diagramm bezieht. Durch den isolierenden Kondensatorspalt wandern keine Elektronen.</p>
+    <div class="field-sim-card" data-field-sim="rc-circuit"></div>
+    <p>Merke: Beim Entladen sind Spannungsquelle und Kondensator getrennt, aber der Stromkreis über den Widerstand bleibt geschlossen. Deshalb kann sich der Kondensator entladen. Nur bei einer vollständigen Unterbrechung des Stromkreises bliebe seine Ladung im idealisierten Modell erhalten.</p>
+    <p>Quelle &amp; Weiterforschen: <a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet/grundwissen/ein-und-ausschalten-von-rc-kreisen" target="_blank" rel="noopener">LEIFIphysik: Ein- und Ausschalten von RC-Kreisen</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {
+        "id":"felder_sim_rc_essay",
+        "title":"Auswertung: Zeitmaß, Energie und Umschalter",
+        "hint":"Verwende zunächst R = 10 kΩ, C = 100 µF und U₀ = 12 V. Ändere jeweils nur einen Parameter.",
+        "fields":[
+          {"label":"Aufladen und Entladen","key":"zeitverlauf","kind":"textarea","prompt":"Bestimme τ und T₁/₂. Vergleiche U_C, I, Q und W bei t = 0 und T₁/₂ für beide Versuche. Bestimme U_C bei τ. Warum ist beim Entladen nach einer Spannungshalbwertszeit nur noch ein Viertel der Anfangsenergie vorhanden?"},
+          {"label":"Einfluss von R, C und U₀","key":"parameter","kind":"textarea","prompt":"Verdopple jeweils nur R, nur C und nur U₀. Erkläre die Änderungen von Zeitkonstante, Halbwertszeit, Anfangsstrom beim Laden sowie endgültiger Ladung und Energie. Nutze die zugehörigen Formeln."},
+          {"label":"Umschalten ohne neuen Ladezustand","key":"umschalten","kind":"textarea","prompt":"Lade mit den Anfangswerten bis T₁/₂ und schalte dann auf Entladen um. Vergleiche unmittelbar davor und danach U_C, Q, W und I. Warum fließt trotz abgetrennter Quelle weiter Strom? Unterscheide diesen Fall vom vollständig isolierten Kondensator."}
         ]
       }
       </script>
@@ -448,33 +471,11 @@
       </script>
     </div>
   </section>
-  <section data-wb-page="6" data-wb-page-title="RC-Labor" data-wb-simulation>
-    <h1>Simulation: Kondensator aufladen und entladen</h1>
-    <p>Untersuche, wie Widerstand, Kapazität und Quellspannung den Lade- und Entladevorgang beeinflussen. Die Diagramme zeigen die Kondensatorspannung, den Ladungsbetrag auf einer Platte und die vorzeichenbehaftete Stromstärke. Die gespeicherte Energie wird mit \(W\) bezeichnet.</p>
-    <p>Der Versuch „Aufladen“ beginnt ungeladen, der Versuch „Entladen“ voll geladen. Mit dem Umschalter kannst du dagegen mitten im Vorgang wechseln und den aktuellen Ladezustand beibehalten. Vergleiche dabei die Stromrichtung im Schaltbild.</p>
-    <div class="field-sim-card" data-field-sim="rc-circuit"></div>
-    <p>Merke: Beim Entladen sind Spannungsquelle und Kondensator getrennt, aber der Stromkreis über den Widerstand bleibt geschlossen. Deshalb kann sich der Kondensator entladen. Nur bei einer vollständigen Unterbrechung des Stromkreises bliebe seine Ladung im idealisierten Modell erhalten.</p>
-    <p>Quelle &amp; Weiterforschen: <a href="https://www.leifiphysik.de/elektrizitaetslehre/kondensator-kapazitaet/grundwissen/ein-und-ausschalten-von-rc-kreisen" target="_blank" rel="noopener">LEIFIphysik: Ein- und Ausschalten von RC-Kreisen</a>.</p>
-    <div class="wb-section-break"></div>
-    <div data-wb-type="essay">
-      <script class="wb-config" type="application/json">
-      {
-        "id":"felder_sim_rc_essay",
-        "title":"Auswertung: Zeitmaß, Energie und Umschalter",
-        "hint":"Verwende zunächst R = 10 kΩ, C = 100 µF und U₀ = 12 V. Ändere jeweils nur einen Parameter.",
-        "fields":[
-          {"label":"Aufladen und Entladen","key":"zeitverlauf","kind":"textarea","prompt":"Bestimme τ und T₁/₂. Vergleiche U_C, I, Q und W bei t = 0 und T₁/₂ für beide Versuche. Bestimme U_C bei τ. Warum ist beim Entladen nach einer Spannungshalbwertszeit nur noch ein Viertel der Anfangsenergie vorhanden?"},
-          {"label":"Einfluss von R, C und U₀","key":"parameter","kind":"textarea","prompt":"Verdopple jeweils nur R, nur C und nur U₀. Erkläre die Änderungen von Zeitkonstante, Halbwertszeit, Anfangsstrom beim Laden sowie endgültiger Ladung und Energie. Nutze die zugehörigen Formeln."},
-          {"label":"Umschalten ohne neuen Ladezustand","key":"umschalten","kind":"textarea","prompt":"Lade mit den Anfangswerten bis T₁/₂ und schalte dann auf Entladen um. Vergleiche unmittelbar davor und danach U_C, Q, W und I. Warum fließt trotz abgetrennter Quelle weiter Strom? Unterscheide diesen Fall vom vollständig isolierten Kondensator."}
-        ]
-      }
-      </script>
-    </div>
-  </section>
+
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261116-rc"></script>
+  <script src="../assets/felder-simulations.js?v=20261117-rc-ladungsfluss"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

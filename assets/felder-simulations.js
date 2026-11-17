@@ -949,18 +949,20 @@
       '<label>Wiedergabetempo<select data-role="rate"><option value="0.1">0,1 ×</option><option value="1" selected>1 ×</option><option value="5">5 ×</option><option value="20">20 ×</option></select></label>' +
       '<button class="wb-btn primary" type="button" data-role="play">Start</button><button class="wb-btn" type="button" data-role="reset">Neu starten</button>' +
       '<button class="wb-btn" type="button" data-role="switch">Auf Entladen umschalten</button></div>' +
-      '<div class="rc-stage"><div><canvas data-role="canvas" width="560" height="320" role="img" aria-label="RC-Stromkreis mit Spannungsquelle, Umschalter, Widerstand und Kondensator"></canvas>' +
+      '<div class="rc-stage"><div><canvas data-role="canvas" width="560" height="320" role="img" aria-label="RC-Stromkreis mit blauen Elektronen in den stromführenden Leitungen und Pfeilen entgegen der technischen Stromrichtung"></canvas>' +
       '<p class="rc-status" data-role="status" aria-live="polite"></p>' +
       '<dl class="rc-meters"><div><dt>Spannung U_C</dt><dd data-role="uc-output"></dd></div><div><dt>Stromstärke I</dt><dd data-role="i-output"></dd></div><div><dt>Ladungsbetrag Q = C U_C</dt><dd data-role="q-output"></dd></div><div><dt>Energie W = ½ C U_C²</dt><dd data-role="w-output"></dd></div><div><dt>Zeitkonstante τ = RC</dt><dd data-role="tau-output"></dd></div><div><dt>Halbwertszeit T₁/₂ = τ ln 2</dt><dd data-role="half-output"></dd></div></dl></div>' +
       '<div><canvas class="rc-plot" data-role="plot" width="700" height="470" role="img" aria-label="Zeitdiagramme von Kondensatorspannung, Ladungsbetrag und vorzeichenbehafteter Stromstärke"></canvas>' +
       '<label class="rc-time">Zeit seit Start / Umschalten: <output data-role="time-output"></output><input type="range" data-role="time" min="0" max="1000" value="0" step="1"></label>' +
       '<div class="rc-markers"><button class="wb-btn" type="button" data-role="half">T₁/₂</button><button class="wb-btn" type="button" data-role="tau">τ</button><button class="wb-btn" type="button" data-role="five-tau">5τ</button></div>' +
-      '<label class="rc-check"><input type="checkbox" data-role="show-current" checked> Technische Stromrichtung im Schaltbild</label></div></div>' +
+      '<label class="rc-check"><input type="checkbox" data-role="show-current" checked> Elektronen und Elektronenrichtung (blau)</label></div></div>' +
       '<p class="rc-formula">U_C(t) = U_Ziel + (U_Start − U_Ziel) · exp(−t/τ), &nbsp; I(t) = (U_Ziel − U_C(t))/R</p>' +
-      '<p class="rc-model">Idealer RC-Kreis ohne Leckstrom. Positive Stromrichtung: in die obere Kondensatorplatte. Bei „Aufladen“ ist U_Ziel = U₀, bei „Entladen“ U_Ziel = 0. Der Umschalter trennt beim Entladen die Quelle vom Widerstand; R und C bilden weiter einen geschlossenen Kreis. Parameteränderungen beginnen einen neuen Versuch. Nach 5τ bleiben etwa 0,67 % der anfänglichen Differenz zum Spannungs-Endwert. Der Endwert wird nicht exakt erreicht.</p>';
+      '<p class="rc-model">Ein blauer Punkt steht für ein Elektronenpaket mit dem Ladungsbetrag <output data-role="packet-charge-output"></output>. Ein vollständig sichtbares Plattenzeichen entspricht demselben Betrag; angebrochene Anteile werden schrittweise sichtbar. Die Pakete bewegen sich entgegen der technischen Stromrichtung, nicht durch das Dielektrikum oder die Unterbrechung am Schalter. Pluszeichen bedeuten Elektronenmangel, Minuszeichen Elektronenüberschuss. Das I-Diagramm verwendet die technische Stromrichtung: positiv in die obere Kondensatorplatte. Idealer RC-Kreis ohne Leckstrom. Bei „Aufladen“ ist U_Ziel = U₀, bei „Entladen“ U_Ziel = 0. Parameteränderungen beginnen einen neuen Versuch und passen den schematischen Paketmaßstab an. Nach 5τ bleiben etwa 0,67 % der anfänglichen Differenz zum Spannungs-Endwert. Der Endwert wird nicht exakt erreicht.</p>';
     var canvas = find(root, "canvas"), plot = find(root, "plot"), modeEl = find(root, "mode");
     var play = find(root, "play"), timeEl = find(root, "time"), switchBtn = find(root, "switch");
     var model, initialU = 0, t = 0, running = false, raf = null, last = null, mode = "charge";
+    var plateSlots = 12;
+    function chargePerPacket() { return model.C * model.U0 / plateSlots; }
     function values(time) {
       var U = model.target + (initialU - model.target) * Math.exp(-time / model.tau);
       return {U:U, I:(model.target - U) / model.R, Q:model.C * U, W:.5 * model.C * U * U};
@@ -1018,22 +1020,52 @@
       wire(ctx, [[xC-24,155],[xC+24,155]], "#be123c");
       wire(ctx, [[xC-24,175],[xC+24,175]], "#1d4ed8");
       ctx.fillStyle = "#334155"; ctx.fillText("C", xC-35, 170);
-      var amount = Math.min(5, Math.round(v.U / model.U0 * 5));
-      for (var k = 0; k < amount; k++) {
-        var cx = xC - (amount-1) * 4 + k * 8;
-        ctx.fillStyle = "#be123c"; ctx.fillText("+", cx, 148);
-        ctx.fillStyle = "#1d4ed8"; ctx.fillText("−", cx, 192);
+      var chargeSteps = Math.max(0, Math.min(plateSlots, v.Q / chargePerPacket()));
+      for (var k = 0; k < plateSlots; k++) {
+        var share = Math.max(0, Math.min(1, chargeSteps - k));
+        if (share === 0) continue;
+        var column = k % 6, cx = xC + (column < 3 ? -24 + column * 8 : 8 + (column-3) * 8), row = Math.floor(k / 6);
+        ctx.globalAlpha = share;
+        ctx.fillStyle = "#be123c"; ctx.fillText("+", cx, 143 - row * 12);
+        ctx.fillStyle = "#2563eb"; ctx.beginPath(); ctx.arc(cx,187+row*12,3.4,0,2*Math.PI); ctx.fill();
+        ctx.strokeStyle = "#fff"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx-2,187+row*12); ctx.lineTo(cx+2,187+row*12); ctx.stroke();
       }
+      ctx.globalAlpha = 1;
       if (find(root, "show-current").checked && Math.abs(v.I) > 1e-12) {
-        var dir = Math.sign(v.I), arrowY = 110;
-        drawArrow(ctx, rX-dir*22, arrowY, rX+dir*22, arrowY, "#7e22ce");
-        ctx.fillStyle = "#7e22ce"; ctx.fillText(dir > 0 ? "I > 0" : "I < 0", rX, arrowY+20);
-        // Charge transport determines the moving dots; they never cross the dielectric.
-        var phase = Math.abs(v.Q - model.C * initialU) / (model.C * model.U0) * 8;
-        for (var dot = 0; dot < 4; dot++) {
-          var fraction = ((dot / 4 + dir * phase) % 1 + 1) % 1;
-          ctx.fillStyle = "#a16207"; ctx.beginPath(); ctx.arc(pivot+fraction*(xC-pivot),top,3,0,2*Math.PI);ctx.fill();
-        }
+        var electronDir = -Math.sign(v.I), blue = "#2563eb", arrowY = 110;
+        drawArrow(ctx, rX-electronDir*22, arrowY, rX+electronDir*22, arrowY, blue);
+        ctx.fillStyle = blue; ctx.fillText("e⁻", rX, arrowY+20);
+        var lowerX = (contact + xC) / 2;
+        drawArrow(ctx, lowerX+electronDir*22, bottom-17, lowerX-electronDir*22, bottom-17, blue);
+        drawArrow(ctx, xC-16, 114-electronDir*13, xC-16, 114+electronDir*13, blue);
+        var leftX = mode === "charge" ? 18 : contact+17;
+        drawArrow(ctx, leftX, 207+electronDir*16, leftX, 207-electronDir*16, blue);
+        // Separate conductive paths exclude the capacitor dielectric and source interior.
+        var paths = mode === "charge" ? [
+          [[35,141],[35,55],[contact,55],[pivot,top],[xC,top],[xC,155]],
+          [[xC,175],[xC,bottom],[35,bottom],[35,157]]
+        ] : [
+          [[xC,175],[xC,bottom],[contact,bottom],[contact,105],[pivot,top],[xC,top],[xC,155]]
+        ];
+        paths.forEach(function (points) {
+          var lengths = [], total = 0;
+          for (var i = 1; i < points.length; i++) {
+            var length = Math.hypot(points[i][0]-points[i-1][0], points[i][1]-points[i-1][1]);
+            lengths.push(length); total += length;
+          }
+          var count = Math.max(4, Math.ceil(total / 35)), spacing = total / count;
+          // One packet spacing corresponds to exactly one plate-charge symbol.
+          for (var dot = 0; dot < count; dot++) {
+            var distance = ((dot*spacing - chargeSteps*spacing) % total + total) % total;
+            var segment = 0;
+            while (segment < lengths.length-1 && distance > lengths[segment]) { distance -= lengths[segment]; segment++; }
+            var fraction = distance / lengths[segment];
+            var px = points[segment][0] + fraction*(points[segment+1][0]-points[segment][0]);
+            var py = points[segment][1] + fraction*(points[segment+1][1]-points[segment][1]);
+            ctx.fillStyle = blue; ctx.beginPath(); ctx.arc(px,py,4.2,0,2*Math.PI); ctx.fill();
+            ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(px-2.3,py); ctx.lineTo(px+2.3,py); ctx.stroke();
+          }
+        });
       }
       ctx.fillStyle = "#475569"; ctx.font = "12px system-ui";
       ctx.fillText("Feldenergie im Kondensator", w / 2, 281);
@@ -1074,7 +1106,8 @@
       if(!model)return;
       var v=values(t);
       [["uc-output",v.U," V",2],["i-output",v.I*1000," mA",3],["q-output",v.Q*1e6," µC",2],["w-output",v.W*1000," mJ",3],
-        ["tau-output",model.tau," s",3],["half-output",model.tau*Math.LN2," s",3],["time-output",t," s",3]].forEach(function (item) {find(root,item[0]).textContent=formatNumber(item[1],item[3])+item[2];});
+        ["tau-output",model.tau," s",3],["half-output",model.tau*Math.LN2," s",3],["time-output",t," s",3],
+        ["packet-charge-output",chargePerPacket()*1e6," µC",2]].forEach(function (item) {find(root,item[0]).textContent=formatNumber(item[1],item[3])+item[2];});
       timeEl.value=String(Math.round(t/(5*model.tau)*1000));
       root.dataset.time=t;root.dataset.voltage=v.U;root.dataset.current=v.I;root.dataset.charge=v.Q;root.dataset.energy=v.W;
       root.dataset.tau=model.tau;root.dataset.initialVoltage=initialU;root.dataset.mode=mode;
