@@ -19,6 +19,94 @@
   let resultsPdfLoader = null;
   const resetStorageKeys = new Set();
 
+  // Observe existing grading states, including older page-specific checks.
+  const gradingSelector = [
+    ".wb-q", ".wb-gap", ".wb-order-slot", ".wb-categorize-chip", ".wb-trace-input",
+    ".p2-joined", ".pudding-drop", "[data-trace]", "[data-entry]", "[data-bug-line]",
+    ".check-number .feedback"
+  ].join(",");
+  const gradingControls = new WeakMap();
+  const gradingDescriptions = {correct:"wb-grade-correct-description", wrong:"wb-grade-wrong-description"};
+  let gradingObserver = null;
+
+  function syncGradingFeedback(node){
+    if(!node.matches || !node.matches(gradingSelector)) return;
+    const isControl = node.matches("input,textarea,select");
+    const hidden = node.hidden || node.getAttribute("aria-hidden") === "true";
+    const classes = node.classList;
+    const wrong = ["wrong","bad","is-wrong","p2-bad"].some(name => classes.contains(name));
+    const correct = ["correct","ok","is-correct","is-right","p2-ok"].some(name => classes.contains(name));
+    const state = hidden ? "" : wrong ? "wrong" : correct ? "correct" : "";
+    const descriptions = (node.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean)
+      .filter(id => !Object.values(gradingDescriptions).includes(id));
+    if(state){
+      node.setAttribute("data-wb-grade",state);
+      descriptions.push(gradingDescriptions[state]);
+    }else node.removeAttribute("data-wb-grade");
+    if(descriptions.length) node.setAttribute("aria-describedby",descriptions.join(" "));
+    else node.removeAttribute("aria-describedby");
+    if(!isControl) return;
+
+    let record = gradingControls.get(node);
+    if(state){
+      if(!record){
+        record = {invalid:node.getAttribute("aria-invalid"), badge:el("span", {class:"wb-grade-field-result", "aria-hidden":"true"})};
+        gradingControls.set(node,record);
+      }
+      record.badge.textContent = state === "correct" ? "\u2713 Richtig" : "\u2717 Falsch";
+      record.badge.setAttribute("data-wb-grade-result",state);
+      if(record.badge.previousElementSibling !== node) node.after(record.badge);
+      node.setAttribute("aria-invalid",state === "wrong" ? "true" : "false");
+    }else if(record){
+      record.badge.remove();
+      if(record.invalid === null) node.removeAttribute("aria-invalid");
+      else node.setAttribute("aria-invalid",record.invalid);
+      gradingControls.delete(node);
+    }
+  }
+
+  function syncGradingTree(root){
+    if(root.nodeType !== 1 && root.nodeType !== 9) return;
+    if(root.nodeType === 1) syncGradingFeedback(root);
+    qsa(gradingSelector,root).forEach(syncGradingFeedback);
+  }
+
+  function mountGradingFeedback(){
+    if(gradingObserver || !document.body || qs('meta[name="musterloesung-source"]')) return;
+    Object.entries(gradingDescriptions).forEach(([state,id]) => {
+      if(!document.getElementById(id)) document.body.appendChild(el("span", {id,class:"wb-grade-description"}, [state === "correct" ? "Antwort richtig." : "Antwort falsch."]));
+    });
+    syncGradingTree(document);
+    gradingObserver = new MutationObserver(records => {
+      const changed = new Set();
+      records.forEach(record => {
+        if(record.type === "attributes") changed.add(record.target);
+        else record.addedNodes.forEach(node => {
+          if(node.nodeType !== 1) return;
+          if(node.matches(gradingSelector)) changed.add(node);
+          qsa(gradingSelector,node).forEach(child => changed.add(child));
+        });
+      });
+      changed.forEach(syncGradingFeedback);
+    });
+    gradingObserver.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["class","hidden","aria-hidden"]});
+    // A changed answer is ungraded again, not still labelled with its old result.
+    const invalidate = event => {
+      const target = event.target;
+      if(!target.matches || !target.matches("input,textarea,select")) return;
+      const graded = target.matches(gradingSelector) ? target : target.closest(".wb-q");
+      if(!graded) return;
+      graded.classList.remove("correct","wrong","is-correct","is-wrong","is-right");
+      if(graded.matches(".wb-q")){
+        const feedback = qs("[data-feedback]",graded);
+        if(feedback) feedback.textContent = "";
+      }
+      syncGradingFeedback(graded);
+    };
+    document.addEventListener("input",invalidate,true);
+    document.addEventListener("change",invalidate,true);
+  }
+
   function registerResetStorageKey(key){
     resetStorageKeys.add(String(key));
     return key;
@@ -4068,6 +4156,9 @@ function autoMountPuzzle2(){
 
 
  
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",mountGradingFeedback,{once:true});
+  else mountGradingFeedback();
+
   global.SBPuzzle2 = { autoMount: autoMountPuzzle2, mountOne: initPuzzle2 };
   global.SBBlocks = { createMCQ, createVerify, createCloze, createOrder, createCategorize, createTrace, createEssay, createReveal, createRevealImage, autoMount: autoMountBlocks, mountOne: mountBlockOne };
   global.SBBook   = { mount: mountBook, autoMount: autoMountBooks, registerResetStorageKey };

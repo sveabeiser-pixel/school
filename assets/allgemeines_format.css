@@ -2343,3 +2343,41 @@ label.wb-choice:hover{background: var(--wb-choice-hover, #f3f6ff)}
 @media (max-width: 720px){
   .wb-book .grid3{ grid-template-columns: 1fr; }
 }
+
+/* Grading remains identifiable without colour, including in monochrome. */
+[data-wb-grade]{border-width:2px!important;border-style:solid!important}
+[data-wb-grade="wrong"]{border-style:dashed!important}
+.wb-grade-description{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.wb-grade-field-result,
+[data-wb-grade]:not(input):not(textarea):not(select)::after,
+.wb-q[data-wb-grade]::before{
+  box-sizing:border-box;
+  color:#111827;
+  background:#fff;
+  border:2px solid #111827;
+  border-radius:4px;
+  font-family:Arial,sans-serif;
+  font-weight:900;
+  font-size:16px;
+  line-height:1.25;
+  text-align:center;
+}
+[data-wb-grade]:not(input):not(textarea):not(select)::after{content:"\2713";display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px;min-width:24px;min-height:24px;margin-inline-start:8px;vertical-align:middle;align-self:center}
+[data-wb-grade="wrong"]:not(input):not(textarea):not(select)::after{content:"\2717";border-style:dashed}
+.wb-q[data-wb-grade]::after{display:none!important}
+.wb-q[data-wb-grade]::before{content:"\2713  Richtig";display:table;padding:4px 8px;margin:0 0 10px;font-size:14px}
+.wb-q[data-wb-grade="wrong"]::before{content:"\2717  Falsch";border-style:dashed}
+.wb-grade-field-result{display:table;max-width:100%;font-size:12px;padding:3px 6px;margin:5px 0 0;overflow-wrap:anywhere}
+.wb-grade-field-result[data-wb-grade-result="wrong"]{border-style:dashed}
+.wb-order-slot[data-wb-grade] .wb-order-drop{min-width:0}
+.wb-categorize-chip[data-wb-grade]{overflow-wrap:anywhere}
+.wb-book .p2 .p2-joined[data-wb-grade]{position:relative;padding-bottom:30px}
+.wb-book .p2 .p2-joined[data-wb-grade]::after{position:absolute;bottom:3px;right:6px;margin:0;min-height:22px}
+.pudding-drop[data-wb-grade]::after{position:absolute;right:4px;bottom:4px;margin:0;pointer-events:none}
+.pudding-drop[data-wb-grade] .pudding-chip{padding-right:34px;box-sizing:border-box}
+.check-number .feedback[data-wb-grade]::after{content:none}
+.check-number .feedback[data-wb-grade]::before{content:"\2713  Richtig: ";font-weight:900}
+.check-number .feedback[data-wb-grade="wrong"]::before{content:"\2717  Falsch: "}
+@media(forced-colors:active){
+  .wb-grade-field-result,[data-wb-grade]::after,.wb-q[data-wb-grade]::before{color:CanvasText;background:Canvas;border-color:CanvasText}
+}
