@@ -9,6 +9,34 @@
 .field-sim-controls select:focus{outline:3px solid rgba(37,99,235,.18);border-color:#2563eb}
 .field-sim-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:13px;color:var(--wb-muted,#6b7280);white-space:pre-wrap;margin-top:8px}
 .field-sim-note{border-left:5px solid #2563eb;background:rgba(37,99,235,.08);padding:12px;border-radius:8px;margin-top:14px}
+[data-field-sim^="lorentz-"]{border-radius:8px;box-shadow:none}
+.lorentz-grid{grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);gap:22px}
+.lorentz-grid .field-sim-controls label{font-size:.88rem;margin-top:12px}
+.lorentz-grid output{float:right;font-variant-numeric:tabular-nums;font-weight:600}
+.lorentz-stage{min-width:0}
+.lorentz-stage h3{font-size:1rem;margin:16px 0 8px}
+[data-field-sim^="lorentz-"] canvas[data-role="canvas"]{height:300px;aspect-ratio:auto;border-radius:6px;box-sizing:border-box}
+.lorentz-stage canvas[data-role="detail"]{display:block;width:100%;height:170px;box-sizing:border-box;border:1px solid var(--wb-line,#cbd5e1);border-radius:6px;background:#f8fafc}
+.lorentz-legend{display:flex;flex-wrap:wrap;gap:5px 16px;font-size:.78rem;margin-top:8px;color:var(--wb-muted,#475569)}
+.lorentz-legend span:first-child{color:#1d4ed8}
+.wb-book:is([data-theme="dark"],[data-theme="dark-blue"]) .lorentz-legend span:first-child{color:#93c5fd}
+.lorentz-actions{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.lorentz-actions .wb-btn{min-height:42px;white-space:normal;font-size:.88rem;border-radius:6px}
+.lorentz-actions [data-role="pause"],.lorentz-actions [data-role="reset"]{width:42px;padding:6px;flex-shrink:0;font-size:20px}
+.lorentz-check{display:flex!important;align-items:center;gap:8px;min-height:34px}
+.lorentz-check input{width:18px;height:18px;accent-color:#0e7490}
+.wb-book .lorentz-model{font-size:13px;line-height:1.6;color:var(--wb-muted,#475569)}
+.lorentz-meters{display:grid;grid-template-columns:1fr 1fr;margin:12px 0 0;font-size:.88rem}
+.lorentz-meters>div{padding:10px 7px;border-bottom:1px solid var(--wb-line,#cbd5e1);min-width:0}
+.lorentz-meters dt{font-size:.78rem;color:var(--wb-muted,#475569)}
+.lorentz-meters dd{margin:5px 0 0;font-weight:750;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.lorentz-potential{display:block;margin-top:3px;font-size:.8rem;font-weight:500;color:var(--wb-muted,#475569)}
+.lorentz-stage sub{font-size:.78em;line-height:0;vertical-align:sub}
+.wb-book .lorentz-status{font-size:14px;line-height:1.55;min-height:4.7em;margin:10px 0}
+.wb-book .lorentz-formula{font-size:14px;color:#0e7490;font-weight:700;line-height:1.6}
+.wb-book:is([data-theme="dark"],[data-theme="dark-blue"]) .lorentz-formula{color:#67e8f9}
+@media(max-width:1100px){.lorentz-grid{grid-template-columns:1fr}.lorentz-grid .field-sim-controls{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.lorentz-grid .field-sim-controls>label,.lorentz-grid .field-sim-controls>input,.lorentz-grid .field-sim-controls>select,.lorentz-actions,.lorentz-model{grid-column:1/-1}}
+@media(max-width:450px){.lorentz-meters{grid-template-columns:1fr}.lorentz-grid output{float:none;display:block}.lorentz-grid{gap:12px}}
 [data-field-sim="rc-circuit"]{border-radius:8px}
 .rc-parameters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .rc-parameter{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:6px 10px;align-items:center;min-width:0}

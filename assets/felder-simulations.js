@@ -3071,6 +3071,197 @@
     draw();
   }
 
+  function initLorentzConductor(root) {
+    if (root.dataset.lorentzMounted) return;
+    root.dataset.lorentzMounted = "1";
+    var motor = root.getAttribute("data-field-sim") === "lorentz-current-wire";
+    var uid = "lorentz-" + document.querySelectorAll('[data-lorentz-mounted="1"]').length;
+    var parameter = function (role, label, min, max, step, value) {
+      return '<label for="' + uid + '-' + role + '">' + label + ' <output data-role="' + role + '-value"></output></label><input id="' + uid + '-' + role + '" data-role="' + role + '" type="range" min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '">';
+    };
+    root.innerHTML = '<div class="field-sim-grid lorentz-grid"><div class="field-sim-controls">' +
+      '<label for="' + uid + '-direction">Magnetfeld</label><select id="' + uid + '-direction" data-role="direction"><option value="-1">↓ nach unten · N oben, S unten</option><option value="1">↑ nach oben · S oben, N unten</option></select>' +
+      '<label for="' + uid + '-drive">' + (motor ? 'Elektronenrichtung im Stab' : 'Bewegungsrichtung des ganzen Stabs') + '</label><select id="' + uid + '-drive" data-role="drive">' +
+      (motor ? '<option value="1">A → B</option><option value="-1">B → A</option>' : '<option value="1">→ nach rechts</option><option value="-1">← nach links</option><option value="up">↑ nach oben · parallel zum Feld</option><option value="down">↓ nach unten · parallel zum Feld</option>') + '</select>' +
+      (motor ? '<label for="' + uid + '-orientation">Leiterausrichtung</label><select id="' + uid + '-orientation" data-role="orientation"><option value="cross">senkrecht zum Feld</option><option value="parallel">parallel zum Feld</option></select>' : '') +
+      parameter("field", "Flussdichte B", 0, 1, 0.05, 0.2) +
+      parameter("amount", motor ? "Stromstärke |I|" : "Geschwindigkeit v", 0, motor ? 5 : 2, 0.1, motor ? 2 : 1) +
+      parameter("length", "Leiterlänge l", 5, 20, 1, 10) +
+      '<label class="lorentz-check"><input data-role="vectors" type="checkbox" checked> Kraftpfeile anzeigen</label>' +
+      '<div class="lorentz-actions"><button class="wb-btn primary" type="button" data-role="drive-toggle">' + (motor ? 'Strom einschalten' : 'Bewegung starten') + '</button><button class="wb-btn" type="button" data-role="pause" title="Zeit anhalten oder fortsetzen" aria-label="Zeit anhalten" aria-pressed="false">Ⅱ</button><button class="wb-btn" type="button" data-role="reset" title="Ausgangszustand wiederherstellen" aria-label="Zurücksetzen">↺</button></div>' +
+      '<p class="lorentz-model">' + (motor ? 'Die Quelle hält den Strom aufrecht. Gezeigt wird die Kraft auf den gehaltenen Leiter; der Stab wird nicht frei beschleunigt. Die blauen Elektronen bewegen sich entgegen der technischen Stromrichtung I.' : 'Offener Stab ohne angeschlossene Quelle: Die Ladungstrennung endet im Kräftegleichgewicht. Beim Stoppen der Bewegung gleicht sie sich wieder aus. Die Ansicht folgt dem bewegten Stab innerhalb des homogenen Feldes.') + ' Elektronenabstände, Verschiebung und Zeitmaß sind stark vergrößert.</p></div>' +
+      '<div class="lorentz-stage"><canvas data-role="canvas" aria-label="Leiter zwischen Nord- und Südpol mit Elektronen und Richtungen"></canvas>' +
+      '<div class="lorentz-legend"><span>●− Elektron</span><span>⊕ ortsfestes Gitterion</span><span data-role="endpoints">A: vorne · B: hinten</span></div>' +
+      '<h3>Stablupe · entlang des Leiters</h3><canvas data-role="detail" aria-label="Vergrößerte Elektronenbewegung zwischen den Leiterenden A und B"></canvas>' +
+      '<dl class="lorentz-meters"><div><dt>' + (motor ? 'Kraft auf den Leiter' : 'Spannung zwischen A und B') + '</dt><dd><span data-role="meter"></span>' + (motor ? '' : '<span class="lorentz-potential"><i>U</i><sub>AB</sub> = <i>V</i><sub>A</sub> − <i>V</i><sub>B</sub></span>') + '</dd></div><div><dt>' + (motor ? 'Technische Stromrichtung' : 'Elektronenüberschuss') + '</dt><dd data-role="result"></dd></div></dl>' +
+      '<p class="lorentz-status" data-role="status" aria-live="polite"></p>' +
+      '<p class="lorentz-formula">' + (motor ? '|<i>F</i><sub>Leiter</sub>| = <i>B</i> · |<i>I</i>| · <i>l</i> · |sin(α)|<br>Parallel oder antiparallel: <i>F</i><sub>Leiter</sub> = 0' : '|<i>U</i><sub>AB</sub>| = <i>B</i> · <i>v</i><sub>⊥</sub> · <i>l</i><br>Im Kräftegleichgewicht: |<i>F</i><sub>el</sub>| = |<i>F</i><sub>L</sub>|') + '</p></div></div>';
+
+    var canvas = find(root, "canvas"), detail = find(root, "detail");
+    var field = find(root, "field"), amount = find(root, "amount"), length = find(root, "length");
+    var direction = find(root, "direction"), drive = find(root, "drive"), orientation = find(root, "orientation");
+    var vectors = find(root, "vectors"), toggle = find(root, "drive-toggle"), pause = find(root, "pause");
+    var active = false, frozen = false, separation = 0, phase = 0, travel = 0, previous = null, raf = 0;
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var lastStatus = "";
+    function write(role, text) { var node = find(root, role); if (node.textContent !== text) node.textContent = text; }
+
+    function values() {
+      var B = Number(field.value), a = active ? Number(amount.value) : 0;
+      var b = Number(direction.value), perpendicular = motor ? orientation.value === "cross" : drive.value === "1" || drive.value === "-1";
+      var sign = motor ? -Number(drive.value) * b : -(Number(drive.value) || 0) * b;
+      var result = perpendicular ? B * a * Number(length.value) / 100 : 0;
+      return { B: B, amount: a, b: b, cross: perpendicular, sign: sign, result: result, target: !motor && result ? sign * result : 0 };
+    }
+
+    function surface(element, height) {
+      var w = Math.max(230, Math.round(element.getBoundingClientRect().width || 600));
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (element.width !== Math.round(w * dpr) || element.height !== Math.round(height * dpr)) {
+        element.width = Math.round(w * dpr); element.height = Math.round(height * dpr);
+      }
+      var ctx = element.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#f8fafc"; ctx.fillRect(0, 0, w, height);
+      ctx.font = "bold 14px system-ui"; ctx.textAlign = "center"; ctx.lineCap = "round";
+      return { ctx: ctx, w: w, h: height };
+    }
+    function dot(ctx, x, y, positive, radius) {
+      ctx.fillStyle = positive ? "#fef3c7" : "#2563eb";
+      ctx.strokeStyle = positive ? "#92400e" : "#1e3a8a"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = positive ? "#92400e" : "#fff"; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(x - radius * .45, y); ctx.lineTo(x + radius * .45, y);
+      if (positive) { ctx.moveTo(x, y - radius * .45); ctx.lineTo(x, y + radius * .45); } ctx.stroke();
+    }
+    function arrow(ctx, x, y, dx, dy, color, label, index) {
+      drawArrow(ctx, x, y, x + dx, y + dy, color);
+      var labelX = x + dx / 2, baseline = y + dy / 2 - 10;
+      ctx.fillStyle = color;
+      if (!index) { ctx.fillText(label, labelX, baseline); return; }
+      ctx.save();
+      ctx.textAlign = "left";
+      ctx.font = "italic bold 14px system-ui";
+      var labelWidth = ctx.measureText(label).width;
+      ctx.font = "bold 10px system-ui";
+      var labelLeft = labelX - (labelWidth + ctx.measureText(index).width) / 2;
+      ctx.fillText(index, labelLeft + labelWidth, baseline + 3);
+      ctx.font = "italic bold 14px system-ui";
+      ctx.fillText(label, labelLeft, baseline);
+      ctx.restore();
+    }
+    function draw() {
+      var v = values(), s = surface(canvas, 300), ctx = s.ctx, w = s.w;
+      var chargeShift = Math.sign(separation) * Math.min(.8, Math.abs(separation) * 16);
+      var scale = Math.min(1, (w - 28) / 440), cx = w / 2, cy = 150;
+      var offsetX = !motor ? travel * (Number(drive.value) || 0) : 0;
+      var offsetY = !motor && !v.cross ? travel * (drive.value === "up" ? 1 : -1) : 0;
+      var parallel = motor && !v.cross;
+      write("endpoints", parallel ? "A: unten · B: oben" : "A: vorne · B: hinten");
+      function p(x, y, z) { return { x: cx + (x - z * .53) * scale, y: cy + (-y + z * .22) * scale }; }
+      function line(a, b, color, width) { ctx.strokeStyle = color; ctx.lineWidth = width; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      function plate(y, north) {
+        var corners = [p(-170, y, -110), p(170, y, -110), p(170, y, 110), p(-170, y, 110)];
+        ctx.fillStyle = north ? "#fee2e2" : "#ccfbf1"; ctx.strokeStyle = "#475569"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); corners.forEach(function (pt, i) { if (i) ctx.lineTo(pt.x, pt.y); else ctx.moveTo(pt.x, pt.y); }); ctx.closePath(); ctx.fill(); ctx.stroke();
+        var at = p(0, y, 0); ctx.fillStyle = "#0f172a"; ctx.font = "bold 20px system-ui"; ctx.fillText(north ? "N" : "S", at.x, at.y + 6); ctx.font = "bold 14px system-ui";
+      }
+      plate(112, v.b < 0); plate(-112, v.b > 0);
+      var density = v.B === 0 ? 0 : 2 + Math.round(v.B * 4);
+      for (var i = 0; i < density; i++) {
+        var x = density === 1 ? 0 : -145 + 290 * i / (density - 1), top = p(x, 85 * -v.b, -65), bottom = p(x, -85 * -v.b, -65);
+        drawArrow(ctx, top.x, top.y, bottom.x, bottom.y, "#64748b");
+      }
+      var A = p(offsetX, offsetY + (parallel ? -80 : 0), parallel ? 0 : 105), B = p(offsetX, offsetY + (parallel ? 80 : 0), parallel ? 0 : -105);
+      line(A, B, "#334155", 25 * scale); line(A, B, "#cbd5e1", 20 * scale);
+      function point(t, row) { return { x: A.x + (B.x - A.x) * t + (parallel ? row : 0), y: A.y + (B.y - A.y) * t + (parallel ? 0 : row) }; }
+      if (motor) {
+        var left = 20, right = w - 20, bottomY = 276;
+        ctx.strokeStyle = "#64748b"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(left, A.y + 35); ctx.lineTo(left, bottomY); ctx.lineTo(right, bottomY); ctx.lineTo(right, B.y + 35); ctx.lineTo(B.x, B.y); ctx.stroke();
+        ctx.fillStyle = "#f8fafc"; ctx.fillRect(cx - 40, bottomY - 12, 80, 24); ctx.fillStyle = "#334155"; ctx.fillText("Quelle", cx, bottomY + 5);
+        ctx.fillText(Number(drive.value) > 0 ? "−" : "+", cx - 48, bottomY - 7); ctx.fillText(Number(drive.value) > 0 ? "+" : "−", cx + 48, bottomY - 7);
+      }
+      for (i = 0; i < 10; i++) {
+        var base = (i + .5) / 10, t = motor ? ((base + phase * Number(drive.value)) % 1 + 1) % 1 : base - chargeShift * .38 * 4 * base * (1 - base);
+        var ion = point(base, -3 * scale), e = point(t, 4 * scale);
+        dot(ctx, ion.x, ion.y, true, 3.5 * scale); dot(ctx, e.x, e.y, false, Math.max(2.5, 4 * scale));
+      }
+      ctx.fillStyle = "#0f172a"; ctx.fillText("A", A.x - (parallel ? 24 : 12), A.y + 23); ctx.fillText("B", B.x + 18, B.y - 15);
+      if (!motor && active && v.amount) {
+        var dx = v.cross ? Number(drive.value) * 46 : 0, dy = v.cross ? 0 : drive.value === "up" ? -43 : 43;
+        arrow(ctx, cx + 75 * scale, cy, dx, dy, "#0e7490", "v");
+      }
+      if (motor && v.result && vectors.checked) arrow(ctx, cx, cy + 48, v.sign * Math.min(85, 35 + v.result * 100), 0, "#9a3412", "F", "Leiter");
+      if (!motor && v.result && vectors.checked) {
+        var mid = point(.5, 0), dz = v.sign * 48 * scale;
+        arrow(ctx, mid.x, mid.y - 30, -dz, dz * .42, "#9a3412", "F", "L");
+      }
+      var d = surface(detail, 170), dc = d.ctx, dw = d.w, x0 = 28, x1 = dw - 28, y = 75;
+      dc.fillStyle = "#e2e8f0"; dc.fillRect(x0 - 8, 48, x1 - x0 + 16, 54); dc.strokeStyle = "#64748b"; dc.lineWidth = 1.5; dc.strokeRect(x0 - 8, 48, x1 - x0 + 16, 54);
+      var count = Math.max(6, Math.floor((dw - 50) / 34));
+      for (i = 0; i < count; i++) {
+        var bt = (i + .5) / count;
+        var et = motor ? ((bt + phase * Number(drive.value)) % 1 + 1) % 1 : bt - chargeShift * .38 * 4 * bt * (1 - bt);
+        dot(dc, x0 + bt * (x1 - x0), y - 10, true, 5);
+        dot(dc, x0 + et * (x1 - x0), y + 11, false, 6);
+      }
+      dc.fillStyle = "#0f172a"; dc.fillText("A", x0, 31); dc.fillText("B", x1, 31);
+      if (!motor && Math.abs(separation) > .0001) {
+        dc.fillStyle = "#1e3a8a"; dc.fillText(separation > 0 ? "−" : "+", x0, 124); dc.fillText(separation > 0 ? "+" : "−", x1, 124);
+      }
+      if (motor && v.amount) {
+        var edir = Number(drive.value), eStart = edir > 0 ? dw * .3 : dw * .7;
+        arrow(dc, eStart, 140, edir * dw * .35, 0, "#1d4ed8", "e⁻");
+        arrow(dc, edir > 0 ? dw * .65 : dw * .35, 24, -edir * dw * .3, 0, "#475569", "I");
+      } else if (!motor && vectors.checked) {
+        if (v.result) arrow(dc, dw / 2, 28, -v.sign * Math.min(62, dw * .2), 0, "#9a3412", "F", "L");
+        if (Math.abs(separation) > .0001) arrow(dc, dw / 2, 144, Math.sign(separation) * Math.min(62, dw * .2) * Math.min(1, Math.abs(separation) / Math.max(.0001, Math.abs(v.target))), 0, "#0f766e", "F", "el");
+      }
+      write("field-value", formatNumber(v.B, 2) + " T");
+      write("amount-value", formatNumber(Number(amount.value), 1) + (motor ? " A" : " m/s"));
+      write("length-value", length.value + " cm");
+      var end = separation > 0 ? "A" : "B";
+      write("meter", motor ? formatNumber(v.result * 1000, 1) + " mN · " + (v.result ? v.sign > 0 ? "nach rechts" : "nach links" : "keine Kraft") : formatNumber(-separation * 1000, 1) + " mV");
+      write("result", motor ? v.amount ? Number(drive.value) > 0 ? "B → A" : "A → B" : "kein Strom" : Math.abs(separation) < .0001 ? "keiner" : "am Ende " + end);
+      var status = motor ? !v.amount ? "Strom aus: keine gerichtete Elektronenwanderung und keine Leiterkraft." : !v.result ? "Elektronen wandern, aber die magnetische Kraft ist null: " + (!v.B ? "B = 0." : "Der Leiter liegt parallel zum Magnetfeld.") : "Elektronen wandern " + (Number(drive.value) > 0 ? "von A nach B" : "von B nach A") + "; auf den Leiter wirkt eine Kraft nach " + (v.sign > 0 ? "rechts." : "links.") :
+        !v.result ? Math.abs(separation) > .0001 ? "Keine magnetische Ladungstrennung mehr. Das elektrische Feld treibt die Elektronen zurück; der Stab wird wieder neutral verteilt." : !active ? "Der Stab ruht. Starte eine Bewegung und beobachte die beiden Enden." : "Keine Ladungstrennung: " + (!v.B ? "B = 0." : !v.amount ? "v = 0." : "Bewegung und Magnetfeld sind parallel.") :
+        Math.abs(separation - v.target) > Math.max(.0001, Math.abs(v.target) * .01) ? "Die Ladungsverteilung ändert sich. Die magnetische Kraft auf Elektronen zeigt zum Ende " + (v.sign > 0 ? "A" : "B") + "; das elektrische Feld wirkt der Verschiebung entgegen." : "Kräftegleichgewicht: Die Elektronenverschiebung endet. " + (v.sign > 0 ? "A" : "B") + " ist negativ, das andere Ende positiv; es fließt kein dauernder Strom.";
+      if (status !== lastStatus) { find(root, "status").textContent = status; lastStatus = status; }
+      root.dataset.force = String(motor ? v.sign * v.result : 0);
+      root.dataset.voltage = String(-separation);
+      root.dataset.targetVoltage = String(-v.sign * v.result);
+      root.dataset.separation = String(separation);
+    }
+    function schedule() { if (!raf && !frozen && root.getClientRects().length && (active || Math.abs(separation) > .00001)) raf = window.requestAnimationFrame(frame); }
+    function frame(ts) {
+      raf = 0;
+      if (frozen || !root.getClientRects().length) { previous = null; return; }
+      var dt = previous === null ? 0 : Math.min(.05, (ts - previous) / 1000); previous = ts;
+      var v = values();
+      separation = v.target + (separation - v.target) * Math.exp(-dt * 4);
+      if (Math.abs(separation - v.target) < .00001) separation = v.target;
+      if (active) { phase += dt * v.amount * .22; travel = Math.min(34, travel + dt * v.amount * 10); }
+      draw(); schedule();
+    }
+    function change() { draw(); schedule(); }
+    function setActive(value) {
+      active = value; if (active) travel = 0; previous = null;
+      toggle.textContent = motor ? active ? "Strom ausschalten" : "Strom einschalten" : active ? "Bewegung stoppen" : "Bewegung starten";
+      toggle.setAttribute("aria-pressed", String(active)); change();
+    }
+    toggle.addEventListener("click", function () { setActive(!active); });
+    pause.addEventListener("click", function () { frozen = !frozen; previous = null; pause.textContent = frozen ? "▶" : "Ⅱ"; pause.setAttribute("aria-pressed", String(frozen)); pause.setAttribute("aria-label", frozen ? "Zeit fortsetzen" : "Zeit anhalten"); pause.title = frozen ? "Zeit fortsetzen" : "Zeit anhalten"; change(); });
+    [field, amount, length, direction, drive, orientation, vectors].filter(Boolean).forEach(function (control) { control.addEventListener("input", change); control.addEventListener("change", change); });
+    find(root, "reset").addEventListener("click", function () {
+      field.value = ".2"; amount.value = motor ? "2" : "1"; length.value = "10"; direction.value = "-1"; drive.value = "1";
+      if (orientation) orientation.value = "cross";
+      separation = 0; phase = 0; frozen = false; pause.textContent = "Ⅱ"; pause.setAttribute("aria-pressed", "false"); pause.setAttribute("aria-label", "Zeit anhalten"); vectors.checked = true; setActive(false);
+    });
+    var observer = new ResizeObserver(function () { if (root.getClientRects().length) { previous = null; draw(); schedule(); } }); observer.observe(root);
+    draw();
+    if (reduced) find(root, "status").textContent = "Die Animation startet erst, wenn du Bewegung oder Strom einschaltest.";
+  }
+
   function mount(root) {
     if (!root || !root.getAttribute) return;
     var key = root.getAttribute("data-field-sim");
@@ -3090,6 +3281,8 @@
   register("particle-trajectory", initParticleTrajectorySim);
   register("longitudinal-field", initLongitudinalFieldSim);
   register("magnetic-trajectory", initMagneticTrajectorySim);
+  register("lorentz-moving-rod", initLorentzConductor);
+  register("lorentz-current-wire", initLorentzConductor);
   register("helix-trajectory", initHelixTrajectorySim);
   register("induction-lab", initInductionLab);
   register("electrostatic-shielding", initElectrostaticShieldingSim);

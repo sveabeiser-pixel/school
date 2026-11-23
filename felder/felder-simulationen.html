@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Felder-Simulationen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261116-rc">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261123-lorentz-indizes">
   <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -251,8 +251,28 @@
     </div>
   </section>
 
-  <section data-wb-page="3" data-wb-page-title="Magnetfeld-Kreisbahn">
-    <h1>Simulation: Geladene Teilchen im Magnetfeld</h1>
+  <section data-wb-page="3" data-wb-page-title="Lorentzkraft und Kreisbahn" data-wb-simulation>
+    <h1>Simulationen: Elektronen im Leiter und Lorentzkraft</h1>
+    <p>Unterscheide zwei Situationen: Du bewegst einen offenen Metallstab durch ein Magnetfeld, oder du hältst durch eine Quelle einen Strom im Leiter aufrecht. In beiden Fällen wirkt die magnetische Lorentzkraft auf bewegte Elektronen. Die Folgen sind aber verschieden.</p>
+    <div class="wb-section-break"></div>
+    <h2>Bewegter Stab: Ladungstrennung</h2>
+    <p>A ist das vordere, B das hintere Ende des schräg gezeichneten Stabs. Die Stablupe zeigt die Elektronenverteilung entlang A–B. Sage erst die Polung voraus, starte dann die Bewegung. Elektronen verschieben sich, bis das elektrische Gegenfeld die magnetische Kraft ausgleicht. Im offenen Stab fließt danach kein dauernder Strom. „Bewegung stoppen“ beendet die reale Bewegung und lässt die Ladungstrennung abklingen; die Pausentaste hält dagegen nur das Modellbild an.</p>
+    <div class="field-sim-card" data-field-sim="lorentz-moving-rod" data-wb-simulation></div>
+    <div class="wb-section-break"></div>
+    <h2>Leiter mit Strom: Kraftwirkung</h2>
+    <p>Jetzt liefert eine Quelle ständig Elektronen nach. Die blauen Elektronen bewegen sich entgegen der technischen Stromrichtung I. Der Kraftpfeil zeigt, wohin der festgehaltene Leiter bei beweglicher Lagerung zunächst ausweichen würde. Vergleiche umgekehrte Richtungen und die Parallelstellung.</p>
+    <div class="field-sim-card" data-field-sim="lorentz-current-wire" data-wb-simulation></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"felder_sim_lorentz_leiter_essay","title":"Auswertung: Ladungstrennung und Leiterkraft","hint":"Nutze die Beschriftung A vorne, B hinten. Ändere pro Vergleich nur eine Einstellung.","fields":[{"label":"Bewegter Stab","key":"bewegter_stab","kind":"textarea","prompt":"Stelle N oben, S unten ein. Beschreibe die negativen Enden bei Bewegung nach rechts, links und oben. Erkläre das Kräftegleichgewicht und was nach dem Bewegungsstopp passiert. Bestimme außerdem den Betrag der Gleichgewichtsspannung für B = 0,20 T, v = 1,0 m/s und l = 10 cm."},{"label":"Leiter mit Strom","key":"leiterkraft","kind":"textarea","prompt":"Stelle N oben, S unten und Elektronen A → B ein. Gib die Kraftrichtung und die technische Stromrichtung an. Vergleiche das Umkehren einer oder beider Richtungen sowie einen Leiter parallel zum Feld. Berechne den Kraftbetrag für B = 0,20 T, |I| = 2,0 A und l = 10 cm und vergleiche mit doppeltem Strom."},{"label":"Zwei unterschiedliche Folgen","key":"vergleich","kind":"textarea","prompt":"Erkläre, weshalb sich die Elektronen im offenen bewegten Stab nicht dauerhaft von einem Ende zum anderen bewegen, bei eingeschalteter Quelle aber schon."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <p><strong>Jetzt hast du gelernt:</strong> Im offenen Leiter entsteht eine begrenzte Ladungstrennung mit elektrischem Gegenfeld. Im Stromkreis hält eine Quelle die Elektronenbewegung aufrecht; die magnetischen Kräfte ergeben zusammen die Leiterkraft. Bei beiden Versuchen ist die Parallelstellung ein wichtiger Nullfall.</p>
+    <p class="wb-muted">Modell zu den Leiterversuchen im Arbeitsblatt „Übungen Lorentzkraft“, PDF-Seiten 31–33. Die Bewegungs- und Umladezeiten sowie die Elektronenabstände sind zur Beobachtung vergrößert.</p>
+    <div class="wb-section-break"></div>
+    <h2>Freie Ladungen: die Kreisbahn</h2>
     <p>In dieser Simulation fliegt ein geladenes Teilchen waagrecht in ein homogenes Magnetfeld. Das Magnetfeld steht senkrecht zur Flugbahn: Es zeigt entweder aus der Zeichenfläche heraus oder in die Zeichenfläche hinein.</p>
     <p>Die Lorentzkraft steht immer senkrecht zur momentanen Bewegungsrichtung. Dadurch wird das Teilchen nicht schneller oder langsamer, sondern seine Bewegungsrichtung ändert sich fortlaufend. So entsteht eine Kreisbahn.</p>
     <div class="wb-section-break"></div>
@@ -475,7 +495,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-  <script src="../assets/felder-simulations.js?v=20261117-rc-ladungsfluss"></script>
+  <script src="../assets/felder-simulations.js?v=20261123-lorentz-direkt"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>

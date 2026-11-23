@@ -11,10 +11,10 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [Elektrische Felder 1: Ladung, Kraft und Feldlinien](felder/elektrische-felder.html) | [Musterlösung](felder/elektrische-felder-briefkasten73.html) |
 | [Elektrische Felder 2: Potenzial, Kondensator-Labor und -schaltungen, Elektronenkanone im Längsfeld](felder/elektrische-felder2.html) | [Musterlösung](felder/elektrische-felder2-regenschirm28.html) |
 | [Elektrische Felder 3: Energie, RC-Labor zum Laden und Entladen, Kapitelaufgaben](felder/elektrische-felder3.html) | [Musterlösung](felder/elektrische-felder3-kieselstein91.html) |
-| [Felder-Simulationen: Elektrostatik, Teilchenbahnen, Induktions- und RC-Labor](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
+| [Felder-Simulationen: Elektrostatik, Lorentzkraft am Leiter, Teilchenbahnen, Induktions- und RC-Labor](felder/felder-simulationen.html) | [Musterlösung](felder/felder-simulationen-hausschuh19.html) |
 | [Induktion 1: Grundversuche, magnetischer Fluss, Lenz und Induktionslabor](felder/induktion.html) | [Musterlösung](felder/induktion-buchruecken37.html) |
 | [Induktion 2: Anwendungen, Selbstinduktion und Maxwell](felder/induktion2.html) | [Musterlösung](felder/induktion2-garderobe84.html) |
-| [Magnetische Felder 1: Feldlinien, Flussdichte und Spule](felder/magnetische-felder.html) | [Musterlösung](felder/magnetische-felder-teetasse46.html) |
+| [Magnetische Felder 1: Feldlinien, Lorentzkraft-Labor, Flussdichte und Spule](felder/magnetische-felder.html) | [Musterlösung](felder/magnetische-felder-teetasse46.html) |
 | [Magnetische Felder 2: Lorentzkraft und Anwendungen](felder/magnetische-felder2.html) | [Musterlösung](felder/magnetische-felder2-wolldecke62.html) |
 | [Künstliche Intelligenz: Grundlagen, KI-Typen und Prolog-Labor](informatik/kuenstliche-intelligenz.html) | [Musterlösung](informatik/kuenstliche-intelligenz-schatulle43.html) |
 | [Künstliche Intelligenz 2: Lernvarianten, Bilddaten-Downloads, Teachable Machine und Modellbewertung](informatik/kuenstliche-intelligenz2.html) | [Musterlösung](informatik/kuenstliche-intelligenz2-pergament87.html) |

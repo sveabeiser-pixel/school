@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Magnetische Felder 1: Grundlagen</title>
   <link rel="stylesheet" href="../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261005-2">
+  <link rel="stylesheet" href="../assets/felder-simulations.css?v=20261123-lorentz-indizes">
   <style>
     .wb-book .mf-grid[data-course-media="paired"]{display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);gap:22px;align-items:center!important;margin:18px 0}
     .wb-book .mf-grid[data-course-media="paired"]>*{min-width:0;align-self:center!important}
@@ -413,7 +413,44 @@
     </div>
   </section>
 
-<section data-wb-page="6" data-wb-page-title="Flussdichte">
+<section data-wb-page="6" data-wb-page-title="Lorentzkraft-Labor" data-wb-simulation>
+    <h1>Simulationen: Elektronen im Leiter und Lorentzkraft</h1>
+    <p>Ein Metallstab liegt zwischen Nord- und Südpol. Was passiert, wenn du den ganzen Stab bewegst? Und was ändert sich, wenn stattdessen eine Quelle Elektronen durch den ruhenden Stab treibt? Prüfe zuerst mit der linken Hand, wohin die Kraft auf die Elektronen zeigt, und vergleiche dann mit der Animation.</p>
+    <div class="wb-section-break"></div>
+    <h2>1. Bewegter Stab: Wohin wandern die Elektronen?</h2>
+    <p>Die Enden heißen <strong>A (vorne)</strong> und <strong>B (hinten)</strong>. Die schräge Darstellung zeigt die räumliche Lage; die Stablupe darunter zeigt denselben Leiter von A nach B. Die blauen Teilchen sind Elektronen. Die positiven Gitterionen bleiben im Metall an ihrem Platz.</p>
+    <p>Der Stab ist <strong>nicht an einen geschlossenen Stromkreis angeschlossen</strong>. Bewegen sich seine Elektronen mit dem Stab quer zum Magnetfeld, wirkt eine magnetische Lorentzkraft auf sie. Sie verschieben sich zu einem Ende. Dort entsteht Elektronenüberschuss, am anderen Ende Elektronenmangel. Das elektrische Feld dieser Ladungstrennung wirkt einer weiteren Verschiebung entgegen. Im Kräftegleichgewicht bleibt eine Spannung bestehen, aber <strong>kein dauernder Elektronenstrom</strong>.</p>
+    <div class="field-sim-card" data-field-sim="lorentz-moving-rod" data-wb-simulation></div>
+    <div class="wb-section-break"></div>
+    <p><strong>Stopp &amp; check:</strong> Beende die Bewegung mit „Bewegung stoppen“. Das ist etwas anderes als das Anhalten der Simulationszeit mit der Pausentaste: Beim echten Bewegungsstopp fällt die magnetische Kraft weg. Das vorhandene elektrische Feld treibt die Elektronen zurück, bis die Ladungstrennung abgebaut ist.</p>
+    <div data-wb-type="trace">
+      <script class="wb-config" type="application/json">
+      {"id":"mf_lorentz_lab_trace","title":"Ablaufspur: Welches Ende wird negativ?","hint":"Sage die Verteilung voraus und überprüfe jeden Fall im Labor. Der Stab steht quer zum Feld; A ist vorne, B hinten.","columns":[{"label":"Bewegung des Stabs"},{"label":"Magnetfeld"},{"label":"Negatives Ende","answerOptions":["A","B","keines"],"hint":"Trage A, B oder keines ein."}],"rows":[{"cells":[{"given":"nach rechts"},{"given":"nach unten"},{"answers":["A","a"]}]},{"cells":[{"given":"nach links"},{"given":"nach unten"},{"answers":["B","b"]}]},{"cells":[{"given":"nach oben"},{"given":"nach unten"},{"answers":["keines"]}]},{"cells":[{"given":"nach links"},{"given":"nach oben"},{"answers":["A","a"]}]}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <h2>2. Stromdurchflossener Leiter: Wohin wirkt die Kraft?</h2>
+    <p>Jetzt hält eine Quelle einen Strom aufrecht. Elektronen verlassen ein Leiterende und werden am anderen nachgeliefert. Ihre Wanderung hört deshalb nicht wie beim offenen Stab auf. Die <strong>technische Stromrichtung I ist der Elektronenrichtung entgegengesetzt</strong>. Die magnetischen Kräfte auf die Elektronen werden auf das Leitergitter übertragen: Der ganze Leiter erfährt eine Kraft.</p>
+    <p>Der Leiter wird hier festgehalten; der Kraftpfeil zeigt, wohin er sich bei beweglicher Lagerung zunächst bewegen würde. Kehre erst nur die Elektronenrichtung, dann nur die Magnetfeldrichtung um. Prüfe anschließend, was beim gleichzeitigen Umkehren beider Richtungen passiert.</p>
+    <div class="field-sim-card" data-field-sim="lorentz-current-wire" data-wb-simulation></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq">
+      <script class="wb-config" type="application/json">
+      {"id":"mf_lorentz_lab_check","title":"Check: Verschiebung oder dauernder Strom?","hint":"Mehrere Aussagen sind richtig.","questions":[{"text":"Welche Aussagen passen zu den beiden Versuchen?","multiple":true,"choices":[{"id":"a","label":"Im offenen bewegten Stab endet die Elektronenverschiebung, wenn elektrische und magnetische Kraft einander ausgleichen."},{"id":"b","label":"Ein stärkeres Magnetfeld erzeugt bei unverändertem Strom und senkrechtem Leiter eine größere Leiterkraft."},{"id":"c","label":"Werden Stromrichtung und Magnetfeldrichtung gleichzeitig umgekehrt, bleibt die Kraftrichtung gleich."},{"id":"d","label":"Ein Strom parallel zum Magnetfeld erzeugt die größtmögliche Leiterkraft."},{"id":"e","label":"Die blauen Elektronen bewegen sich in technischer Stromrichtung."}],"correct":["a","b","c"],"explain":"Im offenen Stab entsteht ein elektrisches Gegenfeld. Beim stromdurchflossenen Leiter wächst die Kraft mit B und |I|; zwei Richtungswechsel heben sich auf. Parallel zum Feld ist die magnetische Kraft null. Elektronen- und technische Stromrichtung sind entgegengesetzt."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay">
+      <script class="wb-config" type="application/json">
+      {"id":"mf_lorentz_lab_essay","title":"Auswertung: Zwei Wege zur Lorentzkraft","hint":"Verändere immer nur eine Größe. Begründe die Richtung mit der linken Hand und die Beobachtung mit den Kräften.","fields":[{"label":"Bewegter offener Stab","key":"stab","kind":"textarea","prompt":"N oben, S unten: Bewege den Stab nach rechts und beschreibe die Elektronenverschiebung, die Polung von A und B und das Ende der Verschiebung. Erkläre anschließend den Bewegungsstopp und die Bewegung parallel zum Feld."},{"label":"Leiter mit Strom","key":"strom","kind":"textarea","prompt":"Stelle N oben, S unten und Elektronen A → B ein. Wohin zeigt die Leiterkraft? Beschreibe das Umkehren nur der Elektronenrichtung, nur der Feldrichtung und beider Richtungen. Vergleiche außerdem doppelte Stromstärke und die Parallelstellung."},{"label":"Vergleich der beiden Versuche","key":"vergleich","kind":"textarea","prompt":"Warum endet die Elektronenwanderung im offenen Stab, nicht aber bei eingeschaltetem Strom? Erkläre auch, warum Elektronenbewegung und technische Stromrichtung nicht verwechselt werden dürfen."}]}
+      </script>
+    </div>
+    <div class="wb-section-break"></div>
+    <p><strong>Jetzt hast du gelernt:</strong> Die Lorentzkraft kann Elektronen im bewegten offenen Leiter trennen oder bei aufrechterhaltenem Strom eine Kraft auf den ganzen Leiter hervorrufen. Entscheidend sind Bewegungsrichtung, Feldrichtung und Ladungsvorzeichen. Eine Bewegung parallel zum Feld liefert keine magnetische Kraft.</p>
+    <p class="wb-muted">Die Simulationen greifen die Versuche aus deinem Arbeitsblatt „Übungen Lorentzkraft“ (PDF-Seiten 31–33) auf. Das Modell vereinfacht den Hufeisenmagneten auf sein homogenes Feld zwischen den Polen. Auf der nächsten Seite lernst du, die Leiterkraft quantitativ auszuwerten.</p>
+  </section>
+
+<section data-wb-page="7" data-wb-page-title="Flussdichte">
     <h1>Die magnetische Flussdichte \(B\)</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Du definierst die magnetische Flussdichte über die Kraft auf einen stromdurchflossenen Leiter und wendest die Beziehung in einfachen Rechnungen an.</p></div>
     <p>Um Magnetfelder zu vergleichen, braucht man eine Messgröße für die Feldstärke. Dafür eignet sich die Kraft auf einen Probestrom: Ein Drahtrahmen wird so in ein homogenes Magnetfeld gebracht, dass ein Leiterstück senkrecht zu den Feldlinien steht. Die Kraft auf dieses wirksame Leiterstück wird gemessen.</p>
@@ -506,7 +543,7 @@
     <div class="wb-section-break"></div>
   </section>
 
-<section data-wb-page="7" data-wb-page-title="Rechnen">
+<section data-wb-page="8" data-wb-page-title="Rechnen">
     <h1>Lorentzkraft berechnen</h1>
     <div><strong>Lorentzkraft berechnen</strong><p>Die Formel \(F_\mathrm L=e\cdot v_s\cdot B\) lässt sich aus der Leiterkraft herleiten und auf bewegte einzelne Ladungen anwenden.</p></div>
     <p>Die Kraft auf einen Leiter lässt sich als Summe vieler Lorentzkräfte auf bewegte Elektronen deuten. Wenn in der Zeit \(\Delta t\) die Ladungsmenge \(\Delta Q=N\cdot e\) durch einen Leiterquerschnitt fließt, gilt \(I=\Delta Q/\Delta t\). Setzt man dies in \(F=BIs\) ein, erhält man für ein einzelnes Elektron bei senkrechter Bewegung die Lorentzkraft.</p>
@@ -561,7 +598,7 @@
     </div>
   </section>
 
-<section data-wb-page="8" data-wb-page-title="Hall-Effekt">
+<section data-wb-page="9" data-wb-page-title="Hall-Effekt">
     <h1>Hallsonden und Hall-Effekt</h1>
     <p>Eine Hallsonde ersetzt eine aufwendige Kraftmessung durch eine Spannungsmessung. In einem stromdurchflossenen Leiterplättchen bewegen sich Elektronen. Durch ein senkrechtes Magnetfeld werden sie seitlich abgelenkt. Dadurch entsteht eine Ladungstrennung und quer zum Strom eine messbare Hallspannung.</p>
     <p>Die Ladungstrennung wächst so lange, bis die elektrische Kraft der Lorentzkraft entgegenwirkt. Im Gleichgewicht fliegen die Elektronen wieder geradlinig weiter.</p>
@@ -622,7 +659,7 @@
     </div>
   </section>
 
-<section data-wb-page="9" data-wb-page-title="Spule und mu0">
+<section data-wb-page="10" data-wb-page-title="Spule und mu0">
     <h1>Die magnetische Feldkonstante und die schlanke Spule</h1>
     <div class="mf-basis"><strong>Grundlage</strong><p>Die schlanke Spule und die Formel \(B=\mu_0\mu_r\frac nl I\) gehören zur Grundlage. In der Vertiefung leitest du den Zusammenhang her und wertest Messreihen ausführlicher aus.</p></div>
     <p>Stromdurchflossene Spulen werden überall dort eingesetzt, wo man Magnetfelder gezielt erzeugen möchte. Für das Grundverständnis betrachtet man zuerst eine lange, luftgefüllte Spule. In ihrem Inneren verlaufen die Feldlinien parallel zur Spulenachse; die magnetische Flussdichte ist dort näherungsweise konstant. Das Feld ist also homogen.</p>
@@ -692,7 +729,7 @@
 </div>
 <script src="../assets/wb-webhook-loader.js"></script>
 <script src="../assets/allgemeines_format.js"></script>
-<script src="../assets/felder-simulations.js?v=20261005-2"></script>
+<script src="../assets/felder-simulations.js?v=20261123-lorentz-direkt"></script>
 <script>SBBook.autoMount();SBBlocks.autoMount();SBLibrary.autoMountAll();FieldSim.mountAll();</script>
 </body>
 </html>
