@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="musterloesung-source" content="arduino-2.html">
-<meta name="musterloesung-source-sha256" content="ca16a5690154e806d3067f7e5040b96c07bf2f390ef84c6f5dad31a334bbd326">
+<meta name="musterloesung-source-sha256" content="b627098df62c4e431c62bb9dc87773db8b8dd3b687167d5fb64582d5b28bc217">
 <title>Arduino Lernbaustein – Seiten 6–11 – Musterlösung</title>
 <link rel="stylesheet" href="../assets/allgemeines_format.css">
 <style>
@@ -345,7 +345,7 @@ void loop() {
   noTone(11);
   delay(3000);
 }</code></pre><p>Der Ton A mit 440 Hz klingt eine Sekunde; danach folgen drei Sekunden Stille. Der Zyklus dauert ungefähr vier Sekunden. Bei 880 Hz klingt A eine Oktave höher; Tondauer und Pause bleiben unverändert. delay() beendet den Ton nicht. Die optionale dritte Zahl in tone(11, 440, 1000) ist die Tondauer in Millisekunden; der Aufruf selbst wartet nicht auf deren Ende.</p></article>
-<div class="wb-section-break"></div><article class="solution-block" data-solution="material_5_1"><h3>5.1 Aufgabe: Selber programmieren – deine Melodie</h3><pre><code>void setup() {}
+<div class="wb-section-break"></div><article class="solution-block" data-solution="material_5_1"><h3>5.1 Aufgabe: Selber programmieren – deine Melodie</h3><p><strong>Tonfolge zu „Alle meine Entchen“:</strong> C D E F G G | A A A A G | A A A A G | F F F F E E | D D D D C</p><pre><code>void setup() {}
 void loop() {
   tone(11, 262); delay(300);
   tone(11, 294); delay(300);
