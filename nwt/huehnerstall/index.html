@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Smart Chicken Coop – Projektübersicht</title>
   <link rel="stylesheet" href="../../assets/allgemeines_format.css">
-  <link rel="stylesheet" href="projekt.css">
+  <link rel="stylesheet" href="projekt.css?v=systemuebersicht">
 </head>
 <body>
   <div data-wb-book>
@@ -33,13 +33,53 @@
       <h2>Unsere Leitfrage</h2>
       <p>Wie bauen wir ein technisches System, das einen Hühnerstall beobachtet, Messwerte verständlich darstellt und nach einem Neustart möglichst selbstständig wieder funktioniert?</p>
 
-      <div class="coop-flow" aria-label="Datenweg vom Hühnerstall zur Schulhomepage">
-        <div class="coop-flow__item"><strong>Hühnerstall</strong><small>reale Vorgänge</small></div>
-        <div class="coop-flow__item"><strong>Sensor + Kamera</strong><small>Signale und Bilder</small></div>
-        <div class="coop-flow__item"><strong>ESP32 + Pi</strong><small>verarbeiten</small></div>
-        <div class="coop-flow__item"><strong>Netzwerk</strong><small>übertragen</small></div>
-        <div class="coop-flow__item"><strong>Homepage</strong><small>anzeigen</small></div>
-      </div>
+      <h2 id="coop-system-title">Systemübersicht</h2>
+      <figure class="coop-system" aria-labelledby="coop-system-title">
+        <div class="coop-system__diagram">
+          <div class="coop-system__source">
+            <strong>ESP32</strong>
+            <span>Temperatur, Feuchte, Licht</span>
+            <small>Optional: Futter und Wasser</small>
+          </div>
+          <div class="coop-system__source coop-system__source--video">
+            <strong>NoIR-Kamera</strong>
+            <span>Livebilder aus dem Stall</span>
+          </div>
+          <div class="coop-system__arrow"><span>Schul-WLAN<br>HTTP-POST</span></div>
+          <div class="coop-system__arrow coop-system__arrow--video"><span>CSI-Kabel<br>Bilddaten</span></div>
+
+          <div class="coop-system__pi">
+            <h3>Raspberry Pi</h3>
+            <div class="coop-system__lanes">
+              <div>
+                <h4>Messwerte</h4>
+                <ol>
+                  <li>Flask-API empfängt</li>
+                  <li>CSV speichert · optional SQLite</li>
+                  <li>Python zeichnet ein Diagramm</li>
+                  <li>Webserver liefert JSON und die lokale Anzeige</li>
+                </ol>
+              </div>
+              <div>
+                <h4>Video</h4>
+                <ol>
+                  <li>Bilder verarbeiten</li>
+                  <li>Lokaler MJPEG-Livestream</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="coop-system__arrow"><span>HTTPS-Upload<br>der Messwerte</span></div>
+          <div class="coop-system__arrow coop-system__arrow--video"><span>Über einen<br>Stream-Dienst</span></div>
+          <div class="coop-system__www">
+            <small>Internet · nach Freigabe</small>
+            <strong>Schulhomepage</strong>
+            <span>Messwerte mit Zeitstempel · Diagramme bei Bedarf · Livestream</span>
+          </div>
+        </div>
+        <figcaption>Die Messwertanzeige und der Livestream sind getrennte Datenwege. Für die öffentliche Anzeige schickt der Pi die Daten nach außen; der Browser greift nicht direkt auf den Pi im Schulnetz zu.</figcaption>
+      </figure>
 
       <div class="grid2">
         <div class="wb-soft-callout">
