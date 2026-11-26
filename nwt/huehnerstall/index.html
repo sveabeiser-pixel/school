@@ -44,7 +44,7 @@
       <div class="grid2">
         <div class="wb-soft-callout">
           <strong>Das Endsystem</strong>
-          <p>Der ESP32 misst Temperatur, Luftfeuchtigkeit und Helligkeit. Der Raspberry Pi verarbeitet Kamerabilder und Video. Eine Webseite führt die Informationen zusammen.</p>
+          <p>Der ESP32 misst Temperatur, Luftfeuchtigkeit und Helligkeit. Der Raspberry Pi empfängt und speichert Messwerte über eine Flask-API. Der Kameradienst verarbeitet unabhängig davon Bilder und Video. Eine freigegebene Webseite führt die Informationen zusammen.</p>
         </div>
         <div class="wb-soft-callout">
           <strong>Dein Arbeitsziel</strong>
@@ -67,7 +67,7 @@
           "title":"Was kannst du nach dem Projekt erklären?",
           "hint":"Überlege zuerst selbst, bevor du die Antwort öffnest.",
           "question":"Welche Kette verbindet einen Sensorwert mit einer Anzeige auf einer Webseite?",
-          "answer":"Sensor und Messprinzip → elektrische Spannung oder digitales Signal → Verarbeitung durch den ESP32 → Netzwerkübertragung → Webseite als Ausgabe. Jeder Schritt kann eigene Fehlerquellen besitzen."
+          "answer":"Sensor → Verarbeitung durch den ESP32 → WLAN und HTTP → Flask-API und Speicherung am Raspberry Pi → ausgehender HTTPS-Upload → Anzeige auf der Homepage. Jeder Übergang hat eigene Fehlerquellen."
         }
         </script>
       </div>
@@ -112,9 +112,9 @@
       <p>Alle lernen die gemeinsamen Grundlagen. Danach bearbeitest du mit deiner Gruppe eine Vertiefung und erklärst sie der anderen Gruppe.</p>
       <div class="grid2">
         <div class="wb-soft-callout">
-          <strong>Gruppe A: Sensorik und ESP32</strong>
-          <p><a href="gruppe-a.html">Zur Übersicht für Gruppe A</a></p>
-          <p>Messkette, ADC, WLAN, Webserver und Datenanzeige.</p>
+          <strong>Gruppe A: Vom Sensor zur Homepage</strong>
+          <p><a href="gruppe-a.html">Zum Arbeitsweg für Gruppe A</a></p>
+          <p>ESP32 und Schul-WLAN, Flask-API am Pi, CSV und Temperaturdiagramm, optional SQLite, HTTPS-Upload zur Homepage.</p>
         </div>
         <div class="wb-soft-callout">
           <strong>Gruppe B: Kamera und Raspberry Pi</strong>
@@ -228,10 +228,10 @@
           <tr><td>3</td><td>Digitale Sensorprotokolle und Linux-Boot</td><td>KY-015 anschließen und auslesen</td><td>Pi starten, Netzwerk und SSH prüfen</td><td>Plausible Messwerte / SSH-Protokoll</td></tr>
           <tr><td>4</td><td>Spannungsteiler, ADC und Prozesse</td><td>KY-018 untersuchen und Kennlinie aufnehmen</td><td>Kamera sicher anschließen und erkennen</td><td>Messreihe / Kameraliste</td></tr>
           <tr><td>5</td><td>Messfehler, Einheiten, Datenqualität</td><td>Beide Sensoren zusammenführen</td><td>Foto und lokales Video erzeugen</td><td>Datensatz / Bild- und Videodatei</td></tr>
-          <tr><td>6</td><td>IP, Client, Server und HTTP</td><td>ESP32 ins WLAN bringen und Webseite anbieten</td><td>NoIR und Infrarot experimentell vergleichen</td><td>HTTP-Antwort / Versuchsprotokoll</td></tr>
-          <tr><td>7</td><td>JSON, Bildrate, Auflösung und Bitrate</td><td>Messwerte strukturiert bereitstellen</td><td>Videodatenrate messen und berechnen</td><td>Datenschnittstelle / Rechenweg</td></tr>
-          <tr><td>8</td><td>Sichere Streamingarchitektur</td><td>Sensoranzeige für die Homepage vorbereiten</td><td>Ausgehenden Stream zum freigegebenen Dienst testen</td><td>Gemeinsamer Integrationstest</td></tr>
-          <tr><td>9</td><td>Dienste, Autostart und Fehlerzustände</td><td>WLAN-Wiederanlauf prüfen</td><td><code>systemd</code>-Dienst und Neustart testen</td><td>Start- und Fehlerprotokoll</td></tr>
+          <tr><td>6</td><td>IP, Client, Server und HTTP</td><td>ESP32 im Schul-WLAN prüfen und lokale Flask-Route am Pi schreiben</td><td>NoIR und Infrarot experimentell vergleichen</td><td>IP/HTTP-Nachweis / Versuchsprotokoll</td></tr>
+          <tr><td>7</td><td>JSON, Bildrate, Auflösung und Bitrate</td><td>ESP32-POST an Pi testen und Daten in CSV speichern</td><td>Videodatenrate messen und berechnen</td><td>HTTP 201 und CSV-Zeile / Rechenweg</td></tr>
+          <tr><td>8</td><td>Sichere Veröffentlichung</td><td>Temperaturdiagramm erstellen und den freigegebenen HTTPS-Upload zur Homepage testen</td><td>Ausgehenden Stream zum freigegebenen Dienst testen</td><td>Diagramm und gemeinsamer Integrationstest</td></tr>
+          <tr><td>9</td><td>Dienste, Autostart und Fehlerzustände</td><td>WLAN-Wiederanlauf und Aktualitätsanzeige prüfen; bei Bedarf SQLite testen</td><td><code>systemd</code>-Dienst und Neustart testen</td><td>Start- und Fehlerprotokoll</td></tr>
           <tr><td>10</td><td>Abnahme, Datenschutz und Montage</td><td colspan="2">Gesamtsystem testen, dokumentieren und stalltaugliche Montage begründen</td><td>Abnahme und individuelle Erklärung</td></tr>
         </tbody>
       </table>

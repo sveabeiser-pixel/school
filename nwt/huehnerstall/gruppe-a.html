@@ -1,8 +1,211 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Smart Chicken Coop – Gruppe A</title><link rel="stylesheet" href="../../assets/allgemeines_format.css"><link rel="stylesheet" href="projekt.css"></head>
-<body><div data-wb-book>
-<script type="application/json" class="wb-book-config">{"bookTitle":"Smart Chicken Coop","sectionTitle":"Gruppe A – Sensorik und ESP32","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Gruppe A","themeDefault":"default"}</script>
-<section data-wb-page="1" data-wb-page-title="Auftrag"><h1>Gruppe A: Sensorik und ESP32</h1><p class="wb-muted">Euer Schwerpunkt ist die Messkette vom physikalischen Vorgang bis zur lokalen Datenanzeige.</p><h2>Euer Beitrag zum Gesamtsystem</h2><p>Ihr untersucht Temperatur, relative Luftfeuchtigkeit und Helligkeit. Anschließend überträgt der ESP32 die Messwerte per WLAN und stellt sie als kleine Webseite bereit.</p><div class="wb-soft-callout"><strong>Arbeitsroute</strong><ol style="margin:0;padding-left:22px"><li><a href="02-esp32.html">ESP32 und serieller Monitor</a></li><li><a href="03-sensoren.html">KY-015: Temperatur und Feuchte</a></li><li><a href="04-ldr-adc.html">KY-018: LDR, Spannungsteiler und ADC</a></li><li><a href="05-messdaten.html">Messfehler und Kalibrierung</a></li><li><a href="06-netzwerk-http.html">WLAN, HTTP und Webserver</a></li><li><a href="09-streaming-homepage.html">JSON-Daten und Homepage</a></li></ol></div><div class="wb-section-break"></div><div data-wb-type="verify"><script type="application/json" class="wb-config">{"id":"groupa_verify","title":"Stopp & check","hint":"Prüfe die Messkette.","statement":"Der ADC misst direkt die Helligkeit in Lux.","answer":false,"explain":"Der ADC misst eine elektrische Spannung und wandelt sie in einen Rohwert um. Eine Helligkeitsskala muss für den konkreten Aufbau experimentell festgelegt werden."}</script></div></section>
-<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><h2>Jede Einheit braucht</h2><ul><li>eine kurze Schaltskizze oder Pin-Tabelle</li><li>ein kommentiertes Kernprogramm</li><li>eine Messreihe mit Einheiten</li><li>einen Screenshot oder seriellen Log</li><li>einen benannten Fehler und euren Diagnoseweg</li></ul><h2>Übergabe an Gruppe B</h2><p>Übergebt eine technische Notiz mit IP-Adresse oder Schnittstelle, Datenformat, Messintervall, bekannten Grenzen und dem letzten funktionierenden Meilenstein.</p><div class="wb-section-break"></div><div data-wb-type="cloze"><script type="application/json" class="wb-config">{"id":"groupa_cloze","title":"Sicherung: Fachbegriffe einsetzen","hint":"Nutze die Begriffe aus dem Projekt.","bank":["Spannung","ADC","Rohwert","WLAN"],"segments":[{"t":"text","v":"Der "},{"t":"gap","a":"ADC"},{"t":"text","v":" wandelt eine elektrische "},{"t":"gap","a":"Spannung"},{"t":"text","v":" in einen digitalen "},{"t":"gap","a":"Rohwert"},{"t":"text","v":" um. Für die Übertragung nutzt der ESP32 "},{"t":"gap","a":"WLAN"},{"t":"text","v":"."}]}</script></div><div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Ein Sensorwert ist das Ergebnis einer Messkette. Du darfst einen Rohwert nicht ohne Kalibrierung als universelle physikalische Einheit ausgeben.</p></div></section>
-</div><script src="projekt-navigation.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script></body></html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop: Gruppe A</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="projekt.css">
+  <style>
+    .coop-command{overflow:auto;padding:12px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);color:var(--wb-text);white-space:pre-wrap}
+    .wb-book [data-wb-page]{overflow-wrap:anywhere}
+    .coop-route li,.coop-files li{margin-block:6px}
+    .wb-book [data-p2-id="groupa_datenwege"] .p2-piece{min-width:0}
+    .wb-book [data-p2-id="groupa_datenwege"] .p2-joined{max-width:100%}
+    @media(max-width:600px){.wb-book .wb-content{padding-inline:6px}.wb-book .wb-paper{padding-inline:14px}}
+  </style>
+</head>
+<body>
+<div data-wb-book>
+  <script type="application/json" class="wb-book-config">
+  {"bookTitle":"Smart Chicken Coop","sectionTitle":"Gruppe A: Vom Sensor zur Homepage","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Gruppe A","themeDefault":"default"}
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="1 · ESP32 und Sensoren">
+    <h1>Gruppe A: Vom Sensor zur Homepage</h1>
+    <p>Wie kannst du nachweisen, dass die Temperatur auf der Homepage wirklich vom Sensor stammt und nicht aus einem alten Test? Verfolge einen Messwert von Station zu Station. Teste erst lokal, bevor du Geräte oder Dienste verbindest.</p>
+    <ol class="coop-route">
+      <li><a href="#page-1">Sensoren am ESP32 messen und seriell anzeigen</a></li>
+      <li><a href="#page-2">ESP32 mit dem freigegebenen Schulnetz verbinden</a></li>
+      <li><a href="#page-3">Auf dem Raspberry Pi eine Flask-API programmieren</a></li>
+      <li><a href="#page-4">Messwerte per HTTP senden</a></li>
+      <li><a href="#page-4">Messwerte in einer CSV-Datei speichern</a></li>
+      <li><a href="#page-5">Temperatur mit Python als Diagramm darstellen</a></li>
+      <li><a href="#page-6">Bei Bedarf auf SQLite umsteigen</a></li>
+      <li><a href="#page-7">Letzten Messwert an den öffentlichen Webserver übertragen</a></li>
+    </ol>
+    <div class="wb-section-break"></div>
+    <h2>Erst messen, dann vernetzen</h2>
+    <p>Für den klassischen ESP32 nutzt du den <a href="03-sensoren.html">KY-015 / DHT11</a> an GPIO4 und den <a href="04-ldr-adc.html">KY-018 / LDR</a> an GPIO34 (ADC1). Prüfe die Pinbelegung deines Boards und die Beschriftung der Module. Verbinde die Masseleitungen und halte das Analogsignal im 3,3-V-Bereich. In der <a href="02-esp32.html">ESP32-Anleitung</a> findest du Hinweise zu Board, Port und Upload.</p>
+    <p>Installiere in der Arduino IDE die Bibliothek <code>DHT sensor library</code> von Adafruit mit ihren Abhängigkeiten. Öffne <a href="material/gruppe-a/messstation/messstation.ino" download>messstation.ino</a> im gleichnamigen Sketch-Ordner. Lass <code>WLAN_AKTIV</code> und <code>SENDEN</code> zunächst auf <code>false</code>. Lade den Sketch hoch und öffne den seriellen Monitor bei <strong>115200 Baud</strong>. Der Sketch liest alle fünf Sekunden aus.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script type="application/json" class="wb-config">
+    {"id":"groupa_verify","title":"Stopp & check","hint":"Prüfe die Messkette.","statement":"Der ADC misst direkt die Helligkeit in Lux.","answer":false,"explain":"Der ADC wandelt die Spannung in einen Rohwert um. Eine Lichtskala muss für diesen Aufbau experimentell festgelegt werden."}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script type="application/json" class="wb-config">
+    {"id":"groupa_serial","title":"Messprotokoll: Licht ändern","hint":"Miss zuerst bei unveränderter Beleuchtung, dann mit abgedecktem LDR.","fields":[{"key":"test","label":"Serieller Nachweis","kind":"textarea","prompt":"Notiere zwei echte Ausgabezeilen mit Einheiten, eine vor und eine nach dem Abdunkeln. Gib an, welcher Wert auf die Änderung reagiert. Was steht im Monitor bei einem DHT-Lesefehler, und warum wäre eine Ersatztemperatur von 0 °C irreführend?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="2 · Schul-WLAN">
+    <h1>Den ESP32 mit dem Schulnetz verbinden</h1>
+    <p>Nutze ausschließlich ein von der Schul-IT freigegebenes Netz für Projektgeräte. Der Sketch ist für ein kompatibles 2,4-GHz-WLAN mit Netzname und gemeinsamem Kennwort gedacht. Bei Anmeldeportal, persönlichen WLAN-Konten oder voneinander getrennten Clients klärst du den Aufbau mit der Schul-IT, statt die Beschränkung zu umgehen.</p>
+    <p>Setze <code>WLAN_AKTIV</code> auf <code>true</code>, trage Netzname und Kennwort nur in deiner lokalen Sketch-Kopie ein und lass <code>SENDEN</code> auf <code>false</code>. Speichere keine Zugangsdaten im Repository, im Protokoll oder in Screenshots. Kontrolliere nach dem Hochladen die Meldung <code>WLAN verbunden</code> und die zugewiesene IP-Adresse im Monitor. Die Messung läuft auch ohne WLAN weiter.</p>
+    <p>Auf dem <a href="07-pi-linux.html">Raspberry Pi</a> erhältst du mit <code>hostname -I</code> die IP-Adressen. Kläre, welche Adresse zum Projektnetz gehört. Die ESP32-Adresse zeigt, wo der Sender ist; in die spätere Ziel-URL kommt die <strong>Pi-Adresse</strong>. In <a href="06-netzwerk-http.html">WLAN, IP und HTTP</a> findest du die Begriffe; dort spielt der ESP32 in einem anderen Versuch die Serverrolle.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script type="application/json" class="wb-config">
+    {"id":"groupa_network","title":"Diagnose: Netz oder Anwendung?","hint":"Ordne den nächsten Prüfschritt zu.","categories":[{"id":"wlan","title":"WLAN-Verbindung prüfen"},{"id":"api","title":"API-Route prüfen"}],"items":[{"label":"Der ESP32 meldet keine Verbindung und hat keine IP im Projektnetz.","category":"wlan"},{"label":"Der Server antwortet mit HTTP 404 auf /api/messwert.","category":"api"},{"label":"Nur nach einem Wechsel der SSID verliert der ESP32 seine Verbindung.","category":"wlan"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="3 · Flask-API am Pi">
+    <h1>Auf dem Raspberry Pi eine API programmieren</h1>
+    <p>Der Pi ist der Server. Eine Route legt fest, was der Pi zu einer HTTP-Anfrage zurückgibt. <code>GET</code> fragt Daten ab; <code>POST</code> liefert hier einen neuen Datensatz. Programmiere und teste zuerst eine Route ohne Sensor und ohne Datei.</p>
+    <h2>Erste Route: GET /api/health</h2>
+    <p>Kopiere den Ordner <code>material/gruppe-a</code> auf den Pi oder lade die Dateien über die Links der Kapitel herunter. Installiere die Pakete in einer virtuellen Umgebung. Starte den ersten Versuch nur auf dem Pi:</p>
+    <pre class="coop-command"><code>python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt</code></pre>
+    <p>Schreibe diesen Einstieg in <code>api_uebung.py</code>:</p>
+    <pre class="coop-command"><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}</code></pre>
+    <p>Starte die Anwendung mit <code>flask --app api_uebung run</code> und rufe <code>curl -i http://127.0.0.1:5000/api/health</code> in einem zweiten Terminal auf. Ergänze danach selbst eine Route <code>/api/version</code>, die eine Versionsnummer als JSON ausgibt. Vergleiche beide Antworten mit einem absichtlich falschen Pfad.</p>
+    <h2>Vom Test zur Sensor-API</h2>
+    <p>Entwirf nun den Ablauf für einen POST: JSON lesen, Werte prüfen, Empfangszeit hinzufügen, speichern und antworten. Verwende anschließend <a href="material/gruppe-a/sensor_api.py" download>sensor_api.py</a> mit <a href="material/gruppe-a/messwerte.py" download>messwerte.py</a> als Referenz für deinen Entwurf. Das <a href="material/gruppe-a/requirements.txt" download>Abhängigkeitsverzeichnis</a> enthält die Python-Pakete für den gesamten Messweg.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script type="application/json" class="wb-config">
+    {"id":"groupa_api_order","title":"Ordne den Ablauf eines gültigen POST","hint":"Was muss der Pi erledigen, bevor er das Speichern bestätigt?","items":["JSON aus der Anfrage lesen","Messwerte prüfen","Empfangszeit ergänzen","Datensatz speichern","HTTP 201 zurückgeben"],"shuffle":true}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script type="application/json" class="wb-config">
+    {"id":"groupa_first_route","title":"Deine erste API-Erweiterung","hint":"Verwende dieselbe Flask-App wie für /api/health.","fields":[{"key":"route","label":"Route und Test","kind":"textarea","prompt":"Zeige deinen Code für GET /api/version. Nenne für diese Route und für /api/falsch jeweils den HTTP-Status und beschreibe, woran du einen erfolgreichen Test erkennst."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="4–5 · Übertragen und CSV">
+    <h1>Messwerte senden und als CSV speichern</h1>
+    <p>Der ESP32 sendet Temperatur in °C, relative Feuchte in Prozent und den ADC-Rohwert als Zahlen. Der Pi ergänzt <code>received_at_utc</code>: den Empfangszeitpunkt in UTC, nicht die Laufzeit seit dem ESP32-Start. Prüfe vorher die Uhr des Pi. Ungültige Messwerte kommen nicht in die Datei.</p>
+    <h2>Zuerst mit Testdaten</h2>
+    <p>Beende den Übungsserver. Starte <code>flask --app sensor_api run</code> im Materialordner und sende vom Pi selbst einen ausdrücklich fiktiven Datensatz:</p>
+    <pre class="coop-command"><code>curl -i -X POST http://127.0.0.1:5000/api/messwerte \
+  -H 'Content-Type: application/json' \
+  -d '{"temperature_c":21.5,"humidity_pct":53.0,"light_raw":1470}'
+curl -i http://127.0.0.1:5000/api/aktuell</code></pre>
+    <p>Bei Erfolg liefert POST <code>201 Created</code>. <code>tail -n 5 ~/.smart-coop/messwerte.csv</code> zeigt die gespeicherte Zeile. Beim ersten Schreiben wird die Kopfzeile angelegt; danach wird jeweils eine Zeile angehängt. Teste einen falschen Wert und kontrolliere, dass die Datei unverändert bleibt. Trenne Test- und reale Daten: Starte für echte Messungen z. B. mit <code>export COOP_DATA_FILE="$HOME/.smart-coop/stall.csv"</code>.</p>
+    <h2>Dann mit dem ESP32</h2>
+    <p>Starte die API für den kurzen Labortest mit <code>flask --app sensor_api run --host PI_IP</code>; ersetze <code>PI_IP</code> durch die freigegebene Projekt-IP. Die unverschlüsselte lokale API ist nur für das abgeschottete Projektnetz gedacht. Dafür müssen ESP32 und Pi laut Schul-IT miteinander sprechen dürfen. Verwende weder Debug-Modus noch Portweiterleitung.</p>
+    <p>Setze im Sketch <code>API_URL</code> auf <code>http://PI_IP:5000/api/messwerte</code> und beide Schalter auf <code>true</code>. Kontrolliere im Monitor <code>HTTP 201</code> und suche genau diesen Messwert in der CSV-Datei. Bei Verbindungsfehlern speichert der ESP32 im Startcode keine Warteschlange; Lücken im Verlauf bleiben sichtbar.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script type="application/json" class="wb-config">
+    {"id":"groupa_post_trace","title":"Ablaufspur: Was landet in der CSV?","hint":"Die Datei enthält vor dem ersten Versuch zwei Datensätze. Arbeite die Zeilen der Reihe nach ab.","columns":[{"label":"Anfrage"},{"label":"HTTP-Status","hint":"Dreistelliger Code ohne Zusatz."},{"label":"Anzahl Datensätze danach","hint":"Ganze Zahl, ohne Kopfzeile."}],"rows":[{"cells":[{"given":"POST mit gültigen Werten"},{"answers":["201"]},{"answers":["3"]}]},{"cells":[{"given":"POST mit Feuchte = 130 %"},{"answers":["400"]},{"answers":["3"]}]},{"cells":[{"given":"GET /api/aktuell"},{"answers":["200"]},{"answers":["3"]}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="6 · Temperaturdiagramm">
+    <h1>Mit Python ein Temperaturdiagramm erstellen</h1>
+    <p>Jede CSV-Zeile wird zu einem Punkt: Auf die x-Achse kommt die Empfangszeit, auf die y-Achse die Temperatur in °C. Verwende die Zeitstempel und nicht die Zeilennummer. Sonst wäre eine WLAN-Lücke im Diagramm genauso breit wie ein normaler Messabstand.</p>
+    <p>Teste <a href="material/gruppe-a/diagramm.py" download>diagramm.py</a> mit der eindeutig fiktiven <a href="material/gruppe-a/beispielmessung.csv" download>Beispielmessung</a> aus fünf Messpunkten. Die Python-Datei speichert das Diagramm als PNG, auch am Pi ohne Bildschirm:</p>
+    <pre class="coop-command"><code>python diagramm.py beispielmessung.csv --output temperatur.png</code></pre>
+    <p>Ersetze die Beispieldatei danach durch eine Kopie deiner echten Messreihe, etwa <code>stall.csv</code>. Nimm mindestens zehn Punkte auf. Prüfe beim Auswerten, ob ein scheinbarer Sprung von der Umgebung, einem Messfehler oder einer Übertragungslücke stammen könnte. Nutze auch <a href="05-messdaten.html">Messfehler und Datenqualität</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+    {"id":"groupa_plot","title":"Check: Lücke im Temperaturdiagramm","hint":"Wähle die Aussage, die durch die Daten gestützt wird.","questions":[{"text":"Zwischen 08:00 und 08:03 wurden keine Daten gespeichert. Was darfst du daraus schließen?","choices":[{"id":"a","label":"Die Temperatur fiel in dieser Zeit auf 0 °C."},{"id":"b","label":"Es fehlen Nachweise für die Temperatur in diesem Zeitraum."},{"id":"c","label":"Die Temperatur blieb drei Minuten konstant."}],"correct":["b"],"explain":"Die Lücke bedeutet nicht, dass der Messwert null, konstant oder linear verändert war."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="7 · Optional: SQLite">
+    <h1>Optional: Von CSV zu SQLite wechseln</h1>
+    <p>Bleib bei CSV, solange eine kleine Messreihe ausreicht. SQLite lohnt sich, wenn du öfter nach Zeiträumen filtern oder viele Werte gezielt auswerten willst. Die API-Routen und das Datenformat für ESP32 und Homepage bleiben gleich; nur der Pi speichert anders.</p>
+    <p>Beende die Sensor-API vor dem Import, damit während der Umstellung keine neuen Zeilen geschrieben werden. Behalte die CSV als Sicherung. <a href="material/gruppe-a/csv_nach_sqlite.py" download>csv_nach_sqlite.py</a> importiert nur in eine neue Zieldatei und meldet die Zahl der übernommenen Messungen.</p>
+    <pre class="coop-command"><code>python csv_nach_sqlite.py "$HOME/.smart-coop/stall.csv" "$HOME/.smart-coop/stall.sqlite3"
+export COOP_DATA_FILE="$HOME/.smart-coop/stall.sqlite3"</code></pre>
+    <p>Vergleiche die Anzahl mit der CSV <em>ohne</em> Kopfzeile. Starte die API wieder mit denselben Netzwerkeinstellungen. Prüfe zuerst <code>GET /api/aktuell</code> und sende dann einen neuen Messwert. Die bisherigen Reihen kannst du weiterhin mit dem CSV-Diagrammskript auswerten. Für neue SQLite-Daten braucht das Skript einen CSV-Export oder eine SQLite-Abfrage statt <code>read_csv()</code>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script type="application/json" class="wb-config">
+    {"id":"groupa_sqlite","title":"Stopp & check: Was ändert sich beim Wechsel?","question":"Musst du beim Wechsel auf SQLite die URL im ESP32 oder das JSON für die Homepage ändern?","answer":"Nein. Die API kapselt die Speicherung. Der ESP32 sendet weiter an POST /api/messwerte, und die zuletzt gespeicherten Werte stehen weiterhin über GET /api/aktuell bereit."}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="8 · Öffentliche Homepage">
+    <h1>Messwerte auf der öffentlichen Homepage anzeigen</h1>
+    <p>Der <strong>Pi baut die Verbindung nach außen auf</strong> und überträgt ausschließlich den letzten freigegebenen Datensatz. Der Browser fragt nur den öffentlichen Webserver ab. Es werden weder Schulnetz-Adressen noch Zugangsdaten, die CSV-Historie oder Kamerabilder über diese Schnittstelle übertragen. Gruppe B betreut den separaten Kameradatenweg.</p>
+    <ol class="coop-files">
+      <li>Die Lehrkraft oder Schul-IT richtet auf einem freigegebenen HTTPS-Host <a href="material/gruppe-a/homepage.py" download>homepage.py</a>, <a href="material/gruppe-a/anzeige.html" download>anzeige.html</a> und <code>messwerte.py</code> ein. Die öffentliche App läuft hinter einem HTTPS-Reverse-Proxy mit einem WSGI-Server, z. B. <code>waitress-serve --listen=127.0.0.1:8000 --call homepage:create_app</code> nach Installation von Flask und Waitress. Für <code>COOP_PUBLIC_FILE</code> ist ein dauerhaftes, beschreibbares Verzeichnis <strong>außerhalb des Webroots</strong> nötig. Der öffentliche <code>POST /api/publish</code> ist token-geschützt, <code>GET /api/aktuell</code> absichtlich lesbar.</li>
+      <li>Die Schul-IT hinterlegt auf Pi und Webserver denselben zufälligen <code>COOP_UPLOAD_TOKEN</code> (mindestens 32 Zeichen) als Umgebungsvariable, nie in der HTML-Seite, im Sketch oder in Git. Am Pi wird <code>COOP_PUBLISH_URL</code> auf die freigegebene HTTPS-Adresse mit <code>/api/publish</code> gesetzt. Bei Bindung der lokalen API nur an die Pi-Projekt-IP setzt du außerdem <code>COOP_LOCAL_URL</code> auf <code>http://PI_IP:5000/api/aktuell</code>.</li>
+      <li>Starte am Pi <code>python veroeffentlichen.py</code> mit <a href="material/gruppe-a/veroeffentlichen.py" download>veroeffentlichen.py</a>. Prüfe erst einen Upload, danach kann die Schul-IT den Einzelaufruf einmal pro Minute als geplanten Dienst starten. Die öffentliche App ersetzt jeweils nur den letzten Datensatz; das Programm überschreibt nicht die lokale Messreihe.</li>
+      <li>Öffne die freigegebene Seite und vergleiche Temperatur, Feuchte, Lichtrohwert und Empfangszeit mit der Pi-API. Stoppe den Upload kontrolliert. Nach mehr als zwei Minuten ohne neuen Empfang zeigt die Seite den Messwert als veraltet an. Ein fehlgeschlagener Abruf wird getrennt gemeldet.</li>
+    </ol>
+    <p><strong>Ohne freigegebenen Host:</strong> Starte die öffentliche App zum Üben lokal mit <code>flask --app homepage run --port 8000</code> und teste <code>GET /api/aktuell</code>. Ohne Upload-Token bleibt der Upload gesperrt. GitHub Pages kann HTML anzeigen, aber keine Flask-API ausführen. Dort kann die Anzeige bei Bedarf auf einen separat freigegebenen HTTPS-Dienst verweisen; der Beispielbrowser und seine API laufen für den einfachsten Einstieg auf derselben Domain.</p>
+    <div class="wb-section-break"></div>
+    <div data-p2 class="p2" data-p2-id="groupa_datenwege" data-p2-title="Wer fragt wen an?" data-p2-hint="Verbinde Sender und Ziel des jeweiligen HTTP-Aufrufs.">
+      <div class="p2-banks">
+        <div><div class="p2-col-title">Sender</div><div class="p2-bank" data-left-bank>
+          <div class="p2-piece p2-left" data-side="L" data-pair="1">ESP32</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="2">Upload-Skript auf dem Pi</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="3">Browser der Öffentlichkeit</div>
+        </div></div>
+        <div><div class="p2-col-title">Anfrage</div><div class="p2-bank" data-right-bank>
+          <div class="p2-piece p2-right" data-side="R" data-pair="2">POST /api/publish am öffentlichen Host</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="3">GET /api/aktuell am öffentlichen Host</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="1">POST /api/messwerte am Pi</div>
+        </div></div>
+      </div>
+      <div class="p2-row"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+      <div class="p2-solved" data-solved></div>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script type="application/json" class="wb-config">
+    {"id":"groupa_publish","title":"Transfer: Anzeige bleibt auf einem alten Wert","hint":"Prüfe lokale Messung, ausgehenden HTTPS-Upload und Browser getrennt.","fields":[{"key":"diagnose","label":"Diagnose und Freigabe","kind":"textarea","prompt":"Der Pi zeigt frische Werte, die öffentliche Homepage meldet aber 'Messwerte veraltet'. Nenne den nächsten Test für den ausgehenden Datenweg und erkläre, warum keine eingehende Portfreigabe am Pi nötig ist. Welche Daten dürfen angezeigt werden und wo bleibt das Upload-Token?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Nachweise und Übergabe">
+    <h1>Nachweise für die Übergabe</h1>
+    <h2>Eure Abnahme</h2>
+    <ul>
+      <li>Schaltskizze, kommentierter Sketch und echte serielle Ausgabe mit Einheiten.</li>
+      <li>HTTP-Nachweis für einen erfolgreichen und einen abgelehnten POST, dazu eine anonymisierte CSV-Probe und das Temperaturdiagramm.</li>
+      <li>Bei SQLite: Zahl importierter Zeilen sowie Vergleich des letzten Messwerts vor und nach der Umstellung.</li>
+      <li>Bei Freigabe: dieselbe Empfangszeit auf Pi und Homepage. Ohne Freigabe dokumentierst du den lokalen Funktionstest und die noch offene Veröffentlichung.</li>
+    </ul>
+    <p>Übergebt Gruppe B das öffentliche Leseformat, die Einheiten, den Aktualitätsstatus und euren letzten nachgewiesenen Meilenstein. Dokumentiert einen Fehler und den nächsten sinnvollen Test. Die Kamera und der Messwertdienst müssen unabhängig voneinander geprüft werden können.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script type="application/json" class="wb-config">
+    {"id":"groupa_cloze","title":"Sicherung: Fachbegriffe einsetzen","hint":"Nutze die Begriffe aus dem Projekt.","bank":["Spannung","ADC","Rohwert","WLAN"],"segments":[{"t":"text","v":"Der "},{"t":"gap","a":"ADC"},{"t":"text","v":" wandelt eine elektrische "},{"t":"gap","a":"Spannung"},{"t":"text","v":" in einen digitalen "},{"t":"gap","a":"Rohwert"},{"t":"text","v":" um. Für die Übertragung nutzt der ESP32 "},{"t":"gap","a":"WLAN"},{"t":"text","v":"."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Du kannst einen Messwert vom Sensor über den seriellen Monitor, HTTP und die Pi-Speicherung bis zur Anzeige verfolgen. Teste jeden Übergang separat und zeige alte Messwerte nicht als aktuell an.</p></div>
+    <h2>Quellen und Weiterforschen</h2>
+    <ul>
+      <li><a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/api/wifi.html">Espressif: WLAN am ESP32 im Stationsmodus</a></li>
+      <li><a href="https://flask.palletsprojects.com/en/stable/quickstart/">Flask: Routing und JSON</a> · <a href="https://flask.palletsprojects.com/en/stable/deploying/">Flask: öffentlicher Betrieb und WSGI</a></li>
+      <li><a href="https://docs.python.org/3/library/csv.html">Python: CSV</a> · <a href="https://docs.python.org/3/library/sqlite3.html">Python: SQLite</a></li>
+      <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">GitHub Pages: statisches Hosting ohne Python-Server</a></li>
+    </ul>
+    <p>Zum Weiterforschen: Wie müsstest du den Messweg ergänzen, damit auch ein vorübergehend vom WLAN getrennter ESP32 später seine Messlücken nachliefern könnte?</p>
+  </section>
+</div>
+<script src="projekt-navigation.js"></script>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>
+  SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();
+  document.querySelectorAll('.coop-route a').forEach(link => link.addEventListener('click', event => {
+    const target = document.querySelector('.wb-page-list a[href="' + link.getAttribute('href') + '"]');
+    if (target) { event.preventDefault(); target.click(); }
+  }));
+</script>
+</body>
+</html>

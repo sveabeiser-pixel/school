@@ -7,6 +7,8 @@
 **Leitfrage:** Wie bauen wir ein technisches System, das einen Hühnerstall beobachtet, Messwerte verständlich darstellt und nach einem Stromausfall selbstständig wieder funktioniert?
 
 > Diese Datei ist als fachliche und didaktische Grundlage für spätere interaktive Lernseiten gedacht. Die Unterrichtseinheiten sind deshalb bereits in Lernziel, Theorie-Input, Problemstellung, Arbeitsauftrag, Ergebnis, Fehlersuche und Erweiterung gegliedert.
+>
+> Für Gruppe A gilt der aktualisierte [Arbeitsweg](gruppe-a.html): ESP32 → Schul-WLAN → Flask-API und CSV am Pi → Temperaturdiagramm → freigegebener HTTPS-Upload zur Homepage. SQLite ist optional. Die ESP32-Webseite in dieser Planung ist ein lokaler HTTP-Übungsversuch, nicht der Abgabeweg für Gruppe A. Der aktuelle Doppelstundenplan steht in der [Projektübersicht](index.html#page-5).
 
 ---
 

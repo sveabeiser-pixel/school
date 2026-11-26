@@ -3,25 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gruppe A – Sensorik und ESP32 - Musterlösung</title>
 <meta name="musterloesung-source" content="gruppe-a.html">
-<meta name="musterloesung-source-sha256" content="6375f6eae1764be46175c19463eb5d9b979ad136aebe749d962a061990eb3d73">
+<meta name="musterloesung-source-sha256" content="99c10922774e435f312ec913e88ded34ae3a51ed7d8f6d6e71e3cf351dfa673b">
+<title>Smart Chicken Coop: Gruppe A – Musterlösung</title>
 <link rel="stylesheet" href="../../assets/allgemeines_format.css">
 <link rel="stylesheet" href="projekt.css">
 <style>
-@import url('../../assets/musterloesungen.css');
+    .coop-command{overflow:auto;padding:12px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);color:var(--wb-text);white-space:pre-wrap}
+    .wb-book [data-wb-page]{overflow-wrap:anywhere}
+    .coop-route li,.coop-files li{margin-block:6px}
+    .wb-book [data-p2-id="groupa_datenwege"] .p2-piece{min-width:0}
+    .wb-book [data-p2-id="groupa_datenwege"] .p2-joined{max-width:100%}
+    @media(max-width:600px){.wb-book .wb-content{padding-inline:6px}.wb-book .wb-paper{padding-inline:14px}}
+  </style>
+<link rel="stylesheet" href="../../assets/musterloesungen.css">
+<style>
 .wb-book .wb-side-footer{display:none}
-.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
-.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
-.sample-answer h2{font-size:20px;line-height:1.4}
-.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
-.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
-th{background:var(--wb-head-bg);color:var(--wb-text)}
-pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
-.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
-@media(max-width:600px){
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
 .wb-book:not(.wb-present-mode){--wb-topH:112px}
 .wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
 .wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
@@ -36,89 +45,39 @@ pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
 </head>
 <body>
 <div data-wb-book>
-<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"Gruppe A – Sensorik und ESP32 · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Gruppe A","themeDefault":"default","enableResultsPage":false}</script>
-<section data-wb-page="1" data-wb-page-title="Auftrag"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>Gruppe A: Sensorik und ESP32</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupa_verify"><h2>Stopp &amp; check</h2><p><strong>Falsch.</strong> Der ADC misst direkt die Helligkeit in Lux.</p><p>Der ADC misst eine elektrische Spannung und wandelt sie in einen Rohwert um. Eine Helligkeitsskala muss für den konkreten Aufbau experimentell festgelegt werden.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupa-musterprojekt"><h2>Musterprojekt: beide Sensoren und lokales HTTP</h2><p>Verdrahtung: KY-015 S→GPIO4, +→3V3, −→GND; KY-018 analoger Mittelabgriff→GPIO34/ADC1, Versorgung und Schaltung nach der tatsächlichen Modulbeschriftung, gemeinsame GND-Verbindung. Beide Signalpegel bleiben innerhalb der 3,3-V-Grenzen. Adafruit-DHT-Bibliothek erforderlich. Das folgende Kernprogramm liest alle 2 s, mittelt 16 LDR-Werte und stellt lokale Messdaten unter <code>/api</code> bereit.</p><pre><code>#include &lt;WiFi.h&gt;
-#include &lt;WebServer.h&gt;
-#include &lt;DHT.h&gt;
-#include &lt;math.h&gt;
-
-// Beispielkonfiguration; im Schulnetz gelten die freigegebenen Zugangsdaten.
-const char* ssid = "Schul-Labornetz";
-const char* password = "BeispielzugangNurLokal";
-constexpr int LDRPIN = 34;
-DHT dht(4, DHT11);
-WebServer server(80);
-float temperatur = NAN, feuchte = NAN;
-int licht = 0;
-bool gueltig = false, gemessen = false, wlanWarVerbunden = false;
-unsigned long letzteMessung = 0, letzterVersuch = 0;
-
-String datensatz() {
-  String s = "{\"temp\":";
-  s += gueltig ? String(temperatur, 1) : "null";
-  s += ",\"humidity\":";
-  s += gueltig ? String(feuchte, 1) : "null";
-  s += ",\"light_raw\":";
-  s += gemessen ? String(licht) : "null";
-  s += ",\"sample_uptime_ms\":";
-  s += gemessen ? String(letzteMessung) : "null";
-  s += ",\"age_ms\":";
-  s += gemessen ? String(millis() - letzteMessung) : "null";
-  s += ",\"interval_ms\":2000,\"status\":\"";
-  s += !gemessen ? "pending" : (gueltig ? "ok" : "dht_error");
-  s += "\"}";
-  return s;
-}
-
-void setup() {
-  Serial.begin(115200);
-  dht.begin();
-  analogReadResolution(12);
-  pinMode(LDRPIN, INPUT);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  server.on("/", []() {
-    server.send(200, "text/html; charset=utf-8",
-      "&lt;!doctype html&gt;&lt;html lang='de'&gt;&lt;meta charset='utf-8'&gt;"
-      "&lt;title&gt;Stallmessung&lt;/title&gt;&lt;h1&gt;Stallmessung&lt;/h1&gt;"
-      "&lt;p&gt;Temperatur in C, Feuchte in %RH, Licht als ADC-Rohwert.&lt;/p&gt;"
-      "&lt;a href='/api'&gt;Aktueller Datensatz&lt;/a&gt;&lt;/html&gt;");
-  });
-  server.on("/api", []() {
-    server.sendHeader("Cache-Control", "no-store");
-    server.send(200, "application/json", datensatz());
-  });
-  server.begin();
-}
-
-void loop() {
-  unsigned long jetzt = millis();
-  if (jetzt - letzteMessung &gt;= 2000) {
-    temperatur = dht.readTemperature();
-    feuchte = dht.readHumidity();
-    gueltig = !isnan(temperatur) &amp;&amp; !isnan(feuchte);
-    long summe = 0;
-    for (int i = 0; i &lt; 16; ++i) summe += analogRead(LDRPIN);
-    licht = summe / 16;
-    letzteMessung = millis();
-    gemessen = true;
-    Serial.println(datensatz());
-  }
-  if (WiFi.status() != WL_CONNECTED &amp;&amp; jetzt - letzterVersuch &gt;= 10000) {
-    letzterVersuch = jetzt;
-    WiFi.reconnect();
-  }
-  bool wlanVerbunden = WiFi.status() == WL_CONNECTED;
-  if (wlanVerbunden &amp;&amp; !wlanWarVerbunden) {
-    Serial.print("HTTP-Adresse: http://");
-    Serial.println(WiFi.localIP());
-  }
-  wlanWarVerbunden = wlanVerbunden;
-  if (wlanVerbunden) server.handleClient();
-}</code></pre><p>Die WLAN-Werte sind eine gekennzeichnete Beispielkonfiguration. <code>sample_uptime_ms</code> ist Laufzeit seit Reset, kein Kalenderdatum; <code>age_ms</code> zeigt das Messalter. Die Anzeige wartet nach dem Start auf den ersten Datensatz. Die Richtung der Lichtänderung und die Kategoriegrenzen werden am konkreten Spannungsteiler bestimmt.</p></article></section>
-<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupa_cloze"><h2>Sicherung: Fachbegriffe einsetzen</h2><p>Der <strong>ADC</strong> wandelt eine elektrische <strong>Spannung</strong> in einen digitalen <strong>Rohwert</strong> um. Für die Übertragung nutzt der ESP32 <strong>WLAN</strong>.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupa-uebergabe"><h2>Technische Notiz an Gruppe B</h2><span class="answer-label">Eine mögliche Antwort</span><p>Schnittstelle: lokales HTTP, GET /api am im seriellen Monitor dokumentierten ESP32-Host; Beispieladresse 192.168.1.50. Datenformat: temp in °C, humidity in %RH, light_raw als 12-Bit-Rohwert; Intervall 2000 ms; Messzeit als Laufzeit plus age_ms. Bei DHT-Lesefehler sind Temperatur und Feuchte null und status=dht_error. Bekannte Grenzen: DHT-Genauigkeit nach Datenblatt, LDR ohne Lux-Kalibrierung und mögliche ADC-Sättigung. Letzter Meilenstein des Musters ist eine gültige HTTP-200-Antwort mit aktuellem Datensatz; im echten Protokoll steht die tatsächlich getestete IP. Als Fehlerfall testen wir gelöste Signalleitung und kurz getrenntes WLAN; ein Fehler darf niemals durch erfundene Nullwerte verdeckt werden.</p><p>Beispiel für Mess- und Fehlersuchnachweis: Fiktive Rohwerte 1420/1430/1440 ergeben Mittelwert 1430. Bei <code>dht_error</code> werden vor dem nächsten Test Versorgung, Masse, GPIO4 und DHTPIN geprüft. Ein Screenshot oder Log muss Datum und tatsächliche Ausgabe des eigenen Tests enthalten; die Musterlösung ersetzt keinen Messnachweis.</p></article></section>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Gruppe A · Musterlösung","sectionTitle":"Gruppe A: Vom Sensor zur Homepage · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="1 · ESP32 und Sensoren"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Gruppe A: Vom Sensor zur Homepage</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_verify"><h3>Stopp &amp; check</h3><p><b>Falsch.</b> Der ADC misst direkt die Helligkeit in Lux.</p><p>Der ADC wandelt die Spannung in einen Rohwert um. Eine Lichtskala muss für diesen Aufbau experimentell festgelegt werden.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_serial"><h3>Messprotokoll: Licht ändern</h3><span class="solution-label">Eine mögliche Antwort</span><p>Fiktive Beispielzeilen (durch eigene Messungen ersetzen): <code>5000 ms | 21.0 Grad C | 52.0 %RH | ADC 1470</code> und <code>10000 ms | 21.0 Grad C | 52.0 %RH | ADC 680</code>. In dieser Anordnung sinkt der LDR-Rohwert beim Abdunkeln. Je nach Spannungsteiler kann sich die Richtung umkehren; sie muss am Aufbau bestimmt werden. Bei DHT-Fehler zeigt der Sketch <code>DHT-Lesefehler; LDR-Rohwert: …; kein POST</code>. Eine Ersatztemperatur 0 °C wäre eine erfundene Messung und könnte als Frost fehlinterpretiert werden.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-musterprojekt"><h3>Referenzsketch und Verdrahtung</h3><p>KY-015 Signal → GPIO4, KY-018 Analogsignal → GPIO34 (ADC1), gemeinsame Masse und geeignete 3,3-V-Versorgung nach Modulbeschriftung. <a href="material/gruppe-a/messstation/messstation.ino">Referenzsketch</a>: Start rein seriell mit 115200 Baud; erst WLAN, dann POST einzeln einschalten. Im Muster misst der ESP32 alle fünf Sekunden. Temperaturfehler werden nicht als Zahlenwerte weitergegeben.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="2 · Schul-WLAN"><h1>Den ESP32 mit dem Schulnetz verbinden</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_network"><h3>Diagnose: Netz oder Anwendung?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>WLAN-Verbindung prüfen</td><td>Der ESP32 meldet keine Verbindung und hat keine IP im Projektnetz.</td></tr><tr><td>API-Route prüfen</td><td>Der Server antwortet mit HTTP 404 auf /api/messwert.</td></tr><tr><td>WLAN-Verbindung prüfen</td><td>Nur nach einem Wechsel der SSID verliert der ESP32 seine Verbindung.</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="3 · Flask-API am Pi"><h1>Auf dem Raspberry Pi eine API programmieren</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_api_order"><h3>Ordne den Ablauf eines gültigen POST</h3><ol><li>JSON aus der Anfrage lesen</li><li>Messwerte prüfen</li><li>Empfangszeit ergänzen</li><li>Datensatz speichern</li><li>HTTP 201 zurückgeben</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_first_route"><h3>Deine erste API-Erweiterung</h3><span class="solution-label">Eine mögliche Antwort</span><pre><code>@app.get("/api/version")
+def version():
+    return {"version": 1}</code></pre><p><code>curl -i http://127.0.0.1:5000/api/version</code> liefert HTTP 200 und ein JSON-Objekt mit <code>version: 1</code>; <code>/api/falsch</code> liefert HTTP 404. Ein erfolgreicher Test prüft sowohl Status als auch Inhalt.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="4–5 · Übertragen und CSV"><h1>Messwerte senden und als CSV speichern</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_post_trace"><h3>Ablaufspur: Was landet in der CSV?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Anfrage</th><th scope="col">HTTP-Status</th><th scope="col">Anzahl Datensätze danach</th></tr></thead><tbody><tr><td>POST mit gültigen Werten</td><td>201</td><td>3</td></tr><tr><td>POST mit Feuchte = 130 %</td><td>400</td><td>3</td></tr><tr><td>GET /api/aktuell</td><td>200</td><td>3</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-pi-api"><h3>Referenz-API und gespeicherter Datensatz</h3><p><a href="material/gruppe-a/sensor_api.py">Flask-Routen</a> und <a href="material/gruppe-a/messwerte.py">Validierung und Speicherung</a>. Das Beispiel <code>21.5,53.0,1470</code> wird zusammen mit der tatsächlichen UTC-Empfangszeit des Pi abgelegt; ein zweiter gültiger POST fügt eine Zeile hinzu, aber keine zweite Kopfzeile. Eine Feuchte von 130 % wird mit HTTP 400 abgelehnt und verändert die Datei nicht.</p></article></section>
+<section data-wb-page="5" data-wb-page-title="6 · Temperaturdiagramm"><h1>Mit Python ein Temperaturdiagramm erstellen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_plot"><h3>Check: Lücke im Temperaturdiagramm</h3><h4>Zwischen 08:00 und 08:03 wurden keine Daten gespeichert. Was darfst du daraus schließen?</h4><p>Es fehlen Nachweise für die Temperatur in diesem Zeitraum.</p><p>Die Lücke bedeutet nicht, dass der Messwert null, konstant oder linear verändert war.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-musterdiagramm"><h3>Auswertung der fiktiven Beispielreihe</h3><p>Die fünf Punkte liegen im Fünfsekundenabstand zwischen 08:00:00 und 08:00:20 UTC. Die Temperatur steigt von 20,0 °C auf ihr Maximum von 21,2 °C um 08:00:15 UTC und endet bei 21,1 °C. Die Ursache des Anstiegs lässt sich aus den Werten allein nicht ermitteln. Das PNG erzeugt <a href="material/gruppe-a/diagramm.py">diagramm.py</a> aus der CSV. Eigene Messwerte und Beobachtungen müssen im Projektprotokoll dokumentiert werden.</p></article></section>
+<section data-wb-page="6" data-wb-page-title="7 · Optional: SQLite"><h1>Optional: Von CSV zu SQLite wechseln</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_sqlite"><h3>Stopp &amp; check: Was ändert sich beim Wechsel?</h3><p>Nein. Die API kapselt die Speicherung. Der ESP32 sendet weiter an POST /api/messwerte, und die zuletzt gespeicherten Werte stehen weiterhin über GET /api/aktuell bereit.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-import"><h3>Kontrolle eines SQLite-Imports</h3><p>Die fiktive CSV-Probe ergibt fünf Datenbankzeilen und als letzten Wert 21,1 °C. <a href="material/gruppe-a/csv_nach_sqlite.py">Der Import</a> verweigert eine schon vorhandene Zieldatei. Nach Einsatz der importierten Datenbank führt ein gültiger POST zu sechs Zeilen; die ursprüngliche CSV bleibt unverändert. Empfänger und Sender behalten die bisherige JSON-Schnittstelle.</p></article></section>
+<section data-wb-page="7" data-wb-page-title="8 · Öffentliche Homepage"><h1>Messwerte auf der öffentlichen Homepage anzeigen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_datenwege"><h3>Wer fragt wen an?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>ESP32</td><td>POST /api/messwerte am Pi</td></tr><tr><td>Upload-Skript auf dem Pi</td><td>POST /api/publish am öffentlichen Host</td></tr><tr><td>Browser der Öffentlichkeit</td><td>GET /api/aktuell am öffentlichen Host</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_publish"><h3>Transfer: Anzeige bleibt auf einem alten Wert</h3><span class="solution-label">Eine mögliche Antwort</span><p>Am Pi den Einzelaufruf <code>python veroeffentlichen.py</code> testen. Anschließend öffentliches <code>GET /api/aktuell</code> getrennt vom Browser prüfen und dessen Empfangszeit mit der lokalen Pi-API vergleichen. HTTP 401 bedeutet hier, dass der Server den Upload nicht autorisiert hat; ein Netz- oder TLS-Fehler wird getrennt geprüft. Der Pi ist beim Upload der Client und baut die HTTPS-Verbindung selbst auf, deshalb braucht er keine von außen erreichbare Portfreigabe. Öffentlich sind nur die freigegebenen drei Messwerte und der UTC-Empfangszeitpunkt des letzten Datensatzes. CSV-Historie, Schulnetz-Adressen und Token bleiben privat; der Token liegt nur in der geschützten Dienstumgebung von Pi und Host, niemals in der Browserseite.</p></article>
+</section>
+<section data-wb-page="8" data-wb-page-title="Nachweise und Übergabe"><h1>Nachweise für die Übergabe</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupa_cloze"><h3>Sicherung: Fachbegriffe einsetzen</h3><p>Der <b>ADC</b> wandelt eine elektrische <b>Spannung</b> in einen digitalen <b>Rohwert</b> um. Für die Übertragung nutzt der ESP32 <b>WLAN</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-uebergabe"><h3>Technische Notiz an Gruppe B</h3><p>Übergeben wird <code>GET /api/aktuell</code> am freigegebenen Host. <code>temperature_c</code> ist in °C, <code>humidity_pct</code> in %, <code>light_raw</code> ist ein 12-Bit-Rohwert und <code>received_at_utc</code> die Empfangszeit am Pi. Nach mehr als zwei Minuten ohne neueren Datensatz markiert der Browser die Werte als veraltet; der Kamerastatus bleibt davon unabhängig. Beispiel eines belegten Meilensteins: serieller Wert und POST 201 stimmen mit der CSV-Zeile überein; die Veröffentlichung steht bis zur Freigabe noch aus. Ein kaputtes WLAN wird getrennt von einem HTTP-Fehler getestet.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupa-nachliefern"><h3>Weiterforschen: Messlücken nachliefern</h3><p>Der ESP32 könnte Messungen vorübergehend in einem begrenzten Puffer halten. Jeder Datensatz braucht einen Messzeitbezug und eine vom Neustart unabhängige Kennung. Nach Wiederverbindung sendet er bestätigte Datensätze nicht erneut; die API erkennt dieselbe Kennung und speichert sie höchstens einmal. Für einen langen Ausfall muss festgelegt werden, wann Daten verworfen werden und wie die Lücke in der Anzeige erkennbar bleibt.</p></article></section>
 </div>
 <script src="../../assets/allgemeines_format.js"></script>
-<script>SBLibrary.autoMountAll();</script>
+<script>SBLibrary.autoMountAll({storagePrefix:"gruppe-a-anker64.html__"});</script>
 </body>
 </html>

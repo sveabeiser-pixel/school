@@ -26,7 +26,7 @@
   "nwt/arduino-motoren.html":"Arduino-Motoren: H-Brücke, Gleichstrommotor, Servo und Schrittmotor",
   "nwt/arduino-wiederholung.html":"Arduino-Wiederholung: Systemcheck, Ablaufspuren und Fehlerlabor",
   "nwt/huehnerstall/index.html":"Smart Chicken Coop: Projektüberblick, Hardware und vernetzte Systemplanung",
-  "nwt/huehnerstall/gruppe-a.html":"Gruppe A: ESP32, Sensorik, Messdaten und Webserver",
+  "nwt/huehnerstall/gruppe-a.html":"Gruppe A: ESP32, Flask-API, CSV, Temperaturdiagramm und Homepage",
   "nwt/huehnerstall/gruppe-b.html":"Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage",
   "nwt/huehnerstall/01-systemaufbau.html":"1. Systemaufbau, Sicherheit und Datenschutz",
   "nwt/huehnerstall/02-esp32.html":"2. ESP32: Board, Pins und Programmierung",
