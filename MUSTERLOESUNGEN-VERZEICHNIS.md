@@ -51,7 +51,7 @@ Automatisch erzeugt mit `node scripts/sync-index-musterloesungen.cjs`.
 | [9. Video, Streaming und eigene Homepage](nwt/huehnerstall/09-streaming-homepage.html) | [Musterlösung](nwt/huehnerstall/09-streaming-homepage-vase53.html) |
 | [10. Ausfallsicherheit, Abnahme und Projektreflexion](nwt/huehnerstall/10-ausfallsicherheit-abgabe.html) | [Musterlösung](nwt/huehnerstall/10-ausfallsicherheit-abgabe-wolke19.html) |
 | [Gruppe A: ESP32, Flask-API, CSV, Temperaturdiagramm und Homepage](nwt/huehnerstall/gruppe-a.html) | [Musterlösung](nwt/huehnerstall/gruppe-a-anker64.html) |
-| [Gruppe B: Raspberry Pi, Kamera, Streaming und Homepage](nwt/huehnerstall/gruppe-b.html) | [Musterlösung](nwt/huehnerstall/gruppe-b-laterne97.html) |
+| [Gruppe B: Raspberry Pi, Flask-API, Testhomepage, Autostart und Kamera](nwt/huehnerstall/gruppe-b.html) | [Musterlösung](nwt/huehnerstall/gruppe-b-laterne97.html) |
 | [Smart Chicken Coop: Projektüberblick, Hardware und vernetzte Systemplanung](nwt/huehnerstall/index.html) | [Musterlösung](nwt/huehnerstall/index-wuerfel72.html) |
 | [Akustik-Versuche: Schall, Tonhöhe, Lautstärke und Ausbreitung](physik_1/Akustik-Versuche.html) | [Musterlösung](physik_1/Akustik-Versuche-segeltuch24.html) |
 | [Physik-Werkzeuge: Formeln, Einheiten, Konstanten und Rechenaufgaben](physik_misc/Einheiten_Formeln.html) | [Musterlösung](physik_misc/Einheiten_Formeln-farn39.html) |

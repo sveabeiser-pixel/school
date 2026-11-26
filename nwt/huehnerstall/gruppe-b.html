@@ -1,8 +1,269 @@
 <!doctype html>
 <html lang="de">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Smart Chicken Coop – Gruppe B</title><link rel="stylesheet" href="../../assets/allgemeines_format.css"><link rel="stylesheet" href="projekt.css"></head>
-<body><div data-wb-book>
-<script type="application/json" class="wb-book-config">{"bookTitle":"Smart Chicken Coop","sectionTitle":"Gruppe B – Kamera und Raspberry Pi","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Gruppe B","themeDefault":"default"}</script>
-<section data-wb-page="1" data-wb-page-title="Auftrag"><h1>Gruppe B: Kamera und Raspberry Pi</h1><p class="wb-muted">Euer Schwerpunkt ist die Kette vom Bildsensor über Linux und Video bis zur verantwortungsvollen Darstellung.</p><h2>Euer Beitrag zum Gesamtsystem</h2><p>Ihr richtet den Raspberry Pi ein, prüft die Kamera lokal, untersucht NoIR und Infrarot und entwickelt einen sicheren Weg für Video und Streaming.</p><div class="wb-soft-callout"><strong>Arbeitsroute</strong><ol style="margin:0;padding-left:22px"><li><a href="07-pi-linux.html">Raspberry Pi OS und SSH</a></li><li><a href="08-kamera-noir.html">Kameraerkennung, Foto und Video</a></li><li><a href="08-kamera-noir.html">NoIR, sichtbares Licht und Infrarot</a></li><li><a href="09-streaming-homepage.html">Auflösung, Bildrate und H.264</a></li><li><a href="09-streaming-homepage.html">Streaming ohne direkte Portfreigabe</a></li><li><a href="10-ausfallsicherheit-abgabe.html">Autostart und Fehlerprotokoll</a></li></ol></div><div class="wb-section-break"></div><div data-wb-type="mcq"><script type="application/json" class="wb-config">{"id":"groupb_mcq","title":"Check: NoIR-Kamera","hint":"Wähle die fachlich beste Aussage.","questions":[{"text":"Was gilt für eine NoIR-Kamera im vollständig dunklen Stall?","choices":[{"id":"a","label":"Sie erzeugt automatisch ein helles Bild."},{"id":"b","label":"Sie kann nahes Infrarot erfassen, braucht aber eine Lichtquelle."},{"id":"c","label":"Sie misst direkt die Temperatur der Hühner."}],"correct":["b"],"explain":"NoIR bedeutet, dass ein IR-Sperrfilter fehlt. Ohne sichtbares oder infrarotes Licht entstehen trotzdem keine Bildinformationen."}]}</script></div></section>
-<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><h2>Jede Einheit braucht</h2><ul><li>Boot- oder Terminalprotokoll</li><li>Screenshot der Kameraerkennung oder Testdatei</li><li>begründete Einstellungen für Auflösung und Bildrate</li><li>Fehlersuchkette vom letzten funktionierenden Meilenstein</li><li>Datenschutzprüfung von Bildausschnitt und Zugriff</li></ul><h2>Übergabe an Gruppe A</h2><p>Übergebt die Anforderungen an die Messwertanzeige, den geplanten Datenweg, den Status bei Kameraausfall und einen klaren Fallback, falls der Stream nicht erreichbar ist.</p><div class="wb-section-break"></div><div data-wb-type="order"><script type="application/json" class="wb-config">{"id":"groupb_order","title":"Diagnose: Kamera liefert kein Bild","hint":"Prüfe zuerst den letzten lokalen Meilenstein.","items":["Kamera wird vom Pi erkannt?","Lokale Vorschau funktioniert?","Lokale Aufnahme funktioniert?","Netzwerk und Streamingweg prüfen","Einbettung auf der Homepage prüfen"],"shuffle":true}</script></div><div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Ein Livestream ist eine Kette mehrerer Systeme. Du prüfst zuerst die Kamera lokal und arbeitest dich dann über Aufnahme, Netzwerk und Streaming bis zur Homepage vor.</p></div></section>
-</div><script src="projekt-navigation.js"></script><script src="../../assets/allgemeines_format.js"></script><script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script></body></html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Chicken Coop: Gruppe B</title>
+  <link rel="stylesheet" href="../../assets/allgemeines_format.css">
+  <link rel="stylesheet" href="projekt.css">
+  <style>
+    .wb-book [data-wb-page]{overflow-wrap:anywhere}
+    .coop-command{overflow:auto;padding:12px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);color:var(--wb-text);white-space:pre-wrap}
+    .coop-checklist{border-block:1px solid var(--wb-line);padding-block:12px}
+    .coop-checklist output{display:block;font-weight:750}
+    .coop-checklist progress{width:min(320px,100%);accent-color:#16716d;margin:4px 0 12px}
+    .coop-checklist ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;padding-inline-start:24px}
+    .coop-checklist label{display:flex;align-items:flex-start;gap:8px;padding:7px 2px;cursor:pointer}
+    .coop-checklist input{flex:none;width:19px;height:19px;accent-color:#16716d;margin:2px 0 0}
+    .coop-measure-preview{border:1px solid var(--wb-line);border-radius:6px;padding:12px;margin-inline:0}
+    .coop-measure-preview dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(134px,100%),1fr));gap:8px 18px}
+    .coop-measure-preview dd{margin:2px 0;font-weight:750}
+    .wb-book [data-p2-id="groupb_wege"] .p2-piece{min-width:0}
+    .wb-book [data-p2-id="groupb_wege"] .p2-joined{max-width:100%}
+    @media(max-width:680px){.coop-checklist ol{grid-template-columns:1fr}.wb-book .wb-content{padding-inline:6px}.wb-book .wb-paper{padding-inline:14px}}
+  </style>
+</head>
+<body>
+<div data-wb-book>
+  <script type="application/json" class="wb-book-config">
+  {"bookTitle":"Smart Chicken Coop","sectionTitle":"Gruppe B: Raspberry Pi, Messwertdienst und Kamera","startPage":1,"submitLabel":"Ergebnisse anzeigen","onSubmit":"alert","webhookEmail":"","autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavGroupTitle":"Gruppe B","themeDefault":"default"}
+  </script>
+
+  <section data-wb-page="1" data-wb-page-title="Auftrag und Checkliste">
+    <h1>Gruppe B: Raspberry Pi, Messwertdienst und Kamera</h1>
+    <p>Nach der Neuinstallation des Pi prüfst du auch Schritte, die früher schon funktioniert haben. Dein erster Meilenstein: Der Pi nimmt einen Testwert an und zeigt ihn im Browser an, <strong>noch ohne ESP32 und Kamera</strong>. Dafür brauchst du weder eine externe Datenbank noch einen kostenpflichtigen Datendienst.</p>
+    <h2>Zwei unabhängige Datenwege</h2>
+    <ul>
+      <li><strong>Messwerte:</strong> Sensoren → ESP32 → Schul-WLAN → Flask-API am Pi → CSV und lokale Anzeige → freigegebener HTTPS-Upload zur Schulhomepage.</li>
+      <li><strong>Videobilder:</strong> NoIR-Kamera → CSI → Raspberry Pi → lokaler MJPEG-Test → bei Freigabe ein getrennter Streamingdienst → Schulhomepage.</li>
+    </ul>
+    <p>Du baust den gemeinsamen Messweg auch in Gruppe B selbst auf. Damit beide Gruppen zusammenarbeiten können, verwendet ihr dieselben Routen und Feldnamen wie <a href="gruppe-a.html">Gruppe A</a>. Auf demselben Pi startet ihr nur eine Sensor-API pro Port.</p>
+    <div class="wb-section-break"></div>
+    <h2>Projekt-Checkliste</h2>
+    <div class="coop-checklist" id="groupb-checklist">
+      <output aria-live="polite">0 von 14 erledigt</output>
+      <progress value="0" max="14" aria-label="Projektfortschritt"></progress>
+      <ol>
+        <li><label><input type="checkbox" value="pi">Raspberry Pi installieren und einrichten</label></li>
+        <li><label><input type="checkbox" value="ssh">SSH für die beteiligten Computer einrichten</label></li>
+        <li><label><input type="checkbox" value="wlan">Schul-WLAN einrichten</label></li>
+        <li><label><input type="checkbox" value="tailscale">Freigegebenen Fernzugriff mit Tailscale prüfen</label></li>
+        <li><label><input type="checkbox" value="python">Python-Umgebung vorbereiten</label></li>
+        <li><label><input type="checkbox" value="ordner">Projektordner erstellen</label></li>
+        <li><label><input type="checkbox" value="api">API mit Flask programmieren</label></li>
+        <li><label><input type="checkbox" value="fake">API mit Testdaten überprüfen</label></li>
+        <li><label><input type="checkbox" value="esp32">ESP32 mit dem Raspberry Pi verbinden</label></li>
+        <li><label><input type="checkbox" value="csv">Messwerte dauerhaft speichern</label></li>
+        <li><label><input type="checkbox" value="local">Lokale Testhomepage erstellen</label></li>
+        <li><label><input type="checkbox" value="autostart">Automatischen Programmstart einrichten</label></li>
+        <li><label><input type="checkbox" value="kamera">Kamera testen und Livestream einrichten</label></li>
+        <li><label><input type="checkbox" value="public">Öffentliche Schulhomepage anbinden</label></li>
+      </ol>
+      <p class="wb-muted">Der Stand bleibt in diesem Browser gespeichert. Trage einen Punkt erst nach einem erfolgreichen Test ein.</p>
+    </div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="reveal"><script type="application/json" class="wb-config">
+    {"id":"groupb_start","title":"Stopp & check: Zwei getrennte Wege","question":"Die Kamera wird getrennt. Welche Funktion sollte trotzdem erhalten bleiben?","answer":"Temperatur, Luftfeuchte und LDR-Rohwert können weiter an der Flask-API ankommen und angezeigt werden. Der Kameratest läuft als eigener Prozess und kann unabhängig ausfallen."}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="2" data-wb-page-title="Pi, SSH und Fernzugriff">
+    <h1>Raspberry Pi nach der Neuinstallation prüfen</h1>
+    <p>Vergleiche eure Einrichtung mit <a href="07-pi-linux.html">Raspberry Pi OS und SSH</a>. Gib jedem berechtigten Projektcomputer einen eigenen SSH-Schlüssel; private Schlüssel bleiben auf den jeweiligen Computern. Prüfe bei einer Warnung nach der Neuinstallation den neuen Host-Fingerabdruck direkt am Pi oder mit der Schul-IT, bevor du den Schlüssel akzeptierst.</p>
+    <p><strong>Windows PowerShell:</strong></p>
+    <pre class="coop-command"><code>ssh bbzstegen@huehnercam.local</code></pre>
+    <p>Falls <code>.local</code> nicht aufgelöst wird, nutze die bestätigte Projekt-IP. Die folgenden Befehle laufen <strong>in der SSH-Sitzung auf dem Pi</strong>:</p>
+    <pre class="coop-command"><code>sudo apt update
+sudo apt upgrade
+hostname
+hostname -I
+nmcli device status
+ping -c 4 google.de</code></pre>
+    <p>Erwarteter Hostname: <code>huehnercam</code>. Notiere die Adresse der Schnittstelle im freigegebenen Projekt-WLAN. Ein gesperrter Ping allein beweist keinen Internetausfall. Bitte die Schul-IT bei wechselnder Pi-Adresse um eine DHCP-Reservierung. Verbinde den ESP32 nicht mit einem ungeeigneten oder nicht freigegebenen Gastnetz.</p>
+    <h2>Tailscale: nur für berechtigte Projektgeräte</h2>
+    <p>Die Schul-IT muss Installation, Tailnet und Zugriffsregeln freigeben. Wenn Tailscale nach der Neuinstallation fehlt oder das Gerät nicht angemeldet ist, richtet ihr es nach dem freigegebenen Verfahren der Schule ein. Bei bereits eingerichteter Verbindung prüfst du:</p>
+    <pre class="coop-command"><code>tailscale status
+tailscale ip -4</code></pre>
+    <p>Vom berechtigten Windows-Computer im gleichen Tailnet kannst du <code>ssh bbzstegen@TAILSCALE-IP</code> verwenden. Ersetze den Platzhalter durch die Ausgabe des Pi. Das ist normaler OpenSSH-Zugriff über das private Tailnet, keine öffentliche Freigabe. Der ESP32 verwendet weiterhin die <strong>Schulnetz-IP des Pi</strong>, nicht die Tailscale-IP.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="categorize"><script type="application/json" class="wb-config">
+    {"id":"groupb_adressen","title":"Welche Verbindung prüfst du?","hint":"Unterscheide den privaten Fernzugriff vom lokalen Sensorweg.","categories":[{"id":"lan","title":"Schulnetz"},{"id":"overlay","title":"Berechtigtes Tailnet"}],"items":[{"label":"ESP32 schickt im Projektraum einen POST an den Pi.","category":"lan"},{"label":"Ein angemeldeter Projektcomputer greift von zu Hause per SSH zu.","category":"overlay"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="3" data-wb-page-title="Python und Flask-API">
+    <h1>Projektordner und Python-API anlegen</h1>
+    <pre class="coop-command"><code>sudo apt install python3 python3-pip python3-venv
+python3 --version
+mkdir -p ~/huehnerstall/daten
+cd ~/huehnerstall
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install Flask</code></pre>
+    <p>Die virtuelle Umgebung hält die Projektpakete getrennt vom Betriebssystem. In den Ordner kommen <a href="material/gruppe-a/sensor_api.py" download>sensor_api.py</a> (Routen), <a href="material/gruppe-a/messwerte.py" download>messwerte.py</a> (Prüfung und Speicherung) und <a href="material/gruppe-a/anzeige.html" download>anzeige.html</a> (Browserseite). Die beiden Python-Dateien und die HTML-Datei liegen nebeneinander. <code>daten/</code> bleibt für CSV und optionale Exporte reserviert.</p>
+    <h2>Eine Route selbst programmieren</h2>
+    <p>Erstelle mit <code>nano api_uebung.py</code> eine erste Route. Speichere in Nano mit <kbd>Strg</kbd> + <kbd>O</kbd>, bestätige mit <kbd>Enter</kbd> und beende mit <kbd>Strg</kbd> + <kbd>X</kbd>:</p>
+    <pre class="coop-command"><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}</code></pre>
+    <p>Starte <code>flask --app api_uebung run</code> und prüfe vom Pi aus in einem zweiten Terminal <code>curl -i http://127.0.0.1:5000/api/health</code>. Der vollständige Dienst verwendet zusätzlich <code>POST /api/messwerte</code> zum Empfangen, <code>GET /api/aktuell</code> für den letzten Wert und <code>GET /</code> für die lokale Homepage. Lies den POST im Referenzcode und verfolge, an welcher Stelle ein unplausibler Wert zurückgewiesen wird.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="essay"><script type="application/json" class="wb-config">
+    {"id":"groupb_api","title":"Vom JSON zur Speicherzeile","hint":"Beziehe dich auf sensor_api.py und messwerte.py.","fields":[{"key":"ablauf","label":"Ablauf des POST","kind":"textarea","prompt":"Erkläre, wie der Server JSON liest, Messwerte prüft, die Empfangszeit ergänzt und das Speichern bestätigt. Was passiert bei einer Luftfeuchte von 130 %?"}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="4" data-wb-page-title="Testdaten und ESP32">
+    <h1>API zuerst mit Testdaten, dann mit dem ESP32 prüfen</h1>
+    <p>Beende den Übungsserver mit <kbd>Strg</kbd> + <kbd>C</kbd>. Die folgenden Befehle laufen im Projektordner auf dem Pi mit aktiver Python-Umgebung. Ersetze <code>PI_IP</code> durch die freigegebene Adresse des Pi im Schulnetz; ohne Freigabe bleibt der Server nur auf <code>127.0.0.1</code> erreichbar.</p>
+    <pre class="coop-command"><code>export COOP_DATA_FILE="$HOME/huehnerstall/daten/test.csv"
+flask --app sensor_api run --host PI_IP</code></pre>
+    <h2>Test von Windows PowerShell</h2>
+    <pre class="coop-command"><code>$basis = 'http://huehnercam.local:5000'
+$antwort = Invoke-WebRequest `
+  -Uri "$basis/api/messwerte" -Method Post `
+  -ContentType 'application/json' `
+  -Body '{"temperature_c":21.5,"humidity_pct":64,"light_raw":1470}'
+$antwort.StatusCode
+Invoke-RestMethod -Uri "$basis/api/aktuell"</code></pre>
+    <p>Ersetze den Hostnamen durch die Projekt-IP, falls <code>.local</code> nicht aufgelöst wird. Du erwartest <strong>HTTP 201</strong> und danach dieselben drei Testwerte mit <code>received_at_utc</code>. Eine Feuchte von 130 % ergibt HTTP 400; der zuletzt gespeicherte Datensatz ändert sich dadurch nicht. Testdaten kommen nicht in den späteren Echtbetrieb.</p>
+    <h2>ESP32 anschließen</h2>
+    <p>Beende den Testserver und starte ihn mit <code>COOP_DATA_FILE="$HOME/huehnerstall/daten/messwerte.csv"</code> statt <code>test.csv</code>. Trage im gemeinsamen <a href="material/gruppe-a/messstation/messstation.ino" download>ESP32-Sketch</a> <code>http://PI_IP:5000/api/messwerte</code> ein. Aktiviere WLAN und Senden; Zugangsdaten bleiben lokal. Beginne für die Diagnose mit dem kurzen Standardintervall; für die Messreihe setzt du <code>MESSINTERVALL_MS = 60000</code>. Der Pi fragt den ESP32 nicht ab. Er wartet auf POST-Anfragen.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="trace"><script type="application/json" class="wb-config">
+    {"id":"groupb_testspur","title":"Ablaufspur: Testdatei verfolgen","hint":"Zu Beginn sind keine Datensätze gespeichert. Die Kopfzeile zählt nicht mit.","columns":[{"label":"Anfrage"},{"label":"HTTP-Status","hint":"Dreistelliger Code."},{"label":"Zeilen danach","hint":"Ganze Zahl ohne Kopfzeile."}],"rows":[{"cells":[{"given":"POST: 21,5 °C und gültige übrige Werte"},{"answers":["201"]},{"answers":["1"]}]},{"cells":[{"given":"POST: Feuchte 130 %"},{"answers":["400"]},{"answers":["1"]}]},{"cells":[{"given":"GET /api/aktuell"},{"answers":["200"]},{"answers":["1"]}]}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="5" data-wb-page-title="Datei, Diagramm und Testhomepage">
+    <h1>Messwerte speichern, auswerten und lokal anzeigen</h1>
+    <p>Die CSV-Datei ist die einzige Datenquelle. <code>GET /api/aktuell</code> liefert daraus den letzten Eintrag als JSON; für die lokale Anzeige musst du keine zweite Datei synchron halten. Für einen Test kannst du eine Momentaufnahme als <code>aktuell.json</code> speichern. Sie ist kein Live-Feed und wird nicht automatisch erneuert.</p>
+    <pre class="coop-command"><code>cd ~/huehnerstall
+tail -n 10 daten/messwerte.csv
+tail -f daten/messwerte.csv
+# In einem zweiten Terminal: PI_IP durch die Adresse des laufenden Servers ersetzen.
+curl -f http://PI_IP:5000/api/aktuell -o daten/aktuell.json
+cat daten/aktuell.json</code></pre>
+    <p>Beende <code>tail -f</code> mit <kbd>Strg</kbd> + <kbd>C</kbd>. Bei einem Messwert pro Minute entstehen 60 pro Stunde, 1.440 pro Tag, 10.080 pro Woche und 525.600 in 365 Tagen. Beginne mit CSV und einer Sicherungskopie; prüfe später Dateigröße, Antwortzeit und Aufbewahrung. Für häufige Abfragen oder größere Reihen ist <a href="gruppe-a.html#page-6">SQLite optional</a>.</p>
+    <h2>Lokale Homepage</h2>
+    <p>Öffne die heruntergeladene <code>anzeige.html</code> mit <code>nano</code> und passe die Überschrift an. Die Seite liest über <code>fetch('./api/aktuell')</code> die aktuelle JSON-Antwort. Öffne im Schulnetz <code>http://huehnercam.local:5000/</code> oder die bestätigte Pi-IP. Nicht per Doppelklick auf die Datei öffnen: Der Browser braucht dieselbe Serveradresse für die API. Die Vorlage fragt die Daten etwa alle 15 Sekunden ab; das ist unabhängig vom 60-Sekunden-Messintervall.</p>
+    <figure class="coop-measure-preview">
+      <figcaption><strong>Beispielansicht mit fiktiven Testdaten</strong></figcaption>
+      <dl><div><dt>Temperatur</dt><dd>21,5 °C</dd></div><div><dt>Relative Luftfeuchte</dt><dd>64 %</dd></div><div><dt>Licht (ADC-Rohwert)</dt><dd>1470</dd></div></dl>
+      <p>Im echten Betrieb siehst du zusätzlich Empfangszeit und Aktualitätsstatus.</p>
+    </figure>
+    <h2>Temperaturdiagramm</h2>
+    <p>Installiere im venv <code>python -m pip install matplotlib</code>. Lade <a href="material/gruppe-a/diagramm.py" download>diagramm.py</a> herunter und starte <code>python diagramm.py daten/messwerte.csv --output temperatur.png</code>. Für einen ersten Test kannst du die <a href="material/gruppe-a/beispielmessung.csv" download>fiktive CSV-Reihe</a> nutzen. Vergleiche Empfangszeiten statt Zeilennummern.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+    {"id":"groupb_dateien","title":"Check: Livewert oder Momentaufnahme?","questions":[{"text":"Welchen Weg nutzt der Browser für neue Werte?","choices":[{"id":"a","label":"Er liest immer dieselbe exportierte Datei aktuell.json."},{"id":"b","label":"Er fragt GET /api/aktuell erneut ab."},{"id":"c","label":"Er sendet selbst Sensorwerte per POST."}],"correct":["b"],"explain":"Die exportierte JSON-Datei ist eine Momentaufnahme. GET /api/aktuell liest den neuesten gespeicherten Wert."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="6" data-wb-page-title="Autostart mit systemd">
+    <h1>Messwertdienst automatisch starten</h1>
+    <p>Für den Abschlusstest reicht der Flask-Entwicklungsserver. Für den dauerhaften Dienst auf dem Pi nutzt du Gunicorn und <code>systemd</code>. Installiere <code>python -m pip install gunicorn</code> im venv und beende den Flask-Testserver, bevor der Dienst Port 5000 belegt.</p>
+    <p>Nutze <a href="material/gruppe-b/huehnerstall.service" download>huehnerstall.service</a> und <a href="material/gruppe-b/huehnerstall.env.example" download>huehnerstall.env.example</a> als Vorlagen. Prüfe Benutzer, Projektpfad und Schreibrechte. Die Unit verwendet <strong>einen Worker</strong> für den CSV-Betrieb. Lasse für den ersten Test die Bindung auf <code>127.0.0.1:5000</code>. Erst nach Freigabe bindest du an die konkrete Pi-IP des abgeschotteten Projektnetzes; keine öffentliche Freigabe. Vor einem Dauerbetrieb im allgemeinen Schulnetz sind mit der Schul-IT ein Schreibschutz für die API, HTTPS oder eine gleichwertige Netzabsicherung sowie Datensicherung zu klären.</p>
+    <pre class="coop-command"><code>sudoedit /etc/huehnerstall.env
+sudoedit /etc/systemd/system/huehnerstall.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now huehnerstall.service
+systemctl status huehnerstall.service
+journalctl -u huehnerstall.service -n 30 --no-pager</code></pre>
+    <p>Übernimm in die beiden Dateien die dazugehörigen Vorlagen mit euren geprüften Werten. Nach Änderungen an der Bindung oder den übrigen Einstellungen startest du den Dienst mit <code>sudo systemctl restart huehnerstall.service</code> neu. Kündige einen kontrollierten Neustart des Pi an. Nach der neuen SSH-Verbindung prüfst du zuerst den Dienststatus, danach <code>/api/health</code> an der konfigurierten Adresse und schließlich eine neue Speicherzeile. Vorhandene Messwerte müssen erhalten bleiben.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="verify"><script type="application/json" class="wb-config">
+    {"id":"groupb_autostart","title":"Stopp & check: Nachweis nach dem Neustart","statement":"systemctl meldet active. Damit ist bereits bewiesen, dass der ESP32 einen neuen Messwert erfolgreich gespeichert hat.","answer":false,"explain":"active zeigt, dass der Dienst läuft. Erst POST 201 und eine neue Zeile mit passendem Zeitstempel belegen den kompletten Datenweg."}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="7" data-wb-page-title="Kamera und lokaler Stream">
+    <h1>NoIR-Kamera und lokalen MJPEG-Stream testen</h1>
+    <p>Schalte den Pi 4B aus und trenne ihn vom Strom, bevor du das Camera Module 3 Wide NoIR per CSI anschließt. Teste zuerst Erkennung, Foto und kurzes Video. Siehe auch <a href="08-kamera-noir.html">NoIR und Infrarot</a>.</p>
+    <pre class="coop-command"><code>rpicam-hello --list-cameras
+rpicam-still -n -o test.jpg
+rpicam-vid -n -t 10000 -o test.h264</code></pre>
+    <p>Fehlen die Befehle auf diesem Raspberry Pi OS, installiere nach Freigabe <code>rpicam-apps</code>. Prüfe den Bildausschnitt und zeige keine Personen. Kamera und Messwertdienst bleiben getrennte Prozesse.</p>
+    <p>Installiere <code>sudo apt install python3-picamera2</code> und lade <a href="material/gruppe-b/kamera_mjpeg.py" download>kamera_mjpeg.py</a> auf den Pi. Die Kamera benutzt die Systembibliothek, nicht das venv der Sensor-API:</p>
+    <pre class="coop-command"><code>/usr/bin/python3 kamera_mjpeg.py</code></pre>
+    <p>Das Beispiel ist nur an <code>127.0.0.1:8001</code> gebunden. Öffne den Stream im Browser am Pi oder nutze, sofern freigegeben, einen SSH-Tunnel von Windows: <code>ssh -N -L 8001:127.0.0.1:8001 bbzstegen@huehnercam.local</code>. Solange die Sitzung offen ist, rufst du <code>http://127.0.0.1:8001/</code> auf Windows auf. Das ist keine Freigabe für andere Rechner. Beende den Kameratest, bevor ein anderes Programm die Kamera übernimmt.</p>
+    <p>Picamera2 steuert die Kamera; MJPEG ist eine Folge einzelner JPEG-Bilder. Für später kommen ein verwalteter Verteilungsdienst oder ein Streamingserver wie MediaMTX mit HLS oder WebRTC infrage. HLS verteilt Segmente, WebRTC ist auf geringe Verzögerung ausgelegt. Die Entscheidung hängt von Upload-Bandbreite, Zugriff und erlaubter Infrastruktur ab. Vergleiche dazu <a href="09-streaming-homepage.html">Video und Streaming</a>.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="mcq"><script type="application/json" class="wb-config">
+    {"id":"groupb_mcq","title":"Check: NoIR-Kamera","hint":"Wähle die fachlich beste Aussage.","questions":[{"text":"Was gilt für eine NoIR-Kamera im vollständig dunklen Stall?","choices":[{"id":"a","label":"Sie erzeugt automatisch ein helles Bild."},{"id":"b","label":"Sie kann nahes Infrarot erfassen, braucht aber eine Lichtquelle."},{"id":"c","label":"Sie misst direkt die Temperatur der Hühner."}],"correct":["b"],"explain":"Ohne sichtbares oder infrarotes Licht entstehen keine Bildinformationen."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="order"><script type="application/json" class="wb-config">
+    {"id":"groupb_order","title":"Diagnose: Kamera liefert kein Bild","hint":"Prüfe zuerst den letzten lokalen Meilenstein.","items":["Kameraerkennung am Pi prüfen","Lokale Aufnahme öffnen","Lokalen MJPEG-Stream testen","Freigegebenen Verteilungsdienst prüfen","Einbettung auf der Homepage prüfen"],"shuffle":true}
+    </script></div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="8" data-wb-page-title="Öffentliche Schulhomepage">
+    <h1>Die öffentliche Schulhomepage anbinden</h1>
+    <p><strong>Messwerte:</strong> Der Pi liest <code>GET /api/aktuell</code> lokal und sendet den letzten freigegebenen Datensatz als HTTPS-POST an <code>/api/publish</code> des freigegebenen Hosts. Die Homepage liest diesen Host, nicht den Pi. Verwende <a href="material/gruppe-a/veroeffentlichen.py" download>veroeffentlichen.py</a> und die <a href="gruppe-a.html#page-7">gemeinsame Einrichtungsanleitung</a>. Der Host braucht eine serverseitige Upload-Schnittstelle. Tailscale bleibt für berechtigte Projektgeräte und ersetzt keine öffentliche Hostinglösung.</p>
+    <p><strong>Video:</strong> Keine direkte Weiterleitung des Kamera-Ports. Erst nach Freigabe von Bildausschnitt, Zugriff, Aufbewahrung und Bandbreite wird ein geeigneter Player oder Streamdienst angebunden. Wenn noch keine Freigabe vorliegt, bleibt die lokale Vorschau der Nachweis. Zeige bei Kameraausfall einen klaren Status, ohne gültige Messwerte auszublenden.</p>
+    <div class="wb-section-break"></div>
+    <div data-p2 class="p2" data-p2-id="groupb_wege" data-p2-title="Datenweg und Zugriffsbereich">
+      <p class="p2-hint">Verbinde die jeweils passende Aussage.</p>
+      <div class="p2-banks">
+        <div><div class="p2-col-title">Datenweg</div><div class="p2-bank" data-left-bank>
+          <div class="p2-piece p2-left" data-side="L" data-pair="1">Messwert-Upload</div>
+          <div class="p2-piece p2-left" data-side="L" data-pair="2">Lokaler Kamera-Test</div>
+        </div></div>
+        <div><div class="p2-col-title">Zugriff</div><div class="p2-bank" data-right-bank>
+          <div class="p2-piece p2-right" data-side="R" data-pair="2">Nur am Pi oder über berechtigten SSH-Tunnel</div>
+          <div class="p2-piece p2-right" data-side="R" data-pair="1">Ausgehender HTTPS-POST an freigegebenen Host</div>
+        </div></div>
+      </div>
+      <div class="p2-row"><button class="wb-btn" type="button" data-shuffle>Mischen</button><button class="wb-btn" type="button" data-reset>Zurücksetzen</button><button class="wb-btn primary" type="button" data-check>Überprüfen</button><div class="p2-score" data-score></div></div>
+      <div class="p2-solved" data-solved></div>
+    </div>
+    <div class="wb-section-break"></div>
+  </section>
+
+  <section data-wb-page="9" data-wb-page-title="Doppelstunden und Übergabe">
+    <h1>Nachweise für die Übergabe</h1>
+    <h2>Die nächsten acht Arbeitsblöcke für Gruppe B</h2>
+    <ol>
+      <li>Pi nach der Neuinstallation prüfen: SSH, Schul-WLAN, bei Freigabe Tailscale, Python und Projektordner.</li>
+      <li>Flask-API programmieren und in PowerShell mit fiktiven Daten prüfen.</li>
+      <li>ESP32 in Betrieb nehmen und den ersten echten POST nachweisen.</li>
+      <li>CSV, Einheiten, Empfangszeit und Datensicherung prüfen.</li>
+      <li>Lokale Homepage programmieren und Status bei Übertragungslücken testen.</li>
+      <li>Temperaturdiagramm erstellen und bei Bedarf weitere Sensoren diskutieren.</li>
+      <li>NoIR-Kamera, Testfoto und lokalen MJPEG-Stream prüfen.</li>
+      <li>Autostart nachweisen; öffentliche Homepage und Stream nur nach Freigabe anbinden.</li>
+    </ol>
+    <p><strong>Als Nächstes:</strong> Richte Python und den Projektordner ein, programmiere die erste Route und schicke einen künstlichen Messwert von Windows. Dafür braucht ihr den ESP32 noch nicht.</p>
+    <p>Übergebt Gruppe A API-Routen, Datenformat, nachgewiesene Speicherung und Fehlerstatus. Ergänzt den Kameranachweis mit Bildausschnitt, Auflösung, Bildrate, Bandbreite und Status bei Ausfall. Legt als Nachweis echte Terminalausgaben, CSV-Probe, Diagramm und, soweit freigegeben, einen Screenshot der Anzeige bei.</p>
+    <div class="wb-section-break"></div>
+    <div data-wb-type="cloze"><script type="application/json" class="wb-config">
+    {"id":"groupb_abschluss","title":"Sicherung: Vom Sender zur Anzeige","bank":["POST","CSV","GET","HTTPS"],"segments":[{"t":"text","v":"Der ESP32 sendet per "},{"t":"gap","a":"POST"},{"t":"text","v":". Der Pi speichert zunächst in "},{"t":"gap","a":"CSV"},{"t":"text","v":". Der Browser liest mit "},{"t":"gap","a":"GET"},{"t":"text","v":". Für den freigegebenen Upload nach außen nutzt der Pi "},{"t":"gap","a":"HTTPS"},{"t":"text","v":"."}]}
+    </script></div>
+    <div class="wb-section-break"></div>
+    <div class="wb-callout"><strong>Jetzt hast du das gelernt:</strong><p>Ein erreichbarer Pi, ein laufender Dienst und eine aktuelle Messung sind drei verschiedene Nachweise. Teste den letzten funktionierenden Übergang und halte Kamera und Sensordienst getrennt.</p></div>
+    <h2>Quellen und Weiterforschen</h2>
+    <ul>
+      <li><a href="https://tailscale.com/docs/install/linux">Tailscale: Einrichtung unter Linux</a></li>
+      <li><a href="https://flask.palletsprojects.com/en/stable/deploying/gunicorn/">Flask: Gunicorn für den Dauerbetrieb</a></li>
+      <li><a href="https://www.raspberrypi.com/documentation/accessories/camera-software.html">Raspberry Pi: Kamera-Software und Testbefehle</a> · <a href="https://github.com/raspberrypi/picamera2-examples/blob/main/examples/mjpeg_server_2.py">Picamera2: MJPEG-Beispiel</a></li>
+    </ul>
+  </section>
+</div>
+<script src="material/gruppe-b/fortschritt.js"></script>
+<script src="projekt-navigation.js"></script>
+<script src="../../assets/allgemeines_format.js"></script>
+<script>SBBook.autoMount(); SBBlocks.autoMount(); SBLibrary.autoMountAll();</script>
+</body>
+</html>

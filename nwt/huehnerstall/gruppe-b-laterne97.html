@@ -3,25 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gruppe B – Kamera und Raspberry Pi - Musterlösung</title>
 <meta name="musterloesung-source" content="gruppe-b.html">
-<meta name="musterloesung-source-sha256" content="8b08cf9a922171b573303dd00767e44e130e3ae1b544f4e15a46193fdf6ad7f8">
+<meta name="musterloesung-source-sha256" content="d8ac2774c9ca59169459dc5d1bb700ae38b70dd304810d4dae2ea350bf9390f5">
+<title>Smart Chicken Coop: Gruppe B – Musterlösung</title>
 <link rel="stylesheet" href="../../assets/allgemeines_format.css">
 <link rel="stylesheet" href="projekt.css">
 <style>
-@import url('../../assets/musterloesungen.css');
+    .wb-book [data-wb-page]{overflow-wrap:anywhere}
+    .coop-command{overflow:auto;padding:12px;border:1px solid var(--wb-line);border-radius:6px;background:var(--wb-block-bg);color:var(--wb-text);white-space:pre-wrap}
+    .coop-checklist{border-block:1px solid var(--wb-line);padding-block:12px}
+    .coop-checklist output{display:block;font-weight:750}
+    .coop-checklist progress{width:min(320px,100%);accent-color:#16716d;margin:4px 0 12px}
+    .coop-checklist ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;padding-inline-start:24px}
+    .coop-checklist label{display:flex;align-items:flex-start;gap:8px;padding:7px 2px;cursor:pointer}
+    .coop-checklist input{flex:none;width:19px;height:19px;accent-color:#16716d;margin:2px 0 0}
+    .coop-measure-preview{border:1px solid var(--wb-line);border-radius:6px;padding:12px;margin-inline:0}
+    .coop-measure-preview dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(134px,100%),1fr));gap:8px 18px}
+    .coop-measure-preview dd{margin:2px 0;font-weight:750}
+    .wb-book [data-p2-id="groupb_wege"] .p2-piece{min-width:0}
+    .wb-book [data-p2-id="groupb_wege"] .p2-joined{max-width:100%}
+    @media(max-width:680px){.coop-checklist ol{grid-template-columns:1fr}.wb-book .wb-content{padding-inline:6px}.wb-book .wb-paper{padding-inline:14px}}
+  </style>
+<link rel="stylesheet" href="../../assets/musterloesungen.css">
+<style>
 .wb-book .wb-side-footer{display:none}
-.wb-book [data-wb-page] .wb-reveal-item-pending,.wb-book [data-wb-page] .wb-reveal-item-done{opacity:1;transform:none;animation:none}
-.sample-answer{min-width:0;margin:18px 0;color:var(--wb-text)}
-.sample-answer h2{font-size:20px;line-height:1.4}
-.answer-label{display:block;font-size:14px;font-weight:700;color:var(--wb-muted)}
-.table-scroll{max-width:100%;overflow-x:auto;margin:12px 0}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{border:1px solid var(--wb-line);padding:9px;text-align:left;vertical-align:top}
-th{background:var(--wb-head-bg);color:var(--wb-text)}
-pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
-.wb-book .wb-top-left{min-width:0}.wb-book .wb-brand{overflow-wrap:anywhere}
-@media(max-width:600px){
+.solution-block{min-width:0}
+.solution-block h3{font-size:18px;line-height:1.45}
+.solution-label{display:block;color:var(--wb-muted);font-size:13px;font-weight:700;margin-bottom:8px}
+.solution-table{max-width:100%;overflow-x:auto;margin:12px 0}
+.solution-table table{border-collapse:collapse;width:100%;min-width:420px;font-size:14px;color:var(--wb-text)}
+.solution-table th,.solution-table td{border:1px solid var(--wb-line);padding:9px 10px;text-align:left;vertical-align:top}
+.solution-table th{background:var(--wb-head-bg);color:var(--wb-text)}
+.solution-block pre{padding:12px;overflow-x:auto;background:var(--wb-block-bg);color:var(--wb-text);border:1px solid var(--wb-line);border-radius:6px}
+.solution-block img{max-width:100%;height:auto}
+.solution-block > table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px}
+.solution-block > table th,.solution-block > table td{border:1px solid var(--wb-line);padding:8px;text-align:left}
+@media(max-width:980px){
 .wb-book:not(.wb-present-mode){--wb-topH:112px}
 .wb-book:not(.wb-present-mode) .wb-topbar{flex-wrap:wrap;gap:6px;padding:8px 12px;box-sizing:border-box}
 .wb-book:not(.wb-present-mode) .wb-top-left{width:100%;min-width:0;gap:10px}
@@ -36,46 +53,37 @@ pre{max-width:100%;overflow-x:auto;white-space:pre;color:var(--wb-text)}
 </head>
 <body>
 <div data-wb-book>
-<script type="application/json" class="wb-book-config">{"bookTitle":"Musterlösung","sectionTitle":"Gruppe B – Kamera und Raspberry Pi · Musterlösung","startPage":1,"autoNav":true,"autoNavHeadings":["h1","h2"],"autoNavIncludeBlocks":false,"autoNavGroupTitle":"Gruppe B","themeDefault":"default","enableResultsPage":false}</script>
-<section data-wb-page="1" data-wb-page-title="Auftrag"><div class="coop-hero"><span class="coop-kicker">Musterlösung</span><h1>Gruppe B: Kamera und Raspberry Pi</h1></div><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupb_mcq"><h2>Check: NoIR-Kamera</h2><h3>Was gilt für eine NoIR-Kamera im vollständig dunklen Stall?</h3><ul><li>Sie kann nahes Infrarot erfassen, braucht aber eine Lichtquelle.</li></ul><p>NoIR bedeutet, dass ein IR-Sperrfilter fehlt. Ohne sichtbares oder infrarotes Licht entstehen trotzdem keine Bildinformationen.</p></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupb-musterprojekt"><h2>Musterprojekt: Kamera und überwachter Dienst</h2><p>Aufbau: Pi 4 B mit OS Lite 64-bit, 2 GB RAM, 64-GB-microSD und geeigneter 5,1-V-/3-A-Versorgung; Camera Module 3 Wide NoIR am CSI-Anschluss, nur stromlos gesteckt. Headless-Test erzeugt ein Foto und ein zehnsekündiges Video. Als konkretes lokales Musterprojekt nimmt ein systemd-Dienst fortlaufend ein Bild auf; die spätere Übertragung an den gewählten freigegebenen Streamingdienst wird davon getrennt geprüft.</p><pre><code>rpicam-hello --list-cameras
-rpicam-still --nopreview -o huhn.jpg
-rpicam-vid --nopreview -t 10000 --codec h264 --width 1280 --height 720 --framerate 25 --bitrate 2000000 -o huhn.h264</code></pre><p>Datei <code>/home/bbzstegen/huehnerstall/kamera.py</code>:</p><pre><code>from pathlib import Path
-import subprocess
-import time
-
-ziel = Path("/home/bbzstegen/huehnerstall")
-ziel.mkdir(parents=True, exist_ok=True)
-while True:
-    temporaer = ziel / "aktuell.tmp.jpg"
-    subprocess.run([
-        "rpicam-still", "--nopreview", "--timeout", "1000",
-        "--width", "1280", "--height", "720", "-o", str(temporaer)
-    ], check=True, timeout=20)
-    temporaer.replace(ziel / "aktuell.jpg")
-    print("Lokales Kamerabild erneuert", flush=True)
-    time.sleep(30)
-</code></pre><p>Dienstdatei <code>/etc/systemd/system/huehnerkamera.service</code>:</p><pre><code>[Unit]
-Description=Lokaler Hühnerstall-Kameratest
-After=local-fs.target
-
-[Service]
-Type=simple
-User=bbzstegen
-SupplementaryGroups=video
-WorkingDirectory=/home/bbzstegen/huehnerstall
-ExecStart=/usr/bin/python3 /home/bbzstegen/huehnerstall/kamera.py
-Restart=on-failure
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-</code></pre><pre><code>sudo systemctl daemon-reload
-sudo systemctl enable --now huehnerkamera.service
-systemctl status huehnerkamera.service
-journalctl -u huehnerkamera.service -b --no-pager</code></pre><p>Die Datei wird erst nach erfolgreicher Aufnahme atomar ersetzt; ein Prozessfehler führt über <code>check=True</code> zum Neustart durch systemd. Die zuletzt vorhandene Datei kann danach alt sein und darf ohne Altersprüfung nicht als Livebild gelten. Der lokale Fotodienst ist kein Livestream und beansprucht die Kamera: Vor dem Videotest wird er mit <code>sudo systemctl stop huehnerkamera.service</code> beendet.</p></article></section>
-<section data-wb-page="2" data-wb-page-title="Nachweise"><h1>Nachweise für die Übergabe</h1><div class="wb-section-break"></div><article class="sample-answer" data-solution="groupb_order"><h2>Diagnose: Kamera liefert kein Bild</h2><ol><li>Kamera wird vom Pi erkannt?</li><li>Lokale Vorschau funktioniert?</li><li>Lokale Aufnahme funktioniert?</li><li>Netzwerk und Streamingweg prüfen</li><li>Einbettung auf der Homepage prüfen</li></ol></article><div class="wb-section-break"></div><article class="sample-answer" data-solution="text-groupb-uebergabe"><h2>Übergabe und begründete Kameraeinstellungen</h2><span class="answer-label">Eine mögliche Antwort</span><p>Die Messwertanzeige benötigt Temperatur in °C, relative Feuchte in %RH, LDR-Rohwert oder erklärte Kategorie sowie Messzeit und Fehlerstatus. Als Ausgangsprofil verwenden wir 1280×720 bei 25 fps und 2 Mbit/s; das ergibt rechnerisch 15 MB pro Minute ohne Zusatzaufwand. Der Pi prüft Video zunächst lokal und sendet später ausgehend zum freigegebenen Verteilungsdienst. Dessen geschützter Player wird in die Homepage eingebettet. Bei Kameraausfall erscheint „Kamera offline“; gültige Sensordaten bleiben sichtbar. Als Fallback zeigen wir höchstens das letzte zulässige Bild mit Aufnahmezeit oder einen ausdrücklichen Ausfallhinweis. Das Bild erfasst nur den Hühnerbereich, Ton bleibt aus, Zugriff und Aufbewahrung sind schulisch festgelegt.</p><p>Muster für die Fehlersuchnotiz: Kamera ist mit <code>--list-cameras</code> erkannt, Foto wurde geöffnet, Video wurde abgespielt; dies sind am Gerät zu belegende Meilensteine. Funktioniert der externe Player, aber die Einbettung nicht, wird zunächst dessen Einbettungsfreigabe geprüft. Bei vollständiger Dunkelheit sind ohne sichtbare oder nahe IR-Beleuchtung keine Motivdetails zu erwarten.</p></article></section>
+<script type="application/json" class="wb-book-config">{"bookTitle":"Gruppe B · Musterlösung","sectionTitle":"Gruppe B: Raspberry Pi, Messwertdienst und Kamera · Musterlösungen","autoNav":true,"autoNavHeadings":["h1","h2","h3"],"autoNavIncludeBlocks":false,"enableResultsPage":false,"studentNameStorageKey":"musterloesung_only_name"}</script>
+<section data-wb-page="1" data-wb-page-title="Auftrag und Checkliste"><div class="course-hero"><div class="course-kicker">Musterlösung</div><h1>Gruppe B: Raspberry Pi, Messwertdienst und Kamera</h1></div>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_start"><h3>Stopp &amp; check: Zwei getrennte Wege</h3><p>Temperatur, Luftfeuchte und LDR-Rohwert können weiter an der Flask-API ankommen und angezeigt werden. Der Kameratest läuft als eigener Prozess und kann unabhängig ausfallen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-meilensteine"><h3>Nachweise zu den 14 Projektpunkten</h3><ol><li>Pi bootet, Hostname ist huehnercam.</li><li>Jeder berechtigte Rechner kann sich mit seinem eigenen SSH-Schlüssel anmelden.</li><li>Der Pi hat die bestätigte Projekt-WLAN-IP.</li><li>Nur ein berechtigter Rechner im freigegebenen Tailnet verbindet sich per SSH.</li><li>Python im venv importiert Flask.</li><li>Projekt- und Datenordner sind getrennt.</li><li>GET /api/health liefert HTTP 200.</li><li>Fiktiver POST liefert HTTP 201; Fehlersatz HTTP 400.</li><li>Serieller ESP32-Log und gespeicherter Eintrag stimmen überein.</li><li>CSV hat genau eine Kopfzeile und bleibt beim Neustart erhalten.</li><li>GET / zeigt die passenden Testwerte mit Empfangszeit.</li><li>Systemd startet den Gunicorn-Dienst nach Neustart; eine neue Messung wird gespeichert.</li><li>Kamera wird erkannt; Foto und lokaler Stream sind sichtbar.</li><li>Nach Freigabe stimmen lokaler und öffentlicher Zeitstempel überein; Video wird getrennt geprüft.</li></ol><p>Diese Nachweise sind Zielkriterien und keine bereits durchgeführten Hardwaretests.</p></article></section>
+<section data-wb-page="2" data-wb-page-title="Pi, SSH und Fernzugriff"><h1>Raspberry Pi nach der Neuinstallation prüfen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_adressen"><h3>Welche Verbindung prüfst du?</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Kategorie</th><th scope="col">Begriff</th></tr></thead><tbody><tr><td>Schulnetz</td><td>ESP32 schickt im Projektraum einen POST an den Pi.</td></tr><tr><td>Berechtigtes Tailnet</td><td>Ein angemeldeter Projektcomputer greift von zu Hause per SSH zu.</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="3" data-wb-page-title="Python und Flask-API"><h1>Projektordner und Python-API anlegen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_api"><h3>Vom JSON zur Speicherzeile</h3><span class="solution-label">Eine mögliche Antwort</span><p><code>POST /api/messwerte</code> erwartet <code>Content-Type: application/json</code> und liest das JSON-Objekt. Es prüft <code>temperature_c</code>, <code>humidity_pct</code> und <code>light_raw</code> auf zulässige Werte. Danach ergänzt der Pi <code>received_at_utc</code> und hängt den Datensatz als CSV-Zeile an. Erst dann antwortet die API mit HTTP 201. Eine Feuchte von 130 % liegt außerhalb von 0 bis 100 %: HTTP 400, kein Eintrag, der bisher jüngste Datensatz bleibt unverändert.</p></article>
+</section>
+<section data-wb-page="4" data-wb-page-title="Testdaten und ESP32"><h1>API zuerst mit Testdaten, dann mit dem ESP32 prüfen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_testspur"><h3>Ablaufspur: Testdatei verfolgen</h3><div class="solution-table" tabindex="0" role="region" aria-label="Musterlösung als Tabelle"><table><thead><tr><th scope="col">Anfrage</th><th scope="col">HTTP-Status</th><th scope="col">Zeilen danach</th></tr></thead><tbody><tr><td>POST: 21,5 °C und gültige übrige Werte</td><td>201</td><td>1</td></tr><tr><td>POST: Feuchte 130 %</td><td>400</td><td>1</td></tr><tr><td>GET /api/aktuell</td><td>200</td><td>1</td></tr></tbody></table></div></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-testdaten"><h3>Beispiel für den API-Test vor dem ESP32</h3><p>Der fiktive Wert 21,5 °C, 64 % und ADC 1470 ergibt HTTP 201. GET /api/aktuell liefert genau diese Felder mit dem tatsächlichen UTC-Empfangszeitpunkt. Ein POST mit 130 % ergibt HTTP 400 und fügt keine Zeile an. Das Skript läuft anschließend mit einer separaten Echtdatei; die Beispielmessung wird nicht öffentlich angezeigt.</p></article></section>
+<section data-wb-page="5" data-wb-page-title="Datei, Diagramm und Testhomepage"><h1>Messwerte speichern, auswerten und lokal anzeigen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_dateien"><h3>Check: Livewert oder Momentaufnahme?</h3><h4>Welchen Weg nutzt der Browser für neue Werte?</h4><p>Er fragt GET /api/aktuell erneut ab.</p><p>Die exportierte JSON-Datei ist eine Momentaufnahme. GET /api/aktuell liest den neuesten gespeicherten Wert.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-auswertung"><h3>Beispielreihe und Datenmenge</h3><p>Bei einem Datensatz pro Minute: 60 pro Stunde, 1.440 pro Tag, 10.080 in sieben Tagen, 525.600 in 365 Tagen. Im <a href="material/gruppe-a/beispielmessung.csv">fiktiven Beispieldatensatz</a> steigt die Temperatur in 15 s von 20,0 °C auf 21,2 °C und fällt nach weiteren 5 s auf 21,1 °C. Der Verlauf allein erklärt die Ursache nicht. Die lokale Anzeige fragt JSON über die API ab; die exportierte Datei aktuell.json enthält nur den Zustand beim Export.</p></article></section>
+<section data-wb-page="6" data-wb-page-title="Autostart mit systemd"><h1>Messwertdienst automatisch starten</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_autostart"><h3>Stopp &amp; check: Nachweis nach dem Neustart</h3><p><b>Falsch.</b> systemctl meldet active. Damit ist bereits bewiesen, dass der ESP32 einen neuen Messwert erfolgreich gespeichert hat.</p><p>active zeigt, dass der Dienst läuft. Erst POST 201 und eine neue Zeile mit passendem Zeitstempel belegen den kompletten Datenweg.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-dienst"><h3>Autostart und Neustart prüfen</h3><p>Die <a href="material/gruppe-b/huehnerstall.service">Muster-Unit</a> startet Gunicorn als Projektbenutzer mit einem Worker. Die Bindung kommt aus <code>/etc/huehnerstall.env</code>. Nach dem Neustart kontrolliert ihr <code>systemctl status</code> und das Journal, ruft <code>/api/health</code> von der erlaubten Adresse auf und vergleicht den nächsten frischen POST mit der CSV. Bei Bindefehlern prüft ihr Adresse und Portbelegung; bei Speicherfehlern den konfigurierten Pfad und die Rechte.</p></article></section>
+<section data-wb-page="7" data-wb-page-title="Kamera und lokaler Stream"><h1>NoIR-Kamera und lokalen MJPEG-Stream testen</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_mcq"><h3>Check: NoIR-Kamera</h3><h4>Was gilt für eine NoIR-Kamera im vollständig dunklen Stall?</h4><p>Sie kann nahes Infrarot erfassen, braucht aber eine Lichtquelle.</p><p>Ohne sichtbares oder infrarotes Licht entstehen keine Bildinformationen.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_order"><h3>Diagnose: Kamera liefert kein Bild</h3><ol><li>Kameraerkennung am Pi prüfen</li><li>Lokale Aufnahme öffnen</li><li>Lokalen MJPEG-Stream testen</li><li>Freigegebenen Verteilungsdienst prüfen</li><li>Einbettung auf der Homepage prüfen</li></ol></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-musterprojekt"><h3>Musterprojekt: Kamera und lokaler Livestream</h3><p>Kamera stromlos anschließen. rpicam-hello --list-cameras erkennt das Modul, die Testdateien werden geöffnet und <a href="material/gruppe-b/kamera_mjpeg.py">kamera_mjpeg.py</a> liefert im Muster 640 × 480 bei 10 Bildern pro Sekunde. Der lokale Test nutzt einen eigenen Prozess und keine öffentliche Portfreigabe. Die tatsächliche Datenrate muss gemessen werden. Für ein späteres Video mit 2 Mbit/s wären es 15 MB pro Minute ohne Protokollzuschlag.</p></article></section>
+<section data-wb-page="8" data-wb-page-title="Öffentliche Schulhomepage"><h1>Die öffentliche Schulhomepage anbinden</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_wege"><h3>Datenweg und Zugriffsbereich</h3><div class="solution-table" tabindex="0" role="region" aria-label="Richtig verbundene Paare"><table><thead><tr><th>Begriff / Aufgabe</th><th>Zuordnung</th></tr></thead><tbody><tr><td>Messwert-Upload</td><td>Ausgehender HTTPS-POST an freigegebenen Host</td></tr><tr><td>Lokaler Kamera-Test</td><td>Nur am Pi oder über berechtigten SSH-Tunnel</td></tr></tbody></table></div></article>
+</section>
+<section data-wb-page="9" data-wb-page-title="Doppelstunden und Übergabe"><h1>Nachweise für die Übergabe</h1>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="groupb_abschluss"><h3>Sicherung: Vom Sender zur Anzeige</h3><p>Der ESP32 sendet per <b>POST</b>. Der Pi speichert zunächst in <b>CSV</b>. Der Browser liest mit <b>GET</b>. Für den freigegebenen Upload nach außen nutzt der Pi <b>HTTPS</b>.</p></article>
+<div class="wb-section-break"></div><article class="solution-block" data-solution="text-groupb-uebergabe"><h3>Technischer Übergabenachweis</h3><p>Datenvertrag: POST /api/messwerte am Pi, GET /api/aktuell auf Pi und freigegebenem Host; Temperatur in °C, relative Feuchte in %, Licht als ADC-Rohwert und UTC-Empfangszeit. Die Messwertanzeige bleibt bei Kameraausfall erreichbar. Als Kamerafallback dient ein eindeutiger Ausfallhinweis; ein Bild darf nur nach Freigabe und mit Aufnahmezeit gezeigt werden. Beispiel für einen offenen Fehler: Wird ein Foto lokal angezeigt, aber der lokale MJPEG-Stream bleibt schwarz, prüfen wir zuerst, ob ein zweiter Prozess die Kamera belegt. Der reale Nachweis enthält Terminalausgaben, die gespeicherte Zeile und das Diagramm der eigenen Messreihe.</p></article></section>
 </div>
 <script src="../../assets/allgemeines_format.js"></script>
-<script>SBLibrary.autoMountAll();</script>
+<script>SBLibrary.autoMountAll({storagePrefix:"gruppe-b-laterne97.html__"});</script>
 </body>
 </html>
